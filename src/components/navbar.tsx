@@ -8,7 +8,7 @@ import { useTheme } from 'next-themes';
 import { siteConfig } from '@/config/site';
 import { mainNavItems } from '@/config/navigation';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'; // Added SheetHeader, SheetTitle
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { GraduationCap, Menu, X, PanelLeft, Sun, Moon, Palette } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -58,11 +58,10 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Horizontal desktop navigation removed as per the visual example */}
-        {/* The main navigation is now solely handled by the Sheet (drawer) */}
+        {/* Main navigation is now solely handled by the Sheet (drawer) on the right */}
 
         {/* Right side: Theme Toggle and Main Navigation Drawer Trigger */}
-        <div className="flex flex-1 items-center justify-end space-x-2"> {/* flex-1 ensures this group is pushed to the right */}
+        <div className="flex flex-1 items-center justify-end space-x-2">
           <Button variant="ghost" size="icon" onClick={cycleTheme} aria-label="Toggle theme">
             <ThemeIcon />
           </Button>
@@ -70,23 +69,26 @@ export function Navbar() {
           {/* Main navigation trigger (Sheet for vertical links) - Always visible */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" aria-label="Open main menu">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle main menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-full max-w-xs p-6 bg-background">
-              <div className="flex flex-col space-y-1">
-                <div className="flex justify-between items-center mb-6 pb-2 border-b">
+            <SheetContent side="left" className="w-full max-w-xs p-0 bg-background">
+              <SheetHeader className="p-6 pb-2 border-b">
+                <div className="flex justify-between items-center">
                   <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
                     <GraduationCap className="h-7 w-7 text-primary" />
                     <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
                   </Link>
-                  <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} className="-mr-2">
+                  <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} className="-mr-2" aria-label="Close menu">
                     <X className="h-6 w-6" />
                     <span className="sr-only">Close menu</span>
                   </Button>
                 </div>
+                <SheetTitle className="sr-only">Main Navigation Menu</SheetTitle> {/* Added visually hidden title */}
+              </SheetHeader>
+              <div className="flex flex-col space-y-1 p-6">
                 {mainNavItems.map((item: NavItem) => (
                   !item.disabled && (
                     <Button
