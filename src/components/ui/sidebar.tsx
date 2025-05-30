@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -7,7 +8,7 @@ import { PanelLeft } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
@@ -261,28 +262,39 @@ Sidebar.displayName = "Sidebar"
 
 const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
-  React.ComponentProps<typeof Button>
->(({ className, onClick, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar()
+  React.ComponentProps<typeof Button> & { children?: React.ReactNode }
+>(({ className, onClick, children, asChild, ...props }, ref) => {
+  const { toggleSidebar } = useSidebar();
+
+  const triggerProps = {
+    "data-sidebar": "trigger",
+    variant: "ghost" as const,
+    size: "icon" as const,
+    className: cn("h-7 w-7", className),
+    onClick: (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (onClick) {
+        (onClick as React.MouseEventHandler<HTMLButtonElement>)(event);
+      }
+      toggleSidebar();
+    },
+    ...props,
+  };
+
+  if (asChild) {
+    return (
+      <Slot ref={ref} {...triggerProps}>
+        {children}
+      </Slot>
+    );
+  }
 
   return (
-    <Button
-      ref={ref}
-      data-sidebar="trigger"
-      variant="ghost"
-      size="icon"
-      className={cn("h-7 w-7", className)}
-      onClick={(event) => {
-        onClick?.(event)
-        toggleSidebar()
-      }}
-      {...props}
-    >
+    <Button ref={ref} {...triggerProps}>
       <PanelLeft />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
-  )
-})
+  );
+});
 SidebarTrigger.displayName = "SidebarTrigger"
 
 const SidebarRail = React.forwardRef<
