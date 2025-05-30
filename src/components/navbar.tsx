@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -7,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { siteConfig } from '@/config/site';
 import { mainNavItems } from '@/config/navigation';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger as MobileSheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'; 
 import { GraduationCap, Menu, X, PanelLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -47,18 +46,14 @@ export function Navbar() {
           {/* Example: Desktop-specific links could go here if desired */}
         </nav>
 
-        {/* Mobile menu trigger, controlled by CSS media queries (md:hidden) */}
-        <div className="md:hidden">
-          <MobileSheetTrigger asChild>
+        {/* Mobile menu Sheet with trigger properly nested inside */}
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <SheetTrigger asChild className="md:hidden">
             <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(true)}>
               <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle menu</span>
             </Button>
-          </MobileSheetTrigger>
-        </div>
-
-        {/* Mobile menu Sheet */}
-        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs p-6 bg-background">
             <div className="flex flex-col space-y-1">
               <div className="flex justify-between items-center mb-6 pb-2 border-b">
