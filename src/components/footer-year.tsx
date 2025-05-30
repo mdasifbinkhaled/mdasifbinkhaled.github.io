@@ -1,18 +1,7 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-
 export function FooterYear() {
-  const [currentYear, setCurrentYear] = useState<number | null>(null);
-
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear());
-  }, []);
-
-  // Render null (or a placeholder) initially until the year is set on the client
-  if (currentYear === null) {
-    return null; 
-  }
-
-  return <span>{currentYear}</span>;
+  // Directly return the current year without using state
+  // This ensures consistent rendering between server and client
+  return <span>{new Date().getFullYear()}</span>;
 }

@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -7,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { siteConfig } from '@/config/site';
 import { mainNavItems } from '@/config/navigation';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger as MobileSheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'; 
 import { GraduationCap, Menu, X, PanelLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -46,56 +45,58 @@ export function Navbar() {
           {/* Example: Desktop-specific links could go here if desired */}
         </nav>
 
-        {/* Mobile menu Sheet system */}
-        <div className="md:hidden"> {/* This div ensures the mobile menu trigger is only visible on mobile */}
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <MobileSheetTrigger asChild>
-              <Button variant="ghost" size="icon"> {/* Removed explicit onClick, SheetTrigger handles it */}
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </MobileSheetTrigger>
-            <SheetContent side="left" className="w-full max-w-xs p-6 bg-background">
-              <div className="flex flex-col space-y-1">
-                <div className="flex justify-between items-center mb-6 pb-2 border-b">
-                  <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
-                    <GraduationCap className="h-7 w-7 text-primary" />
-                    <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
-                  </Link>
-                  <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} className="-mr-2">
-                    <X className="h-6 w-6" />
-                    <span className="sr-only">Close menu</span>
-                  </Button>
-                </div>
-                {mainNavItems.map((item: NavItem) => (
-                  !item.disabled && (
-                    <Button
-                      key={item.label}
-                      variant="ghost"
-                      asChild
-                      className={cn(
-                        "w-full justify-start text-base py-3 px-3",
-                        isItemActive(item.href) ? "text-primary bg-accent" : "text-foreground hover:bg-accent/50"
-                      )}
-                      onClick={() => {
-                        setIsMobileMenuOpen(false);
-                      }}
-                    >
-                      <Link
-                        href={item.href}
-                        target={item.external ? "_blank" : undefined}
-                        rel={item.external ? "noopener noreferrer" : undefined}
-                      >
-                         {item.icon && <Icon name={item.icon} className="mr-2 h-5 w-5 shrink-0" />}
-                        {item.label}
-                      </Link>
-                    </Button>
-                  )
-                ))}
-              </div>
-            </SheetContent>
-          </Sheet>
+        {/* Mobile menu trigger, controlled by CSS media queries (md:hidden) */}
+        <div className="md:hidden">
+          <MobileSheetTrigger asChild>
+            <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(true)}>
+              <Menu className="h-6 w-6" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </MobileSheetTrigger>
         </div>
+
+        {/* Mobile menu Sheet */}
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <SheetContent side="left" className="w-full max-w-xs p-6 bg-background">
+            <div className="flex flex-col space-y-1">
+              <div className="flex justify-between items-center mb-6 pb-2 border-b">
+                <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+                  <GraduationCap className="h-7 w-7 text-primary" />
+                  <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
+                </Link>
+                <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} className="-mr-2">
+                  <X className="h-6 w-6" />
+                  <span className="sr-only">Close menu</span>
+                </Button>
+              </div>
+              {mainNavItems.map((item: NavItem) => (
+                !item.disabled && (
+                  <Button
+                    key={item.label}
+                    variant="ghost"
+                    asChild
+                    className={cn(
+                      "w-full justify-start text-base py-3 px-3",
+                      isItemActive(item.href) ? "text-primary bg-accent" : "text-foreground hover:bg-accent/50"
+                    )}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <Link
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noopener noreferrer" : undefined}
+                    >
+                       {item.icon && <Icon name={item.icon} className="mr-2 h-5 w-5 shrink-0" />}
+                      {item.label}
+                    </Link>
+                  </Button>
+                )
+              ))}
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   );
