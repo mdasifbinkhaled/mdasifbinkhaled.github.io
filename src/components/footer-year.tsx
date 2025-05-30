@@ -3,5 +3,5 @@
 export function FooterYear() {
   // Directly return the current year without using state
   // This ensures consistent rendering between server and client
-  return <span>{new Date().getFullYear()}</span>;
+  return <>{new Date().getFullYear()}</>;
 }
