@@ -8,18 +8,16 @@ import { siteConfig } from '@/config/site';
 import { mainNavItems } from '@/config/navigation';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger as MobileSheetTrigger } from '@/components/ui/sheet';
-import { SidebarTrigger } from '@/components/ui/sidebar'; 
+import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'; 
 import { GraduationCap, Menu, X, PanelLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { NavItem } from '@/types';
-import { Icon } from '@/components/icons'; // Import the new Icon component
+import { Icon } from '@/components/icons';
 
 export function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  // const { isMobile } = useSidebar(); // Or get isMobile directly if needed for Sheet logic
 
   const isItemActive = (href: string): boolean => {
     if (href === "/" && pathname !== "/") return false;
@@ -27,48 +25,29 @@ export function Navbar() {
     return pathname.startsWith(href);
   };
 
-  if (!mounted) {
-    return (
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="mr-2 hidden md:inline-flex" disabled>
-              <PanelLeft className="h-6 w-6" />
-            </Button>
-            <Link href="/" className="flex items-center gap-2">
-              <GraduationCap className="h-7 w-7 text-primary md:hidden" />
-              <span className="font-bold text-lg text-foreground md:hidden">{siteConfig.shortName}</span>
-            </Link>
-          </div>
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" disabled>
-              <Menu className="h-6 w-6" />
-            </Button>
-          </div>
-        </div>
-      </header>
-    );
-  }
-
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center">
+          {/* SidebarTrigger for desktop, controlled by CSS media queries (hidden md:inline-flex) */}
           <SidebarTrigger className="mr-2 hidden md:inline-flex">
             <PanelLeft className="h-6 w-6" />
             <span className="sr-only">Toggle sidebar</span>
           </SidebarTrigger>
 
+          {/* Site logo/name for mobile, controlled by CSS media queries (md:hidden) */}
           <Link href="/" className="flex items-center gap-2 md:hidden" onClick={() => setIsMobileMenuOpen(false)}>
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
           </Link>
         </div>
 
+        {/* Desktop nav items can be added here if needed, separate from sidebar */}
         <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
-          {/* Desktop nav items can be added here if needed, separate from sidebar */}
+          {/* Example: Desktop-specific links could go here if desired */}
         </nav>
 
+        {/* Mobile menu trigger, controlled by CSS media queries (md:hidden) */}
         <div className="md:hidden">
           <MobileSheetTrigger asChild>
             <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(true)}>
@@ -78,6 +57,7 @@ export function Navbar() {
           </MobileSheetTrigger>
         </div>
 
+        {/* Mobile menu Sheet */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetContent side="left" className="w-full max-w-xs p-6 bg-background">
             <div className="flex flex-col space-y-1">
