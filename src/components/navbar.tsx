@@ -16,10 +16,10 @@ import {
   SheetClose 
 } from '@/components/ui/sheet';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { GraduationCap, Menu, PanelLeft, Sun, Moon, Palette } from 'lucide-react';
+import { GraduationCap, Menu, PanelLeft, Sun, Moon, Palette, X } from 'lucide-react'; // Added X import
 import { mainNavItems } from '@/config/navigation';
 import { cn } from '@/lib/utils';
-import { SidebarNav } from './sidebar-nav'; // Assuming SidebarNav is used for mobile
+import { SidebarNav } from './sidebar-nav';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -53,7 +53,7 @@ export function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         {/* Left side: Site Name/Logo AND Desktop Sidebar Trigger */}
-        <div className="flex items-center gap-x-3 sm:gap-x-4"> {/* Adjusted gap */}
+        <div className="flex items-center gap-x-3 sm:gap-x-4">
           <Link href="/" className="flex items-center gap-2">
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
@@ -62,7 +62,7 @@ export function Navbar() {
         </div>
 
         {/* Desktop Navigation Links - Centered */}
-        <nav className="hidden md:flex items-center gap-x-1 sm:gap-x-2 lg:gap-x-3 text-sm font-medium"> {/* Adjusted gap */}
+        <nav className="hidden md:flex items-center gap-x-1 sm:gap-x-2 lg:gap-x-3 text-sm font-medium">
           {mainNavItems.map((item) => (
             !item.disabled && (
               <Link
@@ -84,7 +84,7 @@ export function Navbar() {
         </nav>
 
         {/* Right side: Theme Toggle and Mobile Menu Trigger */}
-        <div className="flex items-center gap-x-1 sm:gap-x-2"> {/* Adjusted gap */}
+        <div className="flex items-center gap-x-1 sm:gap-x-2">
           <Button variant="ghost" size="icon" onClick={cycleTheme} aria-label="Toggle theme">
             <ThemeIcon />
           </Button>
@@ -108,7 +108,7 @@ export function Navbar() {
                  <SheetClose asChild>
                     <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent">
                       <Menu className="h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" /> {/* Using Menu as an X example */}
-                       <X className="h-6 w-6 पूर्ण-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                       <X className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" /> {/* Corrected className */}
                       <span className="sr-only">Close menu</span>
                     </Button>
                   </SheetClose>
