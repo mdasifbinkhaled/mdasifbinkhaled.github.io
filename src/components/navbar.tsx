@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -16,7 +15,7 @@ import {
   SheetClose 
 } from '@/components/ui/sheet';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { GraduationCap, Menu, PanelLeft, Sun, Moon, Palette, X } from 'lucide-react'; // Added X import
+import { GraduationCap, Menu, PanelLeft, Sun, Moon, Palette, X } from 'lucide-react';
 import { mainNavItems } from '@/config/navigation';
 import { cn } from '@/lib/utils';
 import { SidebarNav } from './sidebar-nav';
@@ -89,7 +88,7 @@ export function Navbar() {
             <ThemeIcon />
           </Button>
 
-          {/* Mobile Menu Trigger for Sheet */}
+          {/* Mobile Menu Sheet */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon">
@@ -105,15 +104,12 @@ export function Navbar() {
                     {siteConfig.shortName}
                   </SheetTitle>
                 </div>
-                 <SheetClose asChild>
-                    <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent">
-                      <Menu className="h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" /> {/* Using Menu as an X example */}
-                       <X className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" /> {/* Corrected className */}
-                      <span className="sr-only">Close menu</span>
-                    </Button>
-                  </SheetClose>
-                {/* Visually hidden title for accessibility, actual title is the logo */}
-                <SheetTitle className="sr-only">Main Menu</SheetTitle>
+                <SheetClose asChild>
+                  <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent">
+                    <X className="h-6 w-6" />
+                    <span className="sr-only">Close menu</span>
+                  </Button>
+                </SheetClose>
               </SheetHeader>
               <div className="p-2">
                 <SidebarNav 

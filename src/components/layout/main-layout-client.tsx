@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, type ReactNode } from 'react';
@@ -15,11 +14,10 @@ import {
   SidebarContent, 
   SidebarInset 
 } from '@/components/ui/sidebar';
-// SidebarNav is no longer needed here for mainNavItems
-// import { SidebarNav } from '@/components/sidebar-nav';
-// import { mainNavItems } from '@/config/navigation';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
+import { SidebarNav } from '@/components/sidebar-nav';
+import { mainNavItems } from '@/config/navigation';
 
 interface MainLayoutClientProps {
   children: ReactNode;
@@ -33,9 +31,12 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
   }, []);
 
   if (!mounted) {
-    // Render a minimal fallback or null to avoid hydration mismatch
-    // This can be a visually hidden div or a simple loader if preferred
-    return null; 
+    // Return a minimal layout to avoid hydration mismatch
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto p-4">{children}</div>
+      </div>
+    );
   }
 
   return (
@@ -47,38 +48,34 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
       themes={['light', 'dark', 'retro']}
     >
       <SidebarProvider>
-        <Sidebar className="hidden md:flex border-r shadow-md bg-sidebar text-sidebar-foreground">
-          <SidebarHeader className="p-4 border-b border-sidebar-border flex items-center justify-center">
-            <Link href="/" className="flex items-center gap-2">
-              <GraduationCap className="h-7 w-7 text-sidebar-primary flex-shrink-0" />
-              <span className="font-bold text-lg text-sidebar-foreground group-data-[state=collapsed]:hidden whitespace-nowrap">
-                {siteConfig.shortName}
-              </span>
-            </Link>
-          </SidebarHeader>
-          <SidebarContent className="p-2">
-            <div className="p-2 group-data-[state=expanded]:block hidden">
-              <h3 className="text-sm font-semibold text-sidebar-foreground/70 mb-2">SUMMARY</h3>
-              <p className="text-xs text-sidebar-foreground/90">
-                A brief overview or summary content can go here. This section is part of the main collapsible sidebar.
-                You can add more details about your research focus or teaching philosophy here as a quick glance.
-              </p>
-            </div>
-            {/* 
-              Quick Links can be added here later if needed, using a separate NavItem list.
-              For example:
-              <h3 className="text-sm font-semibold text-sidebar-foreground/70 mt-4 mb-2 p-2 group-data-[state=expanded]:block hidden">QUICK LINKS</h3>
-              <SidebarNav items={quickLinkItems} isMobile={false} /> 
-            */}
-          </SidebarContent>
-        </Sidebar>
-        <SidebarInset>
-          <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen">
+          <Sidebar collapsible="icon" side="left" className="hidden md:flex border-r shadow-md bg-sidebar text-sidebar-foreground">
+            <SidebarHeader className="p-4 border-b border-sidebar-border flex items-center justify-center">
+              <Link href="/" className="flex items-center gap-2">
+                <GraduationCap className="h-7 w-7 text-sidebar-primary flex-shrink-0" />
+                <span className="font-bold text-lg text-sidebar-foreground group-data-[state=collapsed]:hidden whitespace-nowrap">
+                  {siteConfig.shortName}
+                </span>
+              </Link>
+            </SidebarHeader>
+            <SidebarContent className="p-2">
+              <SidebarNav items={mainNavItems} isMobile={false} />
+              <div className="p-2 group-data-[state=expanded]:block hidden mt-4">
+                <h3 className="text-sm font-semibold text-sidebar-foreground/70 mb-2">SUMMARY</h3>
+                <p className="text-xs text-sidebar-foreground/90">
+                  A brief overview or summary content can go here. This section is part of the main collapsible sidebar.
+                  You can add more details about your research focus or teaching philosophy here as a quick glance.
+                </p>
+              </div>
+            </SidebarContent>
+          </Sidebar>
+          <SidebarInset className="flex flex-col flex-1">
             <Navbar />
             <main className="flex-1">
               <MotionDiv
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
                 className="container mx-auto p-4 md:p-6 lg:p-8"
               >
@@ -93,10 +90,10 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
                 Built with Next.js, Tailwind CSS, and ShadCN UI.
               </p>
             </footer>
-          </div>
-        </SidebarInset>
+          </SidebarInset>
+        </div>
+        <Toaster />
       </SidebarProvider>
-      <Toaster />
     </ThemeProvider>
   );
 }
