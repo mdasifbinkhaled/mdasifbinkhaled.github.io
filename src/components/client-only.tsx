@@ -16,6 +16,7 @@ export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
   }, []);
 
   if (!hasMounted) {
+    // Ensure fallback is a single valid ReactNode or null
     return <>{fallback}</>;
   }
 

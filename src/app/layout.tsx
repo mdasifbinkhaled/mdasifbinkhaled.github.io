@@ -1,6 +1,7 @@
 
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { useState, useEffect } from 'react';
 import './globals.css';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,7 +14,6 @@ import { SidebarNav } from '@/components/sidebar-nav';
 import { mainNavItems } from '@/config/navigation';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
-import { ClientOnly } from '@/components/client-only';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -75,6 +75,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}>
@@ -84,7 +90,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClientOnly fallback={null}>
+          {mounted && (
             <SidebarProvider>
               <div className="flex min-h-screen">
                 <Sidebar collapsible="icon" side="left" className="hidden md:flex border-r shadow-md bg-sidebar text-sidebar-foreground">
@@ -123,9 +129,14 @@ export default function RootLayout({
                   </footer>
                 </SidebarInset>
               </div>
-              <Toaster />
             </SidebarProvider>
-          </ClientOnly>
+          )}
+          {!mounted && (
+            <div className="flex min-h-screen items-center justify-center">
+              {/* You can add a loading spinner or a visually hidden placeholder here if needed */}
+            </div>
+          )}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
