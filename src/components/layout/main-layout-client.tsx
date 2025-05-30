@@ -11,6 +11,8 @@ import { Navbar } from '@/components/navbar';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarInset } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
+import { SidebarNav } from '@/components/sidebar-nav'; // Import SidebarNav
+import { mainNavItems } from '@/config/navigation'; // Import mainNavItems
 
 interface MainLayoutClientProps {
   children: ReactNode;
@@ -24,6 +26,7 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
   }, []);
 
   if (!mounted) {
+    // Render null or a minimal loader to prevent hydration mismatch before client-side logic runs
     return null; 
   }
 
@@ -33,7 +36,7 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange
-      themes={['light', 'dark', 'retro']} // Added retro theme
+      themes={['light', 'dark', 'retro']}
     >
       <SidebarProvider>
         <div className="flex min-h-screen">
@@ -53,8 +56,8 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
                   Senior Lecturer & Researcher. Focused on Explainable AI & Multimodal AI in Healthcare. Open to PhD opportunities.
                 </div>
               </div>
-              <div className="flex-grow overflow-y-auto"> {/* Ensure Sidebar can scroll if content exceeds height */}
-                {/* Placeholder for other potential sidebar content/links later */}
+              <div className="flex-grow overflow-y-auto">
+                <SidebarNav items={mainNavItems} /> {/* Main navigation links now here */}
               </div>
             </SidebarContent>
           </Sidebar>
