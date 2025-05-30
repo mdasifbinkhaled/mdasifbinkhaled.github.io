@@ -1,9 +1,19 @@
-
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { MainLayoutClient } from '@/components/layout/main-layout-client';
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from '@/config/site';
+import { FooterYear } from '@/components/footer-year';
+import { MotionDiv } from '@/components/motion-div';
+import { Navbar } from '@/components/navbar';
+import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarInset } from '@/components/ui/sidebar';
+import { SidebarNav } from '@/components/sidebar-nav';
+import { mainNavItems } from '@/config/navigation';
+import Link from 'next/link';
+import { GraduationCap } from 'lucide-react';
+import { ClientOnly } from '@/components/client-only';
+import Image from 'next/image';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -67,11 +77,69 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body 
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
-        suppressHydrationWarning
-      >
-        <MainLayoutClient>{children}</MainLayoutClient>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClientOnly fallback={null}>
+            <SidebarProvider>
+              <div className="flex min-h-screen">
+                <Sidebar collapsible="icon" side="left" className="hidden md:flex border-r shadow-md bg-sidebar text-sidebar-foreground">
+                  <SidebarHeader className="p-4 border-b border-sidebar-border flex flex-col items-center justify-center">
+                    <Link href="/" className="flex flex-col items-center gap-2">
+                      <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-primary">
+                        <Image 
+                          src="https://placehold.co/200x200.png" 
+                          alt="Md Asif Bin Khaled" 
+                          fill
+                          className="object-cover"
+                          data-ai-hint="professional headshot"
+                        />
+                      </div>
+                      <div className="text-center mt-2">
+                        <h3 className="font-bold text-sidebar-foreground whitespace-nowrap group-data-[state=collapsed]:hidden">
+                          Md Asif Bin Khaled
+                        </h3>
+                        <p className="text-xs text-sidebar-foreground/70 group-data-[state=collapsed]:hidden">
+                          Senior Lecturer & Researcher
+                        </p>
+                      </div>
+                    </Link>
+                  </SidebarHeader>
+                  <SidebarContent className="p-2">
+                    <SidebarNav items={mainNavItems} />
+                  </SidebarContent>
+                </Sidebar>
+                <SidebarInset className="flex flex-col flex-1">
+                  <Navbar />
+                  <main className="flex-1">
+                    <MotionDiv
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                      className="container mx-auto p-4 md:p-6 lg:p-8"
+                    >
+                      {children}
+                    </MotionDiv>
+                  </main>
+                  <footer className="py-6 px-4 md:px-6 lg:px-8 text-center border-t bg-background">
+                    <p className="text-sm text-muted-foreground">
+                      &copy; <FooterYear /> {siteConfig.author}. All rights reserved.
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Built with Next.js, Tailwind CSS, and ShadCN UI.
+                    </p>
+                  </footer>
+                </SidebarInset>
+              </div>
+              <Toaster />
+            </SidebarProvider>
+          </ClientOnly>
+        </ThemeProvider>
       </body>
     </html>
   );

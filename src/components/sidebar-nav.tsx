@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -9,18 +8,18 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  useSidebar,
 } from '@/components/ui/sidebar';
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
-import { Icon } from '@/components/icons'; 
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Icon } from '@/components/icons'; // Import the new Icon component
 
 interface SidebarNavProps {
   items: NavItem[];
-  onNavItemClick?: () => void;
-  isMobile: boolean; // To differentiate styling/behavior if needed
 }
 
-export function SidebarNav({ items, onNavItemClick, isMobile }: SidebarNavProps) {
+export function SidebarNav({ items }: SidebarNavProps) {
   const pathname = usePathname();
+  const { state: sidebarState } = useSidebar(); 
 
   const isItemActive = (href: string): boolean => {
     if (href === "/" && pathname !== "/") return false;
@@ -28,7 +27,7 @@ export function SidebarNav({ items, onNavItemClick, isMobile }: SidebarNavProps)
     return pathname.startsWith(href);
   };
 
-  const navContent = (
+  return (
     <SidebarMenu>
       {items.map((item) =>
         !item.disabled ? (
@@ -40,16 +39,10 @@ export function SidebarNav({ items, onNavItemClick, isMobile }: SidebarNavProps)
                   isActive={isItemActive(item.href)}
                   className={cn(
                     "w-full justify-start",
-                    // Apply sidebar-specific active/hover styles only if not in mobile sheet
-                    !isMobile && (isItemActive(item.href)
+                    isItemActive(item.href)
                       ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                      : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"),
-                    // Apply general active/hover for mobile sheet (uses default button/link styling)
-                    isMobile && (isItemActive(item.href)
-                      ? "bg-accent text-accent-foreground" // Or your preferred mobile active style
-                      : "hover:bg-accent/80") 
+                      : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                   )}
-                  onClick={onNavItemClick}
                 >
                   <Link
                     href={item.href}
@@ -57,19 +50,14 @@ export function SidebarNav({ items, onNavItemClick, isMobile }: SidebarNavProps)
                     rel={item.external ? "noopener noreferrer" : undefined}
                   >
                     {item.icon && <Icon name={item.icon} className="shrink-0" />}
-                    <span className={cn(
-                      "truncate",
-                      // For main sidebar, hide label when collapsed (controlled by Sidebar component's data-state)
-                      !isMobile && "group-data-[state=collapsed]:hidden"
-                    )}> 
+                    <span className={cn("truncate", sidebarState === 'collapsed' && 'hidden')}>
                       {item.label}
                     </span>
                   </Link>
                 </SidebarMenuButton>
               </TooltipTrigger>
-              {/* Tooltip only for collapsed main sidebar, not for mobile sheet */}
-              {!isMobile && (
-                <TooltipContent side="right" align="center" className="group-data-[state=expanded]:hidden">
+              {sidebarState === 'collapsed' && (
+                <TooltipContent side="right" align="center">
                   {item.label}
                 </TooltipContent>
               )}
@@ -79,11 +67,4 @@ export function SidebarNav({ items, onNavItemClick, isMobile }: SidebarNavProps)
       )}
     </SidebarMenu>
   );
-
-  // TooltipProvider is only needed if tooltips are active (i.e., not for mobile sheet)
-  if (!isMobile) {
-    return <TooltipProvider delayDuration={0}>{navContent}</TooltipProvider>;
-  }
-  
-  return navContent;
 }
