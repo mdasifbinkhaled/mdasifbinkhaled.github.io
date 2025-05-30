@@ -84,7 +84,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClientOnly fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0 }} aria-hidden="true" />}>
+          <ClientOnly fallback={null}>
             <SidebarProvider>
               <div className="flex min-h-screen">
                 <Sidebar collapsible="icon" side="left" className="hidden md:flex border-r shadow-md bg-sidebar text-sidebar-foreground">
