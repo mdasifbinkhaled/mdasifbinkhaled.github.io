@@ -3,16 +3,16 @@
 import { useState, useEffect } from 'react';
 
 export function FooterYear() {
-  const [year, setYear] = useState<number | null>(null);
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
 
   useEffect(() => {
-    setYear(new Date().getFullYear());
+    setCurrentYear(new Date().getFullYear());
   }, []);
 
-  if (year === null) {
-    // You can return a placeholder or null during server render / initial client render
-    return <span>{new Date().getFullYear()}</span>; // Fallback for SSR/SSG, though it might cause brief mismatch
+  // Render null (or a placeholder) initially until the year is set on the client
+  if (currentYear === null) {
+    return null; 
   }
 
-  return <span>{year}</span>;
+  return <span>{currentYear}</span>;
 }

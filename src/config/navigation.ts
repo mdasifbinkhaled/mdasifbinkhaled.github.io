@@ -1,16 +1,17 @@
 import type { NavItem } from '@/types';
-import { Home, UserCircle, Briefcase, BookOpenText, Rss, Cpu, Award, Send } from 'lucide-react';
+// Icon components are no longer directly imported here.
+// We will use string names that map to icons in a client component.
 
 export const mainNavItems: NavItem[] = [
-  { href: "/", label: "Home", icon: Home, sectionId: "home" },
-  { href: "/about", label: "About Me", icon: UserCircle, sectionId: "about" },
-  { href: "/experience", label: "Experience", icon: Briefcase, sectionId: "experience" },
-  { href: "/research", label: "Research", icon: Cpu, sectionId: "research" },
-  { href: "/publications", label: "Publications", icon: BookOpenText, sectionId: "publications" },
-  { href: "/teaching", label: "Teaching", icon: Rss, sectionId: "teaching" }, // Using Rss as a placeholder for teaching icon
-  { href: "/service-awards", label: "Service & Awards", icon: Award, sectionId: "service-awards" },
-  // { href: "/blog", label: "Blog", icon: Rss, sectionId: "blog" }, // Uncomment when blog is ready
-  { href: "/contact", label: "Contact", icon: Send, sectionId: "contact" },
+  { href: "/", label: "Home", icon: "Home", sectionId: "home" },
+  { href: "/about", label: "About Me", icon: "UserCircle", sectionId: "about" },
+  { href: "/experience", label: "Experience", icon: "Briefcase", sectionId: "experience" },
+  { href: "/research", label: "Research", icon: "Cpu", sectionId: "research" },
+  { href: "/publications", label: "Publications", icon: "BookOpenText", sectionId: "publications" },
+  { href: "/teaching", label: "Teaching", icon: "Rss", sectionId: "teaching" }, // Rss is a placeholder, consider "BookMarked" or "Presentation"
+  { href: "/service-awards", label: "Service & Awards", icon: "Award", sectionId: "service-awards" },
+  // { href: "/blog", label: "Blog", icon: "Rss", sectionId: "blog" }, // Uncomment when blog is ready
+  { href: "/contact", label: "Contact", icon: "Send", sectionId: "contact" },
 ];
 
 // If you have specific teaching pages with sub-navigation:
