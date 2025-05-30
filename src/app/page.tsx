@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/config/site';
-import { ArrowRight, Download, Newspaper, UserCircle, Rocket } from 'lucide-react';
+import { ArrowRight, Download, Newspaper, UserCircle, Rocket, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -9,9 +9,9 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center">
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-gradient-to-br from-background to-secondary/30">
+      <section className="w-full py-12 md:py-24 lg:py-28 xl:py-32 bg-gradient-to-br from-background to-secondary/30">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_600px] items-center">
+          <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px] items-center">
             <Image
               alt="Md Asif Bin Khaled"
               className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last border-4 border-primary shadow-lg"
@@ -52,64 +52,93 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Highlight Cards Section */}
-      <section className="w-full py-12 md:py-24 lg:py-28">
+      {/* Research Interests */}
+      <section className="w-full py-12 md:py-16">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-8 md:grid-cols-3">
+          <h2 className="text-3xl font-bold text-center mb-8 text-primary">Research Interests</h2>
+          <div className="grid gap-8 md:grid-cols-2">
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-xl font-semibold">Latest News</CardTitle>
-                <Newspaper className="w-6 h-6 text-primary" />
-              </CardHeader>
-              <CardContent>
+              <CardHeader>
+                <CardTitle className="text-xl">Explainable AI (XAI)</CardTitle>
                 <CardDescription>
-                  Stay updated with my recent activities, publications, and achievements.
+                  Ensuring transparency and trustworthiness in disease detection, diagnosis, and healthcare analytics
                 </CardDescription>
-                <Button variant="link" asChild className="px-0 mt-2">
-                  <Link href="/#news">View Updates <ArrowRight className="ml-1 h-4 w-4" /></Link>
-                </Button>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>Developing transparent AI systems that can explain their reasoning, critical for healthcare applications where understanding the "why" behind a diagnosis is essential for clinician trust and patient safety.</p>
               </CardContent>
             </Card>
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-xl font-semibold">Brief Bio</CardTitle>
-                <UserCircle className="w-6 h-6 text-primary" />
-              </CardHeader>
-              <CardContent>
+              <CardHeader>
+                <CardTitle className="text-xl">Multimodal AI & Computer Vision</CardTitle>
                 <CardDescription>
-                  Learn more about my academic journey, background, and mission.
+                  Combining imaging, clinical records, and lab results for holistic diagnostics
                 </CardDescription>
-                <Button variant="link" asChild className="px-0 mt-2">
-                  <Link href="/about">Read About Me <ArrowRight className="ml-1 h-4 w-4" /></Link>
-                </Button>
-              </CardContent>
-            </Card>
-            <Card className="shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-xl font-semibold">Core Research</CardTitle>
-                <Rocket className="w-6 h-6 text-primary" />
               </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Discover my primary research interests in XAI and Multimodal AI for healthcare.
-                </CardDescription>
-                <Button variant="link" asChild className="px-0 mt-2">
-                  <Link href="/research">Explore Interests <ArrowRight className="ml-1 h-4 w-4" /></Link>
-                </Button>
+              <CardContent className="text-muted-foreground">
+                <p>Integrating multiple data modalities to create comprehensive diagnostic tools that leverage both visual and non-visual medical data for more accurate healthcare insights.</p>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
-      
-      {/* Placeholder for News/Updates section if needed later, corresponding to the "Latest News" card */}
-      <section id="news" className="w-full py-12 md:py-24 lg:py-28 bg-secondary/20 hidden">
+
+      {/* Latest Publications */}
+      <section className="w-full py-12 md:py-16 bg-secondary/20">
         <div className="container px-4 md:px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16 text-primary">
-            News & Updates
-          </h2>
-          {/* Content for news items would go here */}
-          <p className="text-center text-muted-foreground">Coming soon...</p>
+          <h2 className="text-3xl font-bold text-center mb-8 text-primary">Latest Publications</h2>
+          <div className="space-y-6">
+            <Card className="shadow-md">
+              <CardHeader>
+                <CardTitle className="text-lg leading-tight">
+                  Advancements in Bangla Speech Emotion Recognition: A Deep Learning Approach with Cross-Lingual Validation
+                </CardTitle>
+                <CardDescription className="text-sm">
+                  Alam, K., Bhuiyan, M.H., Hossain, M.J., Monir, M.F., Khaled, M.A.B. (2024)
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">2024 IEEE 99th Vehicular Technology Conference (VTC2024-Spring), Singapore, pp. 1–5</p>
+                <div className="flex justify-end mt-4">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href="/publications">View All Publications <ArrowRight className="ml-1 h-4 w-4" /></Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Grants and Highlight */}
+      <section className="w-full py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-3xl font-bold text-center mb-8 text-primary">Recent Grants</h2>
+          <Card className="shadow-lg hover:shadow-xl transition-shadow mb-8">
+            <CardHeader>
+              <CardTitle className="text-xl">
+                Unveiling the Linguistic Diversity of Bangla
+              </CardTitle>
+              <CardDescription className="text-sm">
+                Principal Investigator, VC's Research Fund 2024-2025
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-muted-foreground">
+              <p>Enhanced Dialect Detection through AI and Machine Learning Techniques - Project Identification No. VCRF-SETS:24-013</p>
+            </CardContent>
+          </Card>
+
+          <div className="text-center mt-12">
+            <h2 className="text-2xl font-bold mb-4">Looking for PhD Opportunities</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+              With a foundation in Explainable AI and Multimodal AI research, I'm seeking doctoral programs to further contribute to transparent and trustworthy healthcare AI systems.
+            </p>
+            <Button asChild>
+              <Link href="/contact">
+                Get in Touch <ExternalLink className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>

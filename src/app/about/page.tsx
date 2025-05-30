@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Award } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export default function AboutPage() {
               As an educator, I strive to inspire students to explore the vast potential of computer science. I am an advocate for Outcome-Based Education (OBE) and employ various strategies to foster critical thinking, problem-solving skills, and a genuine love for learning. My goal is to equip the next generation of engineers and researchers with the knowledge and tools they need to innovate and excel.
             </p>
              <p>
-              Beyond the classroom and lab, I am actively involved in the academic community, mentoring students, and contributing to professional service. I am currently seeking PhD opportunities to further deepen my research expertise and contribute to groundbreaking advancements in AI.
+              Beyond the classroom and lab, I am actively involved in the academic community through mentoring students and contributing to professional service. I am currently seeking PhD opportunities to further deepen my research expertise and contribute to groundbreaking advancements in AI for healthcare.
             </p>
           </CardContent>
         </Card>
@@ -55,8 +55,9 @@ export default function AboutPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">Graduated with Distinction (Cum Laude).</p>
-              {/* Add thesis title or key achievements if available */}
+              <p className="text-muted-foreground">Graduated with Distinction (Cum Laude), CGPA: 3.76/4.0</p>
+              <p className="mt-2 text-muted-foreground">Thesis: Word Sense Disambiguation of Bengali Words using FP-Growth Algorithm</p>
+              <p className="text-muted-foreground">Advisor: Dr. Mahady Hasan</p>
             </CardContent>
           </Card>
           <Card className="shadow-md">
@@ -68,12 +69,71 @@ export default function AboutPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">Graduated with Highest Distinction (Summa Cum Laude).</p>
-              {/* Add key achievements if available */}
+              <p className="text-muted-foreground">Graduated with Highest Distinction (Summa Cum Laude), CGPA: 3.80/4.0</p>
+              <p className="mt-2 text-muted-foreground">Thesis: Exploring Deep Features: Deeper Fully Convolutional Neural Network for Image Segmentation</p>
+              <p className="text-muted-foreground">Advisor: Mr. Moin Mostakim</p>
+              <p className="mt-2 text-muted-foreground font-medium">Achieved Vice Chancellor&apos;s Award for Academic Excellence 6 times.</p>
             </CardContent>
           </Card>
         </div>
       </section>
+       <section id="certifications" className="mt-12">
+         <h2 className="text-3xl font-bold text-center mb-8 text-primary">Certifications & Training</h2>
+         <div className="grid gap-6 md:grid-cols-2">
+           <Card className="shadow-md">
+             <CardHeader className="flex flex-row items-start gap-3">
+               <Award className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+               <div>
+                 <CardTitle className="text-lg">Outcomes-Based Education (OBE)</CardTitle>
+                 <p className="text-sm text-muted-foreground">Board of Accreditation for Engineering and Technical Education (BAETE)</p>
+               </div>
+             </CardHeader>
+             <CardContent>
+               <p className="text-muted-foreground text-sm">Received detailed training on implementing and managing OBE in higher education.</p>
+             </CardContent>
+           </Card>
+           
+           <Card className="shadow-md">
+             <CardHeader className="flex flex-row items-start gap-3">
+               <Award className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+               <div>
+                 <CardTitle className="text-lg">BAETE Accreditation for CSE Programs</CardTitle>
+                 <p className="text-sm text-muted-foreground">United International University, BAETE & IEEE Computer Society Bangladesh Chapter</p>
+               </div>
+             </CardHeader>
+             <CardContent>
+               <p className="text-muted-foreground text-sm">Acquired knowledge of BAETE accreditation criteria and its application in academic programs.</p>
+             </CardContent>
+           </Card>
+           
+           <Card className="shadow-md">
+             <CardHeader className="flex flex-row items-start gap-3">
+               <Award className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+               <div>
+                 <CardTitle className="text-lg">Systematic Literature Review Workshop</CardTitle>
+                 <p className="text-sm text-muted-foreground">Center for Computational and Data Sciences (CCSD)</p>
+               </div>
+             </CardHeader>
+             <CardContent>
+               <p className="text-muted-foreground text-sm">Learned advanced techniques in conducting systematic literature reviews and academic writing.</p>
+             </CardContent>
+           </Card>
+           
+           <Card className="shadow-md">
+             <CardHeader className="flex flex-row items-start gap-3">
+               <Award className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+               <div>
+                 <CardTitle className="text-lg">Amateur Radio Service Certification</CardTitle>
+                 <p className="text-sm text-muted-foreground">Bangladesh Telecommunication Regulatory Commission (BTRC)</p>
+               </div>
+             </CardHeader>
+             <CardContent>
+               <p className="text-muted-foreground text-sm">Certified for operating amateur radio services in Bangladesh. Serial No. 083/17097</p>
+             </CardContent>
+           </Card>
+         </div>
+       </section>
+
        <section id="personal-image" className="mt-12 flex justify-center">
           <Image
             src="https://placehold.co/800x500.png"

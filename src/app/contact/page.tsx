@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Mail, Github, Linkedin, BookUser } from 'lucide-react'; // Assuming BookUser for Google Scholar
+import { Mail, Github, Linkedin, BookUser, MapPin, Phone } from 'lucide-react'; 
 import { siteConfig } from '@/config/site';
 import Image from 'next/image';
 
@@ -26,6 +26,7 @@ export default function ContactPage() {
         <Card className="max-w-2xl mx-auto shadow-lg">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Contact Information</CardTitle>
+            <CardDescription className="text-center mt-2">Feel free to reach out for research collaborations or academic inquiries</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
@@ -35,6 +36,26 @@ export default function ContactPage() {
                 <a href={`mailto:${siteConfig.email}`} className="text-muted-foreground hover:text-primary underline">
                   {siteConfig.email}
                 </a>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+              <Phone className="h-7 w-7 text-primary" />
+              <div>
+                <p className="font-semibold text-foreground">Phone</p>
+                <a href="tel:+8801676076329" className="text-muted-foreground hover:text-primary underline">
+                  (+88) 01676076329
+                </a>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+              <MapPin className="h-7 w-7 text-primary" />
+              <div>
+                <p className="font-semibold text-foreground">Location</p>
+                <p className="text-muted-foreground">
+                  Bashundhara R/A, Dhaka - 1212, Bangladesh
+                </p>
               </div>
             </div>
 
@@ -65,6 +86,36 @@ export default function ContactPage() {
                 data-ai-hint="network connection"
               />
             </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section id="phd-opportunities">
+        <Card className="max-w-3xl mx-auto shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-2xl text-center">PhD Opportunities</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-center text-muted-foreground">
+              I am actively seeking PhD opportunities in the following areas:
+            </p>
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                <h3 className="font-semibold text-primary">Explainable AI for Healthcare</h3>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Research focused on developing transparent AI systems for medical diagnosis and treatment.
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                <h3 className="font-semibold text-primary">Multimodal AI & Medical Imaging</h3>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Integration of diverse data sources for comprehensive healthcare analytics and diagnostics.
+                </p>
+              </div>
+            </div>
+            <p className="text-center text-muted-foreground mt-4">
+              If you are a professor or researcher working in these areas, I would be delighted to discuss potential collaboration opportunities.
+            </p>
           </CardContent>
         </Card>
       </section>

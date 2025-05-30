@@ -75,35 +75,72 @@ export default function ResearchPage() {
           Grants & Funded Projects
         </h2>
         <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
-          {/* Placeholder for Grant Cards - To be populated with actual grant data */}
-          <Card className="shadow-md opacity-70">
+          <Card className="shadow-lg">
             <CardHeader className="flex flex-row items-center gap-4">
               <Banknote className="h-8 w-8 text-primary" />
               <div>
-                <CardTitle className="text-xl">Funded Project Title 1</CardTitle>
-                <CardDescription>Funding Body & Duration</CardDescription>
+                <CardTitle className="text-xl">Development and Analysis of Comprehensive Sorting Algorithm Library</CardTitle>
+                <CardDescription>Principal Investigator, 2024-2025</CardDescription>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">A brief description of the project and its objectives. Details coming soon.</p>
+              <p className="text-muted-foreground">Sponsored Research Projects 2024-2025, Project Identification No. 2024-SETS-06. Focused on enhancing computational efficiency through optimized algorithms.</p>
             </CardContent>
           </Card>
-          <Card className="shadow-md opacity-70">
+          
+          <Card className="shadow-lg">
             <CardHeader className="flex flex-row items-center gap-4">
               <Banknote className="h-8 w-8 text-primary" />
               <div>
-                <CardTitle className="text-xl">Funded Project Title 2</CardTitle>
-                <CardDescription>Funding Body & Duration</CardDescription>
+                <CardTitle className="text-xl">Unveiling the Linguistic Diversity of Bangla</CardTitle>
+                <CardDescription>Principal Investigator, 2024-2025</CardDescription>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">A brief description of the project and its objectives. Details coming soon.</p>
+              <p className="text-muted-foreground">VC's Research Fund 2024-2025, Project Identification No. VCRF-SETS:24-013. Enhancing dialect detection through AI and machine learning techniques.</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="shadow-lg">
+            <CardHeader className="flex flex-row items-center gap-4">
+              <Banknote className="h-8 w-8 text-primary" />
+              <div>
+                <CardTitle className="text-xl">Biomedical Signal Processing for Stroke Prediction</CardTitle>
+                <CardDescription>Co-Principal Investigator, 2022-2023</CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Sponsored Research Projects 2022-2023, Project Identification No. 2022-SETS-07. Application of biomedical signal processing for early stroke prediction and post-stroke recovery.</p>
             </CardContent>
           </Card>
         </div>
-        <p className="text-center mt-8 text-muted-foreground">
-          Details of grants and funded projects will be updated here.
-        </p>
+      </section>
+
+      <section id="current-projects">
+        <h2 className="text-3xl font-bold text-center mb-10 text-primary">
+          Current Research Projects
+        </h2>
+        <div className="space-y-8">
+          <Card className="shadow-lg">
+            <CardHeader className="flex flex-row items-start gap-4">
+              <div className="bg-primary/10 p-3 rounded-full">
+                <Zap className="h-8 w-8 text-primary" />
+              </div>
+              <div>
+                <CardTitle className="text-xl">Mobile Relational Agent for Dengue Management</CardTitle>
+                <CardDescription className="mt-1">2023 - Present</CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3 text-muted-foreground">
+              <p>
+                Developing a mobile health platform using relational agents to address the dengue crisis in Bangladesh. This project focuses on creating interactive conversational agents that can provide timely information, preventive measures, and early intervention guidance to communities affected by dengue.
+              </p>
+              <p>
+                The research includes conceptual design, prototype development, and comprehensive evaluation plans to assess the effectiveness of this mHealth solution in public health contexts.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       </section>
     </div>
   );
