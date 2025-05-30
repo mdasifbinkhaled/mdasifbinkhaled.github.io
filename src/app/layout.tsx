@@ -13,7 +13,7 @@ import { SidebarNav } from '@/components/sidebar-nav';
 import { mainNavItems } from '@/config/navigation';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
-import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
+import { ClientOnly } from '@/components/client-only';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -78,13 +78,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}>
-        <ClientOnly>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClientOnly fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0 }} aria-hidden="true" />}>
             <SidebarProvider>
               <div className="flex min-h-screen">
                 <Sidebar collapsible="icon" side="left" className="hidden md:flex border-r shadow-md bg-sidebar text-sidebar-foreground">
@@ -125,8 +125,8 @@ export default function RootLayout({
               </div>
               <Toaster />
             </SidebarProvider>
-          </ThemeProvider>
-        </ClientOnly>
+          </ClientOnly>
+        </ThemeProvider>
       </body>
     </html>
   );
