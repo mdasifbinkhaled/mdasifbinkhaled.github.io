@@ -76,7 +76,7 @@ export function PublicationCard({ publication }: PublicationCardProps) {
       <CardFooter className="border-t pt-4">
         <div className="flex gap-2 w-full">
           {publication.link && (
-            <Button variant="outline" size="sm" asChild className="flex-1">
+            <Button variant="outline\" size="sm\" asChild className="flex-1">
               <a href={publication.link} target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="mr-2 h-4 w-4" /> View
               </a>
