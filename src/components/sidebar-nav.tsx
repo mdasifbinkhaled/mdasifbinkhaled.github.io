@@ -9,20 +9,18 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  // useSidebar hook is not needed here if this is only for sheet content
-} from '@/components/ui/sidebar'; // Keep sidebar components for styling if desired
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+} from '@/components/ui/sidebar';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 import { Icon } from '@/components/icons'; 
 
 interface SidebarNavProps {
   items: NavItem[];
-  onNavItemClick?: () => void; // Optional callback for when a nav item is clicked
-  // isCollapsed?: boolean; // Prop to know if sidebar is collapsed, not needed if only for sheet
+  onNavItemClick?: () => void;
+  isMobile: boolean; // To differentiate styling/behavior if needed
 }
 
-export function SidebarNav({ items, onNavItemClick }: SidebarNavProps) {
+export function SidebarNav({ items, onNavItemClick, isMobile }: SidebarNavProps) {
   const pathname = usePathname();
-  // const { state: sidebarState } = useSidebar(); // Not needed if not in main sidebar context
 
   const isItemActive = (href: string): boolean => {
     if (href === "/" && pathname !== "/") return false;
@@ -30,7 +28,7 @@ export function SidebarNav({ items, onNavItemClick }: SidebarNavProps) {
     return pathname.startsWith(href);
   };
 
-  return (
+  const navContent = (
     <SidebarMenu>
       {items.map((item) =>
         !item.disabled ? (
@@ -42,11 +40,16 @@ export function SidebarNav({ items, onNavItemClick }: SidebarNavProps) {
                   isActive={isItemActive(item.href)}
                   className={cn(
                     "w-full justify-start",
-                    isItemActive(item.href)
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground" // Use sidebar theme vars for consistency
-                      : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    // Apply sidebar-specific active/hover styles only if not in mobile sheet
+                    !isMobile && (isItemActive(item.href)
+                      ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                      : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"),
+                    // Apply general active/hover for mobile sheet (uses default button/link styling)
+                    isMobile && (isItemActive(item.href)
+                      ? "bg-accent text-accent-foreground" // Or your preferred mobile active style
+                      : "hover:bg-accent/80") 
                   )}
-                  onClick={onNavItemClick} // Call onNavItemClick when button is clicked
+                  onClick={onNavItemClick}
                 >
                   <Link
                     href={item.href}
@@ -54,24 +57,33 @@ export function SidebarNav({ items, onNavItemClick }: SidebarNavProps) {
                     rel={item.external ? "noopener noreferrer" : undefined}
                   >
                     {item.icon && <Icon name={item.icon} className="shrink-0" />}
-                    {/* Label always visible in sheet context */}
-                    <span className="truncate"> 
+                    <span className={cn(
+                      "truncate",
+                      // For main sidebar, hide label when collapsed (controlled by Sidebar component's data-state)
+                      !isMobile && "group-data-[state=collapsed]:hidden"
+                    )}> 
                       {item.label}
                     </span>
                   </Link>
                 </SidebarMenuButton>
               </TooltipTrigger>
-              {/* Tooltip only relevant if icons could be shown without labels, not typical for sheet menu
-              {sidebarState === 'collapsed' && (
-                <TooltipContent side="right" align="center">
+              {/* Tooltip only for collapsed main sidebar, not for mobile sheet */}
+              {!isMobile && (
+                <TooltipContent side="right" align="center" className="group-data-[state=expanded]:hidden">
                   {item.label}
                 </TooltipContent>
               )}
-              */}
             </Tooltip>
           </SidebarMenuItem>
         ) : null
       )}
     </SidebarMenu>
   );
+
+  // TooltipProvider is only needed if tooltips are active (i.e., not for mobile sheet)
+  if (!isMobile) {
+    return <TooltipProvider delayDuration={0}>{navContent}</TooltipProvider>;
+  }
+  
+  return navContent;
 }
