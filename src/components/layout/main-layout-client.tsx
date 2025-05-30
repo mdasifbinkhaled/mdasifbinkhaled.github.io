@@ -16,8 +16,7 @@ import {
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
-import { SidebarNav } from '@/components/sidebar-nav';
-import { mainNavItems } from '@/config/navigation';
+import { ProfileSidebar } from '@/components/profile-sidebar';
 
 interface MainLayoutClientProps {
   children: ReactNode;
@@ -58,15 +57,8 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
                 </span>
               </Link>
             </SidebarHeader>
-            <SidebarContent className="p-2">
-              <SidebarNav items={mainNavItems} isMobile={false} />
-              <div className="p-2 group-data-[state=expanded]:block hidden mt-4">
-                <h3 className="text-sm font-semibold text-sidebar-foreground/70 mb-2">SUMMARY</h3>
-                <p className="text-xs text-sidebar-foreground/90">
-                  A brief overview or summary content can go here. This section is part of the main collapsible sidebar.
-                  You can add more details about your research focus or teaching philosophy here as a quick glance.
-                </p>
-              </div>
+            <SidebarContent className="p-0 overflow-y-auto">
+              <ProfileSidebar />
             </SidebarContent>
           </Sidebar>
           <SidebarInset className="flex flex-col flex-1">
