@@ -15,8 +15,9 @@ import {
   SidebarContent, 
   SidebarInset 
 } from '@/components/ui/sidebar';
-import { SidebarNav } from '@/components/sidebar-nav';
-import { mainNavItems } from '@/config/navigation';
+// SidebarNav is no longer needed here for mainNavItems
+// import { SidebarNav } from '@/components/sidebar-nav';
+// import { mainNavItems } from '@/config/navigation';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
 
@@ -32,6 +33,8 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
   }, []);
 
   if (!mounted) {
+    // Render a minimal fallback or null to avoid hydration mismatch
+    // This can be a visually hidden div or a simple loader if preferred
     return null; 
   }
 
@@ -58,9 +61,15 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
               <h3 className="text-sm font-semibold text-sidebar-foreground/70 mb-2">SUMMARY</h3>
               <p className="text-xs text-sidebar-foreground/90">
                 A brief overview or summary content can go here. This section is part of the main collapsible sidebar.
+                You can add more details about your research focus or teaching philosophy here as a quick glance.
               </p>
             </div>
-            <SidebarNav items={mainNavItems} isMobile={false} />
+            {/* 
+              Quick Links can be added here later if needed, using a separate NavItem list.
+              For example:
+              <h3 className="text-sm font-semibold text-sidebar-foreground/70 mt-4 mb-2 p-2 group-data-[state=expanded]:block hidden">QUICK LINKS</h3>
+              <SidebarNav items={quickLinkItems} isMobile={false} /> 
+            */}
           </SidebarContent>
         </Sidebar>
         <SidebarInset>
