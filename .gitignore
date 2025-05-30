@@ -33,4 +33,7 @@ pnpm-debug.log*
 *.tsbuildinfo
 
 # idx
-.idx
+/.idx
+
+# vscode
+/.vscode
