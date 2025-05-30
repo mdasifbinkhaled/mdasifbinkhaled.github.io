@@ -8,8 +8,8 @@ import { siteConfig } from '@/config/site';
 import { FooterYear } from '@/components/footer-year';
 import { MotionDiv } from '@/components/motion-div';
 import { Navbar } from '@/components/navbar';
-import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarInset, SidebarSeparator } from '@/components/ui/sidebar';
-import { SidebarNav } from '@/components/sidebar-nav';
+import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarInset } from '@/components/ui/sidebar';
+// SidebarNav is no longer imported here as mainNavItems are removed from this sidebar
 import { mainNavItems } from '@/config/navigation';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
@@ -54,10 +54,9 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
                   Senior Lecturer & Researcher. Focused on Explainable AI & Multimodal AI in Healthcare. Open to PhD opportunities.
                 </div>
               </div>
-              {/* Optional: Separator if desired, hidden on collapse */}
-              {/* <SidebarSeparator className="my-2 group-data-[state=collapsed]:hidden" /> */}
-              <div className="flex-grow overflow-y-auto"> {/* Ensure SidebarNav can scroll if content exceeds height */}
-                <SidebarNav items={mainNavItems} />
+              {/* SidebarNav with mainNavItems is removed from here */}
+              <div className="flex-grow overflow-y-auto"> {/* Ensure Sidebar can scroll if content exceeds height */}
+                {/* Placeholder for other potential sidebar content/links later */}
               </div>
             </SidebarContent>
           </Sidebar>
@@ -88,3 +87,4 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
     </ThemeProvider>
   );
 }
+

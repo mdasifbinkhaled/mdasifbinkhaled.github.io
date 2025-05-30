@@ -8,7 +8,7 @@ import { siteConfig } from '@/config/site';
 import { mainNavItems } from '@/config/navigation';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarTrigger } from '@/components/ui/sidebar'; // For the collapsible sidebar
 import { GraduationCap, Menu, X, PanelLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { NavItem } from '@/types';
@@ -16,7 +16,7 @@ import { Icon } from '@/components/icons';
 
 export function Navbar() {
   const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // This state controls the Sheet
 
   const isItemActive = (href: string): boolean => {
     if (href === "/" && pathname !== "/") return false;
@@ -28,36 +28,31 @@ export function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center">
-          {/* SidebarTrigger for desktop, controlled by CSS media queries (hidden md:inline-flex) */}
+          {/* SidebarTrigger for the collapsible desktop sidebar */}
           <SidebarTrigger className="mr-2 hidden md:inline-flex">
             <PanelLeft className="h-6 w-6" />
-            <span className="sr-only">Toggle sidebar</span>
+            <span className="sr-only">Toggle summary sidebar</span>
           </SidebarTrigger>
 
-          {/* Site logo/name for mobile, controlled by CSS media queries (md:hidden) */}
-          <Link href="/" className="flex items-center gap-2 md:hidden" onClick={() => setIsMobileMenuOpen(false)}>
+          {/* Site logo/name - always visible or adjust as needed */}
+          <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
           </Link>
         </div>
 
-        {/* Desktop nav items can be added here if needed, separate from sidebar */}
-        <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
-          {/* Example: Desktop-specific links could go here if desired */}
-        </nav>
-
-        {/* Mobile menu trigger, controlled by CSS media queries (md:hidden) */}
+        {/* Main navigation menu trigger (Sheet for vertical links) - always visible */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-          <div className="md:hidden">
+          {/* Removed md:hidden from this div to make the Menu icon always visible */}
+          <div> 
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(true)}>
+              <Button variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
+                <span className="sr-only">Toggle main menu</span>
               </Button>
             </SheetTrigger>
           </div>
 
-          {/* Mobile menu SheetContent */}
           <SheetContent side="left" className="w-full max-w-xs p-6 bg-background">
             <div className="flex flex-col space-y-1">
               <div className="flex justify-between items-center mb-6 pb-2 border-b">
@@ -81,7 +76,7 @@ export function Navbar() {
                       isItemActive(item.href) ? "text-primary bg-accent" : "text-foreground hover:bg-accent/50"
                     )}
                     onClick={() => {
-                      setIsMobileMenuOpen(false);
+                      setIsMobileMenuOpen(false); // Close sheet on item click
                     }}
                   >
                     <Link
