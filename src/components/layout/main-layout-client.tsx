@@ -9,8 +9,6 @@ import { FooterYear } from '@/components/footer-year';
 import { MotionDiv } from '@/components/motion-div';
 import { Navbar } from '@/components/navbar';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarInset } from '@/components/ui/sidebar';
-// SidebarNav is no longer imported here as mainNavItems are removed from this sidebar
-import { mainNavItems } from '@/config/navigation';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
 
@@ -35,6 +33,7 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange
+      themes={['light', 'dark', 'retro']} // Added retro theme
     >
       <SidebarProvider>
         <div className="flex min-h-screen">
@@ -54,7 +53,6 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
                   Senior Lecturer & Researcher. Focused on Explainable AI & Multimodal AI in Healthcare. Open to PhD opportunities.
                 </div>
               </div>
-              {/* SidebarNav with mainNavItems is removed from here */}
               <div className="flex-grow overflow-y-auto"> {/* Ensure Sidebar can scroll if content exceeds height */}
                 {/* Placeholder for other potential sidebar content/links later */}
               </div>
@@ -87,4 +85,3 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
     </ThemeProvider>
   );
 }
-

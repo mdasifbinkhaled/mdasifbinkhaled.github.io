@@ -4,19 +4,21 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useTheme } from 'next-themes';
 import { siteConfig } from '@/config/site';
 import { mainNavItems } from '@/config/navigation';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { SidebarTrigger } from '@/components/ui/sidebar'; // For the collapsible sidebar
-import { GraduationCap, Menu, X, PanelLeft } from 'lucide-react';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { GraduationCap, Menu, X, PanelLeft, Sun, Moon, Palette } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { NavItem } from '@/types';
 import { Icon } from '@/components/icons';
 
 export function Navbar() {
   const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // This state controls the Sheet
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const isItemActive = (href: string): boolean => {
     if (href === "/" && pathname !== "/") return false;
@@ -24,75 +26,94 @@ export function Navbar() {
     return pathname.startsWith(href);
   };
 
+  const cycleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else if (theme === 'dark') {
+      setTheme('retro');
+    } else {
+      setTheme('light');
+    }
+  };
+
+  const ThemeIcon = () => {
+    if (theme === 'light') return <Sun className="h-5 w-5" />;
+    if (theme === 'dark') return <Moon className="h-5 w-5" />;
+    if (theme === 'retro') return <Palette className="h-5 w-5" />;
+    return <Sun className="h-5 w-5" />; // Default fallback or for system theme resolving to light
+  };
+  
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-16 items-center">
         <div className="flex items-center">
-          {/* SidebarTrigger for the collapsible desktop sidebar */}
           <SidebarTrigger className="mr-2 hidden md:inline-flex">
             <PanelLeft className="h-6 w-6" />
             <span className="sr-only">Toggle summary sidebar</span>
           </SidebarTrigger>
-
-          {/* Site logo/name - always visible or adjust as needed */}
-          <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+          <Link href="/" className="flex items-center gap-2 mr-6" onClick={() => setIsMobileMenuOpen(false)}>
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
           </Link>
         </div>
 
-        {/* Main navigation menu trigger (Sheet for vertical links) - always visible */}
-        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-          {/* Removed md:hidden from this div to make the Menu icon always visible */}
-          <div> 
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle main menu</span>
-              </Button>
-            </SheetTrigger>
-          </div>
+        <div className="flex flex-1 items-center justify-end space-x-2">
+          <Button variant="ghost" size="icon" onClick={cycleTheme} aria-label="Toggle theme">
+            <ThemeIcon />
+          </Button>
 
-          <SheetContent side="left" className="w-full max-w-xs p-6 bg-background">
-            <div className="flex flex-col space-y-1">
-              <div className="flex justify-between items-center mb-6 pb-2 border-b">
-                <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
-                  <GraduationCap className="h-7 w-7 text-primary" />
-                  <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
-                </Link>
-                <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} className="-mr-2">
-                  <X className="h-6 w-6" />
-                  <span className="sr-only">Close menu</span>
+          {/* Mobile menu trigger (Sheet for vertical links) */}
+          <div> 
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle main menu</span>
                 </Button>
-              </div>
-              {mainNavItems.map((item: NavItem) => (
-                !item.disabled && (
-                  <Button
-                    key={item.label}
-                    variant="ghost"
-                    asChild
-                    className={cn(
-                      "w-full justify-start text-base py-3 px-3",
-                      isItemActive(item.href) ? "text-primary bg-accent" : "text-foreground hover:bg-accent/50"
-                    )}
-                    onClick={() => {
-                      setIsMobileMenuOpen(false); // Close sheet on item click
-                    }}
-                  >
-                    <Link
-                      href={item.href}
-                      target={item.external ? "_blank" : undefined}
-                      rel={item.external ? "noopener noreferrer" : undefined}
-                    >
-                       {item.icon && <Icon name={item.icon} className="mr-2 h-5 w-5 shrink-0" />}
-                      {item.label}
+              </SheetTrigger>
+              <SheetContent side="left" className="w-full max-w-xs p-6 bg-background">
+                <div className="flex flex-col space-y-1">
+                  <div className="flex justify-between items-center mb-6 pb-2 border-b">
+                    <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+                      <GraduationCap className="h-7 w-7 text-primary" />
+                      <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
                     </Link>
-                  </Button>
-                )
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
+                    <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} className="-mr-2">
+                      <X className="h-6 w-6" />
+                      <span className="sr-only">Close menu</span>
+                    </Button>
+                  </div>
+                  {mainNavItems.map((item: NavItem) => (
+                    !item.disabled && (
+                      <Button
+                        key={item.label}
+                        variant="ghost"
+                        asChild
+                        className={cn(
+                          "w-full justify-start text-base py-3 px-3",
+                          isItemActive(item.href) ? "text-primary bg-accent" : "text-foreground hover:bg-accent/50"
+                        )}
+                        onClick={() => {
+                          setIsMobileMenuOpen(false); 
+                        }}
+                      >
+                        <Link
+                          href={item.href}
+                          target={item.external ? "_blank" : undefined}
+                          rel={item.external ? "noopener noreferrer" : undefined}
+                        >
+                          {item.icon && <Icon name={item.icon} className="mr-2 h-5 w-5 shrink-0" />}
+                          {item.label}
+                        </Link>
+                      </Button>
+                    )
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
       </div>
     </header>
   );
