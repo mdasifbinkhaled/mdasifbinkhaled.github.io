@@ -7,6 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { ExternalLink, FileText, BookOpenText, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { PublicationCard } from '@/components/publications/publication-card';
+import { SkeletonWrapper } from '@/components/ui/skeleton-wrapper';
+import { BackToTop } from '@/components/back-to-top';
 
 interface PublicationListProps {
   initialPublications: PublicationItem[];
@@ -20,9 +23,8 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
   const [typeFilter, setTypeFilter] = useState<PublicationType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [mounted, setMounted] = useState(false);
-
+  
   useEffect(() => setMounted(true), []);
-
 
   const uniqueYears = useMemo(() => {
     const years = new Set(initialPublications.map(p => p.year.toString()));
@@ -42,23 +44,23 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
   }, [publications, yearFilter, typeFilter, searchTerm]);
 
   if (!mounted) {
-     // Render nothing or a placeholder on the server/initial client render to avoid hydration mismatch
     return (
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row gap-4 mb-6 p-4 border rounded-lg shadow-sm bg-card">
-          <div className="flex-1 min-w-[150px]"></div>
-          <div className="flex-1 min-w-[150px]"></div>
-          <div className="flex-1 min-w-[150px]"></div>
+          <SkeletonWrapper isLoading className="flex-1 min-w-[150px] h-10" />
+          <SkeletonWrapper isLoading className="flex-1 min-w-[150px] h-10" />
+          <SkeletonWrapper isLoading className="flex-1 min-w-[150px] h-10" />
         </div>
-        <Card className="opacity-50">
-          <CardHeader>
-            <CardTitle>Loading publications...</CardTitle>
-          </CardHeader>
-        </Card>
+        {[1, 2, 3].map((i) => (
+          <SkeletonWrapper 
+            key={i} 
+            isLoading 
+            className="h-[280px] w-full" 
+          />
+        ))}
       </div>
     );
   }
-
 
   if (!initialPublications || initialPublications.length === 0) {
     return <p className="text-muted-foreground text-center py-8">No publications to display.</p>;
@@ -113,54 +115,7 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
       {filteredPublications.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPublications.map(pub => (
-            <Card key={pub.id} className="flex flex-col justify-between shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader>
-                <CardTitle className="text-lg leading-tight">{pub.title}</CardTitle>
-                <CardDescription className="text-sm pt-1">
-                  {pub.authors.join(', ')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-sm text-muted-foreground italic">{pub.venue}</p>
-                <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-                  <span>{pub.year}</span>
-                  <span className="px-2 py-0.5 bg-secondary text-secondary-foreground rounded-full">{pub.type}</span>
-                </div>
-                {pub.abstract && (
-                   <details className="mt-3 text-sm">
-                     <summary className="cursor-pointer text-primary hover:underline">Abstract</summary>
-                     <p className="mt-1 text-muted-foreground leading-relaxed">{pub.abstract}</p>
-                   </details>
-                )}
-                 {pub.keywords && pub.keywords.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-1">
-                    {pub.keywords.map(keyword => (
-                      <span key={keyword} className="text-xs bg-muted text-muted-foreground px-1.5 py-0.5 rounded">
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-              <CardFooter className="border-t pt-4">
-                <div className="flex gap-2 w-full">
-                  {pub.link && (
-                    <Button variant="outline" size="sm" asChild className="flex-1">
-                      <a href={pub.link} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-2 h-4 w-4" /> View Online
-                      </a>
-                    </Button>
-                  )}
-                  {pub.pdfLink && (
-                    <Button variant="default" size="sm" asChild className="flex-1">
-                      <a href={pub.pdfLink} target="_blank" rel="noopener noreferrer">
-                        <FileText className="mr-2 h-4 w-4" /> Download PDF
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardFooter>
-            </Card>
+            <PublicationCard key={pub.id} publication={pub} />
           ))}
         </div>
       ) : (
@@ -170,6 +125,8 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
           <p className="text-muted-foreground mt-2">Try adjusting your search or filter criteria.</p>
         </div>
       )}
+      
+      <BackToTop />
     </div>
   );
 }

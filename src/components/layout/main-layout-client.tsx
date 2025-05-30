@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from '@/config/site';
 import { FooterYear } from '@/components/footer-year';
-import { MotionDiv } from '@/components/motion-div';
 import { Navbar } from '@/components/navbar';
 import { 
   SidebarProvider, 
@@ -17,6 +16,7 @@ import {
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
 import { ProfileSidebar } from '@/components/profile-sidebar';
+import { MotionPage } from '@/components/motion-page';
 
 interface MainLayoutClientProps {
   children: ReactNode;
@@ -64,15 +64,9 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
           <SidebarInset className="flex flex-col flex-1">
             <Navbar />
             <main className="flex-1">
-              <MotionDiv
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="container mx-auto p-4 md:p-6 lg:p-8"
-              >
+              <MotionPage>
                 {children}
-              </MotionDiv>
+              </MotionPage>
             </main>
             <footer className="py-6 px-4 md:px-6 lg:px-8 text-center border-t bg-background">
               <p className="text-sm text-muted-foreground">

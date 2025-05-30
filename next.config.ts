@@ -16,8 +16,29 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
     unoptimized: true, // Required for static export with next/image
+  },
+  // Add redirects for better UX
+  async redirects() {
+    return [
+      {
+        source: '/cv.pdf',
+        destination: '/CV_Md_Asif_Bin_Khaled.pdf',
+        permanent: true,
+      },
+      {
+        source: '/resume',
+        destination: '/cv',
+        permanent: false,
+      },
+    ];
   },
 };
 

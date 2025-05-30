@@ -42,9 +42,9 @@ export default function HomePage() {
                   </Link>
                 </Button>
                 <Button variant="outline" size="lg" asChild>
-                  <a href={siteConfig.links.cv} target="_blank" rel="noopener noreferrer">
-                    Download CV <Download className="ml-2 h-5 w-5" />
-                  </a>
+                  <Link href="/cv">
+                    View CV <ExternalLink className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -88,7 +88,7 @@ export default function HomePage() {
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold text-center mb-8 text-primary">Latest Publications</h2>
           <div className="space-y-6">
-            <Card className="shadow-md">
+            <Card className="shadow-md hover:shadow-lg transition-shadow">
               <CardHeader>
                 <CardTitle className="text-lg leading-tight">
                   Advancements in Bangla Speech Emotion Recognition: A Deep Learning Approach with Cross-Lingual Validation

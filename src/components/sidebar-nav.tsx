@@ -11,13 +11,15 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { Icon } from '@/components/icons'; // Import the new Icon component
+import { Icon } from '@/components/icons';
 
 interface SidebarNavProps {
   items: NavItem[];
+  onNavItemClick?: () => void;
+  isMobile?: boolean;
 }
 
-export function SidebarNav({ items }: SidebarNavProps) {
+export function SidebarNav({ items, onNavItemClick, isMobile = false }: SidebarNavProps) {
   const pathname = usePathname();
   const { state: sidebarState } = useSidebar(); 
 
@@ -40,9 +42,12 @@ export function SidebarNav({ items }: SidebarNavProps) {
                   className={cn(
                     "w-full justify-start",
                     isItemActive(item.href)
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                      ? isMobile 
+                        ? "bg-sidebar-accent/50 text-sidebar-primary font-medium" 
+                        : "bg-sidebar-primary text-sidebar-primary-foreground"
                       : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                   )}
+                  onClick={onNavItemClick}
                 >
                   <Link
                     href={item.href}
@@ -56,7 +61,7 @@ export function SidebarNav({ items }: SidebarNavProps) {
                   </Link>
                 </SidebarMenuButton>
               </TooltipTrigger>
-              {sidebarState === 'collapsed' && (
+              {!isMobile && sidebarState === 'collapsed' && (
                 <TooltipContent side="right" align="center">
                   {item.label}
                 </TooltipContent>

@@ -13,7 +13,23 @@ export const siteConfig = {
     googleScholar: "https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID", // Replace
     cv: "/CV_Md_Asif_Bin_Khaled.pdf",
   },
-  keywords: ["Md Asif Bin Khaled", "academic portfolio", "research", "publications", "teaching", "experience", "computer science", "machine learning", "software engineering", "PhD applicant", "XAI", "Explainable AI", "Multimodal AI", "Computer Vision", "Healthcare AI"],
+  keywords: [
+    "Md Asif Bin Khaled", 
+    "academic portfolio", 
+    "research", 
+    "publications", 
+    "teaching", 
+    "experience", 
+    "computer science", 
+    "machine learning", 
+    "software engineering", 
+    "PhD applicant", 
+    "XAI", 
+    "Explainable AI", 
+    "Multimodal AI", 
+    "Computer Vision", 
+    "Healthcare AI"
+  ],
   author: "Md Asif Bin Khaled",
   email: "mdasifbinkhaled@gmail.com",
 };
