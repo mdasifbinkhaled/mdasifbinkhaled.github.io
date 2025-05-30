@@ -66,10 +66,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en"> {/* Removed suppressHydrationWarning from here */}
+    <html lang="en">
       <body 
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
-        suppressHydrationWarning // Added suppressHydrationWarning here
+        suppressHydrationWarning
       >
         <MainLayoutClient>{children}</MainLayoutClient>
       </body>
