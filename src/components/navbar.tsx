@@ -2,17 +2,22 @@
 "use client";
 
 import Link from 'next/link';
-// usePathname and mainNavItems are not directly used for rendering links here anymore
+import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import { useState } from 'react';
 import { siteConfig } from '@/config/site';
 import { Button } from '@/components/ui/button';
-// Sheet components are no longer used for main navigation here
-import { SidebarTrigger } from '@/components/ui/sidebar'; // Key for controlling the main sidebar
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { GraduationCap, Menu, PanelLeft, Sun, Moon, Palette } from 'lucide-react';
-// Icon component from '@/components/icons' is not needed here if mainNavItems are not rendered directly
+import { mainNavItems } from '@/config/navigation';
+import { cn } from '@/lib/utils';
+import { Icon } from '@/components/icons';
+import { SidebarNav } from './sidebar-nav'; // Used for mobile sheet content
 
 export function Navbar() {
+  const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const cycleTheme = () => {
     if (theme === 'light') {
@@ -28,39 +33,76 @@ export function Navbar() {
     if (theme === 'light') return <Sun className="h-5 w-5" />;
     if (theme === 'dark') return <Moon className="h-5 w-5" />;
     if (theme === 'retro') return <Palette className="h-5 w-5" />;
-    return <Sun className="h-5 w-5" />; 
+    return <Sun className="h-5 w-5" />;
   };
-  
+
+  const isNavItemActive = (href: string): boolean => {
+    if (href === "/" && pathname !== "/") return false;
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        {/* Left side: Desktop Sidebar Trigger and Site Name/Logo */}
+        {/* Left side: Site Name/Logo */}
         <div className="flex items-center">
-          {/* Desktop Sidebar Trigger (for main collapsible sidebar) */}
-          <SidebarTrigger className="mr-2 hidden md:inline-flex" aria-label="Toggle sidebar">
-            <PanelLeft className="h-6 w-6" />
-            <span className="sr-only">Toggle sidebar</span>
-          </SidebarTrigger>
-          
           <Link href="/" className="flex items-center gap-2 mr-6">
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
           </Link>
         </div>
 
-        {/* Main navigation links are NOT rendered horizontally here */}
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
+          {mainNavItems.map((item) => (
+            !item.disabled && (
+              <Link
+                key={item.href}
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
+                className={cn(
+                  "transition-colors hover:text-primary",
+                  isNavItemActive(item.href) ? "text-primary font-semibold" : "text-muted-foreground"
+                )}
+              >
+                {item.label}
+              </Link>
+            )
+          ))}
+        </nav>
 
-        {/* Right side: Theme Toggle and Mobile Sidebar Trigger */}
-        <div className="flex flex-1 items-center justify-end space-x-2">
+        {/* Right side: Theme Toggle and Mobile Menu Trigger */}
+        <div className="flex items-center space-x-2 md:ml-auto"> {/* Use md:ml-auto to push to right on desktop */}
           <Button variant="ghost" size="icon" onClick={cycleTheme} aria-label="Toggle theme">
             <ThemeIcon />
           </Button>
 
-          {/* Mobile Sidebar Trigger (for main collapsible sidebar, which acts as a sheet on mobile) */}
-          <SidebarTrigger className="md:hidden" aria-label="Toggle sidebar">
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Toggle sidebar</span>
-          </SidebarTrigger>
+          {/* Mobile Menu Trigger */}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon" aria-label="Toggle menu">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[300px] sm:w-[340px] bg-sidebar text-sidebar-foreground p-0">
+              <SheetHeader className="p-4 border-b border-sidebar-border">
+                <SheetTitle className="sr-only">Main Menu</SheetTitle>
+                 <div className="flex items-center gap-2">
+                    <GraduationCap className="h-7 w-7 text-sidebar-primary" />
+                    <span className="font-bold text-lg text-sidebar-foreground">
+                      {siteConfig.shortName}
+                    </span>
+                  </div>
+              </SheetHeader>
+              <div className="p-2">
+                {/* Pass setIsMobileMenuOpen to allow links to close the sheet */}
+                <SidebarNav items={mainNavItems} onNavItemClick={() => setIsMobileMenuOpen(false)} />
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
