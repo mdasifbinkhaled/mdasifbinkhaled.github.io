@@ -5,7 +5,7 @@ import { useState, useEffect, type ReactNode } from 'react';
 
 interface ClientOnlyProps {
   children: ReactNode;
-  fallback?: ReactNode; // Optional fallback to show while not mounted
+  fallback?: ReactNode; 
 }
 
 export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
@@ -16,9 +16,9 @@ export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
   }, []);
 
   if (!hasMounted) {
-    // Ensure fallback is a single valid ReactNode or null
     return <>{fallback}</>;
   }
 
   return <>{children}</>;
 }
+
