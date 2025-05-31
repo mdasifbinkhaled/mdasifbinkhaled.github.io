@@ -15,7 +15,7 @@ import {
   SheetTrigger,
   SheetClose 
 } from '@/components/ui/sheet';
-import { SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarTrigger } from '@/components/ui/sidebar'; // For the main collapsible sidebar
 import { GraduationCap, Menu, PanelLeft, Sun, Moon, Palette, X } from 'lucide-react';
 import { mainNavItems } from '@/config/navigation';
 import { cn } from '@/lib/utils';
@@ -52,18 +52,19 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        {/* Left Group: Branding and Desktop Sidebar Trigger */}
-        <div className="flex items-center gap-x-3 sm:gap-x-4">
+        {/* Left Group: Desktop Sidebar Trigger and Branding */}
+        <div className="flex items-center gap-x-2 sm:gap-x-3">
+          {/* Desktop Sidebar Trigger for the main collapsible sidebar */}
+          <SidebarTrigger className="hidden md:flex" aria-label="Toggle main sidebar" />
+          
           <Link href="/" className="flex items-center gap-2">
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
           </Link>
-          {/* Desktop Sidebar Trigger for the main collapsible sidebar */}
-          <SidebarTrigger className="hidden md:flex" aria-label="Toggle main sidebar" />
         </div>
 
         {/* Desktop Navigation Links - Centered */}
-        <nav className="hidden md:flex items-center gap-x-1 sm:gap-x-2 lg:gap-x-3 text-sm font-medium">
+        <nav className="hidden md:flex flex-1 items-center justify-center gap-x-1 sm:gap-x-2 lg:gap-x-3 text-sm font-medium">
           {mainNavItems.map((item) => (
             !item.disabled && (
               <Link
@@ -90,7 +91,7 @@ export function Navbar() {
             <ThemeIcon />
           </Button>
 
-          {/* Mobile Menu Sheet Trigger - visible only on mobile */}
+          {/* Mobile Menu Sheet Trigger (Burger Button) - visible only on mobile */}
           {/* This Sheet is for main navigation on mobile */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild className="md:hidden">
@@ -102,11 +103,11 @@ export function Navbar() {
             <SheetContent side="left" className="w-[300px] sm:w-[340px] bg-sidebar text-sidebar-foreground p-0">
               <SheetHeader className="p-4 border-b border-sidebar-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <GraduationCap className="h-7 w-7 text-sidebar-primary" /> {/* Consistent icon color */}
-                  <SheetTitle className="font-bold text-lg text-sidebar-foreground sr-only">
+                  <GraduationCap className="h-7 w-7 text-sidebar-primary" />
+                  <SheetTitle className="font-bold text-lg text-sidebar-foreground sr-only"> 
                     {siteConfig.shortName} Menu
                   </SheetTitle>
-                  <span className="font-bold text-lg text-sidebar-foreground">
+                   <span className="font-bold text-lg text-sidebar-foreground">
                     {siteConfig.shortName}
                   </span>
                 </div>
