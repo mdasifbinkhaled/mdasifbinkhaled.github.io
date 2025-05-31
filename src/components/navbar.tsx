@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -39,7 +40,7 @@ export function Navbar() {
     if (theme === 'light') return <Sun className="h-5 w-5" />;
     if (theme === 'dark') return <Moon className="h-5 w-5" />;
     if (theme === 'retro') return <Palette className="h-5 w-5" />;
-    return <Sun className="h-5 w-5" />; // Default to Sun icon
+    return <Sun className="h-5 w-5" />;
   };
 
   const isNavItemActive = (href: string): boolean => {
@@ -51,12 +52,13 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        {/* Left side: Site Name/Logo AND Desktop Sidebar Trigger */}
+        {/* Left Group: Branding and Desktop Sidebar Trigger */}
         <div className="flex items-center gap-x-3 sm:gap-x-4">
           <Link href="/" className="flex items-center gap-2">
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
           </Link>
+          {/* Desktop Sidebar Trigger */}
           <SidebarTrigger className="hidden md:flex" aria-label="Toggle main sidebar" />
         </div>
 
@@ -82,13 +84,13 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Right side: Theme Toggle and Mobile Menu Trigger */}
+        {/* Right Group: Theme Toggle and Mobile Menu Trigger */}
         <div className="flex items-center gap-x-1 sm:gap-x-2">
           <Button variant="ghost" size="icon" onClick={cycleTheme} aria-label="Toggle theme">
             <ThemeIcon />
           </Button>
 
-          {/* Mobile Menu Sheet */}
+          {/* Mobile Menu Sheet Trigger - visible only on mobile */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon">
@@ -100,9 +102,12 @@ export function Navbar() {
               <SheetHeader className="p-4 border-b border-sidebar-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <GraduationCap className="h-7 w-7 text-sidebar-primary" />
-                  <SheetTitle className="font-bold text-lg text-sidebar-foreground">
-                    {siteConfig.shortName}
+                  <SheetTitle className="font-bold text-lg text-sidebar-foreground sr-only">
+                    {siteConfig.shortName} Menu
                   </SheetTitle>
+                  <span className="font-bold text-lg text-sidebar-foreground">
+                    {siteConfig.shortName}
+                  </span>
                 </div>
                 <SheetClose asChild>
                   <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent">
