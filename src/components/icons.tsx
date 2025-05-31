@@ -1,3 +1,4 @@
+
 // @/components/icons.tsx
 "use client"; // Ensure this can be used in other client components
 
@@ -11,6 +12,7 @@ import {
   Cpu,
   Award,
   Send,
+  Presentation, // Added Presentation
   type LucideProps,
   type LucideIcon as LucideIconType // Renamed to avoid conflict with component name
 } from 'lucide-react';
@@ -27,6 +29,7 @@ const iconComponents = {
   Cpu,
   Award,
   Send,
+  Presentation, // Added Presentation
 };
 
 interface IconComponentProps extends LucideProps {
