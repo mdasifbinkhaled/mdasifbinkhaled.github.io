@@ -58,7 +58,7 @@ export function Navbar() {
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
           </Link>
-          {/* Desktop Sidebar Trigger */}
+          {/* Desktop Sidebar Trigger for the main collapsible sidebar */}
           <SidebarTrigger className="hidden md:flex" aria-label="Toggle main sidebar" />
         </div>
 
@@ -91,17 +91,18 @@ export function Navbar() {
           </Button>
 
           {/* Mobile Menu Sheet Trigger - visible only on mobile */}
+          {/* This Sheet is for main navigation on mobile */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
+                <span className="sr-only">Toggle main navigation menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] sm:w-[340px] bg-sidebar text-sidebar-foreground p-0">
               <SheetHeader className="p-4 border-b border-sidebar-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <GraduationCap className="h-7 w-7 text-sidebar-primary" />
+                  <GraduationCap className="h-7 w-7 text-sidebar-primary" /> {/* Consistent icon color */}
                   <SheetTitle className="font-bold text-lg text-sidebar-foreground sr-only">
                     {siteConfig.shortName} Menu
                   </SheetTitle>

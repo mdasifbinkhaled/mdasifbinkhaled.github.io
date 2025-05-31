@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, type ReactNode } from 'react';
@@ -17,6 +18,8 @@ import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
 import { ProfileSidebar } from '@/components/profile-sidebar';
 import { MotionPage } from '@/components/motion-page';
+import { mainNavItems } from '@/config/navigation'; // Removed, no longer needed here
+import { SidebarNav } from '@/components/sidebar-nav'; // Removed, no longer needed here
 
 interface MainLayoutClientProps {
   children: ReactNode;
@@ -58,6 +61,7 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
               </Link>
             </SidebarHeader>
             <SidebarContent className="p-0 overflow-y-auto">
+              {/* Use ProfileSidebar for the main sidebar's content */}
               <ProfileSidebar />
             </SidebarContent>
           </Sidebar>
