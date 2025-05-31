@@ -12,7 +12,7 @@ export function ProfileSidebar() {
   return (
     <div className="flex flex-col h-full">
       {/* Profile Section */}
-      <div className="flex flex-col items-center p-4 text-center">
+      <div className="flex flex-col items-center p-4 text-center group-data-[state=collapsed]:hidden">
         <div className="relative w-32 h-32 mb-3 overflow-hidden rounded-full border-2 border-sidebar-primary">
           <Image
             src="https://placehold.co/200x200.png" // Replace with an actual profile image if available
@@ -32,10 +32,10 @@ export function ProfileSidebar() {
         </p>
       </div>
 
-      <Separator className="bg-sidebar-border mx-3" />
+      <Separator className="bg-sidebar-border mx-3 group-data-[state=collapsed]:hidden" />
 
       {/* Quick Info */}
-      <div className="p-4 flex-grow">
+      <div className="p-4 flex-grow group-data-[state=collapsed]:hidden">
         <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/70 mb-3 tracking-wide">Contact & Links</h4>
         
         <div className="space-y-2">
@@ -69,10 +69,10 @@ export function ProfileSidebar() {
         </div>
       </div>
 
-      <Separator className="bg-sidebar-border mx-3" />
+      <Separator className="bg-sidebar-border mx-3 group-data-[state=collapsed]:hidden" />
 
       {/* Social Icons */}
-      <div className="p-4">
+      <div className="p-4 group-data-[state=collapsed]:hidden">
         <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/70 mb-3 tracking-wide text-center">Follow Me</h4>
         <div className="flex justify-around items-center">
           <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent">
