@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,7 @@ import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Contact Me',
-  description: `Get in touch with Md Asif Bin Khaled for collaborations, PhD opportunities, or inquiries. ${siteConfig.description}`,
+  description: `Get in touch with ${siteConfig.author} for collaborations, PhD opportunities, or inquiries. ${siteConfig.description}`,
 };
 
 export default function ContactPage() {
@@ -26,7 +27,7 @@ export default function ContactPage() {
         <Card className="max-w-2xl mx-auto shadow-lg">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Contact Information</CardTitle>
-            <CardDescription className="text-center mt-2">Feel free to reach out for research collaborations or academic inquiries</CardDescription>
+            <CardDescription className="text-center mt-2">Feel free to reach out for research collaborations or academic inquiries.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
@@ -43,8 +44,8 @@ export default function ContactPage() {
               <Phone className="h-7 w-7 text-primary" />
               <div>
                 <p className="font-semibold text-foreground">Phone</p>
-                <a href="tel:+8801676076329" className="text-muted-foreground hover:text-primary underline">
-                  (+88) 01676076329
+                <a href={`tel:${siteConfig.phone.replace(/\s|\(|\)/g, '')}`} className="text-muted-foreground hover:text-primary underline">
+                  {siteConfig.phone}
                 </a>
               </div>
             </div>
@@ -54,7 +55,7 @@ export default function ContactPage() {
               <div>
                 <p className="font-semibold text-foreground">Location</p>
                 <p className="text-muted-foreground">
-                  Bashundhara R/A, Dhaka - 1212, Bangladesh
+                  {siteConfig.address}
                 </p>
               </div>
             </div>
@@ -97,24 +98,24 @@ export default function ContactPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-center text-muted-foreground">
-              I am actively seeking PhD opportunities in the following areas:
+              I am actively seeking PhD opportunities in the following research areas:
             </p>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                <h3 className="font-semibold text-primary">Explainable AI for Healthcare</h3>
+                <h3 className="font-semibold text-primary">Explainable AI (XAI) for Healthcare</h3>
                 <p className="text-sm text-muted-foreground mt-2">
-                  Research focused on developing transparent AI systems for medical diagnosis and treatment.
+                  Focusing on developing transparent and trustworthy AI systems for disease detection, diagnosis, and healthcare analytics.
                 </p>
               </div>
               <div className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                <h3 className="font-semibold text-primary">Multimodal AI & Medical Imaging</h3>
+                <h3 className="font-semibold text-primary">Multimodal AI (MMAI) & Computer Vision (CV)</h3>
                 <p className="text-sm text-muted-foreground mt-2">
-                  Integration of diverse data sources for comprehensive healthcare analytics and diagnostics.
+                  Utilizing MMAI and CV to combine imaging, clinical records, and lab results for holistic diagnostics and comprehensive healthcare insights.
                 </p>
               </div>
             </div>
             <p className="text-center text-muted-foreground mt-4">
-              If you are a professor or researcher working in these areas, I would be delighted to discuss potential collaboration opportunities.
+              If you are a professor or researcher working in these or related areas, I would be delighted to discuss potential PhD positions or collaborative research opportunities.
             </p>
           </CardContent>
         </Card>

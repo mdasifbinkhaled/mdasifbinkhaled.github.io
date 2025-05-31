@@ -1,10 +1,11 @@
+
 "use client";
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site';
-import { Download, ExternalLink, FileText, Mail, Github, Linkedin, BookUser } from 'lucide-react';
+import { ExternalLink, FileText, Mail, Github, Linkedin, BookUser, Smartphone, MapPin } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 export function ProfileSidebar() {
@@ -14,7 +15,7 @@ export function ProfileSidebar() {
       <div className="flex flex-col items-center p-4 text-center">
         <div className="relative w-32 h-32 mb-3 overflow-hidden rounded-full border-2 border-sidebar-primary">
           <Image
-            src="https://placehold.co/200x200.png"
+            src="https://placehold.co/200x200.png" // Replace with an actual profile image if available
             alt={siteConfig.author}
             fill
             className="object-cover"
@@ -23,33 +24,46 @@ export function ProfileSidebar() {
         </div>
         <h3 className="font-bold text-lg text-sidebar-foreground">{siteConfig.author}</h3>
         <p className="text-sm text-sidebar-foreground/80 mt-1">Senior Lecturer & Researcher</p>
-        <p className="text-xs text-sidebar-foreground/70 mt-1 italic font-medium">
+        <p className="text-xs text-sidebar-foreground/70 mt-1">
+          {siteConfig.address.split(',')[0]} {/* Show only first part of address e.g. Bashundhara R/A */}
+        </p>
+        <p className="text-xs text-sidebar-foreground/70 mt-2 italic font-medium">
           Open to PhD Opportunities
         </p>
       </div>
 
       <Separator className="bg-sidebar-border mx-3" />
 
-      {/* Quick Links */}
+      {/* Quick Info */}
       <div className="p-4 flex-grow">
-        <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/70 mb-3 tracking-wide">Quick Links</h4>
+        <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/70 mb-3 tracking-wide">Contact & Links</h4>
         
-        <div className="flex flex-col gap-2">
-          <Button variant="outline" size="sm" asChild className="justify-start bg-sidebar-accent/20 hover:bg-sidebar-accent border-sidebar-border text-sidebar-foreground">
+        <div className="space-y-2">
+          <Button variant="ghost" size="sm" asChild className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+            <a href={`mailto:${siteConfig.email}`}>
+              <Mail className="mr-2 h-4 w-4" /> {siteConfig.email}
+            </a>
+          </Button>
+          <Button variant="ghost" size="sm" asChild className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+            <a href={`tel:${siteConfig.phone.replace(/\s|\(|\)/g, '')}`}>
+              <Smartphone className="mr-2 h-4 w-4" /> {siteConfig.phone}
+            </a>
+          </Button>
+          <Button variant="outline" size="sm" asChild className="w-full justify-start bg-sidebar-accent/20 hover:bg-sidebar-accent border-sidebar-border text-sidebar-foreground">
             <a href={siteConfig.links.cv} target="_blank" rel="noopener noreferrer">
               <FileText className="mr-2 h-4 w-4" /> Download CV
             </a>
           </Button>
           
-          <Button variant="outline" size="sm" asChild className="justify-start bg-sidebar-accent/20 hover:bg-sidebar-accent border-sidebar-border text-sidebar-foreground">
+          <Button variant="outline" size="sm" asChild className="w-full justify-start bg-sidebar-accent/20 hover:bg-sidebar-accent border-sidebar-border text-sidebar-foreground">
             <Link href="/research">
-              <ExternalLink className="mr-2 h-4 w-4" /> Research Interests
+              <ExternalLink className="mr-2 h-4 w-4" /> Research Focus
             </Link>
           </Button>
           
-          <Button variant="outline" size="sm" asChild className="justify-start bg-sidebar-accent/20 hover:bg-sidebar-accent border-sidebar-border text-sidebar-foreground">
+          <Button variant="outline" size="sm" asChild className="w-full justify-start bg-sidebar-accent/20 hover:bg-sidebar-accent border-sidebar-border text-sidebar-foreground">
             <Link href="/publications">
-              <FileText className="mr-2 h-4 w-4" /> Latest Publications
+              <FileText className="mr-2 h-4 w-4" /> Publications
             </Link>
           </Button>
         </div>
@@ -57,15 +71,10 @@ export function ProfileSidebar() {
 
       <Separator className="bg-sidebar-border mx-3" />
 
-      {/* Contact Icons */}
+      {/* Social Icons */}
       <div className="p-4">
-        <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/70 mb-3 tracking-wide">Connect</h4>
-        <div className="flex justify-between items-center">
-          <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent">
-            <a href={`mailto:${siteConfig.email}`} aria-label="Email">
-              <Mail className="h-5 w-5" />
-            </a>
-          </Button>
+        <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/70 mb-3 tracking-wide text-center">Follow Me</h4>
+        <div className="flex justify-around items-center">
           <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent">
             <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <Github className="h-5 w-5" />

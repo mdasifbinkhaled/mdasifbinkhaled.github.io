@@ -1,11 +1,12 @@
+
 "use client";
 
 import { useEffect } from 'react';
 import { siteConfig } from '@/config/site';
+import { samplePublications } from '@/lib/data/publications'; // Import publications
 
 export function ScholarStructuredData() {
   useEffect(() => {
-    // Create schema.org Person data for academic profile
     const personSchema = {
       "@context": "https://schema.org",
       "@type": "Person",
@@ -15,55 +16,87 @@ export function ScholarStructuredData() {
       "jobTitle": "Senior Lecturer & Researcher",
       "workLocation": {
         "@type": "Place",
-        "name": "Independent University, Bangladesh"
+        "name": "Independent University, Bangladesh",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Dhaka",
+            "addressCountry": "BD"
+        }
       },
       "worksFor": {
         "@type": "Organization",
         "name": "Independent University, Bangladesh",
-        "url": "https://iub.edu.bd/"
+        "url": "https://www.iub.edu.bd/"
       },
       "url": siteConfig.url,
+      "email": siteConfig.email,
+      "telephone": siteConfig.phone,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Bashundhara R/A", // More specific if available from CV
+        "addressLocality": "Dhaka",
+        "postalCode": "1212",
+        "addressCountry": "Bangladesh"
+      },
       "sameAs": [
         siteConfig.links.github,
         siteConfig.links.linkedin,
-        siteConfig.links.googleScholar
+        siteConfig.links.googleScholar,
+        ...(siteConfig.links.twitter !== "https://twitter.com/yourusername" ? [siteConfig.links.twitter] : []) // Add Twitter if not default
       ],
       "alumniOf": [
         {
           "@type": "CollegeOrUniversity",
           "name": "Independent University, Bangladesh",
-          "url": "https://iub.edu.bd/"
+          "url": "https://www.iub.edu.bd/",
+          "sameAs": "https://www.iub.edu.bd/"
         },
         {
           "@type": "CollegeOrUniversity",
           "name": "BRAC University",
-          "url": "https://www.bracu.ac.bd/"
+          "url": "https://www.bracu.ac.bd/",
+          "sameAs": "https://www.bracu.ac.bd/"
         }
       ],
       "knowsAbout": [
         "Explainable AI (XAI)",
-        "Multimodal AI",
-        "Computer Vision",
+        "Multimodal AI (MMAI)",
+        "Computer Vision (CV)",
         "Healthcare AI",
-        "Machine Learning"
+        "Machine Learning",
+        "Deep Learning",
+        "Data Mining",
+        "Algorithm Design",
+        "Outcome-Based Education (OBE)"
       ],
       "hasCredential": [
         {
           "@type": "EducationalOccupationalCredential",
           "credentialCategory": "degree",
           "name": "Master of Science in Computer Science",
-          "educationalLevel": "graduate"
+          "educationalLevel": "https://schema.org/CollegeDegree", // Using schema.org enum
+          "awardedBy": {
+            "@type": "CollegeOrUniversity",
+            "name": "Independent University, Bangladesh"
+          }
         },
         {
           "@type": "EducationalOccupationalCredential",
           "credentialCategory": "degree",
           "name": "Bachelor of Science in Computer Science and Engineering",
-          "educationalLevel": "undergraduate"
+          "educationalLevel": "https://schema.org/CollegeDegree", // Using schema.org enum
+          "awardedBy": {
+            "@type": "CollegeOrUniversity",
+            "name": "BRAC University"
+          }
         }
+      ],
+      "researchInterest": [
+        "Explainable AI (XAI): Ensuring transparency and trustworthiness in disease detection, diagnosis, and healthcare analytics utilizing Artificial Intelligence (AI).",
+        "Multimodal AI (MMAI) & Computer Vision (CV): Using Multimodal AI (MMAI) and Computer Vision (CV) to combine imaging, clinical records, and lab results for holistic diagnostics."
       ]
     };
 
-    // Add structured data to the document
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify(personSchema);
@@ -79,61 +112,35 @@ export function ScholarStructuredData() {
 
 export function PublicationStructuredData() {
   useEffect(() => {
-    // Create schema.org ScholarlyArticle data
-    const articleSchema = {
+    const publicationsSchema = samplePublications.map(pub => ({
       "@context": "https://schema.org",
       "@type": "ScholarlyArticle",
-      "headline": "Advancements in Bangla Speech Emotion Recognition: A Deep Learning Approach with Cross-Lingual Validation",
-      "author": [
-        {
-          "@type": "Person",
-          "name": "K. Alam"
-        },
-        {
-          "@type": "Person",
-          "name": "M.H. Bhuiyan"
-        },
-        {
-          "@type": "Person",
-          "name": "M.J. Hossain"
-        },
-        {
-          "@type": "Person",
-          "name": "M.F. Monir"
-        },
-        {
-          "@type": "Person",
-          "name": "M.A.B. Khaled"
-        }
-      ],
-      "datePublished": "2024",
-      "publisher": {
+      "headline": pub.title,
+      "name": pub.title,
+      "author": pub.authors.map(authorName => ({ "@type": "Person", "name": authorName })),
+      "datePublished": pub.year.toString(),
+      ...(pub.venue && { "isPartOf": { "@type": "PublicationVolume", "name": pub.venue } }), // Simplified, ideally more detailed
+      ...(pub.link && { "url": pub.link }),
+      ...(pub.doi && { "identifier": { "@type": "PropertyValue", "propertyID": "doi", "value": pub.doi } }),
+      ...(pub.abstract && { "description": pub.abstract }),
+      ...(pub.keywords && { "keywords": pub.keywords.join(", ") }),
+      "publisher": { // Generic publisher, can be refined if each pub has specific publisher info
         "@type": "Organization",
-        "name": "IEEE"
-      },
-      "name": "Advancements in Bangla Speech Emotion Recognition: A Deep Learning Approach with Cross-Lingual Validation",
-      "isPartOf": {
-        "@type": "PublicationIssue",
-        "isPartOf": {
-          "@type": "PublicationVolume",
-          "isPartOf": {
-            "@type": "Periodical",
-            "name": "IEEE 99th Vehicular Technology Conference (VTC2024-Spring)"
-          }
-        }
-      },
-      "keywords": "Speech Emotion Recognition, Deep Learning, Bangla, Cross-Lingual Validation"
-    };
+        "name": pub.venue?.includes("IEEE") ? "IEEE" : (pub.venue?.includes("Springer") ? "Springer" : "Academic Publisher")
+      }
+    }));
 
-    // Add structured data to the document
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(articleSchema);
-    document.head.appendChild(script);
+    if (publicationsSchema.length > 0) {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      // If multiple publications, wrap in an array or use ItemList
+      script.text = JSON.stringify(publicationsSchema.length === 1 ? publicationsSchema[0] : publicationsSchema);
+      document.head.appendChild(script);
 
-    return () => {
-      document.head.removeChild(script);
-    };
+      return () => {
+        document.head.removeChild(script);
+      };
+    }
   }, []);
 
   return null;

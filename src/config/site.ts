@@ -1,35 +1,44 @@
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Md Asif Bin Khaled - Academic Portfolio",
   shortName: "Academic Assemblage",
-  description: "The professional academic portfolio of Md Asif Bin Khaled, showcasing research, teaching, experience, and publications in Explainable AI and Multimodal AI for healthcare. Open to PhD opportunities.",
-  url: "https://mdasifbinkhaled.github.io", // Replace with actual domain
+  description: "The professional academic portfolio of Md Asif Bin Khaled, Senior Lecturer & Researcher. Showcasing research in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, teaching experience, publications, and grants. Open to PhD opportunities.",
+  url: "https://mdasifbinkhaled.github.io",
   ogImage: "https://mdasifbinkhaled.github.io/images/og-image.png", // Replace with actual OG image URL
   links: {
-    twitter: "https://twitter.com/yourusername", // Replace with actual Twitter
+    twitter: "https://twitter.com/yourusername", // Replace with actual Twitter if available
     github: "https://github.com/mdasifbinkhaled",
-    linkedin: "https://linkedin.com/in/mdasifbinkhaled/", // Replace with actual LinkedIn
-    googleScholar: "https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID", // Replace
+    linkedin: "https://linkedin.com/in/mdasifbinkhaled/",
+    googleScholar: "https://scholar.google.com/citations?user=zpcFkLAAAAAJ", // Updated Google Scholar ID
     cv: "/CV_Md_Asif_Bin_Khaled.pdf",
   },
   keywords: [
-    "Md Asif Bin Khaled", 
-    "academic portfolio", 
-    "research", 
-    "publications", 
-    "teaching", 
-    "experience", 
-    "computer science", 
-    "machine learning", 
-    "software engineering", 
-    "PhD applicant", 
-    "XAI", 
-    "Explainable AI", 
-    "Multimodal AI", 
-    "Computer Vision", 
-    "Healthcare AI"
+    "Md Asif Bin Khaled",
+    "Senior Lecturer",
+    "Researcher",
+    "academic portfolio",
+    "research",
+    "publications",
+    "teaching",
+    "experience",
+    "computer science",
+    "machine learning",
+    "Explainable AI",
+    "XAI",
+    "Multimodal AI",
+    "MMAI",
+    "Computer Vision",
+    "CV",
+    "Healthcare AI",
+    "PhD applicant",
+    "IUB",
+    "BRACU",
+    "Bangladesh"
   ],
   author: "Md Asif Bin Khaled",
   email: "mdasifbinkhaled@gmail.com",
+  phone: "(+88) 01676076329",
+  address: "Bashundhara R/A, Dhaka - 1212, Bangladesh"
 };
