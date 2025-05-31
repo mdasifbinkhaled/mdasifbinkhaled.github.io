@@ -5,10 +5,15 @@ import { siteConfig } from '@/config/site';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { samplePublications } from '@/lib/data/publications'; // Import publications data
+import { samplePublications } from '@/lib/data/publications';
 
 export default function HomePage() {
-  const latestPublication = samplePublications.length > 0 ? samplePublications.reduce((a, b) => (a.year > b.year ? a : (a.year === b.year && a.id > b.id ? a : b))) : null;
+  const latestPublication = samplePublications.length > 0 
+    ? samplePublications
+        .filter(p => p.type !== 'In Progress' && p.type !== 'Thesis') // Exclude 'In Progress' and 'Thesis' from "latest"
+        .reduce((a, b) => (a.year > b.year ? a : (a.year === b.year && parseInt(a.id.split('-').pop() || '0') > parseInt(b.id.split('-').pop() || '0') ? a : b)), samplePublications[0])
+    : null;
+
 
   return (
     <div className="flex flex-col items-center">
@@ -20,9 +25,10 @@ export default function HomePage() {
               alt={siteConfig.author}
               className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last border-4 border-primary shadow-lg"
               height="550"
-              src="https://placehold.co/550x550.png" // Replace with actual image if available
+              src="https://placehold.co/550x550.png" 
               data-ai-hint="professional headshot"
               width="550"
+              priority // Added priority for LCP
             />
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
@@ -116,7 +122,7 @@ export default function HomePage() {
       )}
 
       {/* Grants and Highlight */}
-      <section className="w-full py-12 md:py-16">
+       <section className="w-full py-12 md:py-16">
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold text-center mb-8 text-primary">Recent Grants</h2>
           <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
@@ -149,7 +155,7 @@ export default function HomePage() {
           </div>
 
           <div className="text-center mt-12">
-            <h2 className="text-2xl font-bold mb-4">Seeking PhD Opportunities</h2>
+            <h2 className="text-2xl font-bold mb-4 text-foreground">Seeking PhD Opportunities</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
               With a strong foundation in XAI and MMAI research, I am actively seeking doctoral programs to further contribute to innovative and trustworthy AI systems, particularly in healthcare.
             </p>
@@ -164,3 +170,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+    

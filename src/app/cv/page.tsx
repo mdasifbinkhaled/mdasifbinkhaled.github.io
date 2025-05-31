@@ -2,13 +2,20 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
 import { siteConfig } from '@/config/site';
 import { Button } from '@/components/ui/button';
 import { Download, ExternalLinkIcon } from 'lucide-react';
-import { PDFViewer } from '@/components/ui/pdf-viewer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { SkeletonWrapper } from '@/components/ui/skeleton-wrapper';
+
+const PDFViewer = dynamic(() => import('@/components/ui/pdf-viewer').then(mod => mod.PDFViewer), {
+  ssr: false,
+  loading: () => (
+    <SkeletonWrapper isLoading className="w-full max-w-4xl h-[800px]" />
+  ),
+});
 
 export default function CVPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -17,6 +24,7 @@ export default function CVPage() {
     setIsMounted(true);
   }, []);
 
+  // This initial skeleton for tabs can remain as it's lightweight
   if (!isMounted) {
     return (
       <div className="flex flex-col items-center space-y-8">
@@ -147,11 +155,12 @@ export default function CVPage() {
                 <CardDescription>Recent scholarly contributions</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
+                 {/* Updated publication titles based on new data */}
                 <p className="text-sm text-muted-foreground">
-                  <strong>Advancements in Bangla Speech Emotion Recognition...</strong> (IEEE VTC 2024)
+                  <strong>Conceptual Design and Evaluation Plan of a Mobile Relational Agent...</strong> (DESRIST 2024)
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  <strong>Multiclass Classification for GvHD Prognosis...</strong> (AJCAI/Springer 2023)
+                  <strong>Advancements in Bangla Speech Emotion Recognition...</strong> (IEEE VTC 2024)
                 </p>
                  <Button variant="link" asChild className="p-0 h-auto mt-2 text-primary">
                    <a href="/publications">Explore all publications <ExternalLinkIcon className="ml-1 h-4 w-4" /></a>
@@ -164,3 +173,5 @@ export default function CVPage() {
     </div>
   );
 }
+
+    
