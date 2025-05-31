@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { siteConfig } from '@/config/site';
 import { Button } from '@/components/ui/button';
-import { Download, ExternalLinkIcon } from 'lucide-react'; // Added ExternalLinkIcon
+import { Download, ExternalLinkIcon } from 'lucide-react';
 import { PDFViewer } from '@/components/ui/pdf-viewer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -70,14 +70,14 @@ export default function CVPage() {
                 <div className="border-l-4 border-primary pl-4">
                   <h3 className="font-semibold">M.Sc in Computer Science</h3>
                   <p>Independent University, Bangladesh (IUB)</p>
-                  <p className="text-sm text-muted-foreground">CGPA: 3.76/4.0 • Graduated with Distinction (Cum Laude)</p>
+                  <p className="text-sm text-muted-foreground">Graduated with Distinction (Cum Laude)</p>
                   <p className="text-sm text-muted-foreground">Thesis: Word Sense Disambiguation of Bengali Words using FP-Growth Algorithm</p>
                 </div>
                 
                 <div className="border-l-4 border-primary pl-4">
                   <h3 className="font-semibold">B.Sc in Computer Science and Engineering</h3>
                   <p>BRAC University (BRACU)</p>
-                  <p className="text-sm text-muted-foreground">CGPA: 3.80/4.0 • Graduated with Highest Distinction (Summa Cum Laude)</p>
+                  <p className="text-sm text-muted-foreground">Graduated with Highest Distinction (Summa Cum Laude)</p>
                   <p className="text-sm text-muted-foreground">Achieved Vice Chancellor&apos;s Award 6 times</p>
                   <p className="text-sm text-muted-foreground">Thesis: Exploring Deep Features: Deeper Fully Convolutional Neural Network for Image Segmentation</p>
                 </div>

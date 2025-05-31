@@ -64,7 +64,7 @@ export default function AboutPage() {
           <CardContent className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
             <div className="md:float-right md:ml-6 mb-4 md:mb-0 md:w-1/3">
                <Image
-                src="https://placehold.co/400x500.png" // Replace with a relevant image
+                src="https://placehold.co/400x500.png"
                 alt={`${siteConfig.author} - professional`}
                 width={400}
                 height={500}
@@ -101,7 +101,7 @@ export default function AboutPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">Graduated with Distinction (Cum Laude), CGPA: 3.76/4.0</p>
+              <p className="text-muted-foreground">Graduated with Distinction (Cum Laude)</p>
               <p className="mt-2 text-muted-foreground"><strong>Thesis:</strong> Word Sense Disambiguation of Bengali Words using FP-Growth Algorithm</p>
               <p className="text-muted-foreground"><strong>Advisor:</strong> Dr. Mahady Hasan</p>
             </CardContent>
@@ -116,7 +116,7 @@ export default function AboutPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">Graduated with Highest Distinction (Summa Cum Laude), CGPA: 3.80/4.0</p>
+              <p className="text-muted-foreground">Graduated with Highest Distinction (Summa Cum Laude)</p>
               <p className="mt-2 text-muted-foreground"><strong>Thesis:</strong> Exploring Deep Features: Deeper Fully Convolutional Neural Network for Image Segmentation</p>
               <p className="text-muted-foreground"><strong>Advisor:</strong> Mr. Moin Mostakim</p>
               <p className="mt-2 text-muted-foreground font-medium">Achieved Vice Chancellor&apos;s Award for Academic Excellence 6 times.</p>
