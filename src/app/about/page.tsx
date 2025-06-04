@@ -69,7 +69,6 @@ export default function AboutPage() {
                 width={400}
                 height={500}
                 className="rounded-lg shadow-xl object-cover w-full"
-                data-ai-hint="academic professional"
               />
             </div>
             <p>

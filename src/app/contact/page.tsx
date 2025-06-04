@@ -81,10 +81,9 @@ export default function ContactPage() {
                <Image 
                 src="https://placehold.co/600x350.png" 
                 alt="Contact or collaboration concept" 
-                width={600} 
-                height={350} 
+                width={600}
+                height={350}
                 className="rounded-lg shadow-md object-cover mx-auto"
-                data-ai-hint="network connection"
               />
             </div>
           </CardContent>

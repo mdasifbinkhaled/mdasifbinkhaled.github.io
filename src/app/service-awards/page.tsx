@@ -111,12 +111,11 @@ export default function ServiceAwardsPage() {
         </div>
         <div className="mt-12 flex justify-center">
           <Image 
-            src="https://placehold.co/700x400.png" 
-            alt="Awards and recognition collage" 
-            width={700} 
-            height={400} 
+            src="https://placehold.co/700x400.png"
+            alt="Awards and recognition collage"
+            width={700}
+            height={400}
             className="rounded-lg shadow-xl object-cover"
-            data-ai-hint="trophies certificates recognition" 
           />
         </div>
       </section>

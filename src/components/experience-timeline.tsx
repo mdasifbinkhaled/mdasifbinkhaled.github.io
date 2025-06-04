@@ -21,13 +21,12 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
         >
           <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-primary bg-background shadow-md shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 mt-1 md:mt-0">
             {item.logoUrl ? (
-              <Image 
-                src={item.logoUrl} 
-                alt={`${item.institution} logo`} 
-                width={24} 
-                height={24} 
+              <Image
+                src={item.logoUrl}
+                alt={`${item.institution} logo`}
+                width={24}
+                height={24}
                 className="rounded-sm object-contain"
-                data-ai-hint={item.logoAiHint || 'company logo'}
               />
             ) : (
               <Briefcase className="w-5 h-5 text-primary" />
