@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 export function FooterYear() {
   // Directly return the current year without using state

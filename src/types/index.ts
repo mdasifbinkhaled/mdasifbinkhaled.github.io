@@ -1,7 +1,14 @@
 import type { LucideIcon } from 'lucide-react';
 import type { IconName } from '@/components/icons'; // Added import
 
-export type PublicationType = 'Conference' | 'Journal' | 'Workshop' | 'Preprint' | 'In Progress' | 'Book Chapter' | 'Thesis';
+export type PublicationType =
+  | 'Conference'
+  | 'Journal'
+  | 'Workshop'
+  | 'Preprint'
+  | 'In Progress'
+  | 'Book Chapter'
+  | 'Thesis';
 
 export interface ExperienceItem {
   id: string;
@@ -17,7 +24,7 @@ export interface ExperienceItem {
 }
 
 export interface PublicationItem {
-  id:string;
+  id: string;
   title: string;
   authors: string[];
   venue: string;
@@ -35,7 +42,7 @@ export interface PublicationItem {
 
 export interface NavItem {
   href: string;
-  label:string;
+  label: string;
   icon?: IconName; // Changed from LucideIcon to IconName (string)
   sectionId: string;
   external?: boolean;

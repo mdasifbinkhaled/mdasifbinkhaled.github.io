@@ -1,6 +1,5 @@
-
 // @/components/icons.tsx
-"use client"; // Ensure this can be used in other client components
+'use client'; // Ensure this can be used in other client components
 
 import React from 'react';
 import {
@@ -14,7 +13,7 @@ import {
   Send,
   Presentation, // Added Presentation
   type LucideProps,
-  type LucideIcon as LucideIconType // Renamed to avoid conflict with component name
+  type LucideIcon as LucideIconType, // Renamed to avoid conflict with component name
 } from 'lucide-react';
 
 // Define the IconName type based on the keys of iconComponents
@@ -36,7 +35,11 @@ interface IconComponentProps extends LucideProps {
   name?: IconName; // Use the IconName type
 }
 
-export const Icon: React.FC<IconComponentProps> = ({ name, className, ...props }) => {
+export const Icon: React.FC<IconComponentProps> = ({
+  name,
+  className,
+  ...props
+}) => {
   if (!name) {
     return null;
   }

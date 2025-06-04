@@ -42,7 +42,7 @@
     --sidebar-primary-foreground: 0 0% 100%; /* White text on sidebar primary */
     --sidebar-accent: 201 49.1% 42.5%; /* Hover color - slightly lighter/variant of sidebar background */
     --sidebar-accent-foreground: 200 20% 98%; /* Text on hover in sidebar */
-    --sidebar-border: 201 49.1% 40%; 
+    --sidebar-border: 201 49.1% 40%;
     --sidebar-ring: 247 24.8% 44.3%;
 
     --chart-1: 12 76% 61%;
@@ -53,7 +53,7 @@
   }
 
   .dark {
-    --background: 201 30% 15%; 
+    --background: 201 30% 15%;
     --foreground: 200 20% 95.1%;
 
     --muted: 201 25% 25%;
@@ -68,13 +68,13 @@
     --border: 201 25% 30%;
     --input: 201 25% 30%;
 
-    --primary: 201 49.1% 47.5%; 
+    --primary: 201 49.1% 47.5%;
     --primary-foreground: 200 20% 98%;
 
     --secondary: 201 25% 22%;
     --secondary-foreground: 201 49.1% 47.5%;
 
-    --accent: 247 24.8% 54.3%; 
+    --accent: 247 24.8% 54.3%;
     --accent-foreground: 247 20% 98%;
 
     --destructive: 0 72.2% 50.6%;
@@ -91,7 +91,7 @@
     --sidebar-accent-foreground: 200 20% 95%;
     --sidebar-border: 201 40% 25%;
     --sidebar-ring: 247 24.8% 54.3%;
-    
+
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;

@@ -1,8 +1,14 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Download } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ZoomIn,
+  ZoomOut,
+  Download,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
@@ -25,7 +31,9 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
   }
 
   function changePage(offset: number): void {
-    setPageNumber(prevPageNumber => Math.min(Math.max(1, prevPageNumber + offset), numPages || 1));
+    setPageNumber(prevPageNumber =>
+      Math.min(Math.max(1, prevPageNumber + offset), numPages || 1),
+    );
   }
 
   function changeScale(delta: number): void {
@@ -39,11 +47,19 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
           file={file}
           onLoadSuccess={onDocumentLoadSuccess}
           className="flex justify-center"
-          loading={<div className="py-12 text-center text-muted-foreground">Loading PDF...</div>}
-          error={<div className="py-12 text-center text-destructive">Failed to load PDF. Please try again later.</div>}
+          loading={
+            <div className="py-12 text-center text-muted-foreground">
+              Loading PDF...
+            </div>
+          }
+          error={
+            <div className="py-12 text-center text-destructive">
+              Failed to load PDF. Please try again later.
+            </div>
+          }
         >
-          <Page 
-            pageNumber={pageNumber} 
+          <Page
+            pageNumber={pageNumber}
             scale={scale}
             renderTextLayer={false}
             renderAnnotationLayer={false}
@@ -51,7 +67,7 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
           />
         </Document>
       </Card>
-      
+
       <div className="flex items-center justify-between w-full max-w-md">
         <div className="flex items-center gap-2">
           <Button
@@ -63,11 +79,11 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          
+
           <span className="text-sm">
             Page {pageNumber} of {numPages || '?'}
           </span>
-          
+
           <Button
             variant="outline"
             size="icon"
@@ -78,7 +94,7 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
@@ -89,11 +105,11 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
           >
             <ZoomOut className="h-4 w-4" />
           </Button>
-          
+
           <span className="text-sm w-12 text-center">
             {Math.round(scale * 100)}%
           </span>
-          
+
           <Button
             variant="outline"
             size="icon"
@@ -103,10 +119,20 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
           >
             <ZoomIn className="h-4 w-4" />
           </Button>
-          
+
           {downloadLink && (
-            <Button variant="outline" size="icon" asChild aria-label="Download PDF">
-              <a href={downloadLink} target="_blank" rel="noopener noreferrer" download>
+            <Button
+              variant="outline"
+              size="icon"
+              asChild
+              aria-label="Download PDF"
+            >
+              <a
+                href={downloadLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+              >
                 <Download className="h-4 w-4" />
               </a>
             </Button>

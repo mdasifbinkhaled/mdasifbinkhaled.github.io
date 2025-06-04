@@ -31,6 +31,10 @@ export const generateMetadata = async (): Promise<Metadata> => {
   };
 };
 
-export default function PageWithSEO({ children }: { children: React.ReactNode }) {
+export default function PageWithSEO({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }

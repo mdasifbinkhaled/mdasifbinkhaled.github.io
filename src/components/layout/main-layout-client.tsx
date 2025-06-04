@@ -1,18 +1,17 @@
-
-"use client";
+'use client';
 
 import { useState, useEffect, type ReactNode } from 'react';
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
 import { siteConfig } from '@/config/site';
 import { FooterYear } from '@/components/footer-year';
 import { Navbar } from '@/components/navbar';
-import { 
-  SidebarProvider, 
-  Sidebar, 
-  SidebarHeader, 
-  SidebarContent, 
-  SidebarInset 
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarInset,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import { GraduationCap } from 'lucide-react';
@@ -52,7 +51,11 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
       <SidebarProvider>
         <div className="flex min-h-screen">
           {/* Main Collapsible Sidebar */}
-          <Sidebar collapsible="icon" side="left" className="hidden md:flex border-r shadow-md bg-sidebar text-sidebar-foreground">
+          <Sidebar
+            collapsible="icon"
+            side="left"
+            className="hidden md:flex border-r shadow-md bg-sidebar text-sidebar-foreground"
+          >
             <SidebarHeader className="p-4 border-b border-sidebar-border flex items-center justify-center">
               <Link href="/" className="flex items-center gap-2">
                 <GraduationCap className="h-7 w-7 text-sidebar-primary flex-shrink-0" />
@@ -66,14 +69,12 @@ export function MainLayoutClient({ children }: MainLayoutClientProps) {
               <ProfileSidebar />
             </SidebarContent>
           </Sidebar>
-          
+
           {/* Main Content Area */}
           <SidebarInset className="flex flex-col flex-1">
             <Navbar />
             <main className="flex-1">
-              <MotionPage>
-                {children}
-              </MotionPage>
+              <MotionPage>{children}</MotionPage>
             </main>
             <footer className="py-6 px-4 md:px-6 lg:px-8 text-center border-t bg-background">
               <p className="text-sm text-muted-foreground">

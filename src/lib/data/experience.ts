@@ -1,4 +1,3 @@
-
 import type { ExperienceItem } from '@/types';
 
 export const professionalExperiences: ExperienceItem[] = [
@@ -15,7 +14,13 @@ export const professionalExperiences: ExperienceItem[] = [
     ],
     logoUrl: 'https://placehold.co/48x48.png',
     logoAiHint: 'university building iub',
-    tags: ['Teaching', 'Research Supervision', 'Curriculum Development', 'Mentorship', 'OBE'],
+    tags: [
+      'Teaching',
+      'Research Supervision',
+      'Curriculum Development',
+      'Mentorship',
+      'OBE',
+    ],
     type: 'Academic',
   },
   {
@@ -52,7 +57,8 @@ export const professionalExperiences: ExperienceItem[] = [
   },
   {
     id: 'exp-grad-ta-iub',
-    title: 'Graduate Teaching Assistant – Department of Computer Science & Engineering',
+    title:
+      'Graduate Teaching Assistant – Department of Computer Science & Engineering',
     institution: 'Independent University, Bangladesh (IUB)',
     location: 'Dhaka, Bangladesh',
     duration: 'May 2017 - Jun 2017',
@@ -67,7 +73,8 @@ export const professionalExperiences: ExperienceItem[] = [
   },
   {
     id: 'exp-undergrad-ta-bracu',
-    title: 'Undergraduate Teaching Assistant – Department of Computer Science & Engineering',
+    title:
+      'Undergraduate Teaching Assistant – Department of Computer Science & Engineering',
     institution: 'BRAC University',
     location: 'Dhaka, Bangladesh',
     duration: 'May 2015 - Apr 2017',
@@ -97,7 +104,8 @@ export const professionalExperiences: ExperienceItem[] = [
   },
   {
     id: 'exp-grad-research-assistant-iub',
-    title: 'Graduate Research Assistant – Department of Computer Science & Engineering',
+    title:
+      'Graduate Research Assistant – Department of Computer Science & Engineering',
     institution: 'Independent University, Bangladesh (IUB)',
     location: 'Dhaka, Bangladesh',
     duration: 'Jul 2017 - Jun 2018',
@@ -129,31 +137,69 @@ export const professionalExperiences: ExperienceItem[] = [
 
 export const technicalSkills = [
   {
-    category: "Programming & Frameworks",
-    items: ["Python", "TensorFlow", "Keras", "Scikit-learn", "Java", "C/C++", "LaTeX"],
+    category: 'Programming & Frameworks',
+    items: [
+      'Python',
+      'TensorFlow',
+      'Keras',
+      'Scikit-learn',
+      'Java',
+      'C/C++',
+      'LaTeX',
+    ],
   },
   {
-    category: "Data Analysis & Visualization",
-    items: ["NumPy", "Pandas", "Scikit-Learn", "Matplotlib", "Seaborn", "SciPy"],
+    category: 'Data Analysis & Visualization',
+    items: [
+      'NumPy',
+      'Pandas',
+      'Scikit-Learn',
+      'Matplotlib',
+      'Seaborn',
+      'SciPy',
+    ],
   },
   {
-    category: "Tools & Software",
-    items: ["MATLAB", "QGIS", "SNAP", "Mathematica", "Arduino IDE", "Android Studio", "Google Colab", "Jupyter Notebook"],
+    category: 'Tools & Software',
+    items: [
+      'MATLAB',
+      'QGIS',
+      'SNAP',
+      'Mathematica',
+      'Arduino IDE',
+      'Android Studio',
+      'Google Colab',
+      'Jupyter Notebook',
+    ],
   },
   {
-    category: "Teaching & Pedagogy",
-    items: ["Classroom Management", "Curriculum Development", "Mentorship", "Outcome-Based Education (OBE)"],
+    category: 'Teaching & Pedagogy',
+    items: [
+      'Classroom Management',
+      'Curriculum Development',
+      'Mentorship',
+      'Outcome-Based Education (OBE)',
+    ],
   },
   {
-    category: "Project Management",
-    items: ["Research Proposal Writing", "Grant Management", "Team Leadership", "Systematic Literature Review"],
+    category: 'Project Management',
+    items: [
+      'Research Proposal Writing',
+      'Grant Management',
+      'Team Leadership',
+      'Systematic Literature Review',
+    ],
   },
   {
-    category: "Soft Skills",
-    items: ["Problem-solving", "Critical Thinking", "Leadership", "Teamwork"],
+    category: 'Soft Skills',
+    items: ['Problem-solving', 'Critical Thinking', 'Leadership', 'Teamwork'],
   },
   {
-    category: "Languages",
-    items: ["Bengali (Native)", "English (IELTS Band: 7.0)", "Hindi (Conversational)"],
+    category: 'Languages',
+    items: [
+      'Bengali (Native)',
+      'English (IELTS Band: 7.0)',
+      'Hindi (Conversational)',
+    ],
   },
 ];

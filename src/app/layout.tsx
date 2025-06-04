@@ -1,4 +1,3 @@
-
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -26,8 +25,8 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.author, url: siteConfig.url }],
   creator: siteConfig.author,
   openGraph: {
-    type: "website",
-    locale: "en_US",
+    type: 'website',
+    locale: 'en_US',
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
@@ -42,14 +41,14 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: siteConfig.name,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
     creator: `@${siteConfig.links.twitter.split('/').pop()}`,
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: '/favicon.ico',
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
   alternates: {
@@ -59,13 +58,13 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-}
+};
 
 export default function RootLayout({
   children,
@@ -74,7 +73,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body 
+      <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
         suppressHydrationWarning={true}
       >
