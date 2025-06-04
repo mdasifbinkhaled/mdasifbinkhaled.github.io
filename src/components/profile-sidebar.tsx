@@ -19,7 +19,6 @@ export function ProfileSidebar() {
             alt={siteConfig.author}
             fill
             className="object-cover"
-            data-ai-hint="professional headshot"
           />
         </div>
         <h3 className="font-bold text-lg text-sidebar-foreground">{siteConfig.author}</h3>

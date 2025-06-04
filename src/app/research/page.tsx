@@ -44,7 +44,7 @@ export default function ResearchPage() {
               <p>
                 Key areas include developing novel techniques for model interpretability, visualizing decision-making processes, and creating AI systems that can articulate their reasoning in human-understandable ways, thereby fostering clinician trust and enhancing patient safety.
               </p>
-              <Image src="https://placehold.co/600x300.png" alt="Explainable AI concept with interconnected nodes" width={600} height={300} className="rounded-md mt-4 object-cover" data-ai-hint="abstract network" />
+              <Image src="https://placehold.co/600x300.png" alt="Explainable AI concept with interconnected nodes" width={600} height={300} className="rounded-md mt-4 object-cover" />
             </CardContent>
           </Card>
 
@@ -65,7 +65,7 @@ export default function ResearchPage() {
               <p>
                 My research explores advanced data fusion techniques, attention mechanisms for cross-modal understanding, and robust CV models for accurate feature extraction from medical images. The ultimate goal is to significantly improve diagnostic accuracy and pave the way for more personalized medicine.
               </p>
-               <Image src="https://placehold.co/600x300.png" alt="Multimodal AI concept with diverse data types" width={600} height={300} className="rounded-md mt-4 object-cover" data-ai-hint="medical data types" />
+               <Image src="https://placehold.co/600x300.png" alt="Multimodal AI concept with diverse data types" width={600} height={300} className="rounded-md mt-4 object-cover" />
             </CardContent>
           </Card>
         </div>
@@ -145,7 +145,7 @@ export default function ResearchPage() {
               <p>
                 The research encompasses conceptual design, prototype development, and rigorous evaluation strategies to assess the efficacy of this mobile health solution in real-world public health scenarios. Initial findings and concepts have been presented at international conferences.
               </p>
-               <Image src="https://placehold.co/700x350.png" alt="Mobile health app for dengue management" width={700} height={350} className="rounded-md mt-4 object-cover" data-ai-hint="mobile health app" />
+               <Image src="https://placehold.co/700x350.png" alt="Mobile health app for dengue management" width={700} height={350} className="rounded-md mt-4 object-cover" />
             </CardContent>
           </Card>
         </div>

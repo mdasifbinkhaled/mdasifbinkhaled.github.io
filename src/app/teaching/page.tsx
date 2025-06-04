@@ -54,7 +54,6 @@ export default function TeachingPage() {
               width={800} 
               height={400} 
               className="rounded-md mb-6 object-cover"
-              data-ai-hint="classroom lecture students"
             />
             <p>
               My teaching philosophy is centered on creating an inclusive, interactive, and stimulating learning experience. I strive to empower students to ask critical questions, explore complex concepts deeply, and bridge the gap between theoretical knowledge and practical application. A cornerstone of my approach is Outcome-Based Education (OBE), which emphasizes clearly defined learning objectives and measures student success by their ability to achieve these outcomes.

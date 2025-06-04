@@ -25,8 +25,7 @@ export default function HomePage() {
               alt={siteConfig.author}
               className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last border-4 border-primary shadow-lg"
               height="550"
-              src="https://placehold.co/550x550.png" 
-              data-ai-hint="professional headshot"
+              src="https://placehold.co/550x550.png"
               width="550"
               priority // Added priority for LCP
             />

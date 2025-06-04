@@ -11,7 +11,6 @@ export interface ExperienceItem {
   duration: string;
   description: string | string[];
   logoUrl?: string;
-  logoAiHint?: string;
   tags?: string[];
   type?: 'Academic' | 'Research' | 'Industry' | 'Teaching Support';
 }
