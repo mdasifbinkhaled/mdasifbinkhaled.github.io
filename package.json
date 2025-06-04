@@ -10,7 +10,9 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "deploy": "next build && touch ./out/.nojekyll && git add out/ && git commit -m \"Deploy\" && git subtree push --prefix out origin gh-pages"
+    "deploy": "next build && touch ./out/.nojekyll && git add out/ && git commit -m \"Deploy\" && git subtree push --prefix out origin gh-pages",
+    "prepare": "husky install",
+    "test": "vitest run"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.8.0",
@@ -68,8 +70,10 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-pdf": "^7.0.0",
+    "eslint": "^9.28.0",
+    "eslint-config-next": "^15.3.3",
     "genkit-cli": "^1.8.0",
-    "husky": "^9.1.7",
+    "husky": "^8.0.0",
     "next-mdx-remote": "^5.0.0",
     "postcss": "^8",
     "prettier": "^3.5.3",
