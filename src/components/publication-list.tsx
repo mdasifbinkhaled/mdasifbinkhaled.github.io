@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink, FileText, BookOpenText, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { PublicationCard } from '@/components/publications/publication-card';
-import { SkeletonWrapper } from '@/components/ui/skeleton-wrapper';
+import { Skeleton } from '@/components/ui/skeleton';
 import { BackToTop } from '@/components/back-to-top';
 
 interface PublicationListProps {
@@ -47,14 +47,13 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
     return (
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row gap-4 mb-6 p-4 border rounded-lg shadow-sm bg-card">
-          <SkeletonWrapper isLoading className="flex-1 min-w-[150px] h-10" />
-          <SkeletonWrapper isLoading className="flex-1 min-w-[150px] h-10" />
-          <SkeletonWrapper isLoading className="flex-1 min-w-[150px] h-10" />
+          <Skeleton className="flex-1 min-w-[150px] h-10" />
+          <Skeleton className="flex-1 min-w-[150px] h-10" />
+          <Skeleton className="flex-1 min-w-[150px] h-10" />
         </div>
         {[1, 2, 3].map((i) => (
-          <SkeletonWrapper 
+          <Skeleton 
             key={i} 
-            isLoading 
             className="h-[280px] w-full" 
           />
         ))}
