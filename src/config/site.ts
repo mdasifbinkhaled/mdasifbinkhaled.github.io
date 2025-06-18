@@ -1,12 +1,11 @@
-
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Md Asif Bin Khaled - Academic Portfolio",
   shortName: "Md Asif Bin Khaled", // Updated shortName
   description: "The professional academic portfolio of Md Asif Bin Khaled, Senior Lecturer & Researcher. Showcasing research in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, teaching experience, publications, and grants. Open to PhD opportunities.",
-  url: "https://mdasifbinkhaled.github.io",
-  ogImage: "https://mdasifbinkhaled.github.io/images/og-image.png",
+  url: "https://mdasifbinkhaled.github.io/mdasifbinkhaled-portfolio-d2",
+  ogImage: "https://mdasifbinkhaled.github.io/mdasifbinkhaled-portfolio-d2/images/og-image.png",
   links: {
     twitter: "https://twitter.com/yourusername", 
     github: "https://github.com/mdasifbinkhaled",
