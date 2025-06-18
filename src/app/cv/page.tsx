@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from "react";
@@ -8,12 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Download, ExternalLinkIcon } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { SkeletonWrapper } from '@/components/ui/skeleton-wrapper';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const PDFViewer = dynamic(() => import('@/components/ui/pdf-viewer').then(mod => mod.PDFViewer), {
   ssr: false,
   loading: () => (
-    <SkeletonWrapper isLoading className="w-full max-w-4xl h-[800px]" />
+    <Skeleton className="w-full max-w-4xl h-[800px]" />
   ),
 });
 
@@ -28,8 +27,8 @@ export default function CVPage() {
   if (!isMounted) {
     return (
       <div className="flex flex-col items-center space-y-8">
-        <SkeletonWrapper isLoading className="w-full h-12" />
-        <SkeletonWrapper isLoading className="w-full max-w-4xl h-[800px]" />
+        <Skeleton className="w-full h-12" />
+        <Skeleton className="w-full max-w-4xl h-[800px]" />
       </div>
     );
   }
@@ -173,5 +172,3 @@ export default function CVPage() {
     </div>
   );
 }
-
-    
