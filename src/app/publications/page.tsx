@@ -1,24 +1,8 @@
-
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import { samplePublications } from '@/lib/data/publications';
 import { siteConfig } from '@/config/site';
 import { BackToTop } from '@/components/back-to-top';
-import { SkeletonWrapper } from '@/components/ui/skeleton-wrapper';
-
-const PublicationList = dynamic(() => import('@/components/publication-list').then(mod => mod.PublicationList), {
-  ssr: false,
-  loading: () => (
-    <div className="space-y-6">
-      <SkeletonWrapper isLoading className="h-24 w-full" /> {/* Filter section skeleton */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[...Array(3)].map((_, i) => (
-          <SkeletonWrapper isLoading key={i} className="h-[280px] w-full" />
-        ))}
-      </div>
-    </div>
-  ),
-});
+import { PublicationListClient } from '@/components/publication-list-client';
 
 export const metadata: Metadata = {
   title: 'Publications & Research',
@@ -42,12 +26,10 @@ export default function PublicationsPage() {
       </header>
 
       <section id="publication-listing">
-        <PublicationList initialPublications={samplePublications} />
+        <PublicationListClient initialPublications={samplePublications} />
       </section>
       
       <BackToTop />
     </div>
   );
 }
-
-    

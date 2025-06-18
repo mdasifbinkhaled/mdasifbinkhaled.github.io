@@ -1,27 +1,10 @@
-
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import { professionalExperiences, technicalSkills } from '@/lib/data/experience';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Layers, Code, Cpu, Wrench } from 'lucide-react';
 import { siteConfig } from '@/config/site';
-import { SkeletonWrapper } from '@/components/ui/skeleton-wrapper';
-
-const ExperienceTimeline = dynamic(() => import('@/components/experience-timeline').then(mod => mod.ExperienceTimeline), {
-  ssr: false,
-  loading: () => (
-    <div className="space-y-8">
-      {[...Array(3)].map((_, i) => (
-        <div key={i} className="flex gap-4">
-          <SkeletonWrapper isLoading className="h-10 w-10 rounded-full" />
-          <SkeletonWrapper isLoading className="h-40 w-full" />
-        </div>
-      ))}
-    </div>
-  ),
-});
-
+import { ExperienceTimelineClient } from '@/components/experience-timeline-client';
 
 export const metadata: Metadata = {
   title: 'Experience & Skills',
@@ -41,7 +24,7 @@ export default function ExperiencePage() {
       </header>
 
       <section id="experience-timeline">
-        <ExperienceTimeline experiences={professionalExperiences} />
+        <ExperienceTimelineClient experiences={professionalExperiences} />
       </section>
 
       <section id="skills">
@@ -74,5 +57,3 @@ export default function ExperiencePage() {
     </div>
   );
 }
-
-    
