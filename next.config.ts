@@ -2,8 +2,6 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   output: 'export', // Configure for static export
-  basePath: process.env.NODE_ENV === 'production' ? '/mdasifbinkhaled-portfolio-d2' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/mdasifbinkhaled-portfolio-d2/' : '',
   typescript: {
     ignoreBuildErrors: true,
   },
