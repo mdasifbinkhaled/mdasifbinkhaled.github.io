@@ -1,37 +1,24 @@
 
 import type { Metadata } from 'next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Brain, Code2, Calculator, BookOpen, Database, Server, Users, Group, Mic2 } from 'lucide-react';
+import { Users, Group, Mic2, BookOpen } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import Image from 'next/image';
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
+import { coursesTaughtIUB, coursesTaughtBRACU } from '@/lib/data/courses';
 
 export const metadata: Metadata = {
   title: 'Teaching Portfolio',
   description: `${siteConfig.author}'s teaching philosophy, experience with Outcome-Based Education (OBE), and list of courses taught. ${siteConfig.description}`,
 };
 
-const coursesTaughtIUB = [
-  { id: 'iub-cse101', title: 'Introduction to Programming', icon: Code2, description: 'Fundamentals of programming concepts and problem-solving.' },
-  { id: 'iub-cse201', title: 'Algorithms', icon: Brain, description: 'Design and analysis of algorithms and data structures.' },
-  { id: 'iub-cse203', title: 'Data Structures', icon: Database, description: 'Implementation and application of common data structures.' },
-  { id: 'iub-cse205', title: 'Discrete Mathematics', icon: Calculator, description: 'Mathematical foundations for computer science.' },
-  { id: 'iub-cse303', title: 'Numerical Methods', icon: Calculator, description: 'Computational techniques for solving mathematical problems.' },
-  { id: 'iub-cse401', title: 'Fundamentals of Computer System', icon: Server, description: 'Core concepts of computer architecture and systems.' },
-  { id: 'iub-cse403', title: 'Finite Automata and Computability', icon: BookOpen, description: 'Theory of computation and formal languages.' },
-];
-
-const coursesTaughtBRACU = [
-  { id: 'bracu-cg-lab', title: 'Computer Graphics Lab', icon: Code2, description: 'Practical application of computer graphics principles.' },
-  { id: 'bracu-nm-lab', title: 'Numerical Methods Lab', icon: Calculator, description: 'Hands-on numerical computation exercises.' },
-  { id: 'bracu-cd-lab', title: 'Compiler Design Lab', icon: Brain, description: 'Implementation of compiler components.' },
-  { id: 'bracu-android-lab', title: 'Android Development Lab', icon: Code2, description: 'Building mobile applications for Android.' },
-];
-
 
 export default function TeachingPage() {
   return (
     <div className="space-y-16">
+      <Breadcrumbs />
+      
       <header className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           My Teaching Approach
@@ -72,58 +59,42 @@ export default function TeachingPage() {
           Courses Taught
         </h2>
         
-        <div className="mb-10">
-            <h3 className="text-2xl font-semibold text-center mb-6 text-foreground">Independent University, Bangladesh (IUB)</h3>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {coursesTaughtIUB.map((course) => {
-                const IconComponent = course.icon;
-                return (
-                <Card key={course.id} className="shadow-md hover:shadow-lg transition-shadow flex flex-col">
-                    <CardHeader className="flex-grow">
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="bg-primary/10 p-2 rounded-full">
-                        <IconComponent className="h-6 w-6 text-primary" />
-                        </div>
-                        <CardTitle className="text-xl">{course.title}</CardTitle>
-                    </div>
-                    <CardDescription>{course.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                    <Button variant="outline" className="w-full mt-auto" disabled>
-                        Course Materials (Coming Soon)
-                    </Button>
-                    </CardContent>
-                </Card>
-                );
-            })}
-            </div>
+        <div className="mb-12">
+          <h3 className="text-2xl font-semibold text-center mb-8 text-foreground">
+            Independent University, Bangladesh (IUB)
+          </h3>
+          <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
+            As a Senior Lecturer, I have taught a diverse range of undergraduate courses covering 
+            programming fundamentals, algorithms, system design, and mathematical foundations.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+            {coursesTaughtIUB.map((course) => (
+              <SimpleCourseCard 
+                key={course.id} 
+                course={course}
+                showFullDetails={true}
+              />
+            ))}
+          </div>
         </div>
 
         <div>
-            <h3 className="text-2xl font-semibold text-center mb-6 text-foreground">BRAC University (BRACU) - Adjunct Lecturer</h3>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2"> {/* Adjusted for 4 items */}
-            {coursesTaughtBRACU.map((course) => {
-                const IconComponent = course.icon;
-                return (
-                <Card key={course.id} className="shadow-md hover:shadow-lg transition-shadow flex flex-col">
-                    <CardHeader className="flex-grow">
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="bg-primary/10 p-2 rounded-full">
-                        <IconComponent className="h-6 w-6 text-primary" />
-                        </div>
-                        <CardTitle className="text-xl">{course.title}</CardTitle>
-                    </div>
-                    <CardDescription>{course.description}</CardDescription>
-                    </CardHeader>
-                     <CardContent>
-                    <Button variant="outline" className="w-full mt-auto" disabled>
-                        Lab Materials (Coming Soon)
-                    </Button>
-                    </CardContent>
-                </Card>
-                );
-            })}
-            </div>
+          <h3 className="text-2xl font-semibold text-center mb-8 text-foreground">
+            BRAC University (BRACU) - Teaching Assistant
+          </h3>
+          <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Laboratory courses where I provided hands-on guidance and practical experience 
+            in computer graphics, numerical methods, compiler design, and mobile development.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2">
+            {coursesTaughtBRACU.map((course) => (
+              <SimpleCourseCard 
+                key={course.id} 
+                course={course}
+                showFullDetails={true}
+              />
+            ))}
+          </div>
         </div>
       </section>
 

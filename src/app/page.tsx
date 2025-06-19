@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/config/site';
-import { ArrowRight, ExternalLink, BookOpen, Users, Award, Search, Star, Quote, GraduationCap, Target, Lightbulb, TrendingUp, MessageSquare } from 'lucide-react';
+import { ArrowRight, ExternalLink, BookOpen, Users, Search, Quote, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
