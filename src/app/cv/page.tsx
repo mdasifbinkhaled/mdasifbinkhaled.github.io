@@ -9,12 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const PDFViewer = dynamic(() => import('@/components/ui/pdf-viewer').then(mod => mod.PDFViewer), {
-  ssr: false,
-  loading: () => (
-    <Skeleton className="w-full max-w-4xl h-[800px]" />
-  ),
-});
+import { PDFViewerWrapper } from '@/components/ui/pdf-viewer-wrapper';
 
 export default function CVPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -60,7 +55,7 @@ export default function CVPage() {
           </div>
           
           <TabsContent value="viewer" className="mt-0">
-            <PDFViewer 
+            <PDFViewerWrapper 
               file={siteConfig.links.cv} 
               downloadLink={siteConfig.links.cv} 
               className="w-full" 

@@ -8,6 +8,22 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  webpack: (config, { isServer }) => {
+    // Fix for react-pdf and other client-side dependencies
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        canvas: false,
+        fs: false,
+      };
+    }
+    
+    // Exclude canvas from server-side builds
+    config.externals = config.externals || [];
+    config.externals.push('canvas');
+    
+    return config;
+  },
   images: {
     remotePatterns: [
       {
@@ -24,21 +40,6 @@ const nextConfig: NextConfig = {
       },
     ],
     unoptimized: true, // Required for static export with next/image
-  },
-  // Add redirects for better UX
-  async redirects() {
-    return [
-      {
-        source: '/cv.pdf',
-        destination: '/CV_Md_Asif_Bin_Khaled.pdf',
-        permanent: true,
-      },
-      {
-        source: '/resume',
-        destination: '/cv',
-        permanent: false,
-      },
-    ];
   },
 };
 
