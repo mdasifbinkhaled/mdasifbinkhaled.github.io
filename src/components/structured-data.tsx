@@ -4,7 +4,6 @@
 import { memo, useEffect } from 'react';
 import { siteConfig } from '@/config/site';
 import { samplePublications } from '@/lib/data/publications';
-import { professionalExperiences } from '@/lib/data/experience';
 
 export const ScholarStructuredData = memo(function ScholarStructuredData() {
   useEffect(() => {
