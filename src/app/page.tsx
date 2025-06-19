@@ -2,9 +2,11 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/config/site';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink, BookOpen, Users, Award, Search, Star, Quote, GraduationCap, Target, Lightbulb, TrendingUp, MessageSquare } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { AcademicSearch } from '@/components/search/academic-search';
 import { samplePublications } from '@/lib/data/publications';
 import { professionalExperiences } from '@/lib/data/experience';
 import { 
@@ -40,6 +42,8 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col items-center">
+      <Breadcrumbs />
+      
       {/* Hero Section */}
       <section className="w-full py-12 md:py-24 lg:py-28 xl:py-32 bg-gradient-to-br from-background to-secondary/30">
         <div className="container px-4 md:px-6">
@@ -80,7 +84,68 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
+            
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-8">
+              {[
+                { number: '15+', label: 'Publications', icon: BookOpen, color: 'text-blue-500' },
+                { number: '200+', label: 'Citations', icon: Quote, color: 'text-green-500' },
+                { number: '5+', label: 'Years Teaching', icon: GraduationCap, color: 'text-purple-500' },
+                { number: '1000+', label: 'Students Taught', icon: Users, color: 'text-orange-500' }
+              ].map((stat, index) => (
+                <Card key={index} className="bg-card/50 backdrop-blur border-0 shadow-sm hover:shadow-md transition-shadow">
+                  <CardContent className="p-6 text-center">
+                    <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
+                    <div className="text-2xl font-bold text-foreground mb-1">{stat.number}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Quick Access Search */}
+      <section className="w-full py-8 md:py-12">
+        <div className="container px-4 md:px-6">
+          <Card className="overflow-hidden">
+            <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5">
+              <CardTitle className="flex items-center gap-2">
+                <Search className="w-5 h-5" />
+                Explore My Academic Work
+              </CardTitle>
+              <CardDescription>
+                Search through publications, courses, research projects, and teaching materials
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              <AcademicSearch 
+                content={[
+                  {
+                    id: '1',
+                    title: 'Explainable AI for Healthcare Diagnostics',
+                    type: 'publication',
+                    content: 'Research on interpretable machine learning models for medical diagnosis',
+                    tags: ['AI', 'Healthcare', 'Machine Learning'],
+                    year: 2024,
+                    url: '/publications'
+                  },
+                  {
+                    id: '2',
+                    title: 'Advanced Machine Learning',
+                    type: 'course',
+                    content: 'Graduate course covering deep learning and neural networks',
+                    tags: ['Teaching', 'Machine Learning', 'Deep Learning'],
+                    year: 2024,
+                    url: '/teaching'
+                  }
+                ]}
+                placeholder="Search publications, courses, research areas..."
+                maxResults={6}
+              />
+            </CardContent>
+          </Card>
         </div>
       </section>
 

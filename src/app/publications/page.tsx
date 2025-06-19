@@ -3,6 +3,7 @@ import { samplePublications } from '@/lib/data/publications';
 import { siteConfig } from '@/config/site';
 import { BackToTop } from '@/components/back-to-top';
 import { PublicationListClient } from '@/components/publication-list-client';
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Publications & Research',
@@ -16,6 +17,8 @@ export const metadata: Metadata = {
 export default function PublicationsPage() {
   return (
     <div className="space-y-12">
+      <Breadcrumbs />
+      
       <header className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           Publications & Research
