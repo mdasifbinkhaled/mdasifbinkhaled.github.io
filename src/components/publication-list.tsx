@@ -2,10 +2,9 @@
 
 import type { PublicationItem, PublicationType } from '@/types';
 import React, { useState, useMemo, useEffect } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { ExternalLink, FileText, BookOpenText, Filter } from 'lucide-react';
+import { BookOpenText } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { PublicationCard } from '@/components/publications/publication-card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -18,7 +17,7 @@ interface PublicationListProps {
 const publicationTypeOptions: PublicationType[] = ['Conference', 'Journal', 'Workshop', 'Preprint', 'In Progress', 'Book Chapter', 'Thesis'];
 
 export function PublicationList({ initialPublications }: PublicationListProps) {
-  const [publications, setPublications] = useState<PublicationItem[]>(initialPublications);
+  const [publications] = useState<PublicationItem[]>(initialPublications);
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<PublicationType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');

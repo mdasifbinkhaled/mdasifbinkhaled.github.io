@@ -16,7 +16,7 @@ import {
   SheetClose 
 } from '@/components/ui/sheet';
 import { SidebarTrigger } from '@/components/ui/sidebar'; // For the main collapsible sidebar
-import { GraduationCap, Menu, PanelLeft, Sun, Moon, Palette, X } from 'lucide-react';
+import { GraduationCap, Menu, Sun, Moon, Palette, X } from 'lucide-react';
 import { mainNavItems } from '@/config/navigation';
 import { cn } from '@/lib/utils';
 import { SidebarNav } from './sidebar-nav';

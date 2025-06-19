@@ -13,8 +13,7 @@ import {
   Award,
   Send,
   Presentation, // Added Presentation
-  type LucideProps,
-  type LucideIcon as LucideIconType // Renamed to avoid conflict with component name
+  type LucideProps
 } from 'lucide-react';
 
 // Define the IconName type based on the keys of iconComponents

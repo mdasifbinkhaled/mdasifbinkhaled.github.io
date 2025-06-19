@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, FileText, ChevronDown, ChevronUp, Eye, Download } from 'lucide-react';
+import { ExternalLink, FileText, ChevronDown, ChevronUp } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import type { PublicationItem } from '@/types';
 import { cn } from '@/lib/utils';

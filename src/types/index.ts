@@ -1,4 +1,3 @@
-import type { LucideIcon } from 'lucide-react';
 import type { IconName } from '@/components/icons'; // Added import
 
 export type PublicationType = 'Conference' | 'Journal' | 'Workshop' | 'Preprint' | 'In Progress' | 'Book Chapter' | 'Thesis';

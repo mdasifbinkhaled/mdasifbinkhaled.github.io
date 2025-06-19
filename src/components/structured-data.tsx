@@ -141,6 +141,8 @@ export function PublicationStructuredData() {
         document.head.removeChild(script);
       };
     }
+    
+    return undefined; // Explicit return for consistency
   }, []);
 
   return null;

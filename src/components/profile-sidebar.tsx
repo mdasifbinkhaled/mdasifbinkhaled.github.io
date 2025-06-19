@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site';
-import { ExternalLink, FileText, Mail, Github, Linkedin, BookUser, Smartphone, MapPin } from 'lucide-react';
+import { ExternalLink, FileText, Mail, Github, Linkedin, BookUser, Smartphone } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 export function ProfileSidebar() {

@@ -16,8 +16,8 @@ export const mainNavItems: NavItem[] = [
 ];
 
 // If you have specific teaching pages with sub-navigation:
-export const teachingNavItems = (courseBasePath: string): NavItem[] => [
+export const teachingNavItems = (): NavItem[] => [
     // Example:
-    // { href: `${courseBasePath}/introduction`, label: "Introduction", sectionId: "intro" },
-    // { href: `${courseBasePath}/module1`, label: "Module 1", sectionId: "mod1" },
+    // { href: `/teaching/introduction`, label: "Introduction", sectionId: "intro" },
+    // { href: `/teaching/module1`, label: "Module 1", sectionId: "mod1" },
 ];
