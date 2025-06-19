@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import dynamic from 'next/dynamic';
 import { siteConfig } from '@/config/site';
 import { Button } from '@/components/ui/button';
 import { Download, ExternalLinkIcon } from 'lucide-react';

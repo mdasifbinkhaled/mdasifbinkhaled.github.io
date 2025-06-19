@@ -1,7 +1,7 @@
 
 import type { Metadata } from 'next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Award, Users, ShieldCheck, Medal, Trophy, Star, CalendarDays } from 'lucide-react';
+import { Users, ShieldCheck, Medal, Trophy, Star, CalendarDays } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import Image from 'next/image';
 

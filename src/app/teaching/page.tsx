@@ -1,9 +1,8 @@
 
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookCopy, Brain, Code2, Calculator, BookOpen, Database, Server, Users, Group, Mic2 } from 'lucide-react';
+import { Brain, Code2, Calculator, BookOpen, Database, Server, Users, Group, Mic2 } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import Image from 'next/image';
 

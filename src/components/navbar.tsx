@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -36,11 +35,16 @@ export function Navbar() {
     }
   };
 
+  const getThemeLabel = () => {
+    if (theme === 'light') return 'Switch to dark mode';
+    if (theme === 'dark') return 'Switch to retro mode';
+    return 'Switch to light mode';
+  };
+
   const ThemeIcon = () => {
-    if (theme === 'light') return <Sun className="h-5 w-5" />;
-    if (theme === 'dark') return <Moon className="h-5 w-5" />;
-    if (theme === 'retro') return <Palette className="h-5 w-5" />;
-    return <Sun className="h-5 w-5" />;
+    if (theme === 'light') return <Sun className="h-5 w-5" aria-hidden="true" />;
+    if (theme === 'dark') return <Moon className="h-5 w-5" aria-hidden="true" />;
+    return <Palette className="h-5 w-5" aria-hidden="true" />;
   };
 
   const isNavItemActive = (href: string): boolean => {
@@ -50,21 +54,32 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header 
+      className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      role="banner"
+    >
       <div className="container flex h-16 items-center justify-between">
         {/* Left Group: Desktop Sidebar Trigger and Branding */}
         <div className="flex items-center gap-x-2 sm:gap-x-3">
           {/* Desktop Sidebar Trigger for the main collapsible sidebar */}
           <SidebarTrigger className="hidden md:flex" aria-label="Toggle main sidebar" />
           
-          <Link href="/" className="flex items-center gap-2">
-            <GraduationCap className="h-7 w-7 text-primary" />
+          <Link 
+            href="/" 
+            className="flex items-center gap-2"
+            aria-label={`${siteConfig.shortName} - Go to homepage`}
+          >
+            <GraduationCap className="h-7 w-7 text-primary" aria-hidden="true" />
             <span className="font-bold text-lg text-foreground">{siteConfig.shortName}</span>
           </Link>
         </div>
 
         {/* Desktop Navigation Links - Centered */}
-        <nav className="hidden md:flex flex-1 items-center justify-center gap-x-1 sm:gap-x-2 lg:gap-x-3 text-sm font-medium">
+        <nav 
+          className="hidden md:flex flex-1 items-center justify-center gap-x-1 sm:gap-x-2 lg:gap-x-3 text-sm font-medium"
+          role="navigation" 
+          aria-label="Main navigation"
+        >
           {mainNavItems.map((item) => (
             !item.disabled && (
               <Link
@@ -87,7 +102,13 @@ export function Navbar() {
 
         {/* Right Group: Theme Toggle and Mobile Menu Trigger */}
         <div className="flex items-center gap-x-1 sm:gap-x-2">
-          <Button variant="ghost" size="icon" onClick={cycleTheme} aria-label="Toggle theme">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={cycleTheme} 
+            aria-label={getThemeLabel()}
+            title={getThemeLabel()}
+          >
             <ThemeIcon />
           </Button>
 

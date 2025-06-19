@@ -8,10 +8,12 @@ import Link from 'next/link';
 import { samplePublications } from '@/lib/data/publications';
 
 export default function HomePage() {
-  const latestPublication = samplePublications.length > 0 
-    ? samplePublications
-        .filter(p => p.type !== 'In Progress' && p.type !== 'Thesis') // Exclude 'In Progress' and 'Thesis' from "latest"
-        .reduce((a, b) => (a.year > b.year ? a : (a.year === b.year && parseInt(a.id.split('-').pop() || '0') > parseInt(b.id.split('-').pop() || '0') ? a : b)), samplePublications[0])
+  const filteredPublications = samplePublications.filter(p => p.type !== 'In Progress' && p.type !== 'Thesis');
+  const latestPublication = filteredPublications.length > 0 
+    ? filteredPublications.reduce((a, b) => {
+        if (!a || !b) return a || b;
+        return (a.year > b.year ? a : (a.year === b.year && parseInt(a.id.split('-').pop() || '0') > parseInt(b.id.split('-').pop() || '0') ? a : b));
+      })
     : null;
 
 
