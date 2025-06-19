@@ -146,6 +146,6 @@ export const technicalSkills = [
   },
   {
     category: "Languages",
-    items: ["Bengali (Native)", "English (IELTS Band: 7.0)", "Hindi (Conversational)"],
+    items: ["Bengali (Native)", "English (Fluent)", "Hindi (Conversational)"],
   },
 ];

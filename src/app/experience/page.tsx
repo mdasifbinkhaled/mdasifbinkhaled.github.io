@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Layers, Code, Cpu, Wrench } from 'lucide-react';
 import { siteConfig } from '@/config/site';
-import { ExperienceTimelineClient } from '@/components/experience-timeline-client';
+import { ExperienceCompact } from '@/components/experience-compact';
 
 export const metadata: Metadata = {
   title: 'Experience & Skills',
@@ -19,12 +19,12 @@ export default function ExperiencePage() {
           Professional Experience
         </h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          A timeline of my academic, research, and industry roles.
+          My academic, research, and industry roles with key achievements.
         </p>
       </header>
 
-      <section id="experience-timeline">
-        <ExperienceTimelineClient experiences={professionalExperiences} />
+      <section id="experience-overview">
+        <ExperienceCompact experiences={professionalExperiences} />
       </section>
 
       <section id="skills">

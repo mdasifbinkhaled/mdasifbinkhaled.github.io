@@ -1,12 +1,14 @@
 
 import type { Metadata } from 'next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Group, Mic2, BookOpen } from 'lucide-react';
+import { Users, Group, Mic2, BookOpen, Building2, ArrowRight } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
 import { coursesTaughtIUB, coursesTaughtBRACU } from '@/lib/data/courses';
+import { teachingNavItems } from '@/config/navigation';
 
 export const metadata: Metadata = {
   title: 'Teaching Portfolio',
@@ -52,6 +54,65 @@ export default function TeachingPage() {
             </p>
           </CardContent>
         </Card>
+      </section>
+
+      {/* Institution Navigation */}
+      <section id="institution-navigation">
+        <h2 className="text-3xl font-bold text-center mb-10 text-primary">
+          Teaching by Institution
+        </h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+          {teachingNavItems.slice(1).map((institution) => {
+            const isIUB = institution.sectionId === 'iub';
+            const courses = isIUB ? coursesTaughtIUB : coursesTaughtBRACU;
+            const totalStudents = courses.reduce((sum, course) => sum + course.enrollment, 0);
+            
+            return (
+              <Link key={institution.href} href={institution.href}>
+                <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary cursor-pointer h-full">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Building2 className="w-8 h-8 text-primary" />
+                        <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                          {institution.label}
+                        </CardTitle>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+                    <CardDescription>
+                      {isIUB 
+                        ? 'Senior Lecturer & Lecturer (2019 - Present)'
+                        : 'Teaching Assistant & Lab Instructor (2016 - 2018)'
+                      }
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex justify-between items-center text-sm text-muted-foreground">
+                      <span>{courses.length} Courses</span>
+                      <span>{totalStudents} Students</span>
+                    </div>
+                    <div className="mt-3">
+                      <div className="text-xs text-muted-foreground mb-1">Sample Courses:</div>
+                      <div className="flex flex-wrap gap-1">
+                        {courses.slice(0, 3).map((course) => (
+                          <span key={course.id} className="text-xs bg-secondary/50 px-2 py-1 rounded">
+                            {course.code}
+                          </span>
+                        ))}
+                        {courses.length > 3 && (
+                          <span className="text-xs bg-secondary/50 px-2 py-1 rounded">
+                            +{courses.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
       </section>
 
       <section id="courses-taught">

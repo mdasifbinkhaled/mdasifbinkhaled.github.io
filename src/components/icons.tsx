@@ -12,7 +12,15 @@ import {
   Cpu,
   Award,
   Send,
-  Presentation, // Added Presentation
+  Presentation,
+  LayoutDashboard,
+  Building2,
+  Code2,
+  Brain,
+  Database,
+  Calculator,
+  BookOpen,
+  Server,
   type LucideProps
 } from 'lucide-react';
 
@@ -28,7 +36,15 @@ const iconComponents = {
   Cpu,
   Award,
   Send,
-  Presentation, // Added Presentation
+  Presentation,
+  LayoutDashboard,
+  Building2,
+  Code2,
+  Brain,
+  Database,
+  Calculator,
+  BookOpen,
+  Server,
 };
 
 interface IconComponentProps extends LucideProps {

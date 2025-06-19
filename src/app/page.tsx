@@ -10,9 +10,9 @@ import { AcademicSearch } from '@/components/search/academic-search';
 import { samplePublications } from '@/lib/data/publications';
 import { professionalExperiences } from '@/lib/data/experience';
 import { 
-  LazyExperienceTimelineWithSuspense,
   LazyPublicationListWithSuspense 
 } from '@/components/lazy-components';
+import { ExperienceCompact } from '@/components/experience-compact';
 
 export default function HomePage() {
   const filteredPublications = samplePublications.filter(p => p.type !== 'In Progress' && p.type !== 'Thesis');
@@ -183,7 +183,7 @@ export default function HomePage() {
       <section className="w-full py-8 md:py-12">
         <div className="container px-4 md:px-6">
           <h2 className="text-2xl font-bold mb-6 text-primary">Work Experience</h2>
-          <LazyExperienceTimelineWithSuspense experiences={recentExperiences} />
+          <ExperienceCompact experiences={recentExperiences} />
           <div className="text-center mt-6">
             <Button variant="outline" asChild>
               <Link href="/experience">
