@@ -2,10 +2,11 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/config/site';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink, Calendar, Briefcase, Award } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { samplePublications } from '@/lib/data/publications';
+import { professionalExperiences } from '@/lib/data/experience';
 
 export default function HomePage() {
   const filteredPublications = samplePublications.filter(p => p.type !== 'In Progress' && p.type !== 'Thesis');
@@ -15,6 +16,28 @@ export default function HomePage() {
         return (a.year > b.year ? a : (a.year === b.year && parseInt(a.id.split('-').pop() || '0') > parseInt(b.id.split('-').pop() || '0') ? a : b));
       })
     : null;
+
+  // Get recent experiences (current and latest)
+  const recentExperiences = professionalExperiences.slice(0, 3);
+
+  // News items (recent achievements and announcements)
+  const newsItems = [
+    {
+      date: '[2025/04]',
+      text: 'Excited to announce the launch of ',
+      highlight: 'Llama 4',
+      description: ', a major leap in open-source AI! As part of the team supporting Llama 4 at FAIR, I\'m proud to have contributed to these cutting-edge models! 🚀'
+    },
+    {
+      date: '[2025/02]',
+      text: '3D-MVP, MM-Graph and 3D-GRAND are accepted at CVPR 2025!'
+    },
+    {
+      date: '[2024/10]',
+      text: 'We\'re looking for research interns starting next year working on embodied agents and multimodal LLMs.',
+      strikethrough: 'If you are interested, please drop me an email and apply here.'
+    }
+  ];
 
 
   return (
@@ -63,6 +86,79 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* News Section */}
+      <section className="w-full py-8 md:py-12 bg-secondary/10">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-2xl font-bold mb-6 text-primary">News</h2>
+          <div className="space-y-3">
+            {newsItems.map((item, index) => (
+              <div key={index} className="flex gap-2 text-sm">
+                <span className="font-medium text-muted-foreground whitespace-nowrap">
+                  {item.date}
+                </span>
+                <div className="flex-1">
+                  <span>{item.text}</span>
+                  {item.highlight && (
+                    <a href="#" className="text-blue-600 hover:underline font-medium">
+                      {item.highlight}
+                    </a>
+                  )}
+                  {item.description && <span>{item.description}</span>}
+                  {item.strikethrough && (
+                    <span className="line-through text-muted-foreground ml-1">
+                      {item.strikethrough}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Work Experience Section */}
+      <section className="w-full py-8 md:py-12">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-2xl font-bold mb-6 text-primary">Work Experience</h2>
+          <div className="space-y-4">
+            {recentExperiences.map((experience) => (
+              <Card key={experience.id} className="shadow-sm hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <Briefcase className="w-6 h-6 text-primary" />
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-lg leading-tight mb-1">
+                        {experience.title}
+                      </h3>
+                      <p className="text-primary font-medium text-sm mb-1">
+                        {experience.institution}
+                      </p>
+                      <p className="text-muted-foreground text-sm mb-2">
+                        {experience.duration}
+                      </p>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {experience.description[0]}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-6">
+            <Button variant="outline" asChild>
+              <Link href="/experience">
+                View Full Experience <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Research Interests */}
       <section className="w-full py-12 md:py-16">
         <div className="container px-4 md:px-6">
@@ -94,33 +190,55 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Latest Publication */}
-      {latestPublication && (
-        <section className="w-full py-12 md:py-16 bg-secondary/20">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold text-center mb-8 text-primary">Latest Publication Highlight</h2>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-lg leading-tight">
-                  {latestPublication.title}
-                </CardTitle>
-                <CardDescription className="text-sm">
-                  {latestPublication.authors.join(', ')} ({latestPublication.year})
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground italic">{latestPublication.venue}</p>
-                 {latestPublication.abstract && <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{latestPublication.abstract}</p>}
-                <div className="flex justify-end mt-4">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href="/publications">View All Publications <ArrowRight className="ml-1 h-4 w-4" /></Link>
-                  </Button>
+      {/* Publications Section */}
+      <section className="w-full py-8 md:py-12 bg-secondary/10">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-2xl font-bold mb-6 text-primary">Publications</h2>
+          {latestPublication && (
+            <Card className="shadow-sm hover:shadow-md transition-shadow mb-6">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="w-32 h-24 bg-gradient-to-br from-blue-100 to-green-100 rounded-lg flex items-center justify-center">
+                      <Award className="w-8 h-8 text-primary" />
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-lg leading-tight mb-2">
+                      {latestPublication.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      {latestPublication.authors.join(', ')}
+                    </p>
+                    <p className="text-sm text-primary font-medium mb-2">
+                      {latestPublication.venue} • {latestPublication.year}
+                    </p>
+                    {latestPublication.abstract && (
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {latestPublication.abstract}
+                      </p>
+                    )}
+                    <div className="mt-3">
+                      <Button variant="link" size="sm" className="p-0 h-auto" asChild>
+                        <a href="#" className="text-blue-600 hover:underline text-sm">
+                          [paper]
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
+          )}
+          <div className="text-center">
+            <Button variant="outline" asChild>
+              <Link href="/publications">
+                View All Publications <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Grants and Highlight */}
        <section className="w-full py-12 md:py-16">
