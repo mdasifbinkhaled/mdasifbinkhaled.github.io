@@ -1,63 +1,44 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import { ArrowUp } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import React, { useState, useEffect, useCallback } from "react";
+import { ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-interface BackToTopProps {
-  className?: string
-  threshold?: number
-  smooth?: boolean
-  showLabel?: boolean
-}
+export const BackToTop = React.memo(function BackToTop() {
+  const [isVisible, setIsVisible] = useState(false);
 
-export function BackToTop({ 
-  className, 
-  threshold = 400,
-  smooth = true,
-  showLabel = false
-}: BackToTopProps) {
-  const [isVisible, setIsVisible] = useState(false)
-
-  const checkScrollTop = () => {
-    if (!isVisible && window.scrollY > threshold) {
-      setIsVisible(true)
-    } else if (isVisible && window.scrollY <= threshold) {
-      setIsVisible(false)
-    }
-  }
-
-  const scrollToTop = () => {
-    if (smooth) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+  const toggleVisibility = useCallback(() => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
     } else {
-      window.scrollTo(0, 0)
+      setIsVisible(false);
     }
-  }
+  }, []);
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', checkScrollTop)
-    return () => window.removeEventListener('scroll', checkScrollTop)
-  })
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, [toggleVisibility]);
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <Button
-      variant="secondary"
-      size={showLabel ? "default" : "icon"}
-      className={cn(
-        "fixed bottom-6 right-6 z-50 shadow-md transition-opacity duration-300 focus:ring-2 focus:ring-primary",
-        isVisible ? "opacity-100" : "opacity-0 pointer-events-none",
-        className
-      )}
       onClick={scrollToTop}
-      aria-label="Back to top"
+      size="icon"
+      className="fixed bottom-6 right-6 z-50 shadow-lg hover:shadow-xl transition-all duration-200 bg-primary hover:bg-primary/90"
+      aria-label="Scroll back to top"
     >
       <ArrowUp className="h-4 w-4" />
-      {showLabel && <span className="ml-2">Back to top</span>}
     </Button>
-  )
-}
+  );
+});

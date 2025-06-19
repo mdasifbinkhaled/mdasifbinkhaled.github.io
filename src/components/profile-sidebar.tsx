@@ -15,10 +15,13 @@ export function ProfileSidebar() {
       <div className="flex flex-col items-center p-4 text-center group-data-[state=collapsed]:hidden">
         <div className="relative w-32 h-32 mb-3 overflow-hidden rounded-full border-2 border-sidebar-primary">
           <Image
-            src="https://placehold.co/200x200.png" // Replace with an actual profile image if available
-            alt={siteConfig.author}
+            src="/photo/Photo_Md Asif Bin Khaled.png"
+            alt={`${siteConfig.author} - Profile photo`}
             fill
             className="object-cover"
+            sizes="128px"
+            priority
+            quality={85}
           />
         </div>
         <h3 className="font-bold text-lg text-sidebar-foreground">{siteConfig.author}</h3>

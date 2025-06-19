@@ -1,7 +1,7 @@
 "use client";
 
 import type { PublicationItem, PublicationType } from '@/types';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { BookOpenText } from 'lucide-react';
@@ -16,7 +16,7 @@ interface PublicationListProps {
 
 const publicationTypeOptions: PublicationType[] = ['Conference', 'Journal', 'Workshop', 'Preprint', 'In Progress', 'Book Chapter', 'Thesis'];
 
-export function PublicationList({ initialPublications }: PublicationListProps) {
+export const PublicationList = React.memo(function PublicationList({ initialPublications }: PublicationListProps) {
   const [publications] = useState<PublicationItem[]>(initialPublications);
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<PublicationType | 'all'>('all');
@@ -29,6 +29,18 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
     const years = new Set(initialPublications.map(p => p.year.toString()));
     return ['all', ...Array.from(years).sort((a, b) => parseInt(b) - parseInt(a))];
   }, [initialPublications]);
+
+  const handleYearChange = useCallback((value: string) => {
+    setYearFilter(value);
+  }, []);
+
+  const handleTypeChange = useCallback((value: string) => {
+    setTypeFilter(value as PublicationType | 'all');
+  }, []);
+
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
 
   const filteredPublications = useMemo(() => {
     return publications.filter(pub => {
@@ -74,13 +86,13 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
               id="search-filter"
               placeholder="Filter by title, author, keyword..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleSearchChange}
               className="w-full"
             />
           </div>
           <div>
             <label htmlFor="year-filter" className="block text-sm font-medium text-foreground mb-1">Year</label>
-            <Select value={yearFilter} onValueChange={setYearFilter}>
+            <Select value={yearFilter} onValueChange={handleYearChange}>
               <SelectTrigger id="year-filter" className="w-full">
                 <SelectValue placeholder="Filter by Year" />
               </SelectTrigger>
@@ -95,7 +107,7 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
           </div>
           <div>
             <label htmlFor="type-filter" className="block text-sm font-medium text-foreground mb-1">Type</label>
-            <Select value={typeFilter} onValueChange={(value) => setTypeFilter(value as PublicationType | 'all')}>
+            <Select value={typeFilter} onValueChange={handleTypeChange}>
               <SelectTrigger id="type-filter" className="w-full">
                 <SelectValue placeholder="Filter by Type" />
               </SelectTrigger>
@@ -127,4 +139,4 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
       <BackToTop />
     </div>
   );
-}
+});
