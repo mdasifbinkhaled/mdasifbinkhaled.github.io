@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { memo, useState, useCallback } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, FileText, ChevronDown, ChevronUp } from 'lucide-react';
@@ -12,8 +12,14 @@ interface PublicationCardProps {
   publication: PublicationItem;
 }
 
-export function PublicationCard({ publication }: PublicationCardProps) {
+export const PublicationCard = memo(function PublicationCard({ 
+  publication 
+}: PublicationCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpanded = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
 
   return (
     <Card className={cn(
@@ -42,7 +48,7 @@ export function PublicationCard({ publication }: PublicationCardProps) {
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={toggleExpanded}
             className="mt-3 p-0 h-auto font-medium text-primary hover:text-primary/80 hover:bg-transparent"
           >
             {isExpanded ? (
@@ -93,4 +99,4 @@ export function PublicationCard({ publication }: PublicationCardProps) {
       </CardFooter>
     </Card>
   );
-}
+});

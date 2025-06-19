@@ -1,12 +1,12 @@
 "use client";
 
+import { memo, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site';
 import { ExternalLink, FileText, Mail, Github, Linkedin, BookUser, Smartphone, User } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
-import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface ProfileSidebarProps {
@@ -14,8 +14,19 @@ interface ProfileSidebarProps {
   isCollapsed?: boolean;
 }
 
-export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSidebarProps) {
+export const ProfileSidebar = memo(function ProfileSidebar({ 
+  onLinkClick, 
+  isCollapsed = false 
+}: ProfileSidebarProps) {
   const [imageError, setImageError] = useState(false);
+
+  const handleImageError = useCallback(() => {
+    setImageError(true);
+  }, []);
+
+  const handleLinkClick = useCallback(() => {
+    onLinkClick?.();
+  }, [onLinkClick]);
 
   return (
     <div className="flex flex-col h-full bg-sidebar-background">
@@ -37,7 +48,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
               sizes={isCollapsed ? "40px" : "128px"}
               priority
               quality={90}
-              onError={() => setImageError(true)}
+              onError={handleImageError}
             />
           ) : (
             <div className="w-full h-full bg-sidebar-accent/30 flex items-center justify-center">
@@ -92,7 +103,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
             )}
             title={isCollapsed ? siteConfig.email : undefined}
           >
-            <a href={`mailto:${siteConfig.email}`} onClick={onLinkClick}>
+            <a href={`mailto:${siteConfig.email}`} onClick={handleLinkClick}>
               <Mail className={cn(
                 "flex-shrink-0 group-hover:scale-110 transition-transform duration-200",
                 isCollapsed ? "h-4 w-4" : "mr-3 h-4 w-4"
@@ -112,7 +123,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
             )}
             title={isCollapsed ? siteConfig.phone : undefined}
           >
-            <a href={`tel:${siteConfig.phone.replace(/\s|\(|\)/g, '')}`} onClick={onLinkClick}>
+            <a href={`tel:${siteConfig.phone.replace(/\s|\(|\)/g, '')}`} onClick={handleLinkClick}>
               <Smartphone className={cn(
                 "flex-shrink-0 group-hover:scale-110 transition-transform duration-200",
                 isCollapsed ? "h-4 w-4" : "mr-3 h-4 w-4"
@@ -132,7 +143,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
               )}
               title={isCollapsed ? "Download CV" : undefined}
             >
-              <a href={siteConfig.links.cv} target="_blank" rel="noopener noreferrer" onClick={onLinkClick}>
+              <a href={siteConfig.links.cv} target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>
                 <FileText className={cn(
                   "flex-shrink-0 group-hover:scale-110 transition-transform duration-200",
                   isCollapsed ? "h-4 w-4" : "mr-3 h-4 w-4"
@@ -200,7 +211,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
             className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
             title={isCollapsed ? "GitHub Profile" : undefined}
           >
-            <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" onClick={onLinkClick}>
+            <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" onClick={handleLinkClick}>
               <Github className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
@@ -211,7 +222,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
             className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
             title={isCollapsed ? "LinkedIn Profile" : undefined}
           >
-            <a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" onClick={onLinkClick}>
+            <a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" onClick={handleLinkClick}>
               <Linkedin className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
@@ -222,7 +233,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
             className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
             title={isCollapsed ? "Google Scholar Profile" : undefined}
           >
-            <a href={siteConfig.links.googleScholar} target="_blank" rel="noopener noreferrer" aria-label="Google Scholar Profile" onClick={onLinkClick}>
+            <a href={siteConfig.links.googleScholar} target="_blank" rel="noopener noreferrer" aria-label="Google Scholar Profile" onClick={handleLinkClick}>
               <BookUser className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
@@ -230,4 +241,4 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
       </div>
     </div>
   );
-}
+});

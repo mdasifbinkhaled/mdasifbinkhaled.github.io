@@ -1,11 +1,12 @@
 
 "use client";
 
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { siteConfig } from '@/config/site';
-import { samplePublications } from '@/lib/data/publications'; // Import publications
+import { samplePublications } from '@/lib/data/publications';
+import { professionalExperiences } from '@/lib/data/experience';
 
-export function ScholarStructuredData() {
+export const ScholarStructuredData = memo(function ScholarStructuredData() {
   useEffect(() => {
     const personSchema = {
       "@context": "https://schema.org",
@@ -108,9 +109,9 @@ export function ScholarStructuredData() {
   }, []);
 
   return null;
-}
+});
 
-export function PublicationStructuredData() {
+export const PublicationStructuredData = memo(function PublicationStructuredData() {
   useEffect(() => {
     const publicationsSchema = samplePublications.map(pub => ({
       "@context": "https://schema.org",
@@ -146,4 +147,4 @@ export function PublicationStructuredData() {
   }, []);
 
   return null;
-}
+});

@@ -2,20 +2,18 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/config/site';
-import { ArrowRight, ExternalLink, Briefcase, Award } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { samplePublications } from '@/lib/data/publications';
 import { professionalExperiences } from '@/lib/data/experience';
+import { 
+  LazyExperienceTimelineWithSuspense,
+  LazyPublicationListWithSuspense 
+} from '@/components/lazy-components';
 
 export default function HomePage() {
   const filteredPublications = samplePublications.filter(p => p.type !== 'In Progress' && p.type !== 'Thesis');
-  const latestPublication = filteredPublications.length > 0 
-    ? filteredPublications.reduce((a, b) => {
-        if (!a || !b) return a || b;
-        return (a.year > b.year ? a : (a.year === b.year && parseInt(a.id.split('-').pop() || '0') > parseInt(b.id.split('-').pop() || '0') ? a : b));
-      })
-    : null;
 
   // Get recent experiences (current and latest)
   const recentExperiences = professionalExperiences.slice(0, 3);
@@ -120,35 +118,7 @@ export default function HomePage() {
       <section className="w-full py-8 md:py-12">
         <div className="container px-4 md:px-6">
           <h2 className="text-2xl font-bold mb-6 text-primary">Work Experience</h2>
-          <div className="space-y-4">
-            {recentExperiences.map((experience) => (
-              <Card key={experience.id} className="shadow-sm hover:shadow-md transition-shadow">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <Briefcase className="w-6 h-6 text-primary" />
-                      </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-lg leading-tight mb-1">
-                        {experience.title}
-                      </h3>
-                      <p className="text-primary font-medium text-sm mb-1">
-                        {experience.institution}
-                      </p>
-                      <p className="text-muted-foreground text-sm mb-2">
-                        {experience.duration}
-                      </p>
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {experience.description[0]}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <LazyExperienceTimelineWithSuspense experiences={recentExperiences} />
           <div className="text-center mt-6">
             <Button variant="outline" asChild>
               <Link href="/experience">
@@ -193,44 +163,9 @@ export default function HomePage() {
       {/* Publications Section */}
       <section className="w-full py-8 md:py-12 bg-secondary/10">
         <div className="container px-4 md:px-6">
-          <h2 className="text-2xl font-bold mb-6 text-primary">Publications</h2>
-          {latestPublication && (
-            <Card className="shadow-sm hover:shadow-md transition-shadow mb-6">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="w-32 h-24 bg-gradient-to-br from-blue-100 to-green-100 rounded-lg flex items-center justify-center">
-                      <Award className="w-8 h-8 text-primary" />
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-lg leading-tight mb-2">
-                      {latestPublication.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {latestPublication.authors.join(', ')}
-                    </p>
-                    <p className="text-sm text-primary font-medium mb-2">
-                      {latestPublication.venue} • {latestPublication.year}
-                    </p>
-                    {latestPublication.abstract && (
-                      <p className="text-sm text-muted-foreground line-clamp-3">
-                        {latestPublication.abstract}
-                      </p>
-                    )}
-                    <div className="mt-3">
-                      <Button variant="link" size="sm" className="p-0 h-auto" asChild>
-                        <a href="#" className="text-blue-600 hover:underline text-sm">
-                          [paper]
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-          <div className="text-center">
+          <h2 className="text-2xl font-bold mb-6 text-primary">Recent Publications</h2>
+          <LazyPublicationListWithSuspense publications={filteredPublications.slice(0, 3)} />
+          <div className="text-center mt-6">
             <Button variant="outline" asChild>
               <Link href="/publications">
                 View All Publications <ArrowRight className="ml-2 h-4 w-4" />
