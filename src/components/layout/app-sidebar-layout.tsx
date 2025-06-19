@@ -37,7 +37,7 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
           <span 
             className={cn(
               "font-bold text-lg text-sidebar-foreground transition-all duration-200",
-              !isMobile && desktopSidebarCollapsed && "lg:hidden"
+              !isMobile && desktopSidebarCollapsed && "sidebar-hide-when-collapsed"
             )}
           >
             {siteConfig.shortName}
@@ -47,7 +47,10 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
       
       {/* Sidebar Content */}
       <div className="flex-1 overflow-y-auto">
-        <ProfileSidebar onLinkClick={() => isMobile && setMobileMenuOpen(false)} />
+        <ProfileSidebar 
+          onLinkClick={() => isMobile && setMobileMenuOpen(false)} 
+          isCollapsed={!isMobile && desktopSidebarCollapsed}
+        />
       </div>
     </div>
   );
@@ -91,8 +94,9 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
         {/* Desktop Sidebar */}
         <aside 
           className={cn(
-            "relative border-r border-sidebar-border bg-sidebar transition-all duration-300 ease-in-out",
-            desktopSidebarCollapsed ? "w-16" : "w-80"
+            "relative border-r border-sidebar-border bg-sidebar",
+            "sidebar-collapse-transition",
+            desktopSidebarCollapsed ? "layout-sidebar-collapsed" : "layout-sidebar-width"
           )}
         >
           {/* Collapse Toggle */}
@@ -113,21 +117,26 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
             )}
           </Button>
           
-          <SidebarContent isMobile={false} />
+          <div className={cn(desktopSidebarCollapsed && "sidebar-collapsed")}>
+            <SidebarContent isMobile={false} />
+          </div>
         </aside>
 
         {/* Desktop Main Content */}
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 min-w-0">
           <Navbar showMobileMenuButton={false} />
           
           <main 
             id="main-content" 
-            className="flex-1"
+            className="flex-1 min-h-0"
             role="main"
             tabIndex={-1}
           >
             <MotionPage>
-              <div className="container mx-auto px-6 py-8">
+              <div className={cn(
+                "container-responsive py-8",
+                "transition-all duration-300 ease-in-out"
+              )}>
                 {children}
               </div>
             </MotionPage>
