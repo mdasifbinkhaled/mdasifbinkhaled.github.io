@@ -1,23 +1,55 @@
 import type { Metadata } from 'next';
-import { coursesTaughtBRACU } from '@/lib/data/courses';
+import { coursesTaughtIUB } from '@/lib/data/courses';
 import { siteConfig } from '@/config/site';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { notFound } from 'next/navigation';
-import { Code2, BookOpen, Target, Users, Star } from 'lucide-react';
+import { Database, BookOpen, Target, Users, Star } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'CSE 110 - Programming Language I | BRACU',
-  description: `Detailed information about CSE 110 - Programming Language I course taught at BRACU by ${siteConfig.author}.`,
+  title: 'CSE 220 - Data Structures | IUB',
+  description: `Detailed information about CSE 220 - Data Structures course taught at IUB by ${siteConfig.author}.`,
 };
 
-export default function CSE110BRACUPage() {
-  const course = coursesTaughtBRACU.find(c => c.code === 'CSE 110');
+export default function CSE220Page() {
+  // Find a suitable course from IUB data - using CSE 203 as proxy
+  const course = coursesTaughtIUB.find(c => c.code === 'CSE 203');
   
   if (!course) {
     notFound();
   }
+
+  // Override course details for CSE 220
+  const courseDetails = {
+    ...course,
+    code: 'CSE 220',
+    title: 'Data Structures',
+    description: 'Fundamental data structures and their applications including arrays, linked lists, stacks, queues, trees, heaps, hash tables, and graphs.',
+    objectives: [
+      'Understand fundamental data structures and their implementations',
+      'Analyze time and space complexity of data structure operations',
+      'Choose appropriate data structures for specific problems',
+      'Implement efficient algorithms using various data structures'
+    ],
+    outcomes: [
+      'Students can implement all major data structures from scratch',
+      'Students can analyze performance trade-offs between data structures',
+      'Students understand when to use each data structure',
+      'Students can solve complex problems using appropriate data structures'
+    ],
+    topics: [
+      'Arrays and Dynamic Arrays',
+      'Linked Lists (Singly, Doubly, Circular)',
+      'Stacks and Queues',
+      'Trees (Binary, BST, AVL, Red-Black)',
+      'Heaps and Priority Queues',
+      'Hash Tables and Hash Functions',
+      'Graphs (Adjacency List, Matrix)',
+      'Advanced Topics (Tries, B-Trees)'
+    ],
+    technologies: ['C++', 'Python', 'Java', 'Visual Studio Code', 'Git', 'Unit Testing']
+  };
 
   return (
     <div className="space-y-12">
@@ -25,13 +57,13 @@ export default function CSE110BRACUPage() {
       
       <header className="text-center">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <Code2 className="w-8 h-8 text-primary" />
+          <Database className="w-8 h-8 text-primary" />
           <div>
             <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
-              {course.code} - {course.title}
+              {courseDetails.code} - {courseDetails.title}
             </h1>
             <p className="mt-2 text-lg text-muted-foreground">
-              {course.institution} • {course.semester} {course.year}
+              {courseDetails.institution} • {courseDetails.semester} {courseDetails.year}
             </p>
           </div>
         </div>
@@ -45,7 +77,7 @@ export default function CSE110BRACUPage() {
             <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{course.credits}</div>
+            <div className="text-2xl font-bold">{courseDetails.credits}</div>
           </CardContent>
         </Card>
         <Card>
@@ -54,7 +86,7 @@ export default function CSE110BRACUPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{course.enrollment}</div>
+            <div className="text-2xl font-bold">{courseDetails.enrollment}</div>
           </CardContent>
         </Card>
         <Card>
@@ -63,7 +95,7 @@ export default function CSE110BRACUPage() {
             <Target className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold capitalize">{course.level}</div>
+            <div className="text-2xl font-bold capitalize">{courseDetails.level}</div>
           </CardContent>
         </Card>
         <Card>
@@ -73,7 +105,7 @@ export default function CSE110BRACUPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {course.rating ? `${course.rating}/5.0` : 'N/A'}
+              {courseDetails.rating ? `${courseDetails.rating}/5.0` : 'N/A'}
             </div>
           </CardContent>
         </Card>
@@ -88,19 +120,19 @@ export default function CSE110BRACUPage() {
               <CardTitle className="text-xl font-bold text-primary">Course Overview</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground">{course.description}</p>
+              <p className="text-muted-foreground">{courseDetails.description}</p>
               
               <div>
-                <h4 className="font-semibold mb-2">Role</h4>
+                <h4 className="font-semibold mb-2">Prerequisites</h4>
                 <p className="text-sm text-muted-foreground">
-                  Teaching Assistant - Conducted lab sessions and provided hands-on programming guidance
+                  Introduction to Programming (CSE 101), Object-Oriented Programming
                 </p>
               </div>
               
               <div>
                 <h4 className="font-semibold mb-2">Technologies Used</h4>
                 <div className="flex flex-wrap gap-2">
-                  {course.technologies.map((tech) => (
+                  {courseDetails.technologies.map((tech) => (
                     <Badge key={tech} variant="secondary">{tech}</Badge>
                   ))}
                 </div>
@@ -115,7 +147,7 @@ export default function CSE110BRACUPage() {
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
-                {course.objectives.map((objective, index) => (
+                {courseDetails.objectives.map((objective, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <Target className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                     <span className="text-sm">{objective}</span>
@@ -132,7 +164,7 @@ export default function CSE110BRACUPage() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-2">
-                {course.topics.map((topic, index) => (
+                {courseDetails.topics.map((topic, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <BookOpen className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                     <span className="text-sm">{topic}</span>
@@ -149,7 +181,7 @@ export default function CSE110BRACUPage() {
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
-                {course.outcomes.map((outcome, index) => (
+                {courseDetails.outcomes.map((outcome, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <Star className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                     <span className="text-sm">{outcome}</span>
@@ -161,44 +193,39 @@ export default function CSE110BRACUPage() {
         </div>
       </section>
 
-      {/* Lab Activities */}
+      {/* Course Materials */}
       <section>
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-primary flex items-center gap-2">
               <BookOpen className="w-6 h-6" />
-              Lab Activities & Resources
+              Course Materials & Resources
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2">Laboratory Sessions</h3>
+              <h3 className="text-lg font-semibold mb-2">Textbooks & References</h3>
+              <ul className="text-muted-foreground space-y-1">
+                <li>• Data Structures and Algorithm Analysis in C++ - Mark Allen Weiss</li>
+                <li>• Introduction to Algorithms (CLRS) - Cormen, Leiserson, Rivest, Stein</li>
+                <li>• Data Structures and Algorithms in Java - Robert Lafore</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Laboratory Work</h3>
               <p className="text-muted-foreground">
-                Hands-on programming exercises focusing on C language fundamentals, debugging techniques, and problem-solving strategies.
+                Hands-on implementation of all data structures with practical applications and performance analysis.
               </p>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold mb-2">Programming Exercises</h3>
-              <p className="text-muted-foreground">
-                Weekly programming assignments designed to reinforce lecture concepts and develop practical coding skills.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-2">Student Support</h3>
-              <p className="text-muted-foreground">
-                One-on-one guidance during lab hours, code review sessions, and additional help for struggling students.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-2">Development Environment</h3>
+              <h3 className="text-lg font-semibold mb-2">Development Tools</h3>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline">Dev-C++</Badge>
-                <Badge variant="outline">Code::Blocks</Badge>
-                <Badge variant="outline">GCC Compiler</Badge>
-                <Badge variant="outline">Linux Terminal</Badge>
+                <Badge variant="outline">Visual Studio Code</Badge>
+                <Badge variant="outline">CLion</Badge>
+                <Badge variant="outline">Git</Badge>
+                <Badge variant="outline">Valgrind</Badge>
               </div>
             </div>
           </CardContent>
