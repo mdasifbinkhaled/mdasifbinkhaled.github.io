@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/config/site';
-import { ArrowRight, ExternalLink, Calendar, Briefcase, Award } from 'lucide-react';
+import { ArrowRight, ExternalLink, Briefcase, Award } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { samplePublications } from '@/lib/data/publications';
