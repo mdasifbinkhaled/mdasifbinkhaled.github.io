@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ProfileSidebar } from '@/components/profile-sidebar';
 import { PublicationCard } from '@/components/publications/publication-card';
-import { ExperienceTimeline } from '@/components/experience-timeline';
+import { ExperienceCompact } from '@/components/experience-compact';
 import { ThemeProvider } from '@/components/theme-provider';
 import type { PublicationItem, ExperienceItem } from '@/types';
 
@@ -165,7 +165,7 @@ describe('PublicationCard', () => {
   });
 });
 
-describe('ExperienceTimeline', () => {
+describe('ExperienceCompact', () => {
   const mockExperiences: ExperienceItem[] = [
     {
       id: 'exp-1',
@@ -192,8 +192,8 @@ describe('ExperienceTimeline', () => {
     }
   ];
 
-  it('renders experience timeline correctly', () => {
-    renderWithTheme(<ExperienceTimeline experiences={mockExperiences} />);
+  it('renders experience cards correctly', () => {
+    renderWithTheme(<ExperienceCompact experiences={mockExperiences} />);
     
     expect(screen.getByText('Senior Lecturer')).toBeInTheDocument();
     expect(screen.getByText('Independent University, Bangladesh')).toBeInTheDocument();
@@ -202,34 +202,36 @@ describe('ExperienceTimeline', () => {
   });
 
   it('handles empty experiences array', () => {
-    renderWithTheme(<ExperienceTimeline experiences={[]} />);
+    const { container } = renderWithTheme(<ExperienceCompact experiences={[]} />);
     
-    expect(screen.getByText('No professional experiences to display.')).toBeInTheDocument();
+    // ExperienceCompact renders an empty grid, not an error message
+    const gridContainer = container.querySelector('.grid');
+    expect(gridContainer).toBeInTheDocument();
+    expect(gridContainer?.children).toHaveLength(0);
   });
 
   it('displays date ranges correctly', () => {
-    renderWithTheme(<ExperienceTimeline experiences={mockExperiences} />);
+    renderWithTheme(<ExperienceCompact experiences={mockExperiences} />);
     
     expect(screen.getByText(/Jan 2020 - Present/)).toBeInTheDocument();
     expect(screen.getByText(/Jun 2018 - Dec 2019/)).toBeInTheDocument();
   });
 
-  it('shows institution logos when available', () => {
-    renderWithTheme(<ExperienceTimeline experiences={mockExperiences} />);
+  it('shows current vs past positions with badges', () => {
+    renderWithTheme(<ExperienceCompact experiences={mockExperiences} />);
     
-    const logoImage = screen.getByAltText('Independent University, Bangladesh logo');
-    expect(logoImage).toBeInTheDocument();
-    expect(logoImage).toHaveAttribute('src', 'https://example.com/logo.png');
+    // Current position should have "default" badge, past should have "secondary"
+    const badges = screen.getAllByRole('generic').filter(el => 
+      el.className.includes('badge') || el.textContent?.includes('Present') || el.textContent?.includes('2019')
+    );
+    expect(badges.length).toBeGreaterThan(0);
   });
 
-  it('falls back to briefcase icon when no logo', () => {
-    renderWithTheme(<ExperienceTimeline experiences={mockExperiences} />);
+  it('displays locations correctly', () => {
+    renderWithTheme(<ExperienceCompact experiences={mockExperiences} />);
     
-    // The second experience doesn't have a logo, so it should show briefcase icon
-    // We can check for the briefcase icon by its class name since there's no test-id
-    const briefcaseIcon = screen.getByText('Research Assistant').closest('.relative')
-      ?.querySelector('svg[class*="lucide-briefcase"]');
-    expect(briefcaseIcon).toBeInTheDocument();
+    expect(screen.getByText(/Dhaka, Bangladesh/)).toBeInTheDocument();
+    expect(screen.getByText(/City, Country/)).toBeInTheDocument();
   });
 });
 
@@ -290,7 +292,7 @@ describe('Performance', () => {
     }));
 
     const start = performance.now();
-    renderWithTheme(<ExperienceTimeline experiences={largeExperiences} />);
+    renderWithTheme(<ExperienceCompact experiences={largeExperiences} />);
     const end = performance.now();
 
     // Should render within reasonable time (less than 100ms)

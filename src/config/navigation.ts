@@ -25,19 +25,19 @@ export const teachingNavItems: NavItem[] = [
 // IUB course navigation
 export const iubCourseNavItems: NavItem[] = [
   { href: "/teaching/iub/cse101", label: "CSE 101 - Introduction to Programming", icon: "Code2", sectionId: "cse101" },
-  { href: "/teaching/iub/cse221", label: "CSE 221 - Algorithms", icon: "Brain", sectionId: "cse221" },
-  { href: "/teaching/iub/cse220", label: "CSE 220 - Data Structures", icon: "Database", sectionId: "cse220" },
-  { href: "/teaching/iub/cse171", label: "CSE 171 - Discrete Mathematics", icon: "Calculator", sectionId: "cse171" },
-  { href: "/teaching/iub/cse173", label: "CSE 173 - Numerical Methods", icon: "Calculator", sectionId: "cse173" },
-  { href: "/teaching/iub/cse350", label: "CSE 350 - Finite Automata", icon: "BookOpen", sectionId: "cse350" },
-  { href: "/teaching/iub/cse110", label: "CSE 110 - Computer Fundamentals", icon: "Server", sectionId: "cse110" },
+  { href: "/teaching/iub/cse201", label: "CSE 201 - Algorithms", icon: "Brain", sectionId: "cse201" },
+  { href: "/teaching/iub/cse203", label: "CSE 203 - Data Structures", icon: "Database", sectionId: "cse203" },
+  { href: "/teaching/iub/cse205", label: "CSE 205 - Discrete Mathematics", icon: "Calculator", sectionId: "cse205" },
+  { href: "/teaching/iub/cse303", label: "CSE 303 - Operating Systems", icon: "Server", sectionId: "cse303" },
+  { href: "/teaching/iub/cse401", label: "CSE 401 - Database Systems", icon: "Database", sectionId: "cse401" },
+  { href: "/teaching/iub/cse403", label: "CSE 403 - Software Engineering", icon: "Code2", sectionId: "cse403" },
+  { href: "/teaching/iub/cse423", label: "CSE 423 - Machine Learning", icon: "Brain", sectionId: "cse423" },
 ];
 
 // BRACU course navigation
 export const bracuCourseNavItems: NavItem[] = [
-  { href: "/teaching/bracu/cse110", label: "CSE 110 - Programming Language I", icon: "Code2", sectionId: "cse110" },
-  { href: "/teaching/bracu/cse111", label: "CSE 111 - Programming Language II", icon: "Code2", sectionId: "cse111" },
-  { href: "/teaching/bracu/cse260", label: "CSE 260 - Digital Logic Design", icon: "Server", sectionId: "cse260" },
-  { href: "/teaching/bracu/cse220", label: "CSE 220 - Data Structures", icon: "Database", sectionId: "cse220" },
-  { href: "/teaching/bracu/cse221", label: "CSE 221 - Algorithms", icon: "Brain", sectionId: "cse221" },
+  { href: "/teaching/bracu/cse420", label: "CSE 420 - Compiler Design Lab", icon: "Brain", sectionId: "cse420" },
+  { href: "/teaching/bracu/cse423", label: "CSE 423 - Computer Graphics Lab", icon: "Code2", sectionId: "cse423" },
+  { href: "/teaching/bracu/cse489", label: "CSE 489 - Android Development Lab", icon: "Code2", sectionId: "cse489" },
+  { href: "/teaching/bracu/mat361", label: "MAT 361 - Numerical Methods Lab", icon: "Calculator", sectionId: "mat361" },
 ];
