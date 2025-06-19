@@ -11,7 +11,7 @@ export const siteConfig = {
     github: "https://github.com/mdasifbinkhaled",
     linkedin: "https://linkedin.com/in/mdasifbinkhaled/",
     googleScholar: "https://scholar.google.com/citations?user=zpcFkLAAAAAJ",
-    cv: "/CV_Md_Asif_Bin_Khaled.pdf",
+    cv: "/cv/CV_Md Asif Bin Khaled.pdf",
   },
   keywords: [
     "Md Asif Bin Khaled",

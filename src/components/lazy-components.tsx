@@ -2,6 +2,7 @@
 
 import { lazy, Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import type { ExperienceItem, PublicationItem } from '@/types';
 
 // Lazy load heavy components
 export const LazyExperienceTimeline = lazy(() => 
@@ -15,6 +16,15 @@ export const LazyPublicationList = lazy(() =>
     default: module.PublicationList 
   }))
 );
+
+// Props interfaces
+interface ExperienceTimelineProps {
+  experiences: ExperienceItem[];
+}
+
+interface PublicationListProps {
+  initialPublications: PublicationItem[];
+}
 
 // Skeleton loaders for better UX
 export function ExperienceTimelineSkeleton() {
@@ -55,7 +65,7 @@ export function PublicationListSkeleton() {
 }
 
 // Wrapper components with Suspense
-export function LazyExperienceTimelineWithSuspense(props: any) {
+export function LazyExperienceTimelineWithSuspense(props: ExperienceTimelineProps) {
   return (
     <Suspense fallback={<ExperienceTimelineSkeleton />}>
       <LazyExperienceTimeline {...props} />
@@ -63,7 +73,7 @@ export function LazyExperienceTimelineWithSuspense(props: any) {
   );
 }
 
-export function LazyPublicationListWithSuspense(props: any) {
+export function LazyPublicationListWithSuspense(props: PublicationListProps) {
   return (
     <Suspense fallback={<PublicationListSkeleton />}>
       <LazyPublicationList {...props} />

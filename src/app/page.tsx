@@ -48,7 +48,7 @@ export default function HomePage() {
               alt={siteConfig.author}
               className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last border-4 border-primary shadow-lg"
               height="550"
-              src="https://placehold.co/550x550.png"
+              src="/photo/Photo_Md Asif Bin Khaled.png"
               width="550"
               priority // Added priority for LCP
             />
@@ -164,7 +164,7 @@ export default function HomePage() {
       <section className="w-full py-8 md:py-12 bg-secondary/10">
         <div className="container px-4 md:px-6">
           <h2 className="text-2xl font-bold mb-6 text-primary">Recent Publications</h2>
-          <LazyPublicationListWithSuspense publications={filteredPublications.slice(0, 3)} />
+          <LazyPublicationListWithSuspense initialPublications={filteredPublications.slice(0, 3)} />
           <div className="text-center mt-6">
             <Button variant="outline" asChild>
               <Link href="/publications">
