@@ -73,7 +73,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
         isCollapsed ? "p-2" : "p-6"
       )}>
         {!isCollapsed && (
-          <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider">Contact & Links</h4>
+          <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider sidebar-section-title">Contact & Links</h4>
         )}
         
         <div className={cn(
@@ -97,7 +97,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
                 "flex-shrink-0 group-hover:scale-110 transition-transform duration-200",
                 isCollapsed ? "h-4 w-4" : "mr-3 h-4 w-4"
               )} /> 
-              {!isCollapsed && <span className="truncate text-sm">{siteConfig.email}</span>}
+              {!isCollapsed && <span className="truncate text-sm sidebar-button-text">{siteConfig.email}</span>}
             </a>
           </Button>
           <Button 
@@ -117,7 +117,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
                 "flex-shrink-0 group-hover:scale-110 transition-transform duration-200",
                 isCollapsed ? "h-4 w-4" : "mr-3 h-4 w-4"
               )} /> 
-              {!isCollapsed && <span className="truncate text-sm">{siteConfig.phone}</span>}
+              {!isCollapsed && <span className="truncate text-sm sidebar-button-text">{siteConfig.phone}</span>}
             </a>
           </Button>
           
@@ -137,7 +137,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
                   "flex-shrink-0 group-hover:scale-110 transition-transform duration-200",
                   isCollapsed ? "h-4 w-4" : "mr-3 h-4 w-4"
                 )} /> 
-                {!isCollapsed && <span className="font-medium">Download CV</span>}
+                {!isCollapsed && <span className="font-medium sidebar-button-text">Download CV</span>}
               </a>
             </Button>
             
@@ -156,7 +156,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
                   "flex-shrink-0 group-hover:scale-110 transition-transform duration-200",
                   isCollapsed ? "h-4 w-4" : "mr-3 h-4 w-4"
                 )} /> 
-                {!isCollapsed && <span className="font-medium">Research Focus</span>}
+                {!isCollapsed && <span className="font-medium sidebar-button-text">Research Focus</span>}
               </Link>
             </Button>
             
@@ -175,7 +175,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
                   "flex-shrink-0 group-hover:scale-110 transition-transform duration-200",
                   isCollapsed ? "h-4 w-4" : "mr-3 h-4 w-4"
                 )} /> 
-                {!isCollapsed && <span className="font-medium">Publications</span>}
+                {!isCollapsed && <span className="font-medium sidebar-button-text">Publications</span>}
               </Link>
             </Button>
           </div>
@@ -187,7 +187,7 @@ export function ProfileSidebar({ onLinkClick, isCollapsed = false }: ProfileSide
       {/* Social Icons */}
       <div className={cn(isCollapsed ? "p-2" : "p-6")}>
         {!isCollapsed && (
-          <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider text-center">Follow Me</h4>
+          <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider text-center sidebar-section-title">Follow Me</h4>
         )}
         <div className={cn(
           "flex items-center",
