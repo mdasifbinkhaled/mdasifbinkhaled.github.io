@@ -28,16 +28,8 @@ export function AppProviders({ children }: AppProvidersProps) {
           'dark', 
           'system',
           'retro', 
-          'academic', 
-          'ocean', 
-          'warm', 
           'cyberpunk', 
-          'forest',
-          'midnight',
-          'sunset',
-          'minimal',
-          'cosmic',
-          'emerald'
+          'ocean'
         ]}
       >
         <AppSidebarLayout>{children}</AppSidebarLayout>

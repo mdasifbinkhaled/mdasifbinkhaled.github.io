@@ -100,770 +100,263 @@
   }
 
   .retro {
-    --background: 48 90% 90%; /* Pale Yellow */
-    --foreground: 30 40% 20%; /* Dark Brown */
+    /* Retro 80s Theme - Dramatic vintage with film grain and warm glow */
+    --background: 43 84% 97%;
+    --foreground: 24 20% 15%;
 
-    --muted: 45 50% 85%; /* Lighter Yellow-Brown */
-    --muted-foreground: 30 30% 20%; /* Adjusted for better contrast */
+    --muted: 43 84% 92%;
+    --muted-foreground: 25 20% 45%;
 
-    --popover: 45 80% 96%; /* Very Pale Yellow/Cream */
-    --popover-foreground: 30 40% 20%;
+    --popover: 45 100% 94%;
+    --popover-foreground: 24 20% 15%;
 
-    --card: 45 80% 95%; /* Very Pale Yellow/Cream */
-    --card-foreground: 30 40% 20%;
+    --card: 45 100% 94%;
+    --card-foreground: 24 20% 15%;
 
-    --border: 40 30% 70%; /* Light Brownish Gray */
-    --input: 40 30% 75%; /* Slightly lighter for inputs */
+    --border: 43 40% 85%;
+    --input: 43 40% 85%;
 
-    --primary: 35 70% 50%; /* Muted Orange/Brown */
-    --primary-foreground: 48 90% 98%; /* Off-white */
+    --primary: 24 74% 58%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 45 50% 80%; /* Light Yellow-Brown */
-    --secondary-foreground: 35 70% 40%; /* Darker Muted Orange/Brown */
+    --secondary: 43 84% 92%;
+    --secondary-foreground: 24 20% 15%;
 
-    --accent: 25 60% 55%; /* Burnt Orange */
-    --accent-foreground: 48 90% 98%;
+    --accent: 43 84% 88%;
+    --accent-foreground: 24 20% 15%;
 
-    --destructive: 0 60% 50%; /* Muted Red */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --ring: 35 70% 50%; /* Muted Orange/Brown for rings */
+    --ring: 24 74% 58%;
 
-    /* Retro Sidebar */
-    --sidebar-background: 40 50% 30%; /* Darker Brown for retro sidebar */
-    --sidebar-foreground: 45 80% 90%; /* Light Yellow/Beige text */
-    --sidebar-primary: 25 60% 55%; /* Burnt Orange for active items */
-    --sidebar-primary-foreground: 48 90% 98%; /* Off-white text */
-    --sidebar-accent: 40 50% 40%; /* Slightly lighter brown for hover */
-    --sidebar-accent-foreground: 45 80% 95%;
-    --sidebar-border: 40 50% 35%;
-    --sidebar-ring: 25 60% 55%;
+    /* Retro Sidebar with vintage wood */
+    --sidebar-background: 30 50% 25%;
+    --sidebar-foreground: 45 70% 85%;
+    --sidebar-primary: 25 90% 55%;
+    --sidebar-primary-foreground: 30 50% 15%;
+    --sidebar-accent: 30 50% 35%;
+    --sidebar-accent-foreground: 45 70% 90%;
+    --sidebar-border: 30 40% 30%;
+    --sidebar-ring: 25 90% 55%;
 
-    --chart-1: 30 80% 60%;
-    --chart-2: 45 70% 50%;
-    --chart-3: 20 60% 40%;
-    --chart-4: 50 80% 55%;
-    --chart-5: 35 75% 45%;
+    --chart-1: 25 85% 55%;
+    --chart-2: 45 75% 50%;
+    --chart-3: 15 70% 45%;
+    --chart-4: 35 80% 60%;
+    --chart-5: 55 75% 50%;
+
+    /* Dramatic retro background with multiple gradients and film grain */
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.25) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(222, 184, 135, 0.2) 0%, transparent 50%),
+      linear-gradient(135deg, #f4e4bc 0%, #faf0e6 20%, #fff8dc 40%, #f5deb3 60%, #daa520 80%, #b8860b 100%);
+    background-attachment: fixed;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   }
 
-  .academic {
-    /* Academic Theme - Professional blue-gray */
-    --background: 210 40% 98%;
-    --foreground: 210 40% 8%;
-
-    --muted: 210 40% 94%;
-    --muted-foreground: 210 20% 50%;
-
-    --popover: 210 40% 98%;
-    --popover-foreground: 210 40% 8%;
-
-    --card: 210 40% 98%;
-    --card-foreground: 210 40% 8%;
-
-    --border: 210 40% 88%;
-    --input: 210 40% 88%;
-
-    --primary: 213 94% 68%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 210 40% 10%;
-
-    --accent: 217 91% 85%;
-    --accent-foreground: 210 40% 8%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 213 94% 68%;
-
-    /* Academic sidebar */
-    --sidebar-background: 210 40% 95%;
-    --sidebar-foreground: 210 40% 8%;
-    --sidebar-primary: 213 94% 68%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 210 40% 92%;
-    --sidebar-accent-foreground: 210 40% 10%;
-    --sidebar-border: 210 40% 88%;
-    --sidebar-ring: 213 94% 68%;
-
-    --chart-1: 210 80% 60%;
-    --chart-2: 213 70% 50%;
-    --chart-3: 217 60% 40%;
-    --chart-4: 220 80% 55%;
-    --chart-5: 207 75% 45%;
-  }
-
-  .ocean {
-    /* Ocean Theme - Deep blue-teal */
-    --background: 190 60% 96%;
-    --foreground: 190 90% 10%;
-
-    --muted: 190 40% 88%;
-    --muted-foreground: 190 30% 45%;
-
-    --popover: 190 60% 96%;
-    --popover-foreground: 190 90% 10%;
-
-    --card: 190 60% 96%;
-    --card-foreground: 190 90% 10%;
-
-    --border: 190 40% 85%;
-    --input: 190 40% 85%;
-
-    --primary: 195 100% 45%;
-    --primary-foreground: 190 60% 96%;
-
-    --secondary: 190 60% 90%;
-    --secondary-foreground: 190 90% 10%;
-
-    --accent: 180 80% 70%;
-    --accent-foreground: 190 90% 10%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 190 60% 96%;
-
-    --ring: 195 100% 45%;
-
-    /* Ocean sidebar */
-    --sidebar-background: 190 60% 92%;
-    --sidebar-foreground: 190 90% 10%;
-    --sidebar-primary: 195 100% 45%;
-    --sidebar-primary-foreground: 190 60% 96%;
-    --sidebar-accent: 190 60% 88%;
-    --sidebar-accent-foreground: 190 90% 10%;
-    --sidebar-border: 190 40% 85%;
-    --sidebar-ring: 195 100% 45%;
-
-    --chart-1: 190 80% 60%;
-    --chart-2: 195 70% 50%;
-    --chart-3: 180 60% 40%;
-    --chart-4: 200 80% 55%;
-    --chart-5: 185 75% 45%;
-  }
-
-  .warm {
-    /* Warm Theme - Warm oranges and browns */
-    --background: 30 40% 97%;
-    --foreground: 30 40% 8%;
-
-    --muted: 30 20% 88%;
-    --muted-foreground: 30 20% 45%;
-
-    --popover: 30 40% 97%;
-    --popover-foreground: 30 40% 8%;
-
-    --card: 30 40% 97%;
-    --card-foreground: 30 40% 8%;
-
-    --border: 30 20% 85%;
-    --input: 30 20% 85%;
-
-    --primary: 25 95% 53%;
-    --primary-foreground: 30 40% 97%;
-
-    --secondary: 30 40% 92%;
-    --secondary-foreground: 30 40% 8%;
-
-    --accent: 35 80% 75%;
-    --accent-foreground: 30 40% 8%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 30 40% 97%;
-
-    --ring: 25 95% 53%;
-
-    /* Warm sidebar */
-    --sidebar-background: 30 40% 94%;
-    --sidebar-foreground: 30 40% 8%;
-    --sidebar-primary: 25 95% 53%;
-    --sidebar-primary-foreground: 30 40% 97%;
-    --sidebar-accent: 30 40% 90%;
-    --sidebar-accent-foreground: 30 40% 8%;
-    --sidebar-border: 30 20% 85%;
-    --sidebar-ring: 25 95% 53%;
-
-    --chart-1: 30 80% 60%;
-    --chart-2: 25 70% 50%;
-    --chart-3: 35 60% 40%;
-    --chart-4: 40 80% 55%;
-    --chart-5: 20 75% 45%;
+  /* Film grain overlay for retro theme */
+  .retro::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      );
+    pointer-events: none;
+    z-index: -1;
   }
 
   .cyberpunk {
-    /* Cyberpunk Theme - Neon purple and pink */
-    --background: 270 30% 8%;
-    --foreground: 270 30% 92%;
+    /* Cyberpunk Theme - Electric neon matrix with glitch effects */
+    --background: 240 10% 3.9%;
+    --foreground: 315 100% 85%;
 
-    --muted: 270 30% 18%;
-    --muted-foreground: 270 20% 65%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --popover: 270 30% 10%;
-    --popover-foreground: 270 30% 92%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 315 100% 85%;
 
-    --card: 270 30% 10%;
-    --card-foreground: 270 30% 92%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 315 100% 85%;
 
-    --border: 270 30% 22%;
-    --input: 270 30% 22%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
 
     --primary: 315 100% 65%;
-    --primary-foreground: 270 30% 8%;
+    --primary-foreground: 240 10% 3.9%;
 
-    --secondary: 270 30% 15%;
-    --secondary-foreground: 270 30% 92%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 315 50% 75%;
 
-    --accent: 285 100% 75%;
-    --accent-foreground: 270 30% 8%;
-
-    --destructive: 0 100% 65%;
-    --destructive-foreground: 270 30% 8%;
-
-    --ring: 315 100% 65%;
-
-    /* Cyberpunk sidebar */
-    --sidebar-background: 270 30% 6%;
-    --sidebar-foreground: 270 30% 92%;
-    --sidebar-primary: 315 100% 65%;
-    --sidebar-primary-foreground: 270 30% 8%;
-    --sidebar-accent: 270 30% 12%;
-    --sidebar-accent-foreground: 270 30% 92%;
-    --sidebar-border: 270 30% 22%;
-    --sidebar-ring: 315 100% 65%;
-
-    --chart-1: 315 80% 60%;
-    --chart-2: 285 70% 50%;
-    --chart-3: 300 60% 40%;
-    --chart-4: 330 80% 55%;
-    --chart-5: 270 75% 45%;
-  }
-
-  .forest {
-    /* Forest Theme - Natural greens */
-    --background: 120 30% 96%;
-    --foreground: 120 30% 8%;
-
-    --muted: 120 20% 88%;
-    --muted-foreground: 120 20% 45%;
-
-    --popover: 120 30% 96%;
-    --popover-foreground: 120 30% 8%;
-
-    --card: 120 30% 96%;
-    --card-foreground: 120 30% 8%;
-
-    --border: 120 20% 85%;
-    --input: 120 20% 85%;
-
-    --primary: 125 60% 35%;
-    --primary-foreground: 120 30% 96%;
-
-    --secondary: 120 30% 90%;
-    --secondary-foreground: 120 30% 8%;
-
-    --accent: 130 50% 70%;
-    --accent-foreground: 120 30% 8%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 120 30% 96%;
-
-    --ring: 125 60% 35%;
-
-    /* Forest sidebar */
-    --sidebar-background: 120 30% 92%;
-    --sidebar-foreground: 120 30% 8%;
-    --sidebar-primary: 125 60% 35%;
-    --sidebar-primary-foreground: 120 30% 96%;
-    --sidebar-accent: 120 30% 88%;
-    --sidebar-accent-foreground: 120 30% 8%;
-    --sidebar-border: 120 20% 85%;
-    --sidebar-ring: 125 60% 35%;
-
-    --chart-1: 120 80% 60%;
-    --chart-2: 125 70% 50%;
-    --chart-3: 130 60% 40%;
-    --chart-4: 140 80% 55%;
-    --chart-5: 110 75% 45%;
-  }
-
-  .midnight {
-    /* Midnight Theme - Rich blues and blacks */
-    --background: 230 30% 6%;
-    --foreground: 230 20% 92%;
-
-    --muted: 230 30% 12%;
-    --muted-foreground: 230 20% 65%;
-
-    --popover: 230 30% 8%;
-    --popover-foreground: 230 20% 92%;
-
-    --card: 230 30% 8%;
-    --card-foreground: 230 20% 92%;
-
-    --border: 230 30% 18%;
-    --input: 230 30% 18%;
-
-    --primary: 220 100% 60%;
-    --primary-foreground: 230 30% 6%;
-
-    --secondary: 230 30% 12%;
-    --secondary-foreground: 230 20% 92%;
-
-    --accent: 200 100% 70%;
-    --accent-foreground: 230 30% 6%;
-
-    --destructive: 0 100% 60%;
-    --destructive-foreground: 230 30% 6%;
-
-    --ring: 220 100% 60%;
-
-    /* Midnight sidebar */
-    --sidebar-background: 230 30% 4%;
-    --sidebar-foreground: 230 20% 92%;
-    --sidebar-primary: 220 100% 60%;
-    --sidebar-primary-foreground: 230 30% 6%;
-    --sidebar-accent: 230 30% 10%;
-    --sidebar-accent-foreground: 230 20% 92%;
-    --sidebar-border: 230 30% 18%;
-    --sidebar-ring: 220 100% 60%;
-
-    --chart-1: 220 80% 60%;
-    --chart-2: 200 70% 50%;
-    --chart-3: 240 60% 40%;
-    --chart-4: 180 80% 55%;
-    --chart-5: 260 75% 45%;
-  }
-
-  .sunset {
-    /* Sunset Theme - Warm oranges, pinks, and purples */
-    --background: 20 60% 96%;
-    --foreground: 20 60% 8%;
-
-    --muted: 20 40% 88%;
-    --muted-foreground: 20 30% 45%;
-
-    --popover: 20 60% 96%;
-    --popover-foreground: 20 60% 8%;
-
-    --card: 20 60% 96%;
-    --card-foreground: 20 60% 8%;
-
-    --border: 20 40% 85%;
-    --input: 20 40% 85%;
-
-    --primary: 330 80% 60%;
-    --primary-foreground: 20 60% 96%;
-
-    --secondary: 20 60% 90%;
-    --secondary-foreground: 20 60% 8%;
-
-    --accent: 15 90% 70%;
-    --accent-foreground: 20 60% 8%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 20 60% 96%;
-
-    --ring: 330 80% 60%;
-
-    /* Sunset sidebar */
-    --sidebar-background: 20 60% 92%;
-    --sidebar-foreground: 20 60% 8%;
-    --sidebar-primary: 330 80% 60%;
-    --sidebar-primary-foreground: 20 60% 96%;
-    --sidebar-accent: 20 60% 88%;
-    --sidebar-accent-foreground: 20 60% 8%;
-    --sidebar-border: 20 40% 85%;
-    --sidebar-ring: 330 80% 60%;
-
-    --chart-1: 330 80% 60%;
-    --chart-2: 15 70% 50%;
-    --chart-3: 300 60% 40%;
-    --chart-4: 40 80% 55%;
-    --chart-5: 350 75% 45%;
-  }
-
-  .minimal {
-    /* Minimal Theme - Clean grays */
-    --background: 0 0% 99%;
-    --foreground: 0 0% 5%;
-
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 5%;
-
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-
-    --primary: 0 0% 20%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 95%;
-    --secondary-foreground: 0 0% 10%;
-
-    --accent: 0 0% 92%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 315 50% 75%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --ring: 0 0% 20%;
+    --ring: 315 100% 65%;
 
-    /* Minimal sidebar */
-    --sidebar-background: 0 0% 97%;
-    --sidebar-foreground: 0 0% 5%;
-    --sidebar-primary: 0 0% 20%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 94%;
-    --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 0 0% 20%;
+    /* Cyberpunk Sidebar with matrix effect */
+    --sidebar-background: 270 90% 3%;
+    --sidebar-foreground: 315 100% 85%;
+    --sidebar-primary: 180 100% 60%;
+    --sidebar-primary-foreground: 270 90% 3%;
+    --sidebar-accent: 270 60% 10%;
+    --sidebar-accent-foreground: 315 100% 90%;
+    --sidebar-border: 315 100% 30%;
+    --sidebar-ring: 180 100% 60%;
 
-    --chart-1: 0 0% 60%;
-    --chart-2: 0 0% 50%;
-    --chart-3: 0 0% 40%;
-    --chart-4: 0 0% 55%;
-    --chart-5: 0 0% 45%;
+    --chart-1: 315 90% 60%;
+    --chart-2: 285 85% 55%;
+    --chart-3: 180 100% 50%;
+    --chart-4: 120 100% 50%;
+    --chart-5: 60 100% 50%;
+
+    /* Dramatic cyberpunk background with animated neon matrix */
+    background: 
+      radial-gradient(ellipse at center, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 80%, rgba(255, 20, 147, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, #000000 0%, #0a0014 15%, #1a0033 30%, #000011 45%, #2d1b69 60%, #4b0082 75%, #8b00ff 90%, #ff1493 100%);
+    background-attachment: fixed;
+    background-size: 300% 300%, 200% 200%, 250% 250%, 100% 100%;
+    animation: cyberpunkGlow 8s ease-in-out infinite alternate;
   }
 
-  .cosmic {
-    /* Cosmic Theme - Deep space purples and blues */
-    --background: 250 50% 6%;
-    --foreground: 250 30% 95%;
-
-    --muted: 250 40% 12%;
-    --muted-foreground: 250 25% 65%;
-
-    --popover: 250 50% 8%;
-    --popover-foreground: 250 30% 95%;
-
-    --card: 250 50% 8%;
-    --card-foreground: 250 30% 95%;
-
-    --border: 250 40% 18%;
-    --input: 250 40% 18%;
-
-    --primary: 280 100% 70%;
-    --primary-foreground: 250 50% 6%;
-
-    --secondary: 250 40% 12%;
-    --secondary-foreground: 250 30% 95%;
-
-    --accent: 200 100% 75%;
-    --accent-foreground: 250 50% 6%;
-
-    --destructive: 0 100% 65%;
-    --destructive-foreground: 250 50% 6%;
-
-    --ring: 280 100% 70%;
-
-    /* Cosmic sidebar */
-    --sidebar-background: 250 50% 4%;
-    --sidebar-foreground: 250 30% 95%;
-    --sidebar-primary: 280 100% 70%;
-    --sidebar-primary-foreground: 250 50% 6%;
-    --sidebar-accent: 250 40% 10%;
-    --sidebar-accent-foreground: 250 30% 95%;
-    --sidebar-border: 250 40% 18%;
-    --sidebar-ring: 280 100% 70%;
-
-    --chart-1: 280 80% 70%;
-    --chart-2: 260 70% 60%;
-    --chart-3: 300 60% 50%;
-    --chart-4: 200 80% 65%;
-    --chart-5: 240 75% 55%;
+  @keyframes cyberpunkGlow {
+    0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+    25% { background-position: 100% 50%, 50% 100%, 25% 75%, 0% 0%; }
+    50% { background-position: 50% 100%, 100% 0%, 75% 25%, 0% 0%; }
+    75% { background-position: 25% 75%, 25% 25%, 50% 50%, 0% 0%; }
+    100% { background-position: 75% 25%, 75% 75%, 100% 100%, 0% 0%; }
   }
 
-  .emerald {
-    /* Emerald Theme - Professional greens */
-    --background: 150 30% 97%;
-    --foreground: 150 30% 8%;
+  /* Glowing cards for cyberpunk theme */
+  .cyberpunk .card,
+  .cyberpunk .bg-card {
+    box-shadow: 
+      0 0 20px rgba(255, 0, 255, 0.3),
+      inset 0 0 20px rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(255, 0, 255, 0.3);
+  }
 
-    --muted: 150 20% 90%;
-    --muted-foreground: 150 15% 45%;
+  .ocean {
+    /* Ocean Depths Theme - Deep underwater with waves and bubbles */
+    --background: 210 40% 98%;
+    --foreground: 210 40% 15%;
 
-    --popover: 150 30% 97%;
-    --popover-foreground: 150 30% 8%;
+    --muted: 210 40% 92%;
+    --muted-foreground: 210 20% 45%;
 
-    --card: 150 30% 97%;
-    --card-foreground: 150 30% 8%;
+    --popover: 210 40% 96%;
+    --popover-foreground: 210 40% 15%;
 
-    --border: 150 20% 87%;
-    --input: 150 20% 87%;
+    --card: 210 40% 96%;
+    --card-foreground: 210 40% 15%;
 
-    --primary: 160 84% 35%;
-    --primary-foreground: 150 30% 97%;
+    --border: 210 20% 85%;
+    --input: 210 20% 85%;
 
-    --secondary: 150 30% 92%;
-    --secondary-foreground: 150 30% 8%;
+    --primary: 185 62% 45%;
+    --primary-foreground: 0 0% 98%;
 
-    --accent: 140 70% 65%;
-    --accent-foreground: 150 30% 8%;
+    --secondary: 210 40% 92%;
+    --secondary-foreground: 210 40% 15%;
+
+    --accent: 210 40% 88%;
+    --accent-foreground: 210 40% 15%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 150 30% 97%;
+    --destructive-foreground: 0 0% 98%;
 
-    --ring: 160 84% 35%;
+    --ring: 185 62% 45%;
 
-    /* Emerald sidebar */
-    --sidebar-background: 150 30% 94%;
-    --sidebar-foreground: 150 30% 8%;
-    --sidebar-primary: 160 84% 35%;
-    --sidebar-primary-foreground: 150 30% 97%;
-    --sidebar-accent: 150 30% 90%;
-    --sidebar-accent-foreground: 150 30% 8%;
-    --sidebar-border: 150 20% 87%;
-    --sidebar-ring: 160 84% 35%;
+    /* Ocean Sidebar with deep water effect */
+    --sidebar-background: 210 70% 25%;
+    --sidebar-foreground: 195 80% 85%;
+    --sidebar-primary: 175 85% 65%;
+    --sidebar-primary-foreground: 210 70% 15%;
+    --sidebar-accent: 210 70% 35%;
+    --sidebar-accent-foreground: 195 80% 90%;
+    --sidebar-border: 200 60% 40%;
+    --sidebar-ring: 175 85% 65%;
 
-    --chart-1: 150 80% 60%;
-    --chart-2: 160 70% 50%;
-    --chart-3: 140 60% 40%;
-    --chart-4: 170 80% 55%;
-    --chart-5: 130 75% 45%;
+    --chart-1: 190 80% 45%;
+    --chart-2: 175 75% 50%;
+    --chart-3: 160 70% 55%;
+    --chart-4: 205 85% 40%;
+    --chart-5: 220 75% 45%;
+
+    /* Dramatic ocean background with animated waves */
+    background: 
+      radial-gradient(circle at 70% 30%, rgba(0, 191, 255, 0.3) 0%, transparent 40%),
+      radial-gradient(circle at 30% 70%, rgba(0, 150, 136, 0.25) 0%, transparent 40%),
+      radial-gradient(circle at 50% 10%, rgba(72, 209, 204, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, rgba(0, 188, 212, 0.15) 0%, transparent 60%),
+      linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 15%, #80deea 30%, #4dd0e1 45%, #26c6da 60%, #00bcd4 75%, #0097a7 90%, #006064 100%);
+    background-attachment: fixed;
+    background-size: 400% 400%, 350% 350%, 300% 300%, 250% 250%, 100% 100%;
+    animation: oceanWave 12s ease-in-out infinite;
   }
 
-  .neon {
-    /* Neon Theme - Electric blues and greens */
-    --background: 0 0% 5%;
-    --foreground: 120 100% 85%;
-
-    --muted: 0 0% 10%;
-    --muted-foreground: 120 50% 70%;
-
-    --popover: 0 0% 5%;
-    --popover-foreground: 120 100% 85%;
-
-    --card: 0 0% 8%;
-    --card-foreground: 120 100% 85%;
-
-    --border: 120 100% 25%;
-    --input: 120 100% 25%;
-
-    --primary: 180 100% 50%;
-    --primary-foreground: 0 0% 5%;
-
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 120 100% 85%;
-
-    --accent: 120 100% 50%;
-    --accent-foreground: 0 0% 5%;
-
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 0 0% 5%;
-
-    --ring: 180 100% 50%;
-
-    /* Neon sidebar */
-    --sidebar-background: 0 0% 3%;
-    --sidebar-foreground: 120 100% 85%;
-    --sidebar-primary: 180 100% 50%;
-    --sidebar-primary-foreground: 0 0% 5%;
-    --sidebar-accent: 0 0% 8%;
-    --sidebar-accent-foreground: 120 100% 85%;
-    --sidebar-border: 120 100% 25%;
-    --sidebar-ring: 180 100% 50%;
-
-    --chart-1: 180 80% 60%;
-    --chart-2: 120 70% 50%;
-    --chart-3: 160 60% 40%;
-    --chart-4: 200 80% 55%;
-    --chart-5: 140 75% 45%;
+  @keyframes oceanWave {
+    0%, 100% { 
+      background-position: 0% 0%, 100% 100%, 50% 0%, 0% 100%, 0% 0%; 
+    }
+    25% { 
+      background-position: 100% 50%, 0% 50%, 100% 25%, 50% 0%, 0% 0%; 
+    }
+    50% { 
+      background-position: 50% 100%, 50% 0%, 0% 50%, 100% 50%, 0% 0%; 
+    }
+    75% { 
+      background-position: 0% 50%, 100% 50%, 25% 100%, 50% 100%, 0% 0%; 
+    }
   }
 
-  .cherry {
-    /* Cherry Blossom Theme - Soft pinks and whites */
-    --background: 350 50% 98%;
-    --foreground: 350 30% 15%;
-
-    --muted: 350 30% 94%;
-    --muted-foreground: 350 20% 45%;
-
-    --popover: 350 50% 98%;
-    --popover-foreground: 350 30% 15%;
-
-    --card: 350 50% 98%;
-    --card-foreground: 350 30% 15%;
-
-    --border: 350 30% 88%;
-    --input: 350 30% 88%;
-
-    --primary: 340 75% 65%;
-    --primary-foreground: 350 50% 98%;
-
-    --secondary: 350 50% 94%;
-    --secondary-foreground: 350 30% 15%;
-
-    --accent: 330 60% 80%;
-    --accent-foreground: 350 30% 15%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 350 50% 98%;
-
-    --ring: 340 75% 65%;
-
-    /* Cherry sidebar */
-    --sidebar-background: 350 50% 95%;
-    --sidebar-foreground: 350 30% 15%;
-    --sidebar-primary: 340 75% 65%;
-    --sidebar-primary-foreground: 350 50% 98%;
-    --sidebar-accent: 350 50% 92%;
-    --sidebar-accent-foreground: 350 30% 15%;
-    --sidebar-border: 350 30% 88%;
-    --sidebar-ring: 340 75% 65%;
-
-    --chart-1: 340 80% 70%;
-    --chart-2: 330 70% 60%;
-    --chart-3: 350 60% 50%;
-    --chart-4: 320 80% 65%;
-    --chart-5: 10 75% 55%;
+  /* Floating bubbles overlay for ocean theme */
+  .ocean::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+      radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+    background-size: 100px 100px, 150px 150px, 200px 200px;
+    animation: oceanBubbles 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
   }
 
-  .arctic {
-    /* Arctic Theme - Cool blues and whites */
-    --background: 200 50% 98%;
-    --foreground: 200 40% 10%;
-
-    --muted: 200 30% 94%;
-    --muted-foreground: 200 20% 45%;
-
-    --popover: 200 50% 98%;
-    --popover-foreground: 200 40% 10%;
-
-    --card: 200 50% 98%;
-    --card-foreground: 200 40% 10%;
-
-    --border: 200 30% 88%;
-    --input: 200 30% 88%;
-
-    --primary: 195 85% 55%;
-    --primary-foreground: 200 50% 98%;
-
-    --secondary: 200 50% 94%;
-    --secondary-foreground: 200 40% 10%;
-
-    --accent: 190 70% 75%;
-    --accent-foreground: 200 40% 10%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 200 50% 98%;
-
-    --ring: 195 85% 55%;
-
-    /* Arctic sidebar */
-    --sidebar-background: 200 50% 95%;
-    --sidebar-foreground: 200 40% 10%;
-    --sidebar-primary: 195 85% 55%;
-    --sidebar-primary-foreground: 200 50% 98%;
-    --sidebar-accent: 200 50% 92%;
-    --sidebar-accent-foreground: 200 40% 10%;
-    --sidebar-border: 200 30% 88%;
-    --sidebar-ring: 195 85% 55%;
-
-    --chart-1: 195 80% 60%;
-    --chart-2: 200 70% 50%;
-    --chart-3: 190 60% 40%;
-    --chart-4: 210 80% 55%;
-    --chart-5: 185 75% 45%;
-  }
-
-  .golden {
-    /* Golden Theme - Warm golds and ambers */
-    --background: 45 60% 96%;
-    --foreground: 45 40% 10%;
-
-    --muted: 45 30% 88%;
-    --muted-foreground: 45 20% 45%;
-
-    --popover: 45 60% 96%;
-    --popover-foreground: 45 40% 10%;
-
-    --card: 45 60% 96%;
-    --card-foreground: 45 40% 10%;
-
-    --border: 45 30% 85%;
-    --input: 45 30% 85%;
-
-    --primary: 40 90% 50%;
-    --primary-foreground: 45 60% 96%;
-
-    --secondary: 45 60% 90%;
-    --secondary-foreground: 45 40% 10%;
-
-    --accent: 50 80% 70%;
-    --accent-foreground: 45 40% 10%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 45 60% 96%;
-
-    --ring: 40 90% 50%;
-
-    /* Golden sidebar */
-    --sidebar-background: 45 60% 92%;
-    --sidebar-foreground: 45 40% 10%;
-    --sidebar-primary: 40 90% 50%;
-    --sidebar-primary-foreground: 45 60% 96%;
-    --sidebar-accent: 45 60% 88%;
-    --sidebar-accent-foreground: 45 40% 10%;
-    --sidebar-border: 45 30% 85%;
-    --sidebar-ring: 40 90% 50%;
-
-    --chart-1: 40 80% 60%;
-    --chart-2: 45 70% 50%;
-    --chart-3: 50 60% 40%;
-    --chart-4: 55 80% 55%;
-    --chart-5: 35 75% 45%;
-  }
-
-  .lavender {
-    /* Lavender Theme - Soft purples and whites */
-    --background: 270 50% 97%;
-    --foreground: 270 30% 15%;
-
-    --muted: 270 30% 92%;
-    --muted-foreground: 270 20% 45%;
-
-    --popover: 270 50% 97%;
-    --popover-foreground: 270 30% 15%;
-
-    --card: 270 50% 97%;
-    --card-foreground: 270 30% 15%;
-
-    --border: 270 30% 87%;
-    --input: 270 30% 87%;
-
-    --primary: 260 65% 65%;
-    --primary-foreground: 270 50% 97%;
-
-    --secondary: 270 50% 93%;
-    --secondary-foreground: 270 30% 15%;
-
-    --accent: 280 55% 80%;
-    --accent-foreground: 270 30% 15%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 270 50% 97%;
-
-    --ring: 260 65% 65%;
-
-    /* Lavender sidebar */
-    --sidebar-background: 270 50% 94%;
-    --sidebar-foreground: 270 30% 15%;
-    --sidebar-primary: 260 65% 65%;
-    --sidebar-primary-foreground: 270 50% 97%;
-    --sidebar-accent: 270 50% 90%;
-    --sidebar-accent-foreground: 270 30% 15%;
-    --sidebar-border: 270 30% 87%;
-    --sidebar-ring: 260 65% 65%;
-
-    --chart-1: 260 80% 70%;
-    --chart-2: 270 70% 60%;
-    --chart-3: 280 60% 50%;
-    --chart-4: 250 80% 65%;
-    --chart-5: 290 75% 55%;
+  @keyframes oceanBubbles {
+    0% { 
+      background-position: 0% 100%, 0% 100%, 0% 100%; 
+    }
+    100% { 
+      background-position: 0% -100%, 0% -150%, 0% -200%; 
+    }
   }
 }
 

@@ -16,19 +16,10 @@ import {
   Palette, 
   Sun, 
   Moon, 
-  Monitor, 
   Sparkles,
-  GraduationCap,
   Waves,
-  Flame,
   Zap,
-  TreePine,
-  Check,
-  Star,
-  Sunset,
-  Circle,
-  Globe,
-  Gem
+  Check
 } from 'lucide-react'
 
 const themes = [
@@ -49,144 +40,32 @@ const themes = [
     category: 'Classic'
   },
   {
-    name: 'system',
-    label: 'System',
-    description: 'Follows your device',
-    icon: Monitor,
-    preview: 'bg-gradient-to-br from-slate-400 to-slate-600',
-    category: 'Classic'
-  },
-  {
-    name: 'academic',
-    label: 'Academic',
-    description: 'Professional blue-gray',
-    icon: GraduationCap,
-    preview: 'bg-gradient-to-br from-blue-100 to-indigo-200',
-    category: 'Professional'
-  },
-  {
-    name: 'minimal',
-    label: 'Minimal',
-    description: 'Clean grays',
-    icon: Circle,
-    preview: 'bg-gradient-to-br from-gray-100 to-gray-200',
-    category: 'Professional'
-  },
-  {
-    name: 'emerald',
-    label: 'Emerald',
-    description: 'Professional greens',
-    icon: Gem,
-    preview: 'bg-gradient-to-br from-emerald-100 to-green-200',
-    category: 'Professional'
-  },
-  {
-    name: 'ocean',
-    label: 'Ocean',
-    description: 'Deep blue-teal vibes',
-    icon: Waves,
-    preview: 'bg-gradient-to-br from-cyan-100 to-teal-200',
-    category: 'Nature'
-  },
-  {
-    name: 'warm',
-    label: 'Warm',
-    description: 'Cozy oranges & browns',
-    icon: Flame,
-    preview: 'bg-gradient-to-br from-orange-100 to-amber-200',
-    category: 'Nature'
-  },
-  {
-    name: 'forest',
-    label: 'Forest',
-    description: 'Natural green tones',
-    icon: TreePine,
-    preview: 'bg-gradient-to-br from-green-100 to-emerald-200',
-    category: 'Nature'
-  },
-  {
-    name: 'sunset',
-    label: 'Sunset',
-    description: 'Warm pinks & oranges',
-    icon: Sunset,
-    preview: 'bg-gradient-to-br from-pink-200 to-orange-200',
-    category: 'Nature'
-  },
-  {
     name: 'retro',
     label: 'Retro',
-    description: 'Vintage yellow-brown',
+    description: 'Vintage film with warm glow',
     icon: Sparkles,
-    preview: 'bg-gradient-to-br from-yellow-100 to-orange-200',
-    category: 'Creative'
+    preview: 'bg-gradient-to-br from-yellow-100 via-amber-100 to-orange-200',
+    category: 'Dramatic'
   },
   {
     name: 'cyberpunk',
     label: 'Cyberpunk',
-    description: 'Neon purple & pink',
+    description: 'Neon matrix with glitch effects',
     icon: Zap,
-    preview: 'bg-gradient-to-br from-purple-500 to-pink-500',
-    category: 'Creative'
+    preview: 'bg-gradient-to-br from-purple-900 via-pink-500 to-cyan-400',
+    category: 'Dramatic'
   },
   {
-    name: 'midnight',
-    label: 'Midnight',
-    description: 'Rich blues & blacks',
-    icon: Star,
-    preview: 'bg-gradient-to-br from-blue-900 to-slate-900',
-    category: 'Creative'
-  },
-  {
-    name: 'cosmic',
-    label: 'Cosmic',
-    description: 'Deep space vibes',
-    icon: Globe,
-    preview: 'bg-gradient-to-br from-purple-900 to-blue-900',
-    category: 'Creative'
-  },
-  {
-    name: 'neon',
-    label: 'Neon',
-    description: 'Electric blues & greens',
-    icon: Zap,
-    preview: 'bg-gradient-to-br from-black via-cyan-500 to-green-500',
-    category: 'Creative'
-  },
-  {
-    name: 'cherry',
-    label: 'Cherry',
-    description: 'Soft pink blossoms',
-    icon: Sparkles,
-    preview: 'bg-gradient-to-br from-pink-100 to-rose-200',
-    category: 'Nature'
-  },
-  {
-    name: 'arctic',
-    label: 'Arctic',
-    description: 'Cool blues & whites',
-    icon: Star,
-    preview: 'bg-gradient-to-br from-blue-50 to-cyan-100',
-    category: 'Nature'
-  },
-  {
-    name: 'golden',
-    label: 'Golden',
-    description: 'Warm golds & ambers',
-    icon: Sun,
-    preview: 'bg-gradient-to-br from-yellow-200 to-amber-300',
-    category: 'Professional'
-  },
-  {
-    name: 'lavender',
-    label: 'Lavender',
-    description: 'Soft purples & whites',
-    icon: Sparkles,
-    preview: 'bg-gradient-to-br from-purple-100 to-violet-200',
-    category: 'Professional'
+    name: 'ocean',
+    label: 'Ocean',
+    description: 'Deep waves with floating bubbles',
+    icon: Waves,
+    preview: 'bg-gradient-to-br from-cyan-100 via-blue-200 to-teal-300',
+    category: 'Dramatic'
   }
 ]
 
-const categories = ['Classic', 'Professional', 'Nature', 'Creative']
+const categories = ['Classic', 'Dramatic']
 
 interface ThemeSelectorProps {
   variant?: 'default' | 'compact' | 'floating'
