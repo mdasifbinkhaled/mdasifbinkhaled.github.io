@@ -46,7 +46,11 @@ jobs:
         run: npm run build
 
       - name: Add .nojekyll file
-        run: touch ./out/.nojekyll
+        run: |
+          # Ensure out directory exists
+          mkdir -p ./out
+          # Create .nojekyll file for GitHub Pages
+          touch ./out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

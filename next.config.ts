@@ -1,6 +1,8 @@
 import type {NextConfig} from 'next';
 
-// Security headers for better protection
+// Note: Security headers are not used with static export (output: 'export')
+// They would need to be configured at the hosting level (GitHub Pages, etc.)
+/*
 const securityHeaders = [
   {
     key: 'X-DNS-Prefetch-Control',
@@ -54,6 +56,7 @@ const securityHeaders = [
     ].join(', ')
   }
 ];
+*/
 
 const nextConfig: NextConfig = {
   output: 'export', // Configure for static export
@@ -63,14 +66,16 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: securityHeaders,
-      },
-    ];
-  },
+  // Note: headers() doesn't work with static export (output: 'export')
+  // Headers would need to be configured at the hosting level (GitHub Pages, etc.)
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/(.*)',
+  //       headers: securityHeaders,
+  //     },
+  //   ];
+  // },
   webpack: (config, { isServer }) => {
     // Fix for react-pdf and other client-side dependencies
     if (!isServer) {
