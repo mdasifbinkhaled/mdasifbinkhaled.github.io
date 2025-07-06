@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { ClientMountProvider } from './client-mount-provider';
 import { AppSidebarLayout } from './app-sidebar-layout';
+import { MobileThemeFAB } from '@/components/mobile-theme-fab';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -22,9 +23,25 @@ export function AppProviders({ children }: AppProvidersProps) {
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange
-        themes={['light', 'dark', 'retro']}
+        themes={[
+          'light', 
+          'dark', 
+          'system',
+          'retro', 
+          'academic', 
+          'ocean', 
+          'warm', 
+          'cyberpunk', 
+          'forest',
+          'midnight',
+          'sunset',
+          'minimal',
+          'cosmic',
+          'emerald'
+        ]}
       >
         <AppSidebarLayout>{children}</AppSidebarLayout>
+        <MobileThemeFAB />
         <Toaster />
       </ThemeProvider>
     </ClientMountProvider>

@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import { siteConfig } from '@/config/site';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, Menu, Sun, Moon, Palette } from 'lucide-react';
+import { GraduationCap, Menu } from 'lucide-react';
 import { mainNavItems } from '@/config/navigation';
 import { cn } from '@/lib/utils';
+import { ThemeSelector } from '@/components/ui/theme-selector';
 
 interface NavbarProps {
   onMobileMenuOpen?: () => void;
@@ -19,29 +19,6 @@ export function Navbar({
   showMobileMenuButton = true
 }: NavbarProps) {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
-
-  const cycleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else if (theme === 'dark') {
-      setTheme('retro');
-    } else {
-      setTheme('light');
-    }
-  };
-
-  const getThemeLabel = () => {
-    if (theme === 'light') return 'Switch to dark mode';
-    if (theme === 'dark') return 'Switch to retro mode';
-    return 'Switch to light mode';
-  };
-
-  const ThemeIcon = () => {
-    if (theme === 'light') return <Sun className="h-5 w-5" aria-hidden="true" />;
-    if (theme === 'dark') return <Moon className="h-5 w-5" aria-hidden="true" />;
-    return <Palette className="h-5 w-5" aria-hidden="true" />;
-  };
 
   const isNavItemActive = (href: string): boolean => {
     if (href === "/" && pathname !== "/") return false;
@@ -109,18 +86,9 @@ export function Navbar({
           ))}
         </nav>
 
-        {/* Right Group: Theme Toggle */}
+        {/* Right Group: Theme Selector */}
         <div className="flex items-center">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={cycleTheme} 
-            aria-label={getThemeLabel()}
-            title={getThemeLabel()}
-            className="hover:bg-accent/50 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary"
-          >
-            <ThemeIcon />
-          </Button>
+          <ThemeSelector variant="compact" align="end" />
         </div>
       </div>
     </header>
