@@ -143,6 +143,46 @@ const themes = [
     icon: Globe,
     preview: 'bg-gradient-to-br from-purple-900 to-blue-900',
     category: 'Creative'
+  },
+  {
+    name: 'neon',
+    label: 'Neon',
+    description: 'Electric blues & greens',
+    icon: Zap,
+    preview: 'bg-gradient-to-br from-black via-cyan-500 to-green-500',
+    category: 'Creative'
+  },
+  {
+    name: 'cherry',
+    label: 'Cherry',
+    description: 'Soft pink blossoms',
+    icon: Sparkles,
+    preview: 'bg-gradient-to-br from-pink-100 to-rose-200',
+    category: 'Nature'
+  },
+  {
+    name: 'arctic',
+    label: 'Arctic',
+    description: 'Cool blues & whites',
+    icon: Star,
+    preview: 'bg-gradient-to-br from-blue-50 to-cyan-100',
+    category: 'Nature'
+  },
+  {
+    name: 'golden',
+    label: 'Golden',
+    description: 'Warm golds & ambers',
+    icon: Sun,
+    preview: 'bg-gradient-to-br from-yellow-200 to-amber-300',
+    category: 'Professional'
+  },
+  {
+    name: 'lavender',
+    label: 'Lavender',
+    description: 'Soft purples & whites',
+    icon: Sparkles,
+    preview: 'bg-gradient-to-br from-purple-100 to-violet-200',
+    category: 'Professional'
   }
 ]
 

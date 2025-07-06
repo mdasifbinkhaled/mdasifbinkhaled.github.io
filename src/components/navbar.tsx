@@ -88,7 +88,7 @@ export function Navbar({
 
         {/* Right Group: Theme Selector */}
         <div className="flex items-center">
-          <ThemeSelector variant="compact" align="end" />
+          <ThemeSelector variant="default" align="end" showLabel={false} />
         </div>
       </div>
     </header>
