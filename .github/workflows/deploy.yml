@@ -47,16 +47,16 @@ jobs:
 
       - name: Create .nojekyll file and verify output
         run: |
-          # Ensure out directory exists
-          mkdir -p ./out
-          # Create .nojekyll file for GitHub Pages
+          # Create .nojekyll file for GitHub Pages (in the out directory that should exist after build)
           touch ./out/.nojekyll
           # Verify index.html exists
           if [ ! -f "./out/index.html" ]; then
             echo "Error: index.html not found in out directory"
+            echo "Build output contents:"
+            ls -la ./out/ || echo "out directory does not exist"
             exit 1
           fi
-          # List output directory contents
+          # List output directory contents for debugging
           echo "Build output contents:"
           ls -la ./out/
 
