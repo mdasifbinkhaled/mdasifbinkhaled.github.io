@@ -45,3 +45,67 @@ export interface Skill {
   category: string;
   items: string[];
 }
+
+// Enhanced academic-specific types
+export interface CourseData {
+  id: string;
+  code: string;
+  title: string;
+  institution: 'IUB' | 'BRACU';
+  level: 'undergraduate' | 'graduate';
+  credits: number;
+  semester: string;
+  year: number;
+  description: string;
+  outcomes: string[];
+  technologies?: string[];
+  projects?: string[];
+  enrollmentCount?: number;
+  iconName?: IconName;
+}
+
+export interface AcademicAward {
+  id: string;
+  title: string;
+  organization: string;
+  year: number;
+  description: string;
+  type: 'award' | 'grant' | 'fellowship' | 'recognition';
+  amount?: string;
+  duration?: string;
+}
+
+export interface ResearchArea {
+  id: string;
+  name: string;
+  description: string;
+  keywords: string[];
+  publicationCount?: number;
+  icon?: IconName;
+}
+
+// Theme-related types
+export type ThemeName = 'light' | 'dark' | 'retro' | 'cyberpunk' | 'ocean';
+
+export interface ThemeConfig {
+  name: ThemeName;
+  label: string;
+  description: string;
+  category: 'classic' | 'dramatic';
+  preview: {
+    background: string;
+    foreground: string;
+    primary: string;
+  };
+}
+
+// Component prop types
+export interface BaseComponentProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export interface ErrorBoundaryProps extends BaseComponentProps {
+  fallback?: React.ComponentType<{ error: Error; reset: () => void }>;
+  onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
+}

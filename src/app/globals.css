@@ -35,6 +35,19 @@
 
     --radius: 0.5rem;
 
+    /* Academic-specific semantic variables */
+    --academic-primary: var(--primary);
+    --academic-accent: var(--accent);
+    --academic-muted: var(--muted);
+    --academic-card: var(--card);
+    --academic-highlight: 45 100% 85%; /* Light yellow for highlights */
+    
+    /* Layout-specific variables */
+    --sidebar-width: 20rem;
+    --navbar-height: 4rem;
+    --content-padding: 1.5rem;
+    --max-content-width: 87.5rem; /* 1400px */
+
     /* Enhanced Sidebar with better contrast */
     --sidebar-background: 201 55% 28%; /* Richer sidebar background */
     --sidebar-foreground: 200 25% 96%; /* High contrast text */

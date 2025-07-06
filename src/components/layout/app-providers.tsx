@@ -20,13 +20,12 @@ export function AppProviders({ children }: AppProvidersProps) {
     <ClientMountProvider>
       <ThemeProvider
         attribute="class"
-        defaultTheme="system"
-        enableSystem
+        defaultTheme="light"
+        enableSystem={false}
         disableTransitionOnChange
         themes={[
           'light', 
           'dark', 
-          'system',
           'retro', 
           'cyberpunk', 
           'ocean'

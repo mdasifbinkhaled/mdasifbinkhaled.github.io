@@ -52,6 +52,14 @@ export default {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
+  			},
+  			// Academic-specific semantic colors
+  			academic: {
+  				primary: 'hsl(var(--academic-primary))',
+  				accent: 'hsl(var(--academic-accent))',
+  				muted: 'hsl(var(--academic-muted))',
+  				card: 'hsl(var(--academic-card))',
+  				highlight: 'hsl(var(--academic-highlight))'
   			}
   		},
   		borderRadius: {
@@ -80,7 +88,15 @@ export default {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+  		spacing: {
+  			'sidebar-width': 'var(--sidebar-width)',
+  			'navbar-height': 'var(--navbar-height)',
+  			'content-padding': 'var(--content-padding)'
+  		},
+  		maxWidth: {
+  			'content': 'var(--max-content-width)'
+  		},
   	}
   },
   plugins: [require("tailwindcss-animate")],
