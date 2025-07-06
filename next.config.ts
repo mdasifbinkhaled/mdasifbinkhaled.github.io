@@ -66,6 +66,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // GitHub Pages configuration
+  trailingSlash: true,
+  basePath: '',
   // Note: headers() doesn't work with static export (output: 'export')
   // Headers would need to be configured at the hosting level (GitHub Pages, etc.)
   // async headers() {

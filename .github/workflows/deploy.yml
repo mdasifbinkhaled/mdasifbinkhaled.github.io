@@ -45,12 +45,20 @@ jobs:
       - name: Build with Next.js
         run: npm run build
 
-      - name: Add .nojekyll file
+      - name: Create .nojekyll file and verify output
         run: |
           # Ensure out directory exists
           mkdir -p ./out
           # Create .nojekyll file for GitHub Pages
           touch ./out/.nojekyll
+          # Verify index.html exists
+          if [ ! -f "./out/index.html" ]; then
+            echo "Error: index.html not found in out directory"
+            exit 1
+          fi
+          # List output directory contents
+          echo "Build output contents:"
+          ls -la ./out/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
