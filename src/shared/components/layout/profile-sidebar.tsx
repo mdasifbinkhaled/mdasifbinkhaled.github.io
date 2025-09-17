@@ -52,7 +52,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
             isCollapsed ? 'w-10 h-10' : 'w-32 h-32'
           )}
         >
-          {false && !imageError ? (
+          {!imageError ? (
             <Image
               src="/photo/Photo_Md Asif Bin Khaled.png"
               alt={`${siteConfig.author} - Profile photo`}
