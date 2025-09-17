@@ -1,5 +1,7 @@
 // SEO Structured Data utilities for academic content
 import { siteConfig } from '@/config/site'
+import { institutionNames } from '@/lib/data/courses'
+import type { CourseInstitution } from '@/types'
 
 export interface AcademicPersonStructuredData {
   '@context': 'https://schema.org'
@@ -111,6 +113,9 @@ export function generateCourseStructuredData(course: {
   level: string
   topics: string[]
 }): CourseStructuredData {
+  const providerName =
+    institutionNames[course.institution as CourseInstitution] ?? course.institution
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Course',
@@ -118,7 +123,7 @@ export function generateCourseStructuredData(course: {
     description: course.description,
     provider: {
       '@type': 'EducationalOrganization',
-      name: course.institution
+      name: providerName
     },
     instructor: {
       '@type': 'Person',

@@ -16,8 +16,8 @@ import {
   ChevronUp
 } from 'lucide-react'
 import { useState } from 'react'
-import type { CourseData } from '@/lib/data/courses'
-import { iconMap } from '@/lib/data/courses'
+import type { CourseData, CourseStatus } from '@/types'
+import { iconMap, institutionNames } from '@/lib/data/courses'
 
 interface SimpleCourseCardProps {
   course: CourseData
@@ -27,7 +27,7 @@ interface SimpleCourseCardProps {
 export function SimpleCourseCard({ course, showFullDetails = false }: SimpleCourseCardProps) {
   const [expanded, setExpanded] = useState(false)
 
-  const getLevelStyle = (level: string) => {
+  const getLevelStyle = (level: CourseData['level']) => {
     const styles = {
       undergraduate: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
       graduate: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
@@ -35,7 +35,7 @@ export function SimpleCourseCard({ course, showFullDetails = false }: SimpleCour
     return styles[level as keyof typeof styles] || styles.undergraduate
   }
 
-  const getStatusStyle = (status: string) => {
+  const getStatusStyle = (status: CourseStatus) => {
     const styles = {
       completed: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
       ongoing: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
@@ -44,7 +44,12 @@ export function SimpleCourseCard({ course, showFullDetails = false }: SimpleCour
     return styles[status as keyof typeof styles] || styles.completed
   }
 
-  const IconComponent = iconMap[course.iconName as keyof typeof iconMap] || BookOpen
+  const IconComponent = (course.iconName ? iconMap[course.iconName] : undefined) || BookOpen
+  const enrollmentDisplay = typeof course.enrollmentCount === 'number'
+    ? `${course.enrollmentCount} students`
+    : 'Enrollment TBD'
+  const institutionLabel = institutionNames[course.institution] ?? course.institution
+  const status = course.status
 
   return (
     <Card className="transition-all duration-200 hover:shadow-lg group course-card">
@@ -71,9 +76,11 @@ export function SimpleCourseCard({ course, showFullDetails = false }: SimpleCour
               <Badge className={getLevelStyle(course.level)}>
                 {course.level.toUpperCase()}
               </Badge>
-              <Badge className={getStatusStyle(course.status)}>
-                {course.status.toUpperCase()}
-              </Badge>
+              {status && (
+                <Badge className={getStatusStyle(status)}>
+                  {status.toUpperCase()}
+                </Badge>
+              )}
               <Badge variant="outline" className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
                 {course.semester} {course.year}
@@ -93,7 +100,7 @@ export function SimpleCourseCard({ course, showFullDetails = false }: SimpleCour
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Users className="w-3 h-3" />
-                {course.enrollment} students
+                {enrollmentDisplay}
               </div>
               {course.rating && (
                 <div className="flex items-center gap-1">
@@ -103,7 +110,7 @@ export function SimpleCourseCard({ course, showFullDetails = false }: SimpleCour
               )}
               <div className="flex items-center gap-1">
                 <MapPin className="w-3 h-3" />
-                {course.institution.includes('IUB') ? 'IUB' : 'BRACU'}
+                {institutionLabel}
               </div>
             </div>
           </div>
