@@ -62,15 +62,7 @@ export default function HomePage() {
       <section className="w-full py-12 md:py-24 lg:py-28 xl:py-32 bg-gradient-to-br from-background to-secondary/30">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px] items-center">
-            <Image
-              alt={siteConfig.author}
-              className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last border-4 border-primary shadow-lg"
-              height="550"
-              src="/photo/Photo_Md Asif Bin Khaled.png"
-              width="550"
-              priority // Added priority for LCP
-            />
-            <div className="flex flex-col justify-center space-y-4">
+            <div className="flex flex-col justify-center space-y-4 order-2 lg:order-1">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-primary">
                   {siteConfig.author}
@@ -103,6 +95,14 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
+            <Image
+              alt={siteConfig.author}
+              className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full order-1 lg:order-2 border-4 border-primary shadow-lg"
+              height="550"
+              src="/photo/Photo_Md Asif Bin Khaled.png"
+              width="550"
+              priority // Added priority for LCP
+            />
           </div>
 
           {/* Quick Stats */}
