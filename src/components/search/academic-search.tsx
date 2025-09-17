@@ -16,7 +16,7 @@ interface SearchableContent {
   tags: string[]
   year?: number
   url: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 interface AcademicSearchProps {
@@ -41,7 +41,7 @@ export function AcademicSearch({
 
   const { filteredContent, availableYears, contentTypes } = useMemo(() => {
     // Filter content based on search and filters
-    let filtered = content.filter(item => {
+    const filtered = content.filter(item => {
       const matchesQuery = !query || 
         item.title.toLowerCase().includes(query.toLowerCase()) ||
         item.content.toLowerCase().includes(query.toLowerCase()) ||

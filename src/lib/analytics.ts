@@ -1,4 +1,5 @@
 // Analytics and performance tracking utilities
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 'use client'
 
 // Configure analytics destinations via environment variables so static builds
@@ -7,6 +8,7 @@ const analyticsEndpoint = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT
 const isStaticMode = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true'
 
 // Track user interactions for academic portfolio analytics
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const trackEvent = (eventName: string, properties?: Record<string, any>) => {
   if (typeof window === 'undefined') return
 
@@ -194,7 +196,7 @@ function getLargestContentfulPaint(): number | undefined {
 
 function trackCLS() {
   let clsValue = 0
-  let clsEntries: PerformanceEntry[] = []
+  const clsEntries: PerformanceEntry[] = []
 
   try {
     const observer = new PerformanceObserver(list => {
@@ -322,6 +324,7 @@ export const userBehaviorTracker = {
 // Declare global gtag for TypeScript
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gtag: (...args: any[]) => void
   }
 }

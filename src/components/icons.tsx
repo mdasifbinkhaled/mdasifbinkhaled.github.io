@@ -2,7 +2,6 @@
 // @/components/icons.tsx
 "use client"; // Ensure this can be used in other client components
 
-import React from 'react';
 import {
   Home,
   UserCircle,
@@ -51,7 +50,7 @@ interface IconComponentProps extends LucideProps {
   name?: IconName; // Use the IconName type
 }
 
-export const Icon: React.FC<IconComponentProps> = ({ name, className, ...props }) => {
+export function Icon({ name, className, ...props }: IconComponentProps) {
   if (!name) {
     return null;
   }

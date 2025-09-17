@@ -9,23 +9,23 @@ describe("useToast", () => {
   }
 
   beforeEach(() => {
-    __TOAST_TEST_UTILS.reset()
+    __TOAST_TEST_UTILS?.reset()
   })
 
   it("registers a single listener and cleans up on unmount", async () => {
     const { unmount } = renderHook(() => useToast())
 
-    await waitFor(() => expect(__TOAST_TEST_UTILS.getListenerCount()).toBe(1))
+    await waitFor(() => expect(__TOAST_TEST_UTILS?.getListenerCount()).toBe(1))
 
     unmount()
 
-    await waitFor(() => expect(__TOAST_TEST_UTILS.getListenerCount()).toBe(0))
+    await waitFor(() => expect(__TOAST_TEST_UTILS?.getListenerCount()).toBe(0))
   })
 
   it("updates state when dispatching toasts without duplicating listeners", async () => {
     const { result } = renderHook(() => useToast())
 
-    await waitFor(() => expect(__TOAST_TEST_UTILS.getListenerCount()).toBe(1))
+    await waitFor(() => expect(__TOAST_TEST_UTILS?.getListenerCount()).toBe(1))
     expect(result.current.toasts).toHaveLength(0)
 
     act(() => {
@@ -37,7 +37,7 @@ describe("useToast", () => {
 
     expect(result.current.toasts).toHaveLength(1)
     expect(result.current.toasts[0]?.description).toBe("First toast")
-    expect(__TOAST_TEST_UTILS.getListenerCount()).toBe(1)
+    expect(__TOAST_TEST_UTILS?.getListenerCount()).toBe(1)
 
     act(() => {
       result.current.toast({
@@ -48,6 +48,6 @@ describe("useToast", () => {
 
     expect(result.current.toasts).toHaveLength(1)
     expect(result.current.toasts[0]?.description).toBe("Second toast")
-    expect(__TOAST_TEST_UTILS.getListenerCount()).toBe(1)
+    expect(__TOAST_TEST_UTILS?.getListenerCount()).toBe(1)
   })
 })
