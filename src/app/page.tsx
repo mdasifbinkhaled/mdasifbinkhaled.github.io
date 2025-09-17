@@ -16,7 +16,6 @@ import {
   Quote,
   GraduationCap,
 } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { AcademicSearch } from '@/features/academic/academic-search';
@@ -96,20 +95,6 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-
-            {/* Image Section - Temporarily Hidden */}
-            {false && (
-              <div className="hero-image">
-                <Image
-                  alt={siteConfig.author}
-                  className="hero-photo"
-                  height="300"
-                  src="/photo/Photo_Md Asif Bin Khaled.png"
-                  width="300"
-                  priority
-                />
-              </div>
-            )}
           </div>
 
           {/* Quick Stats */}
