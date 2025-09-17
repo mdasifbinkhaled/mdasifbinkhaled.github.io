@@ -97,17 +97,19 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Image Section */}
-            <div className="hero-image">
-              <Image
-                alt={siteConfig.author}
-                className="hero-photo"
-                height="300"
-                src="/photo/Photo_Md Asif Bin Khaled.png"
-                width="300"
-                priority
-              />
-            </div>
+            {/* Image Section - Temporarily Hidden */}
+            {false && (
+              <div className="hero-image">
+                <Image
+                  alt={siteConfig.author}
+                  className="hero-photo"
+                  height="300"
+                  src="/photo/Photo_Md Asif Bin Khaled.png"
+                  width="300"
+                  priority
+                />
+              </div>
+            )}
           </div>
 
           {/* Quick Stats */}
