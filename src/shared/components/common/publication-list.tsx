@@ -1,7 +1,7 @@
 'use client';
 
 import type { PublicationItem, PublicationType } from '@/types';
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Card } from '@/shared/components/ui/card';
 import {
   Select,
@@ -13,7 +13,6 @@ import {
 import { BookOpenText } from 'lucide-react';
 import { Input } from '@/shared/components/ui/input';
 import { PublicationCard } from '@/features/publications/publication-card';
-import { Skeleton } from '@/shared/components/ui/skeleton';
 import { BackToTop } from '@/shared/components/common/back-to-top';
 
 interface PublicationListProps {
@@ -37,9 +36,6 @@ export const PublicationList = React.memo(function PublicationList({
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<PublicationType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
 
   const uniqueYears = useMemo(() => {
     const years = new Set(initialPublications.map((p) => p.year.toString()));
@@ -84,21 +80,6 @@ export const PublicationList = React.memo(function PublicationList({
       return yearMatch && typeMatch && searchMatch;
     });
   }, [publications, yearFilter, typeFilter, searchTerm]);
-
-  if (!mounted) {
-    return (
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row gap-4 mb-6 p-4 border rounded-lg shadow-sm bg-card">
-          <Skeleton className="flex-1 min-w-[150px] h-10" />
-          <Skeleton className="flex-1 min-w-[150px] h-10" />
-          <Skeleton className="flex-1 min-w-[150px] h-10" />
-        </div>
-        {[1, 2, 3].map((i) => (
-          <Skeleton key={i} className="h-[280px] w-full" />
-        ))}
-      </div>
-    );
-  }
 
   if (!initialPublications || initialPublications.length === 0) {
     return (

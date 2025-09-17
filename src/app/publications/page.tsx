@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { samplePublications } from '@/shared/lib/data/publications';
 import { siteConfig } from '@/shared/config/site';
 import { BackToTop } from '@/shared/components/common/back-to-top';
-import { PublicationListClient } from '@/shared/components/common/publication-list-client';
+import { PublicationList } from '@/shared/components/common/publication-list';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export default function PublicationsPage() {
       </header>
 
       <section id="publication-listing">
-        <PublicationListClient initialPublications={samplePublications} />
+        <PublicationList initialPublications={samplePublications} />
       </section>
 
       <BackToTop />
