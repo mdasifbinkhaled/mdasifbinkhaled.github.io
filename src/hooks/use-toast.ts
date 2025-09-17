@@ -176,13 +176,14 @@ function useToast() {
 
   React.useEffect(() => {
     listeners.push(setState)
+
     return () => {
       const index = listeners.indexOf(setState)
       if (index > -1) {
         listeners.splice(index, 1)
       }
     }
-  }, [state])
+  }, [])
 
   return {
     ...state,
@@ -193,5 +194,26 @@ function useToast() {
     }),
   }
 }
+
+type ToastTestUtils = {
+  getListenerCount: () => number
+  reset: () => void
+}
+
+export const __TOAST_TEST_UTILS: ToastTestUtils | undefined =
+  process.env.NODE_ENV === "test"
+    ? {
+        getListenerCount: () => listeners.length,
+        reset: () => {
+          listeners.splice(0, listeners.length)
+          toastTimeouts.forEach((timeout) => {
+            clearTimeout(timeout)
+          })
+          toastTimeouts.clear()
+          memoryState = { toasts: [] }
+          count = 0
+        },
+      }
+    : undefined
 
 export { useToast, toast }
