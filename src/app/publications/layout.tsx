@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
-import { PublicationStructuredData } from '@/components/structured-data';
+import { PublicationStructuredDataScript } from '@/components/structured-data';
 
 export const metadata: Metadata = {
   title: 'Publications & Research',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function PublicationsLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <PublicationStructuredData />
+      <PublicationStructuredDataScript />
       {children}
     </>
   );
