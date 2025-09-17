@@ -59,6 +59,24 @@ export interface PublicationStructuredData {
 }
 
 export function generatePersonStructuredData(): AcademicPersonStructuredData {
+  const profileLinks: Array<string | undefined> = [
+    siteConfig.links.github,
+    siteConfig.links.linkedin,
+    siteConfig.links.googleScholar,
+    siteConfig.links.orcid,
+    siteConfig.links.twitter
+  ]
+
+  const placeholderIndicators = ['YOUR_', 'yourusername'] as const
+
+  const sameAs = profileLinks.filter((url): url is string => {
+    if (!url) {
+      return false
+    }
+
+    return !placeholderIndicators.some(indicator => url.includes(indicator))
+  })
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -70,12 +88,7 @@ export function generatePersonStructuredData(): AcademicPersonStructuredData {
       url: 'https://www.iub.edu.bd'
     },
     url: siteConfig.url,
-    sameAs: [
-      'https://github.com/mdasifbinkhaled',
-      'https://www.linkedin.com/in/mdasifbinkhaled',
-      'https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID',
-      'https://orcid.org/YOUR_ORCID_ID'
-    ],
+    sameAs,
     knowsAbout: [
       'Artificial Intelligence',
       'Machine Learning',
@@ -85,7 +98,7 @@ export function generatePersonStructuredData(): AcademicPersonStructuredData {
       'Software Engineering'
     ],
     description: siteConfig.description,
-    email: 'mdasifbinkhaled@gmail.com',
+    email: siteConfig.email,
     image: `${siteConfig.url}/photo/Photo_Md Asif Bin Khaled.png`
   }
 }
