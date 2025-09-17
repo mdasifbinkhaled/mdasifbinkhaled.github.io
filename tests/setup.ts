@@ -1,9 +1,11 @@
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
-import { afterEach, beforeAll } from 'vitest';
+import { afterEach, beforeAll, vi } from 'vitest';
 
 // Mock window.matchMedia for next-themes
 beforeAll(() => {
+  vi.useRealTimers();
+
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: (query: string) => ({
