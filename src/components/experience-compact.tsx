@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, Building2 } from 'lucide-react';
@@ -9,10 +10,26 @@ interface ExperienceCompactProps {
   experiences: ExperienceItem[];
 }
 
+const INITIAL_RENDER_COUNT = 24;
+
 export function ExperienceCompact({ experiences }: ExperienceCompactProps) {
+  const [visibleCount, setVisibleCount] = useState(() =>
+    Math.min(INITIAL_RENDER_COUNT, experiences.length)
+  );
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      setVisibleCount(experiences.length);
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
+  }, [experiences.length]);
+
+  const displayedExperiences = experiences.slice(0, visibleCount);
+
   return (
     <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
-      {experiences.map((exp, index) => {
+      {displayedExperiences.map((exp, index) => {
         const isCurrent = exp.duration.includes('Present');
         return (
           <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary">

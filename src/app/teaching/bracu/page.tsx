@@ -51,7 +51,10 @@ export default function BRACUTeachingPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {coursesTaughtBRACU.reduce((total, course) => total + course.enrollment, 0)}
+              {coursesTaughtBRACU.reduce(
+                (total, course) => total + (course.enrollmentCount ?? 0),
+                0
+              )}
             </div>
             <p className="text-xs text-muted-foreground">
               Students taught overall
@@ -101,7 +104,7 @@ export default function BRACUTeachingPage() {
                     </CardTitle>
                     {courseData && (
                       <div className="text-xs text-muted-foreground">
-                        {courseData.semester} {courseData.year} • {courseData.enrollment} students
+                        {courseData.semester} {courseData.year} • {courseData.enrollmentCount ?? 'Enrollment TBD'} students
                       </div>
                     )}
                   </CardHeader>

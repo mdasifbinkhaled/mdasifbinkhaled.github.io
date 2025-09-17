@@ -65,7 +65,10 @@ export default function TeachingPage() {
           {teachingNavItems.slice(1).map((institution) => {
             const isIUB = institution.sectionId === 'iub';
             const courses = isIUB ? coursesTaughtIUB : coursesTaughtBRACU;
-            const totalStudents = courses.reduce((sum, course) => sum + course.enrollment, 0);
+            const totalStudents = courses.reduce(
+              (sum, course) => sum + (course.enrollmentCount ?? 0),
+              0
+            );
             
             return (
               <Link key={institution.href} href={institution.href}>
