@@ -59,18 +59,19 @@ export default function HomePage() {
       <Breadcrumbs />
 
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-28 xl:py-32 bg-gradient-to-br from-background to-secondary/30">
-        <div className="container-responsive">
-          <div className="grid gap-6 grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_450px] items-center max-w-6xl mx-auto">
-            <div className="flex flex-col justify-center space-y-4">
+      <section className="w-full py-12 md:py-24 lg:py-20 xl:py-24 bg-gradient-to-br from-background to-secondary/30">
+        <div className="hero-container">
+          <div className="hero-grid">
+            {/* Content Section */}
+            <div className="hero-content">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-5xl xl:text-6xl/none text-primary">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-4xl xl:text-5xl/tight text-primary">
                   {siteConfig.author}
                 </h1>
-                <p className="text-xl text-foreground md:text-2xl">
+                <p className="text-xl text-foreground md:text-xl lg:text-xl">
                   Senior Lecturer & Researcher
                 </p>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                <p className="text-muted-foreground md:text-lg max-w-prose">
                   Specializing in Explainable AI (XAI) and Multimodal AI (MMAI)
                   for healthcare diagnostics and analytics.
                 </p>
@@ -78,7 +79,7 @@ export default function HomePage() {
                   Open to PhD Opportunities
                 </div>
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex flex-col gap-3 sm:flex-row pt-4">
                 <Button size="lg" asChild>
                   <Link href="/research">
                     Explore Research <ArrowRight className="ml-2 h-5 w-5" />
@@ -95,20 +96,22 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <div className="flex justify-center lg:justify-end">
+
+            {/* Image Section */}
+            <div className="hero-image">
               <Image
                 alt={siteConfig.author}
-                className="aspect-square overflow-hidden rounded-xl object-cover border-4 border-primary shadow-lg max-w-[300px] lg:max-w-[400px] w-full"
-                height="400"
+                className="hero-photo"
+                height="300"
                 src="/photo/Photo_Md Asif Bin Khaled.png"
-                width="400"
-                priority // Added priority for LCP
+                width="300"
+                priority
               />
             </div>
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-12 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-16 max-w-4xl mx-auto">
             {[
               {
                 number: '15+',
