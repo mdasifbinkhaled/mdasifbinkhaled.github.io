@@ -103,53 +103,51 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
+          </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-8">
-              {[
-                {
-                  number: '15+',
-                  label: 'Publications',
-                  icon: BookOpen,
-                  color: 'text-blue-500',
-                },
-                {
-                  number: '200+',
-                  label: 'Citations',
-                  icon: Quote,
-                  color: 'text-green-500',
-                },
-                {
-                  number: '5+',
-                  label: 'Years Teaching',
-                  icon: GraduationCap,
-                  color: 'text-purple-500',
-                },
-                {
-                  number: '1000+',
-                  label: 'Students Taught',
-                  icon: Users,
-                  color: 'text-orange-500',
-                },
-              ].map((stat, index) => (
-                <Card
-                  key={index}
-                  className="bg-card/50 backdrop-blur border-0 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <CardContent className="p-6 text-center">
-                    <stat.icon
-                      className={`w-8 h-8 mx-auto mb-2 ${stat.color}`}
-                    />
-                    <div className="text-2xl font-bold text-foreground mb-1">
-                      {stat.number}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {stat.label}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-8">
+            {[
+              {
+                number: '15+',
+                label: 'Publications',
+                icon: BookOpen,
+                color: 'text-blue-500',
+              },
+              {
+                number: '200+',
+                label: 'Citations',
+                icon: Quote,
+                color: 'text-green-500',
+              },
+              {
+                number: '5+',
+                label: 'Years Teaching',
+                icon: GraduationCap,
+                color: 'text-purple-500',
+              },
+              {
+                number: '1000+',
+                label: 'Students Taught',
+                icon: Users,
+                color: 'text-orange-500',
+              },
+            ].map((stat, index) => (
+              <Card
+                key={index}
+                className="bg-card/50 backdrop-blur border-0 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <CardContent className="p-6 text-center">
+                  <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
+                  <div className="text-2xl font-bold text-foreground mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {stat.label}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
