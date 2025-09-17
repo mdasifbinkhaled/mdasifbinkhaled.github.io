@@ -62,11 +62,6 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   generateEtags: false,
 
-  // Experimental features for better performance
-  experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
-  },
-
   // Turbopack configuration (replaces deprecated experimental.turbo)
   turbopack: {
     rules: {
