@@ -22,7 +22,7 @@ import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { AcademicSearch } from '@/features/academic/academic-search';
 import { samplePublications } from '@/shared/lib/data/publications';
 import { professionalExperiences } from '@/shared/lib/data/experience';
-import { LazyPublicationListWithSuspense } from '@/shared/components/common/lazy-components';
+import { PublicationList } from '@/shared/components/common/publication-list';
 import { ExperienceCompact } from '@/shared/components/common/experience-compact';
 
 export default function HomePage() {
@@ -305,7 +305,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold mb-6 text-primary">
             Recent Publications
           </h2>
-          <LazyPublicationListWithSuspense
+          <PublicationList
             initialPublications={filteredPublications.slice(0, 3)}
           />
           <div className="text-center mt-6">
