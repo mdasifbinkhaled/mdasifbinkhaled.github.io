@@ -4,8 +4,9 @@ import { useState, useMemo } from 'react'
 import { Search, Filter, X, Calendar } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Badge, badgeVariants } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 interface SearchableContent {
   id: string
@@ -112,17 +113,25 @@ export function AcademicSearch({
             <div className="flex flex-wrap items-center gap-2">
               <Filter className="w-4 h-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">Type:</span>
-              {contentTypes.map(type => (
-                <Badge
-                  key={type}
-                  variant={selectedTypes.includes(type) ? 'default' : 'secondary'}
-                  className="cursor-pointer capitalize flex items-center gap-1"
-                  onClick={() => toggleTypeFilter(type)}
-                >
-                  <span>{getTypeIcon(type)}</span>
-                  {type}
-                </Badge>
-              ))}
+              {contentTypes.map(type => {
+                const isSelected = selectedTypes.includes(type)
+
+                return (
+                  <button
+                    key={type}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => toggleTypeFilter(type)}
+                    className={cn(
+                      badgeVariants({ variant: isSelected ? 'default' : 'secondary' }),
+                      'flex items-center gap-1 cursor-pointer capitalize'
+                    )}
+                  >
+                    <span>{getTypeIcon(type)}</span>
+                    {type}
+                  </button>
+                )
+              })}
             </div>
           )}
 
@@ -130,23 +139,36 @@ export function AcademicSearch({
             <div className="flex flex-wrap items-center gap-2">
               <Calendar className="w-4 h-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">Year:</span>
-              <Badge
-                variant={!selectedYear ? 'default' : 'secondary'}
-                className="cursor-pointer"
+              <button
+                type="button"
+                aria-pressed={!selectedYear}
                 onClick={() => setSelectedYear(null)}
+                className={cn(
+                  badgeVariants({ variant: !selectedYear ? 'default' : 'secondary' }),
+                  'cursor-pointer'
+                )}
               >
                 All
-              </Badge>
-              {availableYears.slice(0, 8).map(year => (
-                <Badge
-                  key={year}
-                  variant={selectedYear === year?.toString() ? 'default' : 'secondary'}
-                  className="cursor-pointer"
-                  onClick={() => setSelectedYear(year?.toString() || null)}
-                >
-                  {year}
-                </Badge>
-              ))}
+              </button>
+              {availableYears.slice(0, 8).map((year, index) => {
+                const yearValue = year?.toString()
+                const isSelected = !!yearValue && selectedYear === yearValue
+
+                return (
+                  <button
+                    key={yearValue ?? `year-${index}`}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => setSelectedYear(yearValue ?? null)}
+                    className={cn(
+                      badgeVariants({ variant: isSelected ? 'default' : 'secondary' }),
+                      'cursor-pointer'
+                    )}
+                  >
+                    {year}
+                  </button>
+                )
+              })}
             </div>
           )}
         </div>
