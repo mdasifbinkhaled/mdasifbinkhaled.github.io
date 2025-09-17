@@ -1,6 +1,4 @@
-'use client';
-
-import { memo, useState, useCallback } from 'react';
+import { memo } from 'react';
 import {
   Card,
   CardHeader,
@@ -9,8 +7,7 @@ import {
   CardContent,
   CardFooter,
 } from '@/shared/components/ui/card';
-import { Button } from '@/shared/components/ui/button';
-import { ExternalLink, FileText, ChevronDown, ChevronUp } from 'lucide-react';
+import { ExternalLink, FileText, ChevronDown } from 'lucide-react';
 import { Badge } from '@/shared/components/ui/badge';
 import type { PublicationItem } from '@/types';
 import { cn } from '@/shared/lib/utils';
@@ -22,22 +19,15 @@ interface PublicationCardProps {
 export const PublicationCard = memo(function PublicationCard({
   publication,
 }: PublicationCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const toggleExpanded = useCallback(() => {
-    setIsExpanded((prev) => !prev);
-  }, []);
-
   return (
     <Card
       className={cn(
         'flex flex-col justify-between shadow-lg hover:shadow-xl transition-all duration-300',
-        'transform hover:-translate-y-1',
-        isExpanded && 'border-primary/30'
+        'transform hover:-translate-y-1 group'
       )}
     >
       <CardHeader>
-        <CardTitle className="text-lg leading-tight group">
+        <CardTitle className="text-lg leading-tight">
           {publication.title}
         </CardTitle>
         <CardDescription className="text-sm pt-1">
@@ -57,77 +47,60 @@ export const PublicationCard = memo(function PublicationCard({
 
         {(publication.abstract ||
           (publication.keywords && publication.keywords.length > 0)) && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleExpanded}
-            className="mt-3 p-0 h-auto font-medium text-primary hover:text-primary/80 hover:bg-transparent"
-          >
-            {isExpanded ? (
-              <>
-                <ChevronUp className="h-4 w-4 mr-1" /> Show less
-              </>
-            ) : (
-              <>
-                <ChevronDown className="h-4 w-4 mr-1" /> Show more
-              </>
-            )}
-          </Button>
-        )}
+          <details className="mt-3 group">
+            <summary className="cursor-pointer font-medium text-primary hover:text-primary/80 transition-colors flex items-center list-none">
+              <ChevronDown className="h-4 w-4 mr-1 transition-transform group-open:rotate-180" />
+              <span className="select-none">Show more</span>
+            </summary>
 
-        {isExpanded && publication.abstract && (
-          <div
-            className={cn(
-              'mt-3 text-sm overflow-hidden transition-all duration-300',
-              isExpanded ? 'max-h-96' : 'max-h-0'
-            )}
-          >
-            <h4 className="font-semibold text-sm mb-1">Abstract</h4>
-            <p className="text-muted-foreground leading-relaxed">
-              {publication.abstract}
-            </p>
-          </div>
-        )}
+            <div className="mt-3 space-y-3">
+              {publication.abstract && (
+                <div>
+                  <h4 className="font-semibold text-sm mb-1">Abstract</h4>
+                  <p className="text-muted-foreground leading-relaxed text-sm">
+                    {publication.abstract}
+                  </p>
+                </div>
+              )}
 
-        {isExpanded &&
-          publication.keywords &&
-          publication.keywords.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1">
-              {publication.keywords.map((keyword) => (
-                <Badge
-                  key={keyword}
-                  variant="outline"
-                  className="text-xs bg-background"
-                >
-                  {keyword}
-                </Badge>
-              ))}
+              {publication.keywords && publication.keywords.length > 0 && (
+                <div className="flex flex-wrap gap-1">
+                  {publication.keywords.map((keyword) => (
+                    <Badge
+                      key={keyword}
+                      variant="outline"
+                      className="text-xs bg-background"
+                    >
+                      {keyword}
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
+          </details>
+        )}
       </CardContent>
       <CardFooter className="border-t pt-4">
         <div className="flex gap-2 w-full">
           {publication.link && (
-            <Button variant="outline" size="sm" asChild className="flex-1">
-              <a
-                href={publication.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ExternalLink className="mr-2 h-4 w-4" /> View
-              </a>
-            </Button>
+            <a
+              href={publication.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 flex-1"
+            >
+              <ExternalLink className="mr-2 h-4 w-4" /> View
+            </a>
           )}
           {publication.pdfLink && (
-            <Button variant="default" size="sm" asChild className="flex-1">
-              <a
-                href={publication.pdfLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FileText className="mr-2 h-4 w-4" /> PDF
-              </a>
-            </Button>
+            <a
+              href={publication.pdfLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 flex-1"
+            >
+              <FileText className="mr-2 h-4 w-4" /> PDF
+            </a>
           )}
         </div>
       </CardFooter>
