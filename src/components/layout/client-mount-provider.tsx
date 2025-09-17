@@ -1,33 +1,31 @@
 "use client";
 
-import { useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
 interface ClientMountProviderProps {
   children: ReactNode;
-  fallback?: ReactNode;
 }
 
+const ClientMountContext = createContext(false);
+
 /**
- * Prevents hydration mismatches by only rendering children after client mount
+ * Provides a simple mounted flag for components that need to know
+ * when they are running on the client.
  */
-export function ClientMountProvider({ children, fallback }: ClientMountProviderProps) {
-  const [mounted, setMounted] = useState(false);
+export function ClientMountProvider({ children }: ClientMountProviderProps) {
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setIsMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      fallback || (
-        <div className="min-h-screen bg-background">
-          <div className="container mx-auto p-4">
-            <div className="animate-pulse">Loading...</div>
-          </div>
-        </div>
-      )
-    );
-  }
+  return (
+    <ClientMountContext.Provider value={isMounted}>
+      {children}
+    </ClientMountContext.Provider>
+  );
+}
 
-  return <>{children}</>;
+export function useClientMounted() {
+  return useContext(ClientMountContext);
 }

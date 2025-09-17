@@ -1,13 +1,19 @@
-'use client'
+"use client"
 
-import { ThemeSelector } from '@/components/ui/theme-selector'
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useEffect, useState } from "react"
+import { ThemeSelector } from "@/components/ui/theme-selector"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export function MobileThemeFAB() {
+  const [isMounted, setIsMounted] = useState(false)
   const isMobile = useIsMobile()
 
-  // Only show on mobile devices
-  if (!isMobile) {
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // Only show on mobile devices after the client has mounted
+  if (!isMounted || !isMobile) {
     return null
   }
 
