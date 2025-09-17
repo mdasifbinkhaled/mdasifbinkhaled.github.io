@@ -1,12 +1,8 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export', // Configure for static export
-  outputFileTracingRoot: __dirname, // Fix for multiple lockfiles warning
   typescript: {
     ignoreBuildErrors: false, // Enable TypeScript checking
   },
@@ -66,16 +62,6 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
 
-  // Turbopack configuration (replaces deprecated experimental.turbo)
-  turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
-    },
-  },
-
   // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
@@ -88,4 +74,4 @@ const nextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };
 
-export default nextConfig;
+module.exports = nextConfig;

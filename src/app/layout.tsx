@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
-import { GeistSans } from '@vercel/geist/font/sans';
-import { GeistMono } from '@vercel/geist/font/mono';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { siteConfig } from '@/shared/config/site';
 import { MainLayoutClient } from '@/shared/components/layout/main-layout-client';
@@ -56,9 +56,11 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION,
-  },
+  ...(process.env.GOOGLE_SITE_VERIFICATION && {
+    verification: {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+    },
+  }),
 };
 
 export const viewport: Viewport = {
