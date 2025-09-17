@@ -1,16 +1,17 @@
 import { Metadata } from 'next';
-import { coursesTaughtIUB } from '@/lib/data/courses';
-import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
+import { coursesTaughtIUB } from '@/shared/lib/data/courses';
+import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
 import { notFound } from 'next/navigation';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'CSE 221: Algorithms | Teaching Portfolio',
-  description: 'Course details for CSE 221: Algorithms at Independent University Bangladesh',
+  description:
+    'Course details for CSE 221: Algorithms at Independent University Bangladesh',
 };
 
 export default function CSE221Page() {
-  const course = coursesTaughtIUB.find(c => c.code === 'CSE 221');
+  const course = coursesTaughtIUB.find((c) => c.code === 'CSE 221');
 
   if (!course) {
     notFound();

@@ -19,23 +19,28 @@ beforeAll(() => {
   });
 
   // Mock ResizeObserver
-  (global as any).ResizeObserver = class ResizeObserver {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-  };
+  (global as unknown as { ResizeObserver: unknown }).ResizeObserver =
+    class ResizeObserver {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    };
 
   // Mock IntersectionObserver
-  (global as any).IntersectionObserver = class IntersectionObserver {
+  (
+    global as unknown as { IntersectionObserver: unknown }
+  ).IntersectionObserver = class IntersectionObserver {
     root = null;
     rootMargin = '';
     thresholds = [];
-    
+
     constructor() {}
     observe() {}
     unobserve() {}
     disconnect() {}
-    takeRecords() { return []; }
+    takeRecords() {
+      return [];
+    }
   };
 });
 

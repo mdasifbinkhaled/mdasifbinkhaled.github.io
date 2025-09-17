@@ -1,8 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/shared/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 
 interface CVErrorProps {
@@ -25,7 +31,8 @@ export default function CVError({ error, reset }: CVErrorProps) {
           </div>
           <CardTitle className="text-xl">CV Loading Error</CardTitle>
           <CardDescription>
-            There was an error loading the CV viewer. This might be due to a PDF loading issue.
+            There was an error loading the CV viewer. This might be due to a PDF
+            loading issue.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -38,7 +45,11 @@ export default function CVError({ error, reset }: CVErrorProps) {
               Try Again
             </Button>
             <Button variant="outline" asChild className="w-full">
-              <a href="/cv/CV_Md_Asif_Bin_Khaled.pdf" target="_blank" rel="noopener noreferrer">
+              <a
+                href="/cv/CV_Md_Asif_Bin_Khaled.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Download CV Instead
               </a>
             </Button>

@@ -1,10 +1,18 @@
 import type { Metadata } from 'next';
-import { professionalExperiences, technicalSkills } from '@/lib/data/experience';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import {
+  professionalExperiences,
+  technicalSkills,
+} from '@/shared/lib/data/experience';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card';
+import { Badge } from '@/shared/components/ui/badge';
 import { Layers, Code, Cpu, Wrench } from 'lucide-react';
-import { siteConfig } from '@/config/site';
-import { ExperienceCompact } from '@/components/experience-compact';
+import { siteConfig } from '@/shared/config/site';
+import { ExperienceCompact } from '@/shared/components/common/experience-compact';
 
 export const metadata: Metadata = {
   title: 'Experience & Skills',
@@ -35,16 +43,32 @@ export default function ExperiencePage() {
           {technicalSkills.map((skillGroup) => (
             <Card key={skillGroup.category} className="shadow-lg w-full">
               <CardHeader className="flex flex-row items-center space-x-3">
-                {skillGroup.category === "Programming & Frameworks" && <Code className="w-6 h-6 text-primary" />}
-                {skillGroup.category === "Data Analysis & Visualization" && <Cpu className="w-6 h-6 text-primary" />}
-                {skillGroup.category === "Tools & Software" && <Wrench className="w-6 h-6 text-primary" />}
-                {!["Programming & Frameworks", "Data Analysis & Visualization", "Tools & Software"].includes(skillGroup.category) && <Layers className="w-6 h-6 text-primary" />}
+                {skillGroup.category === 'Programming & Frameworks' && (
+                  <Code className="w-6 h-6 text-primary" />
+                )}
+                {skillGroup.category === 'Data Analysis & Visualization' && (
+                  <Cpu className="w-6 h-6 text-primary" />
+                )}
+                {skillGroup.category === 'Tools & Software' && (
+                  <Wrench className="w-6 h-6 text-primary" />
+                )}
+                {![
+                  'Programming & Frameworks',
+                  'Data Analysis & Visualization',
+                  'Tools & Software',
+                ].includes(skillGroup.category) && (
+                  <Layers className="w-6 h-6 text-primary" />
+                )}
                 <CardTitle className="text-xl">{skillGroup.category}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {skillGroup.items.map((skill) => (
-                    <Badge key={skill} variant="secondary" className="text-sm px-3 py-1">
+                    <Badge
+                      key={skill}
+                      variant="secondary"
+                      className="text-sm px-3 py-1"
+                    >
                       {skill}
                     </Badge>
                   ))}

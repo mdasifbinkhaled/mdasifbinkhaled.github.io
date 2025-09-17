@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import { GraduationCap, Home } from 'lucide-react';
 
 export default function NotFound() {
@@ -8,15 +8,16 @@ export default function NotFound() {
       <div className="mb-8 text-primary">
         <GraduationCap className="h-24 w-24 mx-auto" />
       </div>
-      
+
       <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-primary mb-4">
         404 - Page Not Found
       </h1>
-      
+
       <p className="text-xl text-muted-foreground max-w-md mb-8">
-        Oops! The academic resource you're looking for couldn't be located in our repository.
+        Oops! The academic resource you're looking for couldn't be located in
+        our repository.
       </p>
-      
+
       <Button size="lg" asChild>
         <Link href="/">
           <Home className="mr-2 h-5 w-5" /> Return to Homepage

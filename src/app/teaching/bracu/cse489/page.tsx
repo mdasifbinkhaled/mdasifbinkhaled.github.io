@@ -1,16 +1,17 @@
 import { Metadata } from 'next';
-import { coursesTaughtBRACU } from '@/lib/data/courses';
-import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
+import { coursesTaughtBRACU } from '@/shared/lib/data/courses';
+import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
 import { notFound } from 'next/navigation';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'CSE 489: Android Development Lab | Teaching Portfolio',
-  description: 'Course details for CSE 489: Android Development Lab at BRAC University',
+  description:
+    'Course details for CSE 489: Android Development Lab at BRAC University',
 };
 
 export default function CSE489Page() {
-  const course = coursesTaughtBRACU.find(c => c.code === 'CSE 489');
+  const course = coursesTaughtBRACU.find((c) => c.code === 'CSE 489');
 
   if (!course) {
     notFound();

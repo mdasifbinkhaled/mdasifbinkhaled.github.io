@@ -1,16 +1,17 @@
 import { Metadata } from 'next';
-import { coursesTaughtBRACU } from '@/lib/data/courses';
-import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
+import { coursesTaughtBRACU } from '@/shared/lib/data/courses';
+import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
 import { notFound } from 'next/navigation';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'MAT 361: Numerical Methods Lab | Teaching Portfolio',
-  description: 'Course details for MAT 361: Numerical Methods Lab at BRAC University',
+  description:
+    'Course details for MAT 361: Numerical Methods Lab at BRAC University',
 };
 
 export default function MAT361Page() {
-  const course = coursesTaughtBRACU.find(c => c.code === 'MAT 361');
+  const course = coursesTaughtBRACU.find((c) => c.code === 'MAT 361');
 
   if (!course) {
     notFound();

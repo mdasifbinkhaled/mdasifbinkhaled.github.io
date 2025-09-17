@@ -2,8 +2,14 @@
 
 import { useEffect } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/shared/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card';
 import Link from 'next/link';
 
 interface ErrorProps {
@@ -26,7 +32,8 @@ export default function Error({ error, reset }: ErrorProps) {
           </div>
           <CardTitle className="text-xl">Something went wrong</CardTitle>
           <CardDescription>
-            An unexpected error occurred. Please try again or return to the homepage.
+            An unexpected error occurred. Please try again or return to the
+            homepage.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

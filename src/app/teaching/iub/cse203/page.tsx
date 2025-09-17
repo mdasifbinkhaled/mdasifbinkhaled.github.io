@@ -1,16 +1,17 @@
 import { Metadata } from 'next';
-import { coursesTaughtIUB } from '@/lib/data/courses';
-import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
+import { coursesTaughtIUB } from '@/shared/lib/data/courses';
+import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
 import { notFound } from 'next/navigation';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'CSE 203: Data Structures | Teaching Portfolio',
-  description: 'Course details for CSE 203: Data Structures at Independent University, Bangladesh (IUB)',
+  description:
+    'Course details for CSE 203: Data Structures at Independent University, Bangladesh (IUB)',
 };
 
 export default function CSE203Page() {
-  const course = coursesTaughtIUB.find(c => c.code === 'CSE 203');
+  const course = coursesTaughtIUB.find((c) => c.code === 'CSE 203');
 
   if (!course) {
     notFound();

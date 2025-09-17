@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { siteConfig } from '@/config/site';
-import { MainLayoutClient } from '@/components/layout/main-layout-client';
+import { siteConfig } from '@/shared/config/site';
+import { MainLayoutClient } from '@/shared/components/layout/main-layout-client';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    type: "website",
-    locale: "en_US",
+    type: 'website',
+    locale: 'en_US',
     url: siteConfig.url,
     siteName: siteConfig.name,
     title: siteConfig.name,
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    site: "@mdasifbinkhaled",
-    creator: "@mdasifbinkhaled",
+    card: 'summary_large_image',
+    site: '@mdasifbinkhaled',
+    creator: '@mdasifbinkhaled',
     title: siteConfig.name,
     description: siteConfig.description,
     images: [`${siteConfig.url}/og-image.png`],
@@ -72,13 +72,13 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-}
+};
 
 export default function RootLayout({
   children,
@@ -89,9 +89,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning dir="ltr">
       <head>
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
       </head>
-      <body 
+      <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
         suppressHydrationWarning={true}
       >

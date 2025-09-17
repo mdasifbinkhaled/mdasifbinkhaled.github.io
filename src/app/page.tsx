@@ -1,21 +1,34 @@
-
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { siteConfig } from '@/config/site';
-import { ArrowRight, ExternalLink, BookOpen, Users, Search, Quote, GraduationCap } from 'lucide-react';
+import { Button } from '@/shared/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card';
+import { siteConfig } from '@/shared/config/site';
+import {
+  ArrowRight,
+  ExternalLink,
+  BookOpen,
+  Users,
+  Search,
+  Quote,
+  GraduationCap,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
-import { AcademicSearch } from '@/components/search/academic-search';
-import { samplePublications } from '@/lib/data/publications';
-import { professionalExperiences } from '@/lib/data/experience';
-import { 
-  LazyPublicationListWithSuspense 
-} from '@/components/lazy-components';
-import { ExperienceCompact } from '@/components/experience-compact';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
+import { AcademicSearch } from '@/features/academic/academic-search';
+import { samplePublications } from '@/shared/lib/data/publications';
+import { professionalExperiences } from '@/shared/lib/data/experience';
+import { LazyPublicationListWithSuspense } from '@/shared/components/common/lazy-components';
+import { ExperienceCompact } from '@/shared/components/common/experience-compact';
 
 export default function HomePage() {
-  const filteredPublications = samplePublications.filter(p => p.type !== 'In Progress' && p.type !== 'Thesis');
+  const filteredPublications = samplePublications.filter(
+    (p) => p.type !== 'In Progress' && p.type !== 'Thesis'
+  );
 
   // Get recent experiences (current and latest)
   const recentExperiences = professionalExperiences.slice(0, 3);
@@ -26,24 +39,25 @@ export default function HomePage() {
       date: '[2025/04]',
       text: 'Excited to announce the launch of ',
       highlight: 'Llama 4',
-      description: ', a major leap in open-source AI! As part of the team supporting Llama 4 at FAIR, I\'m proud to have contributed to these cutting-edge models! 🚀'
+      description:
+        ", a major leap in open-source AI! As part of the team supporting Llama 4 at FAIR, I'm proud to have contributed to these cutting-edge models! 🚀",
     },
     {
       date: '[2025/02]',
-      text: '3D-MVP, MM-Graph and 3D-GRAND are accepted at CVPR 2025!'
+      text: '3D-MVP, MM-Graph and 3D-GRAND are accepted at CVPR 2025!',
     },
     {
       date: '[2024/10]',
-      text: 'We\'re looking for research interns starting next year working on embodied agents and multimodal LLMs.',
-      strikethrough: 'If you are interested, please drop me an email and apply here.'
-    }
+      text: "We're looking for research interns starting next year working on embodied agents and multimodal LLMs.",
+      strikethrough:
+        'If you are interested, please drop me an email and apply here.',
+    },
   ];
-
 
   return (
     <div className="flex flex-col items-center">
       <Breadcrumbs />
-      
+
       {/* Hero Section */}
       <section className="w-full py-12 md:py-24 lg:py-28 xl:py-32 bg-gradient-to-br from-background to-secondary/30">
         <div className="container px-4 md:px-6">
@@ -65,7 +79,8 @@ export default function HomePage() {
                   Senior Lecturer & Researcher
                 </p>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  Specializing in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare diagnostics and analytics.
+                  Specializing in Explainable AI (XAI) and Multimodal AI (MMAI)
+                  for healthcare diagnostics and analytics.
                 </p>
                 <div className="inline-block bg-accent text-accent-foreground px-3 py-1 text-sm rounded-full font-medium my-2 shadow">
                   Open to PhD Opportunities
@@ -78,26 +93,59 @@ export default function HomePage() {
                   </Link>
                 </Button>
                 <Button variant="outline" size="lg" asChild>
-                  <Link href={siteConfig.links.cv} target='_blank' rel='noopener noreferrer'>
+                  <Link
+                    href={siteConfig.links.cv}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     View CV <ExternalLink className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
               </div>
             </div>
-            
+
             {/* Quick Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-8">
               {[
-                { number: '15+', label: 'Publications', icon: BookOpen, color: 'text-blue-500' },
-                { number: '200+', label: 'Citations', icon: Quote, color: 'text-green-500' },
-                { number: '5+', label: 'Years Teaching', icon: GraduationCap, color: 'text-purple-500' },
-                { number: '1000+', label: 'Students Taught', icon: Users, color: 'text-orange-500' }
+                {
+                  number: '15+',
+                  label: 'Publications',
+                  icon: BookOpen,
+                  color: 'text-blue-500',
+                },
+                {
+                  number: '200+',
+                  label: 'Citations',
+                  icon: Quote,
+                  color: 'text-green-500',
+                },
+                {
+                  number: '5+',
+                  label: 'Years Teaching',
+                  icon: GraduationCap,
+                  color: 'text-purple-500',
+                },
+                {
+                  number: '1000+',
+                  label: 'Students Taught',
+                  icon: Users,
+                  color: 'text-orange-500',
+                },
               ].map((stat, index) => (
-                <Card key={index} className="bg-card/50 backdrop-blur border-0 shadow-sm hover:shadow-md transition-shadow">
+                <Card
+                  key={index}
+                  className="bg-card/50 backdrop-blur border-0 shadow-sm hover:shadow-md transition-shadow"
+                >
                   <CardContent className="p-6 text-center">
-                    <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
-                    <div className="text-2xl font-bold text-foreground mb-1">{stat.number}</div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                    <stat.icon
+                      className={`w-8 h-8 mx-auto mb-2 ${stat.color}`}
+                    />
+                    <div className="text-2xl font-bold text-foreground mb-1">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {stat.label}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -116,30 +164,33 @@ export default function HomePage() {
                 Explore My Academic Work
               </CardTitle>
               <CardDescription>
-                Search through publications, courses, research projects, and teaching materials
+                Search through publications, courses, research projects, and
+                teaching materials
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
-              <AcademicSearch 
+              <AcademicSearch
                 content={[
                   {
                     id: '1',
                     title: 'Explainable AI for Healthcare Diagnostics',
                     type: 'publication',
-                    content: 'Research on interpretable machine learning models for medical diagnosis',
+                    content:
+                      'Research on interpretable machine learning models for medical diagnosis',
                     tags: ['AI', 'Healthcare', 'Machine Learning'],
                     year: 2024,
-                    url: '/publications'
+                    url: '/publications',
                   },
                   {
                     id: '2',
                     title: 'Advanced Machine Learning',
                     type: 'course',
-                    content: 'Graduate course covering deep learning and neural networks',
+                    content:
+                      'Graduate course covering deep learning and neural networks',
                     tags: ['Teaching', 'Machine Learning', 'Deep Learning'],
                     year: 2024,
-                    url: '/teaching'
-                  }
+                    url: '/teaching',
+                  },
                 ]}
                 placeholder="Search publications, courses, research areas..."
                 maxResults={6}
@@ -162,7 +213,10 @@ export default function HomePage() {
                 <div className="flex-1">
                   <span>{item.text}</span>
                   {item.highlight && (
-                    <a href="#" className="text-blue-600 hover:underline font-medium">
+                    <a
+                      href="#"
+                      className="text-blue-600 hover:underline font-medium"
+                    >
                       {item.highlight}
                     </a>
                   )}
@@ -182,7 +236,9 @@ export default function HomePage() {
       {/* Work Experience Section */}
       <section className="w-full py-8 md:py-12">
         <div className="container px-4 md:px-6">
-          <h2 className="text-2xl font-bold mb-6 text-primary">Work Experience</h2>
+          <h2 className="text-2xl font-bold mb-6 text-primary">
+            Work Experience
+          </h2>
           <ExperienceCompact experiences={recentExperiences} />
           <div className="text-center mt-6">
             <Button variant="outline" asChild>
@@ -197,28 +253,46 @@ export default function HomePage() {
       {/* Research Interests */}
       <section className="w-full py-12 md:py-16">
         <div className="container px-4 md:px-6">
-          <h2 className="text-3xl font-bold text-center mb-8 text-primary">Research Interests</h2>
+          <h2 className="text-3xl font-bold text-center mb-8 text-primary">
+            Research Interests
+          </h2>
           <div className="grid gap-8 md:grid-cols-2">
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl">Explainable AI (XAI)</CardTitle>
                 <CardDescription>
-                  Ensuring transparency and trustworthiness in disease detection, diagnosis, and healthcare analytics utilizing Artificial Intelligence (AI).
+                  Ensuring transparency and trustworthiness in disease
+                  detection, diagnosis, and healthcare analytics utilizing
+                  Artificial Intelligence (AI).
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-muted-foreground">
-                <p>Developing AI systems that can explain their reasoning, crucial for healthcare applications where understanding the "why" behind a diagnosis is essential for clinician trust and patient safety.</p>
+                <p>
+                  Developing AI systems that can explain their reasoning,
+                  crucial for healthcare applications where understanding the
+                  "why" behind a diagnosis is essential for clinician trust and
+                  patient safety.
+                </p>
               </CardContent>
             </Card>
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
-                <CardTitle className="text-xl">Multimodal AI (MMAI) & Computer Vision (CV)</CardTitle>
+                <CardTitle className="text-xl">
+                  Multimodal AI (MMAI) & Computer Vision (CV)
+                </CardTitle>
                 <CardDescription>
-                  Using Multimodal AI (MMAI) and Computer Vision (CV) to combine imaging, clinical records, and lab results for holistic diagnostics.
+                  Using Multimodal AI (MMAI) and Computer Vision (CV) to combine
+                  imaging, clinical records, and lab results for holistic
+                  diagnostics.
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-muted-foreground">
-                <p>Integrating diverse data modalities to create comprehensive diagnostic tools that leverage both visual and non-visual medical data for more accurate and personalized healthcare insights.</p>
+                <p>
+                  Integrating diverse data modalities to create comprehensive
+                  diagnostic tools that leverage both visual and non-visual
+                  medical data for more accurate and personalized healthcare
+                  insights.
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -228,8 +302,12 @@ export default function HomePage() {
       {/* Publications Section */}
       <section className="w-full py-8 md:py-12 bg-secondary/10">
         <div className="container px-4 md:px-6">
-          <h2 className="text-2xl font-bold mb-6 text-primary">Recent Publications</h2>
-          <LazyPublicationListWithSuspense initialPublications={filteredPublications.slice(0, 3)} />
+          <h2 className="text-2xl font-bold mb-6 text-primary">
+            Recent Publications
+          </h2>
+          <LazyPublicationListWithSuspense
+            initialPublications={filteredPublications.slice(0, 3)}
+          />
           <div className="text-center mt-6">
             <Button variant="outline" asChild>
               <Link href="/publications">
@@ -241,21 +319,28 @@ export default function HomePage() {
       </section>
 
       {/* Grants and Highlight */}
-       <section className="w-full py-12 md:py-16">
+      <section className="w-full py-12 md:py-16">
         <div className="container px-4 md:px-6">
-          <h2 className="text-3xl font-bold text-center mb-8 text-primary">Recent Grants</h2>
+          <h2 className="text-3xl font-bold text-center mb-8 text-primary">
+            Recent Grants
+          </h2>
           <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl">
-                  Development and Analysis of a Comprehensive Sorting Algorithm Library
+                  Development and Analysis of a Comprehensive Sorting Algorithm
+                  Library
                 </CardTitle>
                 <CardDescription className="text-sm">
-                  Principal Investigator, Sponsored Research Projects 2024-2025 (No. 2024-SETS-06)
+                  Principal Investigator, Sponsored Research Projects 2024-2025
+                  (No. 2024-SETS-06)
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-muted-foreground">
-                <p>Focused on enhancing computational efficiency through optimized sorting algorithms.</p>
+                <p>
+                  Focused on enhancing computational efficiency through
+                  optimized sorting algorithms.
+                </p>
               </CardContent>
             </Card>
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
@@ -264,19 +349,27 @@ export default function HomePage() {
                   Unveiling the Linguistic Diversity of Bangla
                 </CardTitle>
                 <CardDescription className="text-sm">
-                  Principal Investigator, VC's Research Fund 2024-2025 (No. VCRF-SETS:24-013)
+                  Principal Investigator, VC's Research Fund 2024-2025 (No.
+                  VCRF-SETS:24-013)
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-muted-foreground">
-                <p>Enhancing dialect detection through AI and Machine Learning techniques.</p>
+                <p>
+                  Enhancing dialect detection through AI and Machine Learning
+                  techniques.
+                </p>
               </CardContent>
             </Card>
           </div>
 
           <div className="text-center mt-12">
-            <h2 className="text-2xl font-bold mb-4 text-foreground">Seeking PhD Opportunities</h2>
+            <h2 className="text-2xl font-bold mb-4 text-foreground">
+              Seeking PhD Opportunities
+            </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
-              With a strong foundation in XAI and MMAI research, I am actively seeking doctoral programs to further contribute to innovative and trustworthy AI systems, particularly in healthcare.
+              With a strong foundation in XAI and MMAI research, I am actively
+              seeking doctoral programs to further contribute to innovative and
+              trustworthy AI systems, particularly in healthcare.
             </p>
             <Button asChild>
               <Link href="/contact">
@@ -289,5 +382,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-    

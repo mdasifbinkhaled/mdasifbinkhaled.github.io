@@ -1,11 +1,16 @@
 import type { Metadata } from 'next';
-import { coursesTaughtBRACU } from '@/lib/data/courses';
-import { siteConfig } from '@/config/site';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
-import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
-import { bracuCourseNavItems } from '@/config/navigation';
+import { coursesTaughtBRACU } from '@/shared/lib/data/courses';
+import { siteConfig } from '@/shared/config/site';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
+import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
+import { bracuCourseNavItems } from '@/shared/config/navigation';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card';
 import { ArrowRight, Building2, Calendar, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -17,7 +22,7 @@ export default function BRACUTeachingPage() {
   return (
     <div className="space-y-12">
       <Breadcrumbs />
-      
+
       <header className="text-center">
         <div className="flex items-center justify-center gap-3 mb-4">
           <Building2 className="w-8 h-8 text-primary" />
@@ -38,7 +43,9 @@ export default function BRACUTeachingPage() {
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{coursesTaughtBRACU.length}</div>
+            <div className="text-2xl font-bold">
+              {coursesTaughtBRACU.length}
+            </div>
             <p className="text-xs text-muted-foreground">
               Across multiple semesters
             </p>
@@ -46,7 +53,9 @@ export default function BRACUTeachingPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Students</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Students
+            </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -68,18 +77,17 @@ export default function BRACUTeachingPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {coursesTaughtBRACU.filter(course => course.rating).length > 0
-                ? (coursesTaughtBRACU
-                    .filter(course => course.rating)
-                    .reduce((sum, course) => sum + (course.rating || 0), 0) / 
-                    coursesTaughtBRACU.filter(course => course.rating).length
+              {coursesTaughtBRACU.filter((course) => course.rating).length > 0
+                ? (
+                    coursesTaughtBRACU
+                      .filter((course) => course.rating)
+                      .reduce((sum, course) => sum + (course.rating || 0), 0) /
+                    coursesTaughtBRACU.filter((course) => course.rating).length
                   ).toFixed(1)
-                : 'N/A'
-              }/5.0
+                : 'N/A'}
+              /5.0
             </div>
-            <p className="text-xs text-muted-foreground">
-              Student feedback
-            </p>
+            <p className="text-xs text-muted-foreground">Student feedback</p>
           </CardContent>
         </Card>
       </div>
@@ -91,7 +99,7 @@ export default function BRACUTeachingPage() {
         </h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {bracuCourseNavItems.map((course) => {
-            const courseData = coursesTaughtBRACU.find(c => 
+            const courseData = coursesTaughtBRACU.find((c) =>
               course.href.includes(c.code.toLowerCase().replace(' ', ''))
             );
             return (
@@ -104,7 +112,9 @@ export default function BRACUTeachingPage() {
                     </CardTitle>
                     {courseData && (
                       <div className="text-xs text-muted-foreground">
-                        {courseData.semester} {courseData.year} • {courseData.enrollmentCount ?? 'Enrollment TBD'} students
+                        {courseData.semester} {courseData.year} •{' '}
+                        {courseData.enrollmentCount ?? 'Enrollment TBD'}{' '}
+                        students
                       </div>
                     )}
                   </CardHeader>

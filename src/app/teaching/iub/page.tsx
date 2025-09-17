@@ -1,11 +1,16 @@
 import type { Metadata } from 'next';
-import { coursesTaughtIUB } from '@/lib/data/courses';
-import { siteConfig } from '@/config/site';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
-import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
-import { iubCourseNavItems } from '@/config/navigation';
+import { coursesTaughtIUB } from '@/shared/lib/data/courses';
+import { siteConfig } from '@/shared/config/site';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
+import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
+import { iubCourseNavItems } from '@/shared/config/navigation';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card';
 import { ArrowRight, Building2, Calendar, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -17,7 +22,7 @@ export default function IUBTeachingPage() {
   return (
     <div className="space-y-12">
       <Breadcrumbs />
-      
+
       <header className="text-center">
         <div className="flex items-center justify-center gap-3 mb-4">
           <Building2 className="w-8 h-8 text-primary" />
@@ -26,7 +31,8 @@ export default function IUBTeachingPage() {
           </h1>
         </div>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          Courses taught at Independent University, Bangladesh as Senior Lecturer & Lecturer
+          Courses taught at Independent University, Bangladesh as Senior
+          Lecturer & Lecturer
         </p>
       </header>
 
@@ -46,7 +52,9 @@ export default function IUBTeachingPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Students</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Students
+            </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -68,15 +76,15 @@ export default function IUBTeachingPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {(coursesTaughtIUB
-                .filter(course => course.rating)
-                .reduce((sum, course) => sum + (course.rating || 0), 0) / 
-                coursesTaughtIUB.filter(course => course.rating).length
-              ).toFixed(1)}/5.0
+              {(
+                coursesTaughtIUB
+                  .filter((course) => course.rating)
+                  .reduce((sum, course) => sum + (course.rating || 0), 0) /
+                coursesTaughtIUB.filter((course) => course.rating).length
+              ).toFixed(1)}
+              /5.0
             </div>
-            <p className="text-xs text-muted-foreground">
-              Student feedback
-            </p>
+            <p className="text-xs text-muted-foreground">Student feedback</p>
           </CardContent>
         </Card>
       </div>
@@ -88,7 +96,7 @@ export default function IUBTeachingPage() {
         </h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {iubCourseNavItems.map((course) => {
-            const courseData = coursesTaughtIUB.find(c => 
+            const courseData = coursesTaughtIUB.find((c) =>
               course.href.includes(c.code.toLowerCase().replace(' ', ''))
             );
             return (
@@ -101,7 +109,9 @@ export default function IUBTeachingPage() {
                     </CardTitle>
                     {courseData && (
                       <div className="text-xs text-muted-foreground">
-                        {courseData.semester} {courseData.year} • {courseData.enrollmentCount ?? 'Enrollment TBD'} students
+                        {courseData.semester} {courseData.year} •{' '}
+                        {courseData.enrollmentCount ?? 'Enrollment TBD'}{' '}
+                        students
                       </div>
                     )}
                   </CardHeader>

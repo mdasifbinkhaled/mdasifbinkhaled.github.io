@@ -1,16 +1,17 @@
 import { Metadata } from 'next';
-import { coursesTaughtIUB } from '@/lib/data/courses';
-import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
+import { coursesTaughtIUB } from '@/shared/lib/data/courses';
+import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
 import { notFound } from 'next/navigation';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'CSE 101: Introduction to Programming | Teaching Portfolio',
-  description: 'Course details for CSE 101: Introduction to Programming at Independent University, Bangladesh (IUB)',
+  description:
+    'Course details for CSE 101: Introduction to Programming at Independent University, Bangladesh (IUB)',
 };
 
 export default function CSE101Page() {
-  const course = coursesTaughtIUB.find(c => c.code === 'CSE 101');
+  const course = coursesTaughtIUB.find((c) => c.code === 'CSE 101');
 
   if (!course) {
     notFound();

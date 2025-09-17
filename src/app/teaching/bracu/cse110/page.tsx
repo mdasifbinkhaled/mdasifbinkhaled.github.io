@@ -1,16 +1,17 @@
 import { Metadata } from 'next';
-import { coursesTaughtBRACU } from '@/lib/data/courses';
-import { SimpleCourseCard } from '@/components/teaching/simple-course-card';
+import { coursesTaughtBRACU } from '@/shared/lib/data/courses';
+import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
 import { notFound } from 'next/navigation';
-import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'CSE 110: Programming Language I | Teaching Portfolio',
-  description: 'Course details for CSE 110: Programming Language I at BRAC University',
+  description:
+    'Course details for CSE 110: Programming Language I at BRAC University',
 };
 
 export default function CSE110Page() {
-  const course = coursesTaughtBRACU.find(c => c.code === 'CSE 110');
+  const course = coursesTaughtBRACU.find((c) => c.code === 'CSE 110');
 
   if (!course) {
     notFound();

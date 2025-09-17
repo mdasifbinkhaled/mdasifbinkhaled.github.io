@@ -1,0 +1,193 @@
+import type { ExperienceItem } from '@/types';
+
+export const professionalExperiences: ExperienceItem[] = [
+  {
+    id: 'exp-senior-lecturer-iub',
+    title: 'Senior Lecturer – Department of Computer Science & Engineering',
+    institution: 'Independent University, Bangladesh (IUB)',
+    location: 'Dhaka, Bangladesh',
+    duration: 'Feb 2023 - Present',
+    description: [
+      'Courses Taught: Introduction to Programming, Algorithms, and Finite Automata and Computability.',
+      'Supervised and evaluated students’ research projects, theses, and academic progress with an average evaluation score of 4.32/5.',
+      'Served as Coordinator & Faculty Member of the Live-in-Field Experience (LFE) program 4 times, guiding students in field-based activities.',
+    ],
+    logoUrl: 'https://placehold.co/48x48.png',
+    tags: [
+      'Teaching',
+      'Research Supervision',
+      'Curriculum Development',
+      'Mentorship',
+      'OBE',
+    ],
+    type: 'Academic',
+  },
+  {
+    id: 'exp-lecturer-iub',
+    title: 'Lecturer – Department of Computer Science & Engineering',
+    institution: 'Independent University, Bangladesh (IUB)',
+    location: 'Dhaka, Bangladesh',
+    duration: 'Jan 2019 - Feb 2023',
+    description: [
+      'Courses Taught: Fundamentals of Computer System, Algorithms, Data Structures, Discrete Mathematics, and Numerical Methods.',
+      'Conducted lectures, tutorials, and lab sessions.',
+      'Developed course outlines and implemented Outcome-Based Education (OBE) strategies across multiple courses.',
+    ],
+    logoUrl: 'https://placehold.co/48x48.png',
+    tags: ['Teaching', 'Course Development', 'OBE Implementation'],
+    type: 'Academic',
+  },
+  {
+    id: 'exp-adjunct-lecturer-bracu',
+    title: 'Adjunct Lecturer – Department of Computer Science & Engineering',
+    institution: 'BRAC University',
+    location: 'Dhaka, Bangladesh',
+    duration: 'Sep 2017 - Dec 2018',
+    description: [
+      'Courses Taught: Computer Graphics Lab, Numerical Methods Lab, Compiler Design Lab and Android Development Lab.',
+      'Developed lesson plans for sessions, administered exams, graded assignments, and provided student feedback.',
+      'Conducted labs for courses with programming.',
+    ],
+    logoUrl: 'https://placehold.co/48x48.png',
+    tags: ['Teaching', 'Lab Instruction', 'Student Assessment'],
+    type: 'Academic',
+  },
+  {
+    id: 'exp-grad-ta-iub',
+    title:
+      'Graduate Teaching Assistant – Department of Computer Science & Engineering',
+    institution: 'Independent University, Bangladesh (IUB)',
+    location: 'Dhaka, Bangladesh',
+    duration: 'May 2017 - Jun 2017',
+    description: [
+      'Provided academic support to student groups to enhance their understanding of course material.',
+      'Offered guidelines for related activities and decision making.',
+    ],
+    logoUrl: 'https://placehold.co/48x48.png',
+    tags: ['Teaching Support', 'Student Guidance'],
+    type: 'Teaching Support',
+  },
+  {
+    id: 'exp-undergrad-ta-bracu',
+    title:
+      'Undergraduate Teaching Assistant – Department of Computer Science & Engineering',
+    institution: 'BRAC University',
+    location: 'Dhaka, Bangladesh',
+    duration: 'May 2015 - Apr 2017',
+    description: [
+      'Appointed 6 times to assist students in learning object-oriented programming (OOP) in Java.',
+      'Provided academic feedback and helped students with complex concepts.',
+    ],
+    logoUrl: 'https://placehold.co/48x48.png',
+    tags: ['Teaching Support', 'Java Programming', 'OOP'],
+    type: 'Teaching Support',
+  },
+  {
+    id: 'exp-researcher-ccse-iub',
+    title: 'Researcher – Center for Cognitive Skill Enhancement (CCSE)',
+    institution: 'Independent University, Bangladesh (IUB)',
+    location: 'Dhaka, Bangladesh',
+    duration: 'May 2017 - Dec 2023',
+    description: [
+      'Conducted research on flood monitoring using Sentinel-1 remote sensing data.',
+      'Facilitated Advanced Micro-controller Programming Workshop and Yes We Can! Workshop.',
+    ],
+    logoUrl: 'https://placehold.co/48x48.png',
+    tags: ['Research', 'Remote Sensing', 'Workshop Facilitation'],
+    type: 'Research',
+  },
+  {
+    id: 'exp-grad-research-assistant-iub',
+    title:
+      'Graduate Research Assistant – Department of Computer Science & Engineering',
+    institution: 'Independent University, Bangladesh (IUB)',
+    location: 'Dhaka, Bangladesh',
+    duration: 'Jul 2017 - Jun 2018',
+    description: [
+      'Worked on the Big Data, Data Mining with AI project under the supervision of Dr. Mahady Hasan.',
+      'Co-authored two papers published in IEEE conferences.',
+    ],
+    logoUrl: 'https://placehold.co/48x48.png',
+    tags: ['Research Support', 'Data Mining', 'AI', 'Academic Writing'],
+    type: 'Research',
+  },
+  {
+    id: 'exp-research-intern-techgeeks',
+    title: 'Research Intern – Research & Development',
+    institution: 'Tech Geeks Ltd.',
+    location: 'Dhaka, Bangladesh',
+    duration: 'Sep 2015 - Sep 2016',
+    description: [
+      'Designed and implemented a Hand Sign to Text Converter for improved accessibility using Java to aid individuals with hearing impairments.',
+      'Recognized as the Best Intern for outstanding performance and contributions.',
+    ],
+    logoUrl: 'https://placehold.co/48x48.png',
+    tags: ['Internship', 'Accessibility Tech', 'Java Development', 'R&D'],
+    type: 'Industry',
+  },
+];
+
+export const technicalSkills = [
+  {
+    category: 'Programming & Frameworks',
+    items: [
+      'Python',
+      'TensorFlow',
+      'Keras',
+      'Scikit-learn',
+      'Java',
+      'C/C++',
+      'LaTeX',
+    ],
+  },
+  {
+    category: 'Data Analysis & Visualization',
+    items: [
+      'NumPy',
+      'Pandas',
+      'Scikit-Learn',
+      'Matplotlib',
+      'Seaborn',
+      'SciPy',
+    ],
+  },
+  {
+    category: 'Tools & Software',
+    items: [
+      'MATLAB',
+      'QGIS',
+      'SNAP',
+      'Mathematica',
+      'Arduino IDE',
+      'Android Studio',
+      'Google Colab',
+      'Jupyter Notebook',
+    ],
+  },
+  {
+    category: 'Teaching & Pedagogy',
+    items: [
+      'Classroom Management',
+      'Curriculum Development',
+      'Mentorship',
+      'Outcome-Based Education (OBE)',
+    ],
+  },
+  {
+    category: 'Project Management',
+    items: [
+      'Research Proposal Writing',
+      'Grant Management',
+      'Team Leadership',
+      'Systematic Literature Review',
+    ],
+  },
+  {
+    category: 'Soft Skills',
+    items: ['Problem-solving', 'Critical Thinking', 'Leadership', 'Teamwork'],
+  },
+  {
+    category: 'Languages',
+    items: ['Bengali (Native)', 'English (Fluent)', 'Hindi (Conversational)'],
+  },
+];

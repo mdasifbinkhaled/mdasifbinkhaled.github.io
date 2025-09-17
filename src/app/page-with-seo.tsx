@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { siteConfig } from '@/config/site';
+import { siteConfig } from '@/shared/config/site';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
@@ -31,6 +31,10 @@ export const generateMetadata = async (): Promise<Metadata> => {
   };
 };
 
-export default function PageWithSEO({ children }: { children: React.ReactNode }) {
+export default function PageWithSEO({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }
