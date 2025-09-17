@@ -1,36 +1,6 @@
 // Course data for teaching portfolio
 import { Calculator, Code2, Brain, BookOpen, Database, Server } from 'lucide-react';
-
-export interface CourseData {
-  id: string;
-  code: string;
-  title: string;
-  institution: string;
-  level: 'undergraduate' | 'graduate';
-  credits: number;
-  semester: string;
-  year: string;
-  description: string;
-  objectives: string[];
-  outcomes: string[];
-  topics: string[];
-  technologies: string[];
-  assignments?: string[];
-  projects?: string[];
-  assessment: {
-    midterm?: number;
-    final?: number;
-    assignments?: number;
-    projects?: number;
-    quizzes?: number;
-    participation?: number;
-  };
-  enrollment: number;
-  rating?: number;
-  feedback?: string[];
-  iconName: string; // Changed from icon to iconName
-  status: 'completed' | 'ongoing' | 'upcoming';
-}
+import type { CourseData } from '@/types';
 
 // Icon mapping for dynamic lookup
 export const iconMap = {
@@ -48,11 +18,12 @@ export const coursesTaughtIUB: CourseData[] = [
     id: 'iub-cse101-fall2023',
     code: 'CSE 101',
     title: 'Introduction to Programming',
-    institution: 'Independent University, Bangladesh (IUB)',
+    institution: 'IUB',
+    institutionName: 'Independent University, Bangladesh (IUB)',
     level: 'undergraduate',
     credits: 3,
     semester: 'Fall',
-    year: '2023',
+    year: 2023,
     description: 'Fundamentals of programming concepts, problem-solving techniques, and introduction to C programming language.',
     objectives: [
       'Understand basic programming concepts and logic',
@@ -106,11 +77,12 @@ export const coursesTaughtIUB: CourseData[] = [
     id: 'iub-cse201-spring2024',
     code: 'CSE 201',
     title: 'Algorithms',
-    institution: 'Independent University, Bangladesh (IUB)',
+    institution: 'IUB',
+    institutionName: 'Independent University, Bangladesh (IUB)',
     level: 'undergraduate',
     credits: 3,
     semester: 'Spring',
-    year: '2024',
+    year: 2024,
     description: 'Design and analysis of algorithms, complexity theory, and advanced data structures.',
     objectives: [
       'Analyze time and space complexity of algorithms',
@@ -163,11 +135,12 @@ export const coursesTaughtIUB: CourseData[] = [
     id: 'iub-cse203-fall2024',
     code: 'CSE 203',
     title: 'Data Structures',
-    institution: 'Independent University, Bangladesh (IUB)',
+    institution: 'IUB',
+    institutionName: 'Independent University, Bangladesh (IUB)',
     level: 'undergraduate',
     credits: 3,
     semester: 'Fall',
-    year: '2024',
+    year: 2024,
     description: 'Implementation and application of fundamental data structures including arrays, linked lists, stacks, queues, trees, and graphs.',
     objectives: [
       'Implement fundamental data structures',
@@ -220,11 +193,12 @@ export const coursesTaughtIUB: CourseData[] = [
     id: 'iub-cse205-spring2025',
     code: 'CSE 205',
     title: 'Discrete Mathematics',
-    institution: 'Independent University, Bangladesh (IUB)',
+    institution: 'IUB',
+    institutionName: 'Independent University, Bangladesh (IUB)',
     level: 'undergraduate',
     credits: 3,
     semester: 'Spring',
-    year: '2025',
+    year: 2025,
     description: 'Mathematical foundations for computer science including logic, set theory, combinatorics, and graph theory.',
     objectives: [
       'Master mathematical reasoning and proof techniques',
@@ -267,11 +241,12 @@ export const coursesTaughtIUB: CourseData[] = [
     id: 'iub-cse303-fall2023',
     code: 'CSE 303',
     title: 'Numerical Methods',
-    institution: 'Independent University, Bangladesh (IUB)',
+    institution: 'IUB',
+    institutionName: 'Independent University, Bangladesh (IUB)',
     level: 'undergraduate',
     credits: 3,
     semester: 'Fall',
-    year: '2023',
+    year: 2023,
     description: 'Computational techniques for solving mathematical problems using numerical algorithms.',
     objectives: [
       'Understand numerical computation concepts',
@@ -324,11 +299,12 @@ export const coursesTaughtIUB: CourseData[] = [
     id: 'iub-cse401-spring2024',
     code: 'CSE 401',
     title: 'Fundamentals of Computer System',
-    institution: 'Independent University, Bangladesh (IUB)',
+    institution: 'IUB',
+    institutionName: 'Independent University, Bangladesh (IUB)',
     level: 'undergraduate',
     credits: 3,
     semester: 'Spring',
-    year: '2024',
+    year: 2024,
     description: 'Core concepts of computer architecture, system organization, and low-level programming.',
     objectives: [
       'Understand computer architecture principles',
@@ -381,11 +357,12 @@ export const coursesTaughtIUB: CourseData[] = [
     id: 'iub-cse403-fall2024',
     code: 'CSE 403',
     title: 'Finite Automata and Computability',
-    institution: 'Independent University, Bangladesh (IUB)',
+    institution: 'IUB',
+    institutionName: 'Independent University, Bangladesh (IUB)',
     level: 'undergraduate',
     credits: 3,
     semester: 'Fall',
-    year: '2024',
+    year: 2024,
     description: 'Theory of computation, formal languages, and computational complexity.',
     objectives: [
       'Understand formal language theory',
@@ -442,11 +419,12 @@ export const coursesTaughtBRACU: CourseData[] = [
     id: 'bracu-cg-lab-spring2022',
     code: 'CSE 423',
     title: 'Computer Graphics Lab',
-    institution: 'BRAC University',
+    institution: 'BRACU',
+    institutionName: 'BRAC University',
     level: 'undergraduate',
     credits: 1,
     semester: 'Spring',
-    year: '2022',
+    year: 2022,
     description: 'Practical application of computer graphics principles including 2D/3D transformations, rendering, and OpenGL programming.',
     objectives: [
       'Implement graphics algorithms',
@@ -498,11 +476,12 @@ export const coursesTaughtBRACU: CourseData[] = [
     id: 'bracu-nm-lab-summer2022',
     code: 'MAT 361',
     title: 'Numerical Methods Lab',
-    institution: 'BRAC University',
+    institution: 'BRACU',
+    institutionName: 'BRAC University',
     level: 'undergraduate',
     credits: 1,
     semester: 'Summer',
-    year: '2022',
+    year: 2022,
     description: 'Hands-on implementation of numerical computation methods using MATLAB and Python.',
     objectives: [
       'Implement numerical algorithms',
@@ -554,11 +533,12 @@ export const coursesTaughtBRACU: CourseData[] = [
     id: 'bracu-cd-lab-fall2022',
     code: 'CSE 420',
     title: 'Compiler Design Lab',
-    institution: 'BRAC University',
+    institution: 'BRACU',
+    institutionName: 'BRAC University',
     level: 'undergraduate',
     credits: 1,
     semester: 'Fall',
-    year: '2022',
+    year: 2022,
     description: 'Implementation of compiler components including lexical analysis, parsing, and code generation.',
     objectives: [
       'Implement compiler phases',
@@ -610,11 +590,12 @@ export const coursesTaughtBRACU: CourseData[] = [
     id: 'bracu-android-lab-spring2023',
     code: 'CSE 489',
     title: 'Android Development Lab',
-    institution: 'BRAC University',
+    institution: 'BRACU',
+    institutionName: 'BRAC University',
     level: 'undergraduate',
     credits: 1,
     semester: 'Spring',
-    year: '2023',
+    year: 2023,
     description: 'Building mobile applications for Android platform using Java/Kotlin and Android SDK.',
     objectives: [
       'Master Android development basics',
@@ -668,14 +649,14 @@ export const coursesTaughtBRACU: CourseData[] = [
 export const allCourses: CourseData[] = [...coursesTaughtIUB, ...coursesTaughtBRACU];
 
 // Filter functions
-export const getCoursesByInstitution = (institution: string) => 
-  allCourses.filter(course => course.institution.includes(institution));
+export const getCoursesByInstitution = (institution: CourseData['institution']) =>
+  allCourses.filter(course => course.institution === institution);
 
-export const getCoursesByLevel = (level: 'undergraduate' | 'graduate') => 
+export const getCoursesByLevel = (level: CourseData['level']) =>
   allCourses.filter(course => course.level === level);
 
-export const getCoursesByStatus = (status: 'completed' | 'ongoing' | 'upcoming') => 
+export const getCoursesByStatus = (status: CourseData['status']) =>
   allCourses.filter(course => course.status === status);
 
-export const getCoursesByYear = (year: string) => 
+export const getCoursesByYear = (year: CourseData['year']) =>
   allCourses.filter(course => course.year === year);

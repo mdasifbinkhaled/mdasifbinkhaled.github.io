@@ -16,7 +16,7 @@ import {
   ChevronUp
 } from 'lucide-react'
 import { useState } from 'react'
-import type { CourseData } from '@/lib/data/courses'
+import type { CourseData } from '@/types'
 import { iconMap } from '@/lib/data/courses'
 
 interface SimpleCourseCardProps {
@@ -45,6 +45,7 @@ export function SimpleCourseCard({ course, showFullDetails = false }: SimpleCour
   }
 
   const IconComponent = iconMap[course.iconName as keyof typeof iconMap] || BookOpen
+  const institutionLabel = course.institutionName ?? course.institution
 
   return (
     <Card className="transition-all duration-200 hover:shadow-lg group course-card">
@@ -103,7 +104,7 @@ export function SimpleCourseCard({ course, showFullDetails = false }: SimpleCour
               )}
               <div className="flex items-center gap-1">
                 <MapPin className="w-3 h-3" />
-                {course.institution.includes('IUB') ? 'IUB' : 'BRACU'}
+                {institutionLabel}
               </div>
             </div>
           </div>

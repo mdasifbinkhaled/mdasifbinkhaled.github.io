@@ -47,21 +47,44 @@ export interface Skill {
 }
 
 // Enhanced academic-specific types
+export type CourseInstitution = 'IUB' | 'BRACU';
+
+export type CourseLevel = 'undergraduate' | 'graduate';
+
+export type CourseStatus = 'completed' | 'ongoing' | 'upcoming';
+
+export interface CourseAssessmentBreakdown {
+  midterm?: number;
+  final?: number;
+  assignments?: number;
+  projects?: number;
+  quizzes?: number;
+  participation?: number;
+}
+
 export interface CourseData {
   id: string;
   code: string;
   title: string;
-  institution: 'IUB' | 'BRACU';
-  level: 'undergraduate' | 'graduate';
+  institution: CourseInstitution;
+  institutionName?: string;
+  level: CourseLevel;
   credits: number;
   semester: string;
   year: number;
   description: string;
+  objectives?: string[];
   outcomes: string[];
+  topics?: string[];
   technologies?: string[];
+  assignments?: string[];
   projects?: string[];
-  enrollmentCount?: number;
-  iconName?: IconName;
+  assessment?: CourseAssessmentBreakdown;
+  enrollment: number;
+  rating?: number;
+  feedback?: string[];
+  iconName: IconName;
+  status: CourseStatus;
 }
 
 export interface AcademicAward {
