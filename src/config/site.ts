@@ -1,6 +1,27 @@
-export type SiteConfig = typeof siteConfig;
+type SiteLinks = {
+  twitter: string
+  github: string
+  linkedin: string
+  googleScholar: string
+  cv: string
+  orcid?: string
+}
 
-export const siteConfig = {
+export type SiteConfig = {
+  name: string
+  shortName: string
+  description: string
+  url: string
+  ogImage: string
+  links: SiteLinks
+  keywords: string[]
+  author: string
+  email: string
+  phone: string
+  address: string
+}
+
+export const siteConfig: SiteConfig = {
   name: "Md Asif Bin Khaled - Academic Portfolio",
   shortName: "Md Asif Bin Khaled", // Updated shortName
   description: "The professional academic portfolio of Md Asif Bin Khaled, Senior Lecturer & Researcher. Showcasing research in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, teaching experience, publications, and grants. Open to PhD opportunities.",
@@ -11,7 +32,7 @@ export const siteConfig = {
     github: "https://github.com/mdasifbinkhaled",
     linkedin: "https://linkedin.com/in/mdasifbinkhaled/",
     googleScholar: "https://scholar.google.com/citations?user=zpcFkLAAAAAJ",
-    cv: "/cv/CV_Md Asif Bin Khaled.pdf",
+    cv: "/cv/CV_Md Asif Bin Khaled.pdf"
   },
   keywords: [
     "Md Asif Bin Khaled",
