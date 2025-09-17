@@ -61,10 +61,10 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   output: 'export', // Configure for static export
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   // GitHub Pages configuration
   trailingSlash: true,

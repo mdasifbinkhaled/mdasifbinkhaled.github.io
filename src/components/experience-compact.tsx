@@ -12,10 +12,14 @@ interface ExperienceCompactProps {
 export function ExperienceCompact({ experiences }: ExperienceCompactProps) {
   return (
     <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
-      {experiences.map((exp, index) => {
+      {experiences.map((exp) => {
         const isCurrent = exp.duration.includes('Present');
         return (
-          <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary">
+          <Card
+            key={exp.id}
+            data-testid="experience-card"
+            className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary"
+          >
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
                 <div className="flex-1">

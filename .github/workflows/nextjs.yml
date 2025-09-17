@@ -53,7 +53,13 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci --prefer-offline --no-audit --progress=false
-        
+
+      - name: Run typecheck
+        run: npm run typecheck
+
+      - name: Run lint
+        run: npm run lint
+
       - name: Build with Next.js
         run: |
           npm run build
