@@ -60,11 +60,11 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="w-full py-12 md:py-24 lg:py-28 xl:py-32 bg-gradient-to-br from-background to-secondary/30">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px] items-center">
-            <div className="flex flex-col justify-center space-y-4 order-2 lg:order-1">
+        <div className="container-responsive">
+          <div className="grid gap-6 grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_450px] items-center max-w-6xl mx-auto">
+            <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-primary">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-5xl xl:text-6xl/none text-primary">
                   {siteConfig.author}
                 </h1>
                 <p className="text-xl text-foreground md:text-2xl">
@@ -95,18 +95,20 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <Image
-              alt={siteConfig.author}
-              className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full order-1 lg:order-2 border-4 border-primary shadow-lg"
-              height="550"
-              src="/photo/Photo_Md Asif Bin Khaled.png"
-              width="550"
-              priority // Added priority for LCP
-            />
+            <div className="flex justify-center lg:justify-end">
+              <Image
+                alt={siteConfig.author}
+                className="aspect-square overflow-hidden rounded-xl object-cover border-4 border-primary shadow-lg max-w-[300px] lg:max-w-[400px] w-full"
+                height="400"
+                src="/photo/Photo_Md Asif Bin Khaled.png"
+                width="400"
+                priority // Added priority for LCP
+              />
+            </div>
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-12 max-w-4xl mx-auto">
             {[
               {
                 number: '15+',
@@ -154,7 +156,7 @@ export default function HomePage() {
 
       {/* Quick Access Search */}
       <section className="w-full py-8 md:py-12">
-        <div className="container px-4 md:px-6">
+        <div className="container-responsive">
           <Card className="overflow-hidden">
             <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5">
               <CardTitle className="flex items-center gap-2">
@@ -200,7 +202,7 @@ export default function HomePage() {
 
       {/* News Section */}
       <section className="w-full py-8 md:py-12 bg-secondary/10">
-        <div className="container px-4 md:px-6">
+        <div className="container-responsive">
           <h2 className="text-2xl font-bold mb-6 text-primary">News</h2>
           <div className="space-y-3">
             {newsItems.map((item, index) => (
@@ -233,7 +235,7 @@ export default function HomePage() {
 
       {/* Work Experience Section */}
       <section className="w-full py-8 md:py-12">
-        <div className="container px-4 md:px-6">
+        <div className="container-responsive">
           <h2 className="text-2xl font-bold mb-6 text-primary">
             Work Experience
           </h2>
@@ -250,11 +252,11 @@ export default function HomePage() {
 
       {/* Research Interests */}
       <section className="w-full py-12 md:py-16">
-        <div className="container px-4 md:px-6">
+        <div className="container-responsive">
           <h2 className="text-3xl font-bold text-center mb-8 text-primary">
             Research Interests
           </h2>
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl">Explainable AI (XAI)</CardTitle>
@@ -299,7 +301,7 @@ export default function HomePage() {
 
       {/* Publications Section */}
       <section className="w-full py-8 md:py-12 bg-secondary/10">
-        <div className="container px-4 md:px-6">
+        <div className="container-responsive">
           <h2 className="text-2xl font-bold mb-6 text-primary">
             Recent Publications
           </h2>
@@ -318,11 +320,11 @@ export default function HomePage() {
 
       {/* Grants and Highlight */}
       <section className="w-full py-12 md:py-16">
-        <div className="container px-4 md:px-6">
+        <div className="container-responsive">
           <h2 className="text-3xl font-bold text-center mb-8 text-primary">
             Recent Grants
           </h2>
-          <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 max-w-5xl mx-auto">
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl">
