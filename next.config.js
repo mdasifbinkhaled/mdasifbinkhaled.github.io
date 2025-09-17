@@ -1,6 +1,5 @@
-import type { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   output: 'export', // Configure for static export
   outputFileTracingRoot: __dirname, // Fix for multiple lockfiles warning
   typescript: {
@@ -13,7 +12,7 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   basePath: '',
 
-  webpack: (config: any, { isServer }: { isServer: boolean }) => {
+  webpack: (config, { isServer }) => {
     // Fix for react-pdf and other client-side dependencies
     if (!isServer) {
       config.resolve = config.resolve || {};
