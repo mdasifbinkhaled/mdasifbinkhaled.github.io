@@ -18,10 +18,9 @@ const analyticsEndpoint = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT;
 const isStaticMode = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
 
 // Track user interactions for academic portfolio analytics
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const trackEvent = (
   eventName: string,
-  properties?: Record<string, any>
+  properties?: Record<string, string | number | boolean | undefined>
 ) => {
   if (typeof window === 'undefined') return;
 
