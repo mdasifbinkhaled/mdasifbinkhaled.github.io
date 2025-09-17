@@ -1,6 +1,11 @@
 // Analytics and performance tracking utilities
 'use client'
 
+// Configure analytics destinations via environment variables so static builds
+// can skip network requests until a backend is available.
+const analyticsEndpoint = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT
+const isStaticMode = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true'
+
 // Track user interactions for academic portfolio analytics
 export const trackEvent = (eventName: string, properties?: Record<string, any>) => {
   if (typeof window === 'undefined') return
@@ -20,16 +25,20 @@ export const trackEvent = (eventName: string, properties?: Record<string, any>) 
   }
 
   // Custom analytics endpoint
-  try {
-    fetch('/api/analytics', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event: eventName, properties })
-    }).catch(() => {
+  // Future implementations can point NEXT_PUBLIC_ANALYTICS_ENDPOINT to a
+  // serverless function, analytics proxy, or external collection service.
+  if (!isStaticMode && analyticsEndpoint) {
+    try {
+      fetch(analyticsEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: eventName, properties })
+      }).catch(() => {
+        // Silently fail for analytics
+      })
+    } catch {
       // Silently fail for analytics
-    })
-  } catch {
-    // Silently fail for analytics
+    }
   }
 }
 
