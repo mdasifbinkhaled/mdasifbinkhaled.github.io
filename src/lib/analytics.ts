@@ -1,5 +1,4 @@
 // Analytics and performance tracking utilities
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 'use client'
 
 // Configure analytics destinations via environment variables so static builds

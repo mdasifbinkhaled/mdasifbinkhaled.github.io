@@ -9,15 +9,13 @@ import type { PublicationItem, ExperienceItem } from '@/types';
 // Mock next/image for testing
 vi.mock('next/image', () => ({
   default: ({ alt, src, width, height, ...props }: any) => {
-    // Filter out Next.js specific props that don't belong on img elements
-    const { fill, priority, quality, sizes, ...imgProps } = props;
     return (
       <img 
         alt={alt} 
         src={src} 
         width={width} 
         height={height}
-        {...imgProps} 
+        {...props} 
       />
     );
   }
