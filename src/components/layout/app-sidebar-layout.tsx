@@ -58,43 +58,12 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
   return (
     <>
       <SkipLink />
-      
-      {/* Mobile Layout */}
-      <div className="lg:hidden">
-        <Navbar 
-          onMobileMenuOpen={() => setMobileMenuOpen(true)}
-          showMobileMenuButton={true}
-        />
-        
-        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetContent 
-            side="left" 
-            className="w-80 p-0 bg-sidebar border-sidebar-border"
-          >
-            <SidebarContent isMobile={true} />
-          </SheetContent>
-        </Sheet>
 
-        <main 
-          id="main-content" 
-          className="min-h-screen pt-16"
-          role="main"
-          tabIndex={-1}
-        >
-          <MotionPage>
-            <div className="container mx-auto px-4 py-6">
-              {children}
-            </div>
-          </MotionPage>
-        </main>
-      </div>
-
-      {/* Desktop Layout */}
-      <div className="hidden lg:flex min-h-screen">
+      <div className="min-h-screen lg:flex">
         {/* Desktop Sidebar */}
-        <aside 
+        <aside
           className={cn(
-            "relative border-r border-sidebar-border bg-sidebar",
+            "relative hidden lg:flex border-r border-sidebar-border bg-sidebar",
             "sidebar-collapse-transition",
             desktopSidebarCollapsed ? "layout-sidebar-collapsed" : "layout-sidebar-width"
           )}
@@ -116,33 +85,57 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
               <ChevronLeft className="h-3 w-3" />
             )}
           </Button>
-          
+
           <div className={cn(desktopSidebarCollapsed && "sidebar-collapsed")}>
             <SidebarContent isMobile={false} />
           </div>
         </aside>
 
-        {/* Desktop Main Content */}
-        <div className="flex flex-col flex-1 min-w-0">
-          <Navbar showMobileMenuButton={false} />
-          
-          <main 
-            id="main-content" 
-            className="flex-1 min-h-0"
+        {/* Main Content Area */}
+        <div className="flex flex-1 min-w-0 flex-col">
+          <div className="lg:hidden">
+            <Navbar
+              onMobileMenuOpen={() => setMobileMenuOpen(true)}
+              showMobileMenuButton={true}
+            />
+
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetContent
+                side="left"
+                className="w-80 p-0 bg-sidebar border-sidebar-border"
+              >
+                <SidebarContent isMobile={true} />
+              </SheetContent>
+            </Sheet>
+          </div>
+
+          <div className="hidden lg:block">
+            <Navbar showMobileMenuButton={false} />
+          </div>
+
+          <main
+            id="main-content"
+            className={cn(
+              "flex-1 focus:outline-none min-h-screen pt-16",
+              "lg:min-h-0 lg:pt-0"
+            )}
             role="main"
             tabIndex={-1}
           >
             <MotionPage>
-              <div className={cn(
-                "container-responsive py-8",
-                "transition-all duration-300 ease-in-out"
-              )}>
+              <div
+                className={cn(
+                  "container-responsive",
+                  "py-6 sm:py-8",
+                  "transition-all duration-300 ease-in-out"
+                )}
+              >
                 {children}
               </div>
             </MotionPage>
           </main>
-          
-          <footer 
+
+          <footer
             className="py-6 px-6 text-center border-t bg-background/50 backdrop-blur-sm"
             role="contentinfo"
           >
