@@ -9,6 +9,7 @@ import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
 import { Navbar } from '@/shared/components/navigation/navbar';
 import { MotionPage } from '@/shared/components/common/motion-page';
 import { FooterYear } from '@/shared/components/common/footer-year';
+import { BackToTop } from '@/shared/components/common/back-to-top';
 import { SkipLink } from '@/shared/components/common/skip-link';
 import { siteConfig } from '@/shared/config/site';
 import { cn } from '@/shared/lib/utils';
@@ -74,7 +75,7 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
           <SheetContent
             side="left"
-            className="w-80 p-0 bg-sidebar border-sidebar-border"
+            className="w-80 p-0 bg-sidebar text-sidebar-foreground border-sidebar-border z-[60]"
           >
             <SidebarContent isMobile={true} />
           </SheetContent>
@@ -96,6 +97,7 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
       <div className="hidden lg:flex min-h-screen">
         {/* Desktop Sidebar */}
         <aside
+          id="desktop-sidebar"
           className={cn(
             'relative border-r border-sidebar-border bg-sidebar flex-shrink-0',
             'transition-all duration-300 ease-in-out',
@@ -111,6 +113,8 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
               'transition-all duration-200 hover:scale-105 active:scale-95'
             )}
             onClick={() => setDesktopSidebarCollapsed(!desktopSidebarCollapsed)}
+            aria-controls="desktop-sidebar"
+            aria-expanded={!desktopSidebarCollapsed}
             aria-label={
               desktopSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'
             }
@@ -158,6 +162,8 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
               <p className="text-xs text-muted-foreground mt-1">
                 Built with Next.js, Tailwind CSS, and ShadCN UI.
               </p>
+              {/* One global BackToTop control for the whole site */}
+              <BackToTop />
             </footer>
           </main>
         </div>
