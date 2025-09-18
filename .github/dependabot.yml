@@ -34,10 +34,10 @@ updates:
           - 'lucide-react*'
     # Limit open PRs
     open-pull-requests-limit: 5
-    # Auto-approve patch updates for dev dependencies
+    # Allow all dependency types
     allow:
-      - dependency-type: 'development'
-        update-type: 'version-update:semver-patch'
+      - dependency-type: 'direct'
+      - dependency-type: 'indirect'
     # Commit message preferences
     commit-message:
       prefix: 'chore'
