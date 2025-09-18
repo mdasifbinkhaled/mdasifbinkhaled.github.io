@@ -846,6 +846,13 @@
     max-width: 1400px;
   }
 
+  .container-none {
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+  }
+
   /* Better focus states for interactive elements */
   .interactive-focus {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
@@ -1057,4 +1064,44 @@
 /* Publication card details styling */
 details[open] svg {
   transform: rotate(180deg);
+}
+
+/* ==========================================
+ * ACCESSIBILITY: REDUCED MOTION SUPPORT
+ * ========================================== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+
+  /* Disable hover transforms when reduced motion is preferred */
+  .hover\\:translate-x-1:hover,
+  .hover\\:scale-105:hover,
+  .hover\\:-translate-y-1:hover,
+  .group-hover\\:scale-110 {
+    transform: none !important;
+  }
+
+  /* Keep focus styles for accessibility */
+  .focus-visible\\:ring-2:focus-visible,
+  .focus-visible\\:translate-x-1:focus-visible {
+    outline: 2px solid hsl(var(--primary)) !important;
+    outline-offset: 2px !important;
+    transform: none !important;
+  }
+}
+
+/* Enhanced focus visibility for keyboard navigation */
+@layer utilities {
+  .focus-visible-enhanced:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+  }
 }

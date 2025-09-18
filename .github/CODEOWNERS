@@ -1,0 +1,15 @@
+# Global ownership - you are the owner of everything in this repository
+* @mdasifbinkhaled
+
+# Specific areas for focused review
+/.github/ @mdasifbinkhaled
+/src/app/ @mdasifbinkhaled
+/src/shared/config/ @mdasifbinkhaled
+
+# Dependencies and configuration files require careful review
+package.json @mdasifbinkhaled
+package-lock.json @mdasifbinkhaled
+tsconfig.json @mdasifbinkhaled
+next.config.js @mdasifbinkhaled
+tailwind.config.ts @mdasifbinkhaled
+eslint.config.js @mdasifbinkhaled

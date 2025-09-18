@@ -1,14 +1,14 @@
 import type { ThemeConfig, ThemeName } from '@/types';
 
 /**
- * Academic portfolio theme configuration
- * Defines the 5 curated themes with their properties
+ * Simplified Academic Portfolio Theme Configuration
+ * Focus on professional, accessible themes for academic use
  */
 export const themeConfigs: Record<ThemeName, ThemeConfig> = {
   light: {
     name: 'light',
     label: 'Light',
-    description: 'Clean and bright professional theme',
+    description: 'Clean and professional light theme',
     category: 'classic',
     preview: {
       background: 'hsl(200, 25%, 96%)',
@@ -19,7 +19,7 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
   dark: {
     name: 'dark',
     label: 'Dark',
-    description: 'Rich dark mode with enhanced contrast',
+    description: 'Professional dark theme with enhanced contrast',
     category: 'classic',
     preview: {
       background: 'hsl(201, 35%, 12%)',
@@ -27,38 +27,27 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(201, 60%, 50%)',
     },
   },
-  retro: {
-    name: 'retro',
-    label: 'Retro',
-    description: 'Vintage film with warm glow and paper texture',
-    category: 'dramatic',
-    preview: {
-      background: 'linear-gradient(135deg, #f4e4bc 0%, #daa520 100%)',
-      foreground: 'hsl(24, 20%, 15%)',
-      primary: 'hsl(24, 74%, 58%)',
-    },
+} as const;
+
+/**
+ * Motion preferences for accessibility
+ */
+export const motionPreferences = {
+  // Detect user's motion preference
+  respectReducedMotion: true,
+
+  // Default animation durations (will be reduced if user prefers reduced motion)
+  durations: {
+    fast: '150ms',
+    normal: '300ms',
+    slow: '500ms',
   },
-  cyberpunk: {
-    name: 'cyberpunk',
-    label: 'Cyberpunk',
-    description: 'Electric neon matrix with glitch effects',
-    category: 'dramatic',
-    preview: {
-      background: 'linear-gradient(135deg, #000000 0%, #8b00ff 100%)',
-      foreground: 'hsl(315, 100%, 85%)',
-      primary: 'hsl(315, 100%, 65%)',
-    },
-  },
-  ocean: {
-    name: 'ocean',
-    label: 'Ocean',
-    description: 'Deep underwater with animated waves',
-    category: 'dramatic',
-    preview: {
-      background: 'linear-gradient(135deg, #e0f7fa 0%, #006064 100%)',
-      foreground: 'hsl(210, 40%, 15%)',
-      primary: 'hsl(185, 62%, 45%)',
-    },
+
+  // Animation easings
+  easings: {
+    easeOut: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+    easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
   },
 } as const;
 

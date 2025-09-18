@@ -1,3 +1,5 @@
+import { assetPaths, getAssetUrl } from './assets';
+
 type SiteLinks = {
   twitter: string;
   github: string;
@@ -27,13 +29,13 @@ export const siteConfig: SiteConfig = {
   description:
     'The professional academic portfolio of Md Asif Bin Khaled, Senior Lecturer & Researcher. Showcasing research in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, teaching experience, publications, and grants. Open to PhD opportunities.',
   url: 'https://mdasifbinkhaled.github.io',
-  ogImage: 'https://mdasifbinkhaled.github.io/images/og-image.png',
+  ogImage: getAssetUrl(assetPaths.ogImage),
   links: {
     twitter: 'https://twitter.com/yourusername',
     github: 'https://github.com/mdasifbinkhaled',
     linkedin: 'https://linkedin.com/in/mdasifbinkhaled/',
     googleScholar: 'https://scholar.google.com/citations?user=zpcFkLAAAAAJ',
-    cv: '/cv/CV_Md Asif Bin Khaled.pdf',
+    cv: assetPaths.cv,
   },
   keywords: [
     'Md Asif Bin Khaled',

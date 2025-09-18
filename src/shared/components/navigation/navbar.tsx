@@ -20,10 +20,19 @@ export function Navbar({
 }: NavbarProps) {
   const pathname = usePathname();
 
+  // Normalize paths - remove trailing slashes for comparison but keep for active check
+  const normalizePathForComparison = (path: string): string => {
+    if (path === '/') return path;
+    return path.replace(/\/+$/, '');
+  };
+
   const isNavItemActive = (href: string): boolean => {
-    if (href === '/' && pathname !== '/') return false;
-    if (href === '/') return pathname === '/';
-    return pathname.startsWith(href);
+    const normalizedPathname = normalizePathForComparison(pathname);
+    const normalizedHref = normalizePathForComparison(href);
+
+    if (normalizedHref === '/' && normalizedPathname !== '/') return false;
+    if (normalizedHref === '/') return normalizedPathname === '/';
+    return normalizedPathname.startsWith(normalizedHref);
   };
 
   return (
@@ -82,6 +91,7 @@ export function Navbar({
                       ? 'text-primary font-semibold bg-accent/30'
                       : 'text-foreground/90 hover:text-foreground'
                   )}
+                  aria-current={isNavItemActive(item.href) ? 'page' : undefined}
                 >
                   {item.label}
                   {isNavItemActive(item.href) && (

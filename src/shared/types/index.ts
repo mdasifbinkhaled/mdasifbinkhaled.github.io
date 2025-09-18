@@ -112,7 +112,7 @@ export interface ResearchArea {
 }
 
 // Theme-related types
-export type ThemeName = 'light' | 'dark' | 'retro' | 'cyberpunk' | 'ocean';
+export type ThemeName = 'light' | 'dark';
 
 export interface ThemeConfig {
   name: ThemeName;

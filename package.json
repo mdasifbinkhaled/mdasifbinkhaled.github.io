@@ -1,12 +1,16 @@
 {
-  "name": "md-asif-portfolio",
+  "name": "mdasifbinkhaled.github.io",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev -p 9002",
     "build": "next build",
     "build:analyze": "cross-env ANALYZE=true next build",
-    "build:production": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "postbuild": "sh -c 'mkdir -p out && touch out/.nojekyll'",
     "start": "next start",
     "preview": "npm run build && npm run start",
     "lint": "eslint .",
@@ -26,9 +30,7 @@
     "validate": "npm run typecheck && npm run lint:strict && npm run test:run",
     "clean": "rm -rf .next out dist coverage .turbo",
     "reset": "npm run clean && rm -rf node_modules package-lock.json && npm install",
-    "analyze": "npm run build:analyze && npx @next/bundle-analyzer .next",
-    "deploy": "npm run build:production && git subtree push --prefix out origin gh-pages",
-    "deploy:force": "npm run build:production && git push origin `git subtree split --prefix out main`:gh-pages --force"
+    "analyze": "npm run build:analyze && npx @next/bundle-analyzer .next"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -52,7 +54,7 @@
     "framer-motion": "^12.23.13",
     "geist": "^1.5.1",
     "lucide-react": "^0.544.0",
-    "next": "^14.2.5",
+    "next": "^15.5.3",
     "next-themes": "^0.4.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

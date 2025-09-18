@@ -44,7 +44,10 @@ export function Breadcrumbs() {
           <div key={segment} className="flex items-center space-x-2">
             <ChevronRight className="w-4 h-4 text-muted-foreground" />
             {isLast ? (
-              <div className="flex items-center gap-1 text-foreground font-medium">
+              <div
+                className="flex items-center gap-1 text-foreground font-medium"
+                aria-current="page"
+              >
                 {Icon && <Icon className="w-4 h-4" />}
                 <span>{title}</span>
               </div>

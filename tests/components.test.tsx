@@ -186,7 +186,7 @@ describe('PublicationCard', () => {
   it('expands and collapses abstract correctly', async () => {
     renderWithTheme(<PublicationCard publication={mockPublication} />);
 
-    const expandButton = screen.getByRole('button', { name: /show more/i });
+    const expandButton = screen.getByText('Show more').closest('summary');
     expect(expandButton).toBeInTheDocument();
 
     // Abstract should not be visible initially
@@ -195,15 +195,14 @@ describe('PublicationCard', () => {
     ).not.toBeInTheDocument();
 
     // Click to expand
-    fireEvent.click(expandButton);
+    fireEvent.click(expandButton!);
 
     await waitFor(() => {
       expect(screen.getByText(/This is a test abstract/)).toBeInTheDocument();
     });
 
-    // Click to collapse
-    const collapseButton = screen.getByRole('button', { name: /show less/i });
-    fireEvent.click(collapseButton);
+    // Click to collapse (same element, as details/summary doesn't change text)
+    fireEvent.click(expandButton!);
 
     await waitFor(() => {
       expect(

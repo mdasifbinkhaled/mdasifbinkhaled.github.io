@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { assetPaths } from '@/shared/config/assets';
 
 interface CVErrorProps {
   error: Error & { digest?: string };
@@ -45,11 +46,7 @@ export default function CVError({ error, reset }: CVErrorProps) {
               Try Again
             </Button>
             <Button variant="outline" asChild className="w-full">
-              <a
-                href="/cv/CV_Md_Asif_Bin_Khaled.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={assetPaths.cv} target="_blank" rel="noopener noreferrer">
                 Download CV Instead
               </a>
             </Button>

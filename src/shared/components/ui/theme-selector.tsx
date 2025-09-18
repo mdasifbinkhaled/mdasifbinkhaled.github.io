@@ -12,13 +12,13 @@ import {
   DropdownMenuLabel,
 } from '@/shared/components/ui/dropdown-menu';
 import { Badge } from '@/shared/components/ui/badge';
-import { Palette, Sun, Moon, Sparkles, Waves, Zap, Check } from 'lucide-react';
+import { Palette, Sun, Moon, Check } from 'lucide-react';
 
 const themes = [
   {
     name: 'light',
     label: 'Light',
-    description: 'Clean and bright',
+    description: 'Clean and professional light theme',
     icon: Sun,
     preview: 'bg-gradient-to-br from-slate-50 to-blue-50',
     category: 'Classic',
@@ -26,38 +26,14 @@ const themes = [
   {
     name: 'dark',
     label: 'Dark',
-    description: 'Easy on the eyes',
+    description: 'Professional dark theme',
     icon: Moon,
     preview: 'bg-gradient-to-br from-slate-900 to-slate-800',
     category: 'Classic',
   },
-  {
-    name: 'retro',
-    label: 'Retro',
-    description: 'Vintage film with warm glow',
-    icon: Sparkles,
-    preview: 'bg-gradient-to-br from-yellow-100 via-amber-100 to-orange-200',
-    category: 'Dramatic',
-  },
-  {
-    name: 'cyberpunk',
-    label: 'Cyberpunk',
-    description: 'Neon matrix with glitch effects',
-    icon: Zap,
-    preview: 'bg-gradient-to-br from-purple-900 via-pink-500 to-cyan-400',
-    category: 'Dramatic',
-  },
-  {
-    name: 'ocean',
-    label: 'Ocean',
-    description: 'Deep waves with floating bubbles',
-    icon: Waves,
-    preview: 'bg-gradient-to-br from-cyan-100 via-blue-200 to-teal-300',
-    category: 'Dramatic',
-  },
-];
+] as const;
 
-const categories = ['Classic', 'Dramatic'];
+const categories = ['Classic'] as const;
 
 interface ThemeSelectorProps {
   variant?: 'default' | 'compact' | 'floating';

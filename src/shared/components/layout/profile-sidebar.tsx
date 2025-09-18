@@ -3,6 +3,7 @@
 import { memo, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { assetPaths, assetConfig } from '@/shared/config/assets';
 import { Button } from '@/shared/components/ui/button';
 import { siteConfig } from '@/shared/config/site';
 import {
@@ -54,13 +55,11 @@ export const ProfileSidebar = memo(function ProfileSidebar({
         >
           {!imageError ? (
             <Image
-              src="/photo/Photo_Md Asif Bin Khaled.png"
-              alt={`${siteConfig.author} - Profile photo`}
-              fill
-              className="object-cover transition-transform duration-300 hover:scale-105"
-              sizes={isCollapsed ? '40px' : '128px'}
-              priority
-              quality={90}
+              src={assetPaths.profile}
+              alt={assetConfig.profileImage.alt}
+              width={assetConfig.profileImage.width}
+              height={assetConfig.profileImage.height}
+              className="w-full h-full object-cover"
               onError={handleImageError}
             />
           ) : (
