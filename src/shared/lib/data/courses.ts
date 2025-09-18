@@ -8,7 +8,7 @@ import {
   Server,
   type LucideIcon,
 } from 'lucide-react';
-import type { CourseData, CourseInstitution, CourseStatus } from '@/types';
+import type { CourseData, CourseInstitution, CourseStatus } from '@/shared/types';
 import type { IconName } from '@/shared/components/common/icons';
 
 // Icon mapping for dynamic lookup

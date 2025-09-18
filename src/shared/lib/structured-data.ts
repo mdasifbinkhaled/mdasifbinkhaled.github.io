@@ -1,7 +1,7 @@
 // SEO Structured Data utilities for academic content
 import { siteConfig } from '@/shared/config/site';
 import { institutionNames } from '@/shared/lib/data/courses';
-import type { CourseInstitution } from '@/types';
+import type { CourseInstitution } from '@/shared/types';
 
 export interface AcademicPersonStructuredData {
   '@context': 'https://schema.org';

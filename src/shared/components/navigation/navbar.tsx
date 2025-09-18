@@ -3,10 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/shared/config/site';
-import { Button } from '@/shared/components/ui/button';
 import { GraduationCap, Menu } from 'lucide-react';
 import { mainNavItems } from '@/shared/config/navigation';
-import { cn } from '@/shared/lib/utils';
 import { ThemeSelector } from '@/shared/components/ui/theme-selector';
 
 interface NavbarProps {
@@ -37,28 +35,27 @@ export function Navbar({
 
   return (
     <header
-      className="sticky top-0 z-40 w-full border-b-2 border-border/50 bg-background/90 backdrop-blur-md supports-[backdrop-filter]:bg-background/75 shadow-sm"
+      className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur-sm shadow-sm"
       role="banner"
     >
-      <div className="container-responsive flex h-16 items-center justify-between px-4 sm:px-6">
+      <div className="container-page flex h-16 items-center justify-between">
         {/* Left Group: Mobile Menu and Branding */}
         <div className="flex items-center gap-x-3">
           {/* Mobile Menu Button */}
           {showMobileMenuButton && onMobileMenuOpen && (
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
               onClick={onMobileMenuOpen}
-              className="lg:hidden hover:bg-accent/50 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary"
+              className="lg:hidden p-2 rounded-md hover:bg-accent transition-fast focus-visible"
               aria-label="Open navigation menu"
+              type="button"
             >
               <Menu className="h-5 w-5" />
-            </Button>
+            </button>
           )}
 
           <Link
             href="/"
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md"
+            className="flex items-center gap-2 hover:opacity-80 transition-fast focus-visible"
             aria-label={`${siteConfig.shortName} - Go to homepage`}
           >
             <GraduationCap
@@ -73,7 +70,7 @@ export function Navbar({
 
         {/* Desktop Navigation Links - Centered */}
         <nav
-          className="hidden lg:flex flex-1 items-center justify-center gap-x-1 text-sm font-medium"
+          className="hidden lg:flex flex-1 items-center justify-center gap-x-1"
           role="navigation"
           aria-label="Main navigation"
         >
@@ -85,17 +82,19 @@ export function Navbar({
                   href={item.href}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noopener noreferrer' : undefined}
-                  className={cn(
-                    'transition-all duration-200 px-3 py-2 rounded-lg hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 relative',
+                  className={`nav-link px-3 py-2 rounded-lg focus-visible relative ${
                     isNavItemActive(item.href)
                       ? 'text-primary font-semibold bg-accent/30'
-                      : 'text-foreground/90 hover:text-foreground'
-                  )}
+                      : 'text-foreground/90 hover:text-foreground hover:bg-accent/50'
+                  }`}
                   aria-current={isNavItemActive(item.href) ? 'page' : undefined}
                 >
                   {item.label}
                   {isNavItemActive(item.href) && (
-                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></span>
+                    <span 
+                      className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"
+                      aria-hidden="true"
+                    />
                   )}
                 </Link>
               )

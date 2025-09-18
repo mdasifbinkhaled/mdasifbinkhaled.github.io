@@ -1,50 +1,46 @@
 'use client';
 
 import { type ReactNode, useState } from 'react';
-import { Sheet, SheetContent } from '@/shared/components/ui/sheet';
-import { Button } from '@/shared/components/ui/button';
-import { GraduationCap, ChevronLeft, ChevronRight } from 'lucide-react';
+import * as Dialog from '@radix-ui/react-dialog';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import { GraduationCap, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import Link from 'next/link';
 import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
 import { Navbar } from '@/shared/components/navigation/navbar';
-import { MotionPage } from '@/shared/components/common/motion-page';
 import { FooterYear } from '@/shared/components/common/footer-year';
 import { BackToTop } from '@/shared/components/common/back-to-top';
 import { SkipLink } from '@/shared/components/common/skip-link';
 import { siteConfig } from '@/shared/config/site';
-import { cn } from '@/shared/lib/utils';
 
 interface AppSidebarLayoutProps {
   children: ReactNode;
 }
 
 /**
- * Modern responsive sidebar layout with mobile sheet and desktop sidebar
+ * Accessible responsive sidebar layout with mobile Sheet and desktop collapse
+ * Uses Radix Dialog for mobile sidebar with proper accessibility
  */
 export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(false);
 
   const SidebarContent = ({ isMobile = false }: { isMobile?: boolean }) => (
-    <div className="flex flex-col h-full bg-sidebar">
+    <div className="flex flex-col h-full bg-card border-r border-border">
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-sidebar-border">
+      <div className="p-4 border-b border-border">
         <Link
           href="/"
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 transition-fast hover:opacity-80"
           onClick={() => isMobile && setMobileMenuOpen(false)}
         >
           <GraduationCap
-            className="h-7 w-7 text-sidebar-primary flex-shrink-0"
+            className="h-7 w-7 text-primary flex-shrink-0"
             aria-hidden="true"
           />
           <span
-            className={cn(
-              'font-bold text-lg text-sidebar-foreground transition-all duration-200',
-              !isMobile &&
-                desktopSidebarCollapsed &&
-                'sidebar-hide-when-collapsed'
-            )}
+            className={`font-bold text-lg text-foreground transition-normal ${
+              !isMobile && desktopSidebarCollapsed ? 'sr-only' : ''
+            }`}
           >
             {siteConfig.shortName}
           </span>
@@ -72,14 +68,27 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
           showMobileMenuButton={true}
         />
 
-        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetContent
-            side="left"
-            className="w-80 p-0 bg-sidebar text-sidebar-foreground border-sidebar-border z-[60]"
-          >
-            <SidebarContent isMobile={true} />
-          </SheetContent>
-        </Sheet>
+        {/* Mobile Sidebar using Radix Dialog */}
+        <Dialog.Root open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+          <Dialog.Portal>
+            <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40 animate-in" />
+            <Dialog.Content className="fixed top-0 left-0 h-full w-80 bg-background shadow-lg z-50 animate-in focus:outline-none">
+              <VisuallyHidden.Root>
+                <Dialog.Title>Navigation Menu</Dialog.Title>
+                <Dialog.Description>
+                  Main navigation menu with links to different sections of the site
+                </Dialog.Description>
+              </VisuallyHidden.Root>
+              
+              <Dialog.Close className="absolute top-4 right-4 p-2 rounded-md hover:bg-accent transition-fast focus-visible">
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close navigation menu</span>
+              </Dialog.Close>
+              
+              <SidebarContent isMobile={true} />
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
 
         <main
           id="main-content"
@@ -87,9 +96,7 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
           role="main"
           tabIndex={-1}
         >
-          <MotionPage className="container-none">
-            <div className="container mx-auto px-4 py-6">{children}</div>
-          </MotionPage>
+          <div className="container-page py-6">{children}</div>
         </main>
       </div>
 
@@ -98,20 +105,14 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
         {/* Desktop Sidebar */}
         <aside
           id="desktop-sidebar"
-          className={cn(
-            'relative border-r border-sidebar-border bg-sidebar flex-shrink-0',
-            'transition-all duration-300 ease-in-out',
+          className={`relative flex-shrink-0 transition-normal ${
             desktopSidebarCollapsed ? 'w-[60px]' : 'w-[320px]'
-          )}
+          }`}
+          aria-label="Main navigation"
         >
           {/* Collapse Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              'absolute -right-3 top-6 z-50 h-6 w-6 rounded-full bg-background shadow-md border border-sidebar-border hover:bg-accent',
-              'transition-all duration-200 hover:scale-105 active:scale-95'
-            )}
+          <button
+            className="absolute -right-3 top-6 z-50 h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent transition-fast focus-visible"
             onClick={() => setDesktopSidebarCollapsed(!desktopSidebarCollapsed)}
             aria-controls="desktop-sidebar"
             aria-expanded={!desktopSidebarCollapsed}
@@ -124,11 +125,9 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
             ) : (
               <ChevronLeft className="h-3 w-3" />
             )}
-          </Button>
+          </button>
 
-          <div className={cn(desktopSidebarCollapsed && 'sidebar-collapsed')}>
-            <SidebarContent isMobile={false} />
-          </div>
+          <SidebarContent isMobile={false} />
         </aside>
 
         {/* Desktop Main Content */}
@@ -141,16 +140,9 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
             role="main"
             tabIndex={-1}
           >
-            <MotionPage className="container-none flex-1">
-              <div
-                className={cn(
-                  'container-responsive py-8 h-full',
-                  'transition-all duration-300 ease-in-out'
-                )}
-              >
-                {children}
-              </div>
-            </MotionPage>
+            <div className="container-page py-8 h-full flex-1">
+              {children}
+            </div>
 
             <footer
               className="py-6 px-6 text-center border-t bg-background/50 backdrop-blur-sm flex-shrink-0"
@@ -160,7 +152,7 @@ export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
                 &copy; <FooterYear /> {siteConfig.author}. All rights reserved.
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                Built with Next.js, Tailwind CSS, and ShadCN UI.
+                Built with Next.js, Tailwind CSS, and Radix UI.
               </p>
               {/* One global BackToTop control for the whole site */}
               <BackToTop />

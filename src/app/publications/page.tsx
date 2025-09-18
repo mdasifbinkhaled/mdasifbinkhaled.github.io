@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { samplePublications } from '@/shared/lib/data/publications';
 import { siteConfig } from '@/shared/config/site';
-import { BackToTop } from '@/shared/components/common/back-to-top';
 import { PublicationList } from '@/shared/components/common/publication-list';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
@@ -39,8 +38,6 @@ export default function PublicationsPage() {
       <section id="publication-listing">
         <PublicationList initialPublications={samplePublications} />
       </section>
-
-      <BackToTop />
     </div>
   );
 }

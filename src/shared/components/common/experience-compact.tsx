@@ -9,7 +9,7 @@ import {
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { MapPin, Calendar, Building2 } from 'lucide-react';
-import type { ExperienceItem } from '@/types';
+import type { ExperienceItem } from '@/shared/types';
 
 interface ExperienceCompactProps {
   experiences: ExperienceItem[];

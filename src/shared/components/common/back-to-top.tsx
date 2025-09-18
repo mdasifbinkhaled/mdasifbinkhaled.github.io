@@ -23,6 +23,9 @@ export const BackToTop = React.memo(function BackToTop() {
   }, []);
 
   useEffect(() => {
+    // Check initial scroll position
+    toggleVisibility();
+    
     window.addEventListener('scroll', toggleVisibility, { passive: true });
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, [toggleVisibility]);

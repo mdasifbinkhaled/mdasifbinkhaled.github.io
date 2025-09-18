@@ -13,10 +13,9 @@
 // ==========================================
 // UTILITY FUNCTIONS
 // ==========================================
-export * from './utils';
-export * from './validation';
 export * from './analytics';
 export * from './structured-data';
+export * from './utils';
 
 // ==========================================
 // DATA LAYER

@@ -21,7 +21,7 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import { useState } from 'react';
-import type { CourseData, CourseStatus } from '@/types';
+import type { CourseData, CourseStatus } from '@/shared/types';
 import { iconMap, institutionNames } from '@/shared/lib/data/courses';
 
 interface SimpleCourseCardProps {

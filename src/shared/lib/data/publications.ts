@@ -1,4 +1,4 @@
-import type { PublicationItem } from '@/types';
+import type { PublicationItem } from '@/shared/types';
 
 export const samplePublications: PublicationItem[] = [
   {

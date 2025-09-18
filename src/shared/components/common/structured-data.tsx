@@ -1,6 +1,6 @@
 import { siteConfig } from '@/shared/config/site';
 import { samplePublications } from '@/shared/lib/data/publications';
-import type { PublicationItem } from '@/types';
+import type { PublicationItem } from '@/shared/types';
 
 type JsonLd = Record<string, unknown>;
 

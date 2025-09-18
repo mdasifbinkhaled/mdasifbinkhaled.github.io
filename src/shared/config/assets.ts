@@ -10,7 +10,7 @@ export const assetPaths = {
   favicon: '/favicon.ico',
 
   // Documents
-  cv: '/cv/CV_Md_Asif_Bin_Khaled.pdf',
+  cv: '/cv/cv.pdf',
 
   // Icons
   siteWebmanifest: '/site.webmanifest',

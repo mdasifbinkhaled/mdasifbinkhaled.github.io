@@ -1,4 +1,4 @@
-import type { ThemeConfig, ThemeName } from '@/types';
+import type { ThemeConfig, ThemeName } from '@/shared/types';
 
 /**
  * Simplified Academic Portfolio Theme Configuration

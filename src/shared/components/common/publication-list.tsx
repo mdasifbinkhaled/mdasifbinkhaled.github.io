@@ -1,6 +1,6 @@
 'use client';
 
-import type { PublicationItem, PublicationType } from '@/types';
+import type { PublicationItem, PublicationType } from '@/shared/types';
 import React, { useState, useMemo, useCallback } from 'react';
 import { Card } from '@/shared/components/ui/card';
 import {
@@ -13,7 +13,6 @@ import {
 import { BookOpenText } from 'lucide-react';
 import { Input } from '@/shared/components/ui/input';
 import { PublicationCard } from '@/features/publications/publication-card';
-import { BackToTop } from '@/shared/components/common/back-to-top';
 
 interface PublicationListProps {
   initialPublications: PublicationItem[];
@@ -169,8 +168,6 @@ export const PublicationList = React.memo(function PublicationList({
           </p>
         </div>
       )}
-
-      <BackToTop />
     </div>
   );
 });

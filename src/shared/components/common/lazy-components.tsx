@@ -2,7 +2,7 @@
 
 import { lazy, Suspense } from 'react';
 import { Skeleton } from '@/shared/components/ui/skeleton';
-import type { PublicationItem } from '@/types';
+import type { PublicationItem } from '@/shared/types';
 
 // Lazy load heavy components
 export const LazyPublicationList = lazy(() =>

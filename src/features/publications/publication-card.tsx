@@ -9,7 +9,7 @@ import {
 } from '@/shared/components/ui/card';
 import { ExternalLink, FileText, ChevronDown } from 'lucide-react';
 import { Badge } from '@/shared/components/ui/badge';
-import type { PublicationItem } from '@/types';
+import type { PublicationItem } from '@/shared/types';
 import { cn } from '@/shared/lib/utils';
 
 interface PublicationCardProps {

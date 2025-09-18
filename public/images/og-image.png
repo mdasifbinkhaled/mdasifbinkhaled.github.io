@@ -1,0 +1,34 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <rect x="60" y="60" width="1080" height="510" fill="#1e293b" rx="12"/>
+  
+  <!-- Header -->
+  <text x="600" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#f8fafc">
+    MD Asif Bin Khaled
+  </text>
+  <text x="600" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#cbd5e1">
+    Computer Science Researcher &amp; Educator
+  </text>
+  
+  <!-- Content -->
+  <text x="600" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#94a3b8">
+    Academic Portfolio &amp; Research
+  </text>
+  
+  <!-- Bottom -->
+  <text x="600" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#64748b">
+    mdasifbinkhaled.github.io
+  </text>
+  
+  <!-- Academic decoration -->
+  <circle cx="300" cy="350" r="30" fill="#3b82f6" opacity="0.2"/>
+  <circle cx="900" cy="350" r="30" fill="#10b981" opacity="0.2"/>
+  
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="1" opacity="0.1"/>
+    </pattern>
+  </defs>
+  <rect x="60" y="60" width="1080" height="510" fill="url(#grid)"/>
+</svg>

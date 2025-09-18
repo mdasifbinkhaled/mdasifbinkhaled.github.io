@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-import type { ErrorBoundaryProps } from '@/types';
+import type { ErrorBoundaryProps } from '@/shared/types';
 
 interface ErrorBoundaryState {
   hasError: boolean;

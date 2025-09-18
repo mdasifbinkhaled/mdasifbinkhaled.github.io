@@ -1,4 +1,4 @@
-import type { NavItem } from '@/types';
+import type { NavItem } from '@/shared/types';
 // Icon components are no longer directly imported here.
 // We will use string names that map to icons in a client component.
 
