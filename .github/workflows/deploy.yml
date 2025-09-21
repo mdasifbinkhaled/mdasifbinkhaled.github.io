@@ -34,13 +34,22 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Clean cache and setup
+      - name: Force clean conflicting files
         run: |
+          echo "=== Before cleanup ==="
+          ls -la next.config.* || true
+          echo "=== Removing conflicting files ==="
           rm -f next.config.js || true
           rm -f .eslintrc.json || true
           rm -f eslint.config.js || true
-          npm cache clean --force
+          rm -f eslint.config.mjs || true
+          rm -rf .next || true
+          rm -rf node_modules/.cache || true
+          npm cache clean --force || true
+          echo "=== After cleanup ==="
           ls -la next.config.* || true
+          echo "=== File contents check ==="
+          find . -name "next.config.*" -type f -exec echo "Found: {}" \; -exec head -3 {} \; || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -48,11 +57,6 @@ jobs:
           # Automatically inject basePath in your Next.js configuration file and disable
           # server side image optimization (so it can work with static hosting)
           static_site_generator: next
-
-      - name: Clear Next.js cache
-        run: |
-          rm -rf .next || true
-          rm -rf node_modules/.cache || true
 
       - name: Restore cache
         uses: actions/cache@v4
