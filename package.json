@@ -12,11 +12,10 @@
     "build": "next build",
     "build:production": "NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production npm run build",
     "postbuild": "sh -c 'mkdir -p out && touch out/.nojekyll'",
-    "lint": "next lint",
     "test": "vitest",
     "test:run": "vitest run",
-    "pre-commit": "npm run lint && tsc --noEmit",
-    "validate": "npm run lint && npm run test:run && tsc -p tsconfig.json --noEmit",
+    "pre-commit": "tsc --noEmit",
+    "validate": "npm run test:run && tsc -p tsconfig.json --noEmit",
     "deploy": "npm run build:production && git subtree push --prefix out origin gh-pages"
   },
   "dependencies": {

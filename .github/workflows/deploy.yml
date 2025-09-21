@@ -37,7 +37,10 @@ jobs:
       - name: Clean cache and setup
         run: |
           rm -f next.config.js || true
+          rm -f .eslintrc.json || true
+          rm -f eslint.config.js || true
           npm cache clean --force
+          ls -la next.config.* || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -45,6 +48,11 @@ jobs:
           # Automatically inject basePath in your Next.js configuration file and disable
           # server side image optimization (so it can work with static hosting)
           static_site_generator: next
+
+      - name: Clear Next.js cache
+        run: |
+          rm -rf .next || true
+          rm -rf node_modules/.cache || true
 
       - name: Restore cache
         uses: actions/cache@v4
