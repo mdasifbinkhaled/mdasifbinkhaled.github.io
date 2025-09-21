@@ -15,7 +15,6 @@ import {
   CalendarDays,
 } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Service & Awards',
@@ -175,15 +174,6 @@ export default function ServiceAwardsPage() {
               </Card>
             );
           })}
-        </div>
-        <div className="mt-12 flex justify-center">
-          <Image
-            src="https://placehold.co/700x400.png"
-            alt="Awards and recognition collage"
-            width={700}
-            height={400}
-            className="rounded-lg shadow-xl object-cover"
-          />
         </div>
       </section>
 

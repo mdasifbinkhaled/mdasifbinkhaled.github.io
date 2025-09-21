@@ -9,7 +9,6 @@ import {
 import { Button } from '@/shared/components/ui/button';
 import { Mail, Github, Linkedin, BookUser, MapPin, Phone } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Contact Me',
@@ -103,15 +102,6 @@ export default function ContactPage() {
                   <BookUser className="mr-2 h-5 w-5" /> Google Scholar
                 </a>
               </Button>
-            </div>
-            <div className="mt-8 text-center">
-              <Image
-                src="https://placehold.co/600x350.png"
-                alt="Contact or collaboration concept"
-                width={600}
-                height={350}
-                className="rounded-lg shadow-md object-cover mx-auto"
-              />
             </div>
           </CardContent>
         </Card>

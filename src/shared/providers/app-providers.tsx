@@ -1,25 +1,11 @@
-'use client';
+'use client'
+import { ThemeProvider } from 'next-themes'
+import type { ReactNode } from 'react'
 
-import { ThemeProvider } from 'next-themes';
-import { ReactNode, useEffect } from 'react';
-import { AppSidebarLayout } from '@/shared/components/layout/app-sidebar-layout';
-import { Toaster } from '@/shared/components/ui/toaster';
-import { MobileThemeFAB } from '@/shared/components/common/mobile-theme-fab';
-
-type Props = { children: ReactNode };
-
-export function AppProviders({ children }: Props) {
-  // no mount gate, keep theme provider simple
-  // you can add other client side hooks if needed
-  useEffect(() => {
-    // future client side hooks if needed
-  }, []);
-
+export function AppProviders({ children }: { children: ReactNode }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-      <AppSidebarLayout>{children}</AppSidebarLayout>
-      <MobileThemeFAB />
-      <Toaster />
+    <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
+      {children}
     </ThemeProvider>
-  );
+  )
 }

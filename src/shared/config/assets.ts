@@ -5,12 +5,12 @@
 
 export const assetPaths = {
   // Images
-  profile: '/images/profile.jpg',
-  ogImage: '/images/og-image.png',
+  profile: '/images/profile.svg',
+  ogImage: '/images/og-image.svg',
   favicon: '/favicon.ico',
 
   // Documents
-  cv: '/cv/cv.pdf',
+  cv: '/cv/CV_Md_Asif_Bin_Khaled.pdf',
 
   // Icons
   siteWebmanifest: '/site.webmanifest',

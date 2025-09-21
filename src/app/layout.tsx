@@ -1,70 +1,25 @@
-import type { Metadata } from 'next';
-import { AppProviders } from '@/shared/providers/app-providers';
-import { AppSidebarLayout } from '@/shared/components/layout/app-sidebar-layout';
-import { siteConfig } from '@/shared/config/site';
-import '../styles/globals.css';
+import type { Metadata } from 'next'
+import { AppProviders } from '@/shared/providers/app-providers'
+import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout'
+import '@/app/globals.css'
+import '@/styles/tokens.css'
 
 export const metadata: Metadata = {
-  title: {
-    default: siteConfig.shortName,
-    template: `%s | ${siteConfig.shortName}`,
-  },
-  description: siteConfig.description,
-  keywords: siteConfig.keywords,
-  authors: [{ name: siteConfig.author, url: siteConfig.url }],
-  creator: siteConfig.author,
-  metadataBase: new URL(siteConfig.url),
+  title: 'Md Asif Bin Khaled',
+  description: 'Portfolio of Md Asif Bin Khaled',
+  metadataBase: new URL('https://mdasifbinkhaled.github.io'),
   alternates: { canonical: '/' },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [siteConfig.ogImage],
-    creator: '@mdasifbinkhaled',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-};
+  openGraph: { title: 'Md Asif Bin Khaled', images: ['/images/og-image.svg'] }
+}
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
-      <body className="font-sans antialiased">
-        <div id="root">
-          <AppProviders>
-            <AppSidebarLayout>
-              {children}
-            </AppSidebarLayout>
-          </AppProviders>
-        </div>
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-sans antialiased bg-background text-foreground">
+        <AppProviders>
+          <AppSidebarLayout>{children}</AppSidebarLayout>
+        </AppProviders>
       </body>
     </html>
-  );
+  )
 }

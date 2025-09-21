@@ -8,7 +8,6 @@ import {
 } from '@/shared/components/ui/card';
 import { Lightbulb, Telescope, Zap, Banknote, Sigma } from 'lucide-react'; // Added Sigma for new grant
 import { siteConfig } from '@/shared/config/site';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Research Focus',
@@ -61,13 +60,6 @@ export default function ResearchPage() {
                 human-understandable ways, thereby fostering clinician trust and
                 enhancing patient safety.
               </p>
-              <Image
-                src="https://placehold.co/600x300.png"
-                alt="Explainable AI concept with interconnected nodes"
-                width={600}
-                height={300}
-                className="rounded-md mt-4 object-cover"
-              />
             </CardContent>
           </Card>
 
@@ -101,13 +93,6 @@ export default function ResearchPage() {
                 ultimate goal is to significantly improve diagnostic accuracy
                 and pave the way for more personalized medicine.
               </p>
-              <Image
-                src="https://placehold.co/600x300.png"
-                alt="Multimodal AI concept with diverse data types"
-                width={600}
-                height={300}
-                className="rounded-md mt-4 object-cover"
-              />
             </CardContent>
           </Card>
         </div>
@@ -230,13 +215,6 @@ export default function ResearchPage() {
                 health scenarios. Initial findings and concepts have been
                 presented at international conferences.
               </p>
-              <Image
-                src="https://placehold.co/700x350.png"
-                alt="Mobile health app for dengue management"
-                width={700}
-                height={350}
-                className="rounded-md mt-4 object-cover"
-              />
             </CardContent>
           </Card>
         </div>

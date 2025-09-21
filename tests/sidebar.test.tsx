@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { AppSidebarLayout } from '@/shared/components/layout/app-sidebar-layout';
+import AppSidebarLayout from '../src/shared/components/layout/app-sidebar-layout';
 import '@testing-library/jest-dom';
 
 // Mock child components

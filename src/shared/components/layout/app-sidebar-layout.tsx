@@ -1,165 +1,72 @@
-'use client';
+'use client'
 
-import { type ReactNode, useState } from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { GraduationCap, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import Link from 'next/link';
-import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
-import { Navbar } from '@/shared/components/navigation/navbar';
-import { FooterYear } from '@/shared/components/common/footer-year';
-import { BackToTop } from '@/shared/components/common/back-to-top';
-import { SkipLink } from '@/shared/components/common/skip-link';
-import { siteConfig } from '@/shared/config/site';
+import { useState } from 'react'
+import { cn } from '@/shared/lib/utils'
+import { Button } from '@/shared/components/ui/button'
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/shared/components/ui/sheet'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { BackToTop } from '@/shared/components/common/back-to-top'
+import { Navbar } from '@/shared/components/navigation/navbar'
 
-interface AppSidebarLayoutProps {
-  children: ReactNode;
-}
-
-/**
- * Accessible responsive sidebar layout with mobile Sheet and desktop collapse
- * Uses Radix Dialog for mobile sidebar with proper accessibility
- */
-export function AppSidebarLayout({ children }: AppSidebarLayoutProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(false);
-
-  const SidebarContent = ({ isMobile = false }: { isMobile?: boolean }) => (
-    <div className="flex flex-col h-full bg-card border-r border-border">
-      {/* Sidebar Header */}
-      <div className="p-4 border-b border-border">
-        <Link
-          href="/"
-          className="flex items-center gap-2 transition-fast hover:opacity-80"
-          onClick={() => isMobile && setMobileMenuOpen(false)}
-        >
-          <GraduationCap
-            className="h-7 w-7 text-primary flex-shrink-0"
-            aria-hidden="true"
-          />
-          <span
-            className={`font-bold text-lg text-foreground transition-normal ${
-              !isMobile && desktopSidebarCollapsed ? 'sr-only' : ''
-            }`}
-          >
-            {siteConfig.shortName}
-          </span>
-        </Link>
-      </div>
-
-      {/* Sidebar Content */}
-      <div className="flex-1 overflow-y-auto">
-        <ProfileSidebar
-          onLinkClick={() => isMobile && setMobileMenuOpen(false)}
-          isCollapsed={!isMobile && desktopSidebarCollapsed}
-        />
-      </div>
-    </div>
-  );
+export default function AppSidebarLayout({ children }: { children: React.ReactNode }) {
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [collapsed, setCollapsed] = useState(false)
 
   return (
-    <>
-      <SkipLink />
+    <div className="min-h-screen flex flex-col">
+      {/* Single global header */}
+      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur border-b">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+          <Navbar onMobileMenuOpen={() => setMobileOpen(true)} />
+        </div>
+      </header>
 
-      {/* Mobile Layout - Hidden on desktop */}
-      <div className="lg:hidden min-h-screen flex flex-col">
-        <Navbar
-          onMobileMenuOpen={() => setMobileMenuOpen(true)}
-          showMobileMenuButton={true}
-        />
+      {/* Mobile sheet */}
+      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+        <SheetContent side="left" className="w-80 p-0 bg-background text-foreground border-r z-[60]">
+          <VisuallyHidden asChild><SheetTitle>Navigation menu</SheetTitle></VisuallyHidden>
+          <VisuallyHidden asChild><SheetDescription>Site sections and links</SheetDescription></VisuallyHidden>
+          <SidebarContent isMobile onNavigate={() => setMobileOpen(false)} />
+        </SheetContent>
+      </Sheet>
 
-        {/* Mobile Sidebar using Radix Dialog */}
-        <Dialog.Root open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <Dialog.Portal>
-            <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40 animate-in" />
-            <Dialog.Content className="fixed top-0 left-0 h-full w-80 bg-background shadow-lg z-50 animate-in focus:outline-none">
-              <VisuallyHidden.Root>
-                <Dialog.Title>Navigation Menu</Dialog.Title>
-                <Dialog.Description>
-                  Main navigation menu with links to different sections of the site
-                </Dialog.Description>
-              </VisuallyHidden.Root>
-              
-              <Dialog.Close className="absolute top-4 right-4 p-2 rounded-md hover:bg-accent transition-fast focus-visible">
-                <X className="h-4 w-4" />
-                <span className="sr-only">Close navigation menu</span>
-              </Dialog.Close>
-              
-              <SidebarContent isMobile={true} />
-            </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog.Root>
-
-        <main
-          id="main-content"
-          className="flex-1 pt-0"
-          role="main"
-          tabIndex={-1}
-        >
-          <div className="container-page py-6">{children}</div>
-        </main>
-      </div>
-
-      {/* Desktop Layout - Hidden on mobile */}
-      <div className="hidden lg:flex min-h-screen">
-        {/* Desktop Sidebar */}
+      <div className="flex flex-1">
+        {/* Desktop sidebar */}
         <aside
           id="desktop-sidebar"
-          className={`relative flex-shrink-0 transition-normal ${
-            desktopSidebarCollapsed ? 'w-[60px]' : 'w-[320px]'
-          }`}
-          aria-label="Main navigation"
+          className={cn(
+            'relative border-r border-border bg-background hidden lg:block transition-all duration-300',
+            collapsed ? 'w-[60px]' : 'w-[280px]'
+          )}
         >
-          {/* Collapse Toggle */}
-          <button
-            className="absolute -right-3 top-6 z-50 h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent transition-fast focus-visible"
-            onClick={() => setDesktopSidebarCollapsed(!desktopSidebarCollapsed)}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute -right-3 top-6 z-50 h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent"
+            onClick={() => setCollapsed(!collapsed)}
             aria-controls="desktop-sidebar"
-            aria-expanded={!desktopSidebarCollapsed}
-            aria-label={
-              desktopSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'
-            }
+            aria-expanded={!collapsed}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {desktopSidebarCollapsed ? (
-              <ChevronRight className="h-3 w-3" />
-            ) : (
-              <ChevronLeft className="h-3 w-3" />
-            )}
-          </button>
-
+            {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
+          </Button>
           <SidebarContent isMobile={false} />
         </aside>
 
-        {/* Desktop Main Content */}
-        <div className="flex flex-col flex-1 min-w-0">
-          <Navbar showMobileMenuButton={false} />
-
-          <main
-            id="main-content"
-            className="flex-1 min-h-0 flex flex-col"
-            role="main"
-            tabIndex={-1}
-          >
-            <div className="container-page py-8 h-full flex-1">
-              {children}
-            </div>
-
-            <footer
-              className="py-6 px-6 text-center border-t bg-background/50 backdrop-blur-sm flex-shrink-0"
-              role="contentinfo"
-            >
-              <p className="text-sm text-muted-foreground">
-                &copy; <FooterYear /> {siteConfig.author}. All rights reserved.
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Built with Next.js, Tailwind CSS, and Radix UI.
-              </p>
-              {/* One global BackToTop control for the whole site */}
-              <BackToTop />
-            </footer>
-          </main>
-        </div>
+        {/* Main content */}
+        <main className="flex-1 min-w-0">{children}</main>
       </div>
-    </>
-  );
+
+      <footer className="py-6 px-6 text-center border-t bg-background/50 backdrop-blur">
+        <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Md Asif Bin Khaled.</p>
+        <BackToTop />
+      </footer>
+    </div>
+  )
+}
+
+function SidebarContent({ isMobile: _isMobile, onNavigate: _onNavigate }: { isMobile: boolean; onNavigate?: () => void }) {
+  // render your nav groups; call onNavigate?.() in mobile link onClick
+  return <nav className="p-4">{/* links here */}</nav>
 }
