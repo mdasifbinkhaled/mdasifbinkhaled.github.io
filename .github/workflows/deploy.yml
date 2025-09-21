@@ -34,6 +34,11 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: Clean cache and setup
+        run: |
+          rm -f next.config.js || true
+          npm cache clean --force
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
