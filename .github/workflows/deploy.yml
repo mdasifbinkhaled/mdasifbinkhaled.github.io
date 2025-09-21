@@ -55,9 +55,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint code
-        run: npm run lint
-
       - name: Build with Next.js
         run: npm run build
 

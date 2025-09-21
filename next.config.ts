@@ -3,6 +3,7 @@ import type { NextConfig } from 'next'
 const config: NextConfig = {
   output: 'export',
   trailingSlash: true,
+  outputFileTracingRoot: __dirname,
   images: {
     unoptimized: true,
     remotePatterns: [
