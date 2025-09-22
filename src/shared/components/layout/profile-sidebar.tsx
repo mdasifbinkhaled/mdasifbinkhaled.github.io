@@ -45,7 +45,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
   }, [onLinkClick]);
 
   return (
-    <div className="flex flex-col h-full bg-sidebar-background">
+    <div className="flex flex-col h-full bg-sidebar">
       {/* Profile Section */}
       <div
         className={cn(
@@ -55,7 +55,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
       >
         <div
           className={cn(
-            'relative overflow-hidden rounded-full border-3 border-sidebar-primary/30 shadow-lg mb-4',
+            'relative overflow-hidden rounded-full border-2 border-sidebar-primary/30 shadow-lg mb-4',
             isCollapsed ? 'w-10 h-10' : 'w-32 h-32'
           )}
         >

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { AppProviders } from '@/shared/providers/app-providers'
 import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout'
+import { SkipLink } from '@/shared/components/common/skip-link'
 import { assetPaths } from '@/shared/config/assets'
 import '@/app/globals.css'
 import '@/styles/tokens.css'
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-sans antialiased bg-background text-foreground">
+        <SkipLink />
         <AppProviders>
           <AppSidebarLayout>{children}</AppSidebarLayout>
         </AppProviders>

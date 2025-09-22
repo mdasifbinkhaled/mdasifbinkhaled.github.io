@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/shared/comp
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { BackToTop } from '@/shared/components/common/back-to-top'
+import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar'
 import { Navbar } from '@/shared/components/navigation/navbar'
 
 export default function AppSidebarLayout({ children }: { children: React.ReactNode }) {
@@ -24,10 +25,14 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
 
       {/* Mobile sheet */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" className="w-80 p-0 bg-background text-foreground border-r z-[60]">
+        <SheetContent
+          id="mobile-nav"
+          side="left"
+          className="w-80 p-0 bg-sidebar text-sidebar-foreground border-r border-sidebar-border z-[60]"
+        >
           <VisuallyHidden asChild><SheetTitle>Navigation menu</SheetTitle></VisuallyHidden>
           <VisuallyHidden asChild><SheetDescription>Site sections and links</SheetDescription></VisuallyHidden>
-          <SidebarContent isMobile onNavigate={() => setMobileOpen(false)} />
+          <ProfileSidebar onLinkClick={() => setMobileOpen(false)} />
         </SheetContent>
       </Sheet>
 
@@ -36,7 +41,7 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
         <aside
           id="desktop-sidebar"
           className={cn(
-            'relative border-r border-border bg-background hidden lg:block transition-all duration-300',
+            'relative hidden lg:block transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground',
             collapsed ? 'w-[60px]' : 'w-[280px]'
           )}
         >
@@ -51,11 +56,11 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
           >
             {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
           </Button>
-          <SidebarContent isMobile={false} />
+          <ProfileSidebar isCollapsed={collapsed} />
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 min-w-0">{children}</main>
+        <main id="main-content" className="flex-1 min-w-0">{children}</main>
       </div>
 
       <footer className="py-6 px-6 text-center border-t bg-background/50 backdrop-blur">
@@ -64,9 +69,4 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
       </footer>
     </div>
   )
-}
-
-function SidebarContent({ isMobile, onNavigate }: { isMobile: boolean; onNavigate?: () => void }) {
-  // render your nav groups; call onNavigate?.() in mobile link onClick
-  return <nav className="p-4">{/* links here */}</nav>
 }
