@@ -3,6 +3,7 @@
 import { memo, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { assetPaths, assetConfig } from '@/shared/config/assets';
 import { Button } from '@/shared/components/ui/button';
 import { siteConfig } from '@/shared/config/site';
@@ -29,6 +30,11 @@ export const ProfileSidebar = memo(function ProfileSidebar({
   isCollapsed = false,
 }: ProfileSidebarProps) {
   const [imageError, setImageError] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    return pathname === href || pathname.startsWith(href + '/');
+  };
 
   const handleImageError = useCallback(() => {
     setImageError(true);
@@ -199,12 +205,14 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               asChild
               className={cn(
                 'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
-                isCollapsed ? 'w-full justify-center' : 'w-full justify-start'
+                isCollapsed ? 'w-full justify-center' : 'w-full justify-start',
+                isActive('/research') && 'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
               )}
               title={isCollapsed ? 'Research Focus' : undefined}
             >
               <Link
                 href="/research"
+                aria-current={isActive('/research') ? 'page' : undefined}
                 {...(onLinkClick && { onClick: onLinkClick })}
               >
                 <ExternalLink
@@ -227,12 +235,14 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               asChild
               className={cn(
                 'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
-                isCollapsed ? 'w-full justify-center' : 'w-full justify-start'
+                isCollapsed ? 'w-full justify-center' : 'w-full justify-start',
+                isActive('/publications') && 'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
               )}
               title={isCollapsed ? 'Publications' : undefined}
             >
               <Link
                 href="/publications"
+                aria-current={isActive('/publications') ? 'page' : undefined}
                 {...(onLinkClick && { onClick: onLinkClick })}
               >
                 <FileText

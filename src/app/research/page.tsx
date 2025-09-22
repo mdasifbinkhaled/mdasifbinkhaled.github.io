@@ -84,7 +84,7 @@ export default function ResearchPage() {
                 diagnostic tools. By integrating diverse data modalities—such as
                 medical imaging (X-rays, CT scans), electronic health records,
                 and laboratory results—we can achieve a more holistic and
-                nuanced understanding of a patient's condition.
+                nuanced understanding of a patient&apos;s condition.
               </p>
               <p>
                 My research explores advanced data fusion techniques, attention
@@ -139,7 +139,7 @@ export default function ResearchPage() {
                   Detection through AI and Machine Learning Techniques
                 </CardTitle>
                 <CardDescription>
-                  Principal Investigator, VC's Research Fund 2024-2025 (Project
+                  Principal Investigator, VC&apos;s Research Fund 2024-2025 (Project
                   ID: VCRF-SETS:24-013)
                 </CardDescription>
               </div>

@@ -260,7 +260,7 @@ export default function HomePage() {
                 <p>
                   Developing AI systems that can explain their reasoning,
                   crucial for healthcare applications where understanding the
-                  "why" behind a diagnosis is essential for clinician trust and
+                  &ldquo;why&rdquo; behind a diagnosis is essential for clinician trust and
                   patient safety.
                 </p>
               </CardContent>
@@ -339,7 +339,7 @@ export default function HomePage() {
                   Unveiling the Linguistic Diversity of Bangla
                 </CardTitle>
                 <CardDescription className="text-sm">
-                  Principal Investigator, VC's Research Fund 2024-2025 (No.
+                  Principal Investigator, VC&apos;s Research Fund 2024-2025 (No.
                   VCRF-SETS:24-013)
                 </CardDescription>
               </CardHeader>

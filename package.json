@@ -10,21 +10,20 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next export",
     "build:production": "NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production npm run build",
     "postbuild": "sh -c 'mkdir -p out && touch out/.nojekyll'",
     "test": "vitest",
     "test:run": "vitest run",
+    "lint": "next lint",
     "pre-commit": "tsc --noEmit",
-    "validate": "npm run test:run && tsc -p tsconfig.json --noEmit",
+    "validate": "npm run lint && npm run test:run && tsc -p tsconfig.json --noEmit",
     "deploy": "npm run build:production && git subtree push --prefix out origin gh-pages"
   },
   "dependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.36.0",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-progress": "^1.1.7",
-    "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
@@ -38,19 +37,24 @@
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.13",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.36.0",
+    "@tailwindcss/postcss": "^4.1.13",
     "@testing-library/jest-dom": "^6.x",
     "@testing-library/react": "^16.x",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20.x",
     "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.36.0",
     "eslint-config-next": "^15.5.3",
     "jsdom": "^25.x",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.6.x",
     "vitest": "^3.2.4"
   }

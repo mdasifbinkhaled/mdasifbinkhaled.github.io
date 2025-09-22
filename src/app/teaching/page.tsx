@@ -15,6 +15,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
+import { assetPaths } from '@/shared/config/assets';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
@@ -54,7 +55,7 @@ export default function TeachingPage() {
           </CardHeader>
           <CardContent className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
             <Image
-              src="https://placehold.co/800x400.png"
+              src={assetPaths.profile}
               alt="Engaging teaching environment with students"
               width={800}
               height={400}

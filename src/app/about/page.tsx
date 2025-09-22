@@ -9,6 +9,7 @@ import {
 } from '@/shared/components/ui/card';
 import { GraduationCap, Award, CalendarCheck2 } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
+import { assetPaths } from '@/shared/config/assets';
 
 export const metadata: Metadata = {
   title: 'About Me',
@@ -73,7 +74,7 @@ export default function AboutPage() {
           <CardContent className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
             <div className="md:float-right md:ml-6 mb-4 md:mb-0 md:w-1/3">
               <Image
-                src="https://placehold.co/400x500.png"
+                src={assetPaths.profile}
                 alt={`${siteConfig.author} - professional`}
                 width={400}
                 height={500}

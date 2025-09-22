@@ -225,7 +225,7 @@ export function SimpleCourseCard({
                       key={index}
                       className="text-xs text-muted-foreground italic"
                     >
-                      "{feedback}"
+                      &ldquo;{feedback}&rdquo;
                     </p>
                   ))}
                 </div>

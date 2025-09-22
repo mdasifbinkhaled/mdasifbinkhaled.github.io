@@ -21,6 +21,26 @@
   --input: 0 0% 89.8%;
   --ring: 0 0% 3.9%;
   
+  /* Sidebar Colors */
+  --sidebar-background: var(--card);
+  --sidebar-foreground: var(--card-foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  
+  /* Academic Colors */
+  --academic-primary: var(--primary);
+  --academic-accent: var(--accent);
+  --academic-muted: var(--muted);
+  --academic-card: var(--card);
+  --academic-highlight: 210 100% 95%;
+  
+  /* Border Radius */
+  --radius: 0.5rem;
+  
   /* Spacing Scale */
   --space-xs: 0.25rem;    /* 4px */
   --space-sm: 0.5rem;     /* 8px */
@@ -40,7 +60,7 @@
   --text-3xl: 1.875rem;   /* 30px */
   --text-4xl: 2.25rem;    /* 36px */
   
-  /* Border Radius */
+  /* Border Radius Variants */
   --radius-sm: 0.25rem;   /* 4px */
   --radius-md: 0.375rem;  /* 6px */
   --radius-lg: 0.5rem;    /* 8px */
@@ -55,6 +75,8 @@
   --sidebar-width: 280px;
   --navbar-height: 64px;
   --content-max-width: 1024px;
+  --content-padding: 1.5rem;
+  --max-content-width: 1024px;
   
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
@@ -83,6 +105,9 @@
   --border: 0 0% 14.9%;
   --input: 0 0% 14.9%;
   --ring: 0 0% 83.1%;
+  
+  /* Academic Colors - Dark Theme */
+  --academic-highlight: 210 50% 15%;
 }
 
 /* Utility Classes */

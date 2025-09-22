@@ -66,7 +66,7 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
   )
 }
 
-function SidebarContent({ isMobile: _isMobile, onNavigate: _onNavigate }: { isMobile: boolean; onNavigate?: () => void }) {
+function SidebarContent({ isMobile, onNavigate }: { isMobile: boolean; onNavigate?: () => void }) {
   // render your nav groups; call onNavigate?.() in mobile link onClick
   return <nav className="p-4">{/* links here */}</nav>
 }

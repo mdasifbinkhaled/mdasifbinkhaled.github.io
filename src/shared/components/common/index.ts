@@ -16,4 +16,3 @@ export * from './motion-page';
 export * from './publication-list';
 export * from './skip-link';
 export * from './structured-data';
-export * from './theme-provider';
