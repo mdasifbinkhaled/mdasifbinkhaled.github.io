@@ -18,6 +18,8 @@ vi.mock('@/shared/components/ui/theme-selector', () => ({
 vi.mock('lucide-react', () => ({
   GraduationCap: () => <div data-testid="graduation-cap-icon">GraduationCap</div>,
   Menu: () => <div data-testid="menu-icon">Menu</div>,
+  Sun: () => <div data-testid="sun-icon">Sun</div>,
+  Moon: () => <div data-testid="moon-icon">Moon</div>,
 }));
 
 describe('Navbar', () => {
@@ -133,9 +135,9 @@ describe('Navbar', () => {
     render(<Navbar onMobileMenuOpen={mockOnMobileMenuOpen} showMobileMenuButton={true} />);
     
     const menuButton = screen.getByRole('button', { name: /open navigation menu/i });
-    expect(menuButton).toHaveClass('focus-visible');
+    expect(menuButton).toHaveClass('focus-visible:outline-none');
     
     const homeLink = screen.getByRole('link', { name: /go to homepage/i });
-    expect(homeLink).toHaveClass('focus-visible');
+    expect(homeLink).toHaveClass('focus-visible:outline-none');
   });
 });

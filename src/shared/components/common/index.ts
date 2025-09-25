@@ -8,8 +8,6 @@ export * from './back-to-top';
 export * from './experience-compact';
 export * from './footer-year';
 export * from './icons';
-export * from './lazy-components';
-export * from './mobile-theme-fab';
 export * from './motion-page';
 // export * from './navbar' // Moved to navigation/
 // export * from './profile-sidebar' // Moved to layout/

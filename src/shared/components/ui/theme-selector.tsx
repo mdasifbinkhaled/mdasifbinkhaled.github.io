@@ -134,13 +134,11 @@ export function ThemeSelector({
                 </div>
                 <div className="grid grid-cols-2 gap-1">
                   {categoryThemes.map((themeOption) => (
-                    <button
+                    <DropdownMenuItem
                       key={themeOption.name}
                       onClick={() => setTheme(themeOption.name)}
-                      className={`
-                        flex items-center gap-2 p-2 rounded-lg text-left hover:bg-accent transition-colors theme-selector-grid-item
-                        ${theme === themeOption.name ? 'bg-accent border border-primary/20' : ''}
-                      `}
+                      className="flex items-center gap-2 p-2 rounded-lg cursor-pointer theme-selector-grid-item"
+                      aria-label={`Switch to ${themeOption.label} theme`}
                     >
                       <div
                         className={`
@@ -160,7 +158,7 @@ export function ThemeSelector({
                           )}
                         </div>
                       </div>
-                    </button>
+                    </DropdownMenuItem>
                   ))}
                 </div>
               </div>
@@ -205,13 +203,11 @@ export function ThemeSelector({
               </div>
               <div className="grid grid-cols-1 gap-1">
                 {categoryThemes.map((themeOption) => (
-                  <button
+                  <DropdownMenuItem
                     key={themeOption.name}
                     onClick={() => setTheme(themeOption.name)}
-                    className={`
-                      flex items-center gap-3 p-3 rounded-lg text-left hover:bg-accent transition-colors theme-selector-grid-item
-                      ${theme === themeOption.name ? 'bg-accent border border-primary/20' : ''}
-                    `}
+                    className="flex items-center gap-3 p-3 rounded-lg cursor-pointer theme-selector-grid-item"
+                    aria-label={`Switch to ${themeOption.label} theme: ${themeOption.description}`}
                   >
                     <div className="flex items-center gap-3 flex-1">
                       <div
@@ -228,7 +224,7 @@ export function ThemeSelector({
                             {themeOption.label}
                           </span>
                           {theme === themeOption.name && (
-                            <Check className="h-3 w-3 text-primary" />
+                            <Check className="h-3 w-3 text-primary" aria-label="Currently selected" />
                           )}
                         </div>
                         <p className="text-xs text-muted-foreground truncate">
@@ -236,7 +232,7 @@ export function ThemeSelector({
                         </p>
                       </div>
                     </div>
-                  </button>
+                  </DropdownMenuItem>
                 ))}
               </div>
             </div>

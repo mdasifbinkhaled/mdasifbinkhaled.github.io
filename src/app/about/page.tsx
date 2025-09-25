@@ -14,6 +14,11 @@ import { assetPaths } from '@/shared/config/assets';
 export const metadata: Metadata = {
   title: 'About Me',
   description: `Learn more about ${siteConfig.author}'s academic journey, research interests, and professional background. ${siteConfig.description}`,
+  openGraph: {
+    title: `About ${siteConfig.author}`,
+    description: `Learn more about ${siteConfig.author}'s academic journey, research interests, and professional background.`,
+    images: [assetPaths.ogImage],
+  },
 };
 
 const certifications = [

@@ -33,6 +33,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
   const pathname = usePathname();
 
   const isActive = (href: string) => {
+    if (!pathname) return false;
     return pathname === href || pathname.startsWith(href + '/');
   };
 

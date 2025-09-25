@@ -5,11 +5,13 @@ import type { Config } from "tailwindcss";
  * Tailwind CSS Configuration for Academic Portfolio
  * ==========================================
  * 
- * A comprehensive design system supporting 5 curated themes:
+ * A comprehensive design system with CSS custom properties for theming.
  * 
- * 🌟 THEME SYSTEM:
+ * 🌟 ACTIVE THEMES:
  * ├── Light      → Classic professional with clean whites
- * ├── Dark       → Enhanced contrast with deep backgrounds  
+ * └── Dark       → Enhanced contrast with deep backgrounds  
+ * 
+ * 🚧 PLANNED EXPANSION:
  * ├── Retro      → Vintage aesthetics with film grain overlay
  * ├── Cyberpunk  → Neon matrix effects with digital glitch
  * └── Ocean      → Animated wave patterns with blue gradients

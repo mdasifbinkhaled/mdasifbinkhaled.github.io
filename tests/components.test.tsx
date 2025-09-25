@@ -3,8 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
 import { PublicationCard } from '@/features/publications/publication-card';
 import { ExperienceCompact } from '@/shared/components/common/experience-compact';
-import { ThemeProvider } from '@/shared/components/common/theme-provider';
 import type { PublicationItem, ExperienceItem } from '@/shared/types';
+import { AppProviders } from '@/shared/providers/app-providers';
 
 // Type definitions for mocks
 interface ImageProps {
@@ -100,9 +100,9 @@ vi.mock('lucide-react', async (importOriginal) => {
 // Test utilities
 const renderWithTheme = (component: React.ReactElement) => {
   return render(
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+    <AppProviders>
       {component}
-    </ThemeProvider>
+    </AppProviders>
   );
 };
 
@@ -355,7 +355,7 @@ describe('Theme Integration', () => {
   it('applies theme classes correctly', () => {
     const { container } = renderWithTheme(<ProfileSidebar />);
 
-    const sidebar = container.querySelector('.bg-sidebar-background');
+    const sidebar = container.querySelector('.bg-sidebar');
     expect(sidebar).toBeInTheDocument();
   });
 });

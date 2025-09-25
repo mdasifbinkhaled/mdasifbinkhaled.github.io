@@ -3,6 +3,7 @@ import { samplePublications } from '@/shared/lib/data/publications';
 import { siteConfig } from '@/shared/config/site';
 import { PublicationList } from '@/shared/components/common/publication-list';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
+import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
 
 export const metadata: Metadata = {
   title: 'Publications & Research',
@@ -36,7 +37,17 @@ export default function PublicationsPage() {
       </header>
 
       <section id="publication-listing">
-        <PublicationList initialPublications={samplePublications} />
+        <ErrorBoundary
+          fallback={
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">
+                Unable to load publications at this time. Please try again later.
+              </p>
+            </div>
+          }
+        >
+          <PublicationList initialPublications={samplePublications} />
+        </ErrorBoundary>
       </section>
     </div>
   );

@@ -8,10 +8,16 @@ import {
 } from '@/shared/components/ui/card';
 import { Lightbulb, Telescope, Zap, Banknote, Sigma } from 'lucide-react'; // Added Sigma for new grant
 import { siteConfig } from '@/shared/config/site';
+import { assetPaths } from '@/shared/config/assets';
 
 export const metadata: Metadata = {
   title: 'Research Focus',
   description: `Delve into ${siteConfig.author}'s research interests in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, and discover funded projects. ${siteConfig.description}`,
+  openGraph: {
+    title: `Research Focus - ${siteConfig.author}`,
+    description: `Delve into ${siteConfig.author}'s research interests in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare.`,
+    images: [assetPaths.ogImage],
+  },
 };
 
 export default function ResearchPage() {

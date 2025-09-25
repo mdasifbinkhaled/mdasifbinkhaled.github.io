@@ -25,6 +25,7 @@ import {
   coursesTaughtBRACU,
 } from '@/shared/lib/data/courses';
 import { teachingNavItems } from '@/shared/config/navigation';
+import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
 
 export const metadata: Metadata = {
   title: 'Teaching Portfolio',
@@ -175,13 +176,23 @@ export default function TeachingPage() {
             design, and mathematical foundations.
           </p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-            {coursesTaughtIUB.map((course) => (
-              <SimpleCourseCard
-                key={course.id}
-                course={course}
-                showFullDetails={true}
-              />
-            ))}
+            <ErrorBoundary
+              fallback={
+                <div className="col-span-full text-center py-8">
+                  <p className="text-muted-foreground">
+                    Unable to load course information at this time.
+                  </p>
+                </div>
+              }
+            >
+              {coursesTaughtIUB.map((course) => (
+                <SimpleCourseCard
+                  key={course.id}
+                  course={course}
+                  showFullDetails={true}
+                />
+              ))}
+            </ErrorBoundary>
           </div>
         </div>
 
@@ -195,13 +206,23 @@ export default function TeachingPage() {
             and mobile development.
           </p>
           <div className="grid gap-6 md:grid-cols-2">
-            {coursesTaughtBRACU.map((course) => (
-              <SimpleCourseCard
-                key={course.id}
-                course={course}
-                showFullDetails={true}
-              />
-            ))}
+            <ErrorBoundary
+              fallback={
+                <div className="col-span-full text-center py-8">
+                  <p className="text-muted-foreground">
+                    Unable to load BRACU course information at this time.
+                  </p>
+                </div>
+              }
+            >
+              {coursesTaughtBRACU.map((course) => (
+                <SimpleCourseCard
+                  key={course.id}
+                  course={course}
+                  showFullDetails={true}
+                />
+              ))}
+            </ErrorBoundary>
           </div>
         </div>
       </section>

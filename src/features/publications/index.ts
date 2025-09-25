@@ -12,4 +12,3 @@
 
 // Export publication components
 export * from './publication-card';
-export * from './enhanced-publication-card';

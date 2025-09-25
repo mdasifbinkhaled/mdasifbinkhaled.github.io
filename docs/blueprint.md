@@ -7,11 +7,24 @@
 - Filterable Publication List: Publication entries are filterable, with front-end filters to easily sort by year and publication type, such as Conference or In Progress. This aids visitors in efficiently locating specific works of interest.
 - SEO and Metadata Optimization: Configure site metadata with Next.js Metadata API.
 
-## Style Guidelines:
+## Active Theme System
+
+Currently implemented themes:
+
+- **Light**: Classic professional with clean whites and deep teal primary (#31708E)
+- **Dark**: Enhanced contrast with deep backgrounds for comfortable reading
+
+Future theme expansion planned for:
+
+- Retro: Vintage aesthetics with film grain overlay
+- Cyberpunk: Neon matrix effects with digital glitch
+- Ocean: Animated wave patterns with blue gradients
+
+## Style Guidelines
 
 - Primary color: Deep teal (#31708E) to project trustworthiness and expertise, nodding to a sense of academic authority without being overly conventional.
 - Background color: Very light grayish-teal (#F0F4F5) for a professional and clean backdrop that supports readability and reduces eye strain.
 - Accent color: Muted violet (#5E548E) as a sophisticated highlight color for interactive elements, to give a modern feel without overpowering the design.
 - Clean and modern sans-serif fonts for headers and body text.
 - Minimalist design with ample white space, creating a distraction-free environment that emphasizes content and promotes ease of reading.
-- Subtle animations using Framer Motion for page transitions and interactions, offering a fluid and engaging user experience that doesn’t distract from the academic content.
+- Subtle animations using Framer Motion for page transitions and interactions, offering a fluid and engaging user experience that doesn't distract from the academic content.

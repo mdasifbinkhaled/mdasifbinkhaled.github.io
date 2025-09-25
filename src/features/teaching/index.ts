@@ -11,5 +11,4 @@
  */
 
 // Export teaching components
-export * from './comprehensive-course-card';
 export * from './simple-course-card';

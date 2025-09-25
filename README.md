@@ -1,6 +1,6 @@
 # Academic Assemblage
 
-This repository hosts Md Asif Bin Khaled's portfolio site built with **Next.js**, **TypeScript**, and **Firebase**. It presents research publications, teaching activities and an interactive timeline of professional experience.
+This repository hosts Md Asif Bin Khaled's portfolio site built with **Next.js**, **TypeScript**, and **Tailwind CSS**. It presents research publications, teaching activities and an interactive timeline of professional experience.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ To start a local development server run:
 npm run dev
 ```
 
-The application defaults to http://localhost:9002.
+The application defaults to <http://localhost:9002>.
 
 ## Build
 
@@ -44,3 +44,11 @@ This runs `next build`, adds a `.nojekyll` file to the `out` directory and pushe
 ## Contributing
 
 Contributions are welcome! Please open pull requests for any improvements. Before proposing changes, review the project goals and style guidelines in [docs/blueprint.md](docs/blueprint.md).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Accessibility
+
+This site is built with accessibility in mind, featuring semantic HTML, ARIA landmarks, skip navigation, keyboard support, and respect for reduced motion preferences.

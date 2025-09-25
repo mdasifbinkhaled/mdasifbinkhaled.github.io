@@ -11,6 +11,7 @@ import { ExternalLink, FileText, ChevronDown } from 'lucide-react';
 import { Badge } from '@/shared/components/ui/badge';
 import type { PublicationItem } from '@/shared/types';
 import { cn } from '@/shared/lib/utils';
+import { academicEvents } from '@/shared/lib/analytics';
 
 interface PublicationCardProps {
   publication: PublicationItem;
@@ -87,6 +88,7 @@ export const PublicationCard = memo(function PublicationCard({
               href={publication.link}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => academicEvents.viewPublication(publication.id || publication.title, publication.title)}
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 flex-1"
             >
               <ExternalLink className="mr-2 h-4 w-4" /> View
@@ -97,6 +99,7 @@ export const PublicationCard = memo(function PublicationCard({
               href={publication.pdfLink}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => academicEvents.downloadPublication(publication.id || publication.title, publication.title)}
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 flex-1"
             >
               <FileText className="mr-2 h-4 w-4" /> PDF

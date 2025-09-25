@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { Skeleton } from '@/shared/components/ui/skeleton';
+import { academicEvents } from '@/shared/lib/analytics';
 
 import { PDFViewerWrapper } from '@/shared/components/ui/pdf-viewer-wrapper';
 
@@ -26,6 +27,8 @@ export default function CVPage() {
 
   useEffect(() => {
     setIsMounted(true);
+    // Track CV page view
+    academicEvents.viewCV();
   }, []);
 
   // This initial skeleton for tabs can remain as it's lightweight
@@ -62,6 +65,7 @@ export default function CVPage() {
                 href={siteConfig.links.cv}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => academicEvents.downloadCV()}
               >
                 <Download className="mr-2 h-4 w-4" /> Download Full CV
               </a>

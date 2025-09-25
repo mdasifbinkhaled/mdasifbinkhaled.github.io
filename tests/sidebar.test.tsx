@@ -68,9 +68,19 @@ vi.mock('@radix-ui/react-dialog', () => ({
       {children}
     </button>
   ),
+  Trigger: ({ children, ...props }: any) => (
+    <button data-testid="dialog-trigger" {...props}>
+      {children}
+    </button>
+  ),
 }));
 
 vi.mock('@radix-ui/react-visually-hidden', () => ({
+  VisuallyHidden: ({ children }: { children: React.ReactNode }) => (
+    <span style={{ position: 'absolute', border: 0, width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden' }}>
+      {children}
+    </span>
+  ),
   Root: ({ children }: { children: React.ReactNode }) => (
     <span style={{ position: 'absolute', border: 0, width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden' }}>
       {children}
@@ -96,13 +106,13 @@ describe('AppSidebarLayout', () => {
   it('renders the layout with all components', () => {
     render(<AppSidebarLayout>{mockChildren}</AppSidebarLayout>);
     
-    // Check for multiple navbars (mobile and desktop)
-    const navbars = screen.getAllByTestId('navbar');
-    expect(navbars).toHaveLength(2);
+    // Check for single navbar in header
+    const navbar = screen.getByTestId('navbar');
+    expect(navbar).toBeInTheDocument();
     
-    // Check for multiple main-content areas (mobile and desktop)
-    const mainContents = screen.getAllByTestId('main-content');
-    expect(mainContents).toHaveLength(2);
+    // Check for main content
+    const mainContent = screen.getByTestId('main-content');
+    expect(mainContent).toBeInTheDocument();
     
     expect(screen.getByTestId('back-to-top')).toBeInTheDocument();
   });
@@ -157,20 +167,23 @@ describe('AppSidebarLayout', () => {
   it('has proper semantics and structure', () => {
     render(<AppSidebarLayout>{mockChildren}</AppSidebarLayout>);
     
-    // Check skip link
-    const skipLink = screen.getByText('Skip to main content');
-    expect(skipLink).toBeInTheDocument();
-    expect(skipLink).toHaveAttribute('href', '#main-content');
+    // Check main element
+    const mainElement = screen.getByRole('main');
+    expect(mainElement).toBeInTheDocument();
+    expect(mainElement).toHaveAttribute('id', 'main-content');
     
-    // Check main elements (both mobile and desktop versions exist)
-    const mainElements = screen.getAllByRole('main');
-    expect(mainElements).toHaveLength(2); // Mobile and desktop versions
+    // Check desktop sidebar
+    const desktopSidebar = screen.getByRole('complementary');
+    expect(desktopSidebar).toBeInTheDocument();
+    expect(desktopSidebar).toHaveAttribute('id', 'desktop-sidebar');
     
-    // Each main should have correct attributes
-    mainElements.forEach(main => {
-      expect(main).toHaveAttribute('id', 'main-content');
-      expect(main).toHaveAttribute('tabindex', '-1');
-    });
+    // Check header
+    const header = screen.getByRole('banner');
+    expect(header).toBeInTheDocument();
+    
+    // Check footer
+    const footer = screen.getByRole('contentinfo');
+    expect(footer).toBeInTheDocument();
   });
 
   it('renders mobile sidebar in dialog with proper accessibility', () => {
@@ -180,9 +193,13 @@ describe('AppSidebarLayout', () => {
     expect(screen.getByTestId('dialog-root')).toBeInTheDocument();
     expect(screen.getByTestId('dialog-content')).toBeInTheDocument();
     
-    // Verify mobile-specific elements
-    const mobileNavbars = screen.getAllByTestId('navbar');
-    expect(mobileNavbars).toHaveLength(2); // Mobile and desktop versions
+    // Verify navbar exists in header
+    const navbar = screen.getByTestId('navbar');
+    expect(navbar).toBeInTheDocument();
+    
+    // Check accessibility elements in mobile dialog
+    expect(screen.getByTestId('dialog-title')).toBeInTheDocument();
+    expect(screen.getByTestId('dialog-description')).toBeInTheDocument();
   });
 
   it('includes back to top component globally', () => {
@@ -195,17 +212,18 @@ describe('AppSidebarLayout', () => {
   it('has responsive layout classes', () => {
     render(<AppSidebarLayout>{mockChildren}</AppSidebarLayout>);
     
-    // Check for responsive containers (both mobile and desktop versions)
-    const navbars = screen.getAllByTestId('navbar');
-    expect(navbars).toHaveLength(2); // Mobile and desktop versions
+    // Check for main layout container
+    const navbar = screen.getByTestId('navbar');
+    expect(navbar).toBeInTheDocument();
     
-    // Verify mobile container has min-h-screen
-    const mobileContainer = navbars[0]?.parentElement;
-    expect(mobileContainer).toHaveClass('min-h-screen');
+    // Find the root container (should have min-h-screen)
+    const rootContainer = screen.getByTestId('main-content').closest('.min-h-screen');
+    expect(rootContainer).toBeInTheDocument();
+    expect(rootContainer).toHaveClass('min-h-screen', 'flex', 'flex-col');
     
-    // Verify desktop container has min-h-screen
-    const desktopContainer = navbars[1]?.parentElement?.parentElement;
-    expect(desktopContainer).toHaveClass('min-h-screen');
+    // Check desktop sidebar has responsive classes
+    const desktopSidebar = screen.getByRole('complementary');
+    expect(desktopSidebar).toHaveClass('hidden', 'lg:block');
   });
 
   it('manages mobile dialog state correctly', () => {
