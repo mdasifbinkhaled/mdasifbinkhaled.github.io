@@ -15,7 +15,7 @@ function sanitizeJsonLd(data: unknown): string {
     .replace(/\u2029/g, '\\u2029');
 }
 
-function JsonLdScript({ data }: { data: unknown }): JSX.Element {
+function JsonLdScript({ data }: { data: unknown }): React.JSX.Element {
   return (
     <script
       type="application/ld+json"
@@ -191,11 +191,11 @@ function buildPublicationStructuredData(publication: PublicationItem): JsonLd {
   return article;
 }
 
-export function ScholarStructuredDataScript(): JSX.Element {
+export function ScholarStructuredDataScript(): React.JSX.Element {
   return <JsonLdScript data={buildScholarStructuredData()} />;
 }
 
-export function PublicationStructuredDataScript(): JSX.Element | null {
+export function PublicationStructuredDataScript(): React.JSX.Element | null {
   if (samplePublications.length === 0) {
     return null;
   }
