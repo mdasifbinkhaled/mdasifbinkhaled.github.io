@@ -74,7 +74,7 @@ jobs:
           test -f ./out/.nojekyll || (echo "Missing .nojekyll" && exit 1)
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./out
 
