@@ -45,8 +45,13 @@ next-env.d.ts
 
 # ES module conflicts - ignore CommonJS config files
 next.config.js
-.eslintrc.json
 eslint.config.js
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # idx
 /.idx

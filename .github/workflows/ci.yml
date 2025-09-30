@@ -24,13 +24,16 @@ jobs:
         run: npm ci
 
       - name: Lint code
-        run: npm run lint
+        run: npm run lint:check
 
       - name: Run type check
         run: npm run typecheck
 
       - name: Run tests
-        run: npm run test
+        run: npm run test:run
+
+      - name: Generate test coverage
+        run: npm run test:coverage
 
       - name: Build application
         run: npm run build

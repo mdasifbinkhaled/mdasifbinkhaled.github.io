@@ -46,9 +46,9 @@ jobs:
         with:
           path: |
             .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package.json') }}-
 
       - name: Install dependencies
         run: |
@@ -56,7 +56,7 @@ jobs:
 
       - name: Lint and Type Check
         run: |
-          npm run lint
+          npm run lint:check
           npm run typecheck
 
       - name: Build with Next.js
