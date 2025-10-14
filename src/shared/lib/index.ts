@@ -18,6 +18,11 @@ export * from './structured-data';
 export * from './utils';
 
 // ==========================================
+// VALIDATION SCHEMAS
+// ==========================================
+export * from './validation/schemas';
+
+// ==========================================
 // DATA LAYER
 // ==========================================
 export * from './data';

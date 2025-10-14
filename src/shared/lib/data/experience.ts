@@ -1,6 +1,7 @@
 import type { ExperienceItem } from '@/shared/types';
+import { experiencesArraySchema, validateData } from '../validation/schemas';
 
-export const professionalExperiences: ExperienceItem[] = [
+const rawExperiences: ExperienceItem[] = [
   {
     id: 'exp-senior-lecturer-iub',
     title: 'Senior Lecturer – Department of Computer Science & Engineering',
@@ -126,6 +127,16 @@ export const professionalExperiences: ExperienceItem[] = [
     type: 'Industry',
   },
 ];
+
+/**
+ * Validate and export professional experiences
+ * This prevents silent data corruption by validating at import time
+ */
+export const professionalExperiences = validateData(
+  rawExperiences,
+  experiencesArraySchema,
+  'professional experiences'
+);
 
 export const technicalSkills = [
   {

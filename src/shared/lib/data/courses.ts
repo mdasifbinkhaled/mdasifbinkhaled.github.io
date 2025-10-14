@@ -4,6 +4,7 @@ import type {
   CourseInstitution,
   CourseStatus,
 } from '@/shared/types';
+import { coursesArraySchema, validateData } from '../validation/schemas';
 
 export const institutionNames: Record<CourseInstitution, string> = {
   IUB: 'Independent University, Bangladesh (IUB)',
@@ -11,7 +12,7 @@ export const institutionNames: Record<CourseInstitution, string> = {
 };
 
 // IUB Courses (as Senior Lecturer)
-export const coursesTaughtIUB: CourseData[] = [
+const rawCoursesTaughtIUB: CourseData[] = [
   {
     id: 'iub-cse101-fall2023',
     code: 'CSE 101',
@@ -409,8 +410,17 @@ export const coursesTaughtIUB: CourseData[] = [
   },
 ];
 
+/**
+ * Validate and export IUB courses
+ */
+export const coursesTaughtIUB = validateData(
+  rawCoursesTaughtIUB,
+  coursesArraySchema,
+  'IUB courses'
+);
+
 // BRACU Courses (as Teaching Assistant)
-export const coursesTaughtBRACU: CourseData[] = [
+const rawCoursesTaughtBRACU: CourseData[] = [
   {
     id: 'bracu-cg-lab-spring2022',
     code: 'CSE 423',
@@ -632,7 +642,16 @@ export const coursesTaughtBRACU: CourseData[] = [
   },
 ];
 
-// All courses combined
+/**
+ * Validate and export BRACU courses
+ */
+export const coursesTaughtBRACU = validateData(
+  rawCoursesTaughtBRACU,
+  coursesArraySchema,
+  'BRACU courses'
+);
+
+// All courses combined (already validated)
 export const allCourses: CourseData[] = [
   ...coursesTaughtIUB,
   ...coursesTaughtBRACU,

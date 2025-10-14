@@ -1,6 +1,7 @@
 import type { PublicationItem } from '@/shared/types';
+import { publicationsArraySchema, validateData } from '../validation/schemas';
 
-export const samplePublications: PublicationItem[] = [
+const rawPublications: PublicationItem[] = [
   {
     id: 'pub-desrist-2024',
     title:
@@ -174,3 +175,13 @@ export const samplePublications: PublicationItem[] = [
     ],
   },
 ];
+
+/**
+ * Validate and export publications
+ * This prevents silent data corruption by validating at import time
+ */
+export const samplePublications = validateData(
+  rawPublications,
+  publicationsArraySchema,
+  'publications'
+);
