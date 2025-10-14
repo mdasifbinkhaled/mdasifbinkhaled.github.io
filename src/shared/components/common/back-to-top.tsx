@@ -3,12 +3,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
+import { SCROLL } from '@/shared/config';
 
 export const BackToTop = React.memo(function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = useCallback(() => {
-    if (window.pageYOffset > 300) {
+    if (window.pageYOffset > SCROLL.BACK_TO_TOP_THRESHOLD) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -17,8 +18,8 @@ export const BackToTop = React.memo(function BackToTop() {
 
   const scrollToTop = useCallback(() => {
     window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
+      top: SCROLL.TOP,
+      behavior: SCROLL.BEHAVIOR,
     });
   }, []);
 

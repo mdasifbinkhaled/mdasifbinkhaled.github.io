@@ -5,6 +5,7 @@
 
 // Re-export all common components
 export * from './back-to-top';
+export * from './error-fallback';
 export * from './experience-compact';
 export * from './footer-year';
 export * from './icons';

@@ -24,6 +24,7 @@ import { useState } from 'react';
 import type { CourseData, CourseStatus } from '@/shared/types';
 import { institutionNames } from '@/shared/lib/data/courses';
 import { Icon } from '@/shared/components/common/icons';
+import { DISPLAY_LIMITS } from '@/shared/config';
 
 interface SimpleCourseCardProps {
   course: CourseData;
@@ -226,14 +227,16 @@ export function SimpleCourseCard({
                   Student Feedback
                 </h4>
                 <div className="space-y-1">
-                  {course.feedback.slice(0, 2).map((feedback, index) => (
-                    <p
-                      key={index}
-                      className="text-xs text-muted-foreground italic"
-                    >
-                      &ldquo;{feedback}&rdquo;
-                    </p>
-                  ))}
+                  {course.feedback
+                    .slice(0, DISPLAY_LIMITS.COURSE_FEEDBACK)
+                    .map((feedback, index) => (
+                      <p
+                        key={index}
+                        className="text-xs text-muted-foreground italic"
+                      >
+                        &ldquo;{feedback}&rdquo;
+                      </p>
+                    ))}
                 </div>
               </div>
             )}

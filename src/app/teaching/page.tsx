@@ -14,7 +14,7 @@ import {
   Building2,
   ArrowRight,
 } from 'lucide-react';
-import { siteConfig } from '@/shared/config/site';
+import { siteConfig, DISPLAY_LIMITS } from '@/shared/config';
 import { assetPaths } from '@/shared/config/assets';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -138,15 +138,17 @@ export default function TeachingPage() {
                         Sample Courses:
                       </div>
                       <div className="flex flex-wrap gap-1">
-                        {courses.slice(0, 3).map((course) => (
-                          <span
-                            key={course.id}
-                            className="text-xs bg-secondary/50 px-2 py-1 rounded"
-                          >
-                            {course.code}
-                          </span>
-                        ))}
-                        {courses.length > 3 && (
+                        {courses
+                          .slice(0, DISPLAY_LIMITS.HOMEPAGE_RECENT)
+                          .map((course) => (
+                            <span
+                              key={course.id}
+                              className="text-xs bg-secondary/50 px-2 py-1 rounded"
+                            >
+                              {course.code}
+                            </span>
+                          ))}
+                        {courses.length > DISPLAY_LIMITS.HOMEPAGE_RECENT && (
                           <span className="text-xs bg-secondary/50 px-2 py-1 rounded">
                             +{courses.length - 3} more
                           </span>

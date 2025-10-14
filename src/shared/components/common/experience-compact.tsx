@@ -10,6 +10,7 @@ import {
 import { Badge } from '@/shared/components/ui/badge';
 import { MapPin, Calendar, Building2 } from 'lucide-react';
 import type { ExperienceItem } from '@/shared/types';
+import { DISPLAY_LIMITS } from '@/shared/config';
 
 interface ExperienceCompactProps {
   experiences: ExperienceItem[];
@@ -81,16 +82,20 @@ export function ExperienceCompact({ experiences }: ExperienceCompactProps) {
               <div className="text-sm text-muted-foreground mb-3">
                 <ul className="space-y-1">
                   {exp.description
-                    .slice(0, 2)
+                    .slice(0, DISPLAY_LIMITS.EXPERIENCE_DESCRIPTION)
                     .map((desc: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
                         <span className="line-clamp-2">{desc}</span>
                       </li>
                     ))}
-                  {exp.description.length > 2 && (
+                  {exp.description.length >
+                    DISPLAY_LIMITS.EXPERIENCE_DESCRIPTION && (
                     <li className="text-xs italic">
-                      +{exp.description.length - 2} more responsibilities
+                      +
+                      {exp.description.length -
+                        DISPLAY_LIMITS.EXPERIENCE_DESCRIPTION}{' '}
+                      more responsibilities
                     </li>
                   )}
                 </ul>
@@ -99,16 +104,18 @@ export function ExperienceCompact({ experiences }: ExperienceCompactProps) {
               {exp.tags && exp.tags.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-border/50">
                   <div className="flex flex-wrap gap-1">
-                    {exp.tags.slice(0, 4).map((tag: string) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className="text-xs py-0 px-2 h-5"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                    {exp.tags.length > 4 && (
+                    {exp.tags
+                      .slice(0, DISPLAY_LIMITS.EXPERIENCE_TAGS)
+                      .map((tag: string) => (
+                        <Badge
+                          key={tag}
+                          variant="outline"
+                          className="text-xs py-0 px-2 h-5"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    {exp.tags.length > DISPLAY_LIMITS.EXPERIENCE_TAGS && (
                       <Badge
                         variant="outline"
                         className="text-xs py-0 px-2 h-5"

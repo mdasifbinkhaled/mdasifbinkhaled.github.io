@@ -84,7 +84,7 @@ export const samplePublications: PublicationItem[] = [
     venue:
       '36th Australasian Joint Conference on Artificial Intelligence (AJCAI), AI 2023: Advances in Artificial Intelligence, Perth, WA, Australia. Lecture Notes in Computer Science, vol 14430. Springer, Cham',
     pages: '487–500',
-    year: 2023, // Note: CV says 2022, but Springer link for vol 14430 refers to AI 2023 proceedings. Using 2023 based on proceedings.
+    year: 2023,
     type: 'Conference',
     link: 'https://link.springer.com/chapter/10.1007/978-3-031-49811-8_39',
     doi: '10.1007/978-3-031-49811-8_39',
@@ -108,7 +108,7 @@ export const samplePublications: PublicationItem[] = [
     venue:
       '36th Australasian Joint Conference on Artificial Intelligence (AJCAI), AI 2023: Advances in Artificial Intelligence, Perth, WA, Australia. Lecture Notes in Computer Science, vol 14430. Springer, Cham',
     pages: '614–627',
-    year: 2023, // Note: CV says 2022, but Springer link for vol 14430 refers to AI 2023 proceedings. Using 2023 based on proceedings.
+    year: 2023,
     type: 'Conference',
     link: 'https://link.springer.com/chapter/10.1007/978-3-031-49811-8_48',
     doi: '10.1007/978-3-031-49811-8_48',

@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card';
-import { siteConfig } from '@/shared/config/site';
+import { siteConfig, DISPLAY_LIMITS } from '@/shared/config';
 import {
   ArrowRight,
   ExternalLink,
@@ -30,7 +30,10 @@ export default function HomePage() {
   );
 
   // Get recent experiences (current and latest)
-  const recentExperiences = professionalExperiences.slice(0, 3);
+  const recentExperiences = professionalExperiences.slice(
+    0,
+    DISPLAY_LIMITS.HOMEPAGE_RECENT
+  );
 
   // News items (recent achievements and announcements)
   const newsItems = [
@@ -296,7 +299,10 @@ export default function HomePage() {
             Recent Publications
           </h2>
           <PublicationList
-            initialPublications={filteredPublications.slice(0, 3)}
+            initialPublications={filteredPublications.slice(
+              0,
+              DISPLAY_LIMITS.HOMEPAGE_RECENT
+            )}
           />
           <div className="text-center mt-6">
             <Button variant="outline" asChild>

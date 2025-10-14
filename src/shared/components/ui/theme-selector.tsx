@@ -13,6 +13,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu';
 import { Badge } from '@/shared/components/ui/badge';
 import { Palette, Sun, Moon, Check } from 'lucide-react';
+import { DISPLAY_LIMITS } from '@/shared/config';
 
 const themes = [
   {
@@ -77,19 +78,21 @@ export function ThemeSelector({
         <DropdownMenuContent align={align} className="w-48">
           <DropdownMenuLabel>Theme</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {themes.slice(0, 3).map((themeOption) => (
-            <DropdownMenuItem
-              key={themeOption.name}
-              onClick={() => setTheme(themeOption.name)}
-              className="flex items-center gap-2"
-            >
-              <themeOption.icon className="h-4 w-4" />
-              <span>{themeOption.label}</span>
-              {theme === themeOption.name && (
-                <Check className="h-4 w-4 ml-auto" />
-              )}
-            </DropdownMenuItem>
-          ))}
+          {themes
+            .slice(0, DISPLAY_LIMITS.THEME_SELECTOR_QUICK)
+            .map((themeOption) => (
+              <DropdownMenuItem
+                key={themeOption.name}
+                onClick={() => setTheme(themeOption.name)}
+                className="flex items-center gap-2"
+              >
+                <themeOption.icon className="h-4 w-4" />
+                <span>{themeOption.label}</span>
+                {theme === themeOption.name && (
+                  <Check className="h-4 w-4 ml-auto" />
+                )}
+              </DropdownMenuItem>
+            ))}
         </DropdownMenuContent>
       </DropdownMenu>
     );

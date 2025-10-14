@@ -7,6 +7,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Badge, badgeVariants } from '@/shared/components/ui/badge';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { cn } from '@/shared/lib/utils';
+import { DISPLAY_LIMITS } from '@/shared/config';
 
 interface SearchableContent {
   id: string;
@@ -164,27 +165,29 @@ export function AcademicSearch({
               >
                 All
               </button>
-              {availableYears.slice(0, 8).map((year, index) => {
-                const yearValue = year?.toString();
-                const isSelected = !!yearValue && selectedYear === yearValue;
+              {availableYears
+                .slice(0, DISPLAY_LIMITS.ACADEMIC_SEARCH_YEARS)
+                .map((year, index) => {
+                  const yearValue = year?.toString();
+                  const isSelected = !!yearValue && selectedYear === yearValue;
 
-                return (
-                  <button
-                    key={yearValue ?? `year-${index}`}
-                    type="button"
-                    aria-pressed={isSelected}
-                    onClick={() => setSelectedYear(yearValue ?? null)}
-                    className={cn(
-                      badgeVariants({
-                        variant: isSelected ? 'default' : 'secondary',
-                      }),
-                      'cursor-pointer'
-                    )}
-                  >
-                    {year}
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={yearValue ?? `year-${index}`}
+                      type="button"
+                      aria-pressed={isSelected}
+                      onClick={() => setSelectedYear(yearValue ?? null)}
+                      className={cn(
+                        badgeVariants({
+                          variant: isSelected ? 'default' : 'secondary',
+                        }),
+                        'cursor-pointer'
+                      )}
+                    >
+                      {year}
+                    </button>
+                  );
+                })}
             </div>
           )}
         </div>
@@ -246,15 +249,17 @@ export function AcademicSearch({
                         </p>
                         {item.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1">
-                            {item.tags.slice(0, 3).map((tag) => (
-                              <Badge
-                                key={tag}
-                                variant="outline"
-                                className="text-xs"
-                              >
-                                {tag}
-                              </Badge>
-                            ))}
+                            {item.tags
+                              .slice(0, DISPLAY_LIMITS.ACADEMIC_SEARCH_TAGS)
+                              .map((tag) => (
+                                <Badge
+                                  key={tag}
+                                  variant="outline"
+                                  className="text-xs"
+                                >
+                                  {tag}
+                                </Badge>
+                              ))}
                             {item.tags.length > 3 && (
                               <Badge variant="outline" className="text-xs">
                                 +{item.tags.length - 3}
