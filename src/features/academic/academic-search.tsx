@@ -131,7 +131,7 @@ export function AcademicSearch({
                   <button
                     key={type}
                     type="button"
-                    aria-pressed={isSelected}
+                    aria-pressed={isSelected ? 'true' : 'false'}
                     onClick={() => toggleTypeFilter(type)}
                     className={cn(
                       badgeVariants({
@@ -154,7 +154,7 @@ export function AcademicSearch({
               <span className="text-sm text-muted-foreground">Year:</span>
               <button
                 type="button"
-                aria-pressed={!selectedYear}
+                aria-pressed={!selectedYear ? 'true' : 'false'}
                 onClick={() => setSelectedYear(null)}
                 className={cn(
                   badgeVariants({
@@ -175,7 +175,7 @@ export function AcademicSearch({
                     <button
                       key={yearValue ?? `year-${index}`}
                       type="button"
-                      aria-pressed={isSelected}
+                      aria-pressed={isSelected ? 'true' : 'false'}
                       onClick={() => setSelectedYear(yearValue ?? null)}
                       className={cn(
                         badgeVariants({

@@ -85,34 +85,10 @@ vi.mock('@radix-ui/react-dialog', () => ({
 
 vi.mock('@radix-ui/react-visually-hidden', () => ({
   VisuallyHidden: ({ children }: { children: React.ReactNode }) => (
-    <span
-      style={{
-        position: 'absolute',
-        border: 0,
-        width: 1,
-        height: 1,
-        padding: 0,
-        margin: -1,
-        overflow: 'hidden',
-      }}
-    >
-      {children}
-    </span>
+    <span className="sr-only">{children}</span>
   ),
   Root: ({ children }: { children: React.ReactNode }) => (
-    <span
-      style={{
-        position: 'absolute',
-        border: 0,
-        width: 1,
-        height: 1,
-        padding: 0,
-        margin: -1,
-        overflow: 'hidden',
-      }}
-    >
-      {children}
-    </span>
+    <span className="sr-only">{children}</span>
   ),
 }));
 

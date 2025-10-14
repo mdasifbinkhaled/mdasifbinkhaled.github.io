@@ -34,11 +34,10 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
       </div>
 
       {/* PDF iframe - more reliable for static builds */}
-      <div className="relative w-full" style={{ minHeight: '600px' }}>
+      <div className="relative w-full min-h-[600px]">
         <iframe
           src={file}
-          className="w-full h-full border-0"
-          style={{ minHeight: '600px', height: '80vh' }}
+          className="w-full h-[80vh] min-h-[600px] border-0"
           title="CV Document"
           loading="lazy"
         />
