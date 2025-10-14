@@ -11,11 +11,13 @@
  */
 
 import { useState, useMemo } from 'react';
+import { useDebounce } from './use-debounce';
 
 export interface UseSearchOptions<T> {
   items: T[];
   searchFields: (keyof T)[];
   initialQuery?: string;
+  debounceMs?: number;
 }
 
 export interface UseSearchReturn<T> {
@@ -41,15 +43,17 @@ export function useSearch<T extends Record<string, unknown>>({
   items,
   searchFields,
   initialQuery = '',
+  debounceMs = 0,
 }: UseSearchOptions<T>): UseSearchReturn<T> {
   const [query, setQuery] = useState(initialQuery);
+  const debouncedQuery = useDebounce(query, debounceMs);
 
   const filteredItems = useMemo(() => {
-    if (!query.trim()) {
+    if (!debouncedQuery.trim()) {
       return items;
     }
 
-    const lowerQuery = query.toLowerCase();
+    const lowerQuery = debouncedQuery.toLowerCase();
 
     return items.filter((item) => {
       return searchFields.some((field) => {
@@ -75,7 +79,7 @@ export function useSearch<T extends Record<string, unknown>>({
         return String(value).toLowerCase().includes(lowerQuery);
       });
     });
-  }, [items, query, searchFields]);
+  }, [items, debouncedQuery, searchFields]);
 
   const clearSearch = () => setQuery('');
 

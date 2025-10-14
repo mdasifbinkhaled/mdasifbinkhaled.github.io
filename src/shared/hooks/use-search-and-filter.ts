@@ -18,6 +18,7 @@ export interface UseSearchAndFilterOptions<T> {
   searchFields: (keyof T)[];
   filters?: UseFilterOptions<T>['filters'];
   initialQuery?: string;
+  debounceMs?: number;
 }
 
 export interface UseSearchAndFilterReturn<T> {
@@ -74,12 +75,14 @@ export function useSearchAndFilter<T extends Record<string, unknown>>({
   searchFields,
   filters = {},
   initialQuery = '',
+  debounceMs = 0,
 }: UseSearchAndFilterOptions<T>): UseSearchAndFilterReturn<T> {
-  // First apply search
+  // First apply search with debouncing
   const searchResult = useSearch({
     items,
     searchFields,
     initialQuery,
+    debounceMs,
   });
 
   // Then apply filters to searched results
