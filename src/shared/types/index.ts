@@ -15,8 +15,8 @@ export interface ExperienceItem {
   institution: string;
   location?: string;
   duration: string;
-  description: string | string[];
-  logoUrl?: string;
+  description: string[];
+  logoUrl?: string | null;
   tags?: string[];
   type?: 'Academic' | 'Research' | 'Industry' | 'Teaching Support';
 }
@@ -67,7 +67,8 @@ export interface CourseAssessmentBreakdown {
   participation?: number;
 }
 
-export interface CourseData {
+// Core course information (required fields only)
+export interface BaseCourseInfo {
   id: string;
   code: string;
   title: string;
@@ -78,18 +79,37 @@ export interface CourseData {
   year: number;
   description: string;
   outcomes: string[];
+}
+
+// Optional course details (curriculum-related)
+export interface CourseDetails {
   objectives?: string[];
   topics?: string[];
   technologies?: string[];
   assignments?: string[];
   projects?: string[];
   assessment?: CourseAssessmentBreakdown;
+}
+
+// Optional course metrics (feedback and statistics)
+export interface CourseMetrics {
   enrollmentCount?: number;
   rating?: number;
   feedback?: string[];
+}
+
+// Optional course presentation
+export interface CoursePresentation {
   iconName?: IconName;
   status?: CourseStatus;
 }
+
+// Complete course data type combining all interfaces
+export interface CourseData
+  extends BaseCourseInfo,
+    CourseDetails,
+    CourseMetrics,
+    CoursePresentation {}
 
 export interface AcademicAward {
   id: string;

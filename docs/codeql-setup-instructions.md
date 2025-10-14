@@ -1,3 +1,5 @@
+<!-- markdownlint-disable -->
+
 # CodeQL Code Scanning Setup Instructions
 
 ## Current Status

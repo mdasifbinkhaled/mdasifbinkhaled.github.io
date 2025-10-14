@@ -79,25 +79,21 @@ export function ExperienceCompact({ experiences }: ExperienceCompactProps) {
 
             <CardContent className="pt-0">
               <div className="text-sm text-muted-foreground mb-3">
-                {Array.isArray(exp.description) ? (
-                  <ul className="space-y-1">
-                    {exp.description
-                      .slice(0, 2)
-                      .map((desc: string, idx: number) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
-                          <span className="line-clamp-2">{desc}</span>
-                        </li>
-                      ))}
-                    {exp.description.length > 2 && (
-                      <li className="text-xs italic">
-                        +{exp.description.length - 2} more responsibilities
+                <ul className="space-y-1">
+                  {exp.description
+                    .slice(0, 2)
+                    .map((desc: string, idx: number) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                        <span className="line-clamp-2">{desc}</span>
                       </li>
-                    )}
-                  </ul>
-                ) : (
-                  <p className="line-clamp-3">{exp.description}</p>
-                )}
+                    ))}
+                  {exp.description.length > 2 && (
+                    <li className="text-xs italic">
+                      +{exp.description.length - 2} more responsibilities
+                    </li>
+                  )}
+                </ul>
               </div>
 
               {exp.tags && exp.tags.length > 0 && (

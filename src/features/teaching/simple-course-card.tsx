@@ -22,7 +22,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import type { CourseData, CourseStatus } from '@/shared/types';
-import { iconMap, institutionNames } from '@/shared/lib/data/courses';
+import { institutionNames } from '@/shared/lib/data/courses';
+import { Icon } from '@/shared/components/common/icons';
 
 interface SimpleCourseCardProps {
   course: CourseData;
@@ -56,8 +57,6 @@ export function SimpleCourseCard({
     return styles[status as keyof typeof styles] || styles.completed;
   };
 
-  const IconComponent =
-    (course.iconName ? iconMap[course.iconName] : undefined) || BookOpen;
   const enrollmentDisplay =
     typeof course.enrollmentCount === 'number'
       ? `${course.enrollmentCount} students`
@@ -74,7 +73,14 @@ export function SimpleCourseCard({
             {/* Course Header */}
             <div className="flex items-center gap-3 mb-3">
               <div className="bg-primary/10 p-2 rounded-full">
-                <IconComponent className="w-5 h-5 text-primary" />
+                {course.iconName ? (
+                  <Icon
+                    name={course.iconName}
+                    className="w-5 h-5 text-primary"
+                  />
+                ) : (
+                  <BookOpen className="w-5 h-5 text-primary" />
+                )}
               </div>
               <div>
                 <CardTitle className="text-lg leading-tight course-title">

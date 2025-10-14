@@ -1,29 +1,9 @@
 // Course data for teaching portfolio
-import {
-  Calculator,
-  Code2,
-  Brain,
-  BookOpen,
-  Database,
-  Server,
-  type LucideIcon,
-} from 'lucide-react';
 import type {
   CourseData,
   CourseInstitution,
   CourseStatus,
 } from '@/shared/types';
-import type { IconName } from '@/shared/components/common/icons';
-
-// Icon mapping for dynamic lookup
-export const iconMap: Partial<Record<IconName, LucideIcon>> = {
-  Code2,
-  Brain,
-  Database,
-  Calculator,
-  Server,
-  BookOpen,
-};
 
 export const institutionNames: Record<CourseInstitution, string> = {
   IUB: 'Independent University, Bangladesh (IUB)',
