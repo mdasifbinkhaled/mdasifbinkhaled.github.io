@@ -6,9 +6,5 @@ interface MotionPageProps {
 }
 
 export function MotionPage({ children, className }: MotionPageProps) {
-  return (
-    <div className={`animate-in ${className || ''}`}>
-      {children}
-    </div>
-  );
+  return <div className={`animate-in ${className || ''}`}>{children}</div>;
 }

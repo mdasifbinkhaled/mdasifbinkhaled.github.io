@@ -17,7 +17,9 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               <AlertTriangle className="w-8 h-8 text-red-600 dark:text-red-400" />
             </div>
             <div className="space-y-2">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Critical Error</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                Critical Error
+              </h1>
               <p className="text-gray-600 dark:text-gray-400">
                 A critical error occurred. Please refresh the page to continue.
               </p>
@@ -29,7 +31,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                 </p>
               </div>
             )}
-            <button 
+            <button
               onClick={reset}
               className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
             >

@@ -1,19 +1,22 @@
-'use client'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { cn } from '@/shared/lib/utils'
-import { GraduationCap, Menu, Sun, Moon } from 'lucide-react'
-import { useTheme } from 'next-themes'
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/shared/lib/utils';
+import { GraduationCap, Menu, Sun, Moon } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 interface NavbarProps {
-  onMobileMenuOpen?: () => void
-  showMobileMenuButton?: boolean
+  onMobileMenuOpen?: () => void;
+  showMobileMenuButton?: boolean;
 }
 
-export function Navbar({ onMobileMenuOpen, showMobileMenuButton = true }: NavbarProps) {
-  const path = normalize(usePathname() ?? '/')
-  const { theme, setTheme } = useTheme()
-  
+export function Navbar({
+  onMobileMenuOpen,
+  showMobileMenuButton = true,
+}: NavbarProps) {
+  const path = normalize(usePathname() ?? '/');
+  const { theme, setTheme } = useTheme();
+
   const items = [
     { label: 'Home', href: '/' },
     { label: 'About Me', href: '/about/' },
@@ -22,24 +25,34 @@ export function Navbar({ onMobileMenuOpen, showMobileMenuButton = true }: Navbar
     { label: 'Publications', href: '/publications/' },
     { label: 'Teaching', href: '/teaching/' },
     { label: 'Service & Awards', href: '/service-awards/' },
-    { label: 'Contact', href: '/contact/' }
-  ]
+    { label: 'Contact', href: '/contact/' },
+  ];
 
   return (
-    <header role="banner" className="sticky top-0 bg-background/80 backdrop-blur-sm border-b">
+    <header
+      role="banner"
+      className="sticky top-0 bg-background/80 backdrop-blur-sm border-b"
+    >
       <div className="flex items-center justify-between gap-2 w-full p-4">
         <div className="flex items-center gap-2">
-          <Link href="/" aria-label="Go to homepage" className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            <GraduationCap data-testid="graduation-cap-icon" className="h-6 w-6" />
+          <Link
+            href="/"
+            aria-label="Go to homepage"
+            className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <GraduationCap
+              data-testid="graduation-cap-icon"
+              className="h-6 w-6"
+            />
             <span className="font-semibold">Portfolio</span>
           </Link>
         </div>
-        
+
         <div className="flex items-center gap-2">
           {showMobileMenuButton && (
-            <button 
-              className="lg:hidden px-2 py-1 rounded border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" 
-              onClick={onMobileMenuOpen} 
+            <button
+              className="lg:hidden px-2 py-1 rounded border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              onClick={onMobileMenuOpen}
               aria-label="Open navigation menu"
               aria-controls="mobile-nav"
               aria-expanded="false"
@@ -48,24 +61,31 @@ export function Navbar({ onMobileMenuOpen, showMobileMenuButton = true }: Navbar
               <span className="sr-only">Menu</span>
             </button>
           )}
-          
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-            {items.map(it => {
-              const active = isActive(path, it.href)
+
+          <nav
+            className="hidden lg:flex items-center gap-1"
+            aria-label="Main navigation"
+          >
+            {items.map((it) => {
+              const active = isActive(path, it.href);
               return (
                 <Link
                   key={it.href}
                   href={it.href}
                   aria-current={active ? 'page' : undefined}
-                  className={cn('px-3 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                    active ? 'text-primary font-semibold bg-accent/30' : 'text-foreground/90 hover:text-foreground')}
+                  className={cn(
+                    'px-3 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                    active
+                      ? 'text-primary font-semibold bg-accent/30'
+                      : 'text-foreground/90 hover:text-foreground'
+                  )}
                 >
                   {it.label}
                 </Link>
-              )
+              );
             })}
           </nav>
-          
+
           <button
             data-testid="theme-selector"
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
@@ -78,11 +98,13 @@ export function Navbar({ onMobileMenuOpen, showMobileMenuButton = true }: Navbar
         </div>
       </div>
     </header>
-  )
+  );
 }
 
-const normalize = (p: string) => (p.endsWith('/') && p !== '/' ? p.slice(0, -1) : p)
+const normalize = (p: string) =>
+  p.endsWith('/') && p !== '/' ? p.slice(0, -1) : p;
 const isActive = (path: string, href: string) => {
-  const a = normalize(path); const b = normalize(href)
-  return b === '/' ? a === '/' : a.startsWith(b)
-}
+  const a = normalize(path);
+  const b = normalize(href);
+  return b === '/' ? a === '/' : a.startsWith(b);
+};

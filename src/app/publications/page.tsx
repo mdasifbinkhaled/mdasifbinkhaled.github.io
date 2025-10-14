@@ -41,7 +41,8 @@ export default function PublicationsPage() {
           fallback={
             <div className="text-center py-12">
               <p className="text-muted-foreground">
-                Unable to load publications at this time. Please try again later.
+                Unable to load publications at this time. Please try again
+                later.
               </p>
             </div>
           }

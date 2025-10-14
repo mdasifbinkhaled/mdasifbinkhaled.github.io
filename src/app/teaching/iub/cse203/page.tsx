@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { coursesTaughtIUB } from '@/shared/lib/data/courses';
 import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
 import { notFound } from 'next/navigation';

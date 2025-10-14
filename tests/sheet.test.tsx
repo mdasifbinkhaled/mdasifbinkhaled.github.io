@@ -18,7 +18,9 @@ describe('Sheet Component', () => {
       </Sheet>
     );
 
-    expect(screen.getByRole('button', { name: 'Open Sheet' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Open Sheet' })
+    ).toBeInTheDocument();
   });
 
   it('should open sheet when trigger is clicked', async () => {
@@ -127,7 +129,7 @@ describe('Sheet Component', () => {
       expect(title).toBeInTheDocument();
       expect(description).toBeInTheDocument();
       expect(closeButton).toBeInTheDocument();
-      
+
       // Check for close button accessibility
       expect(closeButton).toHaveTextContent('Close');
     });
@@ -136,7 +138,9 @@ describe('Sheet Component', () => {
   it('should render different sides correctly', () => {
     const { rerender } = render(
       <Sheet open={true}>
-        <SheetContent side="left" data-testid="sheet-content">Content</SheetContent>
+        <SheetContent side="left" data-testid="sheet-content">
+          Content
+        </SheetContent>
       </Sheet>
     );
 
@@ -145,7 +149,9 @@ describe('Sheet Component', () => {
 
     rerender(
       <Sheet open={true}>
-        <SheetContent side="right" data-testid="sheet-content">Content</SheetContent>
+        <SheetContent side="right" data-testid="sheet-content">
+          Content
+        </SheetContent>
       </Sheet>
     );
 

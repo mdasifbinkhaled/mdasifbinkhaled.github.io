@@ -30,7 +30,7 @@ describe('Select Component', () => {
 
   it('should open dropdown when clicked', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <Select>
         <SelectTrigger>
@@ -54,7 +54,7 @@ describe('Select Component', () => {
   it('should select an option', async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
-    
+
     render(
       <Select onValueChange={onValueChange}>
         <SelectTrigger>
@@ -82,7 +82,7 @@ describe('Select Component', () => {
 
   it('should be accessible with keyboard navigation', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <Select>
         <SelectTrigger>
@@ -101,18 +101,22 @@ describe('Select Component', () => {
 
     // Open with Enter key
     await user.keyboard('{Enter}');
-    
+
     await waitFor(() => {
       expect(screen.getByRole('listbox')).toBeInTheDocument();
     });
 
     // Navigate with arrow keys - with mocked components, we just verify the options are present
     await user.keyboard('{ArrowDown}');
-    
+
     // In a mocked environment, we can't test actual keyboard navigation behavior,
     // but we can verify that the options are accessible
-    expect(screen.getByRole('option', { name: 'Option 1' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Option 2' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', { name: 'Option 1' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', { name: 'Option 2' })
+    ).toBeInTheDocument();
   });
 
   it('should support disabled state', () => {

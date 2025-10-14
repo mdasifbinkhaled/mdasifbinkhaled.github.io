@@ -12,16 +12,30 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
-export default [
+const config = [
   {
     ignores: [
+      // Build outputs
       '.next/**',
       'out/**',
+      'dist/**',
+      'build/**',
+
+      // Dependencies
       'node_modules/**',
+
+      // Test coverage
       'coverage/**',
-      '*.config.js',
-      '*.config.mjs',
-      '*.config.ts',
+      '.nyc_output/**',
+
+      // TypeScript build info
+      '*.tsbuildinfo',
+
+      // Cache directories
+      '.turbo/**',
+      '.eslintcache',
+
+      // Public assets (no linting needed)
       'public/**',
     ],
   },
@@ -29,10 +43,58 @@ export default [
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     rules: {
-      '@typescript-eslint/no-unused-vars': 'error',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      'react-hooks/exhaustive-deps': 'warn',
+      // TypeScript strict rules
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          fixStyle: 'separate-type-imports',
+        },
+      ],
+
+      // React/Next.js rules
+      'react-hooks/exhaustive-deps': 'error',
       'react/no-unescaped-entities': 'off',
+      'react/jsx-curly-brace-presence': [
+        'warn',
+        {
+          props: 'never',
+          children: 'never',
+        },
+      ],
+
+      // Code quality
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'prefer-const': 'error',
+      'no-var': 'error',
+    },
+  },
+  // Relax rules for test files and configs
+  {
+    files: [
+      '**/*.test.{ts,tsx}',
+      '**/*.spec.{ts,tsx}',
+      'tests/**/*',
+      '*.config.{ts,mjs,js}',
+      'vitest.d.ts',
+    ],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/consistent-type-imports': 'off',
+      'react/display-name': 'off',
     },
   },
 ];
+
+export default config;

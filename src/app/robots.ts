@@ -1,6 +1,6 @@
 export const dynamic = 'force-static';
 
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 import { siteConfig } from '@/shared/config/site';
 
 export default function robots(): MetadataRoute.Robots {

@@ -1,27 +1,50 @@
 {
   "name": "mdasifbinkhaled.github.io",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Academic portfolio showcasing research, publications, teaching activities, and professional experience",
+  "author": {
+    "name": "Md Asif Bin Khaled",
+    "url": "https://mdasifbinkhaled.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/issues"
+  },
+  "homepage": "https://mdasifbinkhaled.github.io",
+  "keywords": [
+    "portfolio",
+    "academic",
+    "research",
+    "nextjs",
+    "typescript",
+    "tailwindcss"
+  ],
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=20",
+    "npm": ">=10"
   },
   "packageManager": "npm@11.4.2",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "build:production": "NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production npm run build && sh -c 'mkdir -p out && touch out/.nojekyll'",
-    "postbuild": "echo \"(no-op; export handled by output: export in next.config.ts)\"",
+    "build": "cross-env NEXT_TELEMETRY_DISABLED=1 next build",
+    "build:production": "cross-env NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production npm run build",
+    "postbuild": "node -e \"const fs = require('fs'); fs.mkdirSync('out', { recursive: true }); fs.writeFileSync('out/.nojekyll', '');\"",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src --fix",
     "lint:check": "eslint src",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml}\"",
     "typecheck": "tsc --noEmit",
-    "pre-commit": "npm run typecheck && npm run lint:check",
+    "pre-commit": "lint-staged",
     "prepare": "husky",
-    "validate": "npm run lint:check && npm run test:run && npm run typecheck",
-    "deploy": "npm run build:production && git subtree push --prefix out origin gh-pages"
+    "validate": "npm run lint:check && npm run format:check && npm run test:run && npm run typecheck"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -52,15 +75,20 @@
     "@types/node": "^20.x",
     "@types/react": "^19.1.16",
     "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "autoprefixer": "^10.4.20",
     "commitlint": "^20.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.3",
     "husky": "^9.1.7",
     "jsdom": "^25.x",
+    "lint-staged": "^15.5.2",
     "postcss": "^8.4.41",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.4.13",
     "tailwindcss-animate": "^1.0.7",
+    "tsc-files": "^1.1.4",
     "typescript": "^5.6.x",
     "vitest": "^3.2.4"
   }

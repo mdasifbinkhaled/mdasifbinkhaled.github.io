@@ -99,11 +99,7 @@ vi.mock('lucide-react', async (importOriginal) => {
 
 // Test utilities
 const renderWithTheme = (component: React.ReactElement) => {
-  return render(
-    <AppProviders>
-      {component}
-    </AppProviders>
-  );
+  return render(<AppProviders>{component}</AppProviders>);
 };
 
 describe('ProfileSidebar', () => {

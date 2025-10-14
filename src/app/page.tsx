@@ -260,8 +260,8 @@ export default function HomePage() {
                 <p>
                   Developing AI systems that can explain their reasoning,
                   crucial for healthcare applications where understanding the
-                  &ldquo;why&rdquo; behind a diagnosis is essential for clinician trust and
-                  patient safety.
+                  &ldquo;why&rdquo; behind a diagnosis is essential for
+                  clinician trust and patient safety.
                 </p>
               </CardContent>
             </Card>

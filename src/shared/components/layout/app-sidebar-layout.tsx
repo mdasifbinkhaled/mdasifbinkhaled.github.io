@@ -1,18 +1,27 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { cn } from '@/shared/lib/utils'
-import { Button } from '@/shared/components/ui/button'
-import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/shared/components/ui/sheet'
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { BackToTop } from '@/shared/components/common/back-to-top'
-import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar'
-import { Navbar } from '@/shared/components/navigation/navbar'
+import { useState } from 'react';
+import { cn } from '@/shared/lib/utils';
+import { Button } from '@/shared/components/ui/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetDescription,
+} from '@/shared/components/ui/sheet';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { BackToTop } from '@/shared/components/common/back-to-top';
+import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
+import { Navbar } from '@/shared/components/navigation/navbar';
 
-export default function AppSidebarLayout({ children }: { children: React.ReactNode }) {
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [collapsed, setCollapsed] = useState(false)
+export default function AppSidebarLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -30,8 +39,12 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
           side="left"
           className="w-80 p-0 bg-sidebar text-sidebar-foreground border-r border-sidebar-border z-[60]"
         >
-          <VisuallyHidden asChild><SheetTitle>Navigation menu</SheetTitle></VisuallyHidden>
-          <VisuallyHidden asChild><SheetDescription>Site sections and links</SheetDescription></VisuallyHidden>
+          <VisuallyHidden asChild>
+            <SheetTitle>Navigation menu</SheetTitle>
+          </VisuallyHidden>
+          <VisuallyHidden asChild>
+            <SheetDescription>Site sections and links</SheetDescription>
+          </VisuallyHidden>
           <ProfileSidebar onLinkClick={() => setMobileOpen(false)} />
         </SheetContent>
       </Sheet>
@@ -54,19 +67,27 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
             aria-expanded={!collapsed}
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
+            {collapsed ? (
+              <ChevronRight className="h-3 w-3" />
+            ) : (
+              <ChevronLeft className="h-3 w-3" />
+            )}
           </Button>
           <ProfileSidebar isCollapsed={collapsed} />
         </aside>
 
         {/* Main content */}
-        <main id="main-content" className="flex-1 min-w-0">{children}</main>
+        <main id="main-content" className="flex-1 min-w-0">
+          {children}
+        </main>
       </div>
 
       <footer className="py-6 px-6 text-center border-t bg-background/50 backdrop-blur">
-        <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Md Asif Bin Khaled.</p>
+        <p className="text-sm text-muted-foreground">
+          &copy; {new Date().getFullYear()} Md Asif Bin Khaled.
+        </p>
         <BackToTop />
       </footer>
     </div>
-  )
+  );
 }

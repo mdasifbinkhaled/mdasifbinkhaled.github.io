@@ -14,8 +14,8 @@ export default function NotFound() {
       </h1>
 
       <p className="text-xl text-muted-foreground max-w-md mb-8">
-        Oops! The academic resource you&apos;re looking for couldn&apos;t be located in
-        our repository.
+        Oops! The academic resource you&apos;re looking for couldn&apos;t be
+        located in our repository.
       </p>
 
       <Button size="lg" asChild>

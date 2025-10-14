@@ -145,8 +145,8 @@ export default function ResearchPage() {
                   Detection through AI and Machine Learning Techniques
                 </CardTitle>
                 <CardDescription>
-                  Principal Investigator, VC&apos;s Research Fund 2024-2025 (Project
-                  ID: VCRF-SETS:24-013)
+                  Principal Investigator, VC&apos;s Research Fund 2024-2025
+                  (Project ID: VCRF-SETS:24-013)
                 </CardDescription>
               </div>
             </CardHeader>

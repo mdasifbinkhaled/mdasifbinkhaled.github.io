@@ -1,0 +1,81 @@
+name: Security Scanning
+
+on:
+  push:
+    branches: ['main', 'develop']
+  pull_request:
+    branches: ['main']
+  schedule:
+    # Run security scan weekly on Mondays at 00:00 UTC
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  dependency-audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run npm audit
+        run: |
+          echo "## 🔒 Dependency Audit Results" >> $GITHUB_STEP_SUMMARY
+
+          # Check for high/critical vulnerabilities
+          if npm audit --audit-level=high; then
+            echo "✅ No high or critical vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ High or critical vulnerabilities detected!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Audit Details" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            npm audit --audit-level=high >> $GITHUB_STEP_SUMMARY 2>&1 || true
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          # Display moderate vulnerabilities as info (non-blocking)
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Moderate Vulnerabilities (Informational)" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate >> $GITHUB_STEP_SUMMARY 2>&1 || echo "None found" >> $GITHUB_STEP_SUMMARY
+
+  codeql-analysis:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['javascript-typescript']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:${{matrix.language}}'

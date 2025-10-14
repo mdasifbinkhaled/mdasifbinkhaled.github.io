@@ -224,7 +224,10 @@ export function ThemeSelector({
                             {themeOption.label}
                           </span>
                           {theme === themeOption.name && (
-                            <Check className="h-3 w-3 text-primary" aria-label="Currently selected" />
+                            <Check
+                              className="h-3 w-3 text-primary"
+                              aria-label="Currently selected"
+                            />
                           )}
                         </div>
                         <p className="text-xs text-muted-foreground truncate">

@@ -1,15 +1,34 @@
-# Global ownership - you are the owner of everything in this repository
+# ==========================================
+# CODEOWNERS - Code Review Assignments
+# ==========================================
+# Global ownership
 * @mdasifbinkhaled
 
-# Specific areas for focused review
-/.github/ @mdasifbinkhaled
-/src/app/ @mdasifbinkhaled
-/src/shared/config/ @mdasifbinkhaled
-
-# Dependencies and configuration files require careful review
+# ==========================================
+# CONFIGURATION FILES (High Risk)
+# ==========================================
+*.config.ts @mdasifbinkhaled
+*.config.mjs @mdasifbinkhaled
+*.config.json @mdasifbinkhaled
+tsconfig*.json @mdasifbinkhaled
 package.json @mdasifbinkhaled
 package-lock.json @mdasifbinkhaled
-tsconfig.json @mdasifbinkhaled
-next.config.js @mdasifbinkhaled
-tailwind.config.ts @mdasifbinkhaled
-eslint.config.js @mdasifbinkhaled
+
+# ==========================================
+# CI/CD & WORKFLOWS
+# ==========================================
+/.github/ @mdasifbinkhaled
+.husky/ @mdasifbinkhaled
+
+# ==========================================
+# SOURCE CODE AREAS
+# ==========================================
+/src/app/ @mdasifbinkhaled
+/src/shared/config/ @mdasifbinkhaled
+/tests/ @mdasifbinkhaled
+
+# ==========================================
+# DOCUMENTATION
+# ==========================================
+*.md @mdasifbinkhaled
+/docs/ @mdasifbinkhaled

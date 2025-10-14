@@ -20,7 +20,7 @@
   --border: 0 0% 89.8%;
   --input: 0 0% 89.8%;
   --ring: 0 0% 3.9%;
-  
+
   /* Sidebar Colors */
   --sidebar-background: var(--card);
   --sidebar-foreground: var(--card-foreground);
@@ -30,54 +30,55 @@
   --sidebar-accent-foreground: var(--accent-foreground);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
-  
+
   /* Academic Colors */
   --academic-primary: var(--primary);
   --academic-accent: var(--accent);
   --academic-muted: var(--muted);
   --academic-card: var(--card);
   --academic-highlight: 210 100% 95%;
-  
+
   /* Border Radius */
   --radius: 0.5rem;
-  
+
   /* Spacing Scale */
-  --space-xs: 0.25rem;    /* 4px */
-  --space-sm: 0.5rem;     /* 8px */
-  --space-md: 1rem;       /* 16px */
-  --space-lg: 1.5rem;     /* 24px */
-  --space-xl: 2rem;       /* 32px */
-  --space-2xl: 3rem;      /* 48px */
-  --space-3xl: 4rem;      /* 64px */
-  
+  --space-xs: 0.25rem; /* 4px */
+  --space-sm: 0.5rem; /* 8px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+
   /* Typography Scale */
-  --text-xs: 0.75rem;     /* 12px */
-  --text-sm: 0.875rem;    /* 14px */
-  --text-base: 1rem;      /* 16px */
-  --text-lg: 1.125rem;    /* 18px */
-  --text-xl: 1.25rem;     /* 20px */
-  --text-2xl: 1.5rem;     /* 24px */
-  --text-3xl: 1.875rem;   /* 30px */
-  --text-4xl: 2.25rem;    /* 36px */
-  
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+
   /* Border Radius Variants */
-  --radius-sm: 0.25rem;   /* 4px */
-  --radius-md: 0.375rem;  /* 6px */
-  --radius-lg: 0.5rem;    /* 8px */
-  --radius-xl: 0.75rem;   /* 12px */
-  
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.375rem; /* 6px */
+  --radius-lg: 0.5rem; /* 8px */
+  --radius-xl: 0.75rem; /* 12px */
+
   /* Shadow Scale */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
   /* Layout */
   --sidebar-width: 280px;
   --navbar-height: 64px;
   --content-max-width: 1024px;
   --content-padding: 1.5rem;
   --max-content-width: 1024px;
-  
+
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
@@ -85,7 +86,8 @@
 }
 
 /* Dark Theme */
-.dark, [data-theme="dark"] {
+.dark,
+[data-theme='dark'] {
   --background: 0 0% 3.9%;
   --foreground: 0 0% 98%;
   --card: 0 0% 3.9%;
@@ -105,41 +107,89 @@
   --border: 0 0% 14.9%;
   --input: 0 0% 14.9%;
   --ring: 0 0% 83.1%;
-  
+
   /* Academic Colors - Dark Theme */
   --academic-highlight: 210 50% 15%;
 }
 
 /* Utility Classes */
-.bg-background { background-color: hsl(var(--background)); }
-.bg-foreground { background-color: hsl(var(--foreground)); }
-.bg-card { background-color: hsl(var(--card)); }
-.bg-primary { background-color: hsl(var(--primary)); }
-.bg-secondary { background-color: hsl(var(--secondary)); }
-.bg-muted { background-color: hsl(var(--muted)); }
-.bg-accent { background-color: hsl(var(--accent)); }
+.bg-background {
+  background-color: hsl(var(--background));
+}
+.bg-foreground {
+  background-color: hsl(var(--foreground));
+}
+.bg-card {
+  background-color: hsl(var(--card));
+}
+.bg-primary {
+  background-color: hsl(var(--primary));
+}
+.bg-secondary {
+  background-color: hsl(var(--secondary));
+}
+.bg-muted {
+  background-color: hsl(var(--muted));
+}
+.bg-accent {
+  background-color: hsl(var(--accent));
+}
 
-.text-foreground { color: hsl(var(--foreground)); }
-.text-muted-foreground { color: hsl(var(--muted-foreground)); }
-.text-primary-foreground { color: hsl(var(--primary-foreground)); }
-.text-secondary-foreground { color: hsl(var(--secondary-foreground)); }
-.text-accent-foreground { color: hsl(var(--accent-foreground)); }
+.text-foreground {
+  color: hsl(var(--foreground));
+}
+.text-muted-foreground {
+  color: hsl(var(--muted-foreground));
+}
+.text-primary-foreground {
+  color: hsl(var(--primary-foreground));
+}
+.text-secondary-foreground {
+  color: hsl(var(--secondary-foreground));
+}
+.text-accent-foreground {
+  color: hsl(var(--accent-foreground));
+}
 
-.border-border { border-color: hsl(var(--border)); }
-.border-input { border-color: hsl(var(--input)); }
+.border-border {
+  border-color: hsl(var(--border));
+}
+.border-input {
+  border-color: hsl(var(--input));
+}
 
-.rounded-sm { border-radius: var(--radius-sm); }
-.rounded-md { border-radius: var(--radius-md); }
-.rounded-lg { border-radius: var(--radius-lg); }
-.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-sm {
+  border-radius: var(--radius-sm);
+}
+.rounded-md {
+  border-radius: var(--radius-md);
+}
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+.rounded-xl {
+  border-radius: var(--radius-xl);
+}
 
-.shadow-sm { box-shadow: var(--shadow-sm); }
-.shadow-md { box-shadow: var(--shadow-md); }
-.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
 
-.transition-fast { transition: all var(--transition-fast); }
-.transition-normal { transition: all var(--transition-normal); }
-.transition-slow { transition: all var(--transition-slow); }
+.transition-fast {
+  transition: all var(--transition-fast);
+}
+.transition-normal {
+  transition: all var(--transition-normal);
+}
+.transition-slow {
+  transition: all var(--transition-slow);
+}
 
 /* Component Patterns */
 .sidebar-base {
@@ -188,7 +238,7 @@
     left: 0;
     z-index: 50;
   }
-  
+
   .page-container {
     padding: var(--space-md);
   }
@@ -200,8 +250,8 @@
     --border: 0 0% 20%;
     --ring: 0 0% 10%;
   }
-  
-  [data-theme="dark"] {
+
+  [data-theme='dark'] {
     --border: 0 0% 80%;
     --ring: 0 0% 90%;
   }
@@ -210,7 +260,7 @@
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .transition-fast,
-  .transition-normal, 
+  .transition-normal,
   .transition-slow {
     transition: none;
   }

@@ -27,10 +27,8 @@ coverage
 # macOS
 .DS_Store
 
-# Package lock files
+# Package lock files (auto-generated, should not be formatted)
 package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
 # Generated files
 *.tsbuildinfo

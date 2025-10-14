@@ -44,10 +44,10 @@ describe('Analytics Integration', () => {
   describe('Publication Card Analytics', () => {
     it('should track publication view when clicking View link', () => {
       render(<PublicationCard publication={mockPublication} />);
-      
+
       const viewButton = screen.getByText('View');
       fireEvent.click(viewButton);
-      
+
       expect(academicEvents.viewPublication).toHaveBeenCalledWith(
         mockPublication.id,
         mockPublication.title
@@ -56,10 +56,10 @@ describe('Analytics Integration', () => {
 
     it('should track publication download when clicking PDF link', () => {
       render(<PublicationCard publication={mockPublication} />);
-      
+
       const pdfButton = screen.getByText('PDF');
       fireEvent.click(pdfButton);
-      
+
       expect(academicEvents.downloadPublication).toHaveBeenCalledWith(
         mockPublication.id,
         mockPublication.title
@@ -68,12 +68,14 @@ describe('Analytics Integration', () => {
 
     it('should handle publication without id by using title', () => {
       const { id, ...publicationWithoutId } = mockPublication;
-      
-      render(<PublicationCard publication={{ ...publicationWithoutId, id: '' }} />);
-      
+
+      render(
+        <PublicationCard publication={{ ...publicationWithoutId, id: '' }} />
+      );
+
       const viewButton = screen.getByText('View');
       fireEvent.click(viewButton);
-      
+
       expect(academicEvents.viewPublication).toHaveBeenCalledWith(
         mockPublication.title,
         mockPublication.title
@@ -86,9 +88,9 @@ describe('Analytics Integration', () => {
         link: undefined,
         pdfLink: undefined,
       };
-      
+
       render(<PublicationCard publication={publicationNoLinks} />);
-      
+
       expect(screen.queryByText('View')).not.toBeInTheDocument();
       expect(screen.queryByText('PDF')).not.toBeInTheDocument();
     });

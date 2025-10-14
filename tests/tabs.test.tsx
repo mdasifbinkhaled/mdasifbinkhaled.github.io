@@ -45,7 +45,7 @@ describe('Tabs Component', () => {
 
   it('should switch content when tab is clicked', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <Tabs defaultValue="tab1">
         <TabsList>
@@ -68,7 +68,7 @@ describe('Tabs Component', () => {
 
   it('should support controlled state', () => {
     const onValueChange = vi.fn();
-    
+
     render(
       <Tabs value="tab2" onValueChange={onValueChange}>
         <TabsList>
@@ -107,7 +107,7 @@ describe('Tabs Component', () => {
 
   it('should be keyboard navigable', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <Tabs defaultValue="tab1">
         <TabsList>
@@ -140,7 +140,9 @@ describe('Tabs Component', () => {
       <Tabs defaultValue="tab1">
         <TabsList>
           <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-          <TabsTrigger value="tab2" disabled>Tab 2</TabsTrigger>
+          <TabsTrigger value="tab2" disabled>
+            Tab 2
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="tab1">Content 1</TabsContent>
         <TabsContent value="tab2">Content 2</TabsContent>

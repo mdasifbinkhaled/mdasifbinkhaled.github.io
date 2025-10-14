@@ -207,7 +207,8 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               className={cn(
                 'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
                 isCollapsed ? 'w-full justify-center' : 'w-full justify-start',
-                isActive('/research') && 'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
+                isActive('/research') &&
+                  'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
               )}
               title={isCollapsed ? 'Research Focus' : undefined}
             >
@@ -237,7 +238,8 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               className={cn(
                 'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
                 isCollapsed ? 'w-full justify-center' : 'w-full justify-start',
-                isActive('/publications') && 'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
+                isActive('/publications') &&
+                  'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
               )}
               title={isCollapsed ? 'Publications' : undefined}
             >

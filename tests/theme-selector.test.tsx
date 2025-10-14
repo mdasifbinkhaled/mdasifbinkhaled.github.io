@@ -7,7 +7,7 @@ import { AppProviders } from '../src/shared/providers/app-providers';
 
 // Mock next-themes module
 vi.mock('next-themes', async (importOriginal) => {
-  const actual = await importOriginal() as any
+  const actual = (await importOriginal()) as any;
   return {
     ...actual,
     useTheme: () => ({
@@ -15,9 +15,11 @@ vi.mock('next-themes', async (importOriginal) => {
       setTheme: vi.fn(),
       themes: ['light', 'dark'],
     }),
-    ThemeProvider: ({ children }: { children: React.ReactNode }) => <div data-testid="theme-provider">{children}</div>,
-  }
-})
+    ThemeProvider: ({ children }: { children: React.ReactNode }) => (
+      <div data-testid="theme-provider">{children}</div>
+    ),
+  };
+});
 
 // Wrapper component with theme provider
 const ThemeWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -68,7 +70,7 @@ describe('ThemeSelector Component', () => {
 
   it('should open dropdown menu when clicked', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <ThemeWrapper>
         <ThemeSelector variant="compact" />
@@ -85,7 +87,7 @@ describe('ThemeSelector Component', () => {
 
   it('should show theme options in dropdown', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <ThemeWrapper>
         <ThemeSelector variant="compact" />
@@ -110,14 +112,14 @@ describe('ThemeSelector Component', () => {
 
     const trigger = screen.getByRole('button');
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
-    
+
     const srOnlyText = screen.getByText('Change theme');
     expect(srOnlyText).toHaveClass('sr-only');
   });
 
   it('should be keyboard navigable', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <ThemeWrapper>
         <ThemeSelector variant="compact" />
@@ -130,7 +132,7 @@ describe('ThemeSelector Component', () => {
 
     // Open menu with Enter
     await user.keyboard('{Enter}');
-    
+
     await waitFor(() => {
       expect(screen.getByRole('menu')).toBeInTheDocument();
     });

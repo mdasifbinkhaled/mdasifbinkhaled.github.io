@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next'
+import type { NextConfig } from 'next';
 
 const config: NextConfig = {
   output: 'export',
@@ -7,9 +7,17 @@ const config: NextConfig = {
   images: {
     unoptimized: true,
     remotePatterns: [
-      { protocol: 'https', hostname: 'avatars.githubusercontent.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'raw.githubusercontent.com', pathname: '/**' }
-    ]
-  }
-}
-export default config
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        pathname: '/**',
+      },
+    ],
+  },
+};
+export default config;

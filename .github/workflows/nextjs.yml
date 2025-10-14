@@ -46,26 +46,19 @@ jobs:
         with:
           path: |
             .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.config.{ts,js,mjs}', 'src/**/*.{ts,tsx}') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package.json') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-
 
       - name: Install dependencies
         run: |
           npm ci --prefer-offline --no-audit --progress=false
 
-      - name: Lint and Type Check
-        run: |
-          npm run lint:check
-          npm run typecheck
-
       - name: Build with Next.js
         run: npm run build
         env:
           NODE_ENV: production
-
-      - name: Add .nojekyll file
-        run: touch ./out/.nojekyll
 
       - name: Verify build output
         run: |

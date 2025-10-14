@@ -32,14 +32,14 @@ describe('BackToTop', () => {
 
   it('renders back to top button', () => {
     render(<BackToTop />);
-    
+
     const button = screen.getByRole('button', { name: /scroll back to top/i });
     expect(button).toBeInTheDocument();
   });
 
   it('has proper accessibility attributes', () => {
     render(<BackToTop />);
-    
+
     const button = screen.getByRole('button', { name: /scroll back to top/i });
     expect(button).toHaveAttribute('aria-label', 'Scroll back to top');
   });
@@ -47,12 +47,12 @@ describe('BackToTop', () => {
   it('scrolls to top when clicked', () => {
     const mockScrollTo = vi.fn();
     window.scrollTo = mockScrollTo;
-    
+
     render(<BackToTop />);
-    
+
     const button = screen.getByRole('button', { name: /scroll back to top/i });
     fireEvent.click(button);
-    
+
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 0,
       behavior: 'smooth',
@@ -65,21 +65,23 @@ describe('BackToTop', () => {
       value: 200, // Below 300 threshold
       writable: true,
     });
-    
+
     render(<BackToTop />);
-    
-    const button = screen.queryByRole('button', { name: /scroll back to top/i });
+
+    const button = screen.queryByRole('button', {
+      name: /scroll back to top/i,
+    });
     expect(button).not.toBeInTheDocument();
   });
 
   it('has keyboard support', () => {
     const mockScrollTo = vi.fn();
     window.scrollTo = mockScrollTo;
-    
+
     render(<BackToTop />);
-    
+
     const button = screen.getByRole('button', { name: /scroll back to top/i });
-    
+
     // Button should be focusable and accessible
     expect(button).toBeInTheDocument();
     expect(button).toHaveAttribute('aria-label');
@@ -88,12 +90,12 @@ describe('BackToTop', () => {
   it('uses smooth scrolling behavior', () => {
     const mockScrollTo = vi.fn();
     window.scrollTo = mockScrollTo;
-    
+
     render(<BackToTop />);
-    
+
     const button = screen.getByRole('button', { name: /scroll back to top/i });
     fireEvent.click(button);
-    
+
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 0,
       behavior: 'smooth',
