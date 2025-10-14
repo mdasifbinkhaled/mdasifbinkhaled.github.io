@@ -202,20 +202,24 @@ type ToastTestUtils = {
   reset: () => void;
 };
 
-export const __TOAST_TEST_UTILS: ToastTestUtils | undefined =
-  process.env.NODE_ENV === 'test'
-    ? {
-        getListenerCount: () => listeners.length,
-        reset: () => {
-          listeners.splice(0, listeners.length);
-          toastTimeouts.forEach((timeout) => {
-            clearTimeout(timeout);
-          });
-          toastTimeouts.clear();
-          memoryState = { toasts: [] };
-          count = 0;
-        },
-      }
-    : undefined;
+// Test utilities only available in test environment
+const isTestEnv =
+  typeof globalThis !== 'undefined' &&
+  (globalThis as Record<string, unknown>).NODE_ENV === 'test';
+
+export const __TOAST_TEST_UTILS: ToastTestUtils | undefined = isTestEnv
+  ? {
+      getListenerCount: () => listeners.length,
+      reset: () => {
+        listeners.splice(0, listeners.length);
+        toastTimeouts.forEach((timeout) => {
+          clearTimeout(timeout);
+        });
+        toastTimeouts.clear();
+        memoryState = { toasts: [] };
+        count = 0;
+      },
+    }
+  : undefined;
 
 export { useToast, toast };
