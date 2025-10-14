@@ -1,0 +1,54 @@
+{
+  "id": "iub-cse203-fall2024",
+  "code": "CSE 203",
+  "title": "Data Structures",
+  "institution": "IUB",
+  "level": "undergraduate",
+  "credits": 3,
+  "semester": "Fall",
+  "year": 2024,
+  "description": "Implementation and application of fundamental data structures including arrays, linked lists, stacks, queues, trees, and graphs.",
+  "objectives": [
+    "Implement fundamental data structures",
+    "Choose appropriate data structures for problems",
+    "Analyze performance characteristics",
+    "Apply data structures in practical scenarios"
+  ],
+  "outcomes": [
+    "Students can implement all major data structures",
+    "Students can analyze space-time trade-offs",
+    "Students can solve problems using appropriate structures",
+    "Students understand memory management concepts"
+  ],
+  "topics": [
+    "Arrays and Linked Lists",
+    "Stacks and Queues",
+    "Trees and Binary Search Trees",
+    "Heaps and Priority Queues",
+    "Hash Tables",
+    "Graph Representations"
+  ],
+  "technologies": ["C++", "Java", "Data Structure Visualizer", "Eclipse IDE"],
+  "assignments": [
+    "Linked List Implementation",
+    "Binary Tree Operations",
+    "Hash Table with Collision Handling",
+    "Graph Algorithms Implementation"
+  ],
+  "projects": ["Expression Evaluator", "File System Simulator"],
+  "assessment": {
+    "midterm": 25,
+    "final": 35,
+    "assignments": 25,
+    "projects": 15
+  },
+  "enrollmentCount": 42,
+  "rating": 4.6,
+  "feedback": [
+    "Hands-on approach helps understanding",
+    "Good progression from simple to complex",
+    "Practical examples are very helpful"
+  ],
+  "iconName": "Database",
+  "status": "ongoing"
+}

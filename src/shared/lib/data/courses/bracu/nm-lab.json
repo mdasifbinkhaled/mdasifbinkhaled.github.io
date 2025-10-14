@@ -1,0 +1,53 @@
+{
+  "id": "bracu-nm-lab-summer2022",
+  "code": "MAT 361",
+  "title": "Numerical Methods Lab",
+  "institution": "BRACU",
+  "level": "undergraduate",
+  "credits": 1,
+  "semester": "Summer",
+  "year": 2022,
+  "description": "Hands-on implementation of numerical computation methods using MATLAB and Python.",
+  "objectives": [
+    "Implement numerical algorithms",
+    "Master MATLAB programming",
+    "Analyze numerical accuracy",
+    "Apply methods to real problems"
+  ],
+  "outcomes": [
+    "Students can program numerical methods",
+    "Students understand error analysis",
+    "Students can use scientific computing tools",
+    "Students can solve engineering problems numerically"
+  ],
+  "topics": [
+    "MATLAB Programming",
+    "Root Finding Algorithms",
+    "Matrix Computations",
+    "Interpolation Methods",
+    "Numerical Integration",
+    "ODE Solvers"
+  ],
+  "technologies": ["MATLAB", "Python", "NumPy", "SciPy", "Jupyter"],
+  "assignments": [
+    "MATLAB Function Library",
+    "Error Analysis Study",
+    "Engineering Problem Solutions",
+    "Optimization Implementation"
+  ],
+  "projects": ["Scientific Calculator", "Engineering Analysis Tool"],
+  "assessment": {
+    "assignments": 50,
+    "projects": 40,
+    "participation": 10
+  },
+  "enrollmentCount": 20,
+  "rating": 4.7,
+  "feedback": [
+    "Great introduction to scientific computing",
+    "MATLAB tutorials were very helpful",
+    "Real-world applications made concepts clear"
+  ],
+  "iconName": "Calculator",
+  "status": "completed"
+}

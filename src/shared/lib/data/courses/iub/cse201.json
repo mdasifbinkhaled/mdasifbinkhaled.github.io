@@ -1,0 +1,54 @@
+{
+  "id": "iub-cse201-spring2024",
+  "code": "CSE 201",
+  "title": "Algorithms",
+  "institution": "IUB",
+  "level": "undergraduate",
+  "credits": 3,
+  "semester": "Spring",
+  "year": 2024,
+  "description": "Design and analysis of algorithms, complexity theory, and advanced data structures.",
+  "objectives": [
+    "Analyze time and space complexity of algorithms",
+    "Design efficient algorithms for various problems",
+    "Understand advanced data structures",
+    "Apply algorithmic techniques to real-world problems"
+  ],
+  "outcomes": [
+    "Students can analyze algorithm complexity",
+    "Students can design optimal solutions",
+    "Students understand graph algorithms",
+    "Students can implement advanced data structures"
+  ],
+  "topics": [
+    "Algorithm Analysis",
+    "Sorting and Searching",
+    "Graph Algorithms",
+    "Dynamic Programming",
+    "Greedy Algorithms",
+    "Network Flow"
+  ],
+  "technologies": ["C++", "Python", "Algorithm Visualizer", "LeetCode"],
+  "assignments": [
+    "Sorting Algorithm Comparison",
+    "Graph Traversal Implementation",
+    "Dynamic Programming Solutions",
+    "Optimization Problems"
+  ],
+  "projects": ["Route Optimization System", "Social Network Analysis Tool"],
+  "assessment": {
+    "midterm": 30,
+    "final": 40,
+    "assignments": 20,
+    "projects": 10
+  },
+  "enrollmentCount": 38,
+  "rating": 4.8,
+  "feedback": [
+    "Challenging but rewarding course",
+    "Great use of visual aids for complex concepts",
+    "Well-structured progression of topics"
+  ],
+  "iconName": "Brain",
+  "status": "completed"
+}

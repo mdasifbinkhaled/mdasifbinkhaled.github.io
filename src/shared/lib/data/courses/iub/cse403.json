@@ -1,0 +1,54 @@
+{
+  "id": "iub-cse403-fall2024",
+  "code": "CSE 403",
+  "title": "Finite Automata and Computability",
+  "institution": "IUB",
+  "level": "undergraduate",
+  "credits": 3,
+  "semester": "Fall",
+  "year": 2024,
+  "description": "Theory of computation, formal languages, and computational complexity.",
+  "objectives": [
+    "Understand formal language theory",
+    "Design finite automata and grammars",
+    "Analyze computational complexity",
+    "Explore limits of computation"
+  ],
+  "outcomes": [
+    "Students can design automata",
+    "Students understand formal grammars",
+    "Students can prove language properties",
+    "Students understand computational limits"
+  ],
+  "topics": [
+    "Finite Automata",
+    "Regular Languages",
+    "Context-Free Grammars",
+    "Pushdown Automata",
+    "Turing Machines",
+    "Computational Complexity"
+  ],
+  "technologies": ["JFLAP", "Formal Language Tools", "Automata Simulators"],
+  "assignments": [
+    "Automata Design Problems",
+    "Grammar Construction Exercises",
+    "Complexity Analysis Tasks",
+    "Proof Writing Assignments"
+  ],
+  "projects": ["Language Recognition Tool", "Automata Simulator"],
+  "assessment": {
+    "midterm": 30,
+    "final": 40,
+    "assignments": 20,
+    "projects": 10
+  },
+  "enrollmentCount": 25,
+  "rating": 4.3,
+  "feedback": [
+    "Abstract concepts made concrete",
+    "Good use of visualization tools",
+    "Theoretical depth with practical examples"
+  ],
+  "iconName": "BookOpen",
+  "status": "ongoing"
+}

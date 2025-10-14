@@ -1,0 +1,53 @@
+{
+  "id": "bracu-android-lab-spring2023",
+  "code": "CSE 489",
+  "title": "Android Development Lab",
+  "institution": "BRACU",
+  "level": "undergraduate",
+  "credits": 1,
+  "semester": "Spring",
+  "year": 2023,
+  "description": "Building mobile applications for Android platform using Java/Kotlin and Android SDK.",
+  "objectives": [
+    "Master Android development basics",
+    "Create user-friendly mobile interfaces",
+    "Implement data persistence",
+    "Integrate web services"
+  ],
+  "outcomes": [
+    "Students can build Android apps",
+    "Students can design mobile UIs",
+    "Students can handle data storage",
+    "Students can consume REST APIs"
+  ],
+  "topics": [
+    "Android Studio and SDK",
+    "Activities and Fragments",
+    "User Interface Design",
+    "Data Storage Options",
+    "Networking and APIs",
+    "Publishing Apps"
+  ],
+  "technologies": ["Android Studio", "Java", "Kotlin", "Firebase", "REST APIs"],
+  "assignments": [
+    "Basic UI Applications",
+    "Database Integration App",
+    "Network-enabled App",
+    "Final Project App"
+  ],
+  "projects": ["Social Media App Clone", "E-commerce Mobile App"],
+  "assessment": {
+    "assignments": 40,
+    "projects": 50,
+    "participation": 10
+  },
+  "enrollmentCount": 22,
+  "rating": 4.8,
+  "feedback": [
+    "Very practical and industry-relevant",
+    "Great project-based learning approach",
+    "Excellent guidance on app development"
+  ],
+  "iconName": "Code2",
+  "status": "completed"
+}

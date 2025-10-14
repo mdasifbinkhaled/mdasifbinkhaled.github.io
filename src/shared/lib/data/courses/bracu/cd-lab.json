@@ -1,0 +1,56 @@
+{
+  "id": "bracu-cd-lab-fall2022",
+  "code": "CSE 420",
+  "title": "Compiler Design Lab",
+  "institution": "BRACU",
+  "level": "undergraduate",
+  "credits": 1,
+  "semester": "Fall",
+  "year": 2022,
+  "description": "Implementation of compiler components including lexical analysis, parsing, and code generation.",
+  "objectives": [
+    "Implement compiler phases",
+    "Understand language processing",
+    "Build lexical analyzers and parsers",
+    "Generate intermediate code"
+  ],
+  "outcomes": [
+    "Students can build lexical analyzers",
+    "Students can implement parsers",
+    "Students understand symbol tables",
+    "Students can generate code"
+  ],
+  "topics": [
+    "Lexical Analysis",
+    "Syntax Analysis",
+    "Semantic Analysis",
+    "Symbol Tables",
+    "Intermediate Code Generation",
+    "Code Optimization"
+  ],
+  "technologies": ["Flex", "Bison", "C/C++", "ANTLR", "Compiler Tools"],
+  "assignments": [
+    "Lexical Analyzer Implementation",
+    "Parser Construction",
+    "Symbol Table Management",
+    "Code Generator"
+  ],
+  "projects": [
+    "Mini Compiler for Simple Language",
+    "Expression Evaluator with Code Generation"
+  ],
+  "assessment": {
+    "assignments": 50,
+    "projects": 45,
+    "participation": 5
+  },
+  "enrollmentCount": 18,
+  "rating": 4.4,
+  "feedback": [
+    "Complex topic made understandable",
+    "Step-by-step approach was helpful",
+    "Good balance of theory and implementation"
+  ],
+  "iconName": "Brain",
+  "status": "completed"
+}
