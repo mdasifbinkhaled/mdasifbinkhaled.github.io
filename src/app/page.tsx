@@ -61,7 +61,7 @@ export default function HomePage() {
       <Breadcrumbs />
 
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-20 xl:py-24 bg-gradient-to-br from-background via-secondary/20 to-primary/5 relative overflow-hidden">
+      <section className="w-full py-[var(--space-section-lg)] bg-gradient-to-br from-background via-secondary/20 to-primary/5 relative overflow-hidden">
         <div className="hero-container">
           <div className="hero-grid">
             {/* Content Section */}
@@ -101,7 +101,7 @@ export default function HomePage() {
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-16 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-card-default)] text-center mt-[var(--space-section-md)] max-w-4xl mx-auto">
             {[
               {
                 number: '15+',
@@ -148,7 +148,7 @@ export default function HomePage() {
       </section>
 
       {/* Quick Access Search */}
-      <section className="w-full py-8 md:py-12">
+      <section className="w-full py-[var(--space-section-md)]">
         <div className="container-responsive">
           <Card className="overflow-hidden">
             <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5">
@@ -194,10 +194,12 @@ export default function HomePage() {
       </section>
 
       {/* News Section */}
-      <section className="w-full py-8 md:py-12 bg-secondary/10">
+      <section className="w-full py-[var(--space-section-md)] bg-secondary/10">
         <div className="container-responsive">
-          <h2 className="text-2xl font-bold mb-6 text-primary">News</h2>
-          <div className="space-y-3">
+          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary">
+            News
+          </h2>
+          <div className="space-y-[var(--space-card-sm)]">
             {newsItems.map((item, index) => (
               <div key={index} className="flex gap-2 text-sm">
                 <span className="font-medium text-muted-foreground whitespace-nowrap">
@@ -227,9 +229,9 @@ export default function HomePage() {
       </section>
 
       {/* Work Experience Section */}
-      <section className="w-full py-8 md:py-12">
+      <section className="w-full py-[var(--space-section-md)]">
         <div className="container-responsive">
-          <h2 className="text-2xl font-bold mb-6 text-primary">
+          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary">
             Work Experience
           </h2>
           <ExperienceCompact experiences={recentExperiences} />
@@ -244,13 +246,13 @@ export default function HomePage() {
       </section>
 
       {/* Research Interests */}
-      <section className="w-full py-12 md:py-16">
+      <section className="w-full py-[var(--space-section-lg)]">
         <div className="container-responsive">
-          <h2 className="text-3xl font-bold text-center mb-8 text-primary">
+          <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
             Research Interests
           </h2>
-          <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
-            <Card className="shadow-lg hover:shadow-xl transition-shadow">
+          <div className="grid gap-[var(--space-card-lg)] md:grid-cols-2 max-w-4xl mx-auto">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="text-xl">Explainable AI (XAI)</CardTitle>
                 <CardDescription>
@@ -293,9 +295,9 @@ export default function HomePage() {
       </section>
 
       {/* Publications Section */}
-      <section className="w-full py-8 md:py-12 bg-secondary/10">
+      <section className="w-full py-[var(--space-section-md)] bg-secondary/10">
         <div className="container-responsive">
-          <h2 className="text-2xl font-bold mb-6 text-primary">
+          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary">
             Recent Publications
           </h2>
           <PublicationList
@@ -315,13 +317,13 @@ export default function HomePage() {
       </section>
 
       {/* Grants and Highlight */}
-      <section className="w-full py-12 md:py-16">
+      <section className="w-full py-[var(--space-section-lg)]">
         <div className="container-responsive">
-          <h2 className="text-3xl font-bold text-center mb-8 text-primary">
+          <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
             Recent Grants
           </h2>
-          <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 max-w-5xl mx-auto">
-            <Card className="shadow-lg hover:shadow-xl transition-shadow">
+          <div className="grid gap-[var(--space-card-default)] md:grid-cols-1 lg:grid-cols-2 max-w-5xl mx-auto">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="text-xl">
                   Development and Analysis of a Comprehensive Sorting Algorithm

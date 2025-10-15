@@ -60,12 +60,12 @@ const certifications = [
 
 export default function AboutPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-[var(--space-section-md)]">
       <header className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           About {siteConfig.author}
         </h1>
-        <p className="mt-4 text-lg leading-8 text-muted-foreground">
+        <p className="mt-[var(--space-card-default)] text-lg leading-8 text-muted-foreground">
           A Senior Lecturer and Researcher dedicated to advancing AI in
           healthcare through transparent and innovative solutions.
         </p>
@@ -126,11 +126,11 @@ export default function AboutPage() {
       </section>
 
       <section id="education">
-        <h2 className="text-3xl font-bold text-center mb-8 text-primary">
+        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
           Education
         </h2>
-        <div className="grid gap-8 md:grid-cols-2">
-          <Card className="shadow-md">
+        <div className="grid gap-[var(--space-card-lg)] md:grid-cols-2">
+          <Card className="shadow-md hover:shadow-xl transition-all duration-300">
             <CardHeader className="flex flex-row items-start gap-4">
               <GraduationCap className="h-10 w-10 text-primary mt-1 flex-shrink-0" />
               <div>
@@ -192,13 +192,16 @@ export default function AboutPage() {
           </Card>
         </div>
       </section>
-      <section id="certifications" className="mt-12">
-        <h2 className="text-3xl font-bold text-center mb-8 text-primary">
+      <section id="certifications">
+        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
           Certifications & Training
         </h2>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-[var(--space-card-default)] md:grid-cols-2">
           {certifications.map((cert, index) => (
-            <Card key={index} className="shadow-md">
+            <Card
+              key={index}
+              className="shadow-md hover:shadow-lg transition-all duration-300"
+            >
               <CardHeader className="flex flex-row items-start gap-3">
                 <Award className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
                 <div>
