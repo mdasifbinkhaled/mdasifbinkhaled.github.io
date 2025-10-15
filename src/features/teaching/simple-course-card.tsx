@@ -20,7 +20,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import type { CourseData, CourseStatus } from '@/shared/types';
 import { institutionNames } from '@/shared/lib/data/courses';
 import { Icon } from '@/shared/components/common/icons';
@@ -31,7 +31,7 @@ interface SimpleCourseCardProps {
   showFullDetails?: boolean;
 }
 
-export function SimpleCourseCard({
+export const SimpleCourseCard = memo(function SimpleCourseCard({
   course,
   showFullDetails = false,
 }: SimpleCourseCardProps) {
@@ -245,4 +245,4 @@ export function SimpleCourseCard({
       )}
     </Card>
   );
-}
+});

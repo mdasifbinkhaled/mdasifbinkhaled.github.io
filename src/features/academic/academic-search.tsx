@@ -5,6 +5,8 @@ import { SearchInput } from './components/search-input';
 import { FilterBar } from './components/filter-bar';
 import { SearchResults } from './components/search-results';
 import { useSearchFilter } from './hooks/use-search-filter';
+import { useDebounce } from '@/shared/hooks';
+import { TIMING } from '@/shared/config/constants';
 import type { SearchableContent } from './types';
 
 interface AcademicSearchProps {
@@ -34,10 +36,13 @@ export function AcademicSearch({
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Debounce search query for performance
+  const debouncedQuery = useDebounce(query, TIMING.SEARCH_DEBOUNCE);
+
   // Get filtered content and available filter options
   const { filteredContent, availableYears, contentTypes } = useSearchFilter({
     content,
-    query,
+    query: debouncedQuery,
     selectedTypes,
     selectedYear,
     maxResults,

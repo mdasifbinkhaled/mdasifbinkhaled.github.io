@@ -13,6 +13,8 @@ import {
 import { BookOpenText } from 'lucide-react';
 import { Input } from '@/shared/components/ui/input';
 import { PublicationCard } from '@/features/publications/publication-card';
+import { useDebounce } from '@/shared/hooks';
+import { TIMING } from '@/shared/config/constants';
 
 interface PublicationListProps {
   initialPublications: PublicationItem[];
@@ -35,6 +37,7 @@ export const PublicationList = React.memo(function PublicationList({
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<PublicationType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const debouncedSearchTerm = useDebounce(searchTerm, TIMING.SEARCH_DEBOUNCE);
 
   const uniqueYears = useMemo(() => {
     const years = new Set(initialPublications.map((p) => p.year.toString()));
@@ -65,20 +68,20 @@ export const PublicationList = React.memo(function PublicationList({
         yearFilter === 'all' || pub.year.toString() === yearFilter;
       const typeMatch = typeFilter === 'all' || pub.type === typeFilter;
       const searchMatch =
-        searchTerm === '' ||
-        pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        debouncedSearchTerm === '' ||
+        pub.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
         pub.authors
           .join(', ')
           .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
+          .includes(debouncedSearchTerm.toLowerCase()) ||
         (pub.keywords &&
           pub.keywords
             .join(', ')
             .toLowerCase()
-            .includes(searchTerm.toLowerCase()));
+            .includes(debouncedSearchTerm.toLowerCase()));
       return yearMatch && typeMatch && searchMatch;
     });
-  }, [publications, yearFilter, typeFilter, searchTerm]);
+  }, [publications, yearFilter, typeFilter, debouncedSearchTerm]);
 
   if (!initialPublications || initialPublications.length === 0) {
     return (

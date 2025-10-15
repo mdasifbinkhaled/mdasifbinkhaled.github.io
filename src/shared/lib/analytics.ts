@@ -283,7 +283,7 @@ export const userBehaviorTracker = {
     if (typeof window === 'undefined') return;
 
     let maxScroll = 0;
-    let scrollTimeout: NodeJS.Timeout;
+    let scrollTimeout: ReturnType<typeof setTimeout>;
 
     const handleScroll = () => {
       const scrollPercent = Math.round(
