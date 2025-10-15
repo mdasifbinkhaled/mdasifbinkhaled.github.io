@@ -61,7 +61,7 @@ export default function HomePage() {
       <Breadcrumbs />
 
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-20 xl:py-24 bg-gradient-to-br from-background to-secondary/30">
+      <section className="w-full py-12 md:py-24 lg:py-20 xl:py-24 bg-gradient-to-br from-background via-secondary/20 to-primary/5 relative overflow-hidden">
         <div className="hero-container">
           <div className="hero-grid">
             {/* Content Section */}
