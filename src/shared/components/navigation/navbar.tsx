@@ -29,8 +29,8 @@ export function Navbar({
   ];
 
   return (
-    <div className="flex items-center justify-between gap-2 w-full">
-      <div className="flex items-center gap-2">
+    <div className="flex items-center justify-between w-full">
+      <div className="flex items-center gap-2 flex-shrink-0">
         <Link
           href="/"
           aria-label="Go to homepage"
@@ -44,7 +44,7 @@ export function Navbar({
         </Link>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {showMobileMenuButton && (
           <button
             className="lg:hidden px-2 py-1 rounded border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -59,7 +59,7 @@ export function Navbar({
         )}
 
         <nav
-          className="hidden lg:flex items-center gap-1"
+          className="hidden lg:flex items-center gap-0.5"
           aria-label="Main navigation"
         >
           {items.map((it) => {

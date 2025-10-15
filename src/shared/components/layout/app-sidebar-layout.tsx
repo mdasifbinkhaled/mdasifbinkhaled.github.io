@@ -30,7 +30,7 @@ export default function AppSidebarLayout({
         role="banner"
         className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b shadow-sm"
       >
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="container mx-auto px-6 py-3">
           <Navbar onMobileMenuOpen={() => setMobileOpen(true)} />
         </div>
       </header>
@@ -80,7 +80,7 @@ export default function AppSidebarLayout({
         </aside>
 
         {/* Main content */}
-        <main id="main-content" className="flex-1 min-w-0 lg:pl-6">
+        <main id="main-content" className="flex-1 min-w-0 px-4 lg:pl-8 lg:pr-6">
           {children}
         </main>
       </div>
