@@ -346,7 +346,10 @@ export const userBehaviorTracker = {
 // Declare global gtag for TypeScript
 declare global {
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    gtag: (...args: any[]) => void;
+    gtag: (
+      command: 'config' | 'event' | 'set' | 'js',
+      targetIdOrEventName: string,
+      params?: Record<string, unknown>
+    ) => void;
   }
 }
