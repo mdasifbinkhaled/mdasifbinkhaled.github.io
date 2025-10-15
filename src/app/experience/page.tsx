@@ -36,10 +36,10 @@ export default function ExperiencePage() {
       </section>
 
       <section id="skills">
-        <h2 className="text-3xl font-bold text-center mb-10 text-primary">
+        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
           Technical Skills
         </h2>
-        <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
+        <div className="grid gap-[var(--space-card-lg)] grid-cols-[repeat(auto-fit,minmax(min(400px,100%),1fr))]">
           {technicalSkills.map((skillGroup) => (
             <Card key={skillGroup.category} className="shadow-lg w-full">
               <CardHeader className="flex flex-row items-center space-x-3">

@@ -43,6 +43,18 @@ const config: Config = {
   theme: {
     extend: {
       // ==========================================
+      // RESPONSIVE BREAKPOINTS
+      // ==========================================
+      screens: {
+        xs: '375px', // Mobile S - iPhone SE
+        sm: '640px', // Mobile L - Default Tailwind
+        md: '768px', // Tablet - Default Tailwind
+        lg: '1024px', // Laptop - Default Tailwind
+        xl: '1280px', // Desktop - Default Tailwind
+        '2xl': '1536px', // Large Desktop - Default Tailwind
+      },
+
+      // ==========================================
       // COLOR SYSTEM
       // ==========================================
       colors: {
