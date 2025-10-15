@@ -132,13 +132,21 @@ export interface ResearchArea {
 }
 
 // Theme-related types
-export type ThemeName = 'light' | 'dark' | 'ocean' | 'warm' | 'forest';
+export type ThemeName =
+  | 'light'
+  | 'dark'
+  | 'ocean'
+  | 'warm'
+  | 'forest'
+  | 'midnight'
+  | 'sunset'
+  | 'lavender';
 
 export interface ThemeConfig {
   name: ThemeName;
   label: string;
   description: string;
-  category: 'classic' | 'dramatic' | 'natural';
+  category: 'classic' | 'dramatic' | 'natural' | 'vibrant';
   preview: {
     background: string;
     foreground: string;

@@ -147,6 +147,41 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* News Section */}
+      <section className="w-full py-[var(--space-section-sm)] bg-secondary/20">
+        <div className="container-responsive">
+          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary">
+            News
+          </h2>
+          <div className="space-y-4">
+            {newsItems.map((item, index) => (
+              <div key={index} className="flex gap-3 text-sm">
+                <span className="font-medium text-muted-foreground whitespace-nowrap">
+                  {item.date}
+                </span>
+                <div className="flex-1">
+                  <span>{item.text}</span>
+                  {item.highlight && (
+                    <a
+                      href="#"
+                      className="text-blue-600 hover:underline font-medium"
+                    >
+                      {item.highlight}
+                    </a>
+                  )}
+                  {item.description && <span>{item.description}</span>}
+                  {item.strikethrough && (
+                    <span className="line-through text-muted-foreground ml-1">
+                      {item.strikethrough}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Quick Access Search */}
       <section className="w-full py-[var(--space-section-sm)]">
         <div className="container-responsive">
@@ -190,41 +225,6 @@ export default function HomePage() {
               />
             </CardContent>
           </Card>
-        </div>
-      </section>
-
-      {/* News Section */}
-      <section className="w-full py-[var(--space-section-sm)] bg-secondary/10">
-        <div className="container-responsive">
-          <h2 className="text-2xl font-bold mb-[var(--space-card-sm)] text-primary">
-            News
-          </h2>
-          <div className="space-y-3">
-            {newsItems.map((item, index) => (
-              <div key={index} className="flex gap-2 text-sm">
-                <span className="font-medium text-muted-foreground whitespace-nowrap">
-                  {item.date}
-                </span>
-                <div className="flex-1">
-                  <span>{item.text}</span>
-                  {item.highlight && (
-                    <a
-                      href="#"
-                      className="text-blue-600 hover:underline font-medium"
-                    >
-                      {item.highlight}
-                    </a>
-                  )}
-                  {item.description && <span>{item.description}</span>}
-                  {item.strikethrough && (
-                    <span className="line-through text-muted-foreground ml-1">
-                      {item.strikethrough}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

@@ -60,6 +60,39 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(142, 76%, 36%)',
     },
   },
+  midnight: {
+    name: 'midnight',
+    label: 'Midnight',
+    description: 'Deep blue night sky with high contrast',
+    category: 'vibrant',
+    preview: {
+      background: 'hsl(220, 40%, 8%)',
+      foreground: 'hsl(210, 40%, 98%)',
+      primary: 'hsl(210, 100%, 60%)',
+    },
+  },
+  sunset: {
+    name: 'sunset',
+    label: 'Sunset',
+    description: 'Warm orange and pink hues like twilight',
+    category: 'vibrant',
+    preview: {
+      background: 'hsl(20, 80%, 98%)',
+      foreground: 'hsl(15, 30%, 20%)',
+      primary: 'hsl(15, 80%, 50%)',
+    },
+  },
+  lavender: {
+    name: 'lavender',
+    label: 'Lavender',
+    description: 'Soft purple tones for a calming experience',
+    category: 'vibrant',
+    preview: {
+      background: 'hsl(270, 60%, 98%)',
+      foreground: 'hsl(270, 30%, 20%)',
+      primary: 'hsl(270, 60%, 55%)',
+    },
+  },
 } as const;
 
 /**
