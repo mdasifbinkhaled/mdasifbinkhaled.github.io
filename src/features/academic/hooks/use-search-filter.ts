@@ -1,15 +1,5 @@
 import { useMemo } from 'react';
-
-interface SearchableContent {
-  id: string;
-  title: string;
-  type: 'publication' | 'course' | 'experience' | 'news';
-  content: string;
-  tags: string[];
-  year?: number;
-  url: string;
-  metadata?: Record<string, unknown>;
-}
+import type { SearchableContent } from '../types';
 
 interface UseSearchFilterOptions {
   content: SearchableContent[];

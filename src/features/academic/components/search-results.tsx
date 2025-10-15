@@ -2,23 +2,12 @@ import { Search as SearchIcon } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { SearchResultCard } from './search-result-card';
-
-interface SearchableContent {
-  id: string;
-  title: string;
-  type: 'publication' | 'course' | 'experience' | 'news';
-  content: string;
-  tags: string[];
-  year?: number;
-  url: string;
-  metadata?: Record<string, unknown>;
-}
+import type { SearchableContent } from '../types';
 
 interface SearchResultsProps {
   results: SearchableContent[];
   hasFilters: boolean;
   onClearFilters: () => void;
-  getTypeIcon: (type: string) => string;
 }
 
 /**
@@ -30,7 +19,6 @@ export function SearchResults({
   results,
   hasFilters,
   onClearFilters,
-  getTypeIcon,
 }: SearchResultsProps) {
   return (
     <div className="space-y-3">
@@ -48,11 +36,7 @@ export function SearchResults({
       {results.length > 0 ? (
         <div className="grid gap-3">
           {results.map((item) => (
-            <SearchResultCard
-              key={item.id}
-              item={item}
-              getTypeIcon={getTypeIcon}
-            />
+            <SearchResultCard key={item.id} item={item} />
           ))}
         </div>
       ) : (

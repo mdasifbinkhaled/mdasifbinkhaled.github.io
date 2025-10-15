@@ -2,6 +2,7 @@ import { Filter, Calendar } from 'lucide-react';
 import { badgeVariants } from '@/shared/components/ui/badge';
 import { cn } from '@/shared/lib/utils';
 import { DISPLAY_LIMITS } from '@/shared/config';
+import { getTypeIcon } from '../utils/get-type-icon';
 
 interface FilterBarProps {
   contentTypes: string[];
@@ -10,7 +11,6 @@ interface FilterBarProps {
   availableYears: (number | undefined)[];
   selectedYear: string | null;
   onSelectYear: (year: string | null) => void;
-  getTypeIcon: (type: string) => string;
   showTypeFilter?: boolean;
   showYearFilter?: boolean;
 }
@@ -27,7 +27,6 @@ export function FilterBar({
   availableYears,
   selectedYear,
   onSelectYear,
-  getTypeIcon,
   showTypeFilter = true,
   showYearFilter = true,
 }: FilterBarProps) {

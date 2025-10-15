@@ -5,18 +5,7 @@ import { SearchInput } from './components/search-input';
 import { FilterBar } from './components/filter-bar';
 import { SearchResults } from './components/search-results';
 import { useSearchFilter } from './hooks/use-search-filter';
-import { getTypeIcon } from './utils/get-type-icon';
-
-interface SearchableContent {
-  id: string;
-  title: string;
-  type: 'publication' | 'course' | 'experience' | 'news';
-  content: string;
-  tags: string[];
-  year?: number;
-  url: string;
-  metadata?: Record<string, unknown>;
-}
+import type { SearchableContent } from './types';
 
 interface AcademicSearchProps {
   content: SearchableContent[];
@@ -100,7 +89,6 @@ export function AcademicSearch({
           availableYears={availableYears}
           selectedYear={selectedYear}
           onSelectYear={setSelectedYear}
-          getTypeIcon={getTypeIcon}
           showTypeFilter={showTypeFilter}
           showYearFilter={showYearFilter}
         />
@@ -112,7 +100,6 @@ export function AcademicSearch({
           results={filteredContent}
           hasFilters={hasActiveFilters}
           onClearFilters={clearFilters}
-          getTypeIcon={getTypeIcon}
         />
       )}
     </div>

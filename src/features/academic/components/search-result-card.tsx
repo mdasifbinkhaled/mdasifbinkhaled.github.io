@@ -2,21 +2,11 @@ import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { DISPLAY_LIMITS } from '@/shared/config';
-
-interface SearchableContent {
-  id: string;
-  title: string;
-  type: 'publication' | 'course' | 'experience' | 'news';
-  content: string;
-  tags: string[];
-  year?: number;
-  url: string;
-  metadata?: Record<string, unknown>;
-}
+import type { SearchableContent } from '../types';
+import { getTypeIcon } from '../utils/get-type-icon';
 
 interface SearchResultCardProps {
   item: SearchableContent;
-  getTypeIcon: (type: string) => string;
 }
 
 /**
@@ -24,7 +14,7 @@ interface SearchResultCardProps {
  * @param props - Component props
  * @returns Single search result card UI
  */
-export function SearchResultCard({ item, getTypeIcon }: SearchResultCardProps) {
+export function SearchResultCard({ item }: SearchResultCardProps) {
   return (
     <Card className="hover:shadow-md transition-shadow cursor-pointer">
       <CardContent className="p-4">
