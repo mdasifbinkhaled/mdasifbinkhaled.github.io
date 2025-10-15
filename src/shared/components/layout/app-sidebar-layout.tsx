@@ -26,7 +26,10 @@ export default function AppSidebarLayout({
   return (
     <div className="min-h-screen flex flex-col">
       {/* Single global header */}
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur border-b">
+      <header
+        role="banner"
+        className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b shadow-sm"
+      >
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Navbar onMobileMenuOpen={() => setMobileOpen(true)} />
         </div>
