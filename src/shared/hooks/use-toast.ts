@@ -204,8 +204,7 @@ type ToastTestUtils = {
 
 // Test utilities only available in test environment
 const isTestEnv =
-  typeof globalThis !== 'undefined' &&
-  (globalThis as Record<string, unknown>).NODE_ENV === 'test';
+  typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
 
 export const __TOAST_TEST_UTILS: ToastTestUtils | undefined = isTestEnv
   ? {
