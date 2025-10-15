@@ -27,6 +27,39 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(201, 60%, 50%)',
     },
   },
+  ocean: {
+    name: 'ocean',
+    label: 'Ocean',
+    description: 'Cool blue tones inspired by ocean depths',
+    category: 'natural',
+    preview: {
+      background: 'hsl(210, 100%, 98%)',
+      foreground: 'hsl(210, 22%, 22%)',
+      primary: 'hsl(199, 89%, 48%)',
+    },
+  },
+  warm: {
+    name: 'warm',
+    label: 'Warm',
+    description: 'Cozy beige and earth tones for comfortable reading',
+    category: 'natural',
+    preview: {
+      background: 'hsl(40, 40%, 98%)',
+      foreground: 'hsl(30, 20%, 20%)',
+      primary: 'hsl(25, 60%, 40%)',
+    },
+  },
+  forest: {
+    name: 'forest',
+    label: 'Forest',
+    description: 'Fresh green tones inspired by nature',
+    category: 'natural',
+    preview: {
+      background: 'hsl(120, 40%, 98%)',
+      foreground: 'hsl(140, 30%, 20%)',
+      primary: 'hsl(142, 76%, 36%)',
+    },
+  },
 } as const;
 
 /**
