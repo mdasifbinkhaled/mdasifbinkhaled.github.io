@@ -77,17 +77,31 @@ export default function HomePage() {
                   Specializing in Explainable AI (XAI) and Multimodal AI (MMAI)
                   for healthcare diagnostics and analytics.
                 </p>
-                <div className="inline-block bg-accent text-accent-foreground px-3 py-1 text-sm rounded-full font-medium my-2 shadow">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-4 py-2 text-sm rounded-full font-semibold my-2 shadow-md border border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                  </span>
                   Open to PhD Opportunities
                 </div>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row pt-4">
-                <Button size="lg" asChild>
+                <Button
+                  size="lg"
+                  asChild
+                  className="shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
                   <Link href="/research">
-                    Explore Research <ArrowRight className="ml-2 h-5 w-5" />
+                    Explore Research{' '}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" asChild>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  asChild
+                  className="border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+                >
                   <Link
                     href={siteConfig.links.cv}
                     target="_blank"
@@ -107,33 +121,45 @@ export default function HomePage() {
                 number: '15+',
                 label: 'Publications',
                 icon: BookOpen,
-                color: 'text-blue-500',
+                color: 'text-blue-500 dark:text-blue-400',
+                bgColor: 'bg-blue-500/10 hover:bg-blue-500/20',
+                borderColor: 'border-blue-500/20',
               },
               {
                 number: '200+',
                 label: 'Citations',
                 icon: Quote,
-                color: 'text-green-500',
+                color: 'text-green-500 dark:text-green-400',
+                bgColor: 'bg-green-500/10 hover:bg-green-500/20',
+                borderColor: 'border-green-500/20',
               },
               {
                 number: '5+',
                 label: 'Years Teaching',
                 icon: GraduationCap,
-                color: 'text-purple-500',
+                color: 'text-purple-500 dark:text-purple-400',
+                bgColor: 'bg-purple-500/10 hover:bg-purple-500/20',
+                borderColor: 'border-purple-500/20',
               },
               {
                 number: '1000+',
                 label: 'Students Taught',
                 icon: Users,
-                color: 'text-orange-500',
+                color: 'text-orange-500 dark:text-orange-400',
+                bgColor: 'bg-orange-500/10 hover:bg-orange-500/20',
+                borderColor: 'border-orange-500/20',
               },
             ].map((stat, index) => (
               <Card
                 key={index}
-                className="bg-card/50 backdrop-blur border-0 shadow-sm hover:shadow-md transition-shadow"
+                className={`backdrop-blur border ${stat.borderColor} shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105 ${stat.bgColor}`}
               >
                 <CardContent className="p-6 text-center">
-                  <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
+                  <div
+                    className={`w-12 h-12 mx-auto mb-3 rounded-lg ${stat.bgColor} flex items-center justify-center transition-all duration-300`}
+                  >
+                    <stat.icon className={`w-7 h-7 ${stat.color}`} />
+                  </div>
                   <div className="text-2xl font-bold text-foreground mb-1">
                     {stat.number}
                   </div>
@@ -148,30 +174,36 @@ export default function HomePage() {
       </section>
 
       {/* News Section */}
-      <section className="w-full py-[var(--space-section-sm)] bg-secondary/20">
+      <section className="w-full py-[var(--space-section-sm)] bg-gradient-to-br from-secondary/30 via-secondary/20 to-transparent">
         <div className="container-responsive">
-          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary">
+          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary flex items-center gap-2">
+            <span className="w-1 h-6 bg-primary rounded-full"></span>
             News
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {newsItems.map((item, index) => (
-              <div key={index} className="flex gap-3 text-sm">
-                <span className="font-medium text-muted-foreground whitespace-nowrap">
+              <div
+                key={index}
+                className="flex gap-3 text-sm p-3 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
+              >
+                <span className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10">
                   {item.date}
                 </span>
                 <div className="flex-1">
-                  <span>{item.text}</span>
+                  <span className="text-foreground">{item.text}</span>
                   {item.highlight && (
                     <a
                       href="#"
-                      className="text-blue-600 hover:underline font-medium"
+                      className="text-primary hover:underline font-semibold hover:text-primary/80 transition-colors"
                     >
                       {item.highlight}
                     </a>
                   )}
-                  {item.description && <span>{item.description}</span>}
+                  {item.description && (
+                    <span className="text-foreground">{item.description}</span>
+                  )}
                   {item.strikethrough && (
-                    <span className="line-through text-muted-foreground ml-1">
+                    <span className="line-through text-muted-foreground ml-1 opacity-60">
                       {item.strikethrough}
                     </span>
                   )}
@@ -185,13 +217,15 @@ export default function HomePage() {
       {/* Quick Access Search */}
       <section className="w-full py-[var(--space-section-sm)]">
         <div className="container-responsive">
-          <Card className="overflow-hidden shadow-md">
-            <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5">
-              <CardTitle className="flex items-center gap-2">
-                <Search className="w-5 h-5" />
+          <Card className="overflow-hidden shadow-lg border-primary/20 hover:shadow-xl transition-shadow duration-300">
+            <CardHeader className="bg-gradient-to-r from-primary/15 via-primary/10 to-primary/5 border-b border-primary/10">
+              <CardTitle className="flex items-center gap-2 text-primary">
+                <div className="p-2 bg-primary/20 rounded-lg">
+                  <Search className="w-5 h-5" />
+                </div>
                 Explore My Academic Work
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-foreground/70">
                 Search through publications, courses, research projects, and
                 teaching materials
               </CardDescription>
