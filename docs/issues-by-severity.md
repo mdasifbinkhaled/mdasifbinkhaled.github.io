@@ -1,8 +1,29 @@
 # Group A Critical Issues - Organized by Severity
 
-**Date:** October 14, 2025  
-**Status:** Ready for Remediation  
+**Date:** October 15, 2025 (Updated after cleanup)  
+**Status:** In Progress - 6 of 30 Complete (20%)  
 **Total Issues:** 30 (8 Critical, 12 High, 10 Medium)
+
+## ⚠️ IMPORTANT: Cleanup Notice (Oct 15, 2025)
+
+**Previous Status Correction:** Issues #9, #14, #16 were incorrectly marked "complete" in earlier commits. Infrastructure was created but **never integrated** into actual components. All unused code has been removed. See `cleanup-report-oct15.md` for details.
+
+**Accurate Completion Status:**
+
+- ✅ **Critical Issues:** 6 of 8 complete (75%)
+  - ✅ Issue #1: courses.ts split into JSON files
+  - ✅ Issue #2: UI imports removed from data layer
+  - ✅ Issue #3: Type consistency fixed
+  - ✅ Issue #4: CourseData simplified
+  - ✅ Issue #5: Publication data quality fixed
+  - ✅ Issue #6: Dynamic routing implemented
+  - ✅ Issue #7: Error boundaries consolidated
+  - ✅ Issue #8: Zod validation added
+- ❌ **High Priority:** 0 of 12 complete (0%)
+  - All high priority issues remain to be addressed
+- ❌ **Medium Priority:** 0 of 10 complete (0%)
+
+**Next to Address:** Issue #11 (Component complexity - academic-search.tsx)
 
 ---
 
