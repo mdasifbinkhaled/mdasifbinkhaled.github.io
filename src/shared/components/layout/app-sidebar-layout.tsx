@@ -80,7 +80,7 @@ export default function AppSidebarLayout({
         </aside>
 
         {/* Main content */}
-        <main id="main-content" className="flex-1 min-w-0">
+        <main id="main-content" className="flex-1 min-w-0 lg:pl-6">
           {children}
         </main>
       </div>
