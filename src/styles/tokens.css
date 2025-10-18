@@ -352,6 +352,134 @@
   --academic-highlight: 270 100% 95%;
 }
 
+/* Slate Theme - Professional neutral gray */
+[data-theme='slate'] {
+  --background: 215 16% 97%;
+  --foreground: 215 25% 17%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 25% 17%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 25% 17%;
+  --primary: 215 50% 45%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 215 15% 92%;
+  --secondary-foreground: 215 25% 17%;
+  --muted: 215 12% 94%;
+  --muted-foreground: 215 10% 42%;
+  --accent: 215 45% 65%;
+  --accent-foreground: 215 25% 17%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 76% 36%;
+  --success-foreground: 0 0% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 98%;
+  --info: 199 89% 48%;
+  --info-foreground: 0 0% 98%;
+  --border: 215 15% 88%;
+  --input: 215 15% 88%;
+  --ring: 215 50% 45%;
+
+  /* Academic Colors - Slate Theme */
+  --academic-highlight: 215 100% 95%;
+}
+
+/* Crimson Theme - Traditional academic red */
+[data-theme='crimson'] {
+  --background: 355 90% 98%;
+  --foreground: 355 30% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 355 30% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 355 30% 20%;
+  --primary: 355 70% 45%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 355 40% 92%;
+  --secondary-foreground: 355 30% 20%;
+  --muted: 355 25% 95%;
+  --muted-foreground: 355 15% 42%;
+  --accent: 355 75% 65%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 76% 36%;
+  --success-foreground: 0 0% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 98%;
+  --info: 199 89% 48%;
+  --info-foreground: 0 0% 98%;
+  --border: 355 30% 90%;
+  --input: 355 30% 90%;
+  --ring: 355 70% 45%;
+
+  /* Academic Colors - Crimson Theme */
+  --academic-highlight: 355 100% 95%;
+}
+
+/* Emerald Theme - Rich green for growth */
+[data-theme='emerald'] {
+  --background: 160 60% 98%;
+  --foreground: 160 30% 18%;
+  --card: 0 0% 100%;
+  --card-foreground: 160 30% 18%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 160 30% 18%;
+  --primary: 160 85% 38%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 160 35% 92%;
+  --secondary-foreground: 160 30% 18%;
+  --muted: 160 25% 95%;
+  --muted-foreground: 160 15% 42%;
+  --accent: 160 75% 55%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 76% 36%;
+  --success-foreground: 0 0% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 98%;
+  --info: 199 89% 48%;
+  --info-foreground: 0 0% 98%;
+  --border: 160 25% 88%;
+  --input: 160 25% 88%;
+  --ring: 160 85% 38%;
+
+  /* Academic Colors - Emerald Theme */
+  --academic-highlight: 160 100% 95%;
+}
+
+/* Indigo Theme - Deep blue for academic excellence */
+[data-theme='indigo'] {
+  --background: 230 55% 98%;
+  --foreground: 230 25% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 230 25% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 230 25% 20%;
+  --primary: 230 70% 50%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 230 35% 92%;
+  --secondary-foreground: 230 25% 20%;
+  --muted: 230 30% 95%;
+  --muted-foreground: 230 15% 42%;
+  --accent: 230 65% 62%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 76% 36%;
+  --success-foreground: 0 0% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 98%;
+  --info: 199 89% 48%;
+  --info-foreground: 0 0% 98%;
+  --border: 230 25% 88%;
+  --input: 230 25% 88%;
+  --ring: 230 70% 50%;
+
+  /* Academic Colors - Indigo Theme */
+  --academic-highlight: 230 100% 95%;
+}
+
 /* Utility Classes */
 .bg-background {
   background-color: hsl(var(--background));

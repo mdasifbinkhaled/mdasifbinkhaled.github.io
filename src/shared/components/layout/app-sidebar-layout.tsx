@@ -28,9 +28,9 @@ export default function AppSidebarLayout({
       {/* Single global header */}
       <header
         role="banner"
-        className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b shadow-sm"
+        className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b shadow-sm mb-4"
       >
-        <div className="container mx-auto px-6 py-3">
+        <div className="container mx-auto px-6 py-4">
           <Navbar onMobileMenuOpen={() => setMobileOpen(true)} />
         </div>
       </header>

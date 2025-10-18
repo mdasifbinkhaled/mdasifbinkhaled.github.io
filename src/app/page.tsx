@@ -12,13 +12,15 @@ import {
   ExternalLink,
   BookOpen,
   Users,
-  Search,
   Quote,
   GraduationCap,
+  Github,
+  Linkedin,
+  Mail,
+  BookUser,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { AcademicSearch } from '@/features/academic/academic-search';
 import { samplePublications } from '@/shared/lib/data/publications';
 import { professionalExperiences } from '@/shared/lib/data/experience';
 import { PublicationList } from '@/shared/components/common/publication-list';
@@ -34,27 +36,6 @@ export default function HomePage() {
     0,
     DISPLAY_LIMITS.HOMEPAGE_RECENT
   );
-
-  // News items (recent achievements and announcements)
-  const newsItems = [
-    {
-      date: '[2025/04]',
-      text: 'Excited to announce the launch of ',
-      highlight: 'Llama 4',
-      description:
-        ", a major leap in open-source AI! As part of the team supporting Llama 4 at FAIR, I'm proud to have contributed to these cutting-edge models! 🚀",
-    },
-    {
-      date: '[2025/02]',
-      text: '3D-MVP, MM-Graph and 3D-GRAND are accepted at CVPR 2025!',
-    },
-    {
-      date: '[2024/10]',
-      text: "We're looking for research interns starting next year working on embodied agents and multimodal LLMs.",
-      strikethrough:
-        'If you are interested, please drop me an email and apply here.',
-    },
-  ];
 
   return (
     <div className="flex flex-col items-center">
@@ -114,6 +95,22 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Brief Bio Section - NEW */}
+          <div className="mt-[var(--space-section-sm)] max-w-3xl mx-auto text-center">
+            <p className="text-lg text-foreground/90 leading-relaxed">
+              I am a dedicated researcher and educator with expertise in
+              developing{' '}
+              <span className="font-semibold text-primary">
+                trustworthy AI systems
+              </span>{' '}
+              for healthcare. My work focuses on creating interpretable machine
+              learning models that bridge the gap between cutting-edge
+              technology and real-world clinical applications, while maintaining
+              transparency and accountability in AI-driven medical
+              decision-making.
+            </p>
+          </div>
+
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-card-sm)] text-center mt-[var(--space-section-sm)] max-w-4xl mx-auto">
             {[
@@ -126,7 +123,7 @@ export default function HomePage() {
                 borderColor: 'border-blue-500/20',
               },
               {
-                number: '200+',
+                number: '100+',
                 label: 'Citations',
                 icon: Quote,
                 color: 'text-green-500 dark:text-green-400',
@@ -173,113 +170,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* News Section */}
-      <section className="w-full py-[var(--space-section-sm)] bg-gradient-to-br from-secondary/30 via-secondary/20 to-transparent">
-        <div className="container-responsive">
-          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary flex items-center gap-2">
-            <span className="w-1 h-6 bg-primary rounded-full"></span>
-            News
-          </h2>
-          <div className="space-y-3">
-            {newsItems.map((item, index) => (
-              <div
-                key={index}
-                className="flex gap-3 text-sm p-3 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
-              >
-                <span className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10">
-                  {item.date}
-                </span>
-                <div className="flex-1">
-                  <span className="text-foreground">{item.text}</span>
-                  {item.highlight && (
-                    <a
-                      href="#"
-                      className="text-primary hover:underline font-semibold hover:text-primary/80 transition-colors"
-                    >
-                      {item.highlight}
-                    </a>
-                  )}
-                  {item.description && (
-                    <span className="text-foreground">{item.description}</span>
-                  )}
-                  {item.strikethrough && (
-                    <span className="line-through text-muted-foreground ml-1 opacity-60">
-                      {item.strikethrough}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Access Search */}
-      <section className="w-full py-[var(--space-section-sm)]">
-        <div className="container-responsive">
-          <Card className="overflow-hidden shadow-lg border-primary/20 hover:shadow-xl transition-shadow duration-300">
-            <CardHeader className="bg-gradient-to-r from-primary/15 via-primary/10 to-primary/5 border-b border-primary/10">
-              <CardTitle className="flex items-center gap-2 text-primary">
-                <div className="p-2 bg-primary/20 rounded-lg">
-                  <Search className="w-5 h-5" />
-                </div>
-                Explore My Academic Work
-              </CardTitle>
-              <CardDescription className="text-foreground/70">
-                Search through publications, courses, research projects, and
-                teaching materials
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <AcademicSearch
-                content={[
-                  {
-                    id: '1',
-                    title: 'Explainable AI for Healthcare Diagnostics',
-                    type: 'publication',
-                    content:
-                      'Research on interpretable machine learning models for medical diagnosis',
-                    tags: ['AI', 'Healthcare', 'Machine Learning'],
-                    year: 2024,
-                    url: '/publications',
-                  },
-                  {
-                    id: '2',
-                    title: 'Advanced Machine Learning',
-                    type: 'course',
-                    content:
-                      'Graduate course covering deep learning and neural networks',
-                    tags: ['Teaching', 'Machine Learning', 'Deep Learning'],
-                    year: 2024,
-                    url: '/teaching',
-                  },
-                ]}
-                placeholder="Search publications, courses, research areas..."
-                maxResults={6}
-              />
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Work Experience Section */}
-      <section className="w-full py-[var(--space-section-sm)]">
-        <div className="container-responsive">
-          <h2 className="text-2xl font-bold mb-[var(--space-card-sm)] text-primary">
-            Work Experience
-          </h2>
-          <ExperienceCompact experiences={recentExperiences} />
-          <div className="text-center mt-6">
-            <Button variant="outline" asChild>
-              <Link href="/experience">
-                View Full Experience <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Research Interests */}
+      {/* Research Interests - Condensed */}
       <section className="w-full py-[var(--space-section-md)]">
         <div className="container-responsive">
           <h2 className="text-3xl font-bold text-center mb-[var(--space-card-lg)] text-primary">
@@ -289,38 +180,27 @@ export default function HomePage() {
             <Card className="shadow-lg hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="text-xl">Explainable AI (XAI)</CardTitle>
-                <CardDescription>
-                  Ensuring transparency and trustworthiness in disease
-                  detection, diagnosis, and healthcare analytics utilizing
-                  Artificial Intelligence (AI).
-                </CardDescription>
               </CardHeader>
               <CardContent className="text-muted-foreground">
                 <p>
-                  Developing AI systems that can explain their reasoning,
-                  crucial for healthcare applications where understanding the
-                  &ldquo;why&rdquo; behind a diagnosis is essential for
-                  clinician trust and patient safety.
+                  Developing transparent AI systems for healthcare that
+                  clinicians and patients can trust. Focus on interpretable
+                  models for disease detection and diagnosis with clear
+                  reasoning.
                 </p>
               </CardContent>
             </Card>
             <Card className="shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl">
-                  Multimodal AI (MMAI) & Computer Vision (CV)
+                  Multimodal AI & Computer Vision
                 </CardTitle>
-                <CardDescription>
-                  Using Multimodal AI (MMAI) and Computer Vision (CV) to combine
-                  imaging, clinical records, and lab results for holistic
-                  diagnostics.
-                </CardDescription>
               </CardHeader>
               <CardContent className="text-muted-foreground">
                 <p>
-                  Integrating diverse data modalities to create comprehensive
-                  diagnostic tools that leverage both visual and non-visual
-                  medical data for more accurate and personalized healthcare
-                  insights.
+                  Integrating imaging, clinical records, and lab results for
+                  holistic diagnostics. Creating comprehensive tools that
+                  leverage diverse data modalities for personalized healthcare.
                 </p>
               </CardContent>
             </Card>
@@ -328,7 +208,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Publications Section */}
+      {/* Recent Publications */}
       <section className="w-full py-[var(--space-section-sm)] bg-secondary/10">
         <div className="container-responsive">
           <h2 className="text-2xl font-bold mb-[var(--space-card-sm)] text-primary">
@@ -350,60 +230,133 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Grants and Highlight */}
-      <section className="w-full py-[var(--space-section-md)]">
+      {/* Work Experience Section */}
+      <section className="w-full py-[var(--space-section-sm)]">
+        <div className="container-responsive">
+          <h2 className="text-2xl font-bold mb-[var(--space-card-sm)] text-primary">
+            Work Experience
+          </h2>
+          <ExperienceCompact experiences={recentExperiences} />
+          <div className="text-center mt-6">
+            <Button variant="outline" asChild>
+              <Link href="/experience">
+                View Full Experience <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Grant - Single Highlight */}
+      <section className="w-full py-[var(--space-section-md)] bg-gradient-to-br from-primary/5 to-accent/5">
         <div className="container-responsive">
           <h2 className="text-3xl font-bold text-center mb-[var(--space-card-lg)] text-primary">
-            Recent Grants
+            Featured Research Grant
           </h2>
-          <div className="grid gap-[var(--space-card-sm)] md:grid-cols-1 lg:grid-cols-2 max-w-5xl mx-auto">
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="text-xl">
-                  Development and Analysis of a Comprehensive Sorting Algorithm
-                  Library
-                </CardTitle>
-                <CardDescription className="text-sm">
-                  Principal Investigator, Sponsored Research Projects 2024-2025
-                  (No. 2024-SETS-06)
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-muted-foreground">
-                <p>
-                  Focused on enhancing computational efficiency through
-                  optimized sorting algorithms.
-                </p>
+          <Card className="shadow-xl hover:shadow-2xl transition-all duration-300 max-w-3xl mx-auto border-primary/20">
+            <CardHeader>
+              <CardTitle className="text-2xl">
+                Unveiling the Linguistic Diversity of Bangla
+              </CardTitle>
+              <CardDescription className="text-base">
+                Principal Investigator, VC&apos;s Research Fund 2024-2025 (No.
+                VCRF-SETS:24-013)
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Leading research on enhancing dialect detection through AI and
+                Machine Learning techniques, contributing to the preservation
+                and understanding of Bangladesh&apos;s rich linguistic heritage.
+              </p>
+              <Button variant="outline" asChild className="mt-2">
+                <Link href="/research">
+                  View All Research Projects{' '}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Connect & Follow - Academic Profiles */}
+      <section className="w-full py-[var(--space-section-md)]">
+        <div className="container-responsive">
+          <h2 className="text-3xl font-bold text-center mb-[var(--space-card-default)] text-primary">
+            Connect & Collaborate
+          </h2>
+          <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-8">
+            Interested in collaboration, discussing research opportunities, or
+            learning more about my work? Let&apos;s connect!
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+            <Card className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-6">
+                <a
+                  href={siteConfig.links.googleScholar}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-3 group"
+                >
+                  <div className="p-4 bg-blue-500/10 rounded-full group-hover:bg-blue-500/20 transition-colors">
+                    <BookUser className="w-8 h-8 text-blue-500" />
+                  </div>
+                  <span className="font-semibold text-sm">Google Scholar</span>
+                </a>
               </CardContent>
             </Card>
-            <Card className="shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-xl">
-                  Unveiling the Linguistic Diversity of Bangla
-                </CardTitle>
-                <CardDescription className="text-sm">
-                  Principal Investigator, VC&apos;s Research Fund 2024-2025 (No.
-                  VCRF-SETS:24-013)
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-muted-foreground">
-                <p>
-                  Enhancing dialect detection through AI and Machine Learning
-                  techniques.
-                </p>
+
+            <Card className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-6">
+                <a
+                  href={siteConfig.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-3 group"
+                >
+                  <div className="p-4 bg-purple-500/10 rounded-full group-hover:bg-purple-500/20 transition-colors">
+                    <Github className="w-8 h-8 text-purple-500" />
+                  </div>
+                  <span className="font-semibold text-sm">GitHub</span>
+                </a>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-6">
+                <a
+                  href={siteConfig.links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-3 group"
+                >
+                  <div className="p-4 bg-indigo-500/10 rounded-full group-hover:bg-indigo-500/20 transition-colors">
+                    <Linkedin className="w-8 h-8 text-indigo-500" />
+                  </div>
+                  <span className="font-semibold text-sm">LinkedIn</span>
+                </a>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-6">
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="flex flex-col items-center gap-3 group"
+                >
+                  <div className="p-4 bg-green-500/10 rounded-full group-hover:bg-green-500/20 transition-colors">
+                    <Mail className="w-8 h-8 text-green-500" />
+                  </div>
+                  <span className="font-semibold text-sm">Email</span>
+                </a>
               </CardContent>
             </Card>
           </div>
 
-          <div className="text-center mt-12">
-            <h2 className="text-2xl font-bold mb-4 text-foreground">
-              Seeking PhD Opportunities
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
-              With a strong foundation in XAI and MMAI research, I am actively
-              seeking doctoral programs to further contribute to innovative and
-              trustworthy AI systems, particularly in healthcare.
-            </p>
-            <Button asChild>
+          <div className="text-center mt-10">
+            <Button asChild size="lg" className="shadow-lg">
               <Link href="/contact">
                 Get in Touch <ExternalLink className="ml-2 h-5 w-5" />
               </Link>

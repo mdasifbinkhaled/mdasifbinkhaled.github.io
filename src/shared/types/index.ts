@@ -140,13 +140,17 @@ export type ThemeName =
   | 'forest'
   | 'midnight'
   | 'sunset'
-  | 'lavender';
+  | 'lavender'
+  | 'slate'
+  | 'crimson'
+  | 'emerald'
+  | 'indigo';
 
 export interface ThemeConfig {
   name: ThemeName;
   label: string;
   description: string;
-  category: 'classic' | 'dramatic' | 'natural' | 'vibrant';
+  category: 'classic' | 'dramatic' | 'natural' | 'vibrant' | 'professional';
   preview: {
     background: string;
     foreground: string;

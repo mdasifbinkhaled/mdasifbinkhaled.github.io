@@ -34,13 +34,13 @@ export function Navbar({
         <Link
           href="/"
           aria-label="Go to homepage"
-          className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring hover:opacity-80 transition-opacity"
         >
           <GraduationCap
             data-testid="graduation-cap-icon"
-            className="h-6 w-6"
+            className="h-6 w-6 text-primary"
           />
-          <span className="font-semibold">Portfolio</span>
+          <span className="font-bold text-lg">MABK</span>
         </Link>
       </div>
 

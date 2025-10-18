@@ -46,7 +46,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
   }, [onLinkClick]);
 
   return (
-    <div className="flex flex-col h-full bg-sidebar">
+    <div className="flex flex-col h-full bg-sidebar overflow-y-auto">
       {/* Profile Section */}
       <div
         className={cn(
@@ -267,8 +267,13 @@ export const ProfileSidebar = memo(function ProfileSidebar({
 
       {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
 
-      {/* Social Icons */}
-      <div className={cn(isCollapsed ? 'p-2' : 'p-6')}>
+      {/* Social Icons - Sticky at Bottom */}
+      <div
+        className={cn(
+          'sticky bottom-0 bg-sidebar border-t border-sidebar-border/40 mt-auto',
+          isCollapsed ? 'p-2' : 'p-6'
+        )}
+      >
         {!isCollapsed && (
           <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider text-center sidebar-section-title">
             Follow Me

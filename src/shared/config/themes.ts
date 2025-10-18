@@ -93,6 +93,50 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(270, 60%, 55%)',
     },
   },
+  slate: {
+    name: 'slate',
+    label: 'Slate',
+    description: 'Professional neutral gray for serious academic work',
+    category: 'professional',
+    preview: {
+      background: 'hsl(215, 16%, 97%)',
+      foreground: 'hsl(215, 25%, 17%)',
+      primary: 'hsl(215, 50%, 45%)',
+    },
+  },
+  crimson: {
+    name: 'crimson',
+    label: 'Crimson',
+    description: 'Traditional academic red with sophistication',
+    category: 'professional',
+    preview: {
+      background: 'hsl(355, 90%, 98%)',
+      foreground: 'hsl(355, 30%, 20%)',
+      primary: 'hsl(355, 70%, 45%)',
+    },
+  },
+  emerald: {
+    name: 'emerald',
+    label: 'Emerald',
+    description: 'Rich green for growth and innovation',
+    category: 'professional',
+    preview: {
+      background: 'hsl(160, 60%, 98%)',
+      foreground: 'hsl(160, 30%, 18%)',
+      primary: 'hsl(160, 85%, 38%)',
+    },
+  },
+  indigo: {
+    name: 'indigo',
+    label: 'Indigo',
+    description: 'Deep blue for academic excellence',
+    category: 'professional',
+    preview: {
+      background: 'hsl(230, 55%, 98%)',
+      foreground: 'hsl(230, 25%, 20%)',
+      primary: 'hsl(230, 70%, 50%)',
+    },
+  },
 } as const;
 
 /**
