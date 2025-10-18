@@ -28,7 +28,6 @@ import {
   Leaf,
   Sparkles,
 } from 'lucide-react';
-import { DISPLAY_LIMITS } from '@/shared/config';
 
 const themes = [
   // Classic Themes
@@ -174,24 +173,53 @@ export function ThemeSelector({
             <span className="sr-only">Change theme</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align={align} className="w-48">
-          <DropdownMenuLabel>Theme</DropdownMenuLabel>
+        <DropdownMenuContent align={align} className="w-64 p-2">
+          <DropdownMenuLabel className="flex items-center gap-2 py-2">
+            <Palette className="h-4 w-4" />
+            Choose Theme
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {themes
-            .slice(0, DISPLAY_LIMITS.THEME_SELECTOR_QUICK)
-            .map((themeOption) => (
-              <DropdownMenuItem
-                key={themeOption.name}
-                onClick={() => setTheme(themeOption.name)}
-                className="flex items-center gap-2"
-              >
-                <themeOption.icon className="h-4 w-4" />
-                <span>{themeOption.label}</span>
-                {theme === themeOption.name && (
-                  <Check className="h-4 w-4 ml-auto" />
-                )}
-              </DropdownMenuItem>
-            ))}
+
+          {categories.map((category) => {
+            const categoryThemes = themes.filter(
+              (t) => t.category === category
+            );
+            if (categoryThemes.length === 0) return null;
+
+            return (
+              <div key={category} className="py-1">
+                <div className="px-2 py-1">
+                  <Badge variant="secondary" className="text-xs">
+                    {category}
+                  </Badge>
+                </div>
+                <div className="space-y-0.5">
+                  {categoryThemes.map((themeOption) => (
+                    <DropdownMenuItem
+                      key={themeOption.name}
+                      onClick={() => setTheme(themeOption.name)}
+                      className="flex items-center gap-2 px-2 py-1.5 rounded-md cursor-pointer"
+                    >
+                      <div
+                        className={`
+                        w-5 h-5 rounded ${themeOption.preview} 
+                        flex items-center justify-center border border-border/50
+                      `}
+                      >
+                        <themeOption.icon className="h-3 w-3 text-foreground/70" />
+                      </div>
+                      <span className="text-sm flex-1">
+                        {themeOption.label}
+                      </span>
+                      {theme === themeOption.name && (
+                        <Check className="h-3 w-3 text-primary" />
+                      )}
+                    </DropdownMenuItem>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </DropdownMenuContent>
       </DropdownMenu>
     );

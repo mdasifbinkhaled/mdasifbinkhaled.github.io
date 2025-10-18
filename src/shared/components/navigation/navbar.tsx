@@ -2,8 +2,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/shared/lib/utils';
-import { GraduationCap, Menu, Sun, Moon } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { GraduationCap, Menu } from 'lucide-react';
+import { ThemeSelector } from '@/shared/components/ui/theme-selector';
 
 interface NavbarProps {
   onMobileMenuOpen?: () => void;
@@ -15,7 +15,6 @@ export function Navbar({
   showMobileMenuButton = true,
 }: NavbarProps) {
   const path = normalize(usePathname() ?? '/');
-  const { theme, setTheme } = useTheme();
 
   const items = [
     { label: 'Home', href: '/' },
@@ -29,7 +28,7 @@ export function Navbar({
   ];
 
   return (
-    <div className="flex items-center justify-between w-full">
+    <div className="flex items-center justify-between w-full gap-4">
       <div className="flex items-center gap-2 flex-shrink-0">
         <Link
           href="/"
@@ -44,7 +43,33 @@ export function Navbar({
         </Link>
       </div>
 
-      <div className="flex items-center gap-3">
+      <nav
+        className="hidden lg:flex items-center gap-1 flex-1 justify-center"
+        aria-label="Main navigation"
+      >
+        {items.map((it) => {
+          const active = isActive(path, it.href);
+          return (
+            <Link
+              key={it.href}
+              href={it.href}
+              aria-current={active ? 'page' : undefined}
+              className={cn(
+                'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                'hover:bg-accent/50',
+                active
+                  ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
+                  : 'text-foreground/80 hover:text-foreground'
+              )}
+            >
+              {it.label}
+            </Link>
+          );
+        })}
+      </nav>
+
+      <div className="flex items-center gap-2">
         {showMobileMenuButton && (
           <button
             className="lg:hidden px-2 py-1 rounded border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -58,41 +83,7 @@ export function Navbar({
           </button>
         )}
 
-        <nav
-          className="hidden lg:flex items-center gap-0.5"
-          aria-label="Main navigation"
-        >
-          {items.map((it) => {
-            const active = isActive(path, it.href);
-            return (
-              <Link
-                key={it.href}
-                href={it.href}
-                aria-current={active ? 'page' : undefined}
-                className={cn(
-                  'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                  'hover:bg-accent/50',
-                  active
-                    ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
-                    : 'text-foreground/80 hover:text-foreground'
-                )}
-              >
-                {it.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <button
-          data-testid="theme-selector"
-          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-          className="relative p-2 rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          aria-label="Toggle theme"
-        >
-          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute top-2 left-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-        </button>
+        <ThemeSelector variant="compact" align="end" showLabel={false} />
       </div>
     </div>
   );

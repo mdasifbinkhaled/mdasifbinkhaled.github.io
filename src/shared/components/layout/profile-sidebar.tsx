@@ -48,231 +48,240 @@ export const ProfileSidebar = memo(function ProfileSidebar({
   }, [onLinkClick]);
 
   return (
-    <div className="flex flex-col h-full bg-sidebar overflow-y-auto">
-      {/* Profile Section */}
-      <div
-        className={cn(
-          'flex flex-col items-center text-center transition-all duration-200',
-          isCollapsed ? 'p-2' : 'p-6'
-        )}
-      >
+    <div className="flex flex-col h-full bg-sidebar">
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto">
+        {/* Profile Section */}
         <div
           className={cn(
-            'relative overflow-hidden rounded-full border-2 border-sidebar-primary/30 shadow-lg mb-4',
-            isCollapsed ? 'w-10 h-10' : 'w-32 h-32'
+            'flex flex-col items-center text-center transition-all duration-200',
+            isCollapsed ? 'p-2' : 'p-6'
           )}
         >
-          {!imageError ? (
-            <Image
-              src={assetPaths.profile}
-              alt={assetConfig.profileImage.alt}
-              width={assetConfig.profileImage.width}
-              height={assetConfig.profileImage.height}
-              className="w-full h-full object-cover"
-              onError={handleImageError}
-            />
-          ) : (
-            <div className="w-full h-full bg-sidebar-accent/30 flex items-center justify-center">
-              <User
-                className={cn(
-                  'text-sidebar-foreground/50',
-                  isCollapsed ? 'w-6 h-6' : 'w-16 h-16'
-                )}
+          <div
+            className={cn(
+              'relative overflow-hidden rounded-full border-2 border-sidebar-primary/30 shadow-lg mb-4',
+              isCollapsed ? 'w-10 h-10' : 'w-32 h-32'
+            )}
+          >
+            {!imageError ? (
+              <Image
+                src={assetPaths.profile}
+                alt={assetConfig.profileImage.alt}
+                width={assetConfig.profileImage.width}
+                height={assetConfig.profileImage.height}
+                className="w-full h-full object-cover"
+                onError={handleImageError}
               />
-            </div>
+            ) : (
+              <div className="w-full h-full bg-sidebar-accent/30 flex items-center justify-center">
+                <User
+                  className={cn(
+                    'text-sidebar-foreground/50',
+                    isCollapsed ? 'w-6 h-6' : 'w-16 h-16'
+                  )}
+                />
+              </div>
+            )}
+          </div>
+
+          {!isCollapsed && (
+            <>
+              <h3 className="font-bold text-xl text-sidebar-foreground leading-tight">
+                {siteConfig.author}
+              </h3>
+              <p className="text-sm text-sidebar-foreground/90 mt-2 font-medium">
+                Senior Lecturer & Researcher
+              </p>
+              <p className="text-xs text-sidebar-foreground/75 mt-1 px-2">
+                {siteConfig.address.split(',')[0]}{' '}
+                {/* Show only first part of address e.g. Bashundhara R/A */}
+              </p>
+              <div className="mt-3 px-3 py-1.5 bg-sidebar-accent/20 rounded-full border border-sidebar-border/50">
+                <p className="text-xs text-sidebar-foreground/90 font-medium">
+                  Open to PhD Opportunities
+                </p>
+              </div>
+            </>
           )}
         </div>
 
-        {!isCollapsed && (
-          <>
-            <h3 className="font-bold text-xl text-sidebar-foreground leading-tight">
-              {siteConfig.author}
-            </h3>
-            <p className="text-sm text-sidebar-foreground/90 mt-2 font-medium">
-              Senior Lecturer & Researcher
-            </p>
-            <p className="text-xs text-sidebar-foreground/75 mt-1 px-2">
-              {siteConfig.address.split(',')[0]}{' '}
-              {/* Show only first part of address e.g. Bashundhara R/A */}
-            </p>
-            <div className="mt-3 px-3 py-1.5 bg-sidebar-accent/20 rounded-full border border-sidebar-border/50">
-              <p className="text-xs text-sidebar-foreground/90 font-medium">
-                Open to PhD Opportunities
-              </p>
-            </div>
-          </>
-        )}
-      </div>
+        {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
 
-      {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
+        {/* Quick Info */}
+        <div className={cn('flex-grow', isCollapsed ? 'p-2' : 'p-6')}>
+          {!isCollapsed && (
+            <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider sidebar-section-title">
+              Contact & Links
+            </h4>
+          )}
 
-      {/* Quick Info */}
-      <div className={cn('flex-grow', isCollapsed ? 'p-2' : 'p-6')}>
-        {!isCollapsed && (
-          <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider sidebar-section-title">
-            Contact & Links
-          </h4>
-        )}
-
-        <div className={cn('space-y-3', isCollapsed && 'space-y-2')}>
-          <Button
-            variant="ghost"
-            size={isCollapsed ? 'icon' : 'sm'}
-            asChild
-            className={cn(
-              'transition-all duration-300 hover:translate-x-1 focus-visible:translate-x-1 focus-visible:bg-sidebar-accent group',
-              isCollapsed
-                ? 'w-full justify-center text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-                : 'w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-            )}
-            title={isCollapsed ? siteConfig.email : undefined}
-          >
-            <a href={`mailto:${siteConfig.email}`} onClick={handleLinkClick}>
-              <Mail
-                className={cn(
-                  'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
-                  isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
-                )}
-              />
-              {!isCollapsed && (
-                <span className="truncate text-sm sidebar-button-text">
-                  {siteConfig.email}
-                </span>
-              )}
-            </a>
-          </Button>
-          <Button
-            variant="ghost"
-            size={isCollapsed ? 'icon' : 'sm'}
-            asChild
-            className={cn(
-              'transition-all duration-300 hover:translate-x-1 focus-visible:translate-x-1 focus-visible:bg-sidebar-accent group',
-              isCollapsed
-                ? 'w-full justify-center text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-                : 'w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-            )}
-            title={isCollapsed ? siteConfig.phone : undefined}
-          >
-            <a
-              href={`tel:${siteConfig.phone.replace(/\s|\(|\)/g, '')}`}
-              onClick={handleLinkClick}
-            >
-              <Smartphone
-                className={cn(
-                  'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
-                  isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
-                )}
-              />
-              {!isCollapsed && (
-                <span className="truncate text-sm sidebar-button-text">
-                  {siteConfig.phone}
-                </span>
-              )}
-            </a>
-          </Button>
-
-          <div className={cn('pt-2', isCollapsed ? 'space-y-1' : 'space-y-2')}>
+          <div className={cn('space-y-3', isCollapsed && 'space-y-2')}>
             <Button
-              variant="outline"
+              variant="ghost"
               size={isCollapsed ? 'icon' : 'sm'}
               asChild
               className={cn(
-                'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
-                isCollapsed ? 'w-full justify-center' : 'w-full justify-start'
+                'transition-all duration-300 hover:translate-x-1 focus-visible:translate-x-1 focus-visible:bg-sidebar-accent group',
+                isCollapsed
+                  ? 'w-full justify-center text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                  : 'w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
               )}
-              title={isCollapsed ? 'Download CV' : undefined}
+              title={isCollapsed ? siteConfig.email : undefined}
             >
-              <a
-                href={siteConfig.links.cv}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleLinkClick}
-              >
-                <FileText
+              <a href={`mailto:${siteConfig.email}`} onClick={handleLinkClick}>
+                <Mail
                   className={cn(
                     'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
                     isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
                   )}
                 />
                 {!isCollapsed && (
-                  <span className="font-medium sidebar-button-text">
-                    Download CV
+                  <span className="truncate text-sm sidebar-button-text">
+                    {siteConfig.email}
+                  </span>
+                )}
+              </a>
+            </Button>
+            <Button
+              variant="ghost"
+              size={isCollapsed ? 'icon' : 'sm'}
+              asChild
+              className={cn(
+                'transition-all duration-300 hover:translate-x-1 focus-visible:translate-x-1 focus-visible:bg-sidebar-accent group',
+                isCollapsed
+                  ? 'w-full justify-center text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                  : 'w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+              )}
+              title={isCollapsed ? siteConfig.phone : undefined}
+            >
+              <a
+                href={`tel:${siteConfig.phone.replace(/\s|\(|\)/g, '')}`}
+                onClick={handleLinkClick}
+              >
+                <Smartphone
+                  className={cn(
+                    'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
+                    isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
+                  )}
+                />
+                {!isCollapsed && (
+                  <span className="truncate text-sm sidebar-button-text">
+                    {siteConfig.phone}
                   </span>
                 )}
               </a>
             </Button>
 
-            <Button
-              variant="outline"
-              size={isCollapsed ? 'icon' : 'sm'}
-              asChild
-              className={cn(
-                'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
-                isCollapsed ? 'w-full justify-center' : 'w-full justify-start',
-                isActive('/research') &&
-                  'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
-              )}
-              title={isCollapsed ? 'Research Focus' : undefined}
+            <div
+              className={cn('pt-2', isCollapsed ? 'space-y-1' : 'space-y-2')}
             >
-              <Link
-                href="/research"
-                aria-current={isActive('/research') ? 'page' : undefined}
-                {...(onLinkClick && { onClick: onLinkClick })}
-              >
-                <ExternalLink
-                  className={cn(
-                    'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
-                    isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
-                  )}
-                />
-                {!isCollapsed && (
-                  <span className="font-medium sidebar-button-text">
-                    Research Focus
-                  </span>
+              <Button
+                variant="outline"
+                size={isCollapsed ? 'icon' : 'sm'}
+                asChild
+                className={cn(
+                  'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
+                  isCollapsed ? 'w-full justify-center' : 'w-full justify-start'
                 )}
-              </Link>
-            </Button>
+                title={isCollapsed ? 'Download CV' : undefined}
+              >
+                <a
+                  href={siteConfig.links.cv}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleLinkClick}
+                >
+                  <FileText
+                    className={cn(
+                      'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
+                      isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
+                    )}
+                  />
+                  {!isCollapsed && (
+                    <span className="font-medium sidebar-button-text">
+                      Download CV
+                    </span>
+                  )}
+                </a>
+              </Button>
 
-            <Button
-              variant="outline"
-              size={isCollapsed ? 'icon' : 'sm'}
-              asChild
-              className={cn(
-                'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
-                isCollapsed ? 'w-full justify-center' : 'w-full justify-start',
-                isActive('/publications') &&
-                  'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
-              )}
-              title={isCollapsed ? 'Publications' : undefined}
-            >
-              <Link
-                href="/publications"
-                aria-current={isActive('/publications') ? 'page' : undefined}
-                {...(onLinkClick && { onClick: onLinkClick })}
-              >
-                <FileText
-                  className={cn(
-                    'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
-                    isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
-                  )}
-                />
-                {!isCollapsed && (
-                  <span className="font-medium sidebar-button-text">
-                    Publications
-                  </span>
+              <Button
+                variant="outline"
+                size={isCollapsed ? 'icon' : 'sm'}
+                asChild
+                className={cn(
+                  'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
+                  isCollapsed
+                    ? 'w-full justify-center'
+                    : 'w-full justify-start',
+                  isActive('/research') &&
+                    'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
                 )}
-              </Link>
-            </Button>
+                title={isCollapsed ? 'Research Focus' : undefined}
+              >
+                <Link
+                  href="/research"
+                  aria-current={isActive('/research') ? 'page' : undefined}
+                  {...(onLinkClick && { onClick: onLinkClick })}
+                >
+                  <ExternalLink
+                    className={cn(
+                      'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
+                      isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
+                    )}
+                  />
+                  {!isCollapsed && (
+                    <span className="font-medium sidebar-button-text">
+                      Research Focus
+                    </span>
+                  )}
+                </Link>
+              </Button>
+
+              <Button
+                variant="outline"
+                size={isCollapsed ? 'icon' : 'sm'}
+                asChild
+                className={cn(
+                  'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
+                  isCollapsed
+                    ? 'w-full justify-center'
+                    : 'w-full justify-start',
+                  isActive('/publications') &&
+                    'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
+                )}
+                title={isCollapsed ? 'Publications' : undefined}
+              >
+                <Link
+                  href="/publications"
+                  aria-current={isActive('/publications') ? 'page' : undefined}
+                  {...(onLinkClick && { onClick: onLinkClick })}
+                >
+                  <FileText
+                    className={cn(
+                      'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
+                      isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
+                    )}
+                  />
+                  {!isCollapsed && (
+                    <span className="font-medium sidebar-button-text">
+                      Publications
+                    </span>
+                  )}
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
+
+        {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
       </div>
 
-      {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
-
-      {/* Social Icons - Sticky at Bottom */}
+      {/* Social Icons - Sticky at Bottom - Always Visible */}
       <div
         className={cn(
-          'sticky bottom-0 bg-sidebar border-t border-sidebar-border/40 mt-auto',
+          'flex-shrink-0 bg-sidebar border-t border-sidebar-border/40 shadow-lg',
           isCollapsed ? 'p-2' : 'p-6'
         )}
       >

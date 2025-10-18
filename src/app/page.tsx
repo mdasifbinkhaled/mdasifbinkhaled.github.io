@@ -10,9 +10,6 @@ import { siteConfig, DISPLAY_LIMITS } from '@/shared/config';
 import {
   ArrowRight,
   ExternalLink,
-  BookOpen,
-  Users,
-  Quote,
   GraduationCap,
   Github,
   Linkedin,
@@ -20,6 +17,9 @@ import {
   BookUser,
   Globe,
   Award,
+  Brain,
+  Target,
+  TrendingUp,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
@@ -137,33 +137,33 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-card-sm)] text-center mt-[var(--space-section-sm)] max-w-4xl mx-auto">
             {[
               {
-                number: '6+',
-                label: 'Publications',
-                icon: BookOpen,
+                number: '2+',
+                label: 'Research Grants',
+                icon: TrendingUp,
                 color: 'text-blue-500 dark:text-blue-400',
                 bgColor: 'bg-blue-500/10 hover:bg-blue-500/20',
                 borderColor: 'border-blue-500/20',
               },
               {
-                number: '34+',
-                label: 'Citations',
-                icon: Quote,
+                number: '10+',
+                label: 'Courses Taught',
+                icon: GraduationCap,
                 color: 'text-green-500 dark:text-green-400',
                 bgColor: 'bg-green-500/10 hover:bg-green-500/20',
                 borderColor: 'border-green-500/20',
               },
               {
-                number: '5+',
-                label: 'Years Teaching',
-                icon: GraduationCap,
+                number: '3+',
+                label: 'Research Areas',
+                icon: Brain,
                 color: 'text-purple-500 dark:text-purple-400',
                 bgColor: 'bg-purple-500/10 hover:bg-purple-500/20',
                 borderColor: 'border-purple-500/20',
               },
               {
-                number: '1000+',
-                label: 'Students Taught',
-                icon: Users,
+                number: '4+',
+                label: 'Years Experience',
+                icon: Target,
                 color: 'text-orange-500 dark:text-orange-400',
                 bgColor: 'bg-orange-500/10 hover:bg-orange-500/20',
                 borderColor: 'border-orange-500/20',
