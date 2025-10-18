@@ -12,10 +12,26 @@ import {
   DropdownMenuLabel,
 } from '@/shared/components/ui/dropdown-menu';
 import { Badge } from '@/shared/components/ui/badge';
-import { Palette, Sun, Moon, Check } from 'lucide-react';
+import {
+  Palette,
+  Sun,
+  Moon,
+  Check,
+  Waves,
+  Coffee,
+  Trees,
+  CloudMoon,
+  Sunrise,
+  Flower,
+  Briefcase,
+  Heart,
+  Leaf,
+  Sparkles,
+} from 'lucide-react';
 import { DISPLAY_LIMITS } from '@/shared/config';
 
 const themes = [
+  // Classic Themes
   {
     name: 'light',
     label: 'Light',
@@ -27,14 +43,97 @@ const themes = [
   {
     name: 'dark',
     label: 'Dark',
-    description: 'Professional dark theme',
+    description: 'Professional dark theme with enhanced contrast',
     icon: Moon,
     preview: 'bg-gradient-to-br from-slate-900 to-slate-800',
     category: 'Classic',
   },
+  // Natural Themes
+  {
+    name: 'ocean',
+    label: 'Ocean',
+    description: 'Cool blue tones inspired by ocean depths',
+    icon: Waves,
+    preview: 'bg-gradient-to-br from-cyan-50 to-blue-100',
+    category: 'Natural',
+  },
+  {
+    name: 'warm',
+    label: 'Warm',
+    description: 'Cozy beige and earth tones',
+    icon: Coffee,
+    preview: 'bg-gradient-to-br from-amber-50 to-orange-50',
+    category: 'Natural',
+  },
+  {
+    name: 'forest',
+    label: 'Forest',
+    description: 'Fresh green tones inspired by nature',
+    icon: Trees,
+    preview: 'bg-gradient-to-br from-emerald-50 to-green-100',
+    category: 'Natural',
+  },
+  // Vibrant Themes
+  {
+    name: 'midnight',
+    label: 'Midnight',
+    description: 'Deep blue night sky with high contrast',
+    icon: CloudMoon,
+    preview: 'bg-gradient-to-br from-indigo-950 to-blue-900',
+    category: 'Vibrant',
+  },
+  {
+    name: 'sunset',
+    label: 'Sunset',
+    description: 'Warm orange and pink hues like twilight',
+    icon: Sunrise,
+    preview: 'bg-gradient-to-br from-orange-100 to-pink-100',
+    category: 'Vibrant',
+  },
+  {
+    name: 'lavender',
+    label: 'Lavender',
+    description: 'Soft purple tones for a calming experience',
+    icon: Flower,
+    preview: 'bg-gradient-to-br from-purple-100 to-pink-50',
+    category: 'Vibrant',
+  },
+  // Professional Themes
+  {
+    name: 'slate',
+    label: 'Slate',
+    description: 'Professional neutral gray for serious work',
+    icon: Briefcase,
+    preview: 'bg-gradient-to-br from-gray-100 to-slate-200',
+    category: 'Professional',
+  },
+  {
+    name: 'crimson',
+    label: 'Crimson',
+    description: 'Traditional academic red with sophistication',
+    icon: Heart,
+    preview: 'bg-gradient-to-br from-red-50 to-rose-100',
+    category: 'Professional',
+  },
+  {
+    name: 'emerald',
+    label: 'Emerald',
+    description: 'Rich green for growth and innovation',
+    icon: Leaf,
+    preview: 'bg-gradient-to-br from-emerald-100 to-teal-100',
+    category: 'Professional',
+  },
+  {
+    name: 'indigo',
+    label: 'Indigo',
+    description: 'Deep blue for academic excellence',
+    icon: Sparkles,
+    preview: 'bg-gradient-to-br from-indigo-100 to-blue-200',
+    category: 'Professional',
+  },
 ] as const;
 
-const categories = ['Classic'] as const;
+const categories = ['Classic', 'Natural', 'Vibrant', 'Professional'] as const;
 
 interface ThemeSelectorProps {
   variant?: 'default' | 'compact' | 'floating';

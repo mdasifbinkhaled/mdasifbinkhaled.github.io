@@ -137,7 +137,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-card-sm)] text-center mt-[var(--space-section-sm)] max-w-4xl mx-auto">
             {[
               {
-                number: '15+',
+                number: '6+',
                 label: 'Publications',
                 icon: BookOpen,
                 color: 'text-blue-500 dark:text-blue-400',
@@ -145,7 +145,7 @@ export default function HomePage() {
                 borderColor: 'border-blue-500/20',
               },
               {
-                number: '100+',
+                number: '34+',
                 label: 'Citations',
                 icon: Quote,
                 color: 'text-green-500 dark:text-green-400',
