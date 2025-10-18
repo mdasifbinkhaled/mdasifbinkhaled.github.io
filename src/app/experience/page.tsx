@@ -17,6 +17,9 @@ import { ExperienceCompact } from '@/shared/components/common/experience-compact
 export const metadata: Metadata = {
   title: 'Experience & Skills',
   description: `Md Asif Bin Khaled's professional experience and technical skills. ${siteConfig.description}`,
+  alternates: {
+    canonical: '/experience',
+  },
 };
 
 export default function ExperiencePage() {

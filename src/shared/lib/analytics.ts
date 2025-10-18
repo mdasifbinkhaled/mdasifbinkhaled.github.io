@@ -12,8 +12,9 @@ interface FirstInputEntry extends PerformanceEntry {
   startTime: number;
 }
 
-// Configure analytics destinations via environment variables so static builds
-// can skip network requests until a backend is available.
+// Configure analytics with environment variables
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const ANALYTICS_ENABLED = process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true';
 const analyticsEndpoint = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT;
 const isStaticMode = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
 
@@ -22,7 +23,7 @@ export const trackEvent = (
   eventName: string,
   properties?: Record<string, string | number | boolean | undefined>
 ) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined' || !ANALYTICS_ENABLED) return;
 
   // For development, just log events
   if (process.env.NODE_ENV === 'development') {
@@ -31,29 +32,20 @@ export const trackEvent = (
     return;
   }
 
-  // In production, you would integrate with your analytics service
-  // Examples: Google Analytics, Mixpanel, Amplitude, etc.
-
   // Google Analytics 4 (gtag)
-  if (typeof window.gtag !== 'undefined') {
-    window.gtag('event', eventName, properties);
+  if (GA_MEASUREMENT_ID && typeof window.gtag !== 'undefined') {
+    window.gtag('event', eventName, properties as Record<string, unknown>);
   }
 
-  // Custom analytics endpoint
-  // Future implementations can point NEXT_PUBLIC_ANALYTICS_ENDPOINT to a
-  // serverless function, analytics proxy, or external collection service.
-  if (!isStaticMode && analyticsEndpoint) {
-    try {
-      fetch(analyticsEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event: eventName, properties }),
-      }).catch(() => {
-        // Silently fail for analytics
-      });
-    } catch {
-      // Silently fail for analytics
-    }
+  // Custom analytics endpoint (if configured)
+  if (analyticsEndpoint && !isStaticMode) {
+    fetch(analyticsEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event: eventName, properties }),
+    }).catch(() => {
+      // Silently fail - analytics should never break the app
+    });
   }
 };
 

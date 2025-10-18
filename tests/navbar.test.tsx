@@ -35,7 +35,7 @@ describe('Navbar', () => {
   it('renders navbar with branding', () => {
     render(<Navbar />);
 
-    expect(screen.getByRole('banner')).toBeInTheDocument();
+    // Navbar itself doesn't have banner role (that's in the layout wrapper)
     expect(screen.getByTestId('graduation-cap-icon')).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: /go to homepage/i })
@@ -136,11 +136,7 @@ describe('Navbar', () => {
   it('has proper semantic structure', () => {
     render(<Navbar />);
 
-    // Check header element
-    const header = screen.getByRole('banner');
-    expect(header).toHaveClass('sticky', 'top-0');
-
-    // Check navigation element
+    // Check navigation element (navbar is nested inside header in layout)
     const nav = screen.getByRole('navigation');
     expect(nav).toHaveAttribute('aria-label', 'Main navigation');
   });

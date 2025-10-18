@@ -17,8 +17,18 @@ interface FilterBarProps {
 
 /**
  * Filter bar component with type and year filters.
+ * Provides accessible toggle buttons for filtering content by type and year.
+ *
  * @param props - Component props
- * @returns Filter UI with buttons
+ * @param props.contentTypes - Available content types for filtering
+ * @param props.selectedTypes - Currently selected content types
+ * @param props.onToggleType - Callback when a type filter is toggled
+ * @param props.availableYears - Available years for filtering
+ * @param props.selectedYear - Currently selected year (null for all years)
+ * @param props.onSelectYear - Callback when a year filter is selected
+ * @param props.showTypeFilter - Whether to show type filter
+ * @param props.showYearFilter - Whether to show year filter
+ * @returns Filter UI with accessible toggle buttons
  */
 export function FilterBar({
   contentTypes,
@@ -35,14 +45,23 @@ export function FilterBar({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3" role="group" aria-label="Content filters">
       {showTypeFilter && contentTypes.length > 1 && (
-        <div className="flex flex-wrap items-center gap-2">
+        <div
+          className="flex flex-wrap items-center gap-2"
+          role="group"
+          aria-label="Filter by type"
+        >
           <Filter
             className="w-4 h-4 text-muted-foreground"
             aria-hidden="true"
           />
-          <span className="text-sm text-muted-foreground">Type:</span>
+          <span
+            className="text-sm text-muted-foreground"
+            id="type-filter-label"
+          >
+            Type:
+          </span>
           {contentTypes.map((type) => {
             const isSelected = selectedTypes.includes(type);
 
@@ -50,7 +69,10 @@ export function FilterBar({
               <button
                 key={type}
                 type="button"
-                aria-pressed={isSelected}
+                role="button"
+                aria-pressed={Boolean(isSelected)}
+                aria-label={`Filter by ${type}`}
+                aria-describedby="type-filter-label"
                 onClick={() => onToggleType(type)}
                 className={cn(
                   badgeVariants({
@@ -68,15 +90,27 @@ export function FilterBar({
       )}
 
       {showYearFilter && availableYears.length > 1 && (
-        <div className="flex flex-wrap items-center gap-2">
+        <div
+          className="flex flex-wrap items-center gap-2"
+          role="group"
+          aria-label="Filter by year"
+        >
           <Calendar
             className="w-4 h-4 text-muted-foreground"
             aria-hidden="true"
           />
-          <span className="text-sm text-muted-foreground">Year:</span>
+          <span
+            className="text-sm text-muted-foreground"
+            id="year-filter-label"
+          >
+            Year:
+          </span>
           <button
             type="button"
-            aria-pressed={!selectedYear}
+            role="button"
+            aria-pressed={Boolean(!selectedYear)}
+            aria-label="Show all years"
+            aria-describedby="year-filter-label"
             onClick={() => onSelectYear(null)}
             className={cn(
               badgeVariants({
@@ -97,7 +131,10 @@ export function FilterBar({
                 <button
                   key={yearValue ?? `year-${index}`}
                   type="button"
-                  aria-pressed={isSelected}
+                  role="button"
+                  aria-pressed={Boolean(isSelected)}
+                  aria-label={`Filter by year ${year || 'unknown'}`}
+                  aria-describedby="year-filter-label"
                   onClick={() => onSelectYear(yearValue ?? null)}
                   className={cn(
                     badgeVariants({

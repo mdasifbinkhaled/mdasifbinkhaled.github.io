@@ -1,0 +1,19 @@
+/* TEAM */
+Developer & Designer: Md Asif Bin Khaled
+Site: https://mdasifbinkhaled.github.io
+Location: Dhaka, Bangladesh
+
+/* THANKS */
+Next.js Team - React Framework
+Vercel - Hosting & Deployment
+shadcn/ui - Component Library
+Radix UI - Accessible Components
+Tailwind CSS - Utility CSS Framework
+
+/* SITE */
+Last update: 2025/10/19
+Standards: HTML5, CSS3, JavaScript ES6+, TypeScript
+Components: React 19, Next.js 15
+Accessibility: WCAG 2.1 AA compliant
+Performance: Optimized static export
+IDE: Visual Studio Code

@@ -30,6 +30,9 @@ import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
 export const metadata: Metadata = {
   title: 'Teaching Portfolio',
   description: `${siteConfig.author}'s teaching philosophy, experience with Outcome-Based Education (OBE), and list of courses taught. ${siteConfig.description}`,
+  alternates: {
+    canonical: '/teaching',
+  },
 };
 
 export default function TeachingPage() {
@@ -61,6 +64,7 @@ export default function TeachingPage() {
               width={800}
               height={400}
               className="rounded-md mb-6 object-cover"
+              loading="lazy"
             />
             <p>
               My teaching philosophy is centered on creating an inclusive,

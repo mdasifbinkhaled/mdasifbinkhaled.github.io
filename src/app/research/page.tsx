@@ -13,6 +13,9 @@ import { assetPaths } from '@/shared/config/assets';
 export const metadata: Metadata = {
   title: 'Research Focus',
   description: `Delve into ${siteConfig.author}'s research interests in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, and discover funded projects. ${siteConfig.description}`,
+  alternates: {
+    canonical: '/research',
+  },
   openGraph: {
     title: `Research Focus - ${siteConfig.author}`,
     description: `Delve into ${siteConfig.author}'s research interests in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare.`,
