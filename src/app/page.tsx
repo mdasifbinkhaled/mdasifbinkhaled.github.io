@@ -20,6 +20,11 @@ import {
   Brain,
   Target,
   TrendingUp,
+  Activity,
+  Leaf,
+  Satellite,
+  Eye,
+  Code2,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
@@ -137,54 +142,63 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-card-sm)] text-center mt-[var(--space-section-sm)] max-w-4xl mx-auto">
             {[
               {
-                number: '2+',
-                label: 'Research Grants',
-                icon: TrendingUp,
+                number: '7+',
+                label: 'Years Teaching',
+                icon: GraduationCap,
                 color: 'text-blue-500 dark:text-blue-400',
                 bgColor: 'bg-blue-500/10 hover:bg-blue-500/20',
                 borderColor: 'border-blue-500/20',
+                description: '6+ full-time, 1.8 part-time',
               },
               {
-                number: '10+',
-                label: 'Courses Taught',
-                icon: GraduationCap,
+                number: '4.0+',
+                label: 'Teaching Score',
+                icon: Target,
                 color: 'text-green-500 dark:text-green-400',
                 bgColor: 'bg-green-500/10 hover:bg-green-500/20',
                 borderColor: 'border-green-500/20',
+                description: 'Out of 5.0',
               },
               {
-                number: '3+',
-                label: 'Research Areas',
-                icon: Brain,
+                number: '4',
+                label: 'Research Grants',
+                icon: TrendingUp,
                 color: 'text-purple-500 dark:text-purple-400',
                 bgColor: 'bg-purple-500/10 hover:bg-purple-500/20',
                 borderColor: 'border-purple-500/20',
+                description: 'Successfully awarded',
               },
               {
-                number: '4+',
-                label: 'Years Experience',
-                icon: Target,
+                number: '5+',
+                label: 'Research Areas',
+                icon: Brain,
                 color: 'text-orange-500 dark:text-orange-400',
                 bgColor: 'bg-orange-500/10 hover:bg-orange-500/20',
                 borderColor: 'border-orange-500/20',
+                description: 'Active focus areas',
               },
             ].map((stat, index) => (
               <Card
                 key={index}
-                className={`backdrop-blur border ${stat.borderColor} shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105 ${stat.bgColor}`}
+                className={`backdrop-blur border ${stat.borderColor} shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105 ${stat.bgColor} group`}
               >
                 <CardContent className="p-6 text-center">
                   <div
-                    className={`w-12 h-12 mx-auto mb-3 rounded-lg ${stat.bgColor} flex items-center justify-center transition-all duration-300`}
+                    className={`w-12 h-12 mx-auto mb-3 rounded-lg ${stat.bgColor} flex items-center justify-center transition-all duration-300 group-hover:scale-110`}
                   >
                     <stat.icon className={`w-7 h-7 ${stat.color}`} />
                   </div>
                   <div className="text-2xl font-bold text-foreground mb-1">
                     {stat.number}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm font-medium text-muted-foreground mb-1">
                     {stat.label}
                   </div>
+                  {'description' in stat && (
+                    <div className="text-xs text-muted-foreground/80 mt-2">
+                      {stat.description}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -225,37 +239,109 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Research Interests - Condensed */}
+      {/* Research Interests - Expanded */}
       <section className="w-full py-[var(--space-section-md)]">
         <div className="container-responsive">
           <h2 className="text-3xl font-bold text-center mb-[var(--space-card-lg)] text-primary">
             Research Interests
           </h2>
-          <div className="grid gap-[var(--space-card-default)] md:grid-cols-2 max-w-4xl mx-auto">
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="grid gap-[var(--space-card-default)] md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-red-500">
               <CardHeader>
-                <CardTitle className="text-xl">Explainable AI (XAI)</CardTitle>
+                <div className="flex items-center gap-3 mb-2">
+                  <Activity className="w-6 h-6 text-red-500" />
+                  <CardTitle className="text-xl">AI in Healthcare</CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="text-muted-foreground">
                 <p>
-                  Developing transparent AI systems for healthcare that
-                  clinicians and patients can trust. Focus on interpretable
-                  models for disease detection and diagnosis with clear
-                  reasoning.
+                  Developing AI-powered diagnostic systems for disease
+                  detection, medical imaging analysis, and clinical decision
+                  support to improve patient outcomes and healthcare delivery.
                 </p>
               </CardContent>
             </Card>
-            <Card className="shadow-lg hover:shadow-xl transition-shadow">
+
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-green-500">
               <CardHeader>
-                <CardTitle className="text-xl">
-                  Multimodal AI & Computer Vision
-                </CardTitle>
+                <div className="flex items-center gap-3 mb-2">
+                  <Leaf className="w-6 h-6 text-green-500" />
+                  <CardTitle className="text-xl">AI in Environment</CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="text-muted-foreground">
                 <p>
-                  Integrating imaging, clinical records, and lab results for
-                  holistic diagnostics. Creating comprehensive tools that
-                  leverage diverse data modalities for personalized healthcare.
+                  Applying machine learning to environmental monitoring, climate
+                  modeling, ecosystem conservation, and sustainable resource
+                  management for a greener future.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-blue-500">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <Brain className="w-6 h-6 text-blue-500" />
+                  <CardTitle className="text-xl">
+                    Explainable AI (XAI)
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Creating transparent AI systems that clinicians and users can
+                  trust. Focus on interpretable models for critical applications
+                  with clear reasoning and decision pathways.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-purple-500">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <Eye className="w-6 h-6 text-purple-500" />
+                  <CardTitle className="text-xl">Multimodal AI</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Integrating imaging, text, clinical records, and sensor data
+                  for comprehensive analysis. Building systems that leverage
+                  diverse data modalities for holistic insights.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-orange-500">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <Satellite className="w-6 h-6 text-orange-500" />
+                  <CardTitle className="text-xl">Remote Sensing</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Analyzing satellite, drone, and aerial imagery for land use
+                  classification, disaster monitoring, agricultural assessment,
+                  and environmental change detection.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-amber-500">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <Code2 className="w-6 h-6 text-amber-500" />
+                  <CardTitle className="text-xl">
+                    Algorithms & Data Structures
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Researching efficient sorting, searching, and optimization
+                  algorithms. Exploring novel data structures and computational
+                  approaches for solving complex problems.
                 </p>
               </CardContent>
             </Card>

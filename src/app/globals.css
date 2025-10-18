@@ -16,9 +16,36 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Smooth theme transitions - only for elements without existing transitions */
+body,
+main,
+section,
+article,
+aside,
+header,
+footer,
+nav {
+  transition:
+    background-color 300ms ease,
+    color 300ms ease,
+    border-color 300ms ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* Disable transitions for reduced motion */
+  body,
+  main,
+  section,
+  article,
+  aside,
+  header,
+  footer,
+  nav {
+    transition: none;
   }
 }
 

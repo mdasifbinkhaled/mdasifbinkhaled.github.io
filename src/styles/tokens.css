@@ -480,6 +480,38 @@
   --academic-highlight: 230 100% 95%;
 }
 
+/* Vintage Theme - Warm golden tones with classic elegance */
+[data-theme='vintage'] {
+  --background: 42 40% 96%;
+  --foreground: 30 30% 18%;
+  --card: 40 50% 98%;
+  --card-foreground: 30 30% 18%;
+  --popover: 40 50% 98%;
+  --popover-foreground: 30 30% 18%;
+  --primary: 38 75% 45%;
+  --primary-foreground: 40 50% 98%;
+  --secondary: 42 30% 88%;
+  --secondary-foreground: 30 30% 18%;
+  --muted: 42 25% 92%;
+  --muted-foreground: 35 18% 40%;
+  --accent: 45 80% 60%;
+  --accent-foreground: 30 30% 18%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 76% 36%;
+  --success-foreground: 0 0% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 9%;
+  --info: 199 89% 48%;
+  --info-foreground: 0 0% 98%;
+  --border: 42 20% 85%;
+  --input: 42 20% 85%;
+  --ring: 38 75% 45%;
+
+  /* Academic Colors - Vintage Theme */
+  --academic-highlight: 45 100% 94%;
+}
+
 /* Utility Classes */
 .bg-background {
   background-color: hsl(var(--background));

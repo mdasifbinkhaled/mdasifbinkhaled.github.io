@@ -27,6 +27,7 @@ import {
   Heart,
   Leaf,
   Sparkles,
+  Scroll,
 } from 'lucide-react';
 
 const themes = [
@@ -129,6 +130,14 @@ const themes = [
     icon: Sparkles,
     preview: 'bg-gradient-to-br from-indigo-100 to-blue-200',
     category: 'Professional',
+  },
+  {
+    name: 'vintage',
+    label: 'Vintage',
+    description: 'Warm golden tones with classic elegance',
+    icon: Scroll,
+    preview: 'bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50',
+    category: 'Classic',
   },
 ] as const;
 
