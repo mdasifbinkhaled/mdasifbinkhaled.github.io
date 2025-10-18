@@ -18,6 +18,8 @@ import {
   Linkedin,
   Mail,
   BookUser,
+  Globe,
+  Award,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
@@ -36,6 +38,26 @@ export default function HomePage() {
     0,
     DISPLAY_LIMITS.HOMEPAGE_RECENT
   );
+
+  // News items (recent achievements and announcements)
+  const newsItems = [
+    {
+      date: '[2025/03]',
+      text: 'Successfully defended research proposal for ',
+      highlight: 'Bangla Dialect Detection',
+      description: " project funded by VC's Research Fund at IUB.",
+    },
+    {
+      date: '[2025/01]',
+      text: 'Awarded Principal Investigator role for ',
+      highlight: 'Unveiling the Linguistic Diversity of Bangla',
+      description: ' (VCRF-SETS:24-013) research grant.',
+    },
+    {
+      date: '[2024/09]',
+      text: 'Promoted to Senior Lecturer at Independent University, Bangladesh (IUB).',
+    },
+  ];
 
   return (
     <div className="flex flex-col items-center">
@@ -170,6 +192,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* News Section */}
+      <section className="w-full py-[var(--space-section-sm)] bg-gradient-to-br from-secondary/30 via-secondary/20 to-transparent">
+        <div className="container-responsive">
+          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary flex items-center gap-2">
+            <span className="w-1 h-6 bg-primary rounded-full"></span>
+            News
+          </h2>
+          <div className="space-y-3">
+            {newsItems.map((item, index) => (
+              <div
+                key={index}
+                className="flex gap-3 text-sm p-3 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
+              >
+                <span className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10">
+                  {item.date}
+                </span>
+                <div className="flex-1">
+                  <span className="text-foreground">{item.text}</span>
+                  {item.highlight && (
+                    <span className="text-primary font-semibold">
+                      {item.highlight}
+                    </span>
+                  )}
+                  {item.description && (
+                    <span className="text-foreground">{item.description}</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Research Interests - Condensed */}
       <section className="w-full py-[var(--space-section-md)]">
         <div className="container-responsive">
@@ -291,7 +346,7 @@ export default function HomePage() {
             learning more about my work? Let&apos;s connect!
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             <Card className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
               <CardContent className="p-6">
                 <a
@@ -304,6 +359,38 @@ export default function HomePage() {
                     <BookUser className="w-8 h-8 text-blue-500" />
                   </div>
                   <span className="font-semibold text-sm">Google Scholar</span>
+                </a>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-6">
+                <a
+                  href={siteConfig.links.researchGate}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-3 group"
+                >
+                  <div className="p-4 bg-teal-500/10 rounded-full group-hover:bg-teal-500/20 transition-colors">
+                    <Globe className="w-8 h-8 text-teal-500" />
+                  </div>
+                  <span className="font-semibold text-sm">ResearchGate</span>
+                </a>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-6">
+                <a
+                  href={siteConfig.links.orcid}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-3 group"
+                >
+                  <div className="p-4 bg-green-600/10 rounded-full group-hover:bg-green-600/20 transition-colors">
+                    <Award className="w-8 h-8 text-green-600" />
+                  </div>
+                  <span className="font-semibold text-sm">ORCID</span>
                 </a>
               </CardContent>
             </Card>
@@ -346,8 +433,8 @@ export default function HomePage() {
                   href={`mailto:${siteConfig.email}`}
                   className="flex flex-col items-center gap-3 group"
                 >
-                  <div className="p-4 bg-green-500/10 rounded-full group-hover:bg-green-500/20 transition-colors">
-                    <Mail className="w-8 h-8 text-green-500" />
+                  <div className="p-4 bg-rose-500/10 rounded-full group-hover:bg-rose-500/20 transition-colors">
+                    <Mail className="w-8 h-8 text-rose-500" />
                   </div>
                   <span className="font-semibold text-sm">Email</span>
                 </a>

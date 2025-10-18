@@ -5,8 +5,10 @@ type SiteLinks = {
   github: string;
   linkedin: string;
   googleScholar: string;
+  researchGate: string;
+  orcid: string;
+  iubAcademic: string;
   cv: string;
-  orcid?: string;
 };
 
 export type SiteConfig = {
@@ -35,6 +37,10 @@ export const siteConfig: SiteConfig = {
     github: 'https://github.com/mdasifbinkhaled',
     linkedin: 'https://linkedin.com/in/mdasifbinkhaled/',
     googleScholar: 'https://scholar.google.com/citations?user=zpcFkLAAAAAJ',
+    researchGate: 'https://www.researchgate.net/profile/Md-Asif-Bin-Khaled',
+    orcid: 'https://orcid.org/0000-0001-8811-0826',
+    iubAcademic:
+      'https://iub.ac.bd/academics/departments/cse/faculty-and-staff/mdasifbinkhaled',
     cv: assetPaths.cv,
   },
   keywords: [
