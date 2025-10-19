@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   Card,
   CardContent,
@@ -7,19 +8,115 @@ import {
   CardTitle,
   CardDescription,
 } from '@/shared/components/ui/card';
-import { GraduationCap, Award, CalendarCheck2 } from 'lucide-react';
+import { Button } from '@/shared/components/ui/button';
+import { Badge } from '@/shared/components/ui/badge';
+import {
+  GraduationCap,
+  Award,
+  CalendarCheck2,
+  MapPin,
+  Briefcase,
+  Target,
+  Mail,
+  Download,
+  BookOpen,
+  Users,
+  Trophy,
+  Sparkles,
+  Brain,
+  Heart,
+  Radio,
+  Code,
+  FlaskConical,
+} from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
 
 export const metadata: Metadata = {
   title: 'About Me',
   description: `Learn more about ${siteConfig.author}'s academic journey, research interests, and professional background. ${siteConfig.description}`,
+  alternates: {
+    canonical: '/about',
+  },
   openGraph: {
     title: `About ${siteConfig.author}`,
     description: `Learn more about ${siteConfig.author}'s academic journey, research interests, and professional background.`,
     images: [assetPaths.ogImage],
   },
 };
+
+const quickFacts = [
+  {
+    icon: MapPin,
+    label: 'Location',
+    value: 'Dhaka, Bangladesh',
+  },
+  {
+    icon: Briefcase,
+    label: 'Current Position',
+    value: 'Senior Lecturer, IUB',
+  },
+  {
+    icon: Brain,
+    label: 'Research Focus',
+    value: 'XAI & MMAI in Healthcare',
+  },
+  {
+    icon: Target,
+    label: 'Career Goal',
+    value: 'Pursuing PhD Opportunities',
+  },
+];
+
+const highlights = [
+  {
+    icon: BookOpen,
+    value: '15+',
+    label: 'Publications',
+  },
+  {
+    icon: Users,
+    value: '1000+',
+    label: 'Students Taught',
+  },
+  {
+    icon: Trophy,
+    value: '6x',
+    label: 'VC Awards',
+  },
+  {
+    icon: FlaskConical,
+    value: '4',
+    label: 'Research Grants',
+  },
+];
+
+const researchInterests = [
+  {
+    icon: Heart,
+    title: 'AI in Healthcare',
+    description: 'Disease detection, diagnosis, and medical analytics',
+    color: 'text-red-500 dark:text-red-400',
+  },
+  {
+    icon: Sparkles,
+    title: 'Explainable AI (XAI)',
+    description: 'Transparent and interpretable AI systems',
+    color: 'text-yellow-500 dark:text-yellow-400',
+  },
+  {
+    icon: Brain,
+    title: 'Multimodal AI (MMAI)',
+    description: 'Integrating diverse data sources for holistic insights',
+    color: 'text-purple-500 dark:text-purple-400',
+  },
+  {
+    icon: Code,
+    title: 'Computer Vision',
+    description: 'Image analysis and medical imaging applications',
+    color: 'text-blue-500 dark:text-blue-400',
+  },
+];
 
 const certifications = [
   {
@@ -31,7 +128,7 @@ const certifications = [
   },
   {
     title:
-      'Insider’s Guide to Systematic Literature Review & Research Paper Writing: A Hands-on Workshop',
+      "Insider's Guide to Systematic Literature Review & Research Paper Writing: A Hands-on Workshop",
     institution: 'Center for Computational and Data Sciences (CCSD), IUB',
     date: 'Jan 2024',
     note: 'Learned advanced techniques in conducting systematic literature reviews and academic writing.',
@@ -61,16 +158,114 @@ const certifications = [
 export default function AboutPage() {
   return (
     <div className="space-y-[var(--space-section-md)]">
-      <header className="text-center">
+      {/* Hero Section */}
+      <header className="text-center space-y-4">
+        <Badge
+          variant="outline"
+          className="text-sm px-4 py-1.5 border-primary/30 bg-primary/5"
+        >
+          <Sparkles className="w-3 h-3 mr-1.5 inline" />
+          Open to PhD Opportunities
+        </Badge>
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           About {siteConfig.author}
         </h1>
-        <p className="mt-[var(--space-card-default)] text-lg leading-8 text-muted-foreground">
-          A Senior Lecturer and Researcher dedicated to advancing AI in
-          healthcare through transparent and innovative solutions.
+        <p className="mt-[var(--space-card-default)] text-lg leading-8 text-muted-foreground max-w-3xl mx-auto">
+          Senior Lecturer and Researcher dedicated to advancing AI in healthcare
+          through transparent and innovative solutions.
         </p>
+        <div className="flex gap-3 justify-center pt-2">
+          <Button asChild size="lg">
+            <Link href={siteConfig.links.cv} target="_blank">
+              <Download className="w-4 h-4 mr-2" />
+              Download CV
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="lg">
+            <Link href="/contact">
+              <Mail className="w-4 h-4 mr-2" />
+              Get in Touch
+            </Link>
+          </Button>
+        </div>
       </header>
 
+      {/* Quick Facts */}
+      <section>
+        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+          <CardContent className="pt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {quickFacts.map((fact, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-background/50 transition-colors"
+                >
+                  <fact.icon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs text-muted-foreground font-medium">
+                      {fact.label}
+                    </p>
+                    <p className="text-sm font-semibold">{fact.value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Highlights Stats */}
+      <section>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {highlights.map((stat, index) => (
+            <Card
+              key={index}
+              className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105 border-primary/10"
+            >
+              <CardContent className="pt-6 pb-6">
+                <stat.icon className="w-8 h-8 mx-auto mb-3 text-primary" />
+                <div className="text-3xl font-bold text-primary mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Research Interests */}
+      <section id="research-interests">
+        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+          Research Interests
+        </h2>
+        <div className="grid gap-[var(--space-card-default)] md:grid-cols-2">
+          {researchInterests.map((interest, index) => (
+            <Card
+              key={index}
+              className="shadow-md hover:shadow-xl transition-all duration-300 group"
+            >
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className={`${interest.color} mt-1`}>
+                    <interest.icon className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-xl">{interest.title}</CardTitle>
+                    <CardDescription className="mt-2">
+                      {interest.description}
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Biography Section */}
       <section id="narrative">
         <Card className="shadow-lg">
           <CardHeader>
@@ -126,6 +321,7 @@ export default function AboutPage() {
         </Card>
       </section>
 
+      {/* Education */}
       <section id="education">
         <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
           Education
@@ -159,7 +355,7 @@ export default function AboutPage() {
               </p>
             </CardContent>
           </Card>
-          <Card className="shadow-md">
+          <Card className="shadow-md hover:shadow-xl transition-all duration-300">
             <CardHeader className="flex flex-row items-start gap-4">
               <GraduationCap className="h-10 w-10 text-primary mt-1 flex-shrink-0" />
               <div>
@@ -193,6 +389,51 @@ export default function AboutPage() {
           </Card>
         </div>
       </section>
+
+      {/* Beyond Academia */}
+      <section id="beyond-academia">
+        <Card className="border-primary/20 bg-gradient-to-br from-accent/5 to-transparent">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-2xl">
+              <Radio className="w-6 h-6 text-primary" />
+              Beyond Academia
+            </CardTitle>
+            <CardDescription>
+              Interests and activities outside research and teaching
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-background/50">
+                <Radio className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-foreground">
+                    Amateur Radio Operator
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Licensed by BTRC, Bangladesh. Passionate about radio
+                    communications and emergency response networks.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-background/50">
+                <Heart className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-foreground">
+                    Community Engagement
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Actively mentoring students and contributing to academic
+                    community development through workshops and seminars.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Certifications */}
       <section id="certifications">
         <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
           Certifications & Training
@@ -222,6 +463,56 @@ export default function AboutPage() {
             </Card>
           ))}
         </div>
+      </section>
+
+      {/* Call to Action */}
+      <section>
+        <Card className="border-primary/30 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent">
+          <CardContent className="pt-8 pb-8 text-center">
+            <h3 className="text-2xl font-bold mb-3 text-primary">
+              Let&apos;s Connect
+            </h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              I&apos;m always open to discussing research collaborations, PhD
+              opportunities, or speaking engagements. Feel free to reach out!
+            </p>
+            <div className="flex gap-3 justify-center flex-wrap">
+              <Button asChild size="lg">
+                <Link href="/contact">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Contact Me
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link
+                  href={siteConfig.links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LinkedIn
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link
+                  href={siteConfig.links.googleScholar}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google Scholar
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link
+                  href={siteConfig.links.orcid}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ORCID
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </section>
     </div>
   );

@@ -309,7 +309,7 @@ e621ee9 feat: performance optimization with debouncing and memoization
 ### Garbage Files
 
 - **Status**: ✅ CLEAN
-- **Searched For**: .DS_Store, _.swp,_.swo, _~,_.bak
+- **Searched For**: .DS*Store, *.swp,_.swo, _~,\_.bak
 - **Result**: 0 files found
 
 ### Build Artifacts
