@@ -122,22 +122,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Brief Bio Section - NEW */}
-          <div className="mt-[var(--space-section-sm)] max-w-3xl mx-auto text-center">
-            <p className="text-lg text-foreground/90 leading-relaxed">
-              I am a dedicated researcher and educator with expertise in
-              developing{' '}
-              <span className="font-semibold text-primary">
-                trustworthy AI systems
-              </span>{' '}
-              for healthcare. My work focuses on creating interpretable machine
-              learning models that bridge the gap between cutting-edge
-              technology and real-world clinical applications, while maintaining
-              transparency and accountability in AI-driven medical
-              decision-making.
-            </p>
-          </div>
-
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-card-sm)] text-center mt-[var(--space-section-sm)] max-w-4xl mx-auto">
             {[

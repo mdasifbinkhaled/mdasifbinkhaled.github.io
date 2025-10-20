@@ -9,7 +9,6 @@ import {
   CardDescription,
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
-import { Badge } from '@/shared/components/ui/badge';
 import {
   GraduationCap,
   Award,
@@ -22,12 +21,10 @@ import {
   BookOpen,
   Users,
   Trophy,
-  Sparkles,
   Brain,
-  Heart,
   Radio,
-  Code,
   FlaskConical,
+  Heart,
 } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
@@ -91,33 +88,6 @@ const highlights = [
   },
 ];
 
-const researchInterests = [
-  {
-    icon: Heart,
-    title: 'AI in Healthcare',
-    description: 'Disease detection, diagnosis, and medical analytics',
-    color: 'text-red-500 dark:text-red-400',
-  },
-  {
-    icon: Sparkles,
-    title: 'Explainable AI (XAI)',
-    description: 'Transparent and interpretable AI systems',
-    color: 'text-yellow-500 dark:text-yellow-400',
-  },
-  {
-    icon: Brain,
-    title: 'Multimodal AI (MMAI)',
-    description: 'Integrating diverse data sources for holistic insights',
-    color: 'text-purple-500 dark:text-purple-400',
-  },
-  {
-    icon: Code,
-    title: 'Computer Vision',
-    description: 'Image analysis and medical imaging applications',
-    color: 'text-blue-500 dark:text-blue-400',
-  },
-];
-
 const certifications = [
   {
     title: 'Hands-on Orientation on Outcomes-Based Education (OBE)',
@@ -160,19 +130,13 @@ export default function AboutPage() {
     <div className="space-y-[var(--space-section-md)]">
       {/* Hero Section */}
       <header className="text-center space-y-4">
-        <Badge
-          variant="outline"
-          className="text-sm px-4 py-1.5 border-primary/30 bg-primary/5"
-        >
-          <Sparkles className="w-3 h-3 mr-1.5 inline" />
-          Open to PhD Opportunities
-        </Badge>
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           About {siteConfig.author}
         </h1>
         <p className="mt-[var(--space-card-default)] text-lg leading-8 text-muted-foreground max-w-3xl mx-auto">
-          Senior Lecturer and Researcher dedicated to advancing AI in healthcare
-          through transparent and innovative solutions.
+          My journey in artificial intelligence research and education, from
+          curiosity-driven exploration to advancing healthcare through
+          transparent AI solutions.
         </p>
         <div className="flex gap-3 justify-center pt-2">
           <Button asChild size="lg">
@@ -231,35 +195,6 @@ export default function AboutPage() {
                   {stat.label}
                 </div>
               </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Research Interests */}
-      <section id="research-interests">
-        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
-          Research Interests
-        </h2>
-        <div className="grid gap-[var(--space-card-default)] md:grid-cols-2">
-          {researchInterests.map((interest, index) => (
-            <Card
-              key={index}
-              className="shadow-md hover:shadow-xl transition-all duration-300 group"
-            >
-              <CardHeader>
-                <div className="flex items-start gap-3">
-                  <div className={`${interest.color} mt-1`}>
-                    <interest.icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-xl">{interest.title}</CardTitle>
-                    <CardDescription className="mt-2">
-                      {interest.description}
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
             </Card>
           ))}
         </div>
