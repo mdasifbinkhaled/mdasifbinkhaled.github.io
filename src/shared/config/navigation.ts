@@ -4,13 +4,7 @@ import type { NavItem } from '@/shared/types';
 
 export const mainNavItems: NavItem[] = [
   { href: '/', label: 'Home', icon: 'Home', sectionId: 'home' },
-  { href: '/about', label: 'About Me', icon: 'UserCircle', sectionId: 'about' },
-  {
-    href: '/experience',
-    label: 'Experience',
-    icon: 'Briefcase',
-    sectionId: 'experience',
-  },
+  { href: '/about', label: 'About', icon: 'UserCircle', sectionId: 'about' },
   { href: '/research', label: 'Research', icon: 'Cpu', sectionId: 'research' },
   {
     href: '/publications',
@@ -24,14 +18,9 @@ export const mainNavItems: NavItem[] = [
     icon: 'Presentation',
     sectionId: 'teaching',
   },
-  {
-    href: '/service-awards',
-    label: 'Service & Awards',
-    icon: 'Award',
-    sectionId: 'service-awards',
-  },
-  // { href: "/blog", label: "Blog", icon: "Rss", sectionId: "blog" }, // Uncomment when blog is ready
   { href: '/contact', label: 'Contact', icon: 'Send', sectionId: 'contact' },
+  // Removed: /experience and /service-awards - content merged into /about
+  // { href: "/blog", label: "Blog", icon: "Rss", sectionId: "blog" }, // Uncomment when blog is ready
 ];
 
 // Teaching sub-navigation with institutions and courses

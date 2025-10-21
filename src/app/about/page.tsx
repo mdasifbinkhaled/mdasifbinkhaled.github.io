@@ -9,6 +9,7 @@ import {
   CardDescription,
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
+import { Badge } from '@/shared/components/ui/badge';
 import {
   GraduationCap,
   Award,
@@ -25,9 +26,21 @@ import {
   Radio,
   FlaskConical,
   Heart,
+  Code,
+  Cpu,
+  Wrench,
+  Layers,
+  Star,
+  Medal,
+  ShieldCheck,
 } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
+import { ExperienceCompact } from '@/shared/components/common/experience-compact';
+import {
+  professionalExperiences,
+  technicalSkills,
+} from '@/shared/lib/data/experience';
 
 export const metadata: Metadata = {
   title: 'About Me',
@@ -122,6 +135,92 @@ const certifications = [
     institution: 'Bangladesh Telecommunication Regulatory Commission (BTRC)',
     date: 'Dec 2017',
     note: 'Certified for operating amateur radio services in Bangladesh. Serial No. 083/17097.',
+  },
+];
+
+const honorsAndAwards = [
+  {
+    title: "Vice Chancellor's Award for Academic Excellence",
+    institution: 'BRAC University',
+    date: 'Spring 2016',
+    icon: Trophy,
+  },
+  {
+    title: "Vice Chancellor's Award for Academic Excellence",
+    institution: 'BRAC University',
+    date: 'Fall 2015',
+    icon: Trophy,
+  },
+  {
+    title: "Vice Chancellor's Award for Academic Excellence",
+    institution: 'BRAC University',
+    date: 'Spring 2015',
+    icon: Trophy,
+  },
+  {
+    title: "Vice Chancellor's Award for Academic Excellence",
+    institution: 'BRAC University',
+    date: 'Fall 2014',
+    icon: Trophy,
+  },
+  {
+    title: "Vice Chancellor's Award for Academic Excellence",
+    institution: 'BRAC University',
+    date: 'Summer 2014',
+    icon: Trophy,
+  },
+  {
+    title: "Vice Chancellor's Award for Academic Excellence",
+    institution: 'BRAC University',
+    date: 'Spring 2014',
+    icon: Trophy,
+  },
+  {
+    title: 'Best Intern Award',
+    institution: 'Tech Geeks Ltd.',
+    date: 'Sep 2016',
+    icon: Star,
+  },
+  {
+    title: 'Top Ten Contestant in Programming Contest',
+    institution: 'BRAC IT',
+    date: 'Nov 2015',
+    icon: Medal,
+  },
+];
+
+const professionalService = [
+  {
+    title: 'IEEE Computer Society Faculty Mentor',
+    organization: 'Independent University, Bangladesh (IUB)',
+    duration: 'Mar 2019 - Present',
+    description:
+      'Mentoring students in IEEE Computer Society activities and research initiatives.',
+    icon: Users,
+  },
+  {
+    title: 'Tech Fest Judge & Organizer',
+    organization: 'Independent University, Bangladesh (IUB)',
+    duration: 'Apr 2019 - Dec 2022',
+    description:
+      'Judged and organized 5 tech fest events, fostering innovation and technical skills among students.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'National Hackathon Mentor',
+    organization: 'Bangladesh Innovation Forum',
+    duration: 'Feb 2020',
+    description:
+      'Mentored student teams in developing innovative solutions for national challenges.',
+    icon: Users,
+  },
+  {
+    title: 'Vice President',
+    organization: 'BRAC University Computer Club (BUCC)',
+    duration: 'Jun 2016 - Jun 2017',
+    description:
+      'Led the executive team in organizing workshops, programming contests, and technical events.',
+    icon: ShieldCheck,
   },
 ];
 
@@ -325,20 +424,77 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Beyond Academia */}
+      {/* Professional Experience */}
+      <section id="experience">
+        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+          Professional Experience
+        </h2>
+        <ExperienceCompact experiences={professionalExperiences} />
+      </section>
+
+      {/* Technical Skills */}
+      <section id="skills">
+        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+          Technical Skills
+        </h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {technicalSkills.map((skillGroup, index) => {
+            const iconMap: Record<string, typeof Code> = {
+              'Programming & Frameworks': Code,
+              'Data Analysis & Visualization': Cpu,
+              'Tools & Software': Wrench,
+              'Teaching & Pedagogy': Users,
+              'Project Management': Briefcase,
+              'Soft Skills': Heart,
+              Languages: BookOpen,
+            };
+            const IconComponent = iconMap[skillGroup.category] || Layers;
+
+            return (
+              <Card
+                key={index}
+                className="shadow-md hover:shadow-lg transition-all duration-300"
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <IconComponent className="w-5 h-5 text-primary" />
+                    {skillGroup.category}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {skillGroup.items.map((skill) => (
+                      <Badge
+                        key={skill}
+                        variant="secondary"
+                        className="text-xs"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Beyond Academia & Service */}
       <section id="beyond-academia">
         <Card className="border-primary/20 bg-gradient-to-br from-accent/5 to-transparent">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-2xl">
               <Radio className="w-6 h-6 text-primary" />
-              Beyond Academia
+              Beyond Academia & Service
             </CardTitle>
             <CardDescription>
-              Interests and activities outside research and teaching
+              Personal interests and professional service contributions
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
+              {/* Personal Interests */}
               <div className="flex items-start gap-3 p-3 rounded-lg bg-background/50">
                 <Radio className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <div>
@@ -361,6 +517,34 @@ export default function AboutPage() {
                     Actively mentoring students and contributing to academic
                     community development through workshops and seminars.
                   </p>
+                </div>
+              </div>
+
+              {/* Professional Service */}
+              <div className="pt-4 mt-4 border-t border-border/50">
+                <h3 className="text-lg font-semibold mb-3 text-foreground">
+                  Professional Service
+                </h3>
+                <div className="space-y-3">
+                  {professionalService.map((service, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-3 p-3 rounded-lg bg-background/50"
+                    >
+                      <service.icon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="font-medium text-foreground">
+                          {service.title}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {service.organization} • {service.duration}
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {service.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -395,6 +579,35 @@ export default function AboutPage() {
               <CardContent>
                 <p className="text-muted-foreground text-sm">{cert.note}</p>
               </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Honors & Awards */}
+      <section id="honors-awards">
+        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+          Honors & Awards
+        </h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {honorsAndAwards.map((award, index) => (
+            <Card
+              key={index}
+              className="shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+            >
+              <CardHeader className="flex flex-row items-start gap-3">
+                <award.icon className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                <div>
+                  <CardTitle className="text-base">{award.title}</CardTitle>
+                  <CardDescription className="text-sm">
+                    {award.institution}
+                  </CardDescription>
+                  <p className="text-xs text-muted-foreground mt-1 flex items-center">
+                    <CalendarCheck2 className="h-3 w-3 mr-1" />
+                    {award.date}
+                  </p>
+                </div>
+              </CardHeader>
             </Card>
           ))}
         </div>

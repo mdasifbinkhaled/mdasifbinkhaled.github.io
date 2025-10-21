@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/shared/lib/utils';
 import { GraduationCap, Menu } from 'lucide-react';
 import { ThemeSelector } from '@/shared/components/ui/theme-selector';
+import { mainNavItems } from '@/shared/config/navigation';
 
 interface NavbarProps {
   onMobileMenuOpen?: () => void;
@@ -16,16 +17,10 @@ export function Navbar({
 }: NavbarProps) {
   const path = normalize(usePathname() ?? '/');
 
-  const items = [
-    { label: 'Home', href: '/' },
-    { label: 'About Me', href: '/about/' },
-    { label: 'Experience', href: '/experience/' },
-    { label: 'Research', href: '/research/' },
-    { label: 'Publications', href: '/publications/' },
-    { label: 'Teaching', href: '/teaching/' },
-    { label: 'Service & Awards', href: '/service-awards/' },
-    { label: 'Contact', href: '/contact/' },
-  ];
+  const items = mainNavItems.map((item) => ({
+    label: item.label,
+    href: item.href,
+  }));
 
   return (
     <div className="flex items-center justify-between w-full gap-4">
