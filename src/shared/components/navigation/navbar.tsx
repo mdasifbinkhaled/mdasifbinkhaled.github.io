@@ -5,6 +5,10 @@ import { cn } from '@/shared/lib/utils';
 import { GraduationCap, Menu } from 'lucide-react';
 import { ThemeSelector } from '@/shared/components/ui/theme-selector';
 import { mainNavItems } from '@/shared/config/navigation';
+import {
+  coursesTaughtIUB,
+  coursesTaughtBRACU,
+} from '@/shared/lib/data/courses';
 
 interface NavbarProps {
   onMobileMenuOpen?: () => void;
@@ -44,22 +48,102 @@ export function Navbar({
       >
         {items.map((it) => {
           const active = isActive(path, it.href);
+          const isTeaching = it.href === '/teaching';
+          if (!isTeaching) {
+            return (
+              <Link
+                key={it.href}
+                href={it.href}
+                aria-current={active ? 'page' : undefined}
+                className={cn(
+                  'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                  'hover:bg-accent/50',
+                  active
+                    ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
+                    : 'text-foreground/80 hover:text-foreground'
+                )}
+              >
+                {it.label}
+              </Link>
+            );
+          }
+
           return (
-            <Link
-              key={it.href}
-              href={it.href}
-              aria-current={active ? 'page' : undefined}
-              className={cn(
-                'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                'hover:bg-accent/50',
-                active
-                  ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
-                  : 'text-foreground/80 hover:text-foreground'
-              )}
-            >
-              {it.label}
-            </Link>
+            <div key={it.href} className="relative group">
+              <Link
+                href={it.href}
+                aria-current={active ? 'page' : undefined}
+                className={cn(
+                  'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                  'hover:bg-accent/50',
+                  active
+                    ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
+                    : 'text-foreground/80 hover:text-foreground'
+                )}
+              >
+                {it.label}
+              </Link>
+
+              {/* Dropdown Panel: simple vertical with flyouts */}
+              <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-1/2 -translate-x-1/2 mt-2 z-40 w-56 bg-background border rounded-lg shadow-lg py-2 transition-opacity duration-150">
+                <div className="relative">
+                  <div className="group/item relative">
+                    <Link
+                      className="block px-3 py-2 hover:bg-accent/50"
+                      href="/teaching?tab=iub"
+                    >
+                      IUB
+                    </Link>
+                    {/* Flyout for IUB */}
+                    <div className="invisible opacity-0 group-hover/item:visible group-hover/item:opacity-100 absolute top-0 left-full ml-2 w-72 max-h-80 overflow-auto bg-background border rounded-lg shadow-lg py-2 transition-opacity duration-150">
+                      {coursesTaughtIUB.map((c) => (
+                        <Link
+                          key={c.code}
+                          className="block px-3 py-2 hover:bg-accent/50 text-sm"
+                          href={`/teaching?tab=iub#${c.code.toLowerCase().replace(' ', '')}`}
+                        >
+                          {c.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="group/item relative">
+                    <Link
+                      className="block px-3 py-2 hover:bg-accent/50"
+                      href="/teaching?tab=bracu"
+                    >
+                      BRACU
+                    </Link>
+                    {/* Flyout for BRACU */}
+                    <div className="invisible opacity-0 group-hover/item:visible group-hover/item:opacity-100 absolute top-0 left-full ml-2 w-72 max-h-80 overflow-auto bg-background border rounded-lg shadow-lg py-2 transition-opacity duration-150">
+                      {coursesTaughtBRACU.map((c) => (
+                        <Link
+                          key={c.code}
+                          className="block px-3 py-2 hover:bg-accent/50 text-sm"
+                          href={`/teaching?tab=bracu#${c.code.toLowerCase().replace(' ', '')}`}
+                        >
+                          {c.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                  <Link
+                    className="block px-3 py-2 hover:bg-accent/50"
+                    href="/teaching?tab=support"
+                  >
+                    TA/ST/SoD
+                  </Link>
+                  <Link
+                    className="block px-3 py-2 hover:bg-accent/50"
+                    href="/teaching?tab=workshops"
+                  >
+                    Workshops & Seminars
+                  </Link>
+                </div>
+              </div>
+            </div>
           );
         })}
       </nav>

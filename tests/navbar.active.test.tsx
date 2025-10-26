@@ -6,7 +6,7 @@ vi.mock('next/navigation', () => ({ usePathname: () => '/about/' }));
 
 test('active link has aria-current', () => {
   render(<Navbar />);
-  expect(screen.getByRole('link', { name: /about me/i })).toHaveAttribute(
+  expect(screen.getByRole('link', { name: /about/i })).toHaveAttribute(
     'aria-current',
     'page'
   );

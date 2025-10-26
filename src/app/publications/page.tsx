@@ -4,6 +4,10 @@ import { siteConfig } from '@/shared/config/site';
 import { PublicationList } from '@/shared/components/common/publication-list';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
+import { researchIdentity } from '@/shared/config/researcher-profile';
+import { AcademicProfiles } from '@/shared/components/academic-profiles';
+import { Card, CardContent } from '@/shared/components/ui/card';
+import { BookOpen, Sparkles, HeartPulse } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Publications & Research',
@@ -32,9 +36,64 @@ export default function PublicationsPage() {
           Publications & Research
         </h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          A collection of my published works and research contributions.
+          {researchIdentity.philosophy.statement}
         </p>
       </header>
+
+      {/* Research Areas Context */}
+      <section className="mx-auto max-w-5xl">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-primary mb-4">
+            Research Focus Areas
+          </h2>
+          <p className="text-muted-foreground">
+            My publications span across these interconnected research domains
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {researchIdentity.primaryAreas.map((area, index) => {
+            const iconComponents = {
+              0: BookOpen,
+              1: Sparkles,
+              2: HeartPulse,
+            };
+            const IconComponent =
+              iconComponents[index as keyof typeof iconComponents];
+            return (
+              <Card
+                key={area.id}
+                className="text-center hover:shadow-lg transition-shadow"
+              >
+                <CardContent className="pt-6">
+                  <div className="flex justify-center mb-4">
+                    <div className="p-3 bg-primary/10 rounded-full">
+                      <IconComponent className="h-8 w-8 text-primary" />
+                    </div>
+                  </div>
+                  <h3 className="font-semibold text-lg mb-2">{area.name}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {area.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Academic Profiles */}
+      <section className="mx-auto max-w-5xl">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-primary mb-4">
+            Academic Profiles
+          </h2>
+          <p className="text-muted-foreground">
+            Find my complete publication record on these platforms
+          </p>
+        </div>
+        <AcademicProfiles variant="grid" />
+      </section>
 
       <section id="publication-listing">
         <ErrorBoundary

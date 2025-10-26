@@ -267,6 +267,24 @@ vi.mock('lucide-react', () => {
     Code: createMockIcon('code'),
     Cpu: createMockIcon('cpu'),
     Wrench: createMockIcon('wrench'),
+
+    // Nature/Theme icons
+    Waves: createMockIcon('waves'),
+    Coffee: createMockIcon('coffee'),
+    Trees: createMockIcon('trees'),
+    Sunset: createMockIcon('sunset'),
+    Sparkles: createMockIcon('sparkles'),
+    Shield: createMockIcon('shield'),
+    Crown: createMockIcon('crown'),
+    Flame: createMockIcon('flame'),
+    Leaf: createMockIcon('leaf'),
+    CloudMoon: createMockIcon('cloudmoon'),
+    Sunrise: createMockIcon('sunrise'),
+    Flower: createMockIcon('flower'),
+    Briefcase: createMockIcon('briefcase'),
+    Heart: createMockIcon('heart'),
+    Scroll: createMockIcon('scroll'),
+    Globe: createMockIcon('globe'),
   };
 });
 

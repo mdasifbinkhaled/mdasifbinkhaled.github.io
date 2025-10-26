@@ -49,8 +49,8 @@ export const ProfileSidebar = memo(function ProfileSidebar({
 
   return (
     <div className="flex flex-col h-full bg-sidebar">
-      {/* Scrollable Content Area */}
-      <div className="flex-1 overflow-y-auto">
+      {/* Content Area (no inner scrollbar) */}
+      <div className="flex-1">
         {/* Profile Section */}
         <div
           className={cn(
@@ -106,7 +106,9 @@ export const ProfileSidebar = memo(function ProfileSidebar({
           )}
         </div>
 
-        {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
+        {!isCollapsed && (
+          <Separator className="bg-sidebar-border/60 mx-4 w-[calc(100%-2rem)]" />
+        )}
 
         {/* Quick Info */}
         <div className={cn('flex-grow', isCollapsed ? 'p-2' : 'p-6')}>
@@ -275,7 +277,9 @@ export const ProfileSidebar = memo(function ProfileSidebar({
           </div>
         </div>
 
-        {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
+        {!isCollapsed && (
+          <Separator className="bg-sidebar-border/60 mx-4 w-[calc(100%-2rem)]" />
+        )}
       </div>
 
       {/* Social Icons - Sticky at Bottom - Always Visible */}

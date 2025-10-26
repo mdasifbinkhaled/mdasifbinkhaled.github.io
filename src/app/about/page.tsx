@@ -36,6 +36,8 @@ import {
 } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
+import { researchIdentity } from '@/shared/config/researcher-profile';
+import { AcademicProfiles } from '@/shared/components/academic-profiles';
 import { ExperienceCompact } from '@/shared/components/common/experience-compact';
 import {
   professionalExperiences,
@@ -68,8 +70,8 @@ const quickFacts = [
   },
   {
     icon: Brain,
-    label: 'Research Focus',
-    value: 'XAI & MMAI in Healthcare',
+    label: 'Research Philosophy',
+    value: 'Explainable & Trustworthy AI',
   },
   {
     icon: Target,
@@ -297,6 +299,55 @@ export default function AboutPage() {
             </Card>
           ))}
         </div>
+      </section>
+
+      {/* Research Philosophy Section */}
+      <section id="research-philosophy">
+        <Card className="shadow-lg border-primary/20">
+          <CardHeader>
+            <CardTitle className="text-2xl flex items-center gap-2">
+              <Brain className="w-6 h-6 text-primary" />
+              Research Philosophy
+            </CardTitle>
+            <CardDescription className="text-base">
+              {researchIdentity.philosophy.statement}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground leading-relaxed">
+              {researchIdentity.philosophy.vision}
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              {researchIdentity.philosophy.approach}
+            </p>
+
+            {/* Research Areas */}
+            <div className="pt-4">
+              <h3 className="text-lg font-semibold mb-3">
+                Primary Research Areas
+              </h3>
+              <div className="grid gap-3 md:grid-cols-3">
+                {researchIdentity.primaryAreas.map((area) => (
+                  <div
+                    key={area.id}
+                    className="p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
+                  >
+                    <div className="font-medium text-sm">{area.name}</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {area.keywords.join(' • ')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Academic Profiles */}
+            <div className="pt-4 border-t">
+              <h3 className="text-lg font-semibold mb-3">Academic Profiles</h3>
+              <AcademicProfiles variant="grid" showLabels={true} />
+            </div>
+          </CardContent>
+        </Card>
       </section>
 
       {/* Biography Section */}
