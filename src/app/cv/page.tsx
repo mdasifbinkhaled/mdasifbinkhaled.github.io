@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { siteConfig } from '@/shared/config/site';
+import { researchIdentity } from '@/shared/config/researcher-profile';
 import { Button } from '@/shared/components/ui/button';
 import { Download, ExternalLinkIcon } from 'lucide-react';
 import {
@@ -48,7 +49,7 @@ export default function CVPage() {
           Curriculum Vitae
         </h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          My academic and professional journey.
+          {researchIdentity.philosophy.statement}
         </p>
       </header>
 
@@ -124,33 +125,21 @@ export default function CVPage() {
               <CardHeader>
                 <CardTitle>Research Interests</CardTitle>
                 <CardDescription>
-                  Primary areas of academic investigation
+                  {researchIdentity.philosophy.vision}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <div className="bg-primary/10 rounded-full p-1.5 mt-0.5">
-                    <div className="w-2 h-2 rounded-full bg-primary"></div>
+                {researchIdentity.primaryAreas.map((area) => (
+                  <div key={area.id} className="flex items-start gap-2">
+                    <div className="bg-primary/10 rounded-full p-1.5 mt-0.5">
+                      <div className="w-2 h-2 rounded-full bg-primary"></div>
+                    </div>
+                    <div>
+                      <span className="font-medium">{area.name}:</span>{' '}
+                      {area.description}
+                    </div>
                   </div>
-                  <div>
-                    <span className="font-medium">Explainable AI (XAI):</span>{' '}
-                    Ensuring transparency and trustworthiness in disease
-                    detection, diagnosis, and healthcare analytics utilizing
-                    Artificial Intelligence (AI).
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="bg-primary/10 rounded-full p-1.5 mt-0.5">
-                    <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  </div>
-                  <div>
-                    <span className="font-medium">
-                      Multimodal AI (MMAI) & Computer Vision (CV):
-                    </span>{' '}
-                    Using MMAI and CV to combine imaging, clinical records, and
-                    lab results for holistic diagnostics.
-                  </div>
-                </div>
+                ))}
                 <Button
                   variant="link"
                   asChild

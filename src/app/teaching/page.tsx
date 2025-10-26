@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { siteConfig, DISPLAY_LIMITS } from '@/shared/config';
 import { assetPaths } from '@/shared/config/assets';
+import { teachingPhilosophy } from '@/shared/config/researcher-profile';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
@@ -51,11 +52,15 @@ export default function TeachingPage() {
       </header>
 
       <section id="teaching-philosophy">
-        <Card className="shadow-lg">
+        <Card className="shadow-lg border-primary/20">
           <CardHeader>
-            <CardTitle className="text-2xl">
-              Teaching Philosophy & Outcome-Based Education (OBE)
+            <CardTitle className="text-2xl flex items-center gap-2">
+              <Users className="w-6 h-6 text-primary" />
+              Teaching Philosophy & Approach
             </CardTitle>
+            <CardDescription className="text-base italic">
+              &ldquo;{teachingPhilosophy.core}&rdquo;
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
             <Image
@@ -66,6 +71,12 @@ export default function TeachingPage() {
               className="rounded-md mb-6 object-cover"
               loading="lazy"
             />
+
+            <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
+              <p className="font-medium text-primary">Core Philosophy</p>
+              <p className="mt-2">{teachingPhilosophy.core}</p>
+            </div>
+
             <p>
               My teaching philosophy is centered on creating an inclusive,
               interactive, and stimulating learning experience. I strive to
@@ -76,6 +87,20 @@ export default function TeachingPage() {
               learning objectives and measures student success by their ability
               to achieve these outcomes.
             </p>
+
+            <div className="grid gap-3 md:grid-cols-4 my-6">
+              {teachingPhilosophy.values.map((value, index) => (
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="font-semibold text-sm text-primary">
+                    {value}
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <p>
               In my courses, I integrate a variety of OBE strategies, such as
               active learning techniques, project-based assignments that mirror
@@ -83,9 +108,7 @@ export default function TeachingPage() {
               mechanisms. My ultimate goal extends beyond merely imparting
               knowledge; I aim to cultivate critical thinking, robust
               problem-solving capabilities, and a lifelong passion for learning
-              in every student. I am committed to preparing them not only for
-              successful careers but also to be adaptable, innovative, and
-              responsible contributors to society.
+              in every student.
             </p>
             <p>
               I have received comprehensive training in implementing OBE

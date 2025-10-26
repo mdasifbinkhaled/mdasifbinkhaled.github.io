@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { siteConfig, DISPLAY_LIMITS } from '@/shared/config';
+import { researchIdentity } from '@/shared/config/researcher-profile';
 import {
   ArrowRight,
   ExternalLink,
@@ -25,6 +26,7 @@ import {
   Satellite,
   Eye,
   Code2,
+  Lightbulb,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
@@ -32,6 +34,7 @@ import { samplePublications } from '@/shared/lib/data/publications';
 import { professionalExperiences } from '@/shared/lib/data/experience';
 import { PublicationList } from '@/shared/components/common/publication-list';
 import { ExperienceCompact } from '@/shared/components/common/experience-compact';
+import { AcademicProfiles } from '@/shared/components/academic-profiles';
 
 export default function HomePage() {
   const filteredPublications = samplePublications.filter(
@@ -74,7 +77,7 @@ export default function HomePage() {
           <div className="hero-grid">
             {/* Content Section */}
             <div className="hero-content">
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-4xl xl:text-5xl/tight text-primary">
                   {siteConfig.author}
                 </h1>
@@ -85,12 +88,38 @@ export default function HomePage() {
                   Specializing in Explainable AI (XAI) and Multimodal AI (MMAI)
                   for healthcare diagnostics and analytics.
                 </p>
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-4 py-2 text-sm rounded-full font-semibold my-2 shadow-md border border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
+
+                {/* Research Philosophy */}
+                <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border border-primary/20 my-4">
+                  <Lightbulb className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-primary mb-1">
+                      Research Philosophy
+                    </p>
+                    <p className="text-sm text-foreground italic leading-relaxed">
+                      "{researchIdentity.philosophy.statement}"
+                    </p>
+                  </div>
+                </div>
+
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-4 py-2 text-sm rounded-full font-semibold shadow-md border border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                   </span>
                   Open to PhD Opportunities
+                </div>
+
+                {/* Academic Profiles */}
+                <div className="pt-2">
+                  <p className="text-xs text-muted-foreground mb-2">
+                    Academic Profiles:
+                  </p>
+                  <AcademicProfiles
+                    primaryOnly
+                    variant="horizontal"
+                    showLabels={false}
+                  />
                 </div>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row pt-4">
