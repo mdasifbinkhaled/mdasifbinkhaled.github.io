@@ -90,7 +90,7 @@ export default function HomePage() {
                 </p>
 
                 {/* Research Philosophy */}
-                <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border border-primary/20 my-4">
+                <div className="flex items-start gap-[var(--space-md)] p-[var(--space-md)] bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border border-primary/20 my-[var(--space-md)]">
                   <Lightbulb className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-primary mb-1">
@@ -102,7 +102,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-4 py-2 text-sm rounded-full font-semibold shadow-md border border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
+                <div className="inline-flex items-center gap-[var(--space-sm)] bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-[var(--space-md)] py-[var(--space-sm)] text-sm rounded-full font-semibold shadow-md border border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -111,8 +111,8 @@ export default function HomePage() {
                 </div>
 
                 {/* Academic Profiles */}
-                <div className="pt-2">
-                  <p className="text-xs text-muted-foreground mb-2">
+                <div className="pt-[var(--space-sm)]">
+                  <p className="text-xs text-muted-foreground mb-[var(--space-sm)]">
                     Academic Profiles:
                   </p>
                   <AcademicProfiles
@@ -122,7 +122,7 @@ export default function HomePage() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row pt-4">
+              <div className="flex flex-col gap-[var(--space-md)] sm:flex-row pt-[var(--space-md)]">
                 <Button
                   size="lg"
                   asChild
@@ -195,9 +195,9 @@ export default function HomePage() {
                 key={index}
                 className={`backdrop-blur border ${stat.borderColor} shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105 ${stat.bgColor} group`}
               >
-                <CardContent className="p-6 text-center">
+                <CardContent className="p-[var(--space-card-default)] text-center">
                   <div
-                    className={`w-12 h-12 mx-auto mb-3 rounded-lg ${stat.bgColor} flex items-center justify-center transition-all duration-300 group-hover:scale-110`}
+                    className={`w-12 h-12 mx-auto mb-[var(--space-md)] rounded-lg ${stat.bgColor} flex items-center justify-center transition-all duration-300 group-hover:scale-110`}
                   >
                     <stat.icon className={`w-7 h-7 ${stat.color}`} />
                   </div>
@@ -208,7 +208,7 @@ export default function HomePage() {
                     {stat.label}
                   </div>
                   {'description' in stat && (
-                    <div className="text-xs text-muted-foreground/80 mt-2">
+                    <div className="text-xs text-muted-foreground/80 mt-[var(--space-sm)]">
                       {stat.description}
                     </div>
                   )}
@@ -226,13 +226,13 @@ export default function HomePage() {
             <span className="w-1 h-6 bg-primary rounded-full"></span>
             News
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-[var(--space-md)]">
             {newsItems.map((item, index) => (
               <div
                 key={index}
-                className="flex gap-3 text-sm p-3 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
+                className="flex gap-[var(--space-md)] text-sm p-[var(--space-md)] rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
               >
-                <span className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10">
+                <span className="font-semibold text-primary/80 whitespace-nowrap px-[var(--space-sm)] py-1 rounded bg-primary/10">
                   {item.date}
                 </span>
                 <div className="flex-1">
@@ -259,10 +259,10 @@ export default function HomePage() {
             Research Interests
           </h2>
           <div className="grid gap-[var(--space-card-default)] md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-red-500">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
               <CardHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <Activity className="w-6 h-6 text-red-500" />
+                <div className="flex items-center gap-[var(--space-md)] mb-[var(--space-sm)]">
+                  <Activity className="w-6 h-6 text-primary" />
                   <CardTitle className="text-xl">AI in Healthcare</CardTitle>
                 </div>
               </CardHeader>
@@ -275,10 +275,10 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-green-500">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
               <CardHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <Leaf className="w-6 h-6 text-green-500" />
+                <div className="flex items-center gap-[var(--space-md)] mb-[var(--space-sm)]">
+                  <Leaf className="w-6 h-6 text-primary" />
                   <CardTitle className="text-xl">AI in Environment</CardTitle>
                 </div>
               </CardHeader>
@@ -291,10 +291,10 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-blue-500">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
               <CardHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <Brain className="w-6 h-6 text-blue-500" />
+                <div className="flex items-center gap-[var(--space-md)] mb-[var(--space-sm)]">
+                  <Brain className="w-6 h-6 text-primary" />
                   <CardTitle className="text-xl">
                     Explainable AI (XAI)
                   </CardTitle>
@@ -309,10 +309,10 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-purple-500">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
               <CardHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <Eye className="w-6 h-6 text-purple-500" />
+                <div className="flex items-center gap-[var(--space-md)] mb-[var(--space-sm)]">
+                  <Eye className="w-6 h-6 text-primary" />
                   <CardTitle className="text-xl">Multimodal AI</CardTitle>
                 </div>
               </CardHeader>
@@ -325,10 +325,10 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-orange-500">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
               <CardHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <Satellite className="w-6 h-6 text-orange-500" />
+                <div className="flex items-center gap-[var(--space-md)] mb-[var(--space-sm)]">
+                  <Satellite className="w-6 h-6 text-primary" />
                   <CardTitle className="text-xl">Remote Sensing</CardTitle>
                 </div>
               </CardHeader>
@@ -341,10 +341,10 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-amber-500">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
               <CardHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <Code2 className="w-6 h-6 text-amber-500" />
+                <div className="flex items-center gap-[var(--space-md)] mb-[var(--space-sm)]">
+                  <Code2 className="w-6 h-6 text-primary" />
                   <CardTitle className="text-xl">
                     Algorithms & Data Structures
                   </CardTitle>

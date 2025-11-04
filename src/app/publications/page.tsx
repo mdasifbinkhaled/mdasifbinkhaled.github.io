@@ -35,15 +35,15 @@ export default function PublicationsPage() {
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           Publications & Research
         </h1>
-        <p className="mt-4 text-lg leading-8 text-muted-foreground">
+        <p className="mt-[var(--space-md)] text-lg leading-8 text-muted-foreground">
           {researchIdentity.philosophy.statement}
         </p>
       </header>
 
       {/* Research Areas Context */}
       <section className="mx-auto max-w-5xl">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-primary mb-4">
+        <div className="text-center mb-[var(--space-card-lg)]">
+          <h2 className="text-2xl font-bold text-primary mb-[var(--space-md)]">
             Research Focus Areas
           </h2>
           <p className="text-muted-foreground">
@@ -51,7 +51,7 @@ export default function PublicationsPage() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-[var(--space-lg)] md:grid-cols-3">
           {researchIdentity.primaryAreas.map((area, index) => {
             const iconComponents = {
               0: BookOpen,
@@ -65,13 +65,15 @@ export default function PublicationsPage() {
                 key={area.id}
                 className="text-center hover:shadow-lg transition-shadow"
               >
-                <CardContent className="pt-6">
-                  <div className="flex justify-center mb-4">
-                    <div className="p-3 bg-primary/10 rounded-full">
+                <CardContent className="pt-[var(--space-lg)]">
+                  <div className="flex justify-center mb-[var(--space-md)]">
+                    <div className="p-[var(--space-md)] bg-primary/10 rounded-full">
                       <IconComponent className="h-8 w-8 text-primary" />
                     </div>
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">{area.name}</h3>
+                  <h3 className="font-semibold text-lg mb-[var(--space-sm)]">
+                    {area.name}
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     {area.description}
                   </p>
@@ -84,8 +86,8 @@ export default function PublicationsPage() {
 
       {/* Academic Profiles */}
       <section className="mx-auto max-w-5xl">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-primary mb-4">
+        <div className="text-center mb-[var(--space-card-lg)]">
+          <h2 className="text-2xl font-bold text-primary mb-[var(--space-md)]">
             Academic Profiles
           </h2>
           <p className="text-muted-foreground">

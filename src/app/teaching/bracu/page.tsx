@@ -36,7 +36,7 @@ export default function BRACUTeachingPage() {
       </header>
 
       {/* Quick Stats */}
-      <div className="grid gap-4 md:grid-cols-3 mb-8">
+      <div className="grid gap-[var(--space-md)] md:grid-cols-3 mb-[var(--space-lg)]">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Courses</CardTitle>
@@ -97,7 +97,7 @@ export default function BRACUTeachingPage() {
         <h2 className="text-2xl font-bold text-center mb-8 text-primary">
           Course Navigation
         </h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-[var(--space-md)] md:grid-cols-2 lg:grid-cols-3">
           {bracuCourseNavItems.map((course) => {
             const courseData = coursesTaughtBRACU.find((c) =>
               course.href.includes(c.code.toLowerCase().replace(' ', ''))
@@ -131,7 +131,7 @@ export default function BRACUTeachingPage() {
         <h2 className="text-2xl font-bold text-center mb-8 text-primary">
           Course Overview
         </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-3">
           {coursesTaughtBRACU.map((course) => (
             <div
               key={course.id}

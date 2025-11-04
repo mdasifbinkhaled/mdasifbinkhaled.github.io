@@ -233,11 +233,15 @@ describe('AppSidebarLayout', () => {
       .getByTestId('main-content')
       .closest('.min-h-screen');
     expect(rootContainer).toBeInTheDocument();
-    expect(rootContainer).toHaveClass('min-h-screen', 'flex', 'flex-col');
+    expect(rootContainer).toHaveClass(
+      'min-h-screen',
+      'w-full',
+      'overflow-x-hidden'
+    );
 
     // Check desktop sidebar has responsive classes
     const desktopSidebar = screen.getByRole('complementary');
-    expect(desktopSidebar).toHaveClass('hidden', 'lg:block');
+    expect(desktopSidebar).toHaveClass('hidden', 'lg:flex');
   });
 
   it('manages mobile dialog state correctly', () => {

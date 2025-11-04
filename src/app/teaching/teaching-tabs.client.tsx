@@ -83,12 +83,12 @@ export default function TeachingTabsClient({
             </div>
           }
         >
-          <div className="columns-1 md:columns-2 lg:columns-2 gap-6 [column-fill:_balance]">
+          <div className="columns-1 md:columns-2 lg:columns-2 gap-[var(--space-lg)] [column-fill:_balance]">
             {coursesTaughtIUB.map((course) => (
               <div
                 key={course.id}
                 id={course.code.toLowerCase().replace(' ', '')}
-                className="break-inside-avoid mb-6 inline-block w-full"
+                className="break-inside-avoid mb-[var(--space-lg)] inline-block w-full"
               >
                 <CollapsibleCourseCard course={course} />
               </div>
@@ -112,12 +112,12 @@ export default function TeachingTabsClient({
             </div>
           }
         >
-          <div className="columns-1 md:columns-2 lg:columns-2 gap-6 [column-fill:_balance]">
+          <div className="columns-1 md:columns-2 lg:columns-2 gap-[var(--space-lg)] [column-fill:_balance]">
             {coursesTaughtBRACU.map((course) => (
               <div
                 key={course.id}
                 id={course.code.toLowerCase().replace(' ', '')}
-                className="break-inside-avoid mb-6 inline-block w-full"
+                className="break-inside-avoid mb-[var(--space-lg)] inline-block w-full"
               >
                 <CollapsibleCourseCard course={course} />
               </div>
@@ -132,7 +132,7 @@ export default function TeachingTabsClient({
           Teaching Assistant (TA), Student Tutor (ST), and School of Development
           (SoD) initiatives.
         </p>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+        <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-2">
           <Card className="transition-all duration-200 hover:shadow-lg h-full">
             <CardHeader>
               <CardTitle className="text-lg">Teaching Assistant (TA)</CardTitle>
@@ -186,7 +186,7 @@ export default function TeachingTabsClient({
       </TabsContent>
 
       <TabsContent value="workshops">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 items-stretch">
+        <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-2 items-stretch">
           {/* Workshop items */}
           <div className="flex">
             <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">

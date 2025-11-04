@@ -36,7 +36,7 @@ export default function ContactPage() {
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           Let&apos;s Connect
         </h1>
-        <p className="mt-4 text-lg leading-8 text-muted-foreground">
+        <p className="mt-[var(--space-md)] text-lg leading-8 text-muted-foreground">
           I&apos;m open to collaborations, PhD opportunities, and interesting
           conversations.
         </p>
@@ -48,13 +48,13 @@ export default function ContactPage() {
             <CardTitle className="text-2xl text-center">
               Contact Information
             </CardTitle>
-            <CardDescription className="text-center mt-2">
+            <CardDescription className="text-center mt-[var(--space-sm)]">
               Feel free to reach out for research collaborations or academic
               inquiries.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+          <CardContent className="space-y-[var(--space-lg)]">
+            <div className="flex items-center gap-[var(--space-md)] p-[var(--space-md)] border rounded-lg hover:bg-muted/50 transition-colors">
               <Mail className="h-7 w-7 text-primary" />
               <div>
                 <p className="font-semibold text-foreground">Email</p>
@@ -67,7 +67,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+            <div className="flex items-center gap-[var(--space-md)] p-[var(--space-md)] border rounded-lg hover:bg-muted/50 transition-colors">
               <Phone className="h-7 w-7 text-primary" />
               <div>
                 <p className="font-semibold text-foreground">Phone</p>
@@ -80,7 +80,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+            <div className="flex items-center gap-[var(--space-md)] p-[var(--space-md)] border rounded-lg hover:bg-muted/50 transition-colors">
               <MapPin className="h-7 w-7 text-primary" />
               <div>
                 <p className="font-semibold text-foreground">Location</p>
@@ -88,8 +88,12 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-              <Button variant="outline" asChild className="py-6 text-base">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-[var(--space-md)] mt-[var(--space-lg)]">
+              <Button
+                variant="outline"
+                asChild
+                className="py-[var(--space-lg)] text-base"
+              >
                 <a
                   href={siteConfig.links.github}
                   target="_blank"
@@ -124,7 +128,7 @@ export default function ContactPage() {
       <section id="research-areas">
         <Card className="max-w-3xl mx-auto shadow-lg border-primary/20">
           <CardHeader>
-            <CardTitle className="text-2xl text-center flex items-center justify-center gap-2">
+            <CardTitle className="text-2xl text-center flex items-center justify-center gap-[var(--space-sm)]">
               <Lightbulb className="w-6 h-6 text-primary" />
               Research Philosophy & Areas
             </CardTitle>
@@ -132,14 +136,14 @@ export default function ContactPage() {
               &ldquo;{researchIdentity.philosophy.statement}&rdquo;
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid gap-4 md:grid-cols-3">
+          <CardContent className="space-y-[var(--space-lg)]">
+            <div className="grid gap-[var(--space-md)] md:grid-cols-3">
               {researchIdentity.primaryAreas.map((area) => (
                 <div
                   key={area.id}
-                  className="p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                  className="p-[var(--space-md)] border rounded-lg hover:bg-muted/50 transition-colors"
                 >
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-[var(--space-sm)] mb-[var(--space-sm)]">
                     <Heart className="w-5 h-5 text-primary" />
                     <h3 className="font-semibold text-primary">{area.name}</h3>
                   </div>
@@ -163,8 +167,8 @@ export default function ContactPage() {
               Connect with me on various academic platforms
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex flex-col items-center gap-4">
+          <CardContent className="space-y-[var(--space-lg)]">
+            <div className="flex flex-col items-center gap-[var(--space-md)]">
               <p className="text-muted-foreground text-center max-w-2xl">
                 {availability.collaboration
                   ? 'I am open to research collaborations, particularly in Explainable AI, Healthcare AI, and Multimodal Systems.'
@@ -183,19 +187,19 @@ export default function ContactPage() {
               PhD Opportunities
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-[var(--space-md)]">
             <p className="text-center text-muted-foreground">
               I am actively seeking PhD opportunities starting in{' '}
               <span className="font-semibold text-primary">2026</span> in the
               following research areas:
             </p>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-[var(--space-md)] md:grid-cols-2">
               {researchIdentity.primaryAreas.slice(0, 2).map((area) => (
                 <div
                   key={area.id}
-                  className="p-4 border rounded-lg bg-background hover:bg-muted/50 transition-colors"
+                  className="p-[var(--space-md)] border rounded-lg bg-background hover:bg-muted/50 transition-colors"
                 >
-                  <h3 className="font-semibold text-primary mb-2">
+                  <h3 className="font-semibold text-primary mb-[var(--space-sm)]">
                     {area.name}
                   </h3>
                   <p className="text-sm text-muted-foreground">
