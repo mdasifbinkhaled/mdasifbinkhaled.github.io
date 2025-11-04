@@ -24,17 +24,7 @@ export default function AppSidebarLayout({
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Single global header */}
-      <header
-        role="banner"
-        className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b shadow-sm mb-4"
-      >
-        <div className="container mx-auto px-6 py-4">
-          <Navbar onMobileMenuOpen={() => setMobileOpen(true)} />
-        </div>
-      </header>
-
+    <div className="min-h-screen w-full overflow-x-hidden">
       {/* Mobile sheet */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent
@@ -52,19 +42,20 @@ export default function AppSidebarLayout({
         </SheetContent>
       </Sheet>
 
-      <div className="flex flex-1">
-        {/* Desktop sidebar */}
+      {/* Two-column layout on desktop */}
+      <div className="lg:flex">
+        {/* Desktop sidebar - sticky with reduced height */}
         <aside
           id="desktop-sidebar"
           className={cn(
-            'relative hidden lg:block transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground',
-            collapsed ? 'w-[60px]' : 'w-[280px]'
+            'relative hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground sticky top-0 max-h-[calc(100vh-1rem)] self-start',
+            collapsed ? 'w-[60px]' : 'w-[300px]'
           )}
         >
           <Button
             variant="ghost"
             size="icon"
-            className="absolute -right-3 top-6 z-50 h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent"
+            className="absolute -right-3 top-4 z-20 h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent"
             onClick={() => setCollapsed(!collapsed)}
             aria-controls="desktop-sidebar"
             aria-expanded={!collapsed}
@@ -79,18 +70,29 @@ export default function AppSidebarLayout({
           <ProfileSidebar isCollapsed={collapsed} />
         </aside>
 
-        {/* Main content */}
-        <main id="main-content" className="flex-1 min-w-0 px-4 lg:pl-8 lg:pr-6">
-          {children}
-        </main>
-      </div>
+        {/* Right column: navbar, content, footer. No inner scrollbars. */}
+        <div className="flex-1 min-w-0 flex flex-col">
+          <header
+            role="banner"
+            className="z-10 bg-background/95 backdrop-blur-md border-b shadow-sm"
+          >
+            <div className="container mx-auto px-6 py-4">
+              <Navbar onMobileMenuOpen={() => setMobileOpen(true)} />
+            </div>
+          </header>
 
-      <footer className="py-6 px-6 text-center border-t bg-background/50 backdrop-blur">
-        <p className="text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} Md Asif Bin Khaled.
-        </p>
-        <BackToTop />
-      </footer>
+          <main id="main-content" className="flex-1 min-w-0 px-4 lg:px-6">
+            <div className="container mx-auto py-6">{children}</div>
+          </main>
+
+          <footer className="shrink-0 py-6 px-6 text-center border-t bg-background/50 backdrop-blur">
+            <p className="text-sm text-muted-foreground">
+              &copy; {new Date().getFullYear()} Md Asif Bin Khaled.
+            </p>
+            <BackToTop />
+          </footer>
+        </div>
+      </div>
     </div>
   );
 }

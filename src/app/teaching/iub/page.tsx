@@ -99,8 +99,9 @@ export default function IUBTeachingPage() {
             const courseData = coursesTaughtIUB.find((c) =>
               course.href.includes(c.code.toLowerCase().replace(' ', ''))
             );
+            const anchor = course.href.split('/').pop();
             return (
-              <Link key={course.href} href={course.href}>
+              <Link key={course.href} href={`/teaching/iub#${anchor}`}>
                 <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary cursor-pointer">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-sm font-medium group-hover:text-primary transition-colors flex items-center justify-between">
@@ -129,7 +130,12 @@ export default function IUBTeachingPage() {
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {coursesTaughtIUB.map((course) => (
-            <SimpleCourseCard key={course.id} course={course} />
+            <div
+              key={course.id}
+              id={course.code.toLowerCase().replace(' ', '')}
+            >
+              <SimpleCourseCard course={course} />
+            </div>
           ))}
         </div>
       </section>

@@ -48,20 +48,22 @@ export const ProfileSidebar = memo(function ProfileSidebar({
   }, [onLinkClick]);
 
   return (
-    <div className="flex flex-col h-full bg-sidebar">
-      {/* Scrollable Content Area */}
-      <div className="flex-1 overflow-y-auto">
+    <div className="flex flex-col h-full max-h-[calc(100vh-1rem)] bg-sidebar overflow-hidden">
+      {/* Scrollable Content Area - Constrained height */}
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
         {/* Profile Section */}
         <div
           className={cn(
             'flex flex-col items-center text-center transition-all duration-200',
-            isCollapsed ? 'p-2' : 'p-6'
+            isCollapsed ? 'p-2' : 'p-2 sm:p-2.5'
           )}
         >
           <div
             className={cn(
-              'relative overflow-hidden rounded-full border-2 border-sidebar-primary/30 shadow-lg mb-4',
-              isCollapsed ? 'w-10 h-10' : 'w-32 h-32'
+              'relative overflow-hidden rounded-full border-2 border-sidebar-primary/30 shadow-lg',
+              isCollapsed
+                ? 'w-10 h-10 mb-1'
+                : 'w-20 h-20 sm:w-24 sm:h-24 mb-1.5'
             )}
           >
             {!imageError ? (
@@ -78,7 +80,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                 <User
                   className={cn(
                     'text-sidebar-foreground/50',
-                    isCollapsed ? 'w-6 h-6' : 'w-16 h-16'
+                    isCollapsed ? 'w-6 h-6' : 'w-12 h-12 sm:w-14 sm:h-14'
                   )}
                 />
               </div>
@@ -87,18 +89,18 @@ export const ProfileSidebar = memo(function ProfileSidebar({
 
           {!isCollapsed && (
             <>
-              <h3 className="font-bold text-xl text-sidebar-foreground leading-tight">
+              <h3 className="font-bold text-sm sm:text-xl text-sidebar-foreground leading-tight mt-1">
                 {siteConfig.author}
               </h3>
-              <p className="text-sm text-sidebar-foreground/90 mt-2 font-medium">
+              <p className="text-[10px] sm:text-[13px] text-sidebar-foreground/90 mt-0.5 font-medium">
                 Senior Lecturer & Researcher
               </p>
-              <p className="text-xs text-sidebar-foreground/75 mt-1 px-2">
+              <p className="text-[12px] text-sidebar-foreground/75 mt-0.5 px-2">
                 {siteConfig.address.split(',')[0]}{' '}
                 {/* Show only first part of address e.g. Bashundhara R/A */}
               </p>
-              <div className="mt-3 px-3 py-1.5 bg-sidebar-accent/20 rounded-full border border-sidebar-border/50">
-                <p className="text-xs text-sidebar-foreground/90 font-medium">
+              <div className="mt-1 px-2 py-0.5 bg-sidebar-accent/20 rounded-full border border-sidebar-border/50">
+                <p className="text-[9px] text-sidebar-foreground/90 font-medium">
                   Open to PhD Opportunities
                 </p>
               </div>
@@ -106,17 +108,21 @@ export const ProfileSidebar = memo(function ProfileSidebar({
           )}
         </div>
 
-        {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
+        {!isCollapsed && (
+          <Separator className="bg-sidebar-border/60 mx-4 w-[calc(100%-2rem)] my-1" />
+        )}
 
         {/* Quick Info */}
-        <div className={cn('flex-grow', isCollapsed ? 'p-2' : 'p-6')}>
+        <div
+          className={cn('flex-grow', isCollapsed ? 'p-2' : 'p-2 sm:p-2.5 pb-2')}
+        >
           {!isCollapsed && (
-            <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider sidebar-section-title">
+            <h4 className="text-[10px] sm:text-xs uppercase font-semibold text-sidebar-foreground/80 mb-1 tracking-wider sidebar-section-title">
               Contact & Links
             </h4>
           )}
 
-          <div className={cn('space-y-3', isCollapsed && 'space-y-2')}>
+          <div className={cn('space-y-1', isCollapsed && 'space-y-1')}>
             <Button
               variant="ghost"
               size={isCollapsed ? 'icon' : 'sm'}
@@ -137,7 +143,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                   )}
                 />
                 {!isCollapsed && (
-                  <span className="truncate text-sm sidebar-button-text">
+                  <span className="truncate text-xs sidebar-button-text">
                     {siteConfig.email}
                   </span>
                 )}
@@ -166,7 +172,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                   )}
                 />
                 {!isCollapsed && (
-                  <span className="truncate text-sm sidebar-button-text">
+                  <span className="truncate text-xs sidebar-button-text">
                     {siteConfig.phone}
                   </span>
                 )}
@@ -174,7 +180,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
             </Button>
 
             <div
-              className={cn('pt-2', isCollapsed ? 'space-y-1' : 'space-y-2')}
+              className={cn('pt-0.5', isCollapsed ? 'space-y-1' : 'space-y-1')}
             >
               <Button
                 variant="outline"
@@ -199,7 +205,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                     )}
                   />
                   {!isCollapsed && (
-                    <span className="font-medium sidebar-button-text">
+                    <span className="font-medium text-xs sidebar-button-text">
                       Download CV
                     </span>
                   )}
@@ -232,7 +238,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                     )}
                   />
                   {!isCollapsed && (
-                    <span className="font-medium sidebar-button-text">
+                    <span className="font-medium text-xs sidebar-button-text">
                       Research Focus
                     </span>
                   )}
@@ -265,125 +271,167 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                     )}
                   />
                   {!isCollapsed && (
-                    <span className="font-medium sidebar-button-text">
+                    <span className="font-medium text-xs sidebar-button-text">
                       Publications
                     </span>
                   )}
                 </Link>
               </Button>
             </div>
+
+            {/* Social Icons - After Contact & Links */}
+            <div className={cn('mt-2 pt-1.5', isCollapsed && 'mt-1.5 pt-1')}>
+              <div
+                className={cn(
+                  'flex items-center flex-wrap',
+                  isCollapsed
+                    ? 'flex-col gap-1.5 justify-center'
+                    : 'justify-center gap-2 sm:gap-2.5'
+                )}
+              >
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className={cn(
+                    'text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group',
+                    isCollapsed ? 'h-7 w-7' : 'h-8 w-8 sm:h-9 sm:w-9'
+                  )}
+                  title={isCollapsed ? 'GitHub Profile' : undefined}
+                >
+                  <a
+                    href={siteConfig.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub Profile"
+                    onClick={handleLinkClick}
+                  >
+                    <Github
+                      className={cn(
+                        'group-hover:scale-110 transition-transform duration-200',
+                        isCollapsed
+                          ? 'h-3.5 w-3.5'
+                          : 'h-3.5 w-3.5 sm:h-4 sm:w-4'
+                      )}
+                    />
+                  </a>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className={cn(
+                    'text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group',
+                    isCollapsed ? 'h-7 w-7' : 'h-8 w-8 sm:h-9 sm:w-9'
+                  )}
+                  title={isCollapsed ? 'LinkedIn Profile' : undefined}
+                >
+                  <a
+                    href={siteConfig.links.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn Profile"
+                    onClick={handleLinkClick}
+                  >
+                    <Linkedin
+                      className={cn(
+                        'group-hover:scale-110 transition-transform duration-200',
+                        isCollapsed
+                          ? 'h-3.5 w-3.5'
+                          : 'h-3.5 w-3.5 sm:h-4 sm:w-4'
+                      )}
+                    />
+                  </a>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className={cn(
+                    'text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group',
+                    isCollapsed ? 'h-7 w-7' : 'h-8 w-8 sm:h-9 sm:w-9'
+                  )}
+                  title={isCollapsed ? 'Google Scholar Profile' : undefined}
+                >
+                  <a
+                    href={siteConfig.links.googleScholar}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Google Scholar Profile"
+                    onClick={handleLinkClick}
+                  >
+                    <BookUser
+                      className={cn(
+                        'group-hover:scale-110 transition-transform duration-200',
+                        isCollapsed
+                          ? 'h-3.5 w-3.5'
+                          : 'h-3.5 w-3.5 sm:h-4 sm:w-4'
+                      )}
+                    />
+                  </a>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className={cn(
+                    'text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group',
+                    isCollapsed ? 'h-7 w-7' : 'h-8 w-8 sm:h-9 sm:w-9'
+                  )}
+                  title={isCollapsed ? 'ResearchGate Profile' : undefined}
+                >
+                  <a
+                    href={siteConfig.links.researchGate}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="ResearchGate Profile"
+                    onClick={handleLinkClick}
+                  >
+                    <Globe
+                      className={cn(
+                        'group-hover:scale-110 transition-transform duration-200',
+                        isCollapsed
+                          ? 'h-3.5 w-3.5'
+                          : 'h-3.5 w-3.5 sm:h-4 sm:w-4'
+                      )}
+                    />
+                  </a>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className={cn(
+                    'text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group',
+                    isCollapsed ? 'h-7 w-7' : 'h-8 w-8 sm:h-9 sm:w-9'
+                  )}
+                  title={isCollapsed ? 'ORCID Profile' : undefined}
+                >
+                  <a
+                    href={siteConfig.links.orcid}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="ORCID Profile"
+                    onClick={handleLinkClick}
+                  >
+                    <Award
+                      className={cn(
+                        'group-hover:scale-110 transition-transform duration-200',
+                        isCollapsed
+                          ? 'h-3.5 w-3.5'
+                          : 'h-3.5 w-3.5 sm:h-4 sm:w-4'
+                      )}
+                    />
+                  </a>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {!isCollapsed && <Separator className="bg-sidebar-border/60 mx-4" />}
-      </div>
-
-      {/* Social Icons - Sticky at Bottom - Always Visible */}
-      <div
-        className={cn(
-          'flex-shrink-0 bg-sidebar border-t border-sidebar-border/40 shadow-lg',
-          isCollapsed ? 'p-2' : 'p-6'
-        )}
-      >
         {!isCollapsed && (
-          <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider text-center sidebar-section-title">
-            Follow Me
-          </h4>
+          <Separator className="bg-sidebar-border/60 mx-4 w-[calc(100%-2rem)] mt-0.5 mb-0.5" />
         )}
-        <div
-          className={cn(
-            'flex items-center flex-wrap',
-            isCollapsed
-              ? 'flex-col gap-2 justify-center'
-              : 'justify-center gap-3'
-          )}
-        >
-          <Button
-            variant="ghost"
-            size="icon"
-            asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
-            title={isCollapsed ? 'GitHub Profile' : undefined}
-          >
-            <a
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub Profile"
-              onClick={handleLinkClick}
-            >
-              <Github className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            </a>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
-            title={isCollapsed ? 'LinkedIn Profile' : undefined}
-          >
-            <a
-              href={siteConfig.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn Profile"
-              onClick={handleLinkClick}
-            >
-              <Linkedin className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            </a>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
-            title={isCollapsed ? 'Google Scholar Profile' : undefined}
-          >
-            <a
-              href={siteConfig.links.googleScholar}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Google Scholar Profile"
-              onClick={handleLinkClick}
-            >
-              <BookUser className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            </a>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
-            title={isCollapsed ? 'ResearchGate Profile' : undefined}
-          >
-            <a
-              href={siteConfig.links.researchGate}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ResearchGate Profile"
-              onClick={handleLinkClick}
-            >
-              <Globe className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            </a>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
-            title={isCollapsed ? 'ORCID Profile' : undefined}
-          >
-            <a
-              href={siteConfig.links.orcid}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ORCID Profile"
-              onClick={handleLinkClick}
-            >
-              <Award className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            </a>
-          </Button>
-        </div>
       </div>
     </div>
   );

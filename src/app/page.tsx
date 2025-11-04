@@ -29,7 +29,6 @@ import {
   Lightbulb,
 } from 'lucide-react';
 import Link from 'next/link';
-import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { samplePublications } from '@/shared/lib/data/publications';
 import { professionalExperiences } from '@/shared/lib/data/experience';
 import { PublicationList } from '@/shared/components/common/publication-list';
@@ -69,40 +68,42 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col items-center">
-      <Breadcrumbs />
+      {/* Hero Section - Optimized for first viewport */}
+      <section className="w-full py-6 lg:py-8 bg-gradient-to-br from-background via-secondary/20 to-primary/5 relative overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-6 max-w-6xl w-full">
+          <div className="space-y-4">
+            {/* Top Section: Full Width */}
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl lg:text-4xl xl:text-4xl text-primary">
+                {siteConfig.author}
+              </h1>
+              <p className="text-lg text-foreground sm:text-xl lg:text-xl">
+                Senior Lecturer & Researcher
+              </p>
+              <p className="text-sm text-muted-foreground sm:text-base lg:text-lg max-w-prose">
+                Specializing in Explainable AI (XAI) and Multimodal AI (MMAI)
+                for healthcare diagnostics and analytics.
+              </p>
 
-      {/* Hero Section */}
-      <section className="w-full py-[var(--space-section-md)] bg-gradient-to-br from-background via-secondary/20 to-primary/5 relative overflow-hidden">
-        <div className="hero-container">
-          <div className="hero-grid">
-            {/* Content Section */}
-            <div className="hero-content">
-              <div className="space-y-3">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-4xl xl:text-5xl/tight text-primary">
-                  {siteConfig.author}
-                </h1>
-                <p className="text-xl text-foreground md:text-xl lg:text-xl">
-                  Senior Lecturer & Researcher
-                </p>
-                <p className="text-muted-foreground md:text-lg max-w-prose">
-                  Specializing in Explainable AI (XAI) and Multimodal AI (MMAI)
-                  for healthcare diagnostics and analytics.
-                </p>
-
-                {/* Research Philosophy */}
-                <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border border-primary/20 my-4">
-                  <Lightbulb className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-primary mb-1">
-                      Research Philosophy
-                    </p>
-                    <p className="text-sm text-foreground italic leading-relaxed">
-                      "{researchIdentity.philosophy.statement}"
-                    </p>
-                  </div>
+              {/* Research Philosophy - Compact */}
+              <div className="flex items-start gap-2 p-3 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border border-primary/20 my-3">
+                <Lightbulb className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-xs font-semibold text-primary mb-0.5">
+                    Research Philosophy
+                  </p>
+                  <p className="text-xs text-foreground italic leading-relaxed sm:text-sm">
+                    "{researchIdentity.philosophy.statement}"
+                  </p>
                 </div>
+              </div>
+            </div>
 
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-4 py-2 text-sm rounded-full font-semibold shadow-md border border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
+            {/* Bottom Section: Flex Layout with Stats Cards */}
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start">
+              {/* Left: Bottom Content */}
+              <div className="flex-1 space-y-3 min-w-0 lg:min-w-[280px] lg:max-w-[320px]">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-3 py-1.5 text-xs rounded-full font-semibold shadow-md border border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -111,8 +112,8 @@ export default function HomePage() {
                 </div>
 
                 {/* Academic Profiles */}
-                <div className="pt-2">
-                  <p className="text-xs text-muted-foreground mb-2">
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1.5">
                     Academic Profiles:
                   </p>
                   <AcademicProfiles
@@ -121,118 +122,124 @@ export default function HomePage() {
                     showLabels={false}
                   />
                 </div>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row pt-4">
-                <Button
-                  size="lg"
-                  asChild
-                  className="shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                >
-                  <Link href="/research">
-                    Explore Research{' '}
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  asChild
-                  className="border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
-                >
-                  <Link
-                    href={siteConfig.links.cv}
-                    target="_blank"
-                    rel="noopener noreferrer"
+
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-2 sm:flex-row pt-2">
+                  <Button
+                    size="default"
+                    asChild
+                    className="px-4 py-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm"
                   >
-                    View CV <ExternalLink className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
+                    <Link href="/research">
+                      Explore Research{' '}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="default"
+                    asChild
+                    className="px-4 py-2 border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 text-sm"
+                  >
+                    <Link
+                      href={siteConfig.links.cv}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View CV <ExternalLink className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right: Quick Stats - Single Row */}
+              <div className="w-full lg:flex-1 lg:min-w-0 overflow-hidden">
+                <div className="flex flex-wrap lg:flex-nowrap gap-2 sm:gap-2.5 lg:gap-2">
+                  {[
+                    {
+                      number: '7+',
+                      label: 'Years Teaching',
+                      icon: GraduationCap,
+                      color: 'text-blue-500 dark:text-blue-400',
+                      bgColor: 'bg-blue-500/10 hover:bg-blue-500/20',
+                      borderColor: 'border-blue-500/20',
+                      description: '6+ full-time, 1.8 part-time',
+                    },
+                    {
+                      number: '4.0+',
+                      label: 'Teaching Score',
+                      icon: Target,
+                      color: 'text-green-500 dark:text-green-400',
+                      bgColor: 'bg-green-500/10 hover:bg-green-500/20',
+                      borderColor: 'border-green-500/20',
+                      description: 'Out of 5.0',
+                    },
+                    {
+                      number: '4',
+                      label: 'Research Grants',
+                      icon: TrendingUp,
+                      color: 'text-purple-500 dark:text-purple-400',
+                      bgColor: 'bg-purple-500/10 hover:bg-purple-500/20',
+                      borderColor: 'border-purple-500/20',
+                      description: 'Successfully awarded',
+                    },
+                    {
+                      number: '5+',
+                      label: 'Research Areas',
+                      icon: Brain,
+                      color: 'text-orange-500 dark:text-orange-400',
+                      bgColor: 'bg-orange-500/10 hover:bg-orange-500/20',
+                      borderColor: 'border-orange-500/20',
+                      description: 'Active focus areas',
+                    },
+                  ].map((stat, index) => (
+                    <Card
+                      key={index}
+                      className={`backdrop-blur border ${stat.borderColor} shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105 ${stat.bgColor} group flex-1 min-w-[calc(50%-4px)] sm:min-w-[140px] lg:min-w-0 lg:flex-[1_1_0%] lg:shrink`}
+                    >
+                      <CardContent className="p-2 sm:p-2.5 lg:p-2 xl:p-2.5 text-center flex flex-col justify-center">
+                        <div
+                          className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-6 lg:h-6 xl:w-7 xl:h-7 mx-auto mb-1 rounded-lg ${stat.bgColor} flex items-center justify-center transition-all duration-300 group-hover:scale-110`}
+                        >
+                          <stat.icon
+                            className={`w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-3 lg:h-3 xl:w-3.5 xl:h-3.5 ${stat.color}`}
+                          />
+                        </div>
+                        <div className="text-sm sm:text-base lg:text-sm xl:text-base font-bold text-foreground mb-0.5">
+                          {stat.number}
+                        </div>
+                        <div className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-0.5">
+                          {stat.label}
+                        </div>
+                        {'description' in stat && (
+                          <div className="text-[9px] sm:text-[10px] text-muted-foreground/80 mt-0.5 leading-tight">
+                            {stat.description}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-card-sm)] text-center mt-[var(--space-section-sm)] max-w-4xl mx-auto">
-            {[
-              {
-                number: '7+',
-                label: 'Years Teaching',
-                icon: GraduationCap,
-                color: 'text-blue-500 dark:text-blue-400',
-                bgColor: 'bg-blue-500/10 hover:bg-blue-500/20',
-                borderColor: 'border-blue-500/20',
-                description: '6+ full-time, 1.8 part-time',
-              },
-              {
-                number: '4.0+',
-                label: 'Teaching Score',
-                icon: Target,
-                color: 'text-green-500 dark:text-green-400',
-                bgColor: 'bg-green-500/10 hover:bg-green-500/20',
-                borderColor: 'border-green-500/20',
-                description: 'Out of 5.0',
-              },
-              {
-                number: '4',
-                label: 'Research Grants',
-                icon: TrendingUp,
-                color: 'text-purple-500 dark:text-purple-400',
-                bgColor: 'bg-purple-500/10 hover:bg-purple-500/20',
-                borderColor: 'border-purple-500/20',
-                description: 'Successfully awarded',
-              },
-              {
-                number: '5+',
-                label: 'Research Areas',
-                icon: Brain,
-                color: 'text-orange-500 dark:text-orange-400',
-                bgColor: 'bg-orange-500/10 hover:bg-orange-500/20',
-                borderColor: 'border-orange-500/20',
-                description: 'Active focus areas',
-              },
-            ].map((stat, index) => (
-              <Card
-                key={index}
-                className={`backdrop-blur border ${stat.borderColor} shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105 ${stat.bgColor} group`}
-              >
-                <CardContent className="p-6 text-center">
-                  <div
-                    className={`w-12 h-12 mx-auto mb-3 rounded-lg ${stat.bgColor} flex items-center justify-center transition-all duration-300 group-hover:scale-110`}
-                  >
-                    <stat.icon className={`w-7 h-7 ${stat.color}`} />
-                  </div>
-                  <div className="text-2xl font-bold text-foreground mb-1">
-                    {stat.number}
-                  </div>
-                  <div className="text-sm font-medium text-muted-foreground mb-1">
-                    {stat.label}
-                  </div>
-                  {'description' in stat && (
-                    <div className="text-xs text-muted-foreground/80 mt-2">
-                      {stat.description}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* News Section */}
-      <section className="w-full py-[var(--space-section-sm)] bg-gradient-to-br from-secondary/30 via-secondary/20 to-transparent">
-        <div className="container-responsive">
-          <h2 className="text-2xl font-bold mb-[var(--space-card-default)] text-primary flex items-center gap-2">
-            <span className="w-1 h-6 bg-primary rounded-full"></span>
+      {/* News Section - Compact */}
+      <section className="w-full py-4 lg:py-6 bg-gradient-to-br from-secondary/30 via-secondary/20 to-transparent">
+        <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
+          <h2 className="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+            <span className="w-1 h-5 bg-primary rounded-full"></span>
             News
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {newsItems.map((item, index) => (
               <div
                 key={index}
-                className="flex gap-3 text-sm p-3 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
+                className="flex gap-2 text-xs sm:text-sm p-2.5 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
               >
-                <span className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10">
+                <span className="font-semibold text-primary/80 whitespace-nowrap px-2 py-0.5 rounded bg-primary/10 text-xs">
                   {item.date}
                 </span>
                 <div className="flex-1">
@@ -254,7 +261,7 @@ export default function HomePage() {
 
       {/* Research Interests - Expanded */}
       <section className="w-full py-[var(--space-section-md)]">
-        <div className="container-responsive">
+        <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
           <h2 className="text-3xl font-bold text-center mb-[var(--space-card-lg)] text-primary">
             Research Interests
           </h2>
@@ -364,7 +371,7 @@ export default function HomePage() {
 
       {/* Recent Publications */}
       <section className="w-full py-[var(--space-section-sm)] bg-secondary/10">
-        <div className="container-responsive">
+        <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
           <h2 className="text-2xl font-bold mb-[var(--space-card-sm)] text-primary">
             Recent Publications
           </h2>
@@ -386,7 +393,7 @@ export default function HomePage() {
 
       {/* Work Experience Section */}
       <section className="w-full py-[var(--space-section-sm)]">
-        <div className="container-responsive">
+        <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
           <h2 className="text-2xl font-bold mb-[var(--space-card-sm)] text-primary">
             Work Experience
           </h2>
@@ -403,7 +410,7 @@ export default function HomePage() {
 
       {/* Featured Grant - Single Highlight */}
       <section className="w-full py-[var(--space-section-md)] bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="container-responsive">
+        <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
           <h2 className="text-3xl font-bold text-center mb-[var(--space-card-lg)] text-primary">
             Featured Research Grant
           </h2>
@@ -436,7 +443,7 @@ export default function HomePage() {
 
       {/* Connect & Follow - Academic Profiles */}
       <section className="w-full py-[var(--space-section-md)]">
-        <div className="container-responsive">
+        <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
           <h2 className="text-3xl font-bold text-center mb-[var(--space-card-default)] text-primary">
             Connect & Collaborate
           </h2>
