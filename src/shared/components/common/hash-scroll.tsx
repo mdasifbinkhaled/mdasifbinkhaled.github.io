@@ -18,6 +18,7 @@ export function HashScroll({ behavior = 'smooth' }: HashScrollProps) {
     // Initial attempt after mount/render
     const t = window.setTimeout(scroll, 50);
     // React to hash changes
+
     const onHash = () => setTimeout(scroll, 0);
     window.addEventListener('hashchange', onHash);
     return () => {
