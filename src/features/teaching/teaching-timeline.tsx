@@ -7,11 +7,8 @@ import { Card, CardContent } from '@/shared/components/ui/card';
 export function TeachingTimeline() {
   return (
     <section className="w-full" aria-labelledby="teaching-timeline-heading">
-      <h2
-        id="teaching-timeline-heading"
-        className="text-3xl font-bold text-center mb-[var(--space-lg)] text-primary"
-      >
-        Teaching Journey
+      <h2 id="teaching-timeline-heading" className="sr-only">
+        Teaching Timeline
       </h2>
 
       {/* Horizontal Timeline - Desktop */}
