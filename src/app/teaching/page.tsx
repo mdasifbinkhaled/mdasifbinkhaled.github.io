@@ -42,11 +42,11 @@ export default function TeachingPage() {
         />
       </section>
 
-      {/* Timeline Section */}
+      {/* Timeline Section - Compact */}
       <section aria-labelledby="teaching-journey">
         <h2
           id="teaching-journey"
-          className="text-3xl font-bold text-center mb-[var(--space-lg)] text-primary"
+          className="text-2xl font-bold text-center mb-6 text-primary"
         >
           Teaching Journey
         </h2>

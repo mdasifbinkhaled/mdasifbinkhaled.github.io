@@ -11,13 +11,13 @@ export function TeachingTimeline() {
         Teaching Timeline
       </h2>
 
-      {/* Horizontal Timeline - Desktop */}
+      {/* Horizontal Timeline - Desktop (Compact) */}
       <div className="hidden lg:block relative">
         {/* Timeline Line */}
-        <div className="absolute top-20 left-0 right-0 h-1 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
+        <div className="absolute top-12 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
 
         {/* Timeline Events */}
-        <div className="grid grid-cols-5 gap-[var(--space-lg)]">
+        <div className="grid grid-cols-5 gap-4">
           {teachingTimelineEvents.map((event) => {
             const Icon = event.icon;
             const isCurrent = event.type === 'current';
@@ -25,66 +25,62 @@ export function TeachingTimeline() {
             return (
               <div key={event.id} className="relative">
                 {/* Connector Dot */}
-                <div className="absolute top-[4.75rem] left-1/2 -translate-x-1/2 z-10">
+                <div className="absolute top-[2.875rem] left-1/2 -translate-x-1/2 z-10">
                   <div
-                    className={`w-4 h-4 rounded-full border-4 ${
+                    className={`w-3 h-3 rounded-full border-2 ${
                       isCurrent
-                        ? 'bg-primary border-primary shadow-lg shadow-primary/50'
+                        ? 'bg-primary border-primary shadow-md shadow-primary/50'
                         : 'bg-card border-primary/40'
                     }`}
                   />
                 </div>
 
-                {/* Event Card */}
+                {/* Event Card - Compact */}
                 <Card
-                  className={`relative mt-32 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                  className={`relative mt-16 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${
                     isCurrent
-                      ? 'border-primary/50 shadow-lg shadow-primary/10'
+                      ? 'border-primary/50 shadow-md shadow-primary/5'
                       : ''
                   }`}
                 >
-                  <CardContent className="p-[var(--space-card-md)] text-center">
-                    {/* Icon */}
+                  <CardContent className="p-3 text-center">
+                    {/* Icon - Smaller */}
                     <div
-                      className={`absolute -top-12 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center ${
+                      className={`absolute -top-7 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full flex items-center justify-center ${
                         isCurrent
-                          ? 'bg-primary text-primary-foreground shadow-lg'
+                          ? 'bg-primary text-primary-foreground shadow-md'
                           : 'bg-primary/10 text-primary'
                       }`}
                     >
-                      <Icon className="w-8 h-8" />
+                      <Icon className="w-5 h-5" />
                     </div>
 
-                    {/* Period */}
-                    <div className="text-xs font-semibold text-muted-foreground mb-2 mt-6">
+                    {/* Period - Compact */}
+                    <div className="text-[10px] font-semibold text-muted-foreground mb-1 mt-3">
                       {event.period}
                     </div>
 
-                    {/* Title */}
-                    <h3 className="font-bold text-sm mb-1 line-clamp-2">
+                    {/* Title - Compact */}
+                    <h3 className="font-bold text-xs mb-0.5 line-clamp-2 leading-tight">
                       {event.title}
                     </h3>
 
-                    {/* Institution */}
-                    <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+                    {/* Institution - Compact */}
+                    <p className="text-[10px] text-muted-foreground mb-2 line-clamp-1">
                       {event.institution}
                     </p>
 
-                    {/* Current Badge */}
+                    {/* Current Badge - Smaller */}
                     {isCurrent && (
-                      <Badge className="bg-green-500 text-white hover:bg-green-600 text-xs">
+                      <Badge className="bg-green-500 text-white hover:bg-green-600 text-[9px] px-1.5 py-0">
                         Current
                       </Badge>
                     )}
 
-                    {/* Highlights */}
+                    {/* Highlights - Show only 1 */}
                     {event.highlights && event.highlights.length > 0 && (
-                      <ul className="mt-3 space-y-1 text-xs text-muted-foreground">
-                        {event.highlights.slice(0, 2).map((highlight, idx) => (
-                          <li key={idx} className="truncate">
-                            • {highlight}
-                          </li>
-                        ))}
+                      <ul className="mt-2 text-[10px] text-muted-foreground">
+                        <li className="truncate">• {event.highlights[0]}</li>
                       </ul>
                     )}
                   </CardContent>
