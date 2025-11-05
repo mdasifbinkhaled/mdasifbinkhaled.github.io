@@ -1,5 +1,7 @@
 'use client';
 
+import { studentTestimonials } from '@/shared/lib/data/testimonials';
+import type { Testimonial } from '@/shared/types/teaching';
 import {
   Card,
   CardContent,
@@ -7,45 +9,6 @@ import {
   CardHeader,
 } from '@/shared/components/ui/card';
 import { Quote, Star } from 'lucide-react';
-
-interface Testimonial {
-  id: string;
-  quote: string;
-  student: string;
-  course: string;
-  semester: string;
-  rating?: number;
-}
-
-const testimonials: Testimonial[] = [
-  {
-    id: 'test-1',
-    quote:
-      'Clear explanations and practical examples made complex algorithms easy to understand. The hands-on approach really helped solidify the concepts.',
-    student: 'Anonymous',
-    course: 'CSE 303 - Algorithms',
-    semester: 'Fall 2023',
-    rating: 5,
-  },
-  {
-    id: 'test-2',
-    quote:
-      'Good balance of theory and hands-on practice. The assignments were challenging but fair, and office hours were incredibly helpful.',
-    student: 'Anonymous',
-    course: 'CSE 101 - Introduction to Programming',
-    semester: 'Fall 2023',
-    rating: 5,
-  },
-  {
-    id: 'test-3',
-    quote:
-      "The instructor's passion for teaching is evident in every lecture. The structured approach to problem-solving has improved my coding skills significantly.",
-    student: 'Anonymous',
-    course: 'CSE 201 - Data Structures',
-    semester: 'Spring 2024',
-    rating: 5,
-  },
-];
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
@@ -96,7 +59,7 @@ export function StudentTestimonials() {
         Student Feedback
       </h2>
       <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-3">
-        {testimonials.map((testimonial) => (
+        {studentTestimonials.map((testimonial) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />
         ))}
       </div>

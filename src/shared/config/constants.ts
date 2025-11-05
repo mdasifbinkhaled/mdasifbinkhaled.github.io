@@ -56,3 +56,59 @@ export const TIMING = {
   /** Animation transition duration (in milliseconds) */
   TRANSITION: 200,
 } as const;
+
+/**
+ * Animation duration constants
+ * @description Standardized animation and transition durations
+ */
+export const ANIMATION = {
+  /** Fast transition (buttons, small components) - 200ms */
+  DURATION_FAST: 200,
+
+  /** Normal transition (cards, standard components) - 300ms */
+  DURATION_NORMAL: 300,
+
+  /** Slow transition (large components, page transitions) - 500ms */
+  DURATION_SLOW: 500,
+
+  /** Intersection observer threshold for animations */
+  OBSERVER_THRESHOLD: 0.1,
+
+  /** Animation easing function */
+  EASING: 'ease-in-out',
+} as const;
+
+/**
+ * Teaching & Career Constants
+ * @description Academic career milestones and dates
+ */
+export const CAREER = {
+  /** Year teaching career began */
+  TEACHING_START_YEAR: 2015,
+
+  /** First teaching position start date */
+  FIRST_TEACHING_POSITION: 'May 2015',
+
+  /** Years of teaching experience (calculated dynamically) */
+  get YEARS_TEACHING() {
+    return new Date().getFullYear() - this.TEACHING_START_YEAR;
+  },
+} as const;
+
+/**
+ * Teaching metrics constants
+ * @description Teaching statistics and performance metrics
+ */
+export const TEACHING_METRICS = {
+  /** Average students per course */
+  AVERAGE_CLASS_SIZE: 30,
+
+  /** Total approximate students taught */
+  TOTAL_STUDENTS: 300,
+
+  /** Average student rating out of 5.0 */
+  AVERAGE_RATING: 4.7,
+
+  /** Maximum rating scale */
+  MAX_RATING: 5.0,
+} as const;

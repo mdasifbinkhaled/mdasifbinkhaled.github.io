@@ -135,12 +135,6 @@ export function Navbar({
                   >
                     TA/ST/SoD
                   </Link>
-                  <Link
-                    className="block px-3 py-2 hover:bg-accent/50"
-                    href="/teaching?tab=workshops"
-                  >
-                    Workshops & Seminars
-                  </Link>
                 </div>
               </div>
             </div>

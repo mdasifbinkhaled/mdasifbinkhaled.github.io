@@ -7,6 +7,7 @@ import {
   coursesTaughtIUB,
   coursesTaughtBRACU,
 } from '@/shared/lib/data/courses';
+import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
 import { TeachingTimeline } from '@/features/teaching/teaching-timeline';
 import { StudentTestimonials } from '@/features/teaching/student-testimonials';
@@ -21,11 +22,8 @@ export const metadata: Metadata = {
 };
 
 export default function TeachingPage() {
-  // Calculate teaching stats
-  const totalCourses = coursesTaughtIUB.length + coursesTaughtBRACU.length;
-  const totalStudents = 300; // Approximate based on average class sizes
-  const averageRating = 4.7; // Based on student feedback
-  const yearsTeaching = new Date().getFullYear() - 2015; // Since May 2015
+  // Get teaching stats from centralized data source
+  const stats = getTeachingStats();
 
   return (
     <div className="space-y-[var(--space-section-lg)]">
@@ -37,10 +35,10 @@ export default function TeachingPage() {
           Teaching Statistics
         </h2>
         <TeachingHeroStats
-          totalStudents={totalStudents}
-          totalCourses={totalCourses}
-          averageRating={averageRating}
-          yearsTeaching={yearsTeaching}
+          totalStudents={stats.totalStudents}
+          totalCourses={stats.totalCourses}
+          averageRating={stats.averageRating}
+          yearsTeaching={stats.yearsTeaching}
         />
       </section>
 

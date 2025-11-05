@@ -9,14 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card';
-import {
-  Mic2,
-  BookOpen,
-  GraduationCap,
-  Building2,
-  Users,
-  Presentation,
-} from 'lucide-react';
+import { GraduationCap, Building2, Users } from 'lucide-react';
 import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
 import { Badge } from '@/shared/components/ui/badge';
 import {
@@ -41,7 +34,7 @@ export default function TeachingTabsClient({
   const sp = useSearchParams();
   const tab = useMemo(() => {
     const t = sp.get('tab') ?? 'iub';
-    return ['iub', 'bracu', 'support', 'workshops'].includes(t) ? t : 'iub';
+    return ['iub', 'bracu', 'support'].includes(t) ? t : 'iub';
   }, [sp]);
 
   return (
@@ -82,18 +75,6 @@ export default function TeachingTabsClient({
             <span>TA/ST/SoD</span>
             <Badge variant="secondary" className="ml-1 text-xs">
               3
-            </Badge>
-          </TabsTrigger>
-
-          <TabsTrigger
-            value="workshops"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary flex items-center gap-2 transition-all"
-            title="Workshops & Seminars - 4 activities"
-          >
-            <Presentation className="h-4 w-4" />
-            <span>Workshops</span>
-            <Badge variant="secondary" className="ml-1 text-xs">
-              4
             </Badge>
           </TabsTrigger>
         </TabsList>
@@ -211,103 +192,6 @@ export default function TeachingTabsClient({
               </ul>
             </CardContent>
           </Card>
-        </div>
-      </TabsContent>
-
-      <TabsContent value="workshops">
-        <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-2 items-stretch">
-          {/* Workshop items */}
-          <div className="flex">
-            <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
-              <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                <Mic2 className="h-8 w-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-base">
-                    Instructor - Automate Your Day with Python Workshops
-                  </CardTitle>
-                  <CardDescription>
-                    Independent University, Bangladesh • Autumn 2023 & Spring
-                    2024
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <p className="text-sm text-muted-foreground">
-                  Conducted hands-on workshops to teach Python automation
-                  techniques to students and faculty members, focusing on
-                  practical applications that can improve productivity and
-                  streamline routine tasks.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="flex">
-            <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
-              <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                <BookOpen className="h-8 w-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-base">
-                    Participant - Preparation of Self-Assessment Report (SAR)
-                    for BAC Accreditation Workshop
-                  </CardTitle>
-                  <CardDescription>
-                    Institutional Quality Assurance Cell (IQAC), IUB • Oct 2024
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <p className="text-sm text-muted-foreground">
-                  Participated in a workshop on SAR preparation, course file
-                  management, and accreditation requirements for PSAC members.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="flex">
-            <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
-              <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                <Mic2 className="h-8 w-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-base">
-                    Facilitator - Advanced Micro-controller Programming Workshop
-                  </CardTitle>
-                  <CardDescription>
-                    Center for Cognitive Skill Enhancement (CCSE), IUB
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <p className="text-sm text-muted-foreground">
-                  Facilitated a workshop focusing on advanced concepts and
-                  practical applications of micro-controller programming.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="flex">
-            <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
-              <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                <Mic2 className="h-8 w-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-base">
-                    Facilitator - Yes We Can! Workshop
-                  </CardTitle>
-                  <CardDescription>
-                    Center for Cognitive Skill Enhancement (CCSE), IUB
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <p className="text-sm text-muted-foreground">
-                  Contributed to a workshop aimed at skill enhancement and
-                  motivation.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </TabsContent>
     </Tabs>
