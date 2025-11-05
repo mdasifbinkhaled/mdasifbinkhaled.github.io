@@ -9,8 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card';
-import { Mic2, BookOpen } from 'lucide-react';
+import {
+  Mic2,
+  BookOpen,
+  GraduationCap,
+  Building2,
+  Users,
+  Presentation,
+} from 'lucide-react';
 import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
+import { Badge } from '@/shared/components/ui/badge';
 import {
   Tabs,
   TabsContent,
@@ -43,27 +51,50 @@ export default function TeachingTabsClient({
         <TabsList className="bg-transparent p-0 border-b border-border rounded-none gap-2">
           <TabsTrigger
             value="iub"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
+            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary flex items-center gap-2 transition-all"
+            title={`Independent University, Bangladesh - ${coursesTaughtIUB.length} courses`}
           >
-            IUB
+            <GraduationCap className="h-4 w-4" />
+            <span>IUB</span>
+            <Badge variant="secondary" className="ml-1 text-xs">
+              {coursesTaughtIUB.length}
+            </Badge>
           </TabsTrigger>
+
           <TabsTrigger
             value="bracu"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
+            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary flex items-center gap-2 transition-all"
+            title={`BRAC University - ${coursesTaughtBRACU.length} lab courses`}
           >
-            BRACU
+            <Building2 className="h-4 w-4" />
+            <span>BRACU</span>
+            <Badge variant="secondary" className="ml-1 text-xs">
+              {coursesTaughtBRACU.length}
+            </Badge>
           </TabsTrigger>
+
           <TabsTrigger
             value="support"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
+            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary flex items-center gap-2 transition-all"
+            title="Teaching Assistant, Student Tutor, School of Development"
           >
-            TA/ST/SoD
+            <Users className="h-4 w-4" />
+            <span>TA/ST/SoD</span>
+            <Badge variant="secondary" className="ml-1 text-xs">
+              3
+            </Badge>
           </TabsTrigger>
+
           <TabsTrigger
             value="workshops"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
+            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary flex items-center gap-2 transition-all"
+            title="Workshops & Seminars - 4 activities"
           >
-            Workshops & Seminars
+            <Presentation className="h-4 w-4" />
+            <span>Workshops</span>
+            <Badge variant="secondary" className="ml-1 text-xs">
+              4
+            </Badge>
           </TabsTrigger>
         </TabsList>
       </div>
@@ -83,12 +114,11 @@ export default function TeachingTabsClient({
             </div>
           }
         >
-          <div className="columns-1 md:columns-2 lg:columns-2 gap-[var(--space-lg)] [column-fill:_balance]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-lg)]">
             {coursesTaughtIUB.map((course) => (
               <div
                 key={course.id}
                 id={course.code.toLowerCase().replace(' ', '')}
-                className="break-inside-avoid mb-[var(--space-lg)] inline-block w-full"
               >
                 <CollapsibleCourseCard course={course} />
               </div>
@@ -112,12 +142,11 @@ export default function TeachingTabsClient({
             </div>
           }
         >
-          <div className="columns-1 md:columns-2 lg:columns-2 gap-[var(--space-lg)] [column-fill:_balance]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-lg)]">
             {coursesTaughtBRACU.map((course) => (
               <div
                 key={course.id}
                 id={course.code.toLowerCase().replace(' ', '')}
-                className="break-inside-avoid mb-[var(--space-lg)] inline-block w-full"
               >
                 <CollapsibleCourseCard course={course} />
               </div>
