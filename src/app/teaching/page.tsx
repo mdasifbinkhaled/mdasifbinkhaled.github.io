@@ -9,7 +9,6 @@ import {
 } from '@/shared/lib/data/courses';
 import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
-import { TeachingTimeline } from '@/features/teaching/teaching-timeline';
 import { StudentTestimonials } from '@/features/teaching/student-testimonials';
 import { TeachingCTA } from '@/features/teaching/teaching-cta';
 
@@ -42,18 +41,26 @@ export default function TeachingPage() {
         />
       </section>
 
-      {/* Timeline Section - Compact */}
-      <section aria-labelledby="teaching-journey">
-        <h2
-          id="teaching-journey"
-          className="text-2xl font-bold text-center mb-6 text-primary"
-        >
-          Teaching Journey
+      {/* Teaching Overview */}
+      <section
+        aria-labelledby="teaching-overview"
+        className="max-w-4xl mx-auto text-center"
+      >
+        <h2 id="teaching-overview" className="sr-only">
+          Teaching Overview
         </h2>
-        <TeachingTimeline />
+        <p className="text-lg text-muted-foreground leading-relaxed">
+          As a{' '}
+          <strong>Senior Lecturer at Independent University, Bangladesh</strong>
+          , I specialize in teaching computer science fundamentals, algorithms,
+          system design, and mathematical foundations. My teaching philosophy
+          emphasizes <strong>hands-on learning</strong>,{' '}
+          <strong>Outcome-Based Education (OBE)</strong>, and preparing students
+          for real-world challenges.
+        </p>
       </section>
 
-      {/* Courses & Activities Section */}
+      {/* Courses & Activities Section - Main Content */}
       <section id="courses-taught" aria-labelledby="courses-heading">
         <h2
           id="courses-heading"
