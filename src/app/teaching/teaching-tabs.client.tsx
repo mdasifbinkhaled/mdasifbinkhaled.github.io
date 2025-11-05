@@ -100,11 +100,6 @@ export default function TeachingTabsClient({
       </div>
 
       <TabsContent value="iub">
-        <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
-          As a Senior Lecturer, I have taught a diverse range of undergraduate
-          courses covering programming fundamentals, algorithms, system design,
-          and mathematical foundations.
-        </p>
         <ErrorBoundary
           fallback={
             <div className="text-center py-8">
@@ -128,11 +123,6 @@ export default function TeachingTabsClient({
       </TabsContent>
 
       <TabsContent value="bracu">
-        <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
-          Laboratory courses where I provided hands-on guidance and practical
-          experience in computer graphics, numerical methods, compiler design,
-          and mobile development.
-        </p>
         <ErrorBoundary
           fallback={
             <div className="text-center py-8">
@@ -156,11 +146,6 @@ export default function TeachingTabsClient({
       </TabsContent>
 
       <TabsContent value="support">
-        <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
-          Teaching support roles and student mentorship activities, including
-          Teaching Assistant (TA), Student Tutor (ST), and School of Development
-          (SoD) initiatives.
-        </p>
         <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-2">
           <Card className="transition-all duration-200 hover:shadow-lg h-full">
             <CardHeader>
@@ -215,11 +200,6 @@ export default function TeachingTabsClient({
       </TabsContent>
 
       <TabsContent value="workshops">
-        <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
-          Workshops and seminars where I've contributed as an instructor,
-          facilitator, or participant, focusing on practical skills,
-          professional development, and student engagement.
-        </p>
         <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-2 items-stretch">
           <div className="flex">
             <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">

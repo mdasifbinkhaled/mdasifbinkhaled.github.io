@@ -41,23 +41,128 @@ export default function TeachingPage() {
         />
       </section>
 
-      {/* Teaching Overview */}
-      <section
-        aria-labelledby="teaching-overview"
-        className="max-w-4xl mx-auto text-center"
-      >
-        <h2 id="teaching-overview" className="sr-only">
-          Teaching Overview
-        </h2>
-        <p className="text-lg text-muted-foreground leading-relaxed">
-          As a{' '}
-          <strong>Senior Lecturer at Independent University, Bangladesh</strong>
-          , I specialize in teaching computer science fundamentals, algorithms,
-          system design, and mathematical foundations. My teaching philosophy
-          emphasizes <strong>hands-on learning</strong>,{' '}
-          <strong>Outcome-Based Education (OBE)</strong>, and preparing students
-          for real-world challenges.
-        </p>
+      {/* Teaching Philosophy */}
+      <section aria-labelledby="teaching-philosophy" className="relative">
+        <div className="max-w-5xl mx-auto">
+          {/* Heading */}
+          <h2
+            id="teaching-philosophy"
+            className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary"
+          >
+            Teaching Philosophy & Approach
+          </h2>
+
+          {/* Main Description */}
+          <div className="max-w-3xl mx-auto mb-12">
+            <p className="text-lg text-muted-foreground leading-relaxed text-left">
+              As a{' '}
+              <strong className="text-foreground">
+                Senior Lecturer at Independent University, Bangladesh
+              </strong>
+              , I specialize in teaching computer science fundamentals,
+              algorithms, system design, and mathematical foundations. My
+              approach combines theoretical depth with practical application.
+            </p>
+          </div>
+
+          {/* Three Pillars */}
+          <div className="grid gap-6 md:grid-cols-3">
+            {/* Pillar 1: Hands-On Learning */}
+            <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
+              <div className="flex flex-col items-start gap-4">
+                <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-6 w-6"
+                  >
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Hands-On Learning
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Real-world projects, coding exercises, and practical
+                    applications that bridge theory and industry practice.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 2: OBE Methodology */}
+            <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
+              <div className="flex flex-col items-start gap-4">
+                <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-6 w-6"
+                  >
+                    <path d="M9 11 6 2 21 7l-9 5m0 0-7 8m7-8v10" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Outcome-Based Education
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Clear learning objectives, measurable outcomes, and
+                    continuous assessment aligned with OBE standards.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 3: Student Success */}
+            <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
+              <div className="flex flex-col items-start gap-4">
+                <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-6 w-6"
+                  >
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Student-Centered Success
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Preparing students for real-world challenges through
+                    mentorship, problem-solving, and industry-relevant skills.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Courses & Activities Section - Main Content */}
@@ -81,15 +186,7 @@ export default function TeachingPage() {
       </section>
 
       {/* Testimonials Section */}
-      <section aria-labelledby="student-feedback">
-        <h2
-          id="student-feedback"
-          className="text-3xl font-bold text-center mb-[var(--space-lg)] text-primary"
-        >
-          Student Feedback
-        </h2>
-        <StudentTestimonials />
-      </section>
+      <StudentTestimonials />
 
       {/* Call to Action */}
       <section aria-labelledby="collaborate">
