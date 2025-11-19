@@ -15,7 +15,7 @@ export function TeachingCTA() {
     <section className="w-full" aria-labelledby="teaching-cta-heading">
       <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 hover:shadow-lg transition-all duration-300">
         <CardHeader>
-          <div className="flex items-center gap-[var(--space-md)] justify-center">
+          <div className="flex items-center gap-4 justify-center">
             <MessageSquare className="w-6 h-6 text-primary" />
             <CardTitle
               id="teaching-cta-heading"
@@ -25,7 +25,7 @@ export function TeachingCTA() {
             </CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="text-center space-y-[var(--space-md)]">
+        <CardContent className="text-center space-y-4">
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Have questions about my teaching approach, curriculum development,
             or looking to collaborate on educational initiatives?

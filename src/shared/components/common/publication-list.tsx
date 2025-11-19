@@ -155,7 +155,7 @@ export const PublicationList = React.memo(function PublicationList({
       </Card>
 
       {filteredPublications.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-[var(--space-card-default)]">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-6">
           {filteredPublications.map((pub) => (
             <PublicationCard key={pub.id} publication={pub} />
           ))}

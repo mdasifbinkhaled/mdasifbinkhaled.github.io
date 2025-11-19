@@ -92,7 +92,7 @@ export function TeachingTimeline() {
       </div>
 
       {/* Vertical Timeline - Mobile & Tablet */}
-      <div className="lg:hidden space-y-[var(--space-md)]">
+      <div className="lg:hidden space-y-4">
         {teachingTimelineEvents.map((event, index) => {
           const Icon = event.icon;
           const isCurrent = event.type === 'current';
@@ -123,7 +123,7 @@ export function TeachingTimeline() {
                   isCurrent ? 'border-primary/50 shadow-md' : ''
                 }`}
               >
-                <CardContent className="p-[var(--space-card-md)]">
+                <CardContent className="p-5">
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div className="text-xs font-semibold text-muted-foreground">
                       {event.period}

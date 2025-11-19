@@ -14,13 +14,13 @@ interface NewsFeedProps {
 
 export function NewsFeed({ items, className }: NewsFeedProps) {
   return (
-    <div className={cn('space-y-[var(--space-md)]', className)}>
+    <div className={cn('space-y-4', className)}>
       {items.map((item, index) => (
         <div
           key={index}
-          className="flex gap-[var(--space-md)] text-sm p-[var(--space-md)] rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
+          className="flex gap-4 text-sm p-4 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
         >
-          <span className="font-semibold text-primary/80 whitespace-nowrap px-[var(--space-sm)] py-1 rounded bg-primary/10 h-fit">
+          <span className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10 h-fit">
             {item.date}
           </span>
           <div className="flex-1">

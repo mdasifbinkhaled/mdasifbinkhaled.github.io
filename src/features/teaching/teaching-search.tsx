@@ -51,7 +51,7 @@ export function TeachingSearch({
   };
 
   return (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-4">
       {/* Search Bar */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -77,11 +77,11 @@ export function TeachingSearch({
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap items-center gap-[var(--space-sm)]">
+      <div className="flex flex-wrap items-center gap-2">
         <span className="text-sm text-muted-foreground">Filter by:</span>
 
         {/* Level Filter */}
-        <div className="flex gap-[var(--space-sm)]">
+        <div className="flex gap-2">
           <Badge
             variant={selectedLevel === 'all' ? 'default' : 'outline'}
             className="cursor-pointer transition-colors hover:bg-primary/90"
@@ -106,7 +106,7 @@ export function TeachingSearch({
         </div>
 
         {/* Year Filter */}
-        <div className="flex gap-[var(--space-sm)] flex-wrap">
+        <div className="flex gap-2 flex-wrap">
           <Badge
             variant={selectedYear === 'all' ? 'default' : 'outline'}
             className="cursor-pointer transition-colors hover:bg-primary/90"

@@ -47,84 +47,10 @@
   /* Border Radius */
   --radius: 0.5rem;
 
-  /* Spacing Scale - Base units */
-  --space-xs: 0.25rem; /* 4px */
-  --space-sm: 0.5rem; /* 8px */
-  --space-md: 1rem; /* 16px */
-  --space-lg: 1.5rem; /* 24px */
-  --space-xl: 2rem; /* 32px */
-  --space-2xl: 3rem; /* 48px */
-  --space-3xl: 4rem; /* 64px */
-
-  /* Section Spacing - Fluid responsive spacing */
-  --space-section-sm: clamp(2rem, 5vw, 3rem); /* 32-48px */
-  --space-section-md: clamp(3rem, 7vw, 4rem); /* 48-64px */
-  --space-section-lg: clamp(4rem, 10vw, 6rem); /* 64-96px */
-
-  /* Card Spacing - Standardized padding */
-  --space-card-sm: 1rem; /* 16px - Compact cards */
-  --space-card-default: 1.5rem; /* 24px - Standard cards */
-  --space-card-lg: 2rem; /* 32px - Large cards */
-
-  /* Container Spacing */
-  --space-container-x: clamp(1rem, 4vw, 2rem); /* Horizontal padding */
-  --space-container-y: clamp(1.5rem, 5vw, 3rem); /* Vertical padding */
-
-  /* Typography Scale - Fluid Responsive Typography */
-  --text-xs: 0.75rem; /* 12px - Fixed for small text */
-  --text-sm: 0.875rem; /* 14px - Fixed for small text */
-  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16-18px */
-  --text-lg: clamp(1.125rem, 1.05rem + 0.375vw, 1.25rem); /* 18-20px */
-  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); /* 20-24px */
-  --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2rem); /* 24-32px */
-  --text-3xl: clamp(1.875rem, 1.6rem + 1.1vw, 2.5rem); /* 30-40px */
-  --text-4xl: clamp(2.25rem, 1.9rem + 1.4vw, 3rem); /* 36-48px */
-
-  /* Border Radius Variants */
-  --radius-sm: 0.25rem; /* 4px */
-  --radius-md: 0.375rem; /* 6px */
-  --radius-lg: 0.5rem; /* 8px */
-  --radius-xl: 0.75rem; /* 12px */
-
-  /* Shadow Scale - 5-level elevation system */
-  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.03);
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
-  --shadow-md:
-    0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
-  --shadow-lg:
-    0 10px 15px -3px rgb(0 0 0 / 0.12), 0 4px 6px -4px rgb(0 0 0 / 0.08);
-  --shadow-xl:
-    0 20px 25px -5px rgb(0 0 0 / 0.16), 0 8px 10px -6px rgb(0 0 0 / 0.12);
-
-  /* Gradient Backgrounds */
-  --gradient-subtle: linear-gradient(
-    135deg,
-    var(--background) 0%,
-    var(--secondary) 100%
-  );
-  --gradient-primary: linear-gradient(
-    135deg,
-    var(--primary) 0%,
-    var(--accent) 100%
-  );
-  --gradient-hero: linear-gradient(
-    135deg,
-    var(--background) 0%,
-    var(--secondary) 50%,
-    var(--primary) 100%
-  );
-
   /* Layout */
   --sidebar-width: 280px;
   --navbar-height: 64px;
   --content-max-width: 1024px;
-  --content-padding: 1.5rem;
-  --max-content-width: 1024px;
-
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-normal: 250ms ease-in-out;
-  --transition-slow: 350ms ease-in-out;
 }
 
 /* Dark Theme */
@@ -512,110 +438,6 @@
   --academic-highlight: 45 100% 94%;
 }
 
-/* Utility Classes */
-.bg-background {
-  background-color: hsl(var(--background));
-}
-.bg-foreground {
-  background-color: hsl(var(--foreground));
-}
-.bg-card {
-  background-color: hsl(var(--card));
-}
-.bg-primary {
-  background-color: hsl(var(--primary));
-}
-.bg-secondary {
-  background-color: hsl(var(--secondary));
-}
-.bg-muted {
-  background-color: hsl(var(--muted));
-}
-.bg-accent {
-  background-color: hsl(var(--accent));
-}
-
-.text-foreground {
-  color: hsl(var(--foreground));
-}
-.text-muted-foreground {
-  color: hsl(var(--muted-foreground));
-}
-.text-primary-foreground {
-  color: hsl(var(--primary-foreground));
-}
-.text-secondary-foreground {
-  color: hsl(var(--secondary-foreground));
-}
-.text-accent-foreground {
-  color: hsl(var(--accent-foreground));
-}
-
-.border-border {
-  border-color: hsl(var(--border));
-}
-.border-input {
-  border-color: hsl(var(--input));
-}
-
-.rounded-sm {
-  border-radius: var(--radius-sm);
-}
-.rounded-md {
-  border-radius: var(--radius-md);
-}
-.rounded-lg {
-  border-radius: var(--radius-lg);
-}
-.rounded-xl {
-  border-radius: var(--radius-xl);
-}
-
-.shadow-sm {
-  box-shadow: var(--shadow-sm);
-}
-.shadow-md {
-  box-shadow: var(--shadow-md);
-}
-.shadow-lg {
-  box-shadow: var(--shadow-lg);
-}
-
-.transition-fast {
-  transition: all var(--transition-fast);
-}
-.transition-normal {
-  transition: all var(--transition-normal);
-}
-.transition-slow {
-  transition: all var(--transition-slow);
-}
-
-/* Component Patterns */
-.sidebar-base {
-  width: var(--sidebar-width);
-  height: 100vh;
-  background-color: hsl(var(--card));
-  border-right: 1px solid hsl(var(--border));
-}
-
-.navbar-base {
-  height: var(--navbar-height);
-  background-color: hsl(var(--background));
-  border-bottom: 1px solid hsl(var(--border));
-}
-
-.page-container {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  padding: var(--space-lg);
-}
-
-.focus-ring {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-}
-
 /* Screen Reader Only */
 .sr-only {
   position: absolute;
@@ -638,10 +460,6 @@
     left: 0;
     z-index: 50;
   }
-
-  .page-container {
-    padding: var(--space-md);
-  }
 }
 
 /* High contrast mode support */
@@ -659,9 +477,9 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .transition-fast,
-  .transition-normal,
-  .transition-slow {
-    transition: none;
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

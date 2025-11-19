@@ -25,7 +25,7 @@ export default function TeachingPage() {
   const stats = getTeachingStats();
 
   return (
-    <div className="space-y-[var(--space-section-lg)]">
+    <div className="space-y-16">
       <Breadcrumbs />
 
       {/* Hero Stats Section */}
@@ -169,7 +169,7 @@ export default function TeachingPage() {
       <section id="courses-taught" aria-labelledby="courses-heading">
         <h2
           id="courses-heading"
-          className="text-3xl font-bold text-center mb-[var(--space-lg)] text-primary"
+          className="text-3xl font-bold text-center mb-6 text-primary"
         >
           Courses & Activities
         </h2>

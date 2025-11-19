@@ -109,7 +109,7 @@ export default function TeachingTabsClient({
             </div>
           }
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-lg)]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {coursesTaughtIUB.map((course) => (
               <div
                 key={course.id}
@@ -132,7 +132,7 @@ export default function TeachingTabsClient({
             </div>
           }
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-lg)]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {coursesTaughtBRACU.map((course) => (
               <div
                 key={course.id}
@@ -146,7 +146,7 @@ export default function TeachingTabsClient({
       </TabsContent>
 
       <TabsContent value="support">
-        <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
           <Card className="transition-all duration-200 hover:shadow-lg h-full">
             <CardHeader>
               <CardTitle className="text-lg">Teaching Assistant (TA)</CardTitle>
@@ -200,7 +200,7 @@ export default function TeachingTabsClient({
       </TabsContent>
 
       <TabsContent value="workshops">
-        <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-2 items-stretch">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 items-stretch">
           <div className="flex">
             <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
               <CardHeader className="flex flex-row items-start gap-3 pb-2">

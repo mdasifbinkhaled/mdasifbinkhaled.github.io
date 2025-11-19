@@ -117,10 +117,10 @@ export default function ResearchPage() {
             <p className="text-lg leading-relaxed">
               {researchIdentity.philosophy.vision}
             </p>
-            <div className="flex items-start gap-[var(--space-md)] p-[var(--space-md)] bg-background/50 rounded-lg border border-border">
+            <div className="flex items-start gap-4 p-4 bg-background/50 rounded-lg border border-border">
               <AlertCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium mb-[var(--space-sm)]">
+                <p className="font-medium mb-2">
                   Why It Matters
                 </p>
                 <p className="text-sm text-muted-foreground">
@@ -138,8 +138,8 @@ export default function ResearchPage() {
 
       {/* Primary Research Areas */}
       <section id="research-areas">
-        <div className="text-center mb-[var(--space-section-md)]">
-          <h2 className="text-3xl font-bold text-primary mb-[var(--space-md)]">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-primary mb-4">
             Primary Research Areas
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -157,8 +157,8 @@ export default function ResearchPage() {
                 className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] hover:border-primary/50"
               >
                 <CardHeader>
-                  <div className="flex items-center gap-[var(--space-md)] mb-[var(--space-sm)]">
-                    <div className="p-[var(--space-md)] bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="p-4 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                       {Icon && <Icon className="h-6 w-6 text-primary" />}
                     </div>
                   </div>
@@ -166,7 +166,7 @@ export default function ResearchPage() {
                   <CardDescription>{area.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex flex-wrap gap-[var(--space-sm)]">
+                  <div className="flex flex-wrap gap-2">
                     {area.keywords.map((keyword) => (
                       <Badge
                         key={keyword}
@@ -188,24 +188,24 @@ export default function ResearchPage() {
       <section className="max-w-4xl mx-auto">
         <Card className="border-2 border-primary/30">
           <CardHeader>
-            <div className="flex items-center gap-[var(--space-sm)] mb-[var(--space-sm)]">
+            <div className="flex items-center gap-2 mb-2">
               <Telescope className="h-5 w-5 text-primary" />
               <CardTitle className="text-2xl">Current Research Focus</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="space-y-[var(--space-lg)]">
+          <CardContent className="space-y-6">
             <div>
-              <h3 className="font-semibold text-lg mb-[var(--space-sm)] text-primary">
+              <h3 className="font-semibold text-lg mb-2 text-primary">
                 Primary Focus
               </h3>
               <p className="text-lg">{researchIdentity.currentFocus.primary}</p>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-[var(--space-md)]">
+              <h3 className="font-semibold mb-4">
                 Research Domains
               </h3>
-              <div className="flex flex-wrap gap-[var(--space-sm)]">
+              <div className="flex flex-wrap gap-2">
                 {researchIdentity.currentFocus.domains.map((domain) => (
                   <Badge key={domain} variant="outline" className="text-sm">
                     {domain}
@@ -214,7 +214,7 @@ export default function ResearchPage() {
               </div>
             </div>
 
-            <div className="pt-[var(--space-md)] border-t border-border">
+            <div className="pt-4 border-t border-border">
               <p className="text-sm text-muted-foreground italic">
                 Methodology: {researchIdentity.currentFocus.methodology}
               </p>
@@ -225,8 +225,8 @@ export default function ResearchPage() {
 
       {/* Featured Research Projects */}
       <section id="research-projects">
-        <div className="text-center mb-[var(--space-section-md)]">
-          <h2 className="text-3xl font-bold text-primary mb-[var(--space-md)]">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-primary mb-4">
             Featured Research Projects
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -240,14 +240,14 @@ export default function ResearchPage() {
               key={project.id}
               className="overflow-hidden hover:shadow-xl transition-all duration-300"
             >
-              <div className="bg-gradient-to-r from-primary/10 to-transparent p-[var(--space-lg)] border-b border-border">
-                <div className="flex items-start justify-between gap-[var(--space-md)]">
+              <div className="bg-gradient-to-r from-primary/10 to-transparent p-6 border-b border-border">
+                <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-[var(--space-md)] mb-[var(--space-sm)]">
+                    <div className="flex items-center gap-4 mb-2">
                       <Badge variant="outline">{project.status}</Badge>
                       <Badge variant="secondary">{project.domain}</Badge>
                     </div>
-                    <h3 className="text-2xl font-bold mb-[var(--space-sm)]">
+                    <h3 className="text-2xl font-bold mb-2">
                       {project.title}
                     </h3>
                     <p className="text-primary font-medium">
@@ -257,14 +257,14 @@ export default function ResearchPage() {
                 </div>
               </div>
 
-              <CardContent className="pt-[var(--space-lg)] space-y-[var(--space-md)]">
+              <CardContent className="pt-6 space-y-4">
                 <p className="text-lg leading-relaxed">{project.description}</p>
 
                 {project.placeholder && (
-                  <div className="flex items-start gap-[var(--space-sm)] p-[var(--space-md)] bg-muted/50 rounded-lg border border-border">
+                  <div className="flex items-start gap-2 p-4 bg-muted/50 rounded-lg border border-border">
                     <AlertCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                     <div className="text-sm">
-                      <p className="font-medium mb-[var(--space-sm)]">
+                      <p className="font-medium mb-2">
                         Detailed Information Coming Soon
                       </p>
                       <p className="text-muted-foreground">
@@ -275,7 +275,7 @@ export default function ResearchPage() {
                   </div>
                 )}
 
-                <div className="pt-[var(--space-md)]">
+                <div className="pt-4">
                   <p className="text-sm text-muted-foreground">
                     <span className="font-medium">Impact:</span>{' '}
                     {'impact' in project ? project.impact : 'To be detailed'}

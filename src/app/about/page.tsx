@@ -228,18 +228,18 @@ const professionalService = [
 
 export default function AboutPage() {
   return (
-    <div className="space-y-[var(--space-section-md)]">
+    <div className="space-y-12">
       {/* Hero Section */}
-      <header className="text-center space-y-[var(--space-md)]">
+      <header className="text-center space-y-4">
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           About {siteConfig.author}
         </h1>
-        <p className="mt-[var(--space-card-default)] text-lg leading-8 text-muted-foreground max-w-3xl mx-auto">
+        <p className="mt-6 text-lg leading-8 text-muted-foreground max-w-3xl mx-auto">
           My journey in artificial intelligence research and education, from
           curiosity-driven exploration to advancing healthcare through
           transparent AI solutions.
         </p>
-        <div className="flex gap-[var(--space-md)] justify-center pt-[var(--space-sm)]">
+        <div className="flex gap-4 justify-center pt-2">
           <Button asChild size="lg">
             <Link href={siteConfig.links.cv} target="_blank">
               <Download className="w-4 h-4 mr-2" />
@@ -258,12 +258,12 @@ export default function AboutPage() {
       {/* Quick Facts */}
       <section>
         <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-          <CardContent className="pt-[var(--space-card-default)]">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[var(--space-md)]">
+          <CardContent className="pt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {quickFacts.map((fact, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-[var(--space-md)] p-[var(--space-md)] rounded-lg hover:bg-background/50 transition-colors"
+                  className="flex items-start gap-4 p-4 rounded-lg hover:bg-background/50 transition-colors"
                 >
                   <fact.icon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                   <div>
@@ -281,14 +281,14 @@ export default function AboutPage() {
 
       {/* Highlights Stats */}
       <section>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-md)]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {highlights.map((stat, index) => (
             <Card
               key={index}
               className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105 border-primary/10"
             >
-              <CardContent className="pt-[var(--space-card-default)] pb-[var(--space-card-default)]">
-                <stat.icon className="w-8 h-8 mx-auto mb-[var(--space-md)] text-primary" />
+              <CardContent className="pt-6 pb-6">
+                <stat.icon className="w-8 h-8 mx-auto mb-4 text-primary" />
                 <div className="text-3xl font-bold text-primary mb-1">
                   {stat.value}
                 </div>
@@ -313,7 +313,7 @@ export default function AboutPage() {
               {researchIdentity.philosophy.statement}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-[var(--space-md)]">
+          <CardContent className="space-y-4">
             <p className="text-muted-foreground leading-relaxed">
               {researchIdentity.philosophy.vision}
             </p>
@@ -322,15 +322,15 @@ export default function AboutPage() {
             </p>
 
             {/* Research Areas */}
-            <div className="pt-[var(--space-md)]">
-              <h3 className="text-lg font-semibold mb-[var(--space-md)]">
+            <div className="pt-4">
+              <h3 className="text-lg font-semibold mb-4">
                 Primary Research Areas
               </h3>
-              <div className="grid gap-[var(--space-md)] md:grid-cols-3">
+              <div className="grid gap-4 md:grid-cols-3">
                 {researchIdentity.primaryAreas.map((area) => (
                   <div
                     key={area.id}
-                    className="p-[var(--space-md)] rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
+                    className="p-4 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
                   >
                     <div className="font-medium text-sm">{area.name}</div>
                     <div className="text-xs text-muted-foreground mt-1">
@@ -342,8 +342,8 @@ export default function AboutPage() {
             </div>
 
             {/* Academic Profiles */}
-            <div className="pt-[var(--space-md)] border-t">
-              <h3 className="text-lg font-semibold mb-[var(--space-md)]">
+            <div className="pt-4 border-t">
+              <h3 className="text-lg font-semibold mb-4">
                 Academic Profiles
               </h3>
               <AcademicProfiles variant="grid" showLabels={true} />
@@ -358,8 +358,8 @@ export default function AboutPage() {
           <CardHeader>
             <CardTitle className="text-2xl">My Journey & Vision</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-[var(--space-md)] text-muted-foreground text-base md:text-lg leading-relaxed">
-            <div className="md:float-right md:ml-[var(--space-card-default)] mb-[var(--space-md)] md:mb-0 md:w-1/3">
+          <CardContent className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+            <div className="md:float-right md:ml-6 mb-4 md:mb-0 md:w-1/3">
               <Image
                 src={assetPaths.profile}
                 alt={`${siteConfig.author} - professional`}
@@ -410,12 +410,12 @@ export default function AboutPage() {
 
       {/* Education */}
       <section id="education">
-        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+        <h2 className="text-3xl font-bold text-center mb-10 text-primary">
           Education
         </h2>
-        <div className="grid gap-[var(--space-card-lg)] md:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-2">
           <Card className="shadow-md hover:shadow-xl transition-all duration-300">
-            <CardHeader className="flex flex-row items-start gap-[var(--space-md)]">
+            <CardHeader className="flex flex-row items-start gap-4">
               <GraduationCap className="h-10 w-10 text-primary mt-1 flex-shrink-0" />
               <div>
                 <CardTitle className="text-xl">
@@ -443,7 +443,7 @@ export default function AboutPage() {
             </CardContent>
           </Card>
           <Card className="shadow-md hover:shadow-xl transition-all duration-300">
-            <CardHeader className="flex flex-row items-start gap-[var(--space-md)]">
+            <CardHeader className="flex flex-row items-start gap-4">
               <GraduationCap className="h-10 w-10 text-primary mt-1 flex-shrink-0" />
               <div>
                 <CardTitle className="text-xl">
@@ -479,7 +479,7 @@ export default function AboutPage() {
 
       {/* Professional Experience */}
       <section id="experience">
-        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+        <h2 className="text-3xl font-bold text-center mb-10 text-primary">
           Professional Experience
         </h2>
         <ExperienceCompact experiences={professionalExperiences} />
@@ -487,10 +487,10 @@ export default function AboutPage() {
 
       {/* Technical Skills */}
       <section id="skills">
-        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+        <h2 className="text-3xl font-bold text-center mb-10 text-primary">
           Technical Skills
         </h2>
-        <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {technicalSkills.map((skillGroup, index) => {
             const iconMap: Record<string, typeof Code> = {
               'Programming & Frameworks': Code,
@@ -546,9 +546,9 @@ export default function AboutPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-[var(--space-md)]">
+            <div className="space-y-4">
               {/* Personal Interests */}
-              <div className="flex items-start gap-[var(--space-md)] p-[var(--space-md)] rounded-lg bg-background/50">
+              <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
                 <Radio className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-foreground">
@@ -560,7 +560,7 @@ export default function AboutPage() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-[var(--space-md)] p-[var(--space-md)] rounded-lg bg-background/50">
+              <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
                 <Heart className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-foreground">
@@ -607,10 +607,10 @@ export default function AboutPage() {
 
       {/* Certifications */}
       <section id="certifications">
-        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+        <h2 className="text-3xl font-bold text-center mb-10 text-primary">
           Certifications & Training
         </h2>
-        <div className="grid gap-[var(--space-card-default)] md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {certifications.map((cert, index) => (
             <Card
               key={index}
@@ -639,7 +639,7 @@ export default function AboutPage() {
 
       {/* Honors & Awards */}
       <section id="honors-awards">
-        <h2 className="text-3xl font-bold text-center mb-[var(--space-section-sm)] text-primary">
+        <h2 className="text-3xl font-bold text-center mb-10 text-primary">
           Honors & Awards
         </h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

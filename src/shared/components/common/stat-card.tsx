@@ -25,10 +25,10 @@ export function StatCard({
         className
       )}
     >
-      <CardContent className="p-[var(--space-card-default)] text-center">
+      <CardContent className="p-6 text-center">
         <div
           className={cn(
-            'w-12 h-12 mx-auto mb-[var(--space-md)] rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110',
+            'w-12 h-12 mx-auto mb-4 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110',
             'bg-primary/10 text-primary group-hover:bg-primary/20'
           )}
         >
@@ -39,7 +39,7 @@ export function StatCard({
           {label}
         </div>
         {description && (
-          <div className="text-xs text-muted-foreground/80 mt-[var(--space-sm)]">
+          <div className="text-xs text-muted-foreground/80 mt-2">
             {description}
           </div>
         )}

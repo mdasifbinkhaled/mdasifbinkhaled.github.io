@@ -20,7 +20,7 @@ function StatCard({
 }: StatCardProps) {
   return (
     <Card className="text-center transition-all duration-200 hover:shadow-lg">
-      <CardContent className="p-[var(--space-card-md)]">
+      <CardContent className="p-5">
         <div className="flex flex-col items-center gap-2">
           <div className="p-3 rounded-full bg-primary/10 text-primary">
             <Icon className="h-6 w-6" />
@@ -58,7 +58,7 @@ export function TeachingHeroStats({
       </h2>
 
       {/* Stats Grid */}
-      <div className="grid gap-[var(--space-md)] grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           icon={Users}
           label="Students Taught"

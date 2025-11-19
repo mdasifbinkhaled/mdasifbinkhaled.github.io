@@ -14,7 +14,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
       <CardHeader className="pb-3">
-        <div className="flex items-start gap-[var(--space-md)]">
+        <div className="flex items-start gap-4">
           <div className="bg-primary/10 p-2 rounded-full mt-1">
             <Quote className="w-5 h-5 text-primary" />
           </div>
@@ -31,10 +31,10 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         </div>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col">
-        <blockquote className="text-sm text-muted-foreground italic mb-[var(--space-md)] flex-1">
+        <blockquote className="text-sm text-muted-foreground italic mb-4 flex-1">
           &ldquo;{testimonial.quote}&rdquo;
         </blockquote>
-        <CardDescription className="text-xs border-t pt-[var(--space-md)]">
+        <CardDescription className="text-xs border-t pt-4">
           <div className="font-semibold text-foreground">
             {testimonial.student}
           </div>
@@ -49,16 +49,16 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 export function StudentTestimonials() {
   return (
     <section
-      className="w-full py-[var(--space-card-lg)]"
+      className="w-full py-8"
       aria-labelledby="testimonials-heading"
     >
       <h2
         id="testimonials-heading"
-        className="text-2xl font-bold text-center mb-[var(--space-card-lg)] text-primary"
+        className="text-2xl font-bold text-center mb-8 text-primary"
       >
         Student Feedback
       </h2>
-      <div className="grid gap-[var(--space-lg)] md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {studentTestimonials.map((testimonial) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />
         ))}
