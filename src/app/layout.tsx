@@ -4,6 +4,7 @@ import { AppProviders } from '@/shared/providers/app-providers';
 import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
 import { SkipLink } from '@/shared/components/common/skip-link';
 import { assetPaths } from '@/shared/config/assets';
+import { getPersonJsonLd } from '@/shared/lib/seo/json-ld';
 import '@/app/globals.css';
 import '@/styles/tokens.css';
 
@@ -22,12 +23,20 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const jsonLd = getPersonJsonLd();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className="font-sans antialiased bg-background text-foreground"
         suppressHydrationWarning
       >
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+
         {/* Google Analytics 4 - Only loads if configured */}
         {ANALYTICS_ENABLED && GA_MEASUREMENT_ID && (
           <>
