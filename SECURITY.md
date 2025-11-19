@@ -53,6 +53,32 @@ This website implements the following security measures:
 - Strict TypeScript type checking
 - Input sanitization and validation
 
+## Known Development Dependency Vulnerabilities
+
+The following vulnerabilities exist in development dependencies and are **NOT exploitable** in production:
+
+### glob (HIGH severity) - GHSA-5j98-mcp5-4vw2
+
+- **Affected Versions**: 10.2.0 - 11.0.3
+- **Status**: No patch available (latest version 11.0.3 still vulnerable)
+- **Location**: Used by `sucrase` and `test-exclude` (dev dependencies)
+- **Vulnerability**: Command injection via `-c/--cmd` CLI flag
+- **Risk Assessment**: LOW - Not used in production, CLI flags not exposed in build/test context
+- **Action**: Monitoring for upstream fixes from glob maintainers
+
+### js-yaml (MODERATE severity) - GHSA-mh29-5h37-fv8m
+
+- **Affected Versions**: 4.0.0 - 4.1.0 (4.1.0 is latest)
+- **Status**: No patch available
+- **Location**: Used by eslint, commitlint for config parsing
+- **Vulnerability**: Prototype pollution in merge operator (`<<`)
+- **Risk Assessment**: LOW - Only parses trusted config files, merge operator not used
+- **Action**: Monitoring for upstream fixes from js-yaml maintainers
+
+**Note**: Both vulnerabilities are in development tooling only and do not affect the production build or runtime security of the deployed website. The production bundle is completely static HTML/CSS/JS with no vulnerable code.
+
+**Last Updated**: 2025-11-19
+
 ## Responsible Disclosure
 
 We kindly ask that you:
