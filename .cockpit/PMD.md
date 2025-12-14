@@ -1,106 +1,150 @@
 # Project Master Document (PMD)
 
-> **Single Source of Truth** | **Version:** 1.0.0 (Dec 2024 Reform) | **Status:** Active
+> **Single Source of Truth** | **Version:** 2.0.0 (Comprehensive Upgrade) | **Status:** Active
 
 ---
 
-## 1. Project Identity
+## 1. Project Identity & Vision
 
-- **Name:** Md Asif Bin Khaled - Academic Portfolio
-- **Type:** Static Website (Portfolio & Research Showcase)
-- **Goal:** Showcase research in Explainable AI (XAI) and Healthcare AI, teaching experience, and publications to facilitate PhD opportunities and academic collaboration.
-- **Hosted On:** GitHub Pages
-- **URL:** [mdasifbinkhaled.github.io](https://mdasifbinkhaled.github.io)
-
----
-
-## 2. Technical Stack (SOTA)
-
-| Layer          | Technology   | Version | Rationale                                      |
-| -------------- | ------------ | ------- | ---------------------------------------------- |
-| **Core**       | Next.js      | 15.5.4  | Server Components, Static Export, Performance. |
-| **UI Library** | React        | 18.3.1  | Component architecture, Ecosystem support.     |
-| **Styling**    | Tailwind CSS | 3.4.13  | Utility-first, Design Tokens, Themes.          |
-| **Language**   | TypeScript   | 5.x     | Type safety, Robustness.                       |
-| **Validation** | Zod          | 3.23    | Build-time data validation for JSON loaders.   |
-| **Icons**      | Lucide React | 0.447   | Consistent, modern iconography.                |
-| **Testing**    | Vitest       | 2.1     | Unit testing, fast execution.                  |
+- **Project Name:** Md Asif Bin Khaled - Academic Portfolio
+- **Domain:** [mdasifbinkhaled.github.io](https://mdasifbinkhaled.github.io)
+- **Type:** Static Academic Portfolio & Research Showcase
+- **Core Mission:** To present research in Explainable AI (XAI) and Healthcare AI with high visual fidelity, ensuring content is accessible, data-driven, and easy to maintain.
+- **Target Audience:** Academic collaborators, PhD supervisors, grant committees, and students.
 
 ---
 
-## 3. Architecture & Context Engineering
+## 2. Technical Architecture (Feature-Sliced Design)
 
-### 3.1 Directory Structure (Feature-Sliced)
+The project leverages a **Feature-Sliced** architecture to ensure modularity and scalability.
 
-The project follows a strict modular architecture to ensure separation of concerns:
+### 2.1 Directory Structure Breakdown
 
-- **`src/features/`**: Domain-specific business logic. Contains `components/`, `hooks/`, `utils/`.
-  - `academic`: Research, publications.
-  - `teaching`: Course cards, timeline.
-  - `home`: Landing page widgets.
-- **`src/shared/`**: Truly reusable primitives.
-  - `components/ui`: Shadcn-like base components (Button, Card).
-  - `components/common`: Generic widgets (StatCard, NewsFeed).
-  - `config/`: Centralized configuration (SiteConfig, Themes).
-  - `lib/`: Utilities, Validation, Data Loaders.
-- **`src/app/`**: Thin routing layer (Next.js App Router).
+```
+src/
+├── app/                  # Next.js App Router (Routing Layer only)
+│   ├── layout.tsx        # Global shell (Providers, Metadata)
+│   ├── page.tsx          # Homepage (Composes features)
+│   └── [routes]/         # /about, /teaching, etc.
+├── features/             # Business Logic & Smart Components
+│   ├── academic/         # Research, Publications logic
+│   ├── home/             # Homepage-specific widgets
+│   └── teaching/         # Course cards, Timelines
+├── shared/               # Reusable Primitives & Config
+│   ├── components/       # UI Library (Radix/Shadcn)
+│   ├── config/           # Site-wide configuration (SSoT)
+│   ├── lib/              # Utilities, Validation, SEO
+│   └── styles/           # Global CSS variables & tokens
+└── .cockpit/             # Project Context & Documentation
+```
 
-### 3.2 Key Design Patterns
+### 2.2 Key Architectural Decisions
 
-1. **Single Source of Truth (SSoT)**:
-   - **Configuration**: All personal data and links live in `src/shared/config/site.ts`.
-   - **Researcher Data**: `researcher-profile.ts` imports from `site.ts`.
-   - **Themes**: Defined in `src/styles/tokens.css` and `src/shared/config/themes.ts`.
-
-2. **Data-Driven Content**:
-   - **Courses/Publications**: Stored as JSON files in `src/shared/lib/data/courses/`.
-   - **Loading**: Loaded and validated via Zod schemas at build time. No hardcoded content in React components (except simple static labels).
-
-3. **Component Composition**:
-   - Use generic containers (`Card`, `Section`) composed with specific data display components (`StatCard`, `CourseCard`).
-   - Avoid "God Components".
-
-### 3.3 Security & Robustness Rules
-
-- **Static Export**: The site uses `output: 'export'`.
-- **No Server Actions**: Security vulnerabilities restricted to server runtime are mitigated.
-- **Strict Validation**: All external/complex data MUST be validated via `validateData` (Zod).
-- **Anti-Patterns**:
-  - ❌ `key={index}` is STRICTLY FORBIDDEN. Use unique IDs.
-  - ❌ Dynamic Tailwind classes (e.g., `bg-${color}`). Use static maps (`clsx`).
+- **Single Source of Truth (SSoT)**: Configuration files (`site.ts`, `themes.ts`) drive the application state. Components must NOT contain hardcoded personal data.
+- **Server Components First**: default to Server Components. Use `'use client'` only for interactive islands (e.g., Theme Toggle, Expandable Cards).
+- **Static Export**: Built with `output: 'export'` for zero-config hosting on GitHub Pages.
 
 ---
 
-## 4. Development Workflow & Context
+## 3. Design System
 
-### 4.1 AI Agent Instructions
+The application features a sophisticated theming engine built on Tailwind CSS and CSS Variables.
 
-When working on this project, adhere to these rules:
+- **Framework**: Tailwind CSS v3.x (Utility-First)
+- **Component Library**: Primitive composition using Radix UI (accessible, headless) styling with Tailwind (Shadcn-like pattern).
+- **Theming Engine**:
+  - **Source**: `src/shared/config/themes.ts`
+  - **Implementation**: `src/styles/tokens.css` (CSS Custom Properties)
+  - **Selection**: `ThemeSelector` component allows dynamic switching.
+- **Theme Categories**:
+  - **Classic**: Light, Dark.
+  - **Natural**: Ocean, Warm, Forest.
+  - **Vibrant**: Midnight, Sunset, Lavender.
+  - **Professional**: Slate, Crimson, Emerald, Indigo, Vintage.
 
-1. **Read First**: Check `.cockpit/PMD.md` for architecture and conventions.
-2. **Verify**: Always run `npm run typecheck` and `npm run test:run` after changes.
-3. **Modular**: Place new features in `src/features/[name]`. Do not clutter `shared/`.
-4. **Config**: Updates to personal info go to `src/shared/config/site.ts`, NOT components.
-5. **Cleanliness**: Remove unused code immediately. Keep `globals.css` minimal.
+**Accessibility (A11y)**:
 
-### 4.2 Commands
-
-| Action     | Command              |
-| ---------- | -------------------- |
-| Dev Server | `npm run dev`        |
-| Build      | `npm run build`      |
-| Type Check | `npm run typecheck`  |
-| Lint       | `npm run lint:check` |
-| Test       | `npm run test:run`   |
-
----
-
-## 5. Maintenance Roadmap
-
-- [ ] **Image Optimization**: Integrate third-party loader for `next/image` (optional).
-- [ ] **Font Optimization**: Migrate system fonts to `next/font/google`.
-- [ ] **Content**: Regularly update JSON data files for new publications/courses.
+- High Contrast support (`prefers-contrast`).
+- Reduced Motion support (`prefers-reduced-motion`).
+- Semantic HTML (`<main>`, `<aside>`, `<nav>`).
+- Skip Links implemented.
 
 ---
 
-> **Note**: This file serves as the context anchor for all future development sessions.
+## 4. Data Architecture
+
+The site uses a **Static JSON / Zod Validation** strategy to ensure robust content management without a CMS.
+
+### 4.1 Data Sources
+
+| Content Type          | Source Location                           | Loader / Validator        |
+| --------------------- | ----------------------------------------- | ------------------------- |
+| **Courses**           | `src/shared/lib/data/courses/*.json`      | `courses.ts` / Zod Schema |
+| **Global Config**     | `src/shared/config/site.ts`               | Static Import             |
+| **Research Identity** | `src/shared/config/researcher-profile.ts` | Static Import             |
+| **Navigation**        | `src/shared/config/navigation.ts`         | Static Import             |
+| **News**              | `src/shared/lib/data/news.ts`             | TypeScript Interface      |
+
+### 4.2 Validation Strategy
+
+- **Build-Time Validation**: Complex data (Courses, Publications) is validated using **Zod** schemas at build time. This prevents broken deployments due to malformed JSON.
+- **Strict Typing**: TypeScript Strict Mode is enabled (`strict: true`).
+
+---
+
+## 5. Security & Dependencies
+
+| Attribute              | State         | Notes                                     |
+| ---------------------- | ------------- | ----------------------------------------- |
+| **Next.js Version**    | 15.5.4        | Latest Stable                             |
+| **Vulnerabilities**    | Mitigated     | CVE-2025-55182 marked N/A (Static Export) |
+| **Server Actions**     | Forbidden     | Security surface area reduced to zero     |
+| **Image Optimization** | `unoptimized` | Configured for GitHub Pages compatibility |
+
+---
+
+## 6. AI Agent Protocols (Context Engineering)
+
+**Instructions for Future Agents:**
+
+1. **Read PMD First**: This file is the absolute truth.
+2. **Modular Enforcement**: NEVER put feature-specific code in `shared/`. Always create a new slice in `features/`.
+3. **Strict Validation**: When adding new data types, create a Zod schema in `src/shared/lib/validation/schemas.ts`.
+4. **No Anti-Patterns**:
+   - `key={index}` is BANNED.
+   - Dynamic Tailwind classes (e.g. `bg-${color}`) are BANNED. Use `clsx` / `cva`.
+5. **Clean Code**: Remove unused imports and dead code immediately.
+6. **Commit Standards**: Use Conventional Commits (`feat:`, `fix:`, `chore:`).
+
+---
+
+## 7. Quality Assurance (QA) Checklist
+
+Before any PR/Merge, the following must pass:
+
+- [ ] `npm run typecheck` (Zero errors)
+- [ ] `npm run lint:check` (Zero ESLint warnings)
+- [ ] `npm run test:run` (All unit tests pass)
+- [ ] `npm run build` (Successful static export)
+- [ ] **Forensic Check**: Verify no "Ghost Code" or unused files remain.
+
+---
+
+## 8. Operational Manual
+
+### 8.1 Scripts
+
+- **Development**: `npm run dev`
+- **Production Build**: `npm run build`
+- **Testing**: `npm run test` / `npm run test:ui`
+- **Linting**: `npm run lint`
+
+### 8.2 Deployment
+
+- **Platform**: GitHub Pages
+- **Trigger**: Push to `main` branch.
+- **Workflow**: `.github/workflows/nextjs.yml` handles build and deploy.
+
+---
+
+> **Note**: Updates to this document require a "Forensic Analysis" task to ensure it reflects reality.
