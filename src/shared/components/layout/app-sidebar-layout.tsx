@@ -48,7 +48,7 @@ export default function AppSidebarLayout({
         <aside
           id="desktop-sidebar"
           className={cn(
-            'relative hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground sticky top-0 max-h-[calc(100vh-1rem)] self-start',
+            'relative hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground sticky top-0 h-screen self-start shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
             collapsed ? 'w-[60px]' : 'w-[300px]'
           )}
         >
