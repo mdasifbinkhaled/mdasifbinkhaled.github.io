@@ -48,14 +48,14 @@ export default function AppSidebarLayout({
         <aside
           id="desktop-sidebar"
           className={cn(
-            'relative hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground min-h-screen',
+            'relative hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground sticky top-0 max-h-[calc(100vh-1rem)] self-start',
             collapsed ? 'w-[60px]' : 'w-[300px]'
           )}
         >
           <Button
             variant="ghost"
             size="icon"
-            className="absolute -right-3 top-16 z-20 h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent"
+            className="absolute -right-3 top-4 z-20 h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent"
             onClick={() => setCollapsed(!collapsed)}
             aria-controls="desktop-sidebar"
             aria-expanded={!collapsed}
