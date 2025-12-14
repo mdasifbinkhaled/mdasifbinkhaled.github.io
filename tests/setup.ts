@@ -233,6 +233,7 @@ vi.mock('lucide-react', () => {
 
     // Contact icons
     Mail: createMockIcon('mail'),
+    Send: createMockIcon('send'),
     Phone: createMockIcon('phone'),
     Github: createMockIcon('github'),
     Linkedin: createMockIcon('linkedin'),
@@ -240,6 +241,7 @@ vi.mock('lucide-react', () => {
 
     // Academic icons
     Code2: createMockIcon('code2'),
+    Presentation: createMockIcon('presentation'),
     Brain: createMockIcon('brain'),
     Database: createMockIcon('database'),
     Calculator: createMockIcon('calculator'),
@@ -255,6 +257,7 @@ vi.mock('lucide-react', () => {
     Building2: createMockIcon('building2'),
     Users: createMockIcon('users'),
     User: createMockIcon('user'),
+    UserCircle: createMockIcon('user-circle'),
     BookUser: createMockIcon('book-user'),
     MapPin: createMockIcon('map-pin'),
 

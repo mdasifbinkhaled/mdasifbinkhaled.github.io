@@ -332,7 +332,7 @@ describe('Accessibility', () => {
     );
 
     const headings = screen.getAllByRole('heading');
-    expect(headings).toHaveLength(4); // h1, h3 (name), h4 (contact), h4 (follow me)
+    expect(headings).toHaveLength(5); // h1, h3 (name), h4 (menu), h4 (contact), h4 (follow me)
   });
 
   it('has proper focus management', () => {
