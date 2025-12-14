@@ -116,7 +116,7 @@ describe('ProfileSidebar', () => {
     expect(
       screen.getByText('Senior Lecturer & Researcher')
     ).toBeInTheDocument();
-    expect(screen.getByText('Open to PhD Opportunities')).toBeInTheDocument();
+    expect(screen.getByText('Open to PhD')).toBeInTheDocument();
   });
 
   it('handles collapsed state correctly', () => {
