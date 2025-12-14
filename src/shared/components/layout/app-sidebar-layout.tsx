@@ -49,7 +49,7 @@ export default function AppSidebarLayout({
           id="desktop-sidebar"
           className={cn(
             'hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-40 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
-            collapsed ? 'w-[60px]' : 'w-[300px]'
+            collapsed ? 'w-[60px]' : 'w-80'
           )}
         >
           <Button
@@ -74,7 +74,7 @@ export default function AppSidebarLayout({
         <div
           className={cn(
             'flex-1 min-w-0 flex flex-col transition-all duration-300',
-            collapsed ? 'lg:ml-[60px]' : 'lg:ml-[300px]'
+            collapsed ? 'lg:ml-[60px]' : 'lg:ml-80'
           )}
         >
           <header

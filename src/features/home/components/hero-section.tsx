@@ -111,7 +111,7 @@ export function HeroSection() {
             </div>
 
             {/* Divider (Desktop) */}
-            <div className="hidden xl:block h-12 w-px bg-border/50"></div>
+            <div className="hidden xl:block h-10 w-px bg-border/50"></div>
 
             {/* Stats Group - Inline */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full xl:w-auto">
@@ -120,14 +120,14 @@ export function HeroSection() {
                   key={stat.id}
                   className="flex items-center gap-3 p-3 rounded-lg bg-background/50 border border-border/50 hover:border-primary/30 transition-colors"
                 >
-                  <div className="p-2 bg-primary/10 rounded-full text-primary">
+                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full text-primary flex-shrink-0">
                     <stat.icon className="w-5 h-5" />
                   </div>
                   <div>
                     <div className="font-bold text-xl leading-none">
                       {stat.number}
                     </div>
-                    <div className="text-xs text-muted-foreground font-medium uppercase">
+                    <div className="text-xs text-muted-foreground font-medium uppercase mt-0.5">
                       {stat.label}
                     </div>
                   </div>
