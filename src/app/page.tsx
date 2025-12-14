@@ -1,12 +1,10 @@
 /**
- * Homepage - Refactored from 508 lines to ~50 lines
- * Following audit recommendations from Antigravity (Google Deepmind)
+ * Homepage
  *
- * Key Improvements:
- * - Decomposed God Component into semantic sections
- * - Moved hardcoded data to data layer (news, research interests)
- * - Improved maintainability and testability
- * - Reduced component complexity from 508 to 50 lines (90% reduction)
+ * Key Features:
+ * - Semantic sections for improved maintainability
+ * - Data layer separation for content management
+ * - Modular component architecture
  */
 
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';

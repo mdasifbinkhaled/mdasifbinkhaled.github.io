@@ -10,52 +10,137 @@ import {
   BookUser,
   Globe,
   Award,
+  type LucideIcon,
 } from 'lucide-react';
+import { cn } from '@/shared/lib/utils';
+
+/**
+ * Social link color variants
+ * Uses static Tailwind classes to ensure proper purging at build time
+ */
+type ColorVariant =
+  | 'blue'
+  | 'teal'
+  | 'green'
+  | 'purple'
+  | 'indigo'
+  | 'rose'
+  | 'primary';
+
+/**
+ * Static color class mappings
+ * IMPORTANT: These must be complete class strings for Tailwind to detect them
+ */
+const colorClasses: Record<
+  ColorVariant,
+  { bg: string; bgHover: string; text: string }
+> = {
+  blue: {
+    bg: 'bg-blue-500/10',
+    bgHover: 'group-hover:bg-blue-500/20',
+    text: 'text-blue-500',
+  },
+  teal: {
+    bg: 'bg-teal-500/10',
+    bgHover: 'group-hover:bg-teal-500/20',
+    text: 'text-teal-500',
+  },
+  green: {
+    bg: 'bg-green-600/10',
+    bgHover: 'group-hover:bg-green-600/20',
+    text: 'text-green-600',
+  },
+  purple: {
+    bg: 'bg-purple-500/10',
+    bgHover: 'group-hover:bg-purple-500/20',
+    text: 'text-purple-500',
+  },
+  indigo: {
+    bg: 'bg-indigo-500/10',
+    bgHover: 'group-hover:bg-indigo-500/20',
+    text: 'text-indigo-500',
+  },
+  rose: {
+    bg: 'bg-rose-500/10',
+    bgHover: 'group-hover:bg-rose-500/20',
+    text: 'text-rose-500',
+  },
+  primary: {
+    bg: 'bg-primary/10',
+    bgHover: 'group-hover:bg-primary/20',
+    text: 'text-primary',
+  },
+};
+
+interface SocialLink {
+  id: string;
+  name: string;
+  href: string;
+  icon: LucideIcon;
+  colorVariant: ColorVariant;
+  isExternal: boolean;
+}
+
+/**
+ * Social links configuration
+ * Centralized data for all connect section links
+ */
+const socialLinks: SocialLink[] = [
+  {
+    id: 'google-scholar',
+    name: 'Google Scholar',
+    href: siteConfig.links.googleScholar,
+    icon: BookUser,
+    colorVariant: 'blue',
+    isExternal: true,
+  },
+  {
+    id: 'researchgate',
+    name: 'ResearchGate',
+    href: siteConfig.links.researchGate,
+    icon: Globe,
+    colorVariant: 'teal',
+    isExternal: true,
+  },
+  {
+    id: 'orcid',
+    name: 'ORCID',
+    href: siteConfig.links.orcid,
+    icon: Award,
+    colorVariant: 'green',
+    isExternal: true,
+  },
+  {
+    id: 'github',
+    name: 'GitHub',
+    href: siteConfig.links.github,
+    icon: Github,
+    colorVariant: 'purple',
+    isExternal: true,
+  },
+  {
+    id: 'linkedin',
+    name: 'LinkedIn',
+    href: siteConfig.links.linkedin,
+    icon: Linkedin,
+    colorVariant: 'indigo',
+    isExternal: true,
+  },
+  {
+    id: 'email',
+    name: 'Email',
+    href: `mailto:${siteConfig.email}`,
+    icon: Mail,
+    colorVariant: 'rose',
+    isExternal: false,
+  },
+];
 
 /**
  * Connect Section Component
- * Displays social links and contact CTA
+ * Displays social links and contact CTA with proper static styling
  */
 export function ConnectSection() {
-  const socialLinks = [
-    {
-      name: 'Google Scholar',
-      href: siteConfig.links.googleScholar,
-      icon: BookUser,
-      color: 'blue-500',
-    },
-    {
-      name: 'ResearchGate',
-      href: siteConfig.links.researchGate,
-      icon: Globe,
-      color: 'teal-500',
-    },
-    {
-      name: 'ORCID',
-      href: siteConfig.links.orcid,
-      icon: Award,
-      color: 'green-600',
-    },
-    {
-      name: 'GitHub',
-      href: siteConfig.links.github,
-      icon: Github,
-      color: 'purple-500',
-    },
-    {
-      name: 'LinkedIn',
-      href: siteConfig.links.linkedin,
-      icon: Linkedin,
-      color: 'indigo-500',
-    },
-    {
-      name: 'Email',
-      href: `mailto:${siteConfig.email}`,
-      icon: Mail,
-      color: 'rose-500',
-    },
-  ];
-
   return (
     <section className="w-full py-12 md:py-16">
       <div className="container-responsive">
@@ -70,24 +155,28 @@ export function ConnectSection() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {socialLinks.map((link) => {
             const Icon = link.icon;
+            const colors = colorClasses[link.colorVariant];
+
             return (
               <Card
-                key={link.name}
+                key={link.id}
                 className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105"
               >
                 <CardContent className="p-6">
                   <a
                     href={link.href}
-                    target={link.name !== 'Email' ? '_blank' : undefined}
-                    rel={
-                      link.name !== 'Email' ? 'noopener noreferrer' : undefined
-                    }
+                    target={link.isExternal ? '_blank' : undefined}
+                    rel={link.isExternal ? 'noopener noreferrer' : undefined}
                     className="flex flex-col items-center gap-3 group"
                   >
                     <div
-                      className={`p-4 bg-${link.color}/10 rounded-full group-hover:bg-${link.color}/20 transition-colors`}
+                      className={cn(
+                        'p-4 rounded-full transition-colors',
+                        colors.bg,
+                        colors.bgHover
+                      )}
                     >
-                      <Icon className={`w-8 h-8 text-${link.color}`} />
+                      <Icon className={cn('w-8 h-8', colors.text)} />
                     </div>
                     <span className="font-semibold text-sm">{link.name}</span>
                   </a>

@@ -317,6 +317,6 @@ The portfolio website now has:
 
 ---
 
-**Prepared by:** GitHub Copilot  
+**Prepared by:** Development Team  
 **Review Status:** Ready for deployment  
 **Recommended Action:** Build, test, and deploy to production

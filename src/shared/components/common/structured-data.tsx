@@ -4,8 +4,6 @@ import type { PublicationItem } from '@/shared/types';
 
 type JsonLd = Record<string, unknown>;
 
-const TWITTER_PLACEHOLDER = 'https://twitter.com/yourusername';
-
 function sanitizeJsonLd(data: unknown): string {
   return JSON.stringify(data, null, 2)
     .replace(/</g, '\\u003C')
@@ -30,14 +28,9 @@ function buildScholarStructuredData(): JsonLd {
     siteConfig.links.github,
     siteConfig.links.linkedin,
     siteConfig.links.googleScholar,
-  ];
-
-  if (
-    siteConfig.links.twitter &&
-    siteConfig.links.twitter !== TWITTER_PLACEHOLDER
-  ) {
-    sameAs.push(siteConfig.links.twitter);
-  }
+    siteConfig.links.researchGate,
+    siteConfig.links.orcid,
+  ].filter(Boolean);
 
   return {
     '@context': 'https://schema.org',
@@ -45,10 +38,10 @@ function buildScholarStructuredData(): JsonLd {
     name: siteConfig.author,
     givenName: 'Md Asif Bin',
     familyName: 'Khaled',
-    jobTitle: 'Senior Lecturer & Researcher',
+    jobTitle: siteConfig.jobTitle,
     workLocation: {
       '@type': 'Place',
-      name: 'Independent University, Bangladesh',
+      name: siteConfig.institution,
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Dhaka',
@@ -57,7 +50,7 @@ function buildScholarStructuredData(): JsonLd {
     },
     worksFor: {
       '@type': 'Organization',
-      name: 'Independent University, Bangladesh',
+      name: siteConfig.institution,
       url: 'https://www.iub.edu.bd/',
     },
     url: siteConfig.url,

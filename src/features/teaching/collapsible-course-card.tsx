@@ -162,8 +162,8 @@ export const CollapsibleCourseCard = memo(function CollapsibleCourseCard({
                   Learning Objectives
                 </h4>
                 <ul className="text-xs text-muted-foreground space-y-1">
-                  {course.objectives.map((objective, index) => (
-                    <li key={index} className="flex items-start gap-2">
+                  {course.objectives.map((objective) => (
+                    <li key={objective} className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
                       {objective}
                     </li>
@@ -176,8 +176,8 @@ export const CollapsibleCourseCard = memo(function CollapsibleCourseCard({
               <div>
                 <h4 className="text-sm font-semibold mb-2">Technologies</h4>
                 <div className="flex flex-wrap gap-1">
-                  {course.technologies.map((tech, index) => (
-                    <Badge key={index} variant="outline" className="text-xs">
+                  {course.technologies.map((tech) => (
+                    <Badge key={tech} variant="outline" className="text-xs">
                       {tech}
                     </Badge>
                   ))}
@@ -213,9 +213,9 @@ export const CollapsibleCourseCard = memo(function CollapsibleCourseCard({
                 <div className="space-y-1">
                   {course.feedback
                     .slice(0, DISPLAY_LIMITS.COURSE_FEEDBACK)
-                    .map((feedback, index) => (
+                    .map((feedback) => (
                       <p
-                        key={index}
+                        key={feedback}
                         className="text-xs text-muted-foreground italic"
                       >
                         &ldquo;{feedback}&rdquo;

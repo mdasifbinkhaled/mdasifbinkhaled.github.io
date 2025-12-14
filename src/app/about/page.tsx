@@ -59,21 +59,25 @@ export const metadata: Metadata = {
 
 const quickFacts = [
   {
+    id: 'qf-location',
     icon: MapPin,
     label: 'Location',
     value: 'Dhaka, Bangladesh',
   },
   {
+    id: 'qf-position',
     icon: Briefcase,
     label: 'Current Position',
     value: 'Senior Lecturer, IUB',
   },
   {
+    id: 'qf-philosophy',
     icon: Brain,
     label: 'Research Philosophy',
     value: 'Explainable & Trustworthy AI',
   },
   {
+    id: 'qf-goal',
     icon: Target,
     label: 'Career Goal',
     value: 'Pursuing PhD Opportunities',
@@ -82,21 +86,25 @@ const quickFacts = [
 
 const highlights = [
   {
+    id: 'hl-publications',
     icon: BookOpen,
     value: '15+',
     label: 'Publications',
   },
   {
+    id: 'hl-students',
     icon: Users,
     value: '1000+',
     label: 'Students Taught',
   },
   {
+    id: 'hl-awards',
     icon: Trophy,
     value: '6x',
     label: 'VC Awards',
   },
   {
+    id: 'hl-grants',
     icon: FlaskConical,
     value: '4',
     label: 'Research Grants',
@@ -105,6 +113,7 @@ const highlights = [
 
 const certifications = [
   {
+    id: 'cert-obe-2024',
     title: 'Hands-on Orientation on Outcomes-Based Education (OBE)',
     institution:
       'Board of Accreditation for Engineering and Technical Education (BAETE), IEB',
@@ -112,6 +121,7 @@ const certifications = [
     note: 'Participated in practical sessions on implementing OBE frameworks in engineering education.',
   },
   {
+    id: 'cert-slr-2024',
     title:
       "Insider's Guide to Systematic Literature Review & Research Paper Writing: A Hands-on Workshop",
     institution: 'Center for Computational and Data Sciences (CCSD), IUB',
@@ -119,6 +129,7 @@ const certifications = [
     note: 'Learned advanced techniques in conducting systematic literature reviews and academic writing.',
   },
   {
+    id: 'cert-baete-2023',
     title: 'BAETE Accreditation for Computer Science and Engineering Programs',
     institution:
       'United International University, BAETE & IEEE Computer Society Bangladesh Chapter',
@@ -126,6 +137,7 @@ const certifications = [
     note: 'Acquired knowledge of BAETE accreditation criteria and its application in academic programs.',
   },
   {
+    id: 'cert-obe-2019',
     title: 'Outcomes-Based Education (OBE)',
     institution:
       'Board of Accreditation for Engineering and Technical Education (BAETE), IEB',
@@ -133,6 +145,7 @@ const certifications = [
     note: 'Received detailed training on implementing and managing OBE in higher education.',
   },
   {
+    id: 'cert-radio-2017',
     title: 'Amateur Radio Service Certification Exam',
     institution: 'Bangladesh Telecommunication Regulatory Commission (BTRC)',
     date: 'Dec 2017',
@@ -142,48 +155,56 @@ const certifications = [
 
 const honorsAndAwards = [
   {
+    id: 'award-vc-spring-2016',
     title: "Vice Chancellor's Award for Academic Excellence",
     institution: 'BRAC University',
     date: 'Spring 2016',
     icon: Trophy,
   },
   {
+    id: 'award-vc-fall-2015',
     title: "Vice Chancellor's Award for Academic Excellence",
     institution: 'BRAC University',
     date: 'Fall 2015',
     icon: Trophy,
   },
   {
+    id: 'award-vc-spring-2015',
     title: "Vice Chancellor's Award for Academic Excellence",
     institution: 'BRAC University',
     date: 'Spring 2015',
     icon: Trophy,
   },
   {
+    id: 'award-vc-fall-2014',
     title: "Vice Chancellor's Award for Academic Excellence",
     institution: 'BRAC University',
     date: 'Fall 2014',
     icon: Trophy,
   },
   {
+    id: 'award-vc-summer-2014',
     title: "Vice Chancellor's Award for Academic Excellence",
     institution: 'BRAC University',
     date: 'Summer 2014',
     icon: Trophy,
   },
   {
+    id: 'award-vc-spring-2014',
     title: "Vice Chancellor's Award for Academic Excellence",
     institution: 'BRAC University',
     date: 'Spring 2014',
     icon: Trophy,
   },
   {
+    id: 'award-intern-2016',
     title: 'Best Intern Award',
     institution: 'Tech Geeks Ltd.',
     date: 'Sep 2016',
     icon: Star,
   },
   {
+    id: 'award-contest-2015',
     title: 'Top Ten Contestant in Programming Contest',
     institution: 'BRAC IT',
     date: 'Nov 2015',
@@ -193,6 +214,7 @@ const honorsAndAwards = [
 
 const professionalService = [
   {
+    id: 'svc-ieee-mentor',
     title: 'IEEE Computer Society Faculty Mentor',
     organization: 'Independent University, Bangladesh (IUB)',
     duration: 'Mar 2019 - Present',
@@ -201,6 +223,7 @@ const professionalService = [
     icon: Users,
   },
   {
+    id: 'svc-techfest',
     title: 'Tech Fest Judge & Organizer',
     organization: 'Independent University, Bangladesh (IUB)',
     duration: 'Apr 2019 - Dec 2022',
@@ -209,6 +232,7 @@ const professionalService = [
     icon: ShieldCheck,
   },
   {
+    id: 'svc-hackathon',
     title: 'National Hackathon Mentor',
     organization: 'Bangladesh Innovation Forum',
     duration: 'Feb 2020',
@@ -217,6 +241,7 @@ const professionalService = [
     icon: Users,
   },
   {
+    id: 'svc-bucc-vp',
     title: 'Vice President',
     organization: 'BRAC University Computer Club (BUCC)',
     duration: 'Jun 2016 - Jun 2017',
@@ -260,9 +285,9 @@ export default function AboutPage() {
         <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
           <CardContent className="pt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {quickFacts.map((fact, index) => (
+              {quickFacts.map((fact) => (
                 <div
-                  key={index}
+                  key={fact.id}
                   className="flex items-start gap-4 p-4 rounded-lg hover:bg-background/50 transition-colors"
                 >
                   <fact.icon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
@@ -282,9 +307,9 @@ export default function AboutPage() {
       {/* Highlights Stats */}
       <section>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {highlights.map((stat, index) => (
+          {highlights.map((stat) => (
             <Card
-              key={index}
+              key={stat.id}
               className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105 border-primary/10"
             >
               <CardContent className="pt-6 pb-6">
@@ -343,9 +368,7 @@ export default function AboutPage() {
 
             {/* Academic Profiles */}
             <div className="pt-4 border-t">
-              <h3 className="text-lg font-semibold mb-4">
-                Academic Profiles
-              </h3>
+              <h3 className="text-lg font-semibold mb-4">Academic Profiles</h3>
               <AcademicProfiles variant="grid" showLabels={true} />
             </div>
           </CardContent>
@@ -491,7 +514,7 @@ export default function AboutPage() {
           Technical Skills
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {technicalSkills.map((skillGroup, index) => {
+          {technicalSkills.map((skillGroup) => {
             const iconMap: Record<string, typeof Code> = {
               'Programming & Frameworks': Code,
               'Data Analysis & Visualization': Cpu,
@@ -505,7 +528,7 @@ export default function AboutPage() {
 
             return (
               <Card
-                key={index}
+                key={skillGroup.category}
                 className="shadow-md hover:shadow-lg transition-all duration-300"
               >
                 <CardHeader>
@@ -579,9 +602,9 @@ export default function AboutPage() {
                   Professional Service
                 </h3>
                 <div className="space-y-3">
-                  {professionalService.map((service, index) => (
+                  {professionalService.map((service) => (
                     <div
-                      key={index}
+                      key={service.id}
                       className="flex items-start gap-3 p-3 rounded-lg bg-background/50"
                     >
                       <service.icon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
@@ -611,9 +634,9 @@ export default function AboutPage() {
           Certifications & Training
         </h2>
         <div className="grid gap-6 md:grid-cols-2">
-          {certifications.map((cert, index) => (
+          {certifications.map((cert) => (
             <Card
-              key={index}
+              key={cert.id}
               className="shadow-md hover:shadow-lg transition-all duration-300"
             >
               <CardHeader className="flex flex-row items-start gap-3">
@@ -643,9 +666,9 @@ export default function AboutPage() {
           Honors & Awards
         </h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {honorsAndAwards.map((award, index) => (
+          {honorsAndAwards.map((award) => (
             <Card
-              key={index}
+              key={award.id}
               className="shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
             >
               <CardHeader className="flex flex-row items-start gap-3">

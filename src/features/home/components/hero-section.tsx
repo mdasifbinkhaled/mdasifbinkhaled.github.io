@@ -19,26 +19,31 @@ import { StatCard } from '@/shared/components/common/stat-card';
  * Main landing section with introduction, quick stats, and CTAs
  */
 export function HeroSection() {
+  // Stats data with unique IDs for stable React keys
   const stats = [
     {
+      id: 'stat-years-teaching',
       number: '7+',
       label: 'Years Teaching',
       icon: GraduationCap,
       description: '6+ full-time, 1.8 part-time',
     },
     {
+      id: 'stat-teaching-score',
       number: '4.0+',
       label: 'Teaching Score',
       icon: Target,
       description: 'Out of 5.0',
     },
     {
+      id: 'stat-research-grants',
       number: '4',
       label: 'Research Grants',
       icon: TrendingUp,
       description: 'Successfully awarded',
     },
     {
+      id: 'stat-research-areas',
       number: '5+',
       label: 'Research Areas',
       icon: Brain,
@@ -48,16 +53,16 @@ export function HeroSection() {
 
   return (
     <section className="w-full py-12 md:py-16 bg-gradient-to-br from-background via-secondary/20 to-primary/5 relative overflow-hidden">
-      <div className="hero-container">
-        <div className="hero-grid">
+      <div className="container-responsive">
+        <div className="max-w-4xl mx-auto">
           {/* Content Section */}
-          <div className="hero-content">
+          <div className="space-y-6">
             <div className="space-y-3">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-4xl xl:text-5xl/tight text-primary">
                 {siteConfig.author}
               </h1>
               <p className="text-xl text-foreground md:text-xl lg:text-xl">
-                Senior Lecturer & Researcher
+                {siteConfig.jobTitle}
               </p>
               <p className="text-muted-foreground md:text-lg max-w-prose">
                 Specializing in Explainable AI (XAI) and Multimodal AI (MMAI)
@@ -128,9 +133,9 @@ export function HeroSection() {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-8 max-w-4xl mx-auto">
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <StatCard
-              key={index}
+              key={stat.id}
               number={stat.number}
               label={stat.label}
               icon={stat.icon}

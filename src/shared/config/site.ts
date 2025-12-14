@@ -1,7 +1,6 @@
 import { assetPaths, getAssetUrl } from './assets';
 
 type SiteLinks = {
-  twitter: string;
   github: string;
   linkedin: string;
   googleScholar: string;
@@ -23,17 +22,22 @@ export type SiteConfig = {
   email: string;
   phone: string;
   address: string;
+  /** Primary job title for consistent usage across the site */
+  jobTitle: string;
+  /** Current institution */
+  institution: string;
+  /** Short institution name */
+  institutionShort: string;
 };
 
 export const siteConfig: SiteConfig = {
   name: 'Md Asif Bin Khaled - Academic Portfolio',
-  shortName: 'Md Asif Bin Khaled', // Updated shortName
+  shortName: 'Md Asif Bin Khaled',
   description:
     'The professional academic portfolio of Md Asif Bin Khaled, Senior Lecturer & Researcher. Showcasing research in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, teaching experience, publications, and grants. Open to PhD opportunities.',
   url: 'https://mdasifbinkhaled.github.io',
   ogImage: getAssetUrl(assetPaths.ogImage),
   links: {
-    twitter: 'https://twitter.com/yourusername',
     github: 'https://github.com/mdasifbinkhaled',
     linkedin: 'https://linkedin.com/in/mdasifbinkhaled/',
     googleScholar:
@@ -71,4 +75,7 @@ export const siteConfig: SiteConfig = {
   email: 'mdasifbinkhaled@gmail.com',
   phone: '(+88) 01676076329',
   address: 'Bashundhara R/A, Dhaka - 1212, Bangladesh',
+  jobTitle: 'Senior Lecturer & Researcher',
+  institution: 'Independent University, Bangladesh (IUB)',
+  institutionShort: 'IUB',
 };

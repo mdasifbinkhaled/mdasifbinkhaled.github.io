@@ -251,7 +251,7 @@ Going forward, we'll focus on:
 
 ---
 
-**Cleanup Performed By:** AI Assistant  
+**Cleanup Performed By:** Development Team  
 **Date:** October 15, 2025  
 **Files Removed:** 4 hooks + unused types  
 **Lines Removed:** ~420 lines  

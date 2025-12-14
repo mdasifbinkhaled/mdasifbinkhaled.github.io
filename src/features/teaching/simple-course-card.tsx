@@ -153,8 +153,8 @@ export const SimpleCourseCard = memo(function SimpleCourseCard({
                 <ul className="text-xs text-muted-foreground space-y-1">
                   {course.objectives
                     .slice(0, expanded ? undefined : 2)
-                    .map((objective, index) => (
-                      <li key={index} className="flex items-start gap-2">
+                    .map((objective) => (
+                      <li key={objective} className="flex items-start gap-2">
                         <span className="text-primary mt-1">•</span>
                         {objective}
                       </li>
@@ -186,9 +186,9 @@ export const SimpleCourseCard = memo(function SimpleCourseCard({
               <div>
                 <h4 className="text-sm font-semibold mb-2">Technologies</h4>
                 <div className="flex flex-wrap gap-1">
-                  {course.technologies.map((tech, index) => (
+                  {course.technologies.map((tech) => (
                     <Badge
-                      key={index}
+                      key={tech}
                       variant="outline"
                       className="text-xs academic-badge"
                     >
@@ -229,9 +229,9 @@ export const SimpleCourseCard = memo(function SimpleCourseCard({
                 <div className="space-y-1">
                   {course.feedback
                     .slice(0, DISPLAY_LIMITS.COURSE_FEEDBACK)
-                    .map((feedback, index) => (
+                    .map((feedback) => (
                       <p
-                        key={index}
+                        key={feedback}
                         className="text-xs text-muted-foreground italic"
                       >
                         &ldquo;{feedback}&rdquo;

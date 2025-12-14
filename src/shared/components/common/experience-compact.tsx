@@ -35,11 +35,11 @@ export function ExperienceCompact({ experiences }: ExperienceCompactProps) {
 
   return (
     <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
-      {displayedExperiences.map((exp, index) => {
+      {displayedExperiences.map((exp) => {
         const isCurrent = exp.duration.includes('Present');
         return (
           <Card
-            key={index}
+            key={exp.id}
             className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary"
           >
             <CardHeader className="pb-3">

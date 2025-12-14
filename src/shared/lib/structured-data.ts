@@ -61,32 +61,25 @@ export interface PublicationStructuredData {
 }
 
 export function generatePersonStructuredData(): AcademicPersonStructuredData {
+  // Collect all social profile links (no placeholder detection needed since Twitter is removed)
   const profileLinks: Array<string | undefined> = [
     siteConfig.links.github,
     siteConfig.links.linkedin,
     siteConfig.links.googleScholar,
     siteConfig.links.orcid,
-    siteConfig.links.twitter,
+    siteConfig.links.researchGate,
   ];
 
-  const placeholderIndicators = ['YOUR_', 'yourusername'] as const;
-
-  const sameAs = profileLinks.filter((url): url is string => {
-    if (!url) {
-      return false;
-    }
-
-    return !placeholderIndicators.some((indicator) => url.includes(indicator));
-  });
+  const sameAs = profileLinks.filter((url): url is string => Boolean(url));
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: siteConfig.author,
-    jobTitle: 'Senior Lecturer and AI Researcher',
+    jobTitle: siteConfig.jobTitle,
     affiliation: {
       '@type': 'EducationalOrganization',
-      name: 'Independent University, Bangladesh',
+      name: siteConfig.institution,
       url: 'https://www.iub.edu.bd',
     },
     url: siteConfig.url,

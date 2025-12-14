@@ -144,7 +144,8 @@ export type ThemeName =
   | 'slate'
   | 'crimson'
   | 'emerald'
-  | 'indigo';
+  | 'indigo'
+  | 'vintage';
 
 export interface ThemeConfig {
   name: ThemeName;

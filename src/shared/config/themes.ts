@@ -1,10 +1,27 @@
 import type { ThemeConfig, ThemeName } from '@/shared/types';
 
 /**
- * Simplified Academic Portfolio Theme Configuration
- * Focus on professional, accessible themes for academic use
+ * ==========================================================================
+ * THEME CONFIGURATION - Single Source of Truth
+ * ==========================================================================
+ *
+ * All theme definitions for the academic portfolio.
+ * This file is the authoritative source; tokens.css must match these values.
+ *
+ * Categories:
+ * - classic: Traditional light/dark themes
+ * - natural: Nature-inspired color palettes
+ * - vibrant: Bold, expressive themes
+ * - professional: Academic/corporate aesthetics
+ *
+ * @version 2.0.0
+ * @author Md Asif Bin Khaled
  */
+
 export const themeConfigs: Record<ThemeName, ThemeConfig> = {
+  // =========================================================================
+  // CLASSIC THEMES
+  // =========================================================================
   light: {
     name: 'light',
     label: 'Light',
@@ -27,6 +44,10 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(201, 60%, 50%)',
     },
   },
+
+  // =========================================================================
+  // NATURAL THEMES
+  // =========================================================================
   ocean: {
     name: 'ocean',
     label: 'Ocean',
@@ -60,6 +81,10 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(142, 76%, 36%)',
     },
   },
+
+  // =========================================================================
+  // VIBRANT THEMES
+  // =========================================================================
   midnight: {
     name: 'midnight',
     label: 'Midnight',
@@ -93,6 +118,10 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(270, 60%, 55%)',
     },
   },
+
+  // =========================================================================
+  // PROFESSIONAL THEMES
+  // =========================================================================
   slate: {
     name: 'slate',
     label: 'Slate',
@@ -137,29 +166,39 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(230, 70%, 50%)',
     },
   },
-} as const;
+  vintage: {
+    name: 'vintage',
+    label: 'Vintage',
+    description: 'Warm golden tones with classic academic elegance',
+    category: 'professional',
+    preview: {
+      background: 'hsl(42, 40%, 96%)',
+      foreground: 'hsl(30, 30%, 18%)',
+      primary: 'hsl(38, 75%, 45%)',
+    },
+  },
+};
 
 /**
  * Motion preferences for accessibility
  */
 export const motionPreferences = {
-  // Detect user's motion preference
   respectReducedMotion: true,
-
-  // Default animation durations (will be reduced if user prefers reduced motion)
   durations: {
     fast: '150ms',
     normal: '300ms',
     slow: '500ms',
   },
-
-  // Animation easings
   easings: {
     easeOut: 'cubic-bezier(0.16, 1, 0.3, 1)',
     easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
     easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
   },
 } as const;
+
+// =========================================================================
+// THEME UTILITY FUNCTIONS
+// =========================================================================
 
 /**
  * Get all available theme names
@@ -174,11 +213,14 @@ export const getThemeConfig = (themeName: ThemeName): ThemeConfig =>
   themeConfigs[themeName];
 
 /**
+ * Theme category type for filtering
+ */
+export type ThemeCategory = ThemeConfig['category'];
+
+/**
  * Get themes by category
  */
-export const getThemesByCategory = (
-  category: 'classic' | 'dramatic'
-): ThemeConfig[] =>
+export const getThemesByCategory = (category: ThemeCategory): ThemeConfig[] =>
   Object.values(themeConfigs).filter((theme) => theme.category === category);
 
 /**

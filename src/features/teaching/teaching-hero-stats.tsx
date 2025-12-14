@@ -1,42 +1,5 @@
-'use client';
-
-import { Card, CardContent } from '@/shared/components/ui/card';
+import { StatCard } from '@/shared/components/common/stat-card';
 import { GraduationCap, Users, Star, Calendar } from 'lucide-react';
-
-interface StatCardProps {
-  icon: React.ElementType;
-  label: string;
-  value: number;
-  suffix?: string;
-  decimals?: number;
-}
-
-function StatCard({
-  icon: Icon,
-  label,
-  value,
-  suffix = '',
-  decimals = 0,
-}: StatCardProps) {
-  return (
-    <Card className="text-center transition-all duration-200 hover:shadow-lg">
-      <CardContent className="p-5">
-        <div className="flex flex-col items-center gap-2">
-          <div className="p-3 rounded-full bg-primary/10 text-primary">
-            <Icon className="h-6 w-6" />
-          </div>
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-            {label}
-          </p>
-          <div className="text-3xl font-bold text-primary">
-            {decimals > 0 ? value.toFixed(decimals) : value}
-            <span className="text-xl">{suffix}</span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
 
 interface TeachingHeroStatsProps {
   totalStudents: number;
@@ -45,6 +8,11 @@ interface TeachingHeroStatsProps {
   yearsTeaching: number;
 }
 
+/**
+ * TeachingHeroStats Component
+ * Displays key teaching statistics in a grid layout
+ * Uses the shared StatCard component with compact variant
+ */
 export function TeachingHeroStats({
   totalStudents,
   totalCourses,
@@ -62,27 +30,31 @@ export function TeachingHeroStats({
         <StatCard
           icon={Users}
           label="Students Taught"
-          value={totalStudents}
+          number={totalStudents}
           suffix="+"
+          variant="compact"
         />
         <StatCard
           icon={GraduationCap}
           label="Courses Delivered"
-          value={totalCourses}
+          number={totalCourses}
           suffix="+"
+          variant="compact"
         />
         <StatCard
           icon={Star}
           label="Average Rating"
-          value={averageRating}
+          number={averageRating}
           suffix="/5.0"
           decimals={1}
+          variant="compact"
         />
         <StatCard
           icon={Calendar}
           label="Years Teaching"
-          value={yearsTeaching}
+          number={yearsTeaching}
           suffix="+"
+          variant="compact"
         />
       </div>
     </section>
