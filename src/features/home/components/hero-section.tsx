@@ -56,13 +56,13 @@ export function HeroSection() {
         <div className="max-w-5xl">
           {/* Header Content */}
           <div className="space-y-6 mb-12">
-            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl lg:text-6xl text-primary">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-5xl text-primary">
               {siteConfig.author}
             </h1>
-            <p className="text-2xl text-foreground/80 md:text-3xl font-medium">
+            <p className="text-xl text-foreground/80 md:text-2xl font-medium">
               {siteConfig.jobTitle}
             </p>
-            <p className="text-lg text-muted-foreground md:text-xl max-w-2xl leading-relaxed">
+            <p className="text-muted-foreground md:text-lg max-w-2xl leading-relaxed">
               Specializing in Explainable AI (XAI) and Multimodal AI (MMAI) for
               healthcare diagnostics and analytics.
             </p>

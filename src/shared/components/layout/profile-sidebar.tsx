@@ -65,7 +65,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
   return (
     <div className="flex flex-col h-full bg-sidebar">
       {/* Content Area (no inner scrollbar) */}
-      <div className="flex-1">
+      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-sidebar-border scrollbar-track-transparent">
         {/* Profile Section */}
         <div
           className={cn(
