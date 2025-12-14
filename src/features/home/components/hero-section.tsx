@@ -54,8 +54,8 @@ export function HeroSection() {
   return (
     <section className="w-full py-12 md:py-16 bg-gradient-to-br from-background via-secondary/20 to-primary/5 relative overflow-hidden">
       <div className="container-responsive">
-        <div className="max-w-4xl mx-auto">
-          {/* Content Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Column: Introduction & Philosophy */}
           <div className="space-y-6">
             <div className="space-y-3">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-4xl xl:text-5xl/tight text-primary">
@@ -129,19 +129,19 @@ export function HeroSection() {
               </Button>
             </div>
           </div>
-        </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-8 max-w-4xl mx-auto">
-          {stats.map((stat) => (
-            <StatCard
-              key={stat.id}
-              number={stat.number}
-              label={stat.label}
-              icon={stat.icon}
-              description={stat.description}
-            />
-          ))}
+          {/* Right Column: Key Stats */}
+          <div className="grid grid-cols-2 gap-4 lg:gap-6 w-full max-w-xl mx-auto lg:mx-0">
+            {stats.map((stat) => (
+              <StatCard
+                key={stat.id}
+                number={stat.number}
+                label={stat.label}
+                icon={stat.icon}
+                description={stat.description}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
