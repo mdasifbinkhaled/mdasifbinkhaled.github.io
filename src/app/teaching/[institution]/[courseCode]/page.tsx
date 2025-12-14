@@ -5,10 +5,10 @@ import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 interface CoursePageProps {
-  params: {
+  params: Promise<{
     institution: string;
     courseCode: string;
-  };
+  }>;
 }
 
 /**
@@ -28,7 +28,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: CoursePageProps): Promise<Metadata> {
-  const { institution, courseCode } = params;
+  const { institution, courseCode } = await params;
 
   // Find the course by matching institution and code
   const course = allCourses.find(
@@ -56,8 +56,8 @@ export async function generateMetadata({
  * Dynamic course detail page
  * Replaces 14 duplicate page.tsx files with a single dynamic route
  */
-export default function CoursePage({ params }: CoursePageProps) {
-  const { institution, courseCode } = params;
+export default async function CoursePage({ params }: CoursePageProps) {
+  const { institution, courseCode } = await params;
 
   // Find the course by matching institution and code
   const course = allCourses.find(

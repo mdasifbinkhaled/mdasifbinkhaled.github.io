@@ -94,12 +94,12 @@ The site uses a **Static JSON / Zod Validation** strategy to ensure robust conte
 
 ## 5. Security & Dependencies
 
-| Attribute              | State         | Notes                                     |
-| ---------------------- | ------------- | ----------------------------------------- |
-| **Next.js Version**    | 15.5.4        | Latest Stable                             |
-| **Vulnerabilities**    | Mitigated     | CVE-2025-55182 marked N/A (Static Export) |
-| **Server Actions**     | Forbidden     | Security surface area reduced to zero     |
-| **Image Optimization** | `unoptimized` | Configured for GitHub Pages compatibility |
+| Attribute              | State            | Notes                                               |
+| ---------------------- | ---------------- | --------------------------------------------------- |
+| **Next.js Version**    | 15.6.0-canary.36 | Security Patch                                      |
+| **Vulnerabilities**    | Mitigated        | RCE (Critical) fixed in Canary; others N/A (Static) |
+| **Server Actions**     | Forbidden        | Security surface area reduced to zero               |
+| **Image Optimization** | `unoptimized`    | Configured for GitHub Pages compatibility           |
 
 ---
 

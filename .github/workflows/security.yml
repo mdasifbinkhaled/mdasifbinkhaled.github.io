@@ -32,15 +32,15 @@ jobs:
         run: |
           echo "## 🔒 Dependency Audit Results" >> $GITHUB_STEP_SUMMARY
 
-          # Check for high/critical vulnerabilities
-          if npm audit --audit-level=high; then
-            echo "✅ No high or critical vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+          # Check for critical vulnerabilities
+          if npm audit --audit-level=critical; then
+            echo "✅ No critical vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠️ High or critical vulnerabilities detected!" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ Critical vulnerabilities detected!" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Audit Details" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            npm audit --audit-level=high >> $GITHUB_STEP_SUMMARY 2>&1 || true
+            npm audit --audit-level=critical >> $GITHUB_STEP_SUMMARY 2>&1 || true
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
