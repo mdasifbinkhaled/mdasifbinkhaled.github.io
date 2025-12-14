@@ -8,6 +8,8 @@
  * @version 1.0.0
  */
 
+import { siteConfig } from './site';
+
 // ============================================================================
 // RESEARCH IDENTITY
 // ============================================================================
@@ -109,20 +111,20 @@ export const academicProfiles = {
   profiles: [
     {
       platform: 'Google Scholar',
-      url: 'https://scholar.google.com/citations?user=QIPrqWgAAAAJ&hl=en',
+      url: siteConfig.links.googleScholar,
       icon: 'GraduationCap',
       primary: true,
     },
     {
       platform: 'ORCID',
-      id: '0000-0001-8811-0826',
-      url: 'https://orcid.org/0000-0001-8811-0826',
+      id: siteConfig.links.orcid.split('/').pop() || '',
+      url: siteConfig.links.orcid,
       icon: 'Award',
       primary: true,
     },
     {
       platform: 'ResearchGate',
-      url: 'https://www.researchgate.net/profile/Md-Asif-Bin-Khaled',
+      url: siteConfig.links.researchGate,
       icon: 'Network',
       primary: true,
     },
@@ -138,8 +140,8 @@ export const academicProfiles = {
    * GitHub profile
    */
   github: {
-    username: 'mdasifbinkhaled',
-    url: 'https://github.com/mdasifbinkhaled',
+    username: siteConfig.links.github.split('/').pop() || 'mdasifbinkhaled',
+    url: siteConfig.links.github,
   },
 
   /**
