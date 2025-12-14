@@ -8,7 +8,6 @@ import { assetPaths, assetConfig } from '@/shared/config/assets';
 import { Button } from '@/shared/components/ui/button';
 import { siteConfig } from '@/shared/config/site';
 import {
-  ExternalLink,
   FileText,
   Mail,
   Github,
@@ -18,9 +17,25 @@ import {
   User,
   Globe,
   Award,
+  Home,
+  UserCircle,
+  Cpu,
+  BookOpenText,
+  Presentation,
+  Send,
 } from 'lucide-react';
 import { Separator } from '@/shared/components/ui/separator';
 import { cn } from '@/shared/lib/utils';
+import { mainNavItems } from '@/shared/config/navigation';
+
+const iconMap: Record<string, React.ElementType> = {
+  Home,
+  UserCircle,
+  Cpu,
+  BookOpenText,
+  Presentation,
+  Send,
+};
 
 interface ProfileSidebarProps {
   onLinkClick?: () => void;
@@ -110,15 +125,74 @@ export const ProfileSidebar = memo(function ProfileSidebar({
           <Separator className="bg-sidebar-border/60 mx-4 w-[calc(100%-2rem)]" />
         )}
 
-        {/* Quick Info */}
-        <div className={cn('flex-grow', isCollapsed ? 'p-2' : 'p-6')}>
+        {/* Navigation Section */}
+        <div
+          className={cn('flex-none', isCollapsed ? 'p-2' : 'px-6 pt-6 pb-2')}
+        >
           {!isCollapsed && (
-            <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-4 tracking-wider sidebar-section-title">
-              Contact & Links
+            <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-3 tracking-wider sidebar-section-title">
+              Menu
+            </h4>
+          )}
+          <nav className={cn('space-y-1', isCollapsed && 'space-y-1')}>
+            {mainNavItems.map((item) => {
+              const IconComponent = (item.icon && iconMap[item.icon]) || Globe;
+              const active = isActive(item.href);
+
+              return (
+                <Button
+                  key={item.href}
+                  variant={active ? 'secondary' : 'ghost'}
+                  size={isCollapsed ? 'icon' : 'sm'}
+                  asChild
+                  className={cn(
+                    'transition-all duration-300 group',
+                    isCollapsed
+                      ? 'w-full justify-center'
+                      : 'w-full justify-start',
+                    active
+                      ? 'bg-sidebar-accent text-sidebar-accent-foreground font-semibold shadow-sm'
+                      : 'text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground hover:translate-x-1'
+                  )}
+                  title={isCollapsed ? item.label : undefined}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={handleLinkClick}
+                    aria-current={active ? 'page' : undefined}
+                  >
+                    <IconComponent
+                      className={cn(
+                        'flex-shrink-0 transition-transform duration-200',
+                        active ? 'text-primary' : 'group-hover:scale-110',
+                        isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
+                      )}
+                    />
+                    {!isCollapsed && (
+                      <span className="truncate text-sm sidebar-button-text">
+                        {item.label}
+                      </span>
+                    )}
+                  </Link>
+                </Button>
+              );
+            })}
+          </nav>
+        </div>
+
+        {!isCollapsed && (
+          <Separator className="bg-sidebar-border/60 mx-4 w-[calc(100%-2rem)] my-2" />
+        )}
+
+        {/* Quick Actions (Contact & CV) */}
+        <div className={cn('flex-grow', isCollapsed ? 'p-2' : 'px-6 py-2')}>
+          {!isCollapsed && (
+            <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/80 mb-3 tracking-wider sidebar-section-title">
+              Contact & Actions
             </h4>
           )}
 
-          <div className={cn('space-y-3', isCollapsed && 'space-y-2')}>
+          <div className={cn('space-y-1', isCollapsed && 'space-y-1')}>
             <Button
               variant="ghost"
               size={isCollapsed ? 'icon' : 'sm'}
@@ -145,6 +219,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                 )}
               </a>
             </Button>
+
             <Button
               variant="ghost"
               size={isCollapsed ? 'icon' : 'sm'}
@@ -175,105 +250,35 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               </a>
             </Button>
 
-            <div
-              className={cn('pt-2', isCollapsed ? 'space-y-1' : 'space-y-2')}
+            <Button
+              variant="outline"
+              size={isCollapsed ? 'icon' : 'sm'}
+              asChild
+              className={cn(
+                'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group mt-2',
+                isCollapsed ? 'w-full justify-center' : 'w-full justify-start'
+              )}
+              title={isCollapsed ? 'Download CV' : undefined}
             >
-              <Button
-                variant="outline"
-                size={isCollapsed ? 'icon' : 'sm'}
-                asChild
-                className={cn(
-                  'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
-                  isCollapsed ? 'w-full justify-center' : 'w-full justify-start'
-                )}
-                title={isCollapsed ? 'Download CV' : undefined}
+              <a
+                href={siteConfig.links.cv}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleLinkClick}
               >
-                <a
-                  href={siteConfig.links.cv}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleLinkClick}
-                >
-                  <FileText
-                    className={cn(
-                      'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
-                      isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
-                    )}
-                  />
-                  {!isCollapsed && (
-                    <span className="font-medium sidebar-button-text">
-                      Download CV
-                    </span>
+                <FileText
+                  className={cn(
+                    'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
+                    isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
                   )}
-                </a>
-              </Button>
-
-              <Button
-                variant="outline"
-                size={isCollapsed ? 'icon' : 'sm'}
-                asChild
-                className={cn(
-                  'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
-                  isCollapsed
-                    ? 'w-full justify-center'
-                    : 'w-full justify-start',
-                  isActive('/research') &&
-                    'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
+                />
+                {!isCollapsed && (
+                  <span className="font-medium sidebar-button-text">
+                    Download CV
+                  </span>
                 )}
-                title={isCollapsed ? 'Research Focus' : undefined}
-              >
-                <Link
-                  href="/research"
-                  aria-current={isActive('/research') ? 'page' : undefined}
-                  {...(onLinkClick && { onClick: onLinkClick })}
-                >
-                  <ExternalLink
-                    className={cn(
-                      'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
-                      isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
-                    )}
-                  />
-                  {!isCollapsed && (
-                    <span className="font-medium sidebar-button-text">
-                      Research Focus
-                    </span>
-                  )}
-                </Link>
-              </Button>
-
-              <Button
-                variant="outline"
-                size={isCollapsed ? 'icon' : 'sm'}
-                asChild
-                className={cn(
-                  'bg-sidebar-accent/10 hover:bg-sidebar-accent/30 border-sidebar-border/60 hover:border-sidebar-border text-sidebar-foreground transition-all duration-300 hover:translate-x-1 hover:shadow-lg focus-visible:translate-x-1 focus-visible:shadow-lg group',
-                  isCollapsed
-                    ? 'w-full justify-center'
-                    : 'w-full justify-start',
-                  isActive('/publications') &&
-                    'bg-sidebar-accent/20 border-sidebar-primary/50 text-sidebar-accent-foreground font-semibold'
-                )}
-                title={isCollapsed ? 'Publications' : undefined}
-              >
-                <Link
-                  href="/publications"
-                  aria-current={isActive('/publications') ? 'page' : undefined}
-                  {...(onLinkClick && { onClick: onLinkClick })}
-                >
-                  <FileText
-                    className={cn(
-                      'flex-shrink-0 group-hover:scale-110 transition-transform duration-200',
-                      isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
-                    )}
-                  />
-                  {!isCollapsed && (
-                    <span className="font-medium sidebar-button-text">
-                      Publications
-                    </span>
-                  )}
-                </Link>
-              </Button>
-            </div>
+              </a>
+            </Button>
           </div>
         </div>
 

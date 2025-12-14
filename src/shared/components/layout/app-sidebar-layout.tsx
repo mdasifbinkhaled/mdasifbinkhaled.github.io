@@ -74,7 +74,7 @@ export default function AppSidebarLayout({
         <div className="flex-1 min-w-0 flex flex-col">
           <header
             role="banner"
-            className="z-10 bg-background/95 backdrop-blur-md border-b shadow-sm"
+            className="z-10 bg-background/95 backdrop-blur-md border-b shadow-sm sticky top-0"
           >
             <div className="container mx-auto px-6 py-4">
               <Navbar onMobileMenuOpen={() => setMobileOpen(true)} />
