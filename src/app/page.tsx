@@ -10,7 +10,6 @@
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import {
   HeroSection,
-  NewsSection,
   ResearchHighlights,
   PublicationsPreview,
   ExperiencePreview,
@@ -24,7 +23,7 @@ export default function HomePage() {
       <Breadcrumbs />
 
       <HeroSection />
-      <NewsSection />
+      {/* <NewsSection /> - Moved to Hero */}
       <ResearchHighlights />
       <PublicationsPreview />
       <ExperiencePreview />

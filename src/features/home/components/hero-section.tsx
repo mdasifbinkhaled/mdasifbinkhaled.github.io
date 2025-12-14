@@ -9,16 +9,21 @@ import {
   Target,
   TrendingUp,
   Lightbulb,
+  Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
 import { AcademicProfiles } from '@/shared/components/academic-profiles';
 import { StatCard } from '@/shared/components/common/stat-card';
+import { NewsFeed } from '@/shared/components/common/news-feed';
+import { getNewsItems } from '@/shared/lib/data/news';
 
 /**
  * Hero Section Component
  * Main landing section with introduction, quick stats, and CTAs
  */
 export function HeroSection() {
+  const newsItems = getNewsItems();
+
   // Stats data with unique IDs for stable React keys
   const stats = [
     {
@@ -54,7 +59,7 @@ export function HeroSection() {
   return (
     <section className="w-full py-12 md:py-16 bg-gradient-to-br from-background via-secondary/20 to-primary/5 relative overflow-hidden">
       <div className="container-responsive">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-12">
           {/* Left Column: Introduction & Philosophy */}
           <div className="space-y-6">
             <div className="space-y-3">
@@ -130,18 +135,36 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right Column: Key Stats */}
-          <div className="grid grid-cols-2 gap-4 lg:gap-6 w-full max-w-xl mx-auto lg:mx-0">
-            {stats.map((stat) => (
-              <StatCard
-                key={stat.id}
-                number={stat.number}
-                label={stat.label}
-                icon={stat.icon}
-                description={stat.description}
-              />
-            ))}
+          {/* Right Column: Latest Updates (News) */}
+          <div className="bg-card/40 backdrop-blur-md rounded-2xl border border-primary/10 p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-bold flex items-center gap-2 text-primary">
+                <Sparkles className="w-5 h-5" />
+                Latest Updates
+              </h3>
+              <Link
+                href="/news"
+                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                View All
+              </Link>
+            </div>
+            <NewsFeed items={newsItems.slice(0, 3)} className="space-y-3" />
           </div>
+        </div>
+
+        {/* Bottom Banner: Key Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          {stats.map((stat) => (
+            <StatCard
+              key={stat.id}
+              number={stat.number}
+              label={stat.label}
+              icon={stat.icon}
+              description={stat.description}
+              className="bg-background/50 hover:bg-background/80 border-primary/5 hover:border-primary/20"
+            />
+          ))}
         </div>
       </div>
     </section>
