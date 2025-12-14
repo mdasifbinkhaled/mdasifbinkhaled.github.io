@@ -81,45 +81,46 @@ export function HeroSection() {
                 Open to PhD Opportunities
               </div>
             </div>
-          </div>
 
-          {/* Action Bar: Primary CTA + Rich Stats Grid */}
-          <div className="flex flex-col xl:flex-row gap-8 items-start xl:items-center">
             {/* Primary CTA */}
-            <div className="flex-shrink-0">
+            <div className="pt-4">
               <Button
                 size="lg"
                 asChild
-                className="h-14 px-8 text-lg shadow-md hover:shadow-xl hover:scale-105 transition-all w-full sm:w-auto"
+                className="h-12 px-8 text-base shadow-md hover:shadow-xl hover:scale-105 transition-all w-full sm:w-auto"
               >
                 <Link href="/research">
-                  Explore Research <ArrowRight className="ml-2 h-5 w-5" />
+                  Explore Research <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
+          </div>
 
-            {/* Rich Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-              {stats.map((stat) => (
-                <div
-                  key={stat.id}
-                  className="group relative flex flex-col p-4 rounded-xl bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-background/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="text-2xl font-bold text-primary">
-                      {stat.number}
-                    </div>
-                    <stat.icon className="w-5 h-5 text-primary/40 group-hover:text-primary/70 transition-colors" />
+          {/* Rich Stats Grid - Full Width */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+            {stats.map((stat) => (
+              <div
+                key={stat.id}
+                className="group relative flex flex-col p-5 rounded-xl bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-background/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className="text-3xl font-bold text-primary tracking-tight">
+                    {stat.number}
                   </div>
-                  <div className="text-sm font-semibold text-foreground/90 leading-tight">
+                  <div className="p-2 bg-primary/5 rounded-full group-hover:bg-primary/10 transition-colors">
+                    <stat.icon className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-sm font-bold text-foreground/90 uppercase tracking-wide text-[0.8rem]">
                     {stat.label}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-1 whitespace-pre-line leading-snug">
+                  <div className="text-xs text-muted-foreground font-medium leading-relaxed">
                     {stat.description}
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
