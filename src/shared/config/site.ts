@@ -6,6 +6,7 @@ type SiteLinks = {
   googleScholar: string;
   researchGate: string;
   orcid: string;
+  academiaEdu: string;
   iubAcademic: string;
   cv: string;
 };
@@ -44,6 +45,7 @@ export const siteConfig: SiteConfig = {
       'https://scholar.google.com/citations?user=QIPrqWgAAAAJ&hl=en',
     researchGate: 'https://www.researchgate.net/profile/Md-Asif-Bin-Khaled',
     orcid: 'https://orcid.org/0000-0001-8811-0826',
+    academiaEdu: 'https://iub-bd.academia.edu/mdasifbinkhaled',
     iubAcademic:
       'https://iub.ac.bd/academics/departments/cse/faculty-and-staff/mdasifbinkhaled',
     cv: assetPaths.cv,

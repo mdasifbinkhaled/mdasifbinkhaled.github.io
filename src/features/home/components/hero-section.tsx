@@ -3,7 +3,6 @@ import { siteConfig } from '@/shared/config';
 import { researchIdentity } from '@/shared/config/researcher-profile';
 import {
   ArrowRight,
-  ExternalLink,
   GraduationCap,
   Brain,
   Target,
@@ -11,7 +10,6 @@ import {
   Lightbulb,
 } from 'lucide-react';
 import Link from 'next/link';
-import { AcademicProfiles } from '@/shared/components/academic-profiles';
 
 /**
  * Hero Section Component
@@ -23,30 +21,30 @@ export function HeroSection() {
     {
       id: 'stat-years',
       number: '7+',
-      label: 'Years',
+      label: 'Years Experience',
       icon: GraduationCap,
-      description: 'Teaching',
+      description: 'Teaching & Research\nin Academia',
     },
     {
       id: 'stat-score',
       number: '4.0',
-      label: 'Score',
+      label: 'Student Eval',
       icon: Target,
-      description: '/5.0',
+      description: 'Average Score\n(out of 5.0)',
     },
     {
       id: 'stat-grants',
       number: '4',
-      label: 'Grants',
+      label: 'Research Grants',
       icon: TrendingUp,
-      description: 'Awarded',
+      description: 'Awarded as PI/Co-PI',
     },
     {
       id: 'stat-areas',
       number: '5+',
-      label: 'Areas',
+      label: 'Research Areas',
       icon: Brain,
-      description: 'Focus',
+      description: 'Multimedia & XAI\nFocus',
     },
   ];
 
@@ -85,60 +83,43 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Action Bar: Buttons + Stats */}
-          <div className="flex flex-col xl:flex-row gap-8 xl:items-center">
-            {/* Buttons Group */}
-            <div className="flex flex-col sm:flex-row gap-4 shrink-0">
+          {/* Action Bar: Primary CTA + Rich Stats Grid */}
+          <div className="flex flex-col xl:flex-row gap-8 items-start xl:items-center">
+            {/* Primary CTA */}
+            <div className="flex-shrink-0">
               <Button
                 size="lg"
                 asChild
-                className="h-14 px-8 text-lg shadow-md hover:shadow-xl hover:scale-105 transition-all"
+                className="h-14 px-8 text-lg shadow-md hover:shadow-xl hover:scale-105 transition-all w-full sm:w-auto"
               >
                 <Link href="/research">
                   Explore Research <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                asChild
-                className="h-14 px-8 text-lg border-2 hover:bg-secondary/50 transition-all"
-              >
-                <Link href={siteConfig.links.cv} target="_blank">
-                  View CV <ExternalLink className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
             </div>
 
-            {/* Divider (Desktop) */}
-            <div className="hidden xl:block h-10 w-px bg-border/50"></div>
-
-            {/* Stats Group - Inline */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full xl:w-auto">
+            {/* Rich Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
               {stats.map((stat) => (
                 <div
                   key={stat.id}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-background/50 border border-border/50 hover:border-primary/30 transition-colors"
+                  className="group relative flex flex-col p-4 rounded-xl bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-background/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm"
                 >
-                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full text-primary flex-shrink-0">
-                    <stat.icon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-xl leading-none">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-2xl font-bold text-primary">
                       {stat.number}
                     </div>
-                    <div className="text-xs text-muted-foreground font-medium uppercase mt-0.5">
-                      {stat.label}
-                    </div>
+                    <stat.icon className="w-5 h-5 text-primary/40 group-hover:text-primary/70 transition-colors" />
+                  </div>
+                  <div className="text-sm font-semibold text-foreground/90 leading-tight">
+                    {stat.label}
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1 whitespace-pre-line leading-snug">
+                    {stat.description}
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Profiles Footer */}
-          <div className="mt-12 pt-6 border-t border-border/40">
-            <AcademicProfiles variant="horizontal" showLabels />
           </div>
         </div>
       </div>

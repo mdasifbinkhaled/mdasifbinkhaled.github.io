@@ -385,6 +385,23 @@ export const ProfileSidebar = memo(function ProfileSidebar({
             size="icon"
             asChild
             className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
+            title={isCollapsed ? 'Academia.edu Profile' : undefined}
+          >
+            <a
+              href={siteConfig.links.academiaEdu}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Academia.edu Profile"
+              onClick={handleLinkClick}
+            >
+              <BookOpenText className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+            </a>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            asChild
+            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group"
             title={isCollapsed ? 'ORCID Profile' : undefined}
           >
             <a
