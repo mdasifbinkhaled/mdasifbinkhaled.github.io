@@ -32,14 +32,14 @@ export function TeachingHeroStats({
           label="Students Taught"
           number={totalStudents}
           suffix="+"
-          variant="compact"
+          variant="glass"
         />
         <StatCard
           icon={GraduationCap}
           label="Courses Delivered"
           number={totalCourses}
           suffix="+"
-          variant="compact"
+          variant="glass"
         />
         <StatCard
           icon={Star}
@@ -47,14 +47,14 @@ export function TeachingHeroStats({
           number={averageRating}
           suffix="/5.0"
           decimals={1}
-          variant="compact"
+          variant="glass"
         />
         <StatCard
           icon={Calendar}
           label="Years Teaching"
           number={yearsTeaching}
           suffix="+"
-          variant="compact"
+          variant="glass"
         />
       </div>
     </section>

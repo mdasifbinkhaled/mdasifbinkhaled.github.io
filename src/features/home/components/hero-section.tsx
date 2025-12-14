@@ -10,6 +10,7 @@ import {
   Lightbulb,
 } from 'lucide-react';
 import Link from 'next/link';
+import { StatCard } from '@/shared/components/common/stat-card';
 
 /**
  * Hero Section Component
@@ -99,27 +100,14 @@ export function HeroSection() {
           {/* Rich Stats Grid - Full Width */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
             {stats.map((stat) => (
-              <div
+              <StatCard
                 key={stat.id}
-                className="group relative flex flex-col p-5 rounded-xl bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-background/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="text-3xl font-bold text-primary tracking-tight">
-                    {stat.number}
-                  </div>
-                  <div className="p-2 bg-primary/5 rounded-full group-hover:bg-primary/10 transition-colors">
-                    <stat.icon className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-sm font-bold text-foreground/90 uppercase tracking-wide text-[0.8rem]">
-                    {stat.label}
-                  </div>
-                  <div className="text-xs text-muted-foreground font-medium leading-relaxed">
-                    {stat.description}
-                  </div>
-                </div>
-              </div>
+                number={stat.number}
+                label={stat.label}
+                icon={stat.icon}
+                description={stat.description}
+                variant="glass"
+              />
             ))}
           </div>
         </div>

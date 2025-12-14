@@ -20,7 +20,7 @@ interface StatCardProps {
   /** Number of decimal places for numeric values */
   decimals?: number;
   /** Visual variant */
-  variant?: 'default' | 'compact';
+  variant?: 'default' | 'compact' | 'glass';
   /** Additional CSS classes */
   className?: string;
 }
@@ -28,16 +28,6 @@ interface StatCardProps {
 /**
  * StatCard Component
  * Reusable statistics card with icon, number, label, and optional description
- *
- * @example
- * // Basic usage
- * <StatCard number="7+" label="Years Teaching" icon={GraduationCap} />
- *
- * // With suffix and decimals
- * <StatCard number={4.7} label="Rating" icon={Star} suffix="/5.0" decimals={1} />
- *
- * // Compact variant
- * <StatCard number={300} label="Students" icon={Users} suffix="+" variant="compact" />
  */
 export function StatCard({
   number,
@@ -56,7 +46,41 @@ export function StatCard({
       : String(number);
 
   const isCompact = variant === 'compact';
+  const isGlass = variant === 'glass';
 
+  // Glass Variant (Hero Style)
+  if (isGlass) {
+    return (
+      <div
+        className={cn(
+          'group relative flex flex-col p-5 rounded-xl bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-background/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm',
+          className
+        )}
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-3xl font-bold text-primary tracking-tight">
+            {displayValue}
+            {suffix}
+          </div>
+          <div className="p-2 bg-primary/5 rounded-full group-hover:bg-primary/10 transition-colors">
+            <Icon className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
+          </div>
+        </div>
+        <div className="space-y-1">
+          <div className="text-sm font-bold text-foreground/90 uppercase tracking-wide text-[0.8rem]">
+            {label}
+          </div>
+          {description && (
+            <div className="text-xs text-muted-foreground font-medium leading-relaxed whitespace-pre-line">
+              {description}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // Default & Compact Variants (Legacy support or alternative styles)
   return (
     <Card
       className={cn(
@@ -76,14 +100,12 @@ export function StatCard({
           <Icon className={cn(isCompact ? 'w-5 h-5' : 'w-7 h-7')} />
         </div>
 
-        {/* Label first for compact variant (visual hierarchy) */}
         {isCompact && (
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
             {label}
           </p>
         )}
 
-        {/* Number display */}
         <div
           className={cn(
             'font-bold text-foreground',
@@ -98,14 +120,12 @@ export function StatCard({
           )}
         </div>
 
-        {/* Label for default variant */}
         {!isCompact && (
           <div className="text-sm font-medium text-muted-foreground mb-1">
             {label}
           </div>
         )}
 
-        {/* Optional description */}
         {description && (
           <div className="text-xs text-muted-foreground/80 mt-2">
             {description}
