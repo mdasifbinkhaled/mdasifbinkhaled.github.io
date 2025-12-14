@@ -48,7 +48,7 @@ export default function AppSidebarLayout({
         <aside
           id="desktop-sidebar"
           className={cn(
-            'relative hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground sticky top-0 h-screen self-start shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
+            'hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-40 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
             collapsed ? 'w-[60px]' : 'w-[300px]'
           )}
         >
@@ -67,11 +67,16 @@ export default function AppSidebarLayout({
               <ChevronLeft className="h-3 w-3" />
             )}
           </Button>
-          <ProfileSidebar isCollapsed={collapsed} />
+          <ProfileSidebar isCollapsed={collapsed} hideNav={true} />
         </aside>
 
         {/* Right column: navbar, content, footer. No inner scrollbars. */}
-        <div className="flex-1 min-w-0 flex flex-col">
+        <div
+          className={cn(
+            'flex-1 min-w-0 flex flex-col transition-all duration-300',
+            collapsed ? 'lg:ml-[60px]' : 'lg:ml-[300px]'
+          )}
+        >
           <header
             role="banner"
             className="z-10 bg-background/95 backdrop-blur-md border-b shadow-sm sticky top-0"
