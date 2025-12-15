@@ -48,10 +48,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 
 export function StudentTestimonials() {
   return (
-    <section
-      className="w-full py-8"
-      aria-labelledby="testimonials-heading"
-    >
+    <section className="w-full py-8" aria-labelledby="testimonials-heading">
       <h2
         id="testimonials-heading"
         className="text-2xl font-bold text-center mb-8 text-primary"

@@ -120,9 +120,7 @@ export default function ResearchPage() {
             <div className="flex items-start gap-4 p-4 bg-background/50 rounded-lg border border-border">
               <AlertCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium mb-2">
-                  Why It Matters
-                </p>
+                <p className="font-medium mb-2">Why It Matters</p>
                 <p className="text-sm text-muted-foreground">
                   In healthcare, AI decisions can mean life or death. When a
                   model predicts stroke risk or diagnoses a disease, doctors and
@@ -202,9 +200,7 @@ export default function ResearchPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">
-                Research Domains
-              </h3>
+              <h3 className="font-semibold mb-4">Research Domains</h3>
               <div className="flex flex-wrap gap-2">
                 {researchIdentity.currentFocus.domains.map((domain) => (
                   <Badge key={domain} variant="outline" className="text-sm">
@@ -247,9 +243,7 @@ export default function ResearchPage() {
                       <Badge variant="outline">{project.status}</Badge>
                       <Badge variant="secondary">{project.domain}</Badge>
                     </div>
-                    <h3 className="text-2xl font-bold mb-2">
-                      {project.title}
-                    </h3>
+                    <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
                     <p className="text-primary font-medium">
                       {project.tagline}
                     </p>

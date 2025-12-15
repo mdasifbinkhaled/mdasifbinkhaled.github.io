@@ -1,79 +1,69 @@
-import type { IconName } from '@/shared/components/common/icons'; // Added import
+/**
+ * ==========================================
+ * SHARED TYPE DEFINITIONS
+ * ==========================================
+ *
+ * Central type exports for the application.
+ * Types with Zod schemas are re-exported from validation/schemas.ts
+ * to maintain a Single Source of Truth.
+ *
+ * @version 4.0
+ * @author Md Asif Bin Khaled
+ */
 
-export type PublicationType =
-  | 'Conference'
-  | 'Journal'
-  | 'Workshop'
-  | 'Preprint'
-  | 'In Progress'
-  | 'Book Chapter'
-  | 'Thesis';
+import type { IconName } from '@/shared/components/common/icons';
 
-export interface ExperienceItem {
-  id: string;
-  title: string;
-  institution: string;
-  location?: string;
-  duration: string;
-  description: string[];
-  logoUrl?: string | null;
-  tags?: string[];
-  type?: 'Academic' | 'Research' | 'Industry' | 'Teaching Support';
-}
+// ============================================================================
+// RE-EXPORTED FROM ZOD SCHEMAS (Single Source of Truth)
+// ============================================================================
+// These types are derived from Zod schemas for runtime validation consistency.
 
-export interface PublicationItem {
-  id: string;
-  title: string;
-  authors: string[];
-  venue: string;
-  year: number;
-  type: PublicationType;
-  link?: string;
-  pdfLink?: string;
-  abstract?: string;
-  keywords?: string[];
-  doi?: string;
-  pages?: string;
-  volume?: string;
-  issue?: string;
-}
+export type {
+  PublicationType,
+  PublicationItem,
+  ExperienceType,
+  ExperienceItem,
+  CourseInstitution,
+  CourseLevel,
+  CourseStatus,
+  CourseAssessmentBreakdown,
+  CourseData,
+} from '@/shared/lib/validation/schemas';
+
+// ============================================================================
+// NAVIGATION TYPES
+// ============================================================================
 
 export interface NavItem {
   href: string;
   label: string;
-  icon?: IconName; // Changed from LucideIcon to IconName (string)
+  icon?: IconName;
   sectionId: string;
   external?: boolean;
   disabled?: boolean;
   children?: NavItem[];
 }
 
+// ============================================================================
+// SKILL TYPES
+// ============================================================================
+
 export interface Skill {
   category: string;
   items: string[];
 }
 
-// Enhanced academic-specific types
-export type CourseInstitution = 'IUB' | 'BRACU';
-export type CourseLevel = 'undergraduate' | 'graduate';
-export type CourseStatus = 'completed' | 'ongoing' | 'upcoming';
+// ============================================================================
+// EXTENDED COURSE TYPES (for composition pattern)
+// ============================================================================
 
-export interface CourseAssessmentBreakdown {
-  midterm?: number;
-  final?: number;
-  assignments?: number;
-  projects?: number;
-  quizzes?: number;
-  participation?: number;
-}
-
-// Core course information (required fields only)
+// Core course information (for selective imports)
 export interface BaseCourseInfo {
   id: string;
   code: string;
   title: string;
-  institution: CourseInstitution;
-  level: CourseLevel;
+  institution: 'IUB' | 'BRACU';
+  level: 'undergraduate' | 'graduate';
   credits: number;
   semester: string;
   year: number;
@@ -88,7 +78,6 @@ export interface CourseDetails {
   technologies?: string[];
   assignments?: string[];
   projects?: string[];
-  assessment?: CourseAssessmentBreakdown;
 }
 
 // Optional course metrics (feedback and statistics)
@@ -101,15 +90,12 @@ export interface CourseMetrics {
 // Optional course presentation
 export interface CoursePresentation {
   iconName?: IconName;
-  status?: CourseStatus;
+  status?: 'completed' | 'ongoing' | 'upcoming';
 }
 
-// Complete course data type combining all interfaces
-export interface CourseData
-  extends BaseCourseInfo,
-    CourseDetails,
-    CourseMetrics,
-    CoursePresentation {}
+// ============================================================================
+// ACADEMIC TYPES
+// ============================================================================
 
 export interface AcademicAward {
   id: string;
@@ -131,7 +117,10 @@ export interface ResearchArea {
   icon?: IconName;
 }
 
-// Theme-related types
+// ============================================================================
+// THEME TYPES
+// ============================================================================
+
 export type ThemeName =
   | 'light'
   | 'dark'
@@ -159,7 +148,10 @@ export interface ThemeConfig {
   };
 }
 
-// Component prop types
+// ============================================================================
+// COMPONENT PROP TYPES
+// ============================================================================
+
 export interface BaseComponentProps {
   className?: string;
   children?: React.ReactNode;

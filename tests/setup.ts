@@ -140,8 +140,10 @@ beforeAll(() => {
 // Mock Radix UI components
 vi.mock('@radix-ui/react-dialog', () => {
   const React = require('react');
+  // Filter out Radix-specific props that shouldn't be passed to DOM
+  const filterDomProps = ({ asChild, onOpenChange, ...rest }: any) => rest;
   const mockComponent = ({ children, ...props }: any) =>
-    React.createElement('div', props, children);
+    React.createElement('div', filterDomProps(props), children);
   return {
     Root: mockComponent,
     Trigger: ({ children, ...props }: any) =>
@@ -177,7 +179,7 @@ vi.mock('@radix-ui/react-dialog', () => {
 vi.mock('@radix-ui/react-visually-hidden', () => {
   const React = require('react');
   return {
-    VisuallyHidden: ({ children, ...props }: any) =>
+    VisuallyHidden: ({ children, asChild, ...props }: any) =>
       React.createElement(
         'span',
         {

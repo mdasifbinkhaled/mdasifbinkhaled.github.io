@@ -71,9 +71,7 @@ export default function PublicationsPage() {
                       <IconComponent className="h-8 w-8 text-primary" />
                     </div>
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">
-                    {area.name}
-                  </h3>
+                  <h3 className="font-semibold text-lg mb-2">{area.name}</h3>
                   <p className="text-sm text-muted-foreground">
                     {area.description}
                   </p>

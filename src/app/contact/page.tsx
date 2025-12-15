@@ -89,11 +89,7 @@ export default function ContactPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-              <Button
-                variant="outline"
-                asChild
-                className="py-6 text-base"
-              >
+              <Button variant="outline" asChild className="py-6 text-base">
                 <a
                   href={siteConfig.links.github}
                   target="_blank"

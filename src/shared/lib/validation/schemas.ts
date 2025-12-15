@@ -254,8 +254,10 @@ export function validateData<T>(
     );
   }
 
-  // eslint-disable-next-line no-console
-  console.log(`✅ Validation passed for ${dataName}`);
+  if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line no-console
+    console.log(`✅ Validation passed for ${dataName}`);
+  }
   return result.data;
 }
 
@@ -283,3 +285,41 @@ export function validateDataSafe<T>(
 
   return { success: true, data: result.data };
 }
+
+// ============================================================================
+// INFERRED TYPES (Single Source of Truth)
+// ============================================================================
+// These types are derived directly from the Zod schemas above.
+// Import these in types/index.ts to avoid type duplication.
+
+/** Publication type enum inferred from schema */
+export type PublicationType = z.infer<typeof publicationTypeSchema>;
+
+/** Publication item structure inferred from schema */
+export type PublicationItem = z.infer<typeof publicationItemSchema>;
+
+/** Experience type enum inferred from schema */
+export type ExperienceType = z.infer<typeof experienceTypeSchema>;
+
+/** Experience item structure inferred from schema */
+export type ExperienceItem = z.infer<typeof experienceItemSchema>;
+
+/** Course institution enum inferred from schema */
+export type CourseInstitution = z.infer<typeof courseInstitutionSchema>;
+
+/** Course level enum inferred from schema */
+export type CourseLevel = z.infer<typeof courseLevelSchema>;
+
+/** Course status enum inferred from schema */
+export type CourseStatus = z.infer<typeof courseStatusSchema>;
+
+/** Course assessment breakdown inferred from schema */
+export type CourseAssessmentBreakdown = z.infer<
+  typeof courseAssessmentBreakdownSchema
+>;
+
+/** Icon name enum inferred from schema */
+export type IconNameFromSchema = z.infer<typeof iconNameSchema>;
+
+/** Complete course data structure inferred from schema */
+export type CourseData = z.infer<typeof courseDataSchema>;
