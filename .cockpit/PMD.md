@@ -201,16 +201,56 @@ Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `Experienc
 
 ---
 
-## 11. QA Checklist
+## 11. Teaching Data Source of Truth (Verified 2025-12-16)
 
-- [ ] `npm run typecheck`
-- [ ] `npm run lint`
-- [ ] `npm run test:run`
-- [ ] `npm run build`
+### 11.1 Official Position
+
+- **Role**: Senior Lecturer
+- **Department**: Computer Science & Engineering
+- **School**: School of Engineering, Technology & Sciences (SETS)
+- **Institution**: Independent University, Bangladesh (IUB)
+
+### 11.2 Validated Courses
+
+| Code    | Title                           | Period    | Role            |
+| ------- | ------------------------------- | --------- | --------------- |
+| CSE 101 | Intro to Programming            | 2023+     | Senior Lecturer |
+| CSE 110 | Fundamentals of Computer System | 2019-2023 | Lecturer        |
+| CSE 201 | Discrete Mathematics            | 2019-2023 | Lecturer        |
+| CSE 203 | Data Structures                 | 2019-2023 | Lecturer        |
+| CSE 211 | Algorithms                      | 2019+     | Both            |
+| CSE 317 | Numerical Methods               | 2019-2023 | Lecturer        |
+| CSE 401 | Finite Automata                 | 2023+     | Senior Lecturer |
+
+### 11.3 Q/A Archive (2025-12-16)
+
+> **Q1: Position Title?**
+> A: Senior Lecturer (CV verified), Department of CSE, SETS.
+>
+> **Q2: Career Timeline?**
+> A: BRACU Student Tutor (2015-2017) -> IUB TA (2017) -> BRACU Lecturer (2017-2018) -> IUB Lecturer (2019-2023) -> IUB Senior Lecturer (2023-Present).
+>
+> **Q3: Verified Courses?**
+> A: See table in 11.2 above. CSE 205, 403, 401 (old) removed as invalid.
+>
+> **Q4: BRACU Role?**
+> A: Adjunct Lecturer (Sep 2017 - Dec 2018) for lab courses (Graphics, Numerical Methods, Compiler Design, Android).
+>
+> **Q5: Teaching Metrics?**
+> A: Average Evaluation: 4.32/5. Years Teaching: 10+.
 
 ---
 
-## 12. Scripts
+## 12. QA Checklist
+
+- [x] `npm run typecheck`
+- [x] `npm run lint`
+- [x] `npm run test:run`
+- [x] `npm run build`
+
+---
+
+## 13. Scripts
 
 | Command            | Purpose          |
 | ------------------ | ---------------- |
@@ -222,10 +262,11 @@ Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `Experienc
 
 ---
 
-## 13. Changes Log
+## 14. Changes Log
 
 | Date       | Version | Changes                                                          |
 | ---------- | ------- | ---------------------------------------------------------------- |
+| 2025-12-16 | 4.3.0   | Teaching data finalized based on CV verification                 |
 | 2025-12-16 | 4.2.0   | About page refactored into 12 modular components, Next.js 15.5.4 |
 | 2025-12-16 | 4.1.0   | Added all 18 UI components, 13 common components, courses.ts     |
 | 2025-12-16 | 4.0.0   | Hooks, CI/CD, test architecture, SEO                             |
