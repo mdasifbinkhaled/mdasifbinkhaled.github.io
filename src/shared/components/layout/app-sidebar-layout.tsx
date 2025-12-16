@@ -14,6 +14,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { BackToTop } from '@/shared/components/common/back-to-top';
 import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
 import { Navbar } from '@/shared/components/navigation/navbar';
+import { siteConfig } from '@/shared/config/site';
 
 export default function AppSidebarLayout({
   children,
@@ -92,7 +93,7 @@ export default function AppSidebarLayout({
 
           <footer className="shrink-0 py-6 px-6 text-center border-t bg-background/50 backdrop-blur">
             <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} Md Asif Bin Khaled.
+              &copy; {new Date().getFullYear()} {siteConfig.author}.
             </p>
             <BackToTop />
           </footer>

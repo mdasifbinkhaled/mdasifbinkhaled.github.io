@@ -36,8 +36,8 @@ function buildScholarStructuredData(): JsonLd {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: siteConfig.author,
-    givenName: 'Md Asif Bin',
-    familyName: 'Khaled',
+    givenName: siteConfig.givenName,
+    familyName: siteConfig.familyName,
     jobTitle: siteConfig.jobTitle,
     workLocation: {
       '@type': 'Place',

@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardContent,
 } from '@/shared/components/ui/card';
-import { GraduationCap } from 'lucide-react';
+import { educationData } from '@/shared/lib/data/education';
 
 export function EducationSection() {
   return (
@@ -13,66 +13,40 @@ export function EducationSection() {
         Education
       </h2>
       <div className="grid gap-8 md:grid-cols-2">
-        <Card className="shadow-md hover:shadow-xl transition-all duration-300">
-          <CardHeader className="flex flex-row items-start gap-4">
-            <GraduationCap className="h-10 w-10 text-primary mt-1 flex-shrink-0" />
-            <div>
-              <CardTitle className="text-xl">
-                M.Sc in Computer Science
-              </CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Independent University, Bangladesh (IUB) - Dhaka, Bangladesh
+        {educationData.map((edu) => (
+          <Card
+            key={edu.id}
+            className="shadow-md hover:shadow-xl transition-all duration-300"
+          >
+            <CardHeader className="flex flex-row items-start gap-4">
+              <edu.icon className="h-10 w-10 text-primary mt-1 flex-shrink-0" />
+              <div>
+                <CardTitle className="text-xl">{edu.degree}</CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  {edu.institution} - {edu.location}
+                </p>
+                <p className="text-sm text-muted-foreground">{edu.duration}</p>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">{edu.distinction}</p>
+              <p className="mt-2 text-muted-foreground">
+                <strong>Thesis:</strong> {edu.thesis.title}
               </p>
-              <p className="text-sm text-muted-foreground">
-                May 2017 - Dec 2018
+              <p className="text-muted-foreground">
+                <strong>Advisor:</strong> {edu.thesis.advisor}
               </p>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Graduated with Distinction (Cum Laude)
-            </p>
-            <p className="mt-2 text-muted-foreground">
-              <strong>Thesis:</strong> Word Sense Disambiguation of Bengali
-              Words using FP-Growth Algorithm
-            </p>
-            <p className="text-muted-foreground">
-              <strong>Advisor:</strong> Dr. Mahady Hasan
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="shadow-md hover:shadow-xl transition-all duration-300">
-          <CardHeader className="flex flex-row items-start gap-4">
-            <GraduationCap className="h-10 w-10 text-primary mt-1 flex-shrink-0" />
-            <div>
-              <CardTitle className="text-xl">
-                B.Sc in Computer Science and Engineering
-              </CardTitle>
-              <p className="text-sm text-muted-foreground">
-                BRAC University (BRACU) - Dhaka, Bangladesh
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Jan 2013 - Apr 2017
-              </p>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Graduated with Highest Distinction (Summa Cum Laude)
-            </p>
-            <p className="mt-2 text-muted-foreground">
-              <strong>Thesis:</strong> Exploring Deep Features: Deeper Fully
-              Convolutional Neural Network for Image Segmentation
-            </p>
-            <p className="text-muted-foreground">
-              <strong>Advisor:</strong> Mr. Moin Mostakim
-            </p>
-            <p className="mt-2 text-muted-foreground font-medium">
-              Achieved Vice Chancellor&apos;s Award for Academic Excellence 6
-              times.
-            </p>
-          </CardContent>
-        </Card>
+              {edu.achievements?.map((achievement, idx) => (
+                <p
+                  key={`${edu.id}-achievement-${idx}`}
+                  className="mt-2 text-muted-foreground font-medium"
+                >
+                  {achievement}
+                </p>
+              ))}
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </section>
   );

@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { AppProviders } from '@/shared/providers/app-providers';
 import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
 import { SkipLink } from '@/shared/components/common/skip-link';
+import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
 import { getPersonJsonLd } from '@/shared/lib/seo/json-ld';
 import '@/app/globals.css';
@@ -13,11 +14,11 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const ANALYTICS_ENABLED = process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true';
 
 export const metadata: Metadata = {
-  title: 'Md Asif Bin Khaled',
-  description: 'Portfolio of Md Asif Bin Khaled',
-  metadataBase: new URL('https://mdasifbinkhaled.github.io'),
+  title: siteConfig.author,
+  description: siteConfig.description,
+  metadataBase: new URL(siteConfig.url),
   alternates: { canonical: '/' },
-  openGraph: { title: 'Md Asif Bin Khaled', images: [assetPaths.ogImage] },
+  openGraph: { title: siteConfig.author, images: [assetPaths.ogImage] },
 };
 
 export default function RootLayout({

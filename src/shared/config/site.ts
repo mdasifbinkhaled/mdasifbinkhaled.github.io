@@ -20,6 +20,10 @@ export type SiteConfig = {
   links: SiteLinks;
   keywords: string[];
   author: string;
+  /** Given name for structured data */
+  givenName: string;
+  /** Family name for structured data */
+  familyName: string;
   email: string;
   phone: string;
   address: string;
@@ -74,6 +78,8 @@ export const siteConfig: SiteConfig = {
     'Bangladesh',
   ],
   author: 'Md Asif Bin Khaled',
+  givenName: 'Md Asif Bin',
+  familyName: 'Khaled',
   email: 'mdasifbinkhaled@gmail.com',
   phone: '(+88) 01676076329',
   address: 'Bashundhara R/A, Dhaka - 1212, Bangladesh',
