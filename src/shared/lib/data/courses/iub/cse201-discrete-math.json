@@ -1,0 +1,56 @@
+{
+  "id": "iub-cse201-fall2023",
+  "code": "CSE 201",
+  "title": "Discrete Mathematics",
+  "institution": "IUB",
+  "hasDetailPage": true,
+  "level": "undergraduate",
+  "credits": 3,
+  "semester": "Fall",
+  "year": 2023,
+  "description": "Mathematical foundations for computer science including logic, sets, relations, functions, and graph theory.",
+  "objectives": [
+    "Understand propositional and predicate logic",
+    "Master set theory and relations",
+    "Learn combinatorics and counting techniques",
+    "Apply graph theory to computational problems"
+  ],
+  "outcomes": [
+    "Students can construct mathematical proofs",
+    "Students understand recursive definitions",
+    "Students can solve combinatorial problems",
+    "Students can apply graph theory algorithms"
+  ],
+  "topics": [
+    "Propositional Logic",
+    "Predicate Logic",
+    "Set Theory",
+    "Relations and Functions",
+    "Counting and Combinatorics",
+    "Graph Theory",
+    "Trees and Spanning Trees"
+  ],
+  "technologies": ["LaTeX", "Python", "MATLAB"],
+  "assignments": [
+    "Logic Proofs",
+    "Set Operations",
+    "Combinatorics Problems",
+    "Graph Algorithms"
+  ],
+  "projects": ["Mathematical Proof System", "Graph Visualization Tool"],
+  "assessment": {
+    "midterm": 25,
+    "final": 35,
+    "assignments": 25,
+    "projects": 15
+  },
+  "enrollmentCount": 35,
+  "rating": 4.3,
+  "feedback": [
+    "Clear explanation of abstract concepts",
+    "Good balance of theory and practice",
+    "Helpful problem-solving sessions"
+  ],
+  "iconName": "Calculator",
+  "status": "completed"
+}

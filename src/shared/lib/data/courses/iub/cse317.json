@@ -1,13 +1,14 @@
 {
-  "id": "iub-cse303-fall2023",
-  "code": "CSE 303",
+  "id": "iub-cse317-fall2023",
+  "code": "CSE 317",
   "title": "Numerical Methods",
   "institution": "IUB",
+  "hasDetailPage": true,
   "level": "undergraduate",
   "credits": 3,
   "semester": "Fall",
   "year": 2023,
-  "description": "Computational techniques for solving mathematical problems using numerical algorithms.",
+  "description": "Computational techniques for solving mathematical problems using numerical algorithms, including root finding, interpolation, and differential equations.",
   "objectives": [
     "Understand numerical computation concepts",
     "Implement numerical algorithms",
@@ -51,7 +52,7 @@
     "projects": 15
   },
   "enrollmentCount": 28,
-  "rating": 4.5,
+  "rating": 4.3,
   "feedback": [
     "Great integration of theory and programming",
     "MATLAB sessions were very helpful",

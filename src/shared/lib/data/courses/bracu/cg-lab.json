@@ -1,12 +1,12 @@
 {
-  "id": "bracu-cg-lab-spring2022",
+  "id": "bracu-cg-lab-fall2018",
   "code": "CSE 423",
   "title": "Computer Graphics Lab",
   "institution": "BRACU",
   "level": "undergraduate",
   "credits": 1,
-  "semester": "Spring",
-  "year": 2022,
+  "semester": "Fall",
+  "year": 2018,
   "description": "Practical application of computer graphics principles including 2D/3D transformations, rendering, and OpenGL programming.",
   "objectives": [
     "Implement graphics algorithms",

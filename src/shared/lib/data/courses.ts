@@ -11,30 +11,30 @@ export const institutionNames: Record<CourseInstitution, string> = {
   BRACU: 'BRAC University',
 };
 
-// Import IUB course JSON files
-import cse101 from './courses/iub/cse101.json';
-import cse201 from './courses/iub/cse201.json';
-import cse203 from './courses/iub/cse203.json';
-import cse205 from './courses/iub/cse205.json';
-import cse303 from './courses/iub/cse303.json';
-import cse401 from './courses/iub/cse401.json';
-import cse403 from './courses/iub/cse403.json';
+// Import IUB course JSON files (CV-verified courses)
+import cse101 from './courses/iub/cse101.json'; // Introduction to Programming
+import cse203 from './courses/iub/cse203.json'; // Data Structures
+import cse211 from './courses/iub/cse211.json'; // Algorithms
+import cse201 from './courses/iub/cse201-discrete-math.json'; // Discrete Mathematics
+import cse317 from './courses/iub/cse317.json'; // Numerical Methods
+import finiteAutomata from './courses/iub/finite-automata.json'; // Finite Automata and Computability
+import fundamentalsCs from './courses/iub/fundamentals-cs.json'; // Fundamentals of Computer System
 
-// Import BRACU course JSON files
+// Import BRACU course JSON files (Adjunct Lecturer Sep 2017 - Dec 2018)
 import cgLab from './courses/bracu/cg-lab.json';
 import nmLab from './courses/bracu/nm-lab.json';
 import cdLab from './courses/bracu/cd-lab.json';
 import androidLab from './courses/bracu/android-lab.json';
 
-// IUB Courses (as Senior Lecturer)
+// IUB Courses (Senior Lecturer Feb 2023+ & Lecturer Jan 2019-Feb 2023)
 const rawCoursesTaughtIUB: CourseData[] = [
-  cse101 as CourseData,
-  cse201 as CourseData,
-  cse203 as CourseData,
-  cse205 as CourseData,
-  cse303 as CourseData,
-  cse401 as CourseData,
-  cse403 as CourseData,
+  cse101 as CourseData, // Introduction to Programming
+  cse203 as CourseData, // Data Structures
+  cse211 as CourseData, // Algorithms
+  cse201 as CourseData, // Discrete Mathematics
+  cse317 as CourseData, // Numerical Methods
+  finiteAutomata as CourseData, // Finite Automata and Computability
+  fundamentalsCs as CourseData, // Fundamentals of Computer System
 ];
 
 /**
@@ -46,7 +46,7 @@ export const coursesTaughtIUB = validateData(
   'IUB courses'
 );
 
-// BRACU Courses (as Teaching Assistant)
+// BRACU Courses (Adjunct Lecturer Sep 2017 - Dec 2018)
 const rawCoursesTaughtBRACU: CourseData[] = [
   cgLab as CourseData,
   nmLab as CourseData,

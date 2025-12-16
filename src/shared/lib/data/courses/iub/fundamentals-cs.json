@@ -1,0 +1,56 @@
+{
+  "id": "iub-cse110-fall2022",
+  "code": "CSE 110",
+  "title": "Fundamentals of Computer System",
+  "institution": "IUB",
+  "hasDetailPage": true,
+  "level": "undergraduate",
+  "credits": 3,
+  "semester": "Fall",
+  "year": 2022,
+  "description": "Introduction to computer systems architecture, including hardware components, operating systems, and basic networking concepts.",
+  "objectives": [
+    "Understand computer hardware components",
+    "Learn operating system fundamentals",
+    "Master basic networking concepts",
+    "Understand system software and utilities"
+  ],
+  "outcomes": [
+    "Students can explain computer architecture",
+    "Students understand OS concepts",
+    "Students can troubleshoot basic system issues",
+    "Students understand network fundamentals"
+  ],
+  "topics": [
+    "Computer Architecture",
+    "CPU and Memory",
+    "Storage Systems",
+    "Operating Systems",
+    "File Systems",
+    "Networking Basics",
+    "System Software"
+  ],
+  "technologies": ["Linux", "Windows", "Virtual Machines", "Network Tools"],
+  "assignments": [
+    "Hardware Identification",
+    "OS Installation Lab",
+    "Network Configuration",
+    "System Administration Tasks"
+  ],
+  "projects": ["System Setup Project", "Network Configuration Lab"],
+  "assessment": {
+    "midterm": 25,
+    "final": 35,
+    "assignments": 25,
+    "lab": 15
+  },
+  "enrollmentCount": 45,
+  "rating": 4.4,
+  "feedback": [
+    "Practical hands-on approach",
+    "Good introduction to CS fundamentals",
+    "Helpful lab sessions"
+  ],
+  "iconName": "Cpu",
+  "status": "completed"
+}

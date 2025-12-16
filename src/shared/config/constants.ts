@@ -103,11 +103,11 @@ export const TEACHING_METRICS = {
   /** Average students per course */
   AVERAGE_CLASS_SIZE: 30,
 
-  /** Total approximate students taught */
-  TOTAL_STUDENTS: 300,
+  /** Total approximate students taught (placeholder) */
+  TOTAL_STUDENTS: 500,
 
-  /** Average student rating out of 5.0 */
-  AVERAGE_RATING: 4.7,
+  /** Average student evaluation score out of 5.0 (from CV) */
+  AVERAGE_RATING: 4.32,
 
   /** Maximum rating scale */
   MAX_RATING: 5.0,

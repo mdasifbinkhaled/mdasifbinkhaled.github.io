@@ -35,6 +35,10 @@ export type SiteConfig = {
   institution: string;
   /** Short institution name */
   institutionShort: string;
+  /** Department name */
+  department: string;
+  /** School/Faculty name */
+  school: string;
 };
 
 export const siteConfig: SiteConfig = {
@@ -89,4 +93,6 @@ export const siteConfig: SiteConfig = {
   jobTitle: 'Senior Lecturer & Researcher',
   institution: 'Independent University, Bangladesh (IUB)',
   institutionShort: 'IUB',
+  department: 'Computer Science & Engineering',
+  school: 'School of Engineering, Technology & Sciences (SETS)',
 };
