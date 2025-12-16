@@ -91,7 +91,6 @@ Commit messages are validated automatically with `commitlint`.
 
 ### Pull Request Checklist
 
-- [ ] Code follows the project's style guidelines
 - [ ] Tests added/updated and all tests pass
 - [ ] TypeScript types are properly defined
 - [ ] Documentation updated (if applicable)
@@ -173,7 +172,7 @@ Feature requests are welcome! Please open an issue describing:
 ## 📞 Getting Help
 
 - Check existing issues and discussions
-- Review the [documentation](docs/blueprint.md)
+- Review the project documentation
 - Reach out via issue comments
 
 ## 📜 Code of Conduct
