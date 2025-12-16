@@ -123,13 +123,13 @@ export function FilterBar({
           </button>
           {availableYears
             .slice(0, DISPLAY_LIMITS.ACADEMIC_SEARCH_YEARS)
-            .map((year, index) => {
+            .map((year) => {
               const yearValue = year?.toString();
               const isSelected = !!yearValue && selectedYear === yearValue;
 
               return (
                 <button
-                  key={yearValue ?? `year-${index}`}
+                  key={yearValue ?? 'unknown-year'}
                   type="button"
                   role="button"
                   aria-pressed={Boolean(isSelected)}

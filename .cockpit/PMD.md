@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Single Source of Truth** | **Version:** 4.1.0 | **Status:** Active | **Last Updated:** 2025-12-16
+> **Single Source of Truth** | **Version:** 4.2.0 | **Status:** Active | **Last Updated:** 2025-12-16
 
 ---
 
@@ -19,10 +19,10 @@
 
 ### 2.1 Directory Structure
 
-```
+```text
 src/
 ├── app/                    # Next.js App Router
-├── features/               # Feature modules (academic, home, publications, teaching)
+├── features/               # Feature modules (about, academic, home, publications, teaching)
 ├── shared/                 # Reusable infrastructure
 │   ├── components/         # common, layout, navigation, ui
 │   ├── config/             # SSoT configuration
@@ -103,7 +103,7 @@ src/
 
 ---
 
-## 4. Custom Hooks (6)
+## 4. Custom Hooks (6 in 4 files)
 
 | Hook                 | Purpose                   |
 | -------------------- | ------------------------- |
@@ -178,12 +178,14 @@ Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `Experienc
 
 ## 9. Dependencies
 
-| Package    | Version          |
-| ---------- | ---------------- |
-| Next.js    | 15.6.0-canary.36 |
-| TypeScript | 5.6.x            |
-| Zod        | 4.1.9            |
-| Tailwind   | 3.4.13           |
+| Package    | Version |
+| ---------- | ------- |
+| Next.js    | 15.5.4  |
+| React      | 18.3.1  |
+| TypeScript | 5.9.2   |
+| Tailwind   | 3.4.17  |
+| Zod        | 4.1.9   |
+| Vitest     | 3.2.4   |
 
 ---
 
@@ -221,11 +223,12 @@ Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `Experienc
 
 ## 13. Changes Log
 
-| Date       | Version | Changes                                                      |
-| ---------- | ------- | ------------------------------------------------------------ |
-| 2025-12-16 | 4.1.0   | Added all 18 UI components, 13 common components, courses.ts |
-| 2025-12-16 | 4.0.0   | Hooks, CI/CD, test architecture, SEO                         |
-| 2025-12-15 | 3.0.0   | Type unification                                             |
+| Date       | Version | Changes                                                          |
+| ---------- | ------- | ---------------------------------------------------------------- |
+| 2025-12-16 | 4.2.0   | About page refactored into 12 modular components, Next.js 15.5.4 |
+| 2025-12-16 | 4.1.0   | Added all 18 UI components, 13 common components, courses.ts     |
+| 2025-12-16 | 4.0.0   | Hooks, CI/CD, test architecture, SEO                             |
+| 2025-12-15 | 3.0.0   | Type unification                                                 |
 
 ---
 

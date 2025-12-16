@@ -2,74 +2,7 @@ import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
 import { afterEach, beforeAll, beforeEach, vi } from 'vitest';
 
-// Mock @radix-ui/react-dialog
-vi.mock('@radix-ui/react-dialog', () => {
-  const React = require('react');
-
-  return {
-    Root: ({ children, open, ...props }: any) => {
-      // Pass the open state down through context or data attribute
-      return React.createElement(
-        'div',
-        {
-          'data-testid': 'dialog-root',
-          'data-open': open?.toString(),
-          style: { display: open ? 'block' : 'none' },
-          ...props,
-        },
-        children
-      );
-    },
-    Portal: ({ children, ...props }: any) =>
-      React.createElement(
-        'div',
-        { 'data-testid': 'dialog-portal', ...props },
-        children
-      ),
-    Overlay: ({ children, ...props }: any) =>
-      React.createElement(
-        'div',
-        { 'data-testid': 'dialog-overlay', ...props },
-        children
-      ),
-    Content: ({ children, ...props }: any) => {
-      return React.createElement(
-        'div',
-        {
-          role: 'dialog',
-          'data-testid': 'dialog-content',
-          'aria-labelledby': 'dialog-title',
-          ...props,
-        },
-        children
-      );
-    },
-    Close: ({ children, ...props }: any) =>
-      React.createElement(
-        'button',
-        { 'data-testid': 'dialog-close', ...props },
-        children
-      ),
-    Title: ({ children, ...props }: any) =>
-      React.createElement(
-        'h2',
-        { id: 'dialog-title', 'data-testid': 'dialog-title', ...props },
-        children
-      ),
-    Description: ({ children, ...props }: any) =>
-      React.createElement(
-        'p',
-        { 'data-testid': 'dialog-description', ...props },
-        children
-      ),
-    Trigger: ({ children, ...props }: any) =>
-      React.createElement(
-        'button',
-        { 'data-testid': 'dialog-trigger', ...props },
-        children
-      ),
-  };
-});
+// React import for test components
 import React from 'react';
 
 // Mock window.matchMedia for next-themes
