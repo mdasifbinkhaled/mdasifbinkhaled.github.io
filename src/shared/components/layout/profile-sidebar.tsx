@@ -108,7 +108,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                 {siteConfig.author}
               </h3>
               <p className="text-sm text-sidebar-foreground/80 mt-2 font-medium leading-relaxed">
-                Senior Lecturer & Researcher
+                {siteConfig.jobTitle}
               </p>
               <p className="text-xs text-sidebar-foreground/60 mt-0.5 px-2">
                 {siteConfig.address.split(',')[0]}

@@ -70,7 +70,7 @@ export function FilterBar({
                 key={type}
                 type="button"
                 role="button"
-                aria-pressed={Boolean(isSelected)}
+                aria-pressed={isSelected}
                 aria-label={`Filter by ${type}`}
                 aria-describedby="type-filter-label"
                 onClick={() => onToggleType(type)}
@@ -108,7 +108,7 @@ export function FilterBar({
           <button
             type="button"
             role="button"
-            aria-pressed={Boolean(!selectedYear)}
+            aria-pressed={!selectedYear}
             aria-label="Show all years"
             aria-describedby="year-filter-label"
             onClick={() => onSelectYear(null)}
@@ -132,7 +132,7 @@ export function FilterBar({
                   key={yearValue ?? 'unknown-year'}
                   type="button"
                   role="button"
-                  aria-pressed={Boolean(isSelected)}
+                  aria-pressed={isSelected}
                   aria-label={`Filter by year ${year || 'unknown'}`}
                   aria-describedby="year-filter-label"
                   onClick={() => onSelectYear(yearValue ?? null)}

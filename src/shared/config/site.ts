@@ -27,6 +27,8 @@ export type SiteConfig = {
   email: string;
   phone: string;
   address: string;
+  /** Short job role (e.g. Senior Lecturer) */
+  role: string;
   /** Primary job title for consistent usage across the site */
   jobTitle: string;
   /** Current institution */
@@ -83,6 +85,7 @@ export const siteConfig: SiteConfig = {
   email: 'mdasifbinkhaled@gmail.com',
   phone: '(+88) 01676076329',
   address: 'Bashundhara R/A, Dhaka - 1212, Bangladesh',
+  role: 'Senior Lecturer',
   jobTitle: 'Senior Lecturer & Researcher',
   institution: 'Independent University, Bangladesh (IUB)',
   institutionShort: 'IUB',

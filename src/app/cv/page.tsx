@@ -162,10 +162,10 @@ export default function CVPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="border-l-4 border-primary pl-4">
-                  <h3 className="font-semibold">Senior Lecturer</h3>
-                  <p className="text-sm">
-                    Independent University, Bangladesh • Feb 2023 - Present
-                  </p>
+                  <h3 className="font-semibold">{siteConfig.role}</h3>
+                  <div className="text-sm text-muted-foreground flex items-center gap-1">
+                    {siteConfig.institution} • Feb 2023 - Present
+                  </div>
                   <p className="text-sm text-muted-foreground mt-1">
                     Teaching advanced CSE courses and supervising student
                     research.

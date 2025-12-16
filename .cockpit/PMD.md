@@ -125,6 +125,7 @@ src/
 | About Page         | `lib/data/about.ts`                 |
 | Courses            | `lib/data/courses/` (11 JSON files) |
 | Courses Loader     | `lib/data/courses.ts`               |
+| Education          | `lib/data/education.ts`             |
 | Experience         | `lib/data/experience.ts`            |
 | News               | `lib/data/news.ts`                  |
 | Publications       | `lib/data/publications.ts`          |

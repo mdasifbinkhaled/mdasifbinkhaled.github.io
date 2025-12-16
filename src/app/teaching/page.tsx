@@ -57,7 +57,7 @@ export default function TeachingPage() {
             <p className="text-lg text-muted-foreground leading-relaxed text-left">
               As a{' '}
               <strong className="text-foreground">
-                Senior Lecturer at Independent University, Bangladesh
+                {siteConfig.role} at {siteConfig.institution}
               </strong>
               , I specialize in teaching computer science fundamentals,
               algorithms, system design, and mathematical foundations. My
