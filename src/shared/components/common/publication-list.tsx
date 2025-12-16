@@ -12,7 +12,7 @@ import {
 } from '@/shared/components/ui/select';
 import { BookOpenText } from 'lucide-react';
 import { Input } from '@/shared/components/ui/input';
-import { PublicationCard } from '@/features/publications/publication-card';
+import { PublicationCard } from './publication-card';
 import { useDebounce } from '@/shared/hooks';
 import { TIMING } from '@/shared/config/constants';
 

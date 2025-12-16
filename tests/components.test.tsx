@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
-import { PublicationCard } from '@/features/publications/publication-card';
+import { PublicationCard } from '@/shared/components/common/publication-card';
 import { ExperienceCompact } from '@/shared/components/common/experience-compact';
 import type { PublicationItem, ExperienceItem } from '@/shared/types';
 import { AppProviders } from '@/shared/providers/app-providers';

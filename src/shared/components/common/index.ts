@@ -10,6 +10,7 @@ export * from './experience-compact';
 export * from './footer-year';
 export * from './icons';
 export * from './motion-page';
+export * from './publication-card';
 export * from './publication-list';
 export * from './skip-link';
 export * from './structured-data';

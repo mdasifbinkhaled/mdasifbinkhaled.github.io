@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { PublicationCard } from '../src/features/publications/publication-card';
+import { PublicationCard } from '../src/shared/components/common/publication-card';
 import { academicEvents } from '../src/shared/lib/analytics';
 import type { PublicationItem } from '../src/shared/types';
 

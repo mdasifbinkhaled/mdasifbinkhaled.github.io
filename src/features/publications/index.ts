@@ -10,5 +10,5 @@
  * @author Md Asif Bin Khaled
  */
 
-// Export publication components
-export * from './publication-card';
+// Re-export PublicationCard from shared (moved for proper dependency flow)
+export { PublicationCard } from '@/shared/components/common/publication-card';
