@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Single Source of Truth** | **Version:** 4.0.0 | **Status:** Active | **Last Updated:** 2025-12-16
+> **Single Source of Truth** | **Version:** 4.1.0 | **Status:** Active | **Last Updated:** 2025-12-16
 
 ---
 
@@ -9,7 +9,7 @@
 - **Project Name:** Md Asif Bin Khaled - Academic Portfolio
 - **Domain:** [mdasifbinkhaled.github.io](https://mdasifbinkhaled.github.io)
 - **Type:** Static Academic Portfolio & Research Showcase
-- **Core Mission:** Present research in Explainable AI (XAI) and Healthcare AI with high visual fidelity, ensuring content is accessible, data-driven, and easy to maintain.
+- **Core Mission:** Present research in Explainable AI (XAI) and Healthcare AI with high visual fidelity.
 - **Target Audience:** Academic collaborators, PhD supervisors, grant committees, students.
 - **SOTA Score:** 9.2/10 ⭐
 
@@ -22,23 +22,12 @@
 ```
 src/
 ├── app/                    # Next.js App Router
-├── features/               # Feature modules
-│   ├── academic/           # Research, search components
-│   ├── home/               # Homepage widgets
-│   ├── publications/       # Publication cards
-│   └── teaching/           # Course components
+├── features/               # Feature modules (academic, home, publications, teaching)
 ├── shared/                 # Reusable infrastructure
-│   ├── components/         # UI library
-│   │   ├── common/         # Business components
-│   │   ├── layout/         # Layout components
-│   │   ├── navigation/     # Nav components
-│   │   └── ui/             # Primitives (Radix/Shadcn)
-│   ├── config/             # Configuration (SSoT)
+│   ├── components/         # common, layout, navigation, ui
+│   ├── config/             # SSoT configuration
 │   ├── hooks/              # Custom React hooks
-│   ├── lib/                # Utilities
-│   │   ├── data/           # Static data files
-│   │   ├── seo/            # Structured data
-│   │   └── validation/     # Zod schemas
+│   ├── lib/                # data, seo, validation
 │   ├── providers/          # React context
 │   └── types/              # Type re-exports
 ├── styles/                 # Global CSS
@@ -47,7 +36,7 @@ src/
 
 ### 2.2 Key Decisions
 
-- **SSoT**: Config files drive state; no hardcoded personal data in components
+- **SSoT**: Config files drive state; no hardcoded personal data
 - **Type SSoT via Zod**: Types derived from schemas using `z.infer<>`
 - **Server Components First**: `'use client'` only for interactive islands
 - **Static Export**: `output: 'export'` for GitHub Pages
@@ -59,92 +48,105 @@ src/
 
 ### 3.1 Framework
 
-- **CSS**: Tailwind CSS v3.4 (Utility-First)
-- **Components**: Radix UI (headless) + Tailwind (Shadcn pattern)
+- **CSS**: Tailwind CSS v3.4
+- **Components**: Radix UI + Tailwind (Shadcn pattern)
 - **Grid**: 8pt vertical rhythm
 
 ### 3.2 Theming
 
-- **Source**: `src/shared/config/themes.ts`
-- **Tokens**: `src/styles/tokens.css`
-- **Categories**: Classic, Natural, Vibrant, Professional (13 themes)
+- **Source**: `config/themes.ts` | **Tokens**: `styles/tokens.css`
+- **13 Themes**: Classic, Natural, Vibrant, Professional categories
 
-### 3.3 UI Component Library
+### 3.3 UI Components (18 files)
 
-| Component       | Location                | Purpose                      |
-| --------------- | ----------------------- | ---------------------------- |
-| `Button`        | `ui/button.tsx`         | Action buttons with variants |
-| `Card`          | `ui/card.tsx`           | Content containers           |
-| `Badge`         | `ui/badge.tsx`          | Labels and tags              |
-| `Sheet`         | `ui/sheet.tsx`          | Mobile slide-out panels      |
-| `Tabs`          | `ui/tabs.tsx`           | Tabbed content               |
-| `Select`        | `ui/select.tsx`         | Dropdown selection           |
-| `DropdownMenu`  | `ui/dropdown-menu.tsx`  | Context menus                |
-| `Toast`         | `ui/toast.tsx`          | Notifications                |
-| `ThemeSelector` | `ui/theme-selector.tsx` | Theme switching              |
-| `Progress`      | `ui/progress.tsx`       | Progress indicators          |
-| `Skeleton`      | `ui/skeleton.tsx`       | Loading states               |
-| `ErrorBoundary` | `ui/error-boundary.tsx` | Error handling               |
+| Component          | Purpose                      |
+| ------------------ | ---------------------------- |
+| `Button`           | Action buttons with variants |
+| `Card`             | Content containers           |
+| `Badge`            | Labels and tags              |
+| `Sheet`            | Mobile slide-out panels      |
+| `Tabs`             | Tabbed content               |
+| `Select`           | Dropdown selection           |
+| `DropdownMenu`     | Context menus                |
+| `Toast`            | Notifications                |
+| `Toaster`          | Toast container              |
+| `ThemeSelector`    | Theme switching              |
+| `Progress`         | Progress indicators          |
+| `Skeleton`         | Loading states               |
+| `ErrorBoundary`    | Error handling               |
+| `Input`            | Form inputs                  |
+| `Separator`        | Visual dividers              |
+| `PDFViewer`        | PDF display                  |
+| `PDFViewerWrapper` | PDF wrapper                  |
 
-### 3.4 Common Components
+### 3.4 Common Components (13 files)
 
-| Component         | Location                      | Purpose                                    |
-| ----------------- | ----------------------------- | ------------------------------------------ |
-| `StatCard`        | `common/stat-card.tsx`        | Statistics display (default/compact/glass) |
-| `BackToTop`       | `common/back-to-top.tsx`      | Scroll-to-top button                       |
-| `SkipLink`        | `common/skip-link.tsx`        | A11y skip navigation                       |
-| `NewsFeed`        | `common/news-feed.tsx`        | News display                               |
-| `PublicationList` | `common/publication-list.tsx` | Filterable publications                    |
-| `Icons`           | `common/icons.tsx`            | Icon component registry                    |
+| Component           | Purpose                                    |
+| ------------------- | ------------------------------------------ |
+| `StatCard`          | Statistics display (default/compact/glass) |
+| `BackToTop`         | Scroll-to-top button                       |
+| `SkipLink`          | A11y skip navigation                       |
+| `NewsFeed`          | News display                               |
+| `PublicationList`   | Filterable publications                    |
+| `Icons`             | Icon component registry                    |
+| `ErrorFallback`     | Error UI fallback                          |
+| `ExperienceCompact` | Experience display                         |
+| `FooterYear`        | Dynamic footer year                        |
+| `HashScroll`        | Hash-based scrolling                       |
+| `MotionPage`        | Page animations                            |
+| `StructuredData`    | SEO structured data                        |
 
 ### 3.5 Accessibility
 
 - High Contrast & Reduced Motion support
-- Semantic HTML, Skip Links
-- WCAG 2.1 Level AA compliance
+- Semantic HTML, Skip Links, WCAG 2.1 AA
 
 ---
 
-## 4. Custom Hooks
+## 4. Custom Hooks (6)
 
-| Hook                 | Purpose                          |
-| -------------------- | -------------------------------- |
-| `useDebounce`        | Debounced value updates          |
-| `useIsMobile`        | Mobile viewport detection        |
-| `useToast`           | Toast notification system        |
-| `useReducedMotion`   | A11y motion preference detection |
-| `useMotionDurations` | Animation timing values          |
-| `useMotionSafeClass` | Motion-safe CSS class helper     |
+| Hook                 | Purpose                   |
+| -------------------- | ------------------------- |
+| `useDebounce`        | Debounced value updates   |
+| `useIsMobile`        | Mobile viewport detection |
+| `useToast`           | Toast notification system |
+| `useReducedMotion`   | A11y motion preference    |
+| `useMotionDurations` | Animation timing values   |
+| `useMotionSafeClass` | Motion-safe CSS classes   |
 
 ---
 
 ## 5. Data Architecture
 
-### 5.1 Data Sources
+### 5.1 Data Sources (10 files + courses/)
 
-| Content Type       | Source Location                  | Validator     |
-| ------------------ | -------------------------------- | ------------- |
-| About Page         | `lib/data/about.ts`              | TypeScript    |
-| Courses            | `lib/data/courses/`              | Zod           |
-| Experience         | `lib/data/experience.ts`         | Zod           |
-| News               | `lib/data/news.ts`               | TypeScript    |
-| Publications       | `lib/data/publications.ts`       | Zod           |
-| Research Interests | `lib/data/research-interests.ts` | TypeScript    |
-| Teaching Stats     | `lib/data/teaching-stats.ts`     | TypeScript    |
-| Teaching Timeline  | `lib/data/teaching-timeline.ts`  | TypeScript    |
-| Testimonials       | `lib/data/testimonials.ts`       | TypeScript    |
-| Site Config        | `config/site.ts`                 | Static Import |
-| Research Profile   | `config/researcher-profile.ts`   | Static Import |
-| Navigation         | `config/navigation.ts`           | Static Import |
-| Themes             | `config/themes.ts`               | Static Import |
+| Content Type       | Source Location                     |
+| ------------------ | ----------------------------------- |
+| About Page         | `lib/data/about.ts`                 |
+| Courses            | `lib/data/courses/` (11 JSON files) |
+| Courses Loader     | `lib/data/courses.ts`               |
+| Experience         | `lib/data/experience.ts`            |
+| News               | `lib/data/news.ts`                  |
+| Publications       | `lib/data/publications.ts`          |
+| Research Interests | `lib/data/research-interests.ts`    |
+| Teaching Stats     | `lib/data/teaching-stats.ts`        |
+| Teaching Timeline  | `lib/data/teaching-timeline.ts`     |
+| Testimonials       | `lib/data/testimonials.ts`          |
 
-### 5.2 Type Unification
+### 5.2 Config Files
 
-Types derived from Zod schemas via `z.infer<>`:
+| Config           | Location                       |
+| ---------------- | ------------------------------ |
+| Site             | `config/site.ts`               |
+| Research Profile | `config/researcher-profile.ts` |
+| Navigation       | `config/navigation.ts`         |
+| Themes           | `config/themes.ts`             |
+| Assets           | `config/assets.ts`             |
+| Constants        | `config/constants.ts`          |
 
-- `PublicationType`, `PublicationItem`
-- `ExperienceType`, `ExperienceItem`
-- `CourseInstitution`, `CourseLevel`, `CourseStatus`, `CourseData`
+### 5.3 Type Unification
+
+Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `ExperienceType`, `ExperienceItem`, `CourseData`
 
 ---
 
@@ -152,92 +154,79 @@ Types derived from Zod schemas via `z.infer<>`:
 
 | File                         | Purpose                   |
 | ---------------------------- | ------------------------- |
-| `lib/seo/json-ld.ts`         | JSON-LD schema generators |
+| `lib/seo/json-ld.ts`         | JSON-LD generators        |
 | `common/structured-data.tsx` | Structured data component |
-| Page `metadata` exports      | Next.js metadata API      |
 
 ---
 
-## 7. CI/CD Workflows
+## 7. CI/CD Workflows (3)
 
-| Workflow     | File           | Purpose                           |
-| ------------ | -------------- | --------------------------------- |
-| **CI**       | `ci.yml`       | Lint, test, typecheck on PR       |
-| **Deploy**   | `nextjs.yml`   | Build & deploy to GitHub Pages    |
-| **Security** | `security.yml` | CodeQL analysis, dependency audit |
+| Workflow       | Purpose                        |
+| -------------- | ------------------------------ |
+| `ci.yml`       | Lint, test, typecheck on PR    |
+| `nextjs.yml`   | Build & deploy to GitHub Pages |
+| `security.yml` | CodeQL, dependency audit       |
 
 ---
 
 ## 8. Test Architecture
 
-- **Framework**: Vitest 3.2.x
-- **Test Files**: 17 files in `tests/`
-- **Coverage**: 89+ tests passing
+- **Framework**: Vitest 3.2.x | **Files**: 17 | **Tests**: 89+
 - **Setup**: `tests/setup.ts` with Radix UI mocks
-
-| Test Category | Files                                                                           |
-| ------------- | ------------------------------------------------------------------------------- |
-| Components    | `components.test.tsx`, `sidebar.test.tsx`, `navbar.test.tsx`                    |
-| A11y          | `sidebar.a11y.test.tsx`, `skip-link.test.tsx`                                   |
-| Hooks         | `use-toast.test.tsx`                                                            |
-| UI            | `theme-selector.test.tsx`, `sheet.test.tsx`, `select.test.tsx`, `tabs.test.tsx` |
-| Data          | `structured-data.test.ts`, `analytics.test.tsx`                                 |
 
 ---
 
-## 9. Security & Dependencies
+## 9. Dependencies
 
-| Attribute       | Value            |
-| --------------- | ---------------- |
-| Next.js         | 15.6.0-canary.36 |
-| TypeScript      | 5.6.x            |
-| Zod             | 4.1.9            |
-| Tailwind        | 3.4.13           |
-| Vulnerabilities | Mitigated        |
+| Package    | Version          |
+| ---------- | ---------------- |
+| Next.js    | 15.6.0-canary.36 |
+| TypeScript | 5.6.x            |
+| Zod        | 4.1.9            |
+| Tailwind   | 3.4.13           |
 
 ---
 
 ## 10. AI Agent Protocols
 
-1. **Read PMD First**: This file is absolute truth
-2. **Modular Enforcement**: Feature-specific code goes in `features/`, not `shared/`
-3. **Type SSoT**: Create Zod schema → export inferred type → re-export in `types/`
-4. **Banned Patterns**: `key={index}`, dynamic Tailwind, `as any`, `@ts-ignore`
-5. **Console Logs**: Wrap in `if (process.env.NODE_ENV === 'development')`
-6. **Commit Standards**: Conventional Commits
+1. Read PMD First
+2. Feature code in `features/`, not `shared/`
+3. Type SSoT via Zod schemas
+4. Banned: `key={index}`, dynamic Tailwind, `as any`, `@ts-ignore`
+5. Console logs wrapped in development check
+6. Conventional Commits
 
 ---
 
 ## 11. QA Checklist
 
-- [ ] `npm run typecheck` (Zero errors)
-- [ ] `npm run lint` (Zero warnings)
-- [ ] `npm run test:run` (89+ tests pass)
-- [ ] `npm run build` (Successful export)
+- [ ] `npm run typecheck`
+- [ ] `npm run lint`
+- [ ] `npm run test:run`
+- [ ] `npm run build`
 
 ---
 
 ## 12. Scripts
 
-| Command            | Purpose            |
-| ------------------ | ------------------ |
-| `npm run dev`      | Development server |
-| `npm run build`    | Production build   |
-| `npm run test:run` | Run tests          |
-| `npm run lint`     | Lint with auto-fix |
-| `npm run format`   | Prettier format    |
-| `npm run validate` | Full validation    |
+| Command            | Purpose          |
+| ------------------ | ---------------- |
+| `npm run dev`      | Development      |
+| `npm run build`    | Production build |
+| `npm run test:run` | Tests            |
+| `npm run lint`     | Lint             |
+| `npm run validate` | Full validation  |
 
 ---
 
 ## 13. Changes Log
 
-| Date       | Version | Changes                                                                     |
-| ---------- | ------- | --------------------------------------------------------------------------- |
-| 2025-12-16 | 4.0.0   | Added hooks, UI components, CI/CD, test architecture, SEO, all data sources |
-| 2025-12-15 | 3.0.0   | Type unification, About page extraction, StatCard variants                  |
-| 2025-12-14 | 2.1.0   | Hero redesign, 8pt grid, sidebar beautification                             |
+| Date       | Version | Changes                                                      |
+| ---------- | ------- | ------------------------------------------------------------ |
+| 2025-12-16 | 4.1.0   | Added all 18 UI components, 13 common components, courses.ts |
+| 2025-12-16 | 4.0.0   | Hooks, CI/CD, test architecture, SEO                         |
+| 2025-12-15 | 3.0.0   | Type unification                                             |
 
 ---
 
-> **Note**: Updates require forensic analysis to ensure accuracy.
+> Updates require forensic analysis.
