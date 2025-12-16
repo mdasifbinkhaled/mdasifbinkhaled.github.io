@@ -25,7 +25,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/shared/components/ui/tabs';
-import { CollapsibleCourseCard } from '@/features/teaching/collapsible-course-card';
+import { CourseCard } from '@/features/teaching/course-card';
 import type { CourseData } from '@/shared/types';
 import { HashScroll } from '@/shared/components/common/hash-scroll';
 
@@ -115,7 +115,7 @@ export default function TeachingTabsClient({
                 key={course.id}
                 id={course.code.toLowerCase().replace(' ', '')}
               >
-                <CollapsibleCourseCard course={course} />
+                <CourseCard course={course} />
               </div>
             ))}
           </div>
@@ -138,7 +138,7 @@ export default function TeachingTabsClient({
                 key={course.id}
                 id={course.code.toLowerCase().replace(' ', '')}
               >
-                <CollapsibleCourseCard course={course} />
+                <CourseCard course={course} />
               </div>
             ))}
           </div>

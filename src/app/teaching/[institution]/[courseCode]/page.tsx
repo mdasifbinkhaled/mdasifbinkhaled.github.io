@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { allCourses, institutionNames } from '@/shared/lib/data/courses';
-import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
+import { CourseCard } from '@/features/teaching/course-card';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 interface CoursePageProps {
@@ -76,7 +76,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
     <div className="container mx-auto px-4 py-8">
       <Breadcrumbs />
       <div className="mt-6">
-        <SimpleCourseCard course={course} showFullDetails={true} />
+        <CourseCard course={course} variant="static" showDetails={true} />
       </div>
     </div>
   );

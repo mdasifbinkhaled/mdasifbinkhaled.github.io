@@ -2,15 +2,11 @@ import type { Metadata } from 'next';
 import { coursesTaughtIUB } from '@/shared/lib/data/courses';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
+import { CourseCard } from '@/features/teaching/course-card';
 import { iubCourseNavItems } from '@/shared/config/navigation';
 import Link from 'next/link';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/components/ui/card';
+import { Card, CardHeader, CardTitle } from '@/shared/components/ui/card';
+import { StatCard } from '@/shared/components/common/stat-card';
 import { ArrowRight, Building2, Calendar, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -38,60 +34,39 @@ export default function IUBTeachingPage() {
 
       {/* Quick Stats */}
       <div className="grid gap-4 md:grid-cols-3 mb-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Courses</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{coursesTaughtIUB.length}</div>
-            <p className="text-xs text-muted-foreground">
-              Across multiple semesters
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Total Students
-            </CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {coursesTaughtIUB.reduce(
-                (total, course) => total + (course.enrollmentCount ?? 0),
-                0
-              )}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Students taught overall
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg. Rating</CardTitle>
-            <Building2 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {(
-                coursesTaughtIUB
-                  .filter((course) => course.rating)
-                  .reduce((sum, course) => sum + (course.rating || 0), 0) /
-                coursesTaughtIUB.filter((course) => course.rating).length
-              ).toFixed(1)}
-              /5.0
-            </div>
-            <p className="text-xs text-muted-foreground">Student feedback</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          icon={Calendar}
+          label="Total Courses"
+          number={coursesTaughtIUB.length}
+          description="Across multiple semesters"
+        />
+        <StatCard
+          icon={Users}
+          label="Total Students"
+          number={coursesTaughtIUB.reduce(
+            (total, course) => total + (course.enrollmentCount ?? 0),
+            0
+          )}
+          description="Students taught overall"
+        />
+        <StatCard
+          icon={Building2}
+          label="Avg. Rating"
+          number={
+            coursesTaughtIUB
+              .filter((course) => course.rating)
+              .reduce((sum, course) => sum + (course.rating || 0), 0) /
+            coursesTaughtIUB.filter((course) => course.rating).length
+          }
+          suffix="/5.0"
+          decimals={1}
+          description="Student feedback"
+        />
       </div>
 
       {/* Course Navigation */}
       <section>
-        <h2 className="text-2xl font-bold text-center mb-8 text-primary">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
           Course Navigation
         </h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -125,7 +100,7 @@ export default function IUBTeachingPage() {
 
       {/* Course Overview */}
       <section>
-        <h2 className="text-2xl font-bold text-center mb-8 text-primary">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
           Course Overview
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -134,7 +109,7 @@ export default function IUBTeachingPage() {
               key={course.id}
               id={course.code.toLowerCase().replace(' ', '')}
             >
-              <SimpleCourseCard course={course} />
+              <CourseCard course={course} variant="static" />
             </div>
           ))}
         </div>

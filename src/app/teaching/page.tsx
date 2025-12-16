@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import { Target, Users, Award } from 'lucide-react';
 import { siteConfig } from '@/shared/config';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import TeachingTabsClient from './teaching-tabs.client';
@@ -42,7 +43,7 @@ export default function TeachingPage() {
       </section>
 
       {/* Teaching Philosophy */}
-      <section aria-labelledby="teaching-philosophy" className="relative">
+      <section aria-labelledby="teaching-philosophy" className="relative py-8">
         <div className="max-w-5xl mx-auto">
           {/* Heading */}
           <h2
@@ -71,20 +72,7 @@ export default function TeachingPage() {
             <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
               <div className="flex flex-col items-start gap-4">
                 <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                  </svg>
+                  <Users className="h-6 w-6" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2">
@@ -102,20 +90,7 @@ export default function TeachingPage() {
             <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
               <div className="flex flex-col items-start gap-4">
                 <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <path d="M9 11 6 2 21 7l-9 5m0 0-7 8m7-8v10" />
-                  </svg>
+                  <Target className="h-6 w-6" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2">
@@ -133,22 +108,7 @@ export default function TeachingPage() {
             <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
               <div className="flex flex-col items-start gap-4">
                 <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                  </svg>
+                  <Award className="h-6 w-6" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2">
@@ -166,10 +126,14 @@ export default function TeachingPage() {
       </section>
 
       {/* Courses & Activities Section - Main Content */}
-      <section id="courses-taught" aria-labelledby="courses-heading">
+      <section
+        id="courses-taught"
+        aria-labelledby="courses-heading"
+        className="py-8"
+      >
         <h2
           id="courses-heading"
-          className="text-3xl font-bold text-center mb-6 text-primary"
+          className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary"
         >
           Courses & Activities
         </h2>
@@ -189,7 +153,7 @@ export default function TeachingPage() {
       <StudentTestimonials />
 
       {/* Call to Action */}
-      <section aria-labelledby="collaborate">
+      <section aria-labelledby="collaborate" className="py-8">
         <h2 id="collaborate" className="sr-only">
           Collaboration Opportunities
         </h2>

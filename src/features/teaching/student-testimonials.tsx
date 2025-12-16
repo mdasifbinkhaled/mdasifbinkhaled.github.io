@@ -51,7 +51,7 @@ export function StudentTestimonials() {
     <section className="w-full py-8" aria-labelledby="testimonials-heading">
       <h2
         id="testimonials-heading"
-        className="text-2xl font-bold text-center mb-8 text-primary"
+        className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary"
       >
         Student Feedback
       </h2>

@@ -2,15 +2,11 @@ import type { Metadata } from 'next';
 import { coursesTaughtBRACU } from '@/shared/lib/data/courses';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { SimpleCourseCard } from '@/features/teaching/simple-course-card';
+import { CourseCard } from '@/features/teaching/course-card';
 import { bracuCourseNavItems } from '@/shared/config/navigation';
 import Link from 'next/link';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/components/ui/card';
+import { Card, CardHeader, CardTitle } from '@/shared/components/ui/card';
+import { StatCard } from '@/shared/components/common/stat-card';
 import { ArrowRight, Building2, Calendar, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -37,59 +33,36 @@ export default function BRACUTeachingPage() {
 
       {/* Quick Stats */}
       <div className="grid gap-4 md:grid-cols-3 mb-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Courses</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {coursesTaughtBRACU.length}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Across multiple semesters
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Total Students
-            </CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {coursesTaughtBRACU.reduce(
-                (total, course) => total + (course.enrollmentCount ?? 0),
-                0
-              )}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Students taught overall
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg. Rating</CardTitle>
-            <Building2 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {coursesTaughtBRACU.filter((course) => course.rating).length > 0
-                ? (
-                    coursesTaughtBRACU
-                      .filter((course) => course.rating)
-                      .reduce((sum, course) => sum + (course.rating || 0), 0) /
-                    coursesTaughtBRACU.filter((course) => course.rating).length
-                  ).toFixed(1)
-                : 'N/A'}
-              /5.0
-            </div>
-            <p className="text-xs text-muted-foreground">Student feedback</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          icon={Calendar}
+          label="Total Courses"
+          number={coursesTaughtBRACU.length}
+          description="Across multiple semesters"
+        />
+        <StatCard
+          icon={Users}
+          label="Total Students"
+          number={coursesTaughtBRACU.reduce(
+            (total, course) => total + (course.enrollmentCount ?? 0),
+            0
+          )}
+          description="Students taught overall"
+        />
+        <StatCard
+          icon={Building2}
+          label="Avg. Rating"
+          number={
+            coursesTaughtBRACU.filter((course) => course.rating).length > 0
+              ? coursesTaughtBRACU
+                  .filter((course) => course.rating)
+                  .reduce((sum, course) => sum + (course.rating || 0), 0) /
+                coursesTaughtBRACU.filter((course) => course.rating).length
+              : 0
+          }
+          suffix="/5.0"
+          decimals={1}
+          description="Student feedback"
+        />
       </div>
 
       {/* Course Navigation */}
@@ -137,7 +110,7 @@ export default function BRACUTeachingPage() {
               key={course.id}
               id={course.code.toLowerCase().replace(' ', '')}
             >
-              <SimpleCourseCard course={course} />
+              <CourseCard course={course} variant="static" />
             </div>
           ))}
         </div>
