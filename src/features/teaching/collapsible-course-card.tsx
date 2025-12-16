@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, memo } from 'react';
 import {
   Card,
@@ -25,6 +26,7 @@ import type { CourseData, CourseStatus } from '@/shared/types';
 import { institutionNames } from '@/shared/lib/data/courses';
 import { Icon } from '@/shared/components/common/icons';
 import { DISPLAY_LIMITS } from '@/shared/config';
+import { cn } from '@/shared/lib/utils';
 
 interface CollapsibleCourseCardProps {
   course: CourseData;
@@ -65,8 +67,21 @@ export const CollapsibleCourseCard = memo(function CollapsibleCourseCard({
   const institutionLabel =
     institutionNames[course.institution] ?? course.institution;
 
+  // Course-level flag (from JSON via schema) controls visit button + border
+  const hasDetailPage = course.hasDetailPage === true;
+
+  // Build dynamic path to dedicated course page (only used if hasDetailPage)
+  const coursePath = `/teaching/${course.institution
+    .toLowerCase()
+    .replace(/\s+/g, '')}/${course.code.toLowerCase().replace(/\s+/g, '')}`;
+
   return (
-    <Card className="transition-all duration-200 hover:shadow-lg break-inside-avoid inline-block w-full">
+    <Card
+      className={cn(
+        'transition-all duration-200 hover:shadow-lg break-inside-avoid inline-block w-full',
+        hasDetailPage && 'border-primary/50'
+      )}
+    >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1">
@@ -131,24 +146,40 @@ export const CollapsibleCourseCard = memo(function CollapsibleCourseCard({
             </div>
           </div>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 px-2 py-1"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls={`course-${course.id}-details`}
-          >
-            {open ? (
-              <>
-                Hide <ChevronUp className="w-4 h-4 ml-1" />
-              </>
-            ) : (
-              <>
-                Details <ChevronDown className="w-4 h-4 ml-1" />
-              </>
-            )}
-          </Button>
+          <div className="flex flex-col items-end gap-2">
+            <div className="flex gap-2">
+              {/* Optional visit button to dedicated course page */}
+              {hasDetailPage && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="h-8 px-3 py-1"
+                >
+                  <Link href={coursePath}>Visit</Link>
+                </Button>
+              )}
+
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 px-2 py-1"
+                onClick={() => setOpen((v) => !v)}
+                aria-expanded={open}
+                aria-controls={`course-${course.id}-details`}
+              >
+                {open ? (
+                  <>
+                    Hide <ChevronUp className="w-4 h-4 ml-1" />
+                  </>
+                ) : (
+                  <>
+                    Details <ChevronDown className="w-4 h-4 ml-1" />
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
         </div>
       </CardHeader>
 

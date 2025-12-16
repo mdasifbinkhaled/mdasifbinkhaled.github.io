@@ -3,6 +3,7 @@
   "code": "CSE 201",
   "title": "Algorithms",
   "institution": "IUB",
+  "hasDetailPage": true,
   "level": "undergraduate",
   "credits": 3,
   "semester": "Spring",

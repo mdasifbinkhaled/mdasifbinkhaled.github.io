@@ -51,5 +51,6 @@
     "Helpful in office hours"
   ],
   "iconName": "Code2",
-  "status": "completed"
+  "status": "completed",
+  "hasDetailPage": true
 }

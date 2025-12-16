@@ -23,6 +23,7 @@ import {
   availability,
 } from '@/shared/config/researcher-profile';
 import { AcademicProfiles } from '@/shared/components/academic-profiles';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Contact Me',
@@ -32,6 +33,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="space-y-12">
+      <Breadcrumbs />
       <header className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
           Let&apos;s Connect

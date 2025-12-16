@@ -50,11 +50,11 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="w-full py-12 md:py-20 bg-gradient-to-br from-background via-secondary/10 to-primary/5 relative overflow-hidden">
+    <section className="w-full  bg-gradient-to-br from-background via-secondary/10 to-primary/5 relative overflow-hidden">
       <div className="container-responsive">
         <div className="max-w-5xl">
           {/* Header Content */}
-          <div className="space-y-6 mb-12">
+          <div className="space-y-6 mb-5">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-5xl text-primary">
               {siteConfig.author}
             </h1>

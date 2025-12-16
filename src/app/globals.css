@@ -14,6 +14,7 @@ body {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Account for sticky navbar height */
 }
 
 /* Smooth theme transitions - only for elements without existing transitions */

@@ -7,7 +7,6 @@
  * - Modular component architecture
  */
 
-import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import {
   HeroSection,
   NewsSection,
@@ -21,8 +20,6 @@ import {
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center">
-      <Breadcrumbs />
-
       <HeroSection />
       <NewsSection />
       <ResearchHighlights />

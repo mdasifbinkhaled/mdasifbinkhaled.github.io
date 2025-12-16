@@ -30,6 +30,7 @@ import {
   academicProfiles,
 } from '@/shared/config/researcher-profile';
 import { AcademicProfiles } from '@/shared/components/academic-profiles';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Research',
@@ -56,6 +57,8 @@ const iconMap = {
 export default function ResearchPage() {
   return (
     <div className="space-y-20">
+      <Breadcrumbs />
+
       {/* Hero Section */}
       <section className="text-center space-y-6">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">

@@ -217,6 +217,7 @@ export const courseDataSchema = z.object({
   // Optional presentation
   iconName: iconNameSchema.optional(),
   status: courseStatusSchema.optional(),
+  hasDetailPage: z.boolean().optional(),
 });
 
 /**

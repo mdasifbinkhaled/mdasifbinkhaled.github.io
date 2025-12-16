@@ -290,27 +290,27 @@ export const ProfileSidebar = memo(function ProfileSidebar({
       <div
         className={cn(
           'flex-shrink-0 bg-sidebar border-t border-sidebar-border/40 shadow-lg',
-          isCollapsed ? 'p-2' : 'p-6'
+          isCollapsed ? 'p-2' : 'px-4 py-4'
         )}
       >
         {!isCollapsed && (
-          <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/60 mb-4 tracking-wider text-center sidebar-section-title">
+          <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/60 mb-3 tracking-wider text-center sidebar-section-title">
             Follow Me
           </h4>
         )}
         <div
           className={cn(
-            'grid',
+            'flex',
             isCollapsed
-              ? 'grid-cols-1 gap-2 justify-items-center'
-              : 'grid-cols-3 gap-3 justify-items-center'
+              ? 'flex-col gap-2 items-center'
+              : 'flex-row flex-nowrap gap-1 justify-center items-center'
           )}
         >
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-9 w-9"
+            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
             title={isCollapsed ? 'GitHub Profile' : undefined}
           >
             <a
@@ -320,14 +320,14 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               aria-label="GitHub Profile"
               onClick={handleLinkClick}
             >
-              <Github className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+              <Github className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-9 w-9"
+            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
             title={isCollapsed ? 'LinkedIn Profile' : undefined}
           >
             <a
@@ -337,14 +337,14 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               aria-label="LinkedIn Profile"
               onClick={handleLinkClick}
             >
-              <Linkedin className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+              <Linkedin className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-9 w-9"
+            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
             title={isCollapsed ? 'Google Scholar Profile' : undefined}
           >
             <a
@@ -354,14 +354,14 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               aria-label="Google Scholar Profile"
               onClick={handleLinkClick}
             >
-              <BookUser className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+              <BookUser className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-9 w-9"
+            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
             title={isCollapsed ? 'ResearchGate Profile' : undefined}
           >
             <a
@@ -371,14 +371,14 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               aria-label="ResearchGate Profile"
               onClick={handleLinkClick}
             >
-              <Globe className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+              <Globe className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-9 w-9"
+            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
             title={isCollapsed ? 'Academia.edu Profile' : undefined}
           >
             <a
@@ -388,14 +388,14 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               aria-label="Academia.edu Profile"
               onClick={handleLinkClick}
             >
-              <BookOpenText className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+              <BookOpenText className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-9 w-9"
+            className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
             title={isCollapsed ? 'ORCID Profile' : undefined}
           >
             <a
@@ -405,7 +405,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               aria-label="ORCID Profile"
               onClick={handleLinkClick}
             >
-              <Award className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+              <Award className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
         </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import {
   HeroSection,
   QuickFacts,
@@ -32,6 +33,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="space-y-12">
+      <Breadcrumbs />
       <HeroSection />
       <QuickFacts />
       <HighlightsSection />

@@ -1,4 +1,5 @@
 'use client';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/shared/lib/utils';
@@ -70,74 +71,12 @@ export function Navbar({
           }
 
           return (
-            <div key={it.href} className="relative group">
-              <Link
-                href={it.href}
-                aria-current={active ? 'page' : undefined}
-                className={cn(
-                  'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                  'hover:bg-accent/50',
-                  active
-                    ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
-                    : 'text-foreground/80 hover:text-foreground'
-                )}
-              >
-                {it.label}
-              </Link>
-
-              {/* Dropdown Panel: simple vertical with flyouts */}
-              <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-1/2 -translate-x-1/2 mt-2 z-40 w-56 bg-background border rounded-lg shadow-lg py-2 transition-opacity duration-150">
-                <div className="relative">
-                  <div className="group/item relative">
-                    <Link
-                      className="block px-3 py-2 hover:bg-accent/50"
-                      href="/teaching?tab=iub"
-                    >
-                      IUB
-                    </Link>
-                    {/* Flyout for IUB */}
-                    <div className="invisible opacity-0 group-hover/item:visible group-hover/item:opacity-100 absolute top-0 left-full ml-2 w-72 max-h-80 overflow-auto bg-background border rounded-lg shadow-lg py-2 transition-opacity duration-150">
-                      {coursesTaughtIUB.map((c) => (
-                        <Link
-                          key={c.code}
-                          className="block px-3 py-2 hover:bg-accent/50 text-sm"
-                          href={`/teaching?tab=iub#${c.code.toLowerCase().replace(' ', '')}`}
-                        >
-                          {c.title}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="group/item relative">
-                    <Link
-                      className="block px-3 py-2 hover:bg-accent/50"
-                      href="/teaching?tab=bracu"
-                    >
-                      BRACU
-                    </Link>
-                    {/* Flyout for BRACU */}
-                    <div className="invisible opacity-0 group-hover/item:visible group-hover/item:opacity-100 absolute top-0 left-full ml-2 w-72 max-h-80 overflow-auto bg-background border rounded-lg shadow-lg py-2 transition-opacity duration-150">
-                      {coursesTaughtBRACU.map((c) => (
-                        <Link
-                          key={c.code}
-                          className="block px-3 py-2 hover:bg-accent/50 text-sm"
-                          href={`/teaching?tab=bracu#${c.code.toLowerCase().replace(' ', '')}`}
-                        >
-                          {c.title}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                  <Link
-                    className="block px-3 py-2 hover:bg-accent/50"
-                    href="/teaching?tab=support"
-                  >
-                    TA/ST/SoD
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <TeachingDropdown
+              key={it.href}
+              href={it.href}
+              label={it.label}
+              active={active}
+            />
           );
         })}
       </nav>
@@ -157,6 +96,173 @@ export function Navbar({
         )}
 
         <ThemeSelector variant="compact" align="end" showLabel={false} />
+      </div>
+    </div>
+  );
+}
+
+// Teaching Dropdown Component with delay on unhover
+function TeachingDropdown({
+  href,
+  label,
+  active,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const HIDE_DELAY = 200; // Delay in milliseconds before hiding
+
+  const handleMouseEnter = () => {
+    // Clear any pending hide timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    // Set a timeout to hide the dropdown after delay
+    timeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, HIDE_DELAY);
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Link
+        href={href}
+        aria-current={active ? 'page' : undefined}
+        className={cn(
+          'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+          'hover:bg-accent/50',
+          active
+            ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
+            : 'text-foreground/80 hover:text-foreground'
+        )}
+      >
+        {label}
+      </Link>
+
+      {/* Dropdown Panel: simple vertical with flyouts */}
+      <div
+        className={cn(
+          'absolute left-1/2 -translate-x-1/2 mt-2 z-40 w-56 bg-background border rounded-lg shadow-lg py-2 transition-all duration-200',
+          isOpen
+            ? 'visible opacity-100 pointer-events-auto'
+            : 'invisible opacity-0 pointer-events-none'
+        )}
+      >
+        <div className="relative">
+          <InstitutionFlyout
+            label="IUB"
+            href="/teaching?tab=iub#courses-taught"
+            courses={coursesTaughtIUB}
+            institution="iub"
+          />
+          <InstitutionFlyout
+            label="BRACU"
+            href="/teaching?tab=bracu#courses-taught"
+            courses={coursesTaughtBRACU}
+            institution="bracu"
+          />
+          <Link
+            className="block px-3 py-2 hover:bg-accent/50"
+            href="/teaching?tab=support#courses-taught"
+          >
+            TA/ST/SoD
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Institution Flyout Component with delay on unhover
+function InstitutionFlyout({
+  label,
+  href,
+  courses,
+  institution,
+}: {
+  label: string;
+  href: string;
+  courses: Array<{ code: string; title: string }>;
+  institution: string;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const HIDE_DELAY = 200; // Delay in milliseconds before hiding
+
+  const handleMouseEnter = () => {
+    // Clear any pending hide timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    // Set a timeout to hide the flyout after delay
+    timeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, HIDE_DELAY);
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Link className="block px-3 py-2 hover:bg-accent/50" href={href}>
+        {label}
+      </Link>
+      {/* Flyout */}
+      <div
+        className={cn(
+          'absolute top-0 left-full ml-2 w-72 max-h-80 overflow-auto bg-background border rounded-lg shadow-lg py-2 transition-all duration-200 z-50',
+          isOpen
+            ? 'visible opacity-100 pointer-events-auto'
+            : 'invisible opacity-0 pointer-events-none'
+        )}
+      >
+        {courses.map((c) => (
+          <Link
+            key={c.code}
+            className="block px-3 py-2 hover:bg-accent/50 text-sm"
+            href={`/teaching?tab=${institution}#${c.code.toLowerCase().replace(' ', '')}`}
+          >
+            {c.title}
+          </Link>
+        ))}
       </div>
     </div>
   );

@@ -13,7 +13,18 @@ export function HashScroll({ behavior = 'smooth' }: HashScrollProps) {
       if (!hash) return;
       const id = hash.slice(1);
       const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior, block: 'start' });
+      if (el) {
+        // Account for sticky navbar height (approximately 5rem = 80px)
+        const navbarHeight = 80;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - navbarHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior,
+        });
+      }
     };
     // Initial attempt after mount/render
     const t = window.setTimeout(scroll, 50);
