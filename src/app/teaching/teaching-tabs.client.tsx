@@ -109,7 +109,7 @@ export default function TeachingTabsClient({
             </div>
           }
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="columns-1 md:columns-2 gap-6 space-y-6">
             {coursesTaughtIUB.map((course) => (
               <div
                 key={course.id}
@@ -132,7 +132,7 @@ export default function TeachingTabsClient({
             </div>
           }
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="columns-1 md:columns-2 gap-6 space-y-6">
             {coursesTaughtBRACU.map((course) => (
               <div
                 key={course.id}

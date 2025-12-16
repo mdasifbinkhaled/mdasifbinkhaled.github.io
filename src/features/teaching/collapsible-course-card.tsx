@@ -78,8 +78,13 @@ export const CollapsibleCourseCard = memo(function CollapsibleCourseCard({
   return (
     <Card
       className={cn(
+        // Base card styling
         'transition-all duration-200 hover:shadow-lg break-inside-avoid inline-block w-full',
-        hasDetailPage && 'border-primary/50'
+        // Ensure consistent initial height across cards
+        'min-h-[260px]',
+        // Highlight cards that have a dedicated detail page + stronger hover affordance
+        hasDetailPage &&
+          'border-2 border-primary/50 hover:border-primary hover:-translate-y-1 hover:shadow-primary/30'
       )}
     >
       <CardHeader className="pb-3">
@@ -147,38 +152,37 @@ export const CollapsibleCourseCard = memo(function CollapsibleCourseCard({
           </div>
 
           <div className="flex flex-col items-end gap-2">
-            <div className="flex gap-2">
-              {/* Optional visit button to dedicated course page */}
-              {hasDetailPage && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  asChild
-                  className="h-8 px-3 py-1"
-                >
-                  <Link href={coursePath}>Visit</Link>
-                </Button>
+            {/* Details toggle button (always present) */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 px-2 py-1"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls={`course-${course.id}-details`}
+            >
+              {open ? (
+                <>
+                  Hide <ChevronUp className="w-4 h-4 ml-1" />
+                </>
+              ) : (
+                <>
+                  Details <ChevronDown className="w-4 h-4 ml-1" />
+                </>
               )}
+            </Button>
 
+            {/* Optional visit button to dedicated course page, shown below Details */}
+            {hasDetailPage && (
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
+                asChild
                 className="h-8 px-2 py-1"
-                onClick={() => setOpen((v) => !v)}
-                aria-expanded={open}
-                aria-controls={`course-${course.id}-details`}
               >
-                {open ? (
-                  <>
-                    Hide <ChevronUp className="w-4 h-4 ml-1" />
-                  </>
-                ) : (
-                  <>
-                    Details <ChevronDown className="w-4 h-4 ml-1" />
-                  </>
-                )}
+                <Link href={coursePath}>Visit</Link>
               </Button>
-            </div>
+            )}
           </div>
         </div>
       </CardHeader>
