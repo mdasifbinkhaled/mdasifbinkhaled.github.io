@@ -45,7 +45,7 @@ export const teachingNavItems: NavItem[] = [
   },
 ];
 
-// IUB course navigation
+// IUB course navigation - synced with actual course JSON files
 export const iubCourseNavItems: NavItem[] = [
   {
     href: '/teaching/iub/cse101',
@@ -54,9 +54,15 @@ export const iubCourseNavItems: NavItem[] = [
     sectionId: 'cse101',
   },
   {
+    href: '/teaching/iub/cse110',
+    label: 'CSE 110 - Fundamentals of Computer System',
+    icon: 'Server',
+    sectionId: 'cse110',
+  },
+  {
     href: '/teaching/iub/cse201',
-    label: 'CSE 201 - Algorithms',
-    icon: 'Brain',
+    label: 'CSE 201 - Discrete Mathematics',
+    icon: 'Calculator',
     sectionId: 'cse201',
   },
   {
@@ -66,38 +72,26 @@ export const iubCourseNavItems: NavItem[] = [
     sectionId: 'cse203',
   },
   {
-    href: '/teaching/iub/cse205',
-    label: 'CSE 205 - Discrete Mathematics',
-    icon: 'Calculator',
-    sectionId: 'cse205',
+    href: '/teaching/iub/cse211',
+    label: 'CSE 211 - Algorithms',
+    icon: 'Brain',
+    sectionId: 'cse211',
   },
   {
-    href: '/teaching/iub/cse303',
-    label: 'CSE 303 - Operating Systems',
-    icon: 'Server',
-    sectionId: 'cse303',
+    href: '/teaching/iub/cse317',
+    label: 'CSE 317 - Numerical Methods',
+    icon: 'Calculator',
+    sectionId: 'cse317',
   },
   {
     href: '/teaching/iub/cse401',
-    label: 'CSE 401 - Database Systems',
-    icon: 'Database',
-    sectionId: 'cse401',
-  },
-  {
-    href: '/teaching/iub/cse403',
-    label: 'CSE 403 - Software Engineering',
-    icon: 'Code2',
-    sectionId: 'cse403',
-  },
-  {
-    href: '/teaching/iub/cse423',
-    label: 'CSE 423 - Machine Learning',
+    label: 'CSE 401 - Finite Automata and Computability',
     icon: 'Brain',
-    sectionId: 'cse423',
+    sectionId: 'cse401',
   },
 ];
 
-// BRACU course navigation
+// BRACU course navigation - synced with actual course JSON files
 export const bracuCourseNavItems: NavItem[] = [
   {
     href: '/teaching/bracu/cse420',

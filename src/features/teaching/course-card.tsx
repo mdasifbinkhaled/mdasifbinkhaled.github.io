@@ -298,21 +298,3 @@ export const CourseCard = memo(function CourseCard({
     </Card>
   );
 });
-
-// Re-export legacy names for backward compatibility during migration
-export const CollapsibleCourseCard = CourseCard;
-export const SimpleCourseCard = memo(function SimpleCourseCardCompat({
-  course,
-  showFullDetails = false,
-}: {
-  course: CourseData;
-  showFullDetails?: boolean;
-}) {
-  return (
-    <CourseCard
-      course={course}
-      variant="static"
-      showDetails={showFullDetails}
-    />
-  );
-});
