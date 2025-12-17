@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Single Source of Truth** | **Version:** 4.3.0 | **Status:** Active | **Last Updated:** 2025-12-16
+> **Single Source of Truth** | **Version:** 4.4.0 | **Status:** Active | **Last Updated:** 2025-12-17
 
 ---
 
@@ -266,6 +266,7 @@ Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `Experienc
 
 | Date       | Version | Changes                                                          |
 | ---------- | ------- | ---------------------------------------------------------------- |
+| 2025-12-17 | 4.4.0   | Unified CourseCard component, AI signature cleanup (-303 lines)  |
 | 2025-12-16 | 4.3.0   | Teaching data finalized based on CV verification                 |
 | 2025-12-16 | 4.2.0   | About page refactored into 12 modular components, Next.js 15.5.4 |
 | 2025-12-16 | 4.1.0   | Added all 18 UI components, 13 common components, courses.ts     |
