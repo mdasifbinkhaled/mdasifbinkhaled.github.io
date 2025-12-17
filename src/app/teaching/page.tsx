@@ -64,58 +64,65 @@ export default function TeachingPage() {
           </div>
 
           {/* Three Pillars */}
+          {/* Three Pillars - Modernized */}
           <div className="grid gap-6 md:grid-cols-3">
             {/* Pillar 1: Hands-On Learning */}
-            <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
-              <div className="flex flex-col items-start gap-4">
-                <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+            <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Users className="h-24 w-24 text-primary" />
+              </div>
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                   <Users className="h-6 w-6" />
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Hands-On Learning
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Real-world projects, coding exercises, and practical
-                    applications that bridge theory and industry practice.
-                  </p>
-                </div>
+                <h3 className="text-xl font-bold mb-3 tracking-tight">
+                  Hands-On Learning
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                  Bridging theory and industry practice through real-world
+                  projects, interactive coding sessions, and practical
+                  applications.
+                </p>
               </div>
             </div>
 
             {/* Pillar 2: OBE Methodology */}
-            <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
-              <div className="flex flex-col items-start gap-4">
-                <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+            <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Target className="h-24 w-24 text-primary" />
+              </div>
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                   <Target className="h-6 w-6" />
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Outcome-Based Education
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Clear learning objectives, measurable outcomes, and
-                    continuous assessment aligned with OBE standards.
-                  </p>
-                </div>
+                <h3 className="text-xl font-bold mb-3 tracking-tight">
+                  Outcome-Based
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                  Structuring courses with clear learning objectives, measurable
+                  outcomes, and continuous assessment aligned with international
+                  OBE standards.
+                </p>
               </div>
             </div>
 
             {/* Pillar 3: Student Success */}
-            <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50">
-              <div className="flex flex-col items-start gap-4">
-                <div className="rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+            <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Award className="h-24 w-24 text-primary" />
+              </div>
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                   <Award className="h-6 w-6" />
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Student-Centered Success
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Preparing students for real-world challenges through
-                    mentorship, problem-solving, and industry-relevant skills.
-                  </p>
-                </div>
+                <h3 className="text-xl font-bold mb-3 tracking-tight">
+                  Student Success
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                  Fostering potential through personalized mentorship, career
+                  guidance, and building confidence to tackle complex technical
+                  challenges.
+                </p>
               </div>
             </div>
           </div>

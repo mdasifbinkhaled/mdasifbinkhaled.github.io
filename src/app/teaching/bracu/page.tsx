@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { coursesTaughtBRACU } from '@/shared/lib/data/courses';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { CourseCard } from '@/features/teaching/course-card';
+import { CourseCardCompact } from '@/features/teaching/course-card-compact';
 import { StatCard } from '@/shared/components/common/stat-card';
 import { Building2, Calendar, Users } from 'lucide-react';
 
@@ -67,13 +67,13 @@ export default function BRACUTeachingPage() {
         <h2 className="text-2xl font-bold text-center mb-8 text-primary">
           Courses Taught
         </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {coursesTaughtBRACU.map((course) => (
             <div
               key={course.id}
               id={course.code.toLowerCase().replace(' ', '')}
             >
-              <CourseCard course={course} variant="static" />
+              <CourseCardCompact course={course} />
             </div>
           ))}
         </div>

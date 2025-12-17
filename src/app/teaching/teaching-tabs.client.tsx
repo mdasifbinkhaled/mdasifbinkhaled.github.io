@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import {
   Card,
   CardContent,
@@ -39,13 +39,23 @@ export default function TeachingTabsClient({
   coursesTaughtBRACU,
 }: TeachingTabsClientProps) {
   const sp = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const tab = useMemo(() => {
-    const t = sp.get('tab') ?? 'iub';
+    const t = sp.get('tab');
+    if (!t) return 'iub';
     return ['iub', 'bracu', 'activities'].includes(t) ? t : 'iub';
   }, [sp]);
 
+  const handleTabChange = (value: string) => {
+    const params = new URLSearchParams(sp);
+    params.set('tab', value);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   return (
-    <Tabs key={tab} defaultValue={tab} className="w-full">
+    <Tabs value={tab} onValueChange={handleTabChange} className="w-full">
       <HashScroll />
       <div className="flex justify-center">
         <TabsList className="bg-transparent p-0 border-b border-border rounded-none gap-2">

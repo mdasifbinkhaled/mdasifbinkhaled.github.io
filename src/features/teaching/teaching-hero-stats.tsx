@@ -20,43 +20,35 @@ export function TeachingHeroStats({
   yearsTeaching,
 }: TeachingHeroStatsProps) {
   return (
-    <section className="w-full" aria-labelledby="teaching-stats-heading">
-      <h2 id="teaching-stats-heading" className="sr-only">
-        Teaching Statistics
-      </h2>
-
-      {/* Stats Grid */}
-      <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          icon={Users}
-          label="Students Taught"
-          number={totalStudents}
-          suffix="+"
-          variant="glass"
-        />
-        <StatCard
-          icon={GraduationCap}
-          label="Courses Delivered"
-          number={totalCourses}
-          suffix="+"
-          variant="glass"
-        />
-        <StatCard
-          icon={Star}
-          label="Average Rating"
-          number={averageRating}
-          suffix="/5.0"
-          decimals={1}
-          variant="glass"
-        />
-        <StatCard
-          icon={Calendar}
-          label="Years Teaching"
-          number={yearsTeaching}
-          suffix="+"
-          variant="glass"
-        />
-      </div>
-    </section>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <StatCard
+        icon={Users}
+        label="Students Mentored"
+        number={totalStudents}
+        suffix="+"
+        variant="glass"
+      />
+      <StatCard
+        icon={GraduationCap}
+        label="Courses Taught"
+        number={totalCourses}
+        variant="glass"
+      />
+      <StatCard
+        icon={Star}
+        label="Average Rating"
+        number={averageRating}
+        suffix="/5.0"
+        decimals={1}
+        variant="glass"
+      />
+      <StatCard
+        icon={Calendar}
+        label="Years Teaching"
+        number={yearsTeaching}
+        suffix="+"
+        variant="glass"
+      />
+    </div>
   );
 }
