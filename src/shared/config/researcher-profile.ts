@@ -1,23 +1,10 @@
-/**
- * CENTRAL RESEARCHER PROFILE CONFIGURATION
- *
- * This file contains all core information about the researcher.
- * Used across the entire site for consistency and modularity.
- *
- * @author Md Asif Bin Khaled
- * @version 1.0.0
- */
+// Central researcher profile configuration
+// Used across the entire site for consistency
 
 import { siteConfig } from './site';
 
-// ============================================================================
-// RESEARCH IDENTITY
-// ============================================================================
-
+// Research identity
 export const researchIdentity = {
-  /**
-   * Core research philosophy - displayed prominently
-   */
   philosophy: {
     statement:
       'Whatever decisions are being taken should be explainable and trustworthy',
@@ -27,9 +14,6 @@ export const researchIdentity = {
       "Focusing on healthcare applications where explainability is not just important - it's essential for saving lives",
   },
 
-  /**
-   * Primary research areas
-   */
   primaryAreas: [
     {
       id: 'healthcare-ai',
@@ -61,18 +45,12 @@ export const researchIdentity = {
     },
   ],
 
-  /**
-   * Current research focus
-   */
   currentFocus: {
     primary: 'Stroke-related problems using AI/ML approaches',
     domains: ['Healthcare', 'Remote Sensing', 'Signal Processing'],
     methodology: 'Methodological research with emphasis on explainability',
   },
 
-  /**
-   * Research goals
-   */
   goals: {
     shortTerm: 'Advance explainable AI techniques in healthcare applications',
     longTerm:
@@ -81,33 +59,24 @@ export const researchIdentity = {
       'Making AI decisions in critical domains transparent and trustworthy',
   },
 
-  /**
-   * Open source contributions
-   */
   libraries: [
     {
       name: 'SortyPy',
       description: 'Python sorting algorithms library',
       status: 'In Development',
-      github: 'https://github.com/mdasifbinkhaled/SortyPy', // Placeholder
+      github: 'https://github.com/mdasifbinkhaled/SortyPy',
     },
     {
       name: 'SearchyPy',
       description: 'Python search algorithms library',
       status: 'In Development',
-      github: 'https://github.com/mdasifbinkhaled/SearchyPy', // Placeholder
+      github: 'https://github.com/mdasifbinkhaled/SearchyPy',
     },
   ],
 } as const;
 
-// ============================================================================
-// ACADEMIC PROFILES & METRICS
-// ============================================================================
-
+// Academic profiles & metrics
 export const academicProfiles = {
-  /**
-   * Public academic profiles
-   */
   profiles: [
     {
       platform: 'Google Scholar',
@@ -136,30 +105,21 @@ export const academicProfiles = {
     },
   ],
 
-  /**
-   * GitHub profile
-   */
   github: {
     username: siteConfig.links.github.split('/').pop() || 'mdasifbinkhaled',
     url: siteConfig.links.github,
   },
 
-  /**
-   * Academic metrics (private - not displayed publicly but kept for reference)
-   */
+  // Private metrics (not displayed publicly)
   metrics: {
     citations: 39,
     hIndex: 3,
     i10Index: 2,
     lastUpdated: '2025-10-26',
-    // Note: These are not displayed on the site but kept for internal tracking
   },
 } as const;
 
-// ============================================================================
-// TEACHING PHILOSOPHY
-// ============================================================================
-
+// Teaching philosophy
 export const teachingPhilosophy = {
   core: 'Teach that inspires and makes students capable, impactful, and honest',
   approach: 'Outcome-Based Education (OBE) with focus on practical application',
@@ -173,10 +133,7 @@ export const teachingPhilosophy = {
     'Fostering an environment where students develop both technical skills and ethical responsibility',
 } as const;
 
-// ============================================================================
-// KEY LEARNINGS & INSIGHTS
-// ============================================================================
-
+// Key learnings & insights
 export const keyLearnings = {
   research: {
     primary: 'Methodological research is very important',
@@ -188,14 +145,7 @@ export const keyLearnings = {
   },
 } as const;
 
-// ============================================================================
-// RESEARCH PROJECTS (PLACEHOLDER STRUCTURE)
-// ============================================================================
-
-/**
- * Research projects structure
- * To be populated with detailed project information
- */
+// Research projects
 export const researchProjects = {
   featured: [
     {
@@ -206,16 +156,16 @@ export const researchProjects = {
         'Developing interpretable machine learning models for stroke-related problems, focusing on early detection and outcome prediction.',
       status: 'Ongoing',
       domain: 'Healthcare AI',
-      technologies: [], // To be filled
-      methodologies: [], // To be filled
+      technologies: [],
+      methodologies: [],
       outcomes: {
-        publications: [], // Link to publication IDs
-        datasets: [], // To be filled
-        code: null, // GitHub repo
+        publications: [],
+        datasets: [],
+        code: null,
       },
       impact: 'Improving stroke diagnosis and treatment through explainable AI',
       featured: true,
-      placeholder: true, // Mark as needing detailed information
+      placeholder: true,
     },
     {
       id: 'multimodal-healthcare',
@@ -225,8 +175,8 @@ export const researchProjects = {
         'Research on combining multiple data modalities for enhanced healthcare diagnostics.',
       status: 'Ongoing',
       domain: 'Multimodal AI',
-      technologies: [], // To be filled
-      methodologies: [], // To be filled
+      technologies: [],
+      methodologies: [],
       outcomes: {
         publications: [],
         datasets: [],
@@ -243,8 +193,8 @@ export const researchProjects = {
         'Applying signal processing and remote sensing techniques to solve practical problems.',
       status: 'Ongoing',
       domain: 'Signal Processing',
-      technologies: [], // To be filled
-      methodologies: [], // To be filled
+      technologies: [],
+      methodologies: [],
       outcomes: {
         publications: [],
         datasets: [],
@@ -256,19 +206,9 @@ export const researchProjects = {
   ],
 } as const;
 
-// ============================================================================
-// NOTABLE PUBLICATIONS
-// ============================================================================
-
-/**
- * Highlight specific publications
- * These are referenced from the main publications data
- */
+// Notable publications
 export const notablePublications = {
-  featured: [
-    'pub-desrist-2024', // DESRIST 2024 - Research in Progress track
-    // Add more featured publication IDs here
-  ],
+  featured: ['pub-desrist-2024'],
   highlights: {
     'pub-desrist-2024': {
       note: 'DESRIST 2024 - Research in Progress Track (A-ranked conference)',
@@ -277,14 +217,7 @@ export const notablePublications = {
   },
 } as const;
 
-// ============================================================================
-// PHD INTERESTS (Private - not displayed on public site)
-// ============================================================================
-
-/**
- * PhD application information
- * PRIVATE: Not displayed publicly but used for internal planning
- */
+// PhD interests (private - not displayed on public site)
 export const phdInterests = {
   timeline: {
     targetStart: 'Fall 2026',
@@ -292,65 +225,44 @@ export const phdInterests = {
   },
   targetLocations: ['Europe', 'Australia', 'Saudi Arabia'],
   researchFocus: ['Healthcare AI', 'AI/ML', 'Explainable AI'],
-  supervisorPreferences: {
-    // To be filled based on specific supervisor research
-  },
-  // Note: This information is NOT displayed on the public website
+  supervisorPreferences: {},
   isPrivate: true,
 } as const;
 
-// ============================================================================
-// VISUAL IDENTITY (PLACEHOLDER)
-// ============================================================================
-
-/**
- * Visual branding elements
- * To be developed
- */
+// Visual identity (placeholder)
 export const visualIdentity = {
   logo: {
-    // Placeholder for logo design
     concept: 'Neural network + healthcare + transparency theme',
     status: 'To be designed',
   },
   colorTheme: {
-    // Primary colors representing research areas
-    healthcare: 'hsl(var(--healthcare-primary))', // To be added to theme
+    healthcare: 'hsl(var(--healthcare-primary))',
     explainability: 'hsl(var(--explainability-primary))',
     technology: 'hsl(var(--technology-primary))',
   },
   visualMotifs: {
-    // Design patterns to be used throughout the site
     neuralNetworks: true,
     transparency: true,
     healthcare: true,
   },
 } as const;
 
-// ============================================================================
-// CONTACT & AVAILABILITY
-// ============================================================================
-
+// Contact & availability
 export const availability = {
   collaboration: {
     open: true,
     areas: ['Healthcare AI', 'XAI', 'Multimodal AI'],
   },
   supervision: {
-    // Not currently advertising
     undergraduate: false,
     masters: false,
   },
   speaking: {
-    // To be determined
     available: false,
   },
 } as const;
 
-// ============================================================================
-// TYPE EXPORTS
-// ============================================================================
-
+// Type exports
 export type ResearchArea = (typeof researchIdentity.primaryAreas)[number];
 export type AcademicProfile = (typeof academicProfiles.profiles)[number];
 export type ResearchProject = (typeof researchProjects.featured)[number];
