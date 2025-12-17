@@ -14,7 +14,7 @@ export const studentTestimonials: Testimonial[] = [
     student: 'Anonymous',
     quote:
       'Clear explanations and practical examples made complex algorithms easy to understand. The hands-on approach really helped solidify the concepts.',
-    course: 'CSE 303 - Algorithms',
+    course: 'CSE 211 - Algorithms',
     rating: 5,
     semester: 'Fall 2023',
   },
@@ -32,7 +32,7 @@ export const studentTestimonials: Testimonial[] = [
     student: 'Anonymous',
     quote:
       "The instructor's passion for teaching is evident in every lecture. The structured approach to problem-solving has improved my coding skills significantly.",
-    course: 'CSE 201 - Data Structures',
+    course: 'CSE 203 - Data Structures',
     rating: 5,
     semester: 'Spring 2024',
   },
