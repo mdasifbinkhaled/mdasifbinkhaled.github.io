@@ -82,47 +82,74 @@ export function TeachingSearch({
 
         {/* Level Filter */}
         <div className="flex gap-2">
-          <Badge
-            variant={selectedLevel === 'all' ? 'default' : 'outline'}
-            className="cursor-pointer transition-colors hover:bg-primary/90"
+          <button
+            type="button"
             onClick={() => handleLevelFilter('all')}
+            className="focus:outline-none"
           >
-            All Levels
-          </Badge>
-          <Badge
-            variant={selectedLevel === 'undergraduate' ? 'default' : 'outline'}
-            className="cursor-pointer transition-colors hover:bg-primary/90"
+            <Badge
+              variant={selectedLevel === 'all' ? 'default' : 'outline'}
+              className="cursor-pointer transition-colors hover:bg-primary/90 pointer-events-none"
+            >
+              All Levels
+            </Badge>
+          </button>
+          <button
+            type="button"
             onClick={() => handleLevelFilter('undergraduate')}
+            className="focus:outline-none"
           >
-            Undergraduate
-          </Badge>
-          <Badge
-            variant={selectedLevel === 'graduate' ? 'default' : 'outline'}
-            className="cursor-pointer transition-colors hover:bg-primary/90"
+            <Badge
+              variant={
+                selectedLevel === 'undergraduate' ? 'default' : 'outline'
+              }
+              className="cursor-pointer transition-colors hover:bg-primary/90 pointer-events-none"
+            >
+              Undergraduate
+            </Badge>
+          </button>
+          <button
+            type="button"
             onClick={() => handleLevelFilter('graduate')}
+            className="focus:outline-none"
           >
-            Graduate
-          </Badge>
+            <Badge
+              variant={selectedLevel === 'graduate' ? 'default' : 'outline'}
+              className="cursor-pointer transition-colors hover:bg-primary/90 pointer-events-none"
+            >
+              Graduate
+            </Badge>
+          </button>
         </div>
 
         {/* Year Filter */}
         <div className="flex gap-2 flex-wrap">
-          <Badge
-            variant={selectedYear === 'all' ? 'default' : 'outline'}
-            className="cursor-pointer transition-colors hover:bg-primary/90"
+          <button
+            type="button"
             onClick={() => handleYearFilter('all')}
+            className="focus:outline-none"
           >
-            All Years
-          </Badge>
-          {years.map((year) => (
             <Badge
-              key={year}
-              variant={selectedYear === year ? 'default' : 'outline'}
-              className="cursor-pointer transition-colors hover:bg-primary/90"
-              onClick={() => handleYearFilter(year)}
+              variant={selectedYear === 'all' ? 'default' : 'outline'}
+              className="cursor-pointer transition-colors hover:bg-primary/90 pointer-events-none"
             >
-              {year}
+              All Years
             </Badge>
+          </button>
+          {years.map((year) => (
+            <button
+              key={year}
+              type="button"
+              onClick={() => handleYearFilter(year)}
+              className="focus:outline-none"
+            >
+              <Badge
+                variant={selectedYear === year ? 'default' : 'outline'}
+                className="cursor-pointer transition-colors hover:bg-primary/90 pointer-events-none"
+              >
+                {year}
+              </Badge>
+            </button>
           ))}
         </div>
       </div>

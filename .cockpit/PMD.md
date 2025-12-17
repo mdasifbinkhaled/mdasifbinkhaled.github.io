@@ -183,7 +183,7 @@ Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `Experienc
 | ---------- | ------- |
 | Next.js    | 15.5.4  |
 | React      | 18.3.1  |
-| TypeScript | 5.9.2   |
+| TypeScript | 5.6.x   |
 | Tailwind   | 3.4.17  |
 | Zod        | 4.1.9   |
 | Vitest     | 3.2.4   |
@@ -264,14 +264,15 @@ Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `Experienc
 
 ## 14. Changes Log
 
-| Date       | Version | Changes                                                          |
-| ---------- | ------- | ---------------------------------------------------------------- |
-| 2025-12-17 | 4.4.0   | Unified CourseCard component, AI signature cleanup (-303 lines)  |
-| 2025-12-16 | 4.3.0   | Teaching data finalized based on CV verification                 |
-| 2025-12-16 | 4.2.0   | About page refactored into 12 modular components, Next.js 15.5.4 |
-| 2025-12-16 | 4.1.0   | Added all 18 UI components, 13 common components, courses.ts     |
-| 2025-12-16 | 4.0.0   | Hooks, CI/CD, test architecture, SEO                             |
-| 2025-12-15 | 3.0.0   | Type unification                                                 |
+| Date       | Version | Changes                                                                                                                                                    |
+| ---------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2025-12-17 | 4.4.0   | Unified CourseCard component, AI signature cleanup (-303 lines)                                                                                            |
+| 2025-12-17 | 4.4.0   | Deep-Dive Audit & Fixes: Security (Next.js downgrade to 15.4.7), A11y (teaching-search.tsx refactor), SEO (metadata on 6 pages), Docs (README/PMD cleanup) |
+| 2025-12-16 | 4.3.0   | Teaching data finalized based on CV verification                                                                                                           |
+| 2025-12-16 | 4.2.0   | About page refactored into 12 modular components, Next.js 15.5.4                                                                                           |
+| 2025-12-16 | 4.1.0   | Added all 18 UI components, 13 common components, courses.ts                                                                                               |
+| 2025-12-16 | 4.0.0   | Hooks, CI/CD, test architecture, SEO                                                                                                                       |
+| 2025-12-15 | 3.0.0   | Type unification                                                                                                                                           |
 
 ---
 

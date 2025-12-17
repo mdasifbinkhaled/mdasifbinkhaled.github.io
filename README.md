@@ -96,16 +96,6 @@ The site automatically deploys to GitHub Pages when changes are pushed to the `m
 2. Uploads to GitHub Pages
 3. Site is available at the configured GitHub Pages URL
 
-### Manual Deployment
-
-For manual deployment to the `gh-pages` branch:
-
-```bash
-npm run deploy
-```
-
-This runs the production build and pushes the static output using `git subtree`.
-
 ## 📁 Project Structure
 
 ```text
@@ -123,9 +113,9 @@ mdasifbinkhaled.github.io/
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) before submitting pull requests.
+Contributions are welcome! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) before submitting pull requests.
 
-Before proposing changes, review the project goals and style guidelines in [docs/blueprint.md](docs/blueprint.md).
+Before proposing changes, review the project configuration in `.cockpit/PMD.md`.
 
 ## 🔒 Security
 

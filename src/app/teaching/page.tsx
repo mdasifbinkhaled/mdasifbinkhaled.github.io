@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { Target, Users, Award } from 'lucide-react';
-import { siteConfig } from '@/shared/config';
+import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import TeachingTabsClient from './teaching-tabs.client';
 import {
@@ -14,11 +14,8 @@ import { StudentTestimonials } from '@/features/teaching/student-testimonials';
 import { TeachingCTA } from '@/features/teaching/teaching-cta';
 
 export const metadata: Metadata = {
-  title: 'Teaching Portfolio',
-  description: `${siteConfig.author}'s teaching philosophy, experience with Outcome-Based Education (OBE), and list of courses taught. ${siteConfig.description}`,
-  alternates: {
-    canonical: '/teaching',
-  },
+  title: 'Teaching',
+  description: `${siteConfig.author}'s teaching portfolio, course details, teaching philosophy, and student mentorship at IUB and BRACU.`,
 };
 
 export default function TeachingPage() {

@@ -7,9 +7,6 @@ import {
   QuickFacts,
   HighlightsSection,
   ResearchPhilosophy,
-  BiographySection,
-  EducationSection,
-  ExperienceSection,
   SkillsSection,
   BeyondAcademia,
   CertificationsSection,
@@ -18,11 +15,8 @@ import {
 } from '@/features/about/components';
 
 export const metadata: Metadata = {
-  title: 'About Me',
-  description: `Learn more about ${siteConfig.author}'s academic journey, research interests, and professional background. ${siteConfig.description}`,
-  alternates: {
-    canonical: '/about',
-  },
+  title: 'About',
+  description: `Learn about ${siteConfig.author}, his academic background, research philosophy, skills, and professional journey as a Senior Lecturer and Researcher.`,
   openGraph: {
     title: `About ${siteConfig.author}`,
     description: `Learn more about ${siteConfig.author}'s academic journey, research interests, and professional background.`,
@@ -32,19 +26,29 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="space-y-12">
+    <div className="container py-10 space-y-16">
       <Breadcrumbs />
+
       <HeroSection />
       <QuickFacts />
       <HighlightsSection />
       <ResearchPhilosophy />
-      <BiographySection />
-      <EducationSection />
-      <ExperienceSection />
-      <SkillsSection />
-      <BeyondAcademia />
-      <CertificationsSection />
-      <AwardsSection />
+
+      <div className="space-y-16">
+        <h2 className="sr-only">Professional Details</h2>
+        {/* Biography Section removed as redundant with Hero + QuickFacts */}
+
+        {/* 
+          Education & Experience moved to CV page as per new IA 
+          However, keeping brief highlights or skills here is good.
+        */}
+
+        <SkillsSection />
+        <BeyondAcademia />
+        <CertificationsSection />
+        <AwardsSection />
+      </div>
+
       <CtaSection />
     </div>
   );
