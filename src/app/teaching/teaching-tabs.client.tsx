@@ -41,7 +41,7 @@ export default function TeachingTabsClient({
   const sp = useSearchParams();
   const tab = useMemo(() => {
     const t = sp.get('tab') ?? 'iub';
-    return ['iub', 'bracu', 'support', 'workshops'].includes(t) ? t : 'iub';
+    return ['iub', 'bracu', 'activities'].includes(t) ? t : 'iub';
   }, [sp]);
 
   return (
@@ -74,26 +74,14 @@ export default function TeachingTabsClient({
           </TabsTrigger>
 
           <TabsTrigger
-            value="support"
+            value="activities"
             className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary flex items-center gap-2 transition-all"
-            title="Teaching Assistant, Student Tutor, School of Development"
-          >
-            <Users className="h-4 w-4" />
-            <span>TA/ST/SoD</span>
-            <Badge variant="secondary" className="ml-1 text-xs">
-              3
-            </Badge>
-          </TabsTrigger>
-
-          <TabsTrigger
-            value="workshops"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary flex items-center gap-2 transition-all"
-            title="Workshops & Seminars - 4 activities"
+            title="Teaching Assistantships, Workshops & Other Activities"
           >
             <Presentation className="h-4 w-4" />
-            <span>Workshops</span>
+            <span>Activities</span>
             <Badge variant="secondary" className="ml-1 text-xs">
-              4
+              7
             </Badge>
           </TabsTrigger>
         </TabsList>
@@ -145,152 +133,125 @@ export default function TeachingTabsClient({
         </ErrorBoundary>
       </TabsContent>
 
-      <TabsContent value="support">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-          <Card className="transition-all duration-200 hover:shadow-lg h-full">
-            <CardHeader>
-              <CardTitle className="text-lg">Teaching Assistant (TA)</CardTitle>
-              <CardDescription>
-                Undergraduate and Graduate TA roles
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                <li>
-                  Supported course delivery, grading, and student consultations
-                </li>
-                <li>Facilitated lab sessions and tutorials</li>
-                <li>Assisted in OBE-aligned assessment preparation</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="transition-all duration-200 hover:shadow-lg h-full">
-            <CardHeader>
-              <CardTitle className="text-lg">Student Tutor (ST)</CardTitle>
-              <CardDescription>Peer tutoring and mentoring</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                <li>One-on-one tutoring for core CS courses</li>
-                <li>Exam prep sessions and problem-solving clinics</li>
-                <li>Guidance on study strategies and project planning</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="transition-all duration-200 hover:shadow-lg h-full">
-            <CardHeader>
-              <CardTitle className="text-lg">
-                School of Development (SoD)
-              </CardTitle>
-              <CardDescription>
-                Workshops and skill-building initiatives
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                <li>Organized foundational programming bootcamps</li>
-                <li>Soft skills and academic writing support</li>
-                <li>Collaborative learning groups and mentoring</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-      </TabsContent>
-
-      <TabsContent value="workshops">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 items-stretch">
-          <div className="flex">
-            <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
-              <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                <Mic2 className="h-8 w-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-base">
-                    Instructor - Automate Your Day with Python Workshops
+      <TabsContent value="activities">
+        <div className="space-y-8">
+          {/* Teaching Support Roles */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-primary">
+              Teaching Support Roles
+            </h3>
+            <div className="grid gap-4 md:grid-cols-3">
+              <Card className="transition-all duration-200 hover:shadow-lg h-full">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Users className="h-4 w-4 text-primary" />
+                    Teaching Assistant
                   </CardTitle>
-                  <CardDescription>
-                    Independent University, Bangladesh • Autumn 2023 & Spring
-                    2024
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <p className="text-sm text-muted-foreground">
-                  Conducted hands-on workshops to teach Python automation
-                  techniques to students and faculty members, focusing on
-                  practical applications that can improve productivity and
-                  streamline routine tasks.
-                </p>
-              </CardContent>
-            </Card>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Supported course delivery, grading, lab sessions, and
+                    OBE-aligned assessments.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="transition-all duration-200 hover:shadow-lg h-full">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Users className="h-4 w-4 text-primary" />
+                    Student Tutor
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Peer tutoring, exam prep sessions, and project guidance for
+                    CS courses.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="transition-all duration-200 hover:shadow-lg h-full">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Users className="h-4 w-4 text-primary" />
+                    School of Development
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Programming bootcamps, soft skills, and collaborative
+                    learning groups.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
-          <div className="flex">
-            <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
-              <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                <BookOpen className="h-8 w-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-base">
-                    Participant - Preparation of Self-Assessment Report (SAR)
-                    for BAC Accreditation Workshop
+          {/* Workshops & Seminars */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-primary">
+              Workshops & Seminars
+            </h3>
+            <div className="grid gap-4 md:grid-cols-2">
+              <Card className="transition-all duration-200 hover:shadow-lg">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Mic2 className="h-4 w-4 text-primary" />
+                    Python Automation Workshops
                   </CardTitle>
-                  <CardDescription>
-                    Institutional Quality Assurance Cell (IQAC), IUB • Oct 2024
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <p className="text-sm text-muted-foreground">
-                  Participated in a workshop on SAR preparation, course file
-                  management, and accreditation requirements for PSAC members.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="flex">
-            <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
-              <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                <Mic2 className="h-8 w-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-base">
-                    Facilitator - Advanced Micro-controller Programming Workshop
+                  <CardDescription>IUB • 2023-2024</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Instructor for hands-on workshops teaching Python automation
+                    to students and faculty.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="transition-all duration-200 hover:shadow-lg">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Mic2 className="h-4 w-4 text-primary" />
+                    Micro-controller Programming
                   </CardTitle>
-                  <CardDescription>
-                    Center for Cognitive Skill Enhancement (CCSE), IUB
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <p className="text-sm text-muted-foreground">
-                  Facilitated a workshop focusing on advanced concepts and
-                  practical applications of micro-controller programming.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="flex">
-            <Card className="transition-all duration-200 hover:shadow-lg h-full flex flex-col">
-              <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                <Mic2 className="h-8 w-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-base">
-                    Facilitator - Yes We Can! Workshop
+                  <CardDescription>CCSE, IUB</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Facilitated advanced micro-controller programming concepts
+                    and applications.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="transition-all duration-200 hover:shadow-lg">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <BookOpen className="h-4 w-4 text-primary" />
+                    BAC Accreditation SAR
                   </CardTitle>
-                  <CardDescription>
-                    Center for Cognitive Skill Enhancement (CCSE), IUB
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <p className="text-sm text-muted-foreground">
-                  Contributed to a workshop aimed at skill enhancement and
-                  motivation.
-                </p>
-              </CardContent>
-            </Card>
+                  <CardDescription>IQAC, IUB • Oct 2024</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Workshop on Self-Assessment Report preparation and course
+                    file management.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="transition-all duration-200 hover:shadow-lg">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Mic2 className="h-4 w-4 text-primary" />
+                    Yes We Can! Workshop
+                  </CardTitle>
+                  <CardDescription>CCSE, IUB</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Skill enhancement and motivation workshop for students.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </TabsContent>

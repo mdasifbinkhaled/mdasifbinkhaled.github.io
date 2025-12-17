@@ -3,11 +3,8 @@ import { coursesTaughtIUB } from '@/shared/lib/data/courses';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { CourseCard } from '@/features/teaching/course-card';
-import { iubCourseNavItems } from '@/shared/config/navigation';
-import Link from 'next/link';
-import { Card, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { StatCard } from '@/shared/components/common/stat-card';
-import { ArrowRight, Building2, Calendar, Users } from 'lucide-react';
+import { Building2, Calendar, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'IUB Courses - Teaching Portfolio',
@@ -64,44 +61,10 @@ export default function IUBTeachingPage() {
         />
       </div>
 
-      {/* Course Navigation */}
-      <section>
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
-          Course Navigation
-        </h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {iubCourseNavItems.map((course) => {
-            const courseData = coursesTaughtIUB.find((c) =>
-              course.href.includes(c.code.toLowerCase().replace(' ', ''))
-            );
-            const anchor = course.href.split('/').pop();
-            return (
-              <Link key={course.href} href={`/teaching/iub#${anchor}`}>
-                <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary cursor-pointer">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-sm font-medium group-hover:text-primary transition-colors flex items-center justify-between">
-                      {course.label}
-                      <ArrowRight className="w-4 h-4" />
-                    </CardTitle>
-                    {courseData && (
-                      <div className="text-xs text-muted-foreground">
-                        {courseData.semester} {courseData.year} •{' '}
-                        {courseData.enrollmentCount ?? 'Enrollment TBD'}{' '}
-                        students
-                      </div>
-                    )}
-                  </CardHeader>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
       {/* Course Overview */}
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
-          Course Overview
+          Courses Taught
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {coursesTaughtIUB.map((course) => (

@@ -15,15 +15,13 @@ import {
   BookOpen,
   Star,
   Calendar,
-  MapPin,
   TrendingUp,
   GraduationCap,
   Award,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
-import type { CourseData, CourseStatus } from '@/shared/types';
-import { institutionNames } from '@/shared/lib/data/courses';
+import type { CourseData } from '@/shared/types';
 import { Icon } from '@/shared/components/common/icons';
 import { DISPLAY_LIMITS } from '@/shared/config';
 import { cn } from '@/shared/lib/utils';
@@ -51,25 +49,10 @@ const LEVEL_STYLES = {
     'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
 } as const;
 
-const STATUS_STYLES = {
-  completed:
-    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-  ongoing:
-    'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-  upcoming: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-} as const;
-
 function getLevelStyle(level: CourseData['level']) {
   return (
     LEVEL_STYLES[level as keyof typeof LEVEL_STYLES] ||
     LEVEL_STYLES.undergraduate
-  );
-}
-
-function getStatusStyle(status: CourseStatus) {
-  return (
-    STATUS_STYLES[status as keyof typeof STATUS_STYLES] ||
-    STATUS_STYLES.completed
   );
 }
 
@@ -163,8 +146,6 @@ export const CourseCard = memo(function CourseCard({
     typeof course.enrollmentCount === 'number'
       ? `${course.enrollmentCount} students`
       : 'Enrollment TBD';
-  const institutionLabel =
-    institutionNames[course.institution] ?? course.institution;
 
   const hasDetailPage = course.hasDetailPage === true;
   const coursePath = `/teaching/${course.institution
@@ -203,16 +184,11 @@ export const CourseCard = memo(function CourseCard({
               </div>
             </div>
 
-            {/* Badges */}
+            {/* Badges - Simplified for cleaner UI */}
             <div className="flex flex-wrap items-center gap-2 mb-3">
               <Badge className={getLevelStyle(course.level)}>
                 {course.level.toUpperCase()}
               </Badge>
-              {course.status && (
-                <Badge className={getStatusStyle(course.status)}>
-                  {course.status.toUpperCase()}
-                </Badge>
-              )}
               <Badge variant="outline" className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
                 {course.semester} {course.year}
@@ -233,15 +209,11 @@ export const CourseCard = memo(function CourseCard({
               {course.description}
             </p>
 
-            {/* Quick Stats */}
+            {/* Quick Stats - Simplified */}
             <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Users className="w-3 h-3" />
                 {enrollmentDisplay}
-              </div>
-              <div className="flex items-center gap-1">
-                <MapPin className="w-3 h-3" />
-                {institutionLabel}
               </div>
               {typeof course.rating === 'number' && (
                 <div className="flex items-center gap-1">
