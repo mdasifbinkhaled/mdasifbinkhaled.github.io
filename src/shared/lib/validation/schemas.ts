@@ -287,11 +287,8 @@ export function validateDataSafe<T>(
   return { success: true, data: result.data };
 }
 
-// ============================================================================
-// INFERRED TYPES (Single Source of Truth)
-// ============================================================================
+// Inferred types (Single Source of Truth)
 // These types are derived directly from the Zod schemas above.
-// Import these in types/index.ts to avoid type duplication.
 
 /** Publication type enum inferred from schema */
 export type PublicationType = z.infer<typeof publicationTypeSchema>;

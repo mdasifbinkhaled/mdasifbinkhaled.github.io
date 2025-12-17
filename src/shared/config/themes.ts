@@ -1,27 +1,10 @@
 import type { ThemeConfig, ThemeName } from '@/shared/types';
 
-/**
- * ==========================================================================
- * THEME CONFIGURATION - Single Source of Truth
- * ==========================================================================
- *
- * All theme definitions for the academic portfolio.
- * This file is the authoritative source; tokens.css must match these values.
- *
- * Categories:
- * - classic: Traditional light/dark themes
- * - natural: Nature-inspired color palettes
- * - vibrant: Bold, expressive themes
- * - professional: Academic/corporate aesthetics
- *
- * @version 2.0.0
- * @author Md Asif Bin Khaled
- */
+// Theme configuration - Single Source of Truth
+// Categories: classic, natural, vibrant, professional
 
 export const themeConfigs: Record<ThemeName, ThemeConfig> = {
-  // =========================================================================
-  // CLASSIC THEMES
-  // =========================================================================
+  // Classic themes
   light: {
     name: 'light',
     label: 'Light',
@@ -45,9 +28,7 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
     },
   },
 
-  // =========================================================================
-  // NATURAL THEMES
-  // =========================================================================
+  // Natural themes
   ocean: {
     name: 'ocean',
     label: 'Ocean',
@@ -82,9 +63,7 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
     },
   },
 
-  // =========================================================================
-  // VIBRANT THEMES
-  // =========================================================================
+  // Vibrant themes
   midnight: {
     name: 'midnight',
     label: 'Midnight',
@@ -119,9 +98,7 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
     },
   },
 
-  // =========================================================================
-  // PROFESSIONAL THEMES
-  // =========================================================================
+  // Professional themes
   slate: {
     name: 'slate',
     label: 'Slate',
@@ -196,9 +173,7 @@ export const motionPreferences = {
   },
 } as const;
 
-// =========================================================================
-// THEME UTILITY FUNCTIONS
-// =========================================================================
+// Theme utility functions
 
 /**
  * Get all available theme names

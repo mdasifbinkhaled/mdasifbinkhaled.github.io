@@ -1,23 +1,9 @@
-/**
- * ==========================================
- * SHARED TYPE DEFINITIONS
- * ==========================================
- *
- * Central type exports for the application.
- * Types with Zod schemas are re-exported from validation/schemas.ts
- * to maintain a Single Source of Truth.
- *
- * @version 4.0
- * @author Md Asif Bin Khaled
- */
+// Shared type definitions
+// Types with Zod schemas are re-exported from validation/schemas.ts
 
 import type { IconName } from '@/shared/components/common/icons';
 
-// ============================================================================
-// RE-EXPORTED FROM ZOD SCHEMAS (Single Source of Truth)
-// ============================================================================
-// These types are derived from Zod schemas for runtime validation consistency.
-
+// Re-exported from Zod schemas (Single Source of Truth)
 export type {
   PublicationType,
   PublicationItem,
@@ -30,10 +16,7 @@ export type {
   CourseData,
 } from '@/shared/lib/validation/schemas';
 
-// ============================================================================
-// NAVIGATION TYPES
-// ============================================================================
-
+// Navigation types
 export interface NavItem {
   href: string;
   label: string;
@@ -44,20 +27,13 @@ export interface NavItem {
   children?: NavItem[];
 }
 
-// ============================================================================
-// SKILL TYPES
-// ============================================================================
-
+// Skill types
 export interface Skill {
   category: string;
   items: string[];
 }
 
-// ============================================================================
-// EXTENDED COURSE TYPES (for composition pattern)
-// ============================================================================
-
-// Core course information (for selective imports)
+// Extended course types (composition pattern)
 export interface BaseCourseInfo {
   id: string;
   code: string;
@@ -71,7 +47,6 @@ export interface BaseCourseInfo {
   outcomes: string[];
 }
 
-// Optional course details (curriculum-related)
 export interface CourseDetails {
   objectives?: string[];
   topics?: string[];
@@ -80,23 +55,18 @@ export interface CourseDetails {
   projects?: string[];
 }
 
-// Optional course metrics (feedback and statistics)
 export interface CourseMetrics {
   enrollmentCount?: number;
   rating?: number;
   feedback?: string[];
 }
 
-// Optional course presentation
 export interface CoursePresentation {
   iconName?: IconName;
   status?: 'completed' | 'ongoing' | 'upcoming';
 }
 
-// ============================================================================
-// ACADEMIC TYPES
-// ============================================================================
-
+// Academic types
 export interface AcademicAward {
   id: string;
   title: string;
@@ -117,10 +87,7 @@ export interface ResearchArea {
   icon?: IconName;
 }
 
-// ============================================================================
-// THEME TYPES
-// ============================================================================
-
+// Theme types
 export type ThemeName =
   | 'light'
   | 'dark'
@@ -148,10 +115,7 @@ export interface ThemeConfig {
   };
 }
 
-// ============================================================================
-// COMPONENT PROP TYPES
-// ============================================================================
-
+// Component prop types
 export interface BaseComponentProps {
   className?: string;
   children?: React.ReactNode;
