@@ -3,8 +3,6 @@
  * Centralized type definitions for all teaching-related components
  */
 
-import type { LucideIcon } from 'lucide-react';
-
 /**
  * Student testimonial data structure
  */
@@ -18,20 +16,6 @@ export interface Testimonial {
   quote?: string;
   semester?: string;
   date?: string;
-}
-
-/**
- * Teaching timeline event
- */
-export interface TeachingTimelineEvent {
-  id: string;
-  title: string;
-  institution: string;
-  period: string;
-  type: 'current' | 'past' | 'achievement' | 'milestone';
-  icon: LucideIcon;
-  description?: string;
-  highlights?: string[];
 }
 
 /**
