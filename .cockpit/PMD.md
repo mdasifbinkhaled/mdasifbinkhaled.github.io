@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Single Source of Truth** | **Version:** 4.4.0 | **Status:** Active | **Last Updated:** 2025-12-17
+> **Single Source of Truth** | **Version:** 4.4.1 | **Status:** Active | **Last Updated:** 2025-12-19
 
 ---
 
@@ -266,6 +266,7 @@ Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `Experienc
 
 | Date       | Version | Changes                                                                                                                                                    |
 | ---------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2025-12-19 | 4.4.1   | **Shape System Unification**: Standardized `rounded-xl` for cards, `rounded-full` for all icons. Finalized Teaching feature architecture.                  |
 | 2025-12-17 | 4.4.0   | Unified CourseCard component, AI signature cleanup (-303 lines)                                                                                            |
 | 2025-12-17 | 4.4.0   | Deep-Dive Audit & Fixes: Security (Next.js downgrade to 15.4.7), A11y (teaching-search.tsx refactor), SEO (metadata on 6 pages), Docs (README/PMD cleanup) |
 | 2025-12-16 | 4.3.0   | Teaching data finalized based on CV verification                                                                                                           |
