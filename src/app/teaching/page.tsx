@@ -67,7 +67,7 @@ export default function TeachingPage() {
           {/* Three Pillars - Modernized */}
           <div className="grid gap-6 md:grid-cols-3">
             {/* Pillar 1: Hands-On Learning */}
-            <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
+            <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <Users className="h-24 w-24 text-primary" />
               </div>
@@ -87,7 +87,7 @@ export default function TeachingPage() {
             </div>
 
             {/* Pillar 2: OBE Methodology */}
-            <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
+            <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <Target className="h-24 w-24 text-primary" />
               </div>
@@ -107,7 +107,7 @@ export default function TeachingPage() {
             </div>
 
             {/* Pillar 3: Student Success */}
-            <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
+            <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <Award className="h-24 w-24 text-primary" />
               </div>
