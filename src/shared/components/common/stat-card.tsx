@@ -92,9 +92,9 @@ export function StatCard({
       <CardContent className={cn('text-center', isCompact ? 'p-5' : 'p-6')}>
         <div
           className={cn(
-            'mx-auto rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110',
+            'mx-auto rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110',
             'bg-primary/10 text-primary group-hover:bg-primary/20',
-            isCompact ? 'w-10 h-10 mb-3 rounded-full p-2' : 'w-12 h-12 mb-4'
+            isCompact ? 'w-10 h-10 mb-3 p-2' : 'w-12 h-12 mb-4'
           )}
         >
           <Icon className={cn(isCompact ? 'w-5 h-5' : 'w-7 h-7')} />
