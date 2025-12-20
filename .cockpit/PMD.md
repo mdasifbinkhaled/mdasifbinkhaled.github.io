@@ -74,7 +74,7 @@ src/
 
 ### 4.3 Components
 
-**UI (18)**: Button, Card, Badge, Sheet, Tabs, Select, DropdownMenu, Toast, Toaster, ThemeSelector, Progress, Skeleton, ErrorBoundary, Input, Separator, PDFViewer, PDFViewerWrapper
+**UI (17)**: Button, Card, Badge, Sheet, Tabs, Select, DropdownMenu, Toast, Toaster, ThemeSelector, Progress, Skeleton, ErrorBoundary, Input, Separator, PDFViewer, PDFViewerWrapper
 
 **Common (13)**: StatCard, BackToTop, SkipLink, NewsFeed, PublicationList, Icons, ErrorFallback, ExperienceCompact, FooterYear, HashScroll, MotionPage, StructuredData, PublicationCard
 
