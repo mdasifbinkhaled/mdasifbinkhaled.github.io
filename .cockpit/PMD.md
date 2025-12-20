@@ -1,281 +1,163 @@
 # Project Master Document (PMD)
 
-> **Single Source of Truth** | **Version:** 4.5.0 | **Status:** Active | **Last Updated:** 2025-12-20
+> **Version:** 4.6.0 | **Status:** Active | **Updated:** 2025-12-21
 
 ---
 
-## 1. Project Identity & Vision
+## 1. Overview
 
-- **Project Name:** Md Asif Bin Khaled - Academic Portfolio
-- **Domain:** [mdasifbinkhaled.github.io](https://mdasifbinkhaled.github.io)
-- **Type:** Static Academic Portfolio & Research Showcase
-- **Core Mission:** Present research in Explainable AI (XAI) and Healthcare AI with high visual fidelity.
-- **Target Audience:** Academic collaborators, PhD supervisors, grant committees, students.
-- **Audit Score:** 8.8/10 ⭐ (Comprehensive audit 2025-12-16)
+| Field       | Value                                                          |
+| ----------- | -------------------------------------------------------------- |
+| **Project** | Academic Portfolio                                             |
+| **Domain**  | [mdasifbinkhaled.github.io](https://mdasifbinkhaled.github.io) |
+| **Type**    | Static Site (GitHub Pages)                                     |
+| **Stack**   | Next.js 15.5 · TypeScript · Tailwind CSS                       |
 
 ---
 
-## 2. Technical Architecture
+## 2. Architecture
 
-### 2.1 Directory Structure
+### 2.1 Directory Layout
 
 ```text
 src/
-├── app/                    # Next.js App Router
-├── features/               # Feature modules (about, academic, home, publications, teaching)
-├── shared/                 # Reusable infrastructure
-│   ├── components/         # common, layout, navigation, ui
-│   ├── config/             # SSoT configuration
-│   ├── hooks/              # Custom React hooks
-│   ├── lib/                # data, seo, validation
-│   ├── providers/          # React context
-│   └── types/              # Type re-exports
-├── styles/                 # Global CSS
-└── tests/                  # Vitest test suite
+├── app/              # Next.js App Router
+├── features/         # Feature modules (about, home, teaching, publications)
+├── shared/           # Shared infrastructure
+│   ├── components/   # common, layout, navigation, ui
+│   ├── config/       # Site configuration (SSoT)
+│   ├── hooks/        # Custom React hooks
+│   ├── lib/          # data, seo, validation
+│   └── types/        # Type definitions
+└── styles/           # Global CSS tokens
 ```
 
-### 2.2 Key Decisions
+### 2.2 Principles
 
-- **SSoT**: Config files drive state; no hardcoded personal data
-- **Type SSoT via Zod**: Types derived from schemas using `z.infer<>`
-- **Server Components First**: `'use client'` only for interactive islands
-- **Static Export**: `output: 'export'` for GitHub Pages
-- **Clean Dependency Flow**: `shared/` never imports from `features/`
-
----
-
-## 3. Design System
-
-### 3.1 Framework
-
-- **CSS**: Tailwind CSS v3.4
-- **Components**: Radix UI + Tailwind (Shadcn pattern)
-- **Grid**: 8pt vertical rhythm
-
-### 3.2 Theming
-
-- **Source**: `config/themes.ts` | **Tokens**: `styles/tokens.css`
-- **13 Themes**: Classic, Natural, Vibrant, Professional categories
-
-### 3.3 UI Components (18 files)
-
-| Component          | Purpose                      |
-| ------------------ | ---------------------------- |
-| `Button`           | Action buttons with variants |
-| `Card`             | Content containers           |
-| `Badge`            | Labels and tags              |
-| `Sheet`            | Mobile slide-out panels      |
-| `Tabs`             | Tabbed content               |
-| `Select`           | Dropdown selection           |
-| `DropdownMenu`     | Context menus                |
-| `Toast`            | Notifications                |
-| `Toaster`          | Toast container              |
-| `ThemeSelector`    | Theme switching              |
-| `Progress`         | Progress indicators          |
-| `Skeleton`         | Loading states               |
-| `ErrorBoundary`    | Error handling               |
-| `Input`            | Form inputs                  |
-| `Separator`        | Visual dividers              |
-| `PDFViewer`        | PDF display                  |
-| `PDFViewerWrapper` | PDF wrapper                  |
-
-### 3.4 Common Components (13 files)
-
-| Component           | Purpose                                    |
-| ------------------- | ------------------------------------------ |
-| `StatCard`          | Statistics display (default/compact/glass) |
-| `BackToTop`         | Scroll-to-top button                       |
-| `SkipLink`          | A11y skip navigation                       |
-| `NewsFeed`          | News display                               |
-| `PublicationList`   | Filterable publications                    |
-| `Icons`             | Icon component registry                    |
-| `ErrorFallback`     | Error UI fallback                          |
-| `ExperienceCompact` | Experience display                         |
-| `FooterYear`        | Dynamic footer year                        |
-| `HashScroll`        | Hash-based scrolling                       |
-| `MotionPage`        | Page animations                            |
-| `StructuredData`    | SEO structured data                        |
-
-### 3.5 Accessibility
-
-- High Contrast & Reduced Motion support
-- Semantic HTML, Skip Links, WCAG 2.1 AA
+| Principle         | Implementation                      |
+| ----------------- | ----------------------------------- |
+| **SSoT**          | Config files drive all content      |
+| **Type Safety**   | Zod schemas + `z.infer<>`           |
+| **Server First**  | Use `'use client'` only when needed |
+| **Static Export** | `output: 'export'`                  |
+| **Clean Deps**    | `shared/` never imports `features/` |
 
 ---
 
-## 4. Custom Hooks (6 in 4 files)
+## 3. Tech Stack
 
-| Hook                 | Purpose                   |
-| -------------------- | ------------------------- |
-| `useDebounce`        | Debounced value updates   |
-| `useIsMobile`        | Mobile viewport detection |
-| `useToast`           | Toast notification system |
-| `useReducedMotion`   | A11y motion preference    |
-| `useMotionDurations` | Animation timing values   |
-| `useMotionSafeClass` | Motion-safe CSS classes   |
-
----
-
-## 5. Data Architecture
-
-### 5.1 Data Sources (10 files + courses/)
-
-| Content Type       | Source Location                     |
-| ------------------ | ----------------------------------- |
-| About Page         | `lib/data/about.ts`                 |
-| Courses            | `lib/data/courses/` (11 JSON files) |
-| Courses Loader     | `lib/data/courses.ts`               |
-| Education          | `lib/data/education.ts`             |
-| Experience         | `lib/data/experience.ts`            |
-| News               | `lib/data/news.ts`                  |
-| Publications       | `lib/data/publications.ts`          |
-| Research Interests | `lib/data/research-interests.ts`    |
-| Teaching Stats     | `lib/data/teaching-stats.ts`        |
-| Teaching Timeline  | `lib/data/teaching-timeline.ts`     |
-| Testimonials       | `lib/data/testimonials.ts`          |
-
-### 5.2 Config Files
-
-| Config           | Location                       |
-| ---------------- | ------------------------------ |
-| Site             | `config/site.ts`               |
-| Research Profile | `config/researcher-profile.ts` |
-| Navigation       | `config/navigation.ts`         |
-| Themes           | `config/themes.ts`             |
-| Assets           | `config/assets.ts`             |
-| Constants        | `config/constants.ts`          |
-
-### 5.3 Type Unification
-
-Types from Zod via `z.infer<>`: `PublicationType`, `PublicationItem`, `ExperienceType`, `ExperienceItem`, `CourseData`
+| Category   | Technology   | Version |
+| ---------- | ------------ | ------- |
+| Framework  | Next.js      | 15.5.4  |
+| Language   | TypeScript   | 5.6.x   |
+| Styling    | Tailwind CSS | 3.4.17  |
+| Validation | Zod          | 4.1.9   |
+| Testing    | Vitest       | 3.2.4   |
+| Components | Radix UI     | Latest  |
 
 ---
 
-## 6. SEO Implementation
+## 4. Design System
 
-| File                         | Purpose                   |
-| ---------------------------- | ------------------------- |
-| `lib/seo/json-ld.ts`         | JSON-LD generators        |
-| `common/structured-data.tsx` | Structured data component |
+### 4.1 Theming
 
----
+- **13 themes** defined in `config/themes.ts`
+- **Tokens** in `styles/tokens.css`
+- **Categories**: Classic, Natural, Vibrant, Professional
 
-## 7. CI/CD Workflows (3)
+### 4.2 Shape Standards
 
-| Workflow       | Purpose                        |
-| -------------- | ------------------------------ |
-| `ci.yml`       | Lint, test, typecheck on PR    |
-| `nextjs.yml`   | Build & deploy to GitHub Pages |
-| `security.yml` | CodeQL, dependency audit       |
+| Element      | Style          |
+| ------------ | -------------- |
+| Cards        | `rounded-xl`   |
+| Icons/Badges | `rounded-full` |
 
----
+### 4.3 Components
 
-## 8. Test Architecture
+**UI (18)**: Button, Card, Badge, Sheet, Tabs, Select, DropdownMenu, Toast, Toaster, ThemeSelector, Progress, Skeleton, ErrorBoundary, Input, Separator, PDFViewer, PDFViewerWrapper
 
-- **Framework**: Vitest 3.2.x | **Files**: 17 | **Tests**: 89+
-- **Setup**: `tests/setup.ts` with Radix UI mocks
+**Common (13)**: StatCard, BackToTop, SkipLink, NewsFeed, PublicationList, Icons, ErrorFallback, ExperienceCompact, FooterYear, HashScroll, MotionPage, StructuredData, PublicationCard
 
 ---
 
-## 9. Dependencies
+## 5. Data Layer
 
-| Package    | Version |
-| ---------- | ------- |
-| Next.js    | 15.5.4  |
-| React      | 18.3.1  |
-| TypeScript | 5.6.x   |
-| Tailwind   | 3.4.17  |
-| Zod        | 4.1.9   |
-| Vitest     | 3.2.4   |
+### 5.1 Sources
 
----
+| Type         | Location                      |
+| ------------ | ----------------------------- |
+| Courses      | `lib/data/courses/` (11 JSON) |
+| Publications | `lib/data/publications.ts`    |
+| Experience   | `lib/data/experience.ts`      |
+| News         | `lib/data/news.ts`            |
 
-## 10. AI Agent Protocols
+### 5.2 Configuration
 
-1. Read PMD First
-2. Feature code in `features/`, not `shared/`
-3. Type SSoT via Zod schemas
-4. Banned: `key={index}`, dynamic Tailwind, `as any`, `@ts-ignore`
-5. Console logs wrapped in development check
-6. Conventional Commits
+| Config          | Purpose           |
+| --------------- | ----------------- |
+| `site.ts`       | Site metadata     |
+| `navigation.ts` | Nav structure     |
+| `themes.ts`     | Theme definitions |
+| `constants.ts`  | Display limits    |
 
 ---
 
-## 11. Teaching Data Source of Truth (Verified 2025-12-16)
+## 6. Quality Assurance
 
-### 11.1 Official Position
+### 6.1 Testing
 
-- **Role**: Senior Lecturer
-- **Department**: Computer Science & Engineering
-- **School**: School of Engineering, Technology & Sciences (SETS)
-- **Institution**: Independent University, Bangladesh (IUB)
+- **Framework**: Vitest
+- **Tests**: 89+
+- **Coverage**: 80% threshold
 
-### 11.2 Validated Courses
+### 6.2 CI/CD
 
-| Code    | Title                           | Period    | Role            |
-| ------- | ------------------------------- | --------- | --------------- |
-| CSE 101 | Intro to Programming            | 2023+     | Senior Lecturer |
-| CSE 110 | Fundamentals of Computer System | 2019-2023 | Lecturer        |
-| CSE 201 | Discrete Mathematics            | 2019-2023 | Lecturer        |
-| CSE 203 | Data Structures                 | 2019-2023 | Lecturer        |
-| CSE 211 | Algorithms                      | 2019+     | Both            |
-| CSE 317 | Numerical Methods               | 2019-2023 | Lecturer        |
-| CSE 401 | Finite Automata                 | 2023+     | Senior Lecturer |
+| Workflow       | Trigger      | Purpose               |
+| -------------- | ------------ | --------------------- |
+| `ci.yml`       | PR           | Lint, test, typecheck |
+| `nextjs.yml`   | Push to main | Build & deploy        |
+| `security.yml` | Schedule     | CodeQL, audit         |
 
-### 11.3 Q/A Archive (2025-12-16)
+### 6.3 Verification Commands
 
-> **Q1: Position Title?**
-> A: Senior Lecturer (CV verified), Department of CSE, SETS.
->
-> **Q2: Career Timeline?**
-> A: BRACU Student Tutor (2015-2017) -> IUB TA (2017) -> BRACU Lecturer (2017-2018) -> IUB Lecturer (2019-2023) -> IUB Senior Lecturer (2023-Present).
->
-> **Q3: Verified Courses?**
-> A: See table in 11.2 above. CSE 205, 403, 401 (old) removed as invalid.
->
-> **Q4: BRACU Role?**
-> A: Adjunct Lecturer (Sep 2017 - Dec 2018) for lab courses (Graphics, Numerical Methods, Compiler Design, Android).
->
-> **Q5: Teaching Metrics?**
-> A: Average Evaluation: 4.32/5. Years Teaching: 10+.
+```bash
+npm run validate   # Full check
+npm run typecheck  # Types only
+npm run lint:check # Lint only
+npm run test:run   # Tests only
+```
 
 ---
 
-## 12. QA Checklist
+## 7. Conventions
 
-- [x] `npm run typecheck`
-- [x] `npm run lint`
-- [x] `npm run test:run`
-- [x] `npm run build`
+### 7.1 Code
 
----
+- **Files**: `kebab-case.tsx`
+- **Components**: `PascalCase`
+- **Hooks**: `use-*.ts`
+- **Commits**: [Conventional Commits](https://www.conventionalcommits.org/)
 
-## 13. Scripts
+### 7.2 Banned Patterns
 
-| Command            | Purpose          |
-| ------------------ | ---------------- |
-| `npm run dev`      | Development      |
-| `npm run build`    | Production build |
-| `npm run test:run` | Tests            |
-| `npm run lint`     | Lint             |
-| `npm run validate` | Full validation  |
+- `key={index}` in lists
+- Dynamic Tailwind classes
+- `as any`, `@ts-ignore`
+- Console logs without env check
 
 ---
 
-## 14. Changes Log
+## 8. Changelog
 
-| Date       | Version | Changes                                                                                                                                                    |
-| ---------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2025-12-20 | 4.5.0   | **Cleanup & Finalization**: Next.js 15.5.4, removed AI @description tags, fixed barrel exports (stat-card, hash-scroll, news-feed), updated README/PMD.    |
-| 2025-12-19 | 4.4.1   | **Shape System Unification**: Standardized `rounded-xl` for cards, `rounded-full` for all icons. Finalized Teaching feature architecture.                  |
-| 2025-12-17 | 4.4.0   | Unified CourseCard component, AI signature cleanup (-303 lines)                                                                                            |
-| 2025-12-17 | 4.4.0   | Deep-Dive Audit & Fixes: Security (Next.js downgrade to 15.4.7), A11y (teaching-search.tsx refactor), SEO (metadata on 6 pages), Docs (README/PMD cleanup) |
-| 2025-12-16 | 4.3.0   | Teaching data finalized based on CV verification                                                                                                           |
-| 2025-12-16 | 4.2.0   | About page refactored into 12 modular components, Next.js 15.5.4                                                                                           |
-| 2025-12-16 | 4.1.0   | Added all 18 UI components, 13 common components, courses.ts                                                                                               |
-| 2025-12-16 | 4.0.0   | Hooks, CI/CD, test architecture, SEO                                                                                                                       |
-| 2025-12-15 | 3.0.0   | Type unification                                                                                                                                           |
+| Date       | Version | Changes                                                 |
+| ---------- | ------- | ------------------------------------------------------- |
+| 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup |
+| 2025-12-20 | 4.5.0   | Cleanup & finalization, fixed barrel exports            |
+| 2025-12-19 | 4.4.1   | Shape system unification                                |
+| 2025-12-17 | 4.4.0   | AI signature cleanup, CourseCard unification            |
+| 2025-12-16 | 4.3.0   | Teaching data verified                                  |
+| 2025-12-16 | 4.0.0   | Major architecture overhaul                             |
 
 ---
 
-> Updates require forensic analysis.
+> This document is the single source of truth. All changes require verification.
