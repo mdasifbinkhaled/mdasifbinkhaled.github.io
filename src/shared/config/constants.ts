@@ -1,6 +1,5 @@
 /**
  * UI Display Constants
- * @description Centralized constants for component display limits and pagination
  */
 
 /**
@@ -59,7 +58,6 @@ export const TIMING = {
 
 /**
  * Animation duration constants
- * @description Standardized animation and transition durations
  */
 export const ANIMATION = {
   /** Fast transition (buttons, small components) - 200ms */
@@ -80,7 +78,6 @@ export const ANIMATION = {
 
 /**
  * Teaching & Career Constants
- * @description Academic career milestones and dates
  */
 export const CAREER = {
   /** Year teaching career began */
@@ -97,7 +94,6 @@ export const CAREER = {
 
 /**
  * Teaching metrics constants
- * @description Teaching statistics and performance metrics
  */
 export const TEACHING_METRICS = {
   /** Average students per course */

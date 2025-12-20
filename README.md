@@ -107,8 +107,8 @@ mdasifbinkhaled.github.io/
 │   └── styles/              # Global styles and design tokens
 ├── tests/                   # Vitest test suite
 ├── public/                  # Static assets
-├── .github/workflows/       # CI/CD pipelines
-└── docs/                    # Project documentation
+├── .cockpit/                # Project documentation (PMD)
+└── .github/workflows/       # CI/CD pipelines
 ```
 
 ## 🤝 Contributing

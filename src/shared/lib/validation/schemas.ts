@@ -1,7 +1,6 @@
 /**
  * Zod Validation Schemas
- * @description Runtime validation schemas for all data types to prevent silent corruption
- * @see Issue #8: Add Zod validation to prevent data quality issues
+ * Runtime validation for all data types to prevent silent corruption
  */
 
 import { z } from 'zod';

@@ -1,16 +1,18 @@
 /**
  * Common Components
- * @description Shared components used across features
- * @note Navigation components moved to navigation/, Layout components moved to layout/
+ * Shared components used across features
  */
 
 export * from './back-to-top';
 export * from './error-fallback';
 export * from './experience-compact';
 export * from './footer-year';
+export * from './hash-scroll';
 export * from './icons';
 export * from './motion-page';
+export * from './news-feed';
 export * from './publication-card';
 export * from './publication-list';
 export * from './skip-link';
+export * from './stat-card';
 export * from './structured-data';

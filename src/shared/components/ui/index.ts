@@ -1,6 +1,5 @@
 /**
  * UI Components Library
- * @description Reusable UI primitives and components
  */
 
 // Re-export only actively used UI components
