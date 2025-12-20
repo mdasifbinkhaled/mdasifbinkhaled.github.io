@@ -90,7 +90,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tsc-files": "^1.1.4",
     "typescript": "^5.6.x",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.15"
   },
   "overrides": {
     "glob": "10.1.0"
