@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Version:** 4.6.0 | **Status:** Active | **Updated:** 2025-12-21
+> **Version:** 4.7.0 | **Status:** Active | **Updated:** 2026-01-13
 
 ---
 
@@ -50,7 +50,7 @@ src/
 | ---------- | ------------ | ------- |
 | Framework  | Next.js      | 15.5.4  |
 | Language   | TypeScript   | 5.6.x   |
-| Styling    | Tailwind CSS | 3.4.17  |
+| Styling    | Tailwind CSS | 3.4.13  |
 | Validation | Zod          | 4.1.9   |
 | Testing    | Vitest       | 3.2.4   |
 | Components | Radix UI     | Latest  |
@@ -151,6 +151,7 @@ npm run test:run   # Tests only
 
 | Date       | Version | Changes                                                 |
 | ---------- | ------- | ------------------------------------------------------- |
+| 2026-01-13 | 4.7.0   | Dependency audit, PMD sync (fix Tailwind version)       |
 | 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup |
 | 2025-12-20 | 4.5.0   | Cleanup & finalization, fixed barrel exports            |
 | 2025-12-19 | 4.4.1   | Shape system unification                                |
