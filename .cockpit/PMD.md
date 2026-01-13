@@ -76,7 +76,7 @@ src/
 
 **UI (17)**: Button, Card, Badge, Sheet, Tabs, Select, DropdownMenu, Toast, Toaster, ThemeSelector, Progress, Skeleton, ErrorBoundary, Input, Separator, PDFViewer, PDFViewerWrapper
 
-**Common (13)**: StatCard, BackToTop, SkipLink, NewsFeed, PublicationList, Icons, ErrorFallback, ExperienceCompact, FooterYear, HashScroll, MotionPage, StructuredData, PublicationCard
+**Common (14)**: AcademicProfiles, StatCard, BackToTop, SkipLink, NewsFeed, PublicationList, Icons, ErrorFallback, ExperienceCompact, FooterYear, HashScroll, MotionPage, StructuredData, PublicationCard
 
 ---
 
