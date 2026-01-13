@@ -19,6 +19,7 @@ import {
   Calculator,
   BookOpen,
   Server,
+  Users,
   type LucideProps,
 } from 'lucide-react';
 
@@ -43,6 +44,7 @@ const iconComponents = {
   Calculator,
   BookOpen,
   Server,
+  Users,
 };
 
 interface IconComponentProps extends LucideProps {

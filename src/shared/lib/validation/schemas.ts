@@ -162,6 +162,7 @@ export const iconNameSchema = z.enum([
   'Calculator',
   'BookOpen',
   'Server',
+  'Users',
 ]);
 
 /**
@@ -225,6 +226,21 @@ export const courseDataSchema = z.object({
 export const publicationsArraySchema = z.array(publicationItemSchema);
 export const experiencesArraySchema = z.array(experienceItemSchema);
 export const coursesArraySchema = z.array(courseDataSchema);
+
+/**
+ * Testimonial Schema
+ * Validates student testimonial data
+ */
+export const testimonialSchema = z.object({
+  id: z.union([z.string(), z.number()]),
+  student: z.string().min(1, 'Student identifier is required'),
+  quote: z.string().min(20, 'Quote must be at least 20 characters'),
+  course: z.string().min(3, 'Course name is required'),
+  rating: z.number().int().min(1).max(5),
+  semester: z.string().optional(),
+});
+
+export const testimonialsArraySchema = z.array(testimonialSchema);
 
 /**
  * Validation helper function with detailed error reporting
@@ -320,3 +336,6 @@ export type IconNameFromSchema = z.infer<typeof iconNameSchema>;
 
 /** Complete course data structure inferred from schema */
 export type CourseData = z.infer<typeof courseDataSchema>;
+
+/** Testimonial structure inferred from schema */
+export type Testimonial = z.infer<typeof testimonialSchema>;

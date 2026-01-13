@@ -25,6 +25,7 @@ import type { CourseData } from '@/shared/types';
 import { Icon } from '@/shared/components/common/icons';
 import { DISPLAY_LIMITS } from '@/shared/config';
 import { cn } from '@/shared/lib/utils';
+import { getLevelStyle } from './styles';
 
 // -----------------------------------------------------------------------------
 // Unified CourseCard component
@@ -39,21 +40,6 @@ interface CourseCardProps {
   showDetails?: boolean;
   /** Initial open state (collapsible only) */
   defaultOpen?: boolean;
-}
-
-// Style helpers (extracted as const to avoid recreation)
-const LEVEL_STYLES = {
-  undergraduate:
-    'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-  graduate:
-    'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
-} as const;
-
-function getLevelStyle(level: CourseData['level']) {
-  return (
-    LEVEL_STYLES[level as keyof typeof LEVEL_STYLES] ||
-    LEVEL_STYLES.undergraduate
-  );
 }
 
 // Course details section (shared between variants)

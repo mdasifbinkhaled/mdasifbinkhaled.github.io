@@ -3,20 +3,8 @@
  * Centralized type definitions for all teaching-related components
  */
 
-/**
- * Student testimonial data structure
- */
-export interface Testimonial {
-  id: number | string;
-  name?: string;
-  student?: string;
-  course: string;
-  rating: number;
-  comment?: string;
-  quote?: string;
-  semester?: string;
-  date?: string;
-}
+// Re-export Testimonial from Zod schemas (Single Source of Truth)
+export type { Testimonial } from '@/shared/lib/validation/schemas';
 
 /**
  * Teaching statistics
@@ -29,7 +17,7 @@ export interface TeachingStats {
 }
 
 /**
- * Course card component props
+ * Course card component props (simplified)
  */
 export interface CourseCardProps {
   code: string;

@@ -69,6 +69,23 @@ export const allCourses: CourseData[] = [
   ...coursesTaughtBRACU,
 ];
 
+/**
+ * Courses grouped by institution
+ * Enables dynamic tab generation - add new institutions here
+ */
+export const coursesByInstitution: Record<string, CourseData[]> = {
+  IUB: coursesTaughtIUB,
+  BRACU: coursesTaughtBRACU,
+  // Future: Add new institutions here without changing UI code
+};
+
+/**
+ * Calculate total students from enrollment data
+ */
+export function getTotalStudentsFromCourses(): number {
+  return allCourses.reduce((sum, c) => sum + (c.enrollmentCount || 0), 0);
+}
+
 // Filter functions
 export const getCoursesByInstitution = (institution: CourseInstitution) =>
   allCourses.filter((course) => course.institution === institution);

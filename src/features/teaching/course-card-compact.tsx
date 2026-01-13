@@ -6,21 +6,7 @@ import { Card } from '@/shared/components/ui/card';
 import { Calendar, ChevronRight } from 'lucide-react';
 import type { CourseData } from '@/shared/types';
 import { cn } from '@/shared/lib/utils';
-
-// Simplified styles for the compact card
-const LEVEL_STYLES = {
-  undergraduate:
-    'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200 ring-1 ring-blue-500/20',
-  graduate:
-    'bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200 ring-1 ring-purple-500/20',
-} as const;
-
-function getLevelStyle(level: CourseData['level']) {
-  return (
-    LEVEL_STYLES[level as keyof typeof LEVEL_STYLES] ||
-    LEVEL_STYLES.undergraduate
-  );
-}
+import { getLevelStyle } from './styles';
 
 interface CourseCardCompactProps {
   course: CourseData;

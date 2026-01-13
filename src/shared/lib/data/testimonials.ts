@@ -4,11 +4,15 @@
  */
 
 import type { Testimonial } from '@/shared/types/teaching';
+import {
+  testimonialsArraySchema,
+  validateData,
+} from '@/shared/lib/validation/schemas';
 
 /**
- * Curated student testimonials showcasing teaching impact
+ * Raw testimonials data
  */
-export const studentTestimonials: Testimonial[] = [
+const rawTestimonials = [
   {
     id: 1,
     student: 'Anonymous',
@@ -39,28 +43,17 @@ export const studentTestimonials: Testimonial[] = [
 ];
 
 /**
- * Get testimonials by minimum rating
- * @param minRating Minimum rating threshold (1-5)
- * @returns Filtered testimonials meeting the rating criteria
+ * Validated student testimonials
  */
-export function getTestimonialsByRating(minRating: number): Testimonial[] {
-  return studentTestimonials.filter((t) => t.rating >= minRating);
-}
+export const studentTestimonials: Testimonial[] = validateData(
+  rawTestimonials,
+  testimonialsArraySchema,
+  'studentTestimonials'
+);
 
 /**
- * Get testimonials by course code
- * @param courseCode Course code to filter by (e.g., "CSE 303")
- * @returns Testimonials for the specified course
+ * Get testimonial count (for stats)
  */
-export function getTestimonialsByCourse(courseCode: string): Testimonial[] {
-  return studentTestimonials.filter((t) =>
-    t.course.toLowerCase().includes(courseCode.toLowerCase())
-  );
-}
-
-/**
- * Get all testimonials sorted by rating (highest first)
- */
-export function getTestimonialsSortedByRating(): Testimonial[] {
-  return [...studentTestimonials].sort((a, b) => b.rating - a.rating);
+export function getTestimonialCount(): number {
+  return studentTestimonials.length;
 }
