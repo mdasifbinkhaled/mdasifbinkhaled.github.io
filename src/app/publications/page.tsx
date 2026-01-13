@@ -5,7 +5,7 @@ import { PublicationList } from '@/shared/components/common/publication-list';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
 import { researchIdentity } from '@/shared/config/researcher-profile';
-import { AcademicProfiles } from '@/shared/components/academic-profiles';
+import { AcademicProfiles } from '@/shared/components/common/academic-profiles';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { BookOpen, Sparkles, HeartPulse } from 'lucide-react';
 

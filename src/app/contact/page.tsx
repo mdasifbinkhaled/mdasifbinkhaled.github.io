@@ -22,7 +22,7 @@ import {
   researchIdentity,
   availability,
 } from '@/shared/config/researcher-profile';
-import { AcademicProfiles } from '@/shared/components/academic-profiles';
+import { AcademicProfiles } from '@/shared/components/common/academic-profiles';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 export const metadata: Metadata = {

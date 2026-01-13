@@ -3,6 +3,7 @@
  * Shared components used across features
  */
 
+export * from './academic-profiles';
 export * from './back-to-top';
 export * from './error-fallback';
 export * from './experience-compact';

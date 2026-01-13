@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/card';
 import { Brain } from 'lucide-react';
 import { researchIdentity } from '@/shared/config/researcher-profile';
-import { AcademicProfiles } from '@/shared/components/academic-profiles';
+import { AcademicProfiles } from '@/shared/components/common/academic-profiles';
 
 export function ResearchPhilosophy() {
   return (
