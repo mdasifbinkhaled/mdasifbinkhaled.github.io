@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Version:** 4.7.0 | **Status:** Active | **Updated:** 2026-01-13
+> **Version:** 4.8.0 | **Status:** Active | **Updated:** 2026-01-14
 
 ---
 
@@ -89,6 +89,8 @@ src/
 | Courses      | `lib/data/courses/` (11 JSON) |
 | Publications | `lib/data/publications.ts`    |
 | Experience   | `lib/data/experience.ts`      |
+| Activities   | `lib/data/activities.ts`      |
+| Testimonials | `lib/data/testimonials.ts`    |
 | News         | `lib/data/news.ts`            |
 
 ### 5.2 Configuration
@@ -151,6 +153,7 @@ npm run test:run   # Tests only
 
 | Date       | Version | Changes                                                 |
 | ---------- | ------- | ------------------------------------------------------- |
+| 2026-01-14 | 4.8.0   | Teaching module refactoring - data-driven architecture  |
 | 2026-01-13 | 4.7.0   | Dependency audit, PMD sync (fix Tailwind version)       |
 | 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup |
 | 2025-12-20 | 4.5.0   | Cleanup & finalization, fixed barrel exports            |
