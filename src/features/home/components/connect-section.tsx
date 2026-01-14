@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/shared/components/ui/card';
 import { siteConfig } from '@/shared/config';
 import Link from 'next/link';
 import {
-  ExternalLink,
+  ArrowRight,
   Github,
   Linkedin,
   Mail,
@@ -138,19 +138,26 @@ const socialLinks: SocialLink[] = [
 
 /**
  * Connect Section Component
- * Displays social links and contact CTA with proper static styling
+ * Displays social links and contact CTA - World-class design
  */
 export function ConnectSection() {
   return (
-    <section className="w-full py-12 md:py-16">
-      <div className="container-responsive">
-        <h2 className="text-3xl font-bold text-center mb-6 text-primary">
-          Connect & Collaborate
-        </h2>
-        <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-8">
-          Interested in collaboration, discussing research opportunities, or
-          learning more about my work? Let&apos;s connect!
-        </p>
+    <section className="w-full py-12 md:py-16 relative overflow-hidden">
+      {/* Ambient background */}
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent" />
+      <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-primary/8 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-1/4 w-56 h-56 bg-secondary/10 rounded-full blur-2xl" />
+
+      <div className="container-responsive relative z-10">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            Connect & Collaborate
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Interested in collaboration, discussing research opportunities, or
+            learning more about my work? Let&apos;s connect!
+          </p>
+        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {socialLinks.map((link) => {
@@ -160,7 +167,7 @@ export function ConnectSection() {
             return (
               <Card
                 key={link.id}
-                className="text-center hover:shadow-lg transition-all duration-300 hover:scale-105"
+                className="text-center border-0 bg-background/60 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
                 <CardContent className="p-6">
                   <a
@@ -171,12 +178,12 @@ export function ConnectSection() {
                   >
                     <div
                       className={cn(
-                        'p-4 rounded-full transition-colors',
+                        'p-4 rounded-2xl transition-all duration-300',
                         colors.bg,
                         colors.bgHover
                       )}
                     >
-                      <Icon className={cn('w-8 h-8', colors.text)} />
+                      <Icon className={cn('w-7 h-7', colors.text)} />
                     </div>
                     <span className="font-semibold text-sm">{link.name}</span>
                   </a>
@@ -187,9 +194,13 @@ export function ConnectSection() {
         </div>
 
         <div className="text-center mt-10">
-          <Button asChild size="lg" className="shadow-lg">
+          <Button
+            asChild
+            size="lg"
+            className="shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all"
+          >
             <Link href="/contact">
-              Get in Touch <ExternalLink className="ml-2 h-5 w-5" />
+              Get in Touch <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

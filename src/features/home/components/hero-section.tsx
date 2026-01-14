@@ -8,6 +8,7 @@ import {
   Target,
   TrendingUp,
   Lightbulb,
+  Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
 import { StatCard } from '@/shared/components/common/stat-card';
@@ -15,6 +16,7 @@ import { StatCard } from '@/shared/components/common/stat-card';
 /**
  * Hero Section Component
  * Main landing section with introduction, quick stats, and CTAs
+ * World-class design with ambient backgrounds and glassmorphism
  */
 export function HeroSection() {
   // Stats data with unique IDs for stable React keys
@@ -50,54 +52,91 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="w-full  bg-gradient-to-br from-background via-secondary/10 to-primary/5 relative overflow-hidden">
-      <div className="container-responsive">
+    <section className="w-full relative overflow-hidden">
+      {/* Ambient Background - World-Class Design */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/8 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
+      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary/5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
+
+      <div className="container-responsive relative z-10 py-2">
         <div className="max-w-5xl">
           {/* Header Content */}
-          <div className="space-y-6 mb-5">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-5xl text-primary">
-              {siteConfig.author}
-            </h1>
-            <p className="text-xl text-foreground/80 md:text-2xl font-medium">
-              {siteConfig.jobTitle}
-            </p>
-            <p className="text-muted-foreground md:text-lg max-w-2xl leading-relaxed">
-              Specializing in Explainable AI (XAI) and Multimodal AI (MMAI) for
-              healthcare diagnostics and analytics.
-            </p>
+          <div className="space-y-6 mb-8">
+            {/* Name with Accent */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm text-primary font-medium">
+                <Sparkles className="w-4 h-4" />
+                <span>Welcome to my academic portfolio</span>
+              </div>
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+                {siteConfig.author}
+              </h1>
+            </div>
 
-            {/* Philosophy & Status */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:items-center text-sm text-foreground/80 pt-2">
-              <div className="flex items-center gap-2 bg-primary/5 px-3 py-1.5 rounded-md border border-primary/10">
+            {/* Title & Description */}
+            <div className="space-y-3">
+              <p className="text-xl text-foreground md:text-2xl font-semibold">
+                {siteConfig.jobTitle}
+              </p>
+              <p className="text-muted-foreground text-base md:text-lg max-w-2xl leading-relaxed">
+                Specializing in{' '}
+                <span className="text-foreground font-medium">
+                  Explainable AI (XAI)
+                </span>{' '}
+                and{' '}
+                <span className="text-foreground font-medium">
+                  Multimodal AI (MMAI)
+                </span>{' '}
+                for healthcare diagnostics and analytics.
+              </p>
+            </div>
+
+            {/* Philosophy & Status Badges */}
+            <div className="flex flex-wrap gap-3 pt-2">
+              {/* Philosophy Badge */}
+              <div className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/20 shadow-sm">
                 <Lightbulb className="w-4 h-4 text-primary" />
-                <span className="italic">
+                <span className="text-sm text-foreground/80 italic">
                   "{researchIdentity.philosophy.statement}"
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-primary font-medium px-3 py-1.5">
+
+              {/* PhD Status Badge */}
+              <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/30 shadow-sm">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
-                Open to PhD Opportunities
+                <span className="text-sm font-medium text-primary">
+                  Open to PhD Opportunities
+                </span>
               </div>
             </div>
 
-            {/* Primary CTA */}
-            <div className="pt-4">
+            {/* Primary CTAs */}
+            <div className="flex flex-wrap gap-4 pt-4">
               <Button
                 size="lg"
                 asChild
-                className="h-12 px-8 text-base shadow-md hover:shadow-xl hover:scale-105 transition-all w-full sm:w-auto"
+                className="h-12 px-8 text-base shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all"
               >
                 <Link href="/research">
                   Explore Research <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                asChild
+                className="h-12 px-8 text-base border-primary/30 hover:bg-primary/5 hover:scale-[1.02] transition-all"
+              >
+                <Link href="/teaching">View Teaching Portfolio</Link>
+              </Button>
             </div>
           </div>
 
-          {/* Rich Stats Grid - Full Width */}
+          {/* Rich Stats Grid - Glassmorphism Style */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
             {stats.map((stat) => (
               <StatCard
