@@ -35,9 +35,30 @@ export function Breadcrumbs() {
       {segments.map((segment, index) => {
         const href = '/' + segments.slice(0, index + 1).join('/');
         const isLast = index === segments.length - 1;
-        const title = segment
-          .replace(/-/g, ' ')
-          .replace(/^\w/, (c) => c.toUpperCase());
+
+        // Smart title formatting
+        let title: string;
+        const institutionCodes = ['iub', 'bracu', 'nsu', 'aiub'];
+        const courseCodePattern = /^[a-z]{2,4}\d{3,4}$/i;
+
+        if (institutionCodes.includes(segment.toLowerCase())) {
+          // Institution codes should be UPPERCASE
+          title = segment.toUpperCase();
+        } else if (courseCodePattern.test(segment)) {
+          // Course codes: "cse211" -> "CSE 211"
+          const match = segment.match(/^([a-z]+)(\d+)$/i);
+          if (match && match[1] && match[2]) {
+            title = `${match[1].toUpperCase()} ${match[2]}`;
+          } else {
+            title = segment.toUpperCase();
+          }
+        } else {
+          // Normal title case for other segments
+          title = segment
+            .replace(/-/g, ' ')
+            .replace(/\b\w/g, (c) => c.toUpperCase());
+        }
+
         const Icon = pageIcons[segment as keyof typeof pageIcons];
 
         return (

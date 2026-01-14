@@ -261,17 +261,24 @@ function SyllabusSection({ course }: { course: CourseData }) {
               Assessment Breakdown
             </h3>
             <div className="space-y-4">
-              {Object.entries(course.assessment).map(([key, value]) => (
-                <div key={key}>
-                  <div className="flex justify-between mb-1">
-                    <span className="capitalize text-sm">
-                      {key.replace(/([A-Z])/g, ' $1').trim()}
-                    </span>
-                    <span className="font-semibold text-sm">{value}%</span>
+              {Object.entries(course.assessment).map(([key, value]) => {
+                // Properly capitalize assessment labels (e.g., "midterm" -> "Midterm")
+                const label = key
+                  .replace(/([A-Z])/g, ' $1')
+                  .trim()
+                  .split(' ')
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ');
+                return (
+                  <div key={key}>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm">{label}</span>
+                      <span className="font-semibold text-sm">{value}%</span>
+                    </div>
+                    <Progress value={value} className="h-2" />
                   </div>
-                  <Progress value={value} className="h-2" />
-                </div>
-              ))}
+                );
+              })}
             </div>
           </CardContent>
         </Card>
@@ -372,18 +379,13 @@ function FeedbackSection({ course }: { course: CourseData }) {
       {course.feedback.map((fb, idx) => (
         <Card key={idx} className="border-primary/10 bg-muted/20">
           <CardContent className="p-5 sm:p-6">
-            <div className="flex items-center gap-1 mb-3">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={cn(
-                    'w-4 h-4',
-                    i < (course.rating || 0)
-                      ? 'fill-yellow-400 text-yellow-400'
-                      : 'text-muted-foreground/30'
-                  )}
-                />
-              ))}
+            <div className="flex items-center gap-2 mb-3 text-muted-foreground">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-sm font-medium text-primary">
+                  {String.fromCharCode(65 + (idx % 26))}
+                </span>
+              </div>
+              <span className="text-xs">Student Testimonial</span>
             </div>
             <p className="text-sm sm:text-base text-muted-foreground italic">
               &ldquo;{fb}&rdquo;
@@ -406,8 +408,11 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
 
       {/* Tabbed Content with Sticky Header */}
       <Tabs defaultValue="overview" className="w-full">
-        <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 -mx-4 px-4 py-2">
-          <TabsList className="w-full justify-start bg-transparent border-b border-border rounded-none p-0 gap-1 sm:gap-2 overflow-x-auto flex-nowrap">
+        <div className="sticky top-0 z-10 bg-background/98 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 -mx-4 px-4 py-2 border-b border-border/50">
+          <TabsList
+            className="w-full justify-start bg-transparent border-b-0 rounded-none p-0 gap-1 sm:gap-2 overflow-x-auto flex-nowrap scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             <TabsTrigger
               value="overview"
               className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"

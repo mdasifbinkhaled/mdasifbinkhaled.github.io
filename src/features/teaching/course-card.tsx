@@ -7,6 +7,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
@@ -20,6 +21,7 @@ import {
   Award,
   ChevronDown,
   ChevronUp,
+  ExternalLink,
 } from 'lucide-react';
 import type { CourseData } from '@/shared/types';
 import { Icon } from '@/shared/components/common/icons';
@@ -40,6 +42,16 @@ interface CourseCardProps {
   showDetails?: boolean;
   /** Initial open state (collapsible only) */
   defaultOpen?: boolean;
+}
+
+// Helper function to capitalize assessment labels
+function formatAssessmentLabel(key: string): string {
+  return key
+    .replace(/([A-Z])/g, ' $1')
+    .trim()
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
 
 // Course details section (shared between variants)
@@ -85,8 +97,8 @@ function CourseDetails({ course }: { course: CourseData }) {
           <div className="grid grid-cols-2 gap-2 text-xs">
             {Object.entries(course.assessment).map(([key, value]) => (
               <div key={key} className="flex justify-between">
-                <span className="capitalize text-muted-foreground">
-                  {key.replace(/([A-Z])/g, ' $1').trim()}:
+                <span className="text-muted-foreground">
+                  {formatAssessmentLabel(key)}:
                 </span>
                 <span className="font-medium">{value}%</span>
               </div>
@@ -141,107 +153,67 @@ export const CourseCard = memo(function CourseCard({
   return (
     <Card
       className={cn(
-        'transition-all duration-200 hover:shadow-lg',
+        'transition-all duration-200 hover:shadow-lg flex flex-col',
         isCollapsible && 'break-inside-avoid inline-block w-full min-h-[260px]',
         hasDetailPage &&
           'border-2 border-primary/50 hover:border-primary hover:-translate-y-1'
       )}
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex-1">
-            {/* Course Header */}
-            <div className="flex items-center gap-3 mb-3">
-              <div className="bg-primary/10 p-2 rounded-full">
-                {course.iconName ? (
-                  <Icon
-                    name={course.iconName}
-                    className="w-5 h-5 text-primary"
-                  />
-                ) : (
-                  <BookOpen className="w-5 h-5 text-primary" />
-                )}
-              </div>
-              <div>
-                <CardTitle className="text-lg leading-tight">
-                  {course.title}
-                </CardTitle>
-                <p className="text-sm font-mono text-primary">{course.code}</p>
-              </div>
-            </div>
-
-            {/* Badges - Simplified for cleaner UI */}
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              <Badge className={getLevelStyle(course.level)}>
-                {course.level.toUpperCase()}
-              </Badge>
-              <Badge variant="outline" className="flex items-center gap-1">
-                <Calendar className="w-3 h-3" />
-                {course.semester} {course.year}
-              </Badge>
-              <Badge variant="secondary" className="flex items-center gap-1">
-                <GraduationCap className="w-3 h-3" />
-                {course.credits} Credits
-              </Badge>
-            </div>
-
-            {/* Description */}
-            <p
-              className={cn(
-                'text-sm text-muted-foreground',
-                isCollapsible && 'line-clamp-3'
-              )}
-            >
-              {course.description}
-            </p>
-
-            {/* Quick Stats - Simplified */}
-            <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <Users className="w-3 h-3" />
-                {enrollmentDisplay}
-              </div>
-              {typeof course.rating === 'number' && (
-                <div className="flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                  {course.rating}/5.0
-                </div>
-              )}
-            </div>
+      <CardHeader className="pb-3 flex-1">
+        <div className="flex items-start gap-3">
+          {/* Course Icon */}
+          <div className="bg-primary/10 p-2 rounded-full shrink-0">
+            {course.iconName ? (
+              <Icon name={course.iconName} className="w-5 h-5 text-primary" />
+            ) : (
+              <BookOpen className="w-5 h-5 text-primary" />
+            )}
           </div>
 
-          {/* Action Buttons (collapsible variant only) */}
-          {isCollapsible && (
-            <div className="flex flex-col items-end gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 px-2 py-1"
-                onClick={() => setOpen((v) => !v)}
-                aria-expanded={open}
-                aria-controls={`course-${course.id}-details`}
-              >
-                {open ? (
-                  <>
-                    Hide <ChevronUp className="w-4 h-4 ml-1" />
-                  </>
-                ) : (
-                  <>
-                    Details <ChevronDown className="w-4 h-4 ml-1" />
-                  </>
-                )}
-              </Button>
+          {/* Course Info */}
+          <div className="flex-1 min-w-0">
+            <CardTitle className="text-lg leading-tight">
+              {course.title}
+            </CardTitle>
+            <p className="text-sm font-mono text-primary">{course.code}</p>
+          </div>
+        </div>
 
-              {hasDetailPage && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  asChild
-                  className="h-8 px-2 py-1"
-                >
-                  <Link href={coursePath}>Visit</Link>
-                </Button>
-              )}
+        {/* Badges */}
+        <div className="flex flex-wrap items-center gap-2 mt-3">
+          <Badge className={getLevelStyle(course.level)}>
+            {course.level.toUpperCase()}
+          </Badge>
+          <Badge variant="outline" className="flex items-center gap-1">
+            <Calendar className="w-3 h-3" />
+            {course.semester} {course.year}
+          </Badge>
+          <Badge variant="secondary" className="flex items-center gap-1">
+            <GraduationCap className="w-3 h-3" />
+            {course.credits} Credits
+          </Badge>
+        </div>
+
+        {/* Description */}
+        <p
+          className={cn(
+            'text-sm text-muted-foreground mt-3',
+            isCollapsible && 'line-clamp-3'
+          )}
+        >
+          {course.description}
+        </p>
+
+        {/* Quick Stats */}
+        <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <Users className="w-3 h-3" />
+            {enrollmentDisplay}
+          </div>
+          {typeof course.rating === 'number' && (
+            <div className="flex items-center gap-1">
+              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+              {course.rating}/5.0
             </div>
           )}
         </div>
@@ -252,6 +224,46 @@ export const CourseCard = memo(function CourseCard({
         <CardContent id={`course-${course.id}-details`} className="pt-0">
           <CourseDetails course={course} />
         </CardContent>
+      )}
+
+      {/* Action Buttons - Now at the bottom */}
+      {isCollapsible && (
+        <CardFooter className="pt-0 pb-4 flex gap-2 flex-wrap">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex-1 sm:flex-none"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls={`course-${course.id}-details`}
+          >
+            {open ? (
+              <>
+                <ChevronUp className="w-4 h-4 mr-1" />
+                Hide Details
+              </>
+            ) : (
+              <>
+                <ChevronDown className="w-4 h-4 mr-1" />
+                Show Details
+              </>
+            )}
+          </Button>
+
+          {hasDetailPage && (
+            <Button
+              variant="default"
+              size="sm"
+              asChild
+              className="flex-1 sm:flex-none"
+            >
+              <Link href={coursePath}>
+                <ExternalLink className="w-4 h-4 mr-1" />
+                View Course
+              </Link>
+            </Button>
+          )}
+        </CardFooter>
       )}
     </Card>
   );

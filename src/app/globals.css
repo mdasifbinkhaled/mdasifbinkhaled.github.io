@@ -90,6 +90,16 @@ nav {
   .hover-glow {
     @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/20;
   }
+
+  /* Hide scrollbar for cleaner UI while maintaining scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 }
 
 /* Smooth gradient animations */
