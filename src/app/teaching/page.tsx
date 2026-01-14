@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { Target, Users, Award } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import TeachingTabsClient from './teaching-tabs.client';
@@ -9,141 +8,76 @@ import {
   coursesTaughtBRACU,
 } from '@/shared/lib/data/courses';
 import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
-import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
-import { StudentTestimonials } from '@/features/teaching/student-testimonials';
-import { TeachingCTA } from '@/features/teaching/teaching-cta';
+import { Users, BookOpen, Star, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Teaching',
-  description: `${siteConfig.author}'s teaching portfolio, course details, teaching philosophy, and student mentorship at IUB and BRACU.`,
+  description: `${siteConfig.author}'s teaching portfolio, courses taught at IUB and BRACU, and teaching philosophy.`,
 };
 
 export default function TeachingPage() {
-  // Get teaching stats from centralized data source
   const stats = getTeachingStats();
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-12">
       <Breadcrumbs />
 
-      {/* Hero Stats Section */}
-      <section aria-labelledby="teaching-stats">
-        <h2 id="teaching-stats" className="sr-only">
-          Teaching Statistics
-        </h2>
-        <TeachingHeroStats
-          totalStudents={stats.totalStudents}
-          totalCourses={stats.totalCourses}
-          averageRating={stats.averageRating}
-          yearsTeaching={stats.yearsTeaching}
-        />
-      </section>
+      {/* Clean Hero Section */}
+      <section className="text-center space-y-4">
+        <h1 className="text-3xl md:text-4xl font-bold">Teaching Portfolio</h1>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          As a {siteConfig.role} at {siteConfig.institution}, I teach computer
+          science fundamentals, algorithms, and system design with a focus on
+          practical, outcome-based learning.
+        </p>
 
-      {/* Teaching Philosophy */}
-      <section aria-labelledby="teaching-philosophy" className="relative py-8">
-        <div className="max-w-5xl mx-auto">
-          {/* Heading */}
-          <h2
-            id="teaching-philosophy"
-            className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary"
-          >
-            Teaching Philosophy & Approach
-          </h2>
-
-          {/* Main Description */}
-          <div className="max-w-3xl mx-auto mb-12">
-            <p className="text-lg text-muted-foreground leading-relaxed text-left">
-              As a{' '}
+        {/* Compact Stats Bar */}
+        <div className="flex flex-wrap justify-center gap-6 pt-4 text-sm">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Users className="w-4 h-4 text-primary" />
+            <span>
               <strong className="text-foreground">
-                {siteConfig.role} at {siteConfig.institution}
-              </strong>
-              , I specialize in teaching computer science fundamentals,
-              algorithms, system design, and mathematical foundations. My
-              approach combines theoretical depth with practical application.
-            </p>
+                {stats.totalStudents}+
+              </strong>{' '}
+              students taught
+            </span>
           </div>
-
-          {/* Three Pillars */}
-          {/* Three Pillars - Modernized */}
-          <div className="grid gap-6 md:grid-cols-3">
-            {/* Pillar 1: Hands-On Learning */}
-            <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Users className="h-24 w-24 text-primary" />
-              </div>
-              <div className="relative z-10 flex flex-col h-full">
-                <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                  <Users className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 tracking-tight">
-                  Hands-On Learning
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  Bridging theory and industry practice through real-world
-                  projects, interactive coding sessions, and practical
-                  applications.
-                </p>
-              </div>
-            </div>
-
-            {/* Pillar 2: OBE Methodology */}
-            <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Target className="h-24 w-24 text-primary" />
-              </div>
-              <div className="relative z-10 flex flex-col h-full">
-                <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                  <Target className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 tracking-tight">
-                  Outcome-Based
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  Structuring courses with clear learning objectives, measurable
-                  outcomes, and continuous assessment aligned with international
-                  OBE standards.
-                </p>
-              </div>
-            </div>
-
-            {/* Pillar 3: Student Success */}
-            <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Award className="h-24 w-24 text-primary" />
-              </div>
-              <div className="relative z-10 flex flex-col h-full">
-                <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                  <Award className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 tracking-tight">
-                  Student Success
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  Fostering potential through personalized mentorship, career
-                  guidance, and building confidence to tackle complex technical
-                  challenges.
-                </p>
-              </div>
-            </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <BookOpen className="w-4 h-4 text-primary" />
+            <span>
+              <strong className="text-foreground">{stats.totalCourses}</strong>{' '}
+              courses
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Star className="w-4 h-4 text-yellow-500" />
+            <span>
+              <strong className="text-foreground">{stats.averageRating}</strong>
+              /5.0 avg rating
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Clock className="w-4 h-4 text-primary" />
+            <span>
+              <strong className="text-foreground">
+                {stats.yearsTeaching}+
+              </strong>{' '}
+              years experience
+            </span>
           </div>
         </div>
       </section>
 
-      {/* Courses & Activities Section - Main Content */}
-      <section
-        id="courses-taught"
-        aria-labelledby="courses-heading"
-        className="py-8"
-      >
-        <h2
-          id="courses-heading"
-          className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary"
-        >
-          Courses & Activities
+      {/* Courses Section - Main Content */}
+      <section id="courses-taught" aria-labelledby="courses-heading">
+        <h2 id="courses-heading" className="text-2xl font-semibold mb-6">
+          Courses Taught
         </h2>
         <Suspense
           fallback={
-            <div className="text-center text-muted-foreground">Loading...</div>
+            <div className="text-center text-muted-foreground py-8">
+              Loading courses...
+            </div>
           }
         >
           <TeachingTabsClient
@@ -151,17 +85,6 @@ export default function TeachingPage() {
             coursesTaughtBRACU={coursesTaughtBRACU}
           />
         </Suspense>
-      </section>
-
-      {/* Testimonials Section */}
-      <StudentTestimonials />
-
-      {/* Call to Action */}
-      <section aria-labelledby="collaborate" className="py-8">
-        <h2 id="collaborate" className="sr-only">
-          Collaboration Opportunities
-        </h2>
-        <TeachingCTA />
       </section>
     </div>
   );
