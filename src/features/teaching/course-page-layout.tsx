@@ -6,8 +6,6 @@ import {
   BookOpen,
   Calendar,
   CheckCircle,
-  ChevronLeft,
-  ChevronRight,
   GraduationCap,
   Star,
   Target,
@@ -37,17 +35,6 @@ import { getLevelStyle } from './styles';
 
 interface CoursePageLayoutProps {
   course: CourseData;
-  /** Previous course in the list (if any) */
-  previousCourse?: CourseData | null;
-  /** Next course in the list (if any) */
-  nextCourse?: CourseData | null;
-}
-
-// -----------------------------------------------------------------------------
-// Helper: Build course path
-// -----------------------------------------------------------------------------
-function getCoursePath(course: CourseData): string {
-  return `/teaching/${course.institution.toLowerCase()}/${course.code.toLowerCase().replace(/\s+/g, '')}`;
 }
 
 // -----------------------------------------------------------------------------
@@ -178,63 +165,6 @@ function StatBlock({
       </div>
       <p className="text-xl sm:text-2xl font-bold">{value}</p>
     </div>
-  );
-}
-
-// -----------------------------------------------------------------------------
-// Course Navigation - Next/Previous links
-// -----------------------------------------------------------------------------
-function CourseNavigation({
-  previousCourse,
-  nextCourse,
-}: {
-  previousCourse?: CourseData | null;
-  nextCourse?: CourseData | null;
-}) {
-  if (!previousCourse && !nextCourse) return null;
-
-  return (
-    <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-border">
-      {previousCourse ? (
-        <Link
-          href={getCoursePath(previousCourse)}
-          className="group flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/50 hover:bg-muted/30 transition-all flex-1"
-        >
-          <ChevronLeft className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-          <div className="text-left">
-            <p className="text-xs text-muted-foreground">Previous Course</p>
-            <p className="font-medium group-hover:text-primary transition-colors">
-              {previousCourse.code}
-            </p>
-            <p className="text-sm text-muted-foreground line-clamp-1">
-              {previousCourse.title}
-            </p>
-          </div>
-        </Link>
-      ) : (
-        <div className="flex-1" />
-      )}
-
-      {nextCourse ? (
-        <Link
-          href={getCoursePath(nextCourse)}
-          className="group flex items-center justify-end gap-3 p-4 rounded-xl border border-border hover:border-primary/50 hover:bg-muted/30 transition-all flex-1"
-        >
-          <div className="text-right">
-            <p className="text-xs text-muted-foreground">Next Course</p>
-            <p className="font-medium group-hover:text-primary transition-colors">
-              {nextCourse.code}
-            </p>
-            <p className="text-sm text-muted-foreground line-clamp-1">
-              {nextCourse.title}
-            </p>
-          </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-        </Link>
-      ) : (
-        <div className="flex-1" />
-      )}
-    </nav>
   );
 }
 
@@ -468,11 +398,7 @@ function FeedbackSection({ course }: { course: CourseData }) {
 // -----------------------------------------------------------------------------
 // Main Layout Component
 // -----------------------------------------------------------------------------
-export function CoursePageLayout({
-  course,
-  previousCourse,
-  nextCourse,
-}: CoursePageLayoutProps) {
+export function CoursePageLayout({ course }: CoursePageLayoutProps) {
   return (
     <div className="space-y-8">
       {/* Hero Section */}
@@ -525,12 +451,6 @@ export function CoursePageLayout({
           <FeedbackSection course={course} />
         </TabsContent>
       </Tabs>
-
-      {/* Course Navigation */}
-      <CourseNavigation
-        previousCourse={previousCourse}
-        nextCourse={nextCourse}
-      />
     </div>
   );
 }
