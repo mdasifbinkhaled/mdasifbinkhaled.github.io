@@ -1,9 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import {
+  ArrowLeft,
   BookOpen,
   Calendar,
   CheckCircle,
+  ChevronLeft,
+  ChevronRight,
   GraduationCap,
   Star,
   Target,
@@ -14,6 +18,7 @@ import {
 } from 'lucide-react';
 import type { CourseData } from '@/shared/types';
 import { Badge } from '@/shared/components/ui/badge';
+import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Progress } from '@/shared/components/ui/progress';
 import {
@@ -32,83 +37,121 @@ import { getLevelStyle } from './styles';
 
 interface CoursePageLayoutProps {
   course: CourseData;
+  /** Previous course in the list (if any) */
+  previousCourse?: CourseData | null;
+  /** Next course in the list (if any) */
+  nextCourse?: CourseData | null;
 }
 
 // -----------------------------------------------------------------------------
-// Hero Section - Gradient header with course info
+// Helper: Build course path
+// -----------------------------------------------------------------------------
+function getCoursePath(course: CourseData): string {
+  return `/teaching/${course.institution.toLowerCase()}/${course.code.toLowerCase().replace(/\s+/g, '')}`;
+}
+
+// -----------------------------------------------------------------------------
+// Hero Section - Gradient header with course info + Back button
 // -----------------------------------------------------------------------------
 function CourseHero({ course }: { course: CourseData }) {
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-primary/10 to-background border border-primary/20 p-8 md:p-12">
+    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-primary/10 to-background border border-primary/20 p-6 md:p-12">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
 
       <div className="relative z-10">
+        {/* Back Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          asChild
+          className="mb-4 -ml-2 text-muted-foreground hover:text-foreground"
+        >
+          <Link href="/teaching">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to All Courses
+          </Link>
+        </Button>
+
         {/* Course Icon & Title */}
-        <div className="flex items-start gap-6 mb-6">
-          <div className="bg-gradient-to-br from-primary to-primary/60 p-4 rounded-2xl shadow-lg shadow-primary/25">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mb-6">
+          <div className="bg-gradient-to-br from-primary to-primary/60 p-3 sm:p-4 rounded-2xl shadow-lg shadow-primary/25">
             {course.iconName ? (
-              <Icon name={course.iconName} className="w-10 h-10 text-white" />
+              <Icon
+                name={course.iconName}
+                className="w-8 h-8 sm:w-10 sm:h-10 text-white"
+              />
             ) : (
-              <BookOpen className="w-10 h-10 text-white" />
+              <BookOpen className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
             )}
           </div>
           <div className="flex-1">
-            <p className="font-mono text-primary text-lg font-semibold mb-1">
+            <p className="font-mono text-primary text-base sm:text-lg font-semibold mb-1">
               {course.code}
             </p>
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-2">
               {course.title}
             </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl">
+            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl">
               {course.description}
             </p>
           </div>
         </div>
 
         {/* Badges & Stats */}
-        <div className="flex flex-wrap items-center gap-3 mb-6">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
           <Badge
-            className={cn('text-sm py-1 px-3', getLevelStyle(course.level))}
+            className={cn(
+              'text-xs sm:text-sm py-1 px-2 sm:px-3',
+              getLevelStyle(course.level)
+            )}
           >
             {course.level.toUpperCase()}
           </Badge>
-          <Badge variant="outline" className="text-sm py-1 px-3 gap-1">
-            <Calendar className="w-4 h-4" />
+          <Badge
+            variant="outline"
+            className="text-xs sm:text-sm py-1 px-2 sm:px-3 gap-1"
+          >
+            <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
             {course.semester} {course.year}
           </Badge>
-          <Badge variant="secondary" className="text-sm py-1 px-3 gap-1">
-            <GraduationCap className="w-4 h-4" />
+          <Badge
+            variant="secondary"
+            className="text-xs sm:text-sm py-1 px-2 sm:px-3 gap-1"
+          >
+            <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4" />
             {course.credits} Credits
           </Badge>
           <Badge
             variant="outline"
-            className="text-sm py-1 px-3 bg-background/50"
+            className="text-xs sm:text-sm py-1 px-2 sm:px-3 bg-background/50"
           >
             {course.institution}
           </Badge>
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           <StatBlock
-            icon={<Users className="w-5 h-5" />}
+            icon={<Users className="w-4 h-4 sm:w-5 sm:h-5" />}
             label="Students"
             value={course.enrollmentCount?.toString() || 'TBD'}
           />
           <StatBlock
-            icon={<Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />}
+            icon={
+              <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400 text-yellow-400" />
+            }
             label="Rating"
             value={course.rating ? `${course.rating}/5.0` : 'N/A'}
           />
           <StatBlock
-            icon={<Layers className="w-5 h-5" />}
+            icon={<Layers className="w-4 h-4 sm:w-5 sm:h-5" />}
             label="Topics"
             value={course.topics?.length?.toString() || '0'}
           />
           <StatBlock
-            icon={<Code2 className="w-5 h-5" />}
+            icon={<Code2 className="w-4 h-4 sm:w-5 sm:h-5" />}
             label="Technologies"
             value={course.technologies?.length?.toString() || '0'}
           />
@@ -128,13 +171,70 @@ function StatBlock({
   value: string;
 }) {
   return (
-    <div className="bg-background/60 backdrop-blur-sm rounded-xl p-4 border border-border/50">
+    <div className="bg-background/60 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-border/50">
       <div className="flex items-center gap-2 text-muted-foreground mb-1">
         {icon}
-        <span className="text-sm">{label}</span>
+        <span className="text-xs sm:text-sm">{label}</span>
       </div>
-      <p className="text-2xl font-bold">{value}</p>
+      <p className="text-xl sm:text-2xl font-bold">{value}</p>
     </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Course Navigation - Next/Previous links
+// -----------------------------------------------------------------------------
+function CourseNavigation({
+  previousCourse,
+  nextCourse,
+}: {
+  previousCourse?: CourseData | null;
+  nextCourse?: CourseData | null;
+}) {
+  if (!previousCourse && !nextCourse) return null;
+
+  return (
+    <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-border">
+      {previousCourse ? (
+        <Link
+          href={getCoursePath(previousCourse)}
+          className="group flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/50 hover:bg-muted/30 transition-all flex-1"
+        >
+          <ChevronLeft className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+          <div className="text-left">
+            <p className="text-xs text-muted-foreground">Previous Course</p>
+            <p className="font-medium group-hover:text-primary transition-colors">
+              {previousCourse.code}
+            </p>
+            <p className="text-sm text-muted-foreground line-clamp-1">
+              {previousCourse.title}
+            </p>
+          </div>
+        </Link>
+      ) : (
+        <div className="flex-1" />
+      )}
+
+      {nextCourse ? (
+        <Link
+          href={getCoursePath(nextCourse)}
+          className="group flex items-center justify-end gap-3 p-4 rounded-xl border border-border hover:border-primary/50 hover:bg-muted/30 transition-all flex-1"
+        >
+          <div className="text-right">
+            <p className="text-xs text-muted-foreground">Next Course</p>
+            <p className="font-medium group-hover:text-primary transition-colors">
+              {nextCourse.code}
+            </p>
+            <p className="text-sm text-muted-foreground line-clamp-1">
+              {nextCourse.title}
+            </p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+        </Link>
+      ) : (
+        <div className="flex-1" />
+      )}
+    </nav>
   );
 }
 
@@ -143,22 +243,23 @@ function StatBlock({
 // -----------------------------------------------------------------------------
 function OverviewSection({ course }: { course: CourseData }) {
   return (
-    <div className="grid gap-8 md:grid-cols-2">
-      {/* Learning Objectives */}
+    <div className="grid gap-6 md:gap-8 md:grid-cols-2">
       {course.objectives && course.objectives.length > 0 && (
         <Card className="border-primary/20">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <CardContent className="p-5 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
               <Target className="w-5 h-5 text-primary" />
               Learning Objectives
             </h3>
             <ul className="space-y-3">
               {course.objectives.map((obj, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <div className="bg-primary/10 rounded-full p-1 mt-0.5">
+                  <div className="bg-primary/10 rounded-full p-1 mt-0.5 shrink-0">
                     <CheckCircle className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-muted-foreground">{obj}</span>
+                  <span className="text-sm sm:text-base text-muted-foreground">
+                    {obj}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -166,21 +267,22 @@ function OverviewSection({ course }: { course: CourseData }) {
         </Card>
       )}
 
-      {/* Learning Outcomes */}
       {course.outcomes && course.outcomes.length > 0 && (
         <Card className="border-primary/20">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <CardContent className="p-5 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
               <Award className="w-5 h-5 text-primary" />
               Expected Outcomes
             </h3>
             <ul className="space-y-3">
               {course.outcomes.map((outcome, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <div className="bg-green-500/10 rounded-full p-1 mt-0.5">
+                  <div className="bg-green-500/10 rounded-full p-1 mt-0.5 shrink-0">
                     <CheckCircle className="w-4 h-4 text-green-500" />
                   </div>
-                  <span className="text-muted-foreground">{outcome}</span>
+                  <span className="text-sm sm:text-base text-muted-foreground">
+                    {outcome}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -196,12 +298,11 @@ function OverviewSection({ course }: { course: CourseData }) {
 // -----------------------------------------------------------------------------
 function SyllabusSection({ course }: { course: CourseData }) {
   return (
-    <div className="grid gap-8 md:grid-cols-2">
-      {/* Topics */}
+    <div className="grid gap-6 md:gap-8 md:grid-cols-2">
       {course.topics && course.topics.length > 0 && (
         <Card className="border-primary/20">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <CardContent className="p-5 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-primary" />
               Course Topics
             </h3>
@@ -209,12 +310,12 @@ function SyllabusSection({ course }: { course: CourseData }) {
               {course.topics.map((topic, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                  className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
                 >
-                  <span className="bg-primary text-primary-foreground w-7 h-7 rounded-full flex items-center justify-center text-sm font-medium">
+                  <span className="bg-primary text-primary-foreground w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium shrink-0">
                     {idx + 1}
                   </span>
-                  <span>{topic}</span>
+                  <span className="text-sm sm:text-base">{topic}</span>
                 </div>
               ))}
             </div>
@@ -222,11 +323,10 @@ function SyllabusSection({ course }: { course: CourseData }) {
         </Card>
       )}
 
-      {/* Assessment Breakdown */}
       {course.assessment && (
         <Card className="border-primary/20">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <CardContent className="p-5 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
               <Layers className="w-5 h-5 text-primary" />
               Assessment Breakdown
             </h3>
@@ -237,7 +337,7 @@ function SyllabusSection({ course }: { course: CourseData }) {
                     <span className="capitalize text-sm">
                       {key.replace(/([A-Z])/g, ' $1').trim()}
                     </span>
-                    <span className="font-semibold">{value}%</span>
+                    <span className="font-semibold text-sm">{value}%</span>
                   </div>
                   <Progress value={value} className="h-2" />
                 </div>
@@ -255,12 +355,11 @@ function SyllabusSection({ course }: { course: CourseData }) {
 // -----------------------------------------------------------------------------
 function ResourcesSection({ course }: { course: CourseData }) {
   return (
-    <div className="grid gap-8 md:grid-cols-2">
-      {/* Technologies */}
+    <div className="grid gap-6 md:gap-8 md:grid-cols-2">
       {course.technologies && course.technologies.length > 0 && (
         <Card className="border-primary/20">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <CardContent className="p-5 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
               <Code2 className="w-5 h-5 text-primary" />
               Technologies & Tools
             </h3>
@@ -269,7 +368,7 @@ function ResourcesSection({ course }: { course: CourseData }) {
                 <Badge
                   key={tech}
                   variant="secondary"
-                  className="text-sm py-1.5 px-3"
+                  className="text-xs sm:text-sm py-1 sm:py-1.5 px-2 sm:px-3"
                 >
                   {tech}
                 </Badge>
@@ -279,19 +378,20 @@ function ResourcesSection({ course }: { course: CourseData }) {
         </Card>
       )}
 
-      {/* Assignments & Projects */}
       <div className="space-y-6">
         {course.assignments && course.assignments.length > 0 && (
           <Card className="border-primary/20">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold mb-4">Assignments</h3>
+            <CardContent className="p-5 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold mb-4">
+                Assignments
+              </h3>
               <ul className="space-y-2">
                 {course.assignments.map((assignment, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center gap-2 text-muted-foreground"
+                    className="flex items-center gap-2 text-sm sm:text-base text-muted-foreground"
                   >
-                    <span className="w-2 h-2 bg-primary rounded-full" />
+                    <span className="w-2 h-2 bg-primary rounded-full shrink-0" />
                     {assignment}
                   </li>
                 ))}
@@ -302,15 +402,17 @@ function ResourcesSection({ course }: { course: CourseData }) {
 
         {course.projects && course.projects.length > 0 && (
           <Card className="border-green-500/20">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold mb-4">Projects</h3>
+            <CardContent className="p-5 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold mb-4">
+                Projects
+              </h3>
               <ul className="space-y-2">
                 {course.projects.map((project, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center gap-2 text-muted-foreground"
+                    className="flex items-center gap-2 text-sm sm:text-base text-muted-foreground"
                   >
-                    <span className="w-2 h-2 bg-green-500 rounded-full" />
+                    <span className="w-2 h-2 bg-green-500 rounded-full shrink-0" />
                     {project}
                   </li>
                 ))}
@@ -336,10 +438,10 @@ function FeedbackSection({ course }: { course: CourseData }) {
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {course.feedback.map((fb, idx) => (
         <Card key={idx} className="border-primary/10 bg-muted/20">
-          <CardContent className="p-6">
+          <CardContent className="p-5 sm:p-6">
             <div className="flex items-center gap-1 mb-3">
               {[...Array(5)].map((_, i) => (
                 <Star
@@ -353,7 +455,9 @@ function FeedbackSection({ course }: { course: CourseData }) {
                 />
               ))}
             </div>
-            <p className="text-muted-foreground italic">&ldquo;{fb}&rdquo;</p>
+            <p className="text-sm sm:text-base text-muted-foreground italic">
+              &ldquo;{fb}&rdquo;
+            </p>
           </CardContent>
         </Card>
       ))}
@@ -364,40 +468,46 @@ function FeedbackSection({ course }: { course: CourseData }) {
 // -----------------------------------------------------------------------------
 // Main Layout Component
 // -----------------------------------------------------------------------------
-export function CoursePageLayout({ course }: CoursePageLayoutProps) {
+export function CoursePageLayout({
+  course,
+  previousCourse,
+  nextCourse,
+}: CoursePageLayoutProps) {
   return (
     <div className="space-y-8">
       {/* Hero Section */}
       <CourseHero course={course} />
 
-      {/* Tabbed Content */}
+      {/* Tabbed Content with Sticky Header */}
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="w-full justify-start bg-transparent border-b border-border rounded-none p-0 gap-2">
-          <TabsTrigger
-            value="overview"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
-          >
-            Overview
-          </TabsTrigger>
-          <TabsTrigger
-            value="syllabus"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
-          >
-            Syllabus
-          </TabsTrigger>
-          <TabsTrigger
-            value="resources"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
-          >
-            Resources
-          </TabsTrigger>
-          <TabsTrigger
-            value="feedback"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
-          >
-            Feedback
-          </TabsTrigger>
-        </TabsList>
+        <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 -mx-4 px-4 py-2">
+          <TabsList className="w-full justify-start bg-transparent border-b border-border rounded-none p-0 gap-1 sm:gap-2 overflow-x-auto flex-nowrap">
+            <TabsTrigger
+              value="overview"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"
+            >
+              Overview
+            </TabsTrigger>
+            <TabsTrigger
+              value="syllabus"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"
+            >
+              Syllabus
+            </TabsTrigger>
+            <TabsTrigger
+              value="resources"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"
+            >
+              Resources
+            </TabsTrigger>
+            <TabsTrigger
+              value="feedback"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"
+            >
+              Feedback
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="overview" className="mt-6">
           <OverviewSection course={course} />
@@ -415,6 +525,12 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
           <FeedbackSection course={course} />
         </TabsContent>
       </Tabs>
+
+      {/* Course Navigation */}
+      <CourseNavigation
+        previousCourse={previousCourse}
+        nextCourse={nextCourse}
+      />
     </div>
   );
 }

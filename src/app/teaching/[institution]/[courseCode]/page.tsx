@@ -62,6 +62,7 @@ export async function generateMetadata({
 export default async function CoursePage({ params }: CoursePageProps) {
   const { institution, courseCode } = await params;
 
+  // Find the current course
   const course = allCourses.find(
     (c) =>
       c.institution.toLowerCase() === institution.toLowerCase() &&
@@ -73,11 +74,30 @@ export default async function CoursePage({ params }: CoursePageProps) {
     notFound();
   }
 
+  // Get courses from the same institution for navigation
+  const sameInstitutionCourses = allCourses.filter(
+    (c) => c.institution.toLowerCase() === institution.toLowerCase()
+  );
+  const currentIdx = sameInstitutionCourses.findIndex(
+    (c) => c.id === course.id
+  );
+
+  const previousCourse =
+    currentIdx > 0 ? sameInstitutionCourses[currentIdx - 1] : null;
+  const nextCourse =
+    currentIdx < sameInstitutionCourses.length - 1
+      ? sameInstitutionCourses[currentIdx + 1]
+      : null;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Breadcrumbs />
       <div className="mt-6">
-        <CoursePageLayout course={course} />
+        <CoursePageLayout
+          course={course}
+          previousCourse={previousCourse}
+          nextCourse={nextCourse}
+        />
       </div>
     </div>
   );
