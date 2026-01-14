@@ -10,7 +10,6 @@ import {
 } from '@/shared/lib/data/courses';
 import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
-import { StudentTestimonials } from '@/features/teaching/student-testimonials';
 import { TeachingCTA } from '@/features/teaching/teaching-cta';
 
 export const metadata: Metadata = {
@@ -152,9 +151,6 @@ export default function TeachingPage() {
           />
         </Suspense>
       </section>
-
-      {/* Testimonials Section */}
-      <StudentTestimonials />
 
       {/* Call to Action */}
       <section aria-labelledby="collaborate" className="py-8">

@@ -22,6 +22,7 @@ import {
   ChevronDown,
   ChevronUp,
   ExternalLink,
+  ArrowRight,
 } from 'lucide-react';
 import type { CourseData } from '@/shared/types';
 import { Icon } from '@/shared/components/common/icons';
@@ -153,10 +154,11 @@ export const CourseCard = memo(function CourseCard({
   return (
     <Card
       className={cn(
-        'transition-all duration-200 hover:shadow-lg flex flex-col',
+        'transition-all duration-200 flex flex-col group',
         isCollapsible && 'break-inside-avoid inline-block w-full min-h-[260px]',
-        hasDetailPage &&
-          'border-2 border-primary/50 hover:border-primary hover:-translate-y-1'
+        hasDetailPage
+          ? 'border-2 border-primary/30 hover:border-primary hover:shadow-lg hover:-translate-y-1'
+          : 'bg-muted/5 hover:bg-muted/10'
       )}
     >
       <CardHeader className="pb-3 flex-1">
@@ -172,9 +174,15 @@ export const CourseCard = memo(function CourseCard({
 
           {/* Course Info */}
           <div className="flex-1 min-w-0">
-            <CardTitle className="text-lg leading-tight">
-              {course.title}
-            </CardTitle>
+            <div className="flex items-center gap-2">
+              <CardTitle className="text-lg leading-tight">
+                {course.title}
+              </CardTitle>
+              {/* Visual indicator for detail pages */}
+              {hasDetailPage && (
+                <ArrowRight className="w-4 h-4 text-primary/50 group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0" />
+              )}
+            </div>
             <p className="text-sm font-mono text-primary">{course.code}</p>
           </div>
         </div>
@@ -217,6 +225,30 @@ export const CourseCard = memo(function CourseCard({
             </div>
           )}
         </div>
+
+        {/* Inline Tech Tags for cards without detail pages */}
+        {!hasDetailPage &&
+          course.technologies &&
+          course.technologies.length > 0 && (
+            <div className="mt-3 pt-3 border-t border-border/30">
+              <div className="flex flex-wrap gap-1">
+                {course.technologies.slice(0, 4).map((tech) => (
+                  <Badge
+                    key={tech}
+                    variant="outline"
+                    className="text-[10px] px-1.5 py-0 h-5 bg-background/50"
+                  >
+                    {tech}
+                  </Badge>
+                ))}
+                {course.technologies.length > 4 && (
+                  <span className="text-[10px] text-muted-foreground self-center">
+                    +{course.technologies.length - 4}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
       </CardHeader>
 
       {/* Expandable Details */}
