@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { allCourses, institutionNames } from '@/shared/lib/data/courses';
-import { CourseCard } from '@/features/teaching/course-card';
+import { CoursePageLayout } from '@/features/teaching/course-page-layout';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
 interface CoursePageProps {
@@ -13,7 +13,6 @@ interface CoursePageProps {
 
 /**
  * Generate static paths for all courses at build time
- * This replaces the need for 14 individual page files
  */
 export async function generateStaticParams() {
   return allCourses.map((course) => ({
@@ -30,7 +29,6 @@ export async function generateMetadata({
 }: CoursePageProps): Promise<Metadata> {
   const { institution, courseCode } = await params;
 
-  // Find the course by matching institution and code
   const course = allCourses.find(
     (c) =>
       c.institution.toLowerCase() === institution.toLowerCase() &&
@@ -48,18 +46,22 @@ export async function generateMetadata({
 
   return {
     title: `${course.code}: ${course.title} | Teaching Portfolio`,
-    description: `Course details for ${course.code}: ${course.title} at ${institutionName}`,
+    description: `Course details for ${course.code}: ${course.title} at ${institutionName}. ${course.description}`,
+    keywords: [
+      course.code,
+      course.title,
+      course.institution,
+      ...(course.technologies || []),
+    ],
   };
 }
 
 /**
- * Dynamic course detail page
- * Replaces 14 duplicate page.tsx files with a single dynamic route
+ * Course Detail Page - World-Class Teaching Portal
  */
 export default async function CoursePage({ params }: CoursePageProps) {
   const { institution, courseCode } = await params;
 
-  // Find the course by matching institution and code
   const course = allCourses.find(
     (c) =>
       c.institution.toLowerCase() === institution.toLowerCase() &&
@@ -67,7 +69,6 @@ export default async function CoursePage({ params }: CoursePageProps) {
         courseCode.toLowerCase().replace(/\s+/g, '')
   );
 
-  // Show 404 if course not found
   if (!course) {
     notFound();
   }
@@ -76,7 +77,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
     <div className="container mx-auto px-4 py-8">
       <Breadcrumbs />
       <div className="mt-6">
-        <CourseCard course={course} variant="static" showDetails={true} />
+        <CoursePageLayout course={course} />
       </div>
     </div>
   );
