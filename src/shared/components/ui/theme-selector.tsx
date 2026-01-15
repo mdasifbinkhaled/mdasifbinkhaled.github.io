@@ -313,7 +313,7 @@ export function ThemeSelector({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="flex items-center gap-2 min-w-[140px] justify-start"
+          className="flex items-center gap-2 min-w-36 justify-start"
         >
           <CurrentIcon className="h-4 w-4" />
           <span className="hidden sm:inline">
