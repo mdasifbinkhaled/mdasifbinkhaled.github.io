@@ -1,0 +1,267 @@
+{
+  "courses": [
+    {
+      "id": "iub-cse101",
+      "code": "CSE 101",
+      "title": "Introduction to Programming",
+      "institution": "IUB",
+      "level": "undergraduate",
+      "credits": 3,
+      "semester": "Fall",
+      "year": 2023,
+      "description": "Fundamentals of programming concepts, problem-solving techniques, and introduction to C programming language.",
+      "outcomes": [
+        "Students can write well-structured C programs",
+        "Students can solve complex problems using programming",
+        "Students understand memory management and pointers",
+        "Students can debug and optimize their code"
+      ],
+      "technologies": [
+        "C Programming",
+        "Code::Blocks",
+        "GCC Compiler",
+        "GitHub"
+      ],
+      "enrollmentCount": 45,
+      "rating": 4.7,
+      "iconName": "Code2",
+      "status": "completed",
+      "tier": "detailed"
+    },
+    {
+      "id": "iub-cse201",
+      "code": "CSE 201",
+      "title": "Discrete Mathematics",
+      "institution": "IUB",
+      "level": "undergraduate",
+      "credits": 3,
+      "semester": "Fall",
+      "year": 2023,
+      "description": "Mathematical foundations for computer science including logic, sets, relations, functions, and graph theory.",
+      "outcomes": [
+        "Students can construct mathematical proofs",
+        "Students understand set theory and relations",
+        "Students can apply graph theory concepts",
+        "Students understand combinatorics and counting"
+      ],
+      "technologies": ["LaTeX", "Mathematical Notation", "Proof Techniques"],
+      "enrollmentCount": 35,
+      "rating": 4.3,
+      "iconName": "Calculator",
+      "status": "completed",
+      "tier": "detailed"
+    },
+    {
+      "id": "iub-cse203",
+      "code": "CSE 203",
+      "title": "Data Structures",
+      "institution": "IUB",
+      "level": "undergraduate",
+      "credits": 3,
+      "semester": "Fall",
+      "year": 2024,
+      "description": "Implementation and application of fundamental data structures including arrays, linked lists, stacks, queues, trees, and graphs.",
+      "outcomes": [
+        "Students can implement all major data structures",
+        "Students can analyze space-time trade-offs",
+        "Students can solve problems using appropriate structures",
+        "Students understand memory management concepts"
+      ],
+      "technologies": [
+        "C++",
+        "Java",
+        "Data Structure Visualizer",
+        "Eclipse IDE"
+      ],
+      "enrollmentCount": 42,
+      "rating": 4.6,
+      "iconName": "Database",
+      "status": "ongoing",
+      "tier": "standard"
+    },
+    {
+      "id": "iub-cse211",
+      "code": "CSE 211",
+      "title": "Algorithms",
+      "institution": "IUB",
+      "level": "undergraduate",
+      "credits": 3,
+      "semester": "Spring",
+      "year": 2024,
+      "description": "Analysis and design of algorithms including sorting, searching, graph algorithms, dynamic programming, and complexity analysis.",
+      "outcomes": [
+        "Students can analyze algorithm complexity",
+        "Students can design efficient algorithms",
+        "Students understand NP-completeness concepts",
+        "Students can apply algorithmic techniques to problems"
+      ],
+      "technologies": ["Python", "C++", "Algorithm Visualizers", "LeetCode"],
+      "enrollmentCount": 38,
+      "rating": 4.5,
+      "iconName": "Brain",
+      "status": "completed",
+      "tier": "detailed"
+    },
+    {
+      "id": "iub-cse317",
+      "code": "CSE 317",
+      "title": "Numerical Methods",
+      "institution": "IUB",
+      "level": "undergraduate",
+      "credits": 3,
+      "semester": "Summer",
+      "year": 2024,
+      "description": "Numerical techniques for solving mathematical problems including root finding, interpolation, numerical integration, and differential equations.",
+      "outcomes": [
+        "Students can implement numerical algorithms",
+        "Students understand error analysis",
+        "Students can solve engineering problems numerically",
+        "Students can use MATLAB for scientific computing"
+      ],
+      "technologies": ["MATLAB", "Python", "NumPy", "SciPy"],
+      "enrollmentCount": 30,
+      "rating": 4.4,
+      "iconName": "Calculator",
+      "status": "completed",
+      "tier": "standard"
+    },
+    {
+      "id": "iub-finite-automata",
+      "code": "CSE 331",
+      "title": "Finite Automata and Computability",
+      "institution": "IUB",
+      "level": "undergraduate",
+      "credits": 3,
+      "semester": "Fall",
+      "year": 2023,
+      "description": "Theory of computation including finite automata, regular expressions, context-free grammars, and Turing machines.",
+      "outcomes": [
+        "Students understand formal language theory",
+        "Students can design automata and grammars",
+        "Students understand computability limits",
+        "Students can prove language properties"
+      ],
+      "technologies": ["JFLAP", "Automata Simulator", "LaTeX"],
+      "enrollmentCount": 28,
+      "rating": 4.2,
+      "iconName": "Cpu",
+      "status": "completed",
+      "tier": "standard"
+    },
+    {
+      "id": "iub-fundamentals-cs",
+      "code": "CSE 110",
+      "title": "Fundamentals of Computer System",
+      "institution": "IUB",
+      "level": "undergraduate",
+      "credits": 3,
+      "semester": "Spring",
+      "year": 2023,
+      "description": "Introduction to computer organization, binary systems, logic design, and basic computer architecture.",
+      "outcomes": [
+        "Students understand binary and hexadecimal systems",
+        "Students can design basic logic circuits",
+        "Students understand CPU architecture",
+        "Students can work with assembly language basics"
+      ],
+      "technologies": ["Logisim", "Digital Circuit Simulators", "Assembly"],
+      "enrollmentCount": 50,
+      "rating": 4.3,
+      "iconName": "Server",
+      "status": "completed",
+      "tier": "standard"
+    },
+    {
+      "id": "bracu-cg-lab",
+      "code": "CSE 423",
+      "title": "Computer Graphics Lab",
+      "institution": "BRACU",
+      "level": "undergraduate",
+      "credits": 1,
+      "semester": "Fall",
+      "year": 2018,
+      "description": "Practical application of computer graphics principles including 2D/3D transformations, rendering, and OpenGL programming.",
+      "outcomes": [
+        "Students can implement graphics primitives",
+        "Students can create 3D scenes",
+        "Students understand transformation matrices",
+        "Students can develop interactive applications"
+      ],
+      "technologies": ["OpenGL", "C++", "Visual Studio", "GLUT"],
+      "enrollmentCount": 25,
+      "rating": 4.6,
+      "iconName": "Presentation",
+      "status": "completed",
+      "tier": "summary"
+    },
+    {
+      "id": "bracu-nm-lab",
+      "code": "CSE 284",
+      "title": "Numerical Methods Lab",
+      "institution": "BRACU",
+      "level": "undergraduate",
+      "credits": 1,
+      "semester": "Fall",
+      "year": 2017,
+      "description": "Laboratory sessions for implementing numerical methods algorithms and solving engineering problems.",
+      "outcomes": [
+        "Students can implement numerical methods",
+        "Students can use MATLAB effectively",
+        "Students can analyze numerical results",
+        "Students can solve real-world problems"
+      ],
+      "technologies": ["MATLAB", "Python", "Excel"],
+      "enrollmentCount": 30,
+      "rating": 4.4,
+      "iconName": "Calculator",
+      "status": "completed",
+      "tier": "summary"
+    },
+    {
+      "id": "bracu-cd-lab",
+      "code": "CSE 420",
+      "title": "Compiler Design Lab",
+      "institution": "BRACU",
+      "level": "undergraduate",
+      "credits": 1,
+      "semester": "Spring",
+      "year": 2018,
+      "description": "Practical implementation of compiler components including lexical analysis, parsing, and code generation.",
+      "outcomes": [
+        "Students can implement lexical analyzers",
+        "Students can build parsers",
+        "Students understand code generation",
+        "Students can use compiler tools"
+      ],
+      "technologies": ["Flex", "Bison", "C", "GCC"],
+      "enrollmentCount": 22,
+      "rating": 4.5,
+      "iconName": "Code2",
+      "status": "completed",
+      "tier": "summary"
+    },
+    {
+      "id": "bracu-android-lab",
+      "code": "CSE 489",
+      "title": "Android Development Lab",
+      "institution": "BRACU",
+      "level": "undergraduate",
+      "credits": 1,
+      "semester": "Summer",
+      "year": 2018,
+      "description": "Hands-on development of Android mobile applications using Java and Android SDK.",
+      "outcomes": [
+        "Students can build Android applications",
+        "Students understand mobile UI design",
+        "Students can use Android SDK",
+        "Students can publish apps to Play Store"
+      ],
+      "technologies": ["Java", "Android Studio", "Firebase", "SQLite"],
+      "enrollmentCount": 28,
+      "rating": 4.7,
+      "iconName": "LayoutDashboard",
+      "status": "completed",
+      "tier": "summary"
+    }
+  ]
+}

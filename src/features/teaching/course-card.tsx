@@ -146,7 +146,8 @@ export const CourseCard = memo(function CourseCard({
       ? `${course.enrollmentCount} students`
       : 'Enrollment TBD';
 
-  const hasDetailPage = course.hasDetailPage === true;
+  // Use tier field (detailed = has separate page)
+  const hasDetailPage = course.tier === 'detailed';
   const coursePath = `/teaching/${course.institution
     .toLowerCase()
     .replace(/\s+/g, '')}/${course.code.toLowerCase().replace(/\s+/g, '')}`;

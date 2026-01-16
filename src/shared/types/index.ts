@@ -12,6 +12,7 @@ export type {
   CourseInstitution,
   CourseLevel,
   CourseStatus,
+  CourseTier,
   CourseAssessmentBreakdown,
   CourseData,
 } from '@/shared/lib/validation/schemas';

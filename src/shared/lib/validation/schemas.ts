@@ -122,6 +122,12 @@ export const courseLevelSchema = z.enum(['undergraduate', 'graduate']);
 export const courseStatusSchema = z.enum(['completed', 'ongoing', 'upcoming']);
 
 /**
+ * Course Tier Schema
+ * Defines display detail level: summary (card only), standard (expandable), detailed (full page)
+ */
+export const courseTierSchema = z.enum(['summary', 'standard', 'detailed']);
+
+/**
  * Course Assessment Breakdown Schema
  */
 export const courseAssessmentBreakdownSchema = z
@@ -217,6 +223,11 @@ export const courseDataSchema = z.object({
   // Optional presentation
   iconName: iconNameSchema.optional(),
   status: courseStatusSchema.optional(),
+
+  // Tier: determines display level (summary=card, standard=expandable, detailed=full page)
+  tier: courseTierSchema.default('standard'),
+
+  // Deprecated: kept for backward compatibility
   hasDetailPage: z.boolean().optional(),
 });
 
@@ -325,6 +336,9 @@ export type CourseLevel = z.infer<typeof courseLevelSchema>;
 
 /** Course status enum inferred from schema */
 export type CourseStatus = z.infer<typeof courseStatusSchema>;
+
+/** Course tier enum inferred from schema */
+export type CourseTier = z.infer<typeof courseTierSchema>;
 
 /** Course assessment breakdown inferred from schema */
 export type CourseAssessmentBreakdown = z.infer<

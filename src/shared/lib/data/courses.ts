@@ -1,83 +1,77 @@
-// Course data loader - imports individual JSON files for better maintainability
+/**
+ * Course Data Loader - Centralized Index Architecture
+ *
+ * This module provides a scalable, future-proof course data system:
+ * - Single central index (_index.json) for all courses
+ * - Tier-based display levels (summary, standard, detailed)
+ * - Lazy loading for detailed course content
+ */
 import type {
   CourseData,
   CourseInstitution,
   CourseStatus,
+  CourseTier,
 } from '@/shared/types';
 import { coursesArraySchema, validateData } from '../validation/schemas';
 
+// Import central index
+import coursesIndex from './courses/_index.json';
+
+/**
+ * Institution display names
+ */
 export const institutionNames: Record<CourseInstitution, string> = {
   IUB: 'Independent University, Bangladesh (IUB)',
   BRACU: 'BRAC University',
 };
 
-// Import IUB course JSON files (CV-verified courses)
-import cse101 from './courses/iub/cse101.json'; // Introduction to Programming
-import cse203 from './courses/iub/cse203.json'; // Data Structures
-import cse211 from './courses/iub/cse211.json'; // Algorithms
-import cse201 from './courses/iub/cse201-discrete-math.json'; // Discrete Mathematics
-import cse317 from './courses/iub/cse317.json'; // Numerical Methods
-import finiteAutomata from './courses/iub/finite-automata.json'; // Finite Automata and Computability
-import fundamentalsCs from './courses/iub/fundamentals-cs.json'; // Fundamentals of Computer System
-
-// Import BRACU course JSON files (Adjunct Lecturer Sep 2017 - Dec 2018)
-import cgLab from './courses/bracu/cg-lab.json';
-import nmLab from './courses/bracu/nm-lab.json';
-import cdLab from './courses/bracu/cd-lab.json';
-import androidLab from './courses/bracu/android-lab.json';
-
-// IUB Courses (Senior Lecturer Feb 2023+ & Lecturer Jan 2019-Feb 2023)
-const rawCoursesTaughtIUB: CourseData[] = [
-  cse101 as CourseData, // Introduction to Programming
-  cse203 as CourseData, // Data Structures
-  cse211 as CourseData, // Algorithms
-  cse201 as CourseData, // Discrete Mathematics
-  cse317 as CourseData, // Numerical Methods
-  finiteAutomata as CourseData, // Finite Automata and Computability
-  fundamentalsCs as CourseData, // Fundamentals of Computer System
-];
-
 /**
- * Validate and export IUB courses
+ * All courses - validated from central index
  */
-export const coursesTaughtIUB = validateData(
-  rawCoursesTaughtIUB,
+export const allCourses: CourseData[] = validateData(
+  coursesIndex.courses,
   coursesArraySchema,
-  'IUB courses'
+  'courses'
 );
 
-// BRACU Courses (Adjunct Lecturer Sep 2017 - Dec 2018)
-const rawCoursesTaughtBRACU: CourseData[] = [
-  cgLab as CourseData,
-  nmLab as CourseData,
-  cdLab as CourseData,
-  androidLab as CourseData,
-];
-
 /**
- * Validate and export BRACU courses
+ * Courses by institution
  */
-export const coursesTaughtBRACU = validateData(
-  rawCoursesTaughtBRACU,
-  coursesArraySchema,
-  'BRACU courses'
+export const coursesTaughtIUB = allCourses.filter(
+  (c) => c.institution === 'IUB'
 );
 
-// All courses combined (already validated)
-export const allCourses: CourseData[] = [
-  ...coursesTaughtIUB,
-  ...coursesTaughtBRACU,
-];
+export const coursesTaughtBRACU = allCourses.filter(
+  (c) => c.institution === 'BRACU'
+);
 
 /**
  * Courses grouped by institution
- * Enables dynamic tab generation - add new institutions here
+ * Enables dynamic tab generation
  */
 export const coursesByInstitution: Record<string, CourseData[]> = {
   IUB: coursesTaughtIUB,
   BRACU: coursesTaughtBRACU,
-  // Future: Add new institutions here without changing UI code
 };
+
+/**
+ * Get courses by tier
+ */
+export const getCoursesByTier = (tier: CourseTier): CourseData[] =>
+  allCourses.filter((c) => c.tier === tier);
+
+/**
+ * Get detailed courses (for generating static pages)
+ */
+export const getDetailedCourses = (): CourseData[] =>
+  allCourses.filter((c) => c.tier === 'detailed');
+
+/**
+ * Check if a course has a detail page
+ * Uses tier field (detailed = has page)
+ */
+export const hasDetailPage = (course: CourseData): boolean =>
+  course.tier === 'detailed';
 
 /**
  * Calculate total students from enrollment data
@@ -86,7 +80,9 @@ export function getTotalStudentsFromCourses(): number {
   return allCourses.reduce((sum, c) => sum + (c.enrollmentCount || 0), 0);
 }
 
-// Filter functions
+/**
+ * Filter functions
+ */
 export const getCoursesByInstitution = (institution: CourseInstitution) =>
   allCourses.filter((course) => course.institution === institution);
 
@@ -98,3 +94,19 @@ export const getCoursesByStatus = (status: CourseStatus) =>
 
 export const getCoursesByYear = (year: number) =>
   allCourses.filter((course) => course.year === year);
+
+/**
+ * Get course by ID
+ */
+export const getCourseById = (id: string): CourseData | undefined =>
+  allCourses.find((course) => course.id === id);
+
+/**
+ * Get course by code (e.g., "CSE 101")
+ */
+export const getCourseByCode = (code: string): CourseData | undefined =>
+  allCourses.find(
+    (course) =>
+      course.code.toLowerCase().replace(/\s/g, '') ===
+      code.toLowerCase().replace(/\s/g, '')
+  );
