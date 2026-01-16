@@ -1,8 +1,10 @@
-import { siteConfig } from '@/shared/config/site';
 import { samplePublications } from '@/shared/lib/data/publications';
-import type { PublicationItem } from '@/shared/types';
-
-type JsonLd = Record<string, unknown>;
+import type { CourseData } from '@/shared/types';
+import {
+  generateCourseStructuredData,
+  generatePersonStructuredData,
+  generatePublicationStructuredData,
+} from '@/shared/lib/structured-data';
 
 function sanitizeJsonLd(data: unknown): string {
   return JSON.stringify(data, null, 2)
@@ -23,169 +25,8 @@ function JsonLdScript({ data }: { data: unknown }): React.JSX.Element {
   );
 }
 
-function buildScholarStructuredData(): JsonLd {
-  const sameAs = [
-    siteConfig.links.github,
-    siteConfig.links.linkedin,
-    siteConfig.links.googleScholar,
-    siteConfig.links.researchGate,
-    siteConfig.links.orcid,
-  ].filter(Boolean);
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: siteConfig.author,
-    givenName: siteConfig.givenName,
-    familyName: siteConfig.familyName,
-    jobTitle: siteConfig.jobTitle,
-    workLocation: {
-      '@type': 'Place',
-      name: siteConfig.institution,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Dhaka',
-        addressCountry: 'BD',
-      },
-    },
-    worksFor: {
-      '@type': 'Organization',
-      name: siteConfig.institution,
-      url: 'https://www.iub.edu.bd/',
-    },
-    url: siteConfig.url,
-    email: siteConfig.email,
-    telephone: siteConfig.phone,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Bashundhara R/A',
-      addressLocality: 'Dhaka',
-      postalCode: '1212',
-      addressCountry: 'Bangladesh',
-    },
-    sameAs,
-    alumniOf: [
-      {
-        '@type': 'CollegeOrUniversity',
-        name: 'Independent University, Bangladesh',
-        url: 'https://www.iub.edu.bd/',
-        sameAs: 'https://www.iub.edu.bd/',
-      },
-      {
-        '@type': 'CollegeOrUniversity',
-        name: 'BRAC University',
-        url: 'https://www.bracu.ac.bd/',
-        sameAs: 'https://www.bracu.ac.bd/',
-      },
-    ],
-    knowsAbout: [
-      'Explainable AI (XAI)',
-      'Multimodal AI (MMAI)',
-      'Computer Vision (CV)',
-      'Healthcare AI',
-      'Machine Learning',
-      'Deep Learning',
-      'Data Mining',
-      'Algorithm Design',
-      'Outcome-Based Education (OBE)',
-    ],
-    hasCredential: [
-      {
-        '@type': 'EducationalOccupationalCredential',
-        credentialCategory: 'degree',
-        name: 'Master of Science in Computer Science',
-        educationalLevel: 'https://schema.org/CollegeDegree',
-        awardedBy: {
-          '@type': 'CollegeOrUniversity',
-          name: 'Independent University, Bangladesh',
-        },
-      },
-      {
-        '@type': 'EducationalOccupationalCredential',
-        credentialCategory: 'degree',
-        name: 'Bachelor of Science in Computer Science and Engineering',
-        educationalLevel: 'https://schema.org/CollegeDegree',
-        awardedBy: {
-          '@type': 'CollegeOrUniversity',
-          name: 'BRAC University',
-        },
-      },
-    ],
-    researchInterest: [
-      'Explainable AI (XAI): Ensuring transparency and trustworthiness in disease detection, diagnosis, and healthcare analytics utilizing Artificial Intelligence (AI).',
-      'Multimodal AI (MMAI) & Computer Vision (CV): Using Multimodal AI (MMAI) and Computer Vision (CV) to combine imaging, clinical records, and lab results for holistic diagnostics.',
-    ],
-  };
-}
-
-function getPublisherName(venue?: string): string {
-  if (!venue) {
-    return 'Academic Publisher';
-  }
-
-  if (venue.includes('IEEE')) {
-    return 'IEEE';
-  }
-
-  if (venue.includes('Springer')) {
-    return 'Springer';
-  }
-
-  return 'Academic Publisher';
-}
-
-function buildPublicationStructuredData(publication: PublicationItem): JsonLd {
-  const article: JsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ScholarlyArticle',
-    headline: publication.title,
-    name: publication.title,
-    author: publication.authors.map((authorName) => ({
-      '@type': 'Person',
-      name: authorName,
-    })),
-    publisher: {
-      '@type': 'Organization',
-      name: getPublisherName(publication.venue),
-    },
-  };
-
-  if (publication.year) {
-    article.datePublished = publication.year.toString();
-  }
-
-  if (publication.venue) {
-    article.isPartOf = {
-      '@type': 'PublicationVolume',
-      name: publication.venue,
-    };
-  }
-
-  if (publication.link) {
-    article.url = publication.link;
-  }
-
-  if (publication.doi) {
-    article.identifier = {
-      '@type': 'PropertyValue',
-      propertyID: 'doi',
-      value: publication.doi,
-    };
-  }
-
-  if (publication.abstract) {
-    article.description = publication.abstract;
-  }
-
-  if (publication.keywords?.length) {
-    article.keywords = publication.keywords.join(', ');
-  }
-
-  return article;
-}
-
 export function ScholarStructuredDataScript(): React.JSX.Element {
-  return <JsonLdScript data={buildScholarStructuredData()} />;
+  return <JsonLdScript data={generatePersonStructuredData()} />;
 }
 
 export function PublicationStructuredDataScript(): React.JSX.Element | null {
@@ -193,10 +34,37 @@ export function PublicationStructuredDataScript(): React.JSX.Element | null {
     return null;
   }
 
-  const publications = samplePublications.map(buildPublicationStructuredData);
+  // PublicationItem vs the expected input of generatePublicationStructuredData might differ.
+  // generatePublicationStructuredData expects { title, authors, venue?, year?, abstract?, keywords?, doi?, url? }
+  // PublicationItem has { title, authors (string[]), venue, year, link (as url), doi, abstract, keywords? }
+  // Let's map it.
+
+  const publications = samplePublications.map((pub) =>
+    generatePublicationStructuredData({
+      title: pub.title,
+      authors: pub.authors,
+      venue: pub.venue,
+      year: pub.year,
+      abstract: pub.abstract,
+      keywords: pub.keywords,
+      doi: pub.doi,
+      url: pub.link,
+    })
+  );
+
   const jsonLd = publications.length === 1 ? publications[0] : publications;
 
   return <JsonLdScript data={jsonLd} />;
 }
 
-export { buildScholarStructuredData, buildPublicationStructuredData };
+export function CourseStructuredDataScript({
+  course,
+}: {
+  course: CourseData;
+}): React.JSX.Element {
+  const jsonLd = generateCourseStructuredData({
+    ...course,
+    outcomes: course.outcomes || [],
+  });
+  return <JsonLdScript data={jsonLd} />;
+}

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { allCourses, institutionNames } from '@/shared/lib/data/courses';
 import { CoursePageLayout } from '@/features/teaching/course-page-layout';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
+import { CourseStructuredDataScript } from '@/shared/components/common/structured-data';
 
 interface CoursePageProps {
   params: Promise<{
@@ -75,6 +76,9 @@ export default async function CoursePage({ params }: CoursePageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Structured Data for rich results */}
+      <CourseStructuredDataScript course={course} />
+
       <Breadcrumbs />
       <div className="mt-6">
         <CoursePageLayout course={course} />

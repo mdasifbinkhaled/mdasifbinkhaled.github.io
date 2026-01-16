@@ -1,3 +1,4 @@
+import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { AppProviders } from '@/shared/providers/app-providers';
@@ -5,9 +6,16 @@ import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
 import { SkipLink } from '@/shared/components/common/skip-link';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
-import { getPersonJsonLd } from '@/shared/lib/seo/json-ld';
+import { generatePersonStructuredData } from '@/shared/lib/structured-data';
 import '@/app/globals.css';
 import '@/styles/tokens.css';
+
+// Optimize font loading
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 // Analytics configuration
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -24,12 +32,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const jsonLd = getPersonJsonLd();
+  const jsonLd = generatePersonStructuredData();
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className="font-sans antialiased bg-background text-foreground"
+        className={`${inter.variable} font-sans antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
         {/* JSON-LD Structured Data */}

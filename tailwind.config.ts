@@ -44,6 +44,13 @@ const config: Config = {
   theme: {
     extend: {
       // ==========================================
+      // FONT FAMILY SYSTEM
+      // ==========================================
+      fontFamily: {
+        sans: ['var(--font-inter)', 'sans-serif'],
+      },
+
+      // ==========================================
       // RESPONSIVE BREAKPOINTS
       // ==========================================
       screens: {

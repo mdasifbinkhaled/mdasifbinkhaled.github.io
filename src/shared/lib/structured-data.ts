@@ -60,6 +60,8 @@ export interface PublicationStructuredData {
   doi?: string;
 }
 
+import { researchIdentity } from '@/shared/config/researcher-profile';
+
 export function generatePersonStructuredData(): AcademicPersonStructuredData {
   // Collect all social profile links (no placeholder detection needed since Twitter is removed)
   const profileLinks: Array<string | undefined> = [
@@ -84,14 +86,7 @@ export function generatePersonStructuredData(): AcademicPersonStructuredData {
     },
     url: siteConfig.url,
     sameAs,
-    knowsAbout: [
-      'Artificial Intelligence',
-      'Machine Learning',
-      'Computer Science Education',
-      'Data Science',
-      'Algorithm Design',
-      'Software Engineering',
-    ],
+    knowsAbout: researchIdentity.primaryAreas.map((area) => area.name),
     description: siteConfig.description,
     email: siteConfig.email,
     image: `${siteConfig.url}/photo/Photo_Md Asif Bin Khaled.png`,
@@ -104,7 +99,8 @@ export function generateCourseStructuredData(course: {
   description: string;
   institution: string;
   level: string;
-  topics: string[];
+  outcomes: string[];
+  technologies?: string[];
 }): CourseStructuredData {
   const providerName =
     institutionNames[course.institution as CourseInstitution] ??
@@ -126,7 +122,7 @@ export function generateCourseStructuredData(course: {
     courseCode: course.code,
     educationalLevel: course.level,
     timeRequired: 'P1S', // One semester
-    teaches: course.topics,
+    teaches: course.outcomes,
     url: `${siteConfig.url}/teaching#${course.code.toLowerCase().replace(/\s+/g, '-')}`,
   };
 }
