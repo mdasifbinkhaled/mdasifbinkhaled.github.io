@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Version:** 4.8.0 | **Status:** Active | **Updated:** 2026-01-14
+> **Version:** 4.9.0 | **Status:** Active | **Updated:** 2026-01-17
 
 ---
 
@@ -102,12 +102,20 @@ src/
 
 ### 5.3 Configuration
 
-| Config          | Purpose           |
-| --------------- | ----------------- |
-| `site.ts`       | Site metadata     |
-| `navigation.ts` | Nav structure     |
-| `themes.ts`     | Theme definitions |
-| `constants.ts`  | Display limits    |
+| Config                  | Purpose                   |
+| ----------------------- | ------------------------- |
+| `site.ts`               | Site metadata             |
+| `navigation.ts`         | Nav structure             |
+| `themes.ts`             | Theme definitions         |
+| `constants.ts`          | Display limits            |
+| `researcher-profile.ts` | Research areas & identity |
+| `structured-data.ts`    | SEO & Schema logic        |
+
+### 5.4 SEO & Structured Data
+
+- **Implementation**: `src/shared/lib/structured-data.ts`
+- **Schema Support**: `Person` (Global), `Course` (Teaching), `ScholarlyArticle` (Publications)
+- **Optimization**: `next/font/google` (Zero CLS), Dynamic Metadata generation
 
 ---
 
@@ -160,6 +168,7 @@ npm run test:run   # Tests only
 
 | Date       | Version | Changes                                                 |
 | ---------- | ------- | ------------------------------------------------------- |
+| 2026-01-17 | 4.9.0   | Performance & SEO Optimization (Next.font, JSON-LD)     |
 | 2026-01-14 | 4.8.0   | Teaching module refactoring - data-driven architecture  |
 | 2026-01-13 | 4.7.0   | Dependency audit, PMD sync (fix Tailwind version)       |
 | 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup |
