@@ -233,7 +233,7 @@
         "Students understand code generation",
         "Students can use compiler tools"
       ],
-      "technologies": ["Flex", "Bison", "C", "GCC"],
+      "technologies": ["Flex", "Bison", "C Language", "GCC"],
       "enrollmentCount": 22,
       "rating": 4.5,
       "iconName": "Code2",

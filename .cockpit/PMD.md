@@ -86,14 +86,21 @@ src/
 
 | Type         | Location                      |
 | ------------ | ----------------------------- |
-| Courses      | `lib/data/courses/` (11 JSON) |
+| Courses      | `lib/data/courses/index.json` |
 | Publications | `lib/data/publications.ts`    |
 | Experience   | `lib/data/experience.ts`      |
 | Activities   | `lib/data/activities.ts`      |
-| Testimonials | `lib/data/testimonials.ts`    |
 | News         | `lib/data/news.ts`            |
 
-### 5.2 Configuration
+### 5.2 Course Tier System
+
+| Tier       | Display         | Count |
+| ---------- | --------------- | ----- |
+| `detailed` | Full page       | 3     |
+| `standard` | Expandable card | 4     |
+| `summary`  | Card only       | 4     |
+
+### 5.3 Configuration
 
 | Config          | Purpose           |
 | --------------- | ----------------- |
