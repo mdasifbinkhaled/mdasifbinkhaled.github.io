@@ -15,7 +15,7 @@ import type {
 import { coursesArraySchema, validateData } from '../validation/schemas';
 
 // Import central index
-import coursesIndex from './courses/_index.json';
+import coursesIndex from './courses/index.json';
 
 /**
  * Institution display names
