@@ -227,6 +227,41 @@ export const courseDataSchema = z.object({
   // Tier: determines display level (summary=card, standard=expandable, detailed=full page)
   tier: courseTierSchema.default('standard'),
 
+  // Extended Resource Fields
+  links: z
+    .array(
+      z.object({
+        title: z.string(),
+        url: z.string().url(),
+        type: z.enum([
+          'outline',
+          'slides',
+          'discord',
+          'site',
+          'video',
+          'problem-set',
+          'note',
+          'other',
+        ]),
+      })
+    )
+    .optional(),
+
+  resourceSections: z
+    .array(
+      z.object({
+        title: z.string(),
+        items: z.array(
+          z.object({
+            label: z.string(),
+            url: z.string().url().optional(),
+            description: z.string().optional(),
+          })
+        ),
+      })
+    )
+    .optional(),
+
   // Deprecated: kept for backward compatibility
   hasDetailPage: z.boolean().optional(),
 });
@@ -353,3 +388,10 @@ export type CourseData = z.infer<typeof courseDataSchema>;
 
 /** Testimonial structure inferred from schema */
 export type Testimonial = z.infer<typeof testimonialSchema>;
+
+export type CourseLink = NonNullable<
+  z.infer<typeof courseDataSchema>['links']
+>[number];
+export type CourseResourceSection = NonNullable<
+  z.infer<typeof courseDataSchema>['resourceSections']
+>[number];

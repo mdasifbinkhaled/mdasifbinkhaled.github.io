@@ -15,6 +15,8 @@ export type {
   CourseTier,
   CourseAssessmentBreakdown,
   CourseData,
+  CourseLink,
+  CourseResourceSection,
 } from '@/shared/lib/validation/schemas';
 
 // Navigation types
