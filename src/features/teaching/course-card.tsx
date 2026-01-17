@@ -242,7 +242,7 @@ export const CourseCard = memo(function CourseCard({
                   </Badge>
                 ))}
                 {course.technologies.length > 4 && (
-                  <span className="text-[10px] text-muted-foreground self-center">
+                  <span className="text-10px text-muted-foreground self-center">
                     +{course.technologies.length - 4}
                   </span>
                 )}
