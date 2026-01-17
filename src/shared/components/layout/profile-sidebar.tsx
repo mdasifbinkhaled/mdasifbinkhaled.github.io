@@ -113,11 +113,6 @@ export const ProfileSidebar = memo(function ProfileSidebar({
               <p className="text-xs text-sidebar-foreground/60 mt-0.5 px-2">
                 {siteConfig.address.split(',')[0]}
               </p>
-              <div className="mt-4 px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
-                <p className="text-10px uppercase tracking-wider text-primary font-bold">
-                  Open to PhD
-                </p>
-              </div>
             </>
           )}
         </div>

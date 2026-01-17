@@ -45,7 +45,7 @@ export const siteConfig: SiteConfig = {
   name: 'Md Asif Bin Khaled - Academic Portfolio',
   shortName: 'Md Asif Bin Khaled',
   description:
-    'The professional academic portfolio of Md Asif Bin Khaled, Senior Lecturer & Researcher. Showcasing research in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, teaching experience, publications, and grants. Open to PhD opportunities.',
+    'The professional academic portfolio of Md Asif Bin Khaled, Senior Lecturer & Researcher. Showcasing research in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, teaching experience, publications, and grants.',
   url: 'https://mdasifbinkhaled.github.io',
   ogImage: getAssetUrl(assetPaths.ogImage),
   links: {
@@ -78,7 +78,7 @@ export const siteConfig: SiteConfig = {
     'Computer Vision',
     'CV',
     'Healthcare AI',
-    'PhD applicant',
+
     'IUB',
     'BRACU',
     'Bangladesh',
@@ -88,7 +88,7 @@ export const siteConfig: SiteConfig = {
   familyName: 'Khaled',
   email: 'mdasifbinkhaled@gmail.com',
   phone: '(+88) 01676076329',
-  address: 'Bashundhara R/A, Dhaka - 1212, Bangladesh',
+  address: 'Dhaka, Bangladesh',
   role: 'Senior Lecturer',
   jobTitle: 'Senior Lecturer & Researcher',
   institution: 'Independent University, Bangladesh (IUB)',
