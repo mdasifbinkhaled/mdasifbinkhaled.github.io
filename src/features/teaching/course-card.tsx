@@ -155,8 +155,7 @@ export const CourseCard = memo(function CourseCard({
   return (
     <Card
       className={cn(
-        'transition-all duration-200 flex flex-col group',
-        isCollapsible && 'break-inside-avoid inline-block w-full min-h-64',
+        'transition-all duration-200 flex flex-col group h-full',
         hasDetailPage
           ? 'border-2 border-primary/30 hover:border-primary hover:shadow-lg hover:-translate-y-1'
           : 'bg-muted/5 hover:bg-muted/10'
