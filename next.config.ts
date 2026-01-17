@@ -19,6 +19,10 @@ const config: NextConfig = {
       },
     ],
   },
+  eslint: {
+    // Already checking linting in a separate step
+    ignoreDuringBuilds: true,
+  },
   // Security headers for static export (applied during dev server)
   async headers() {
     return [
