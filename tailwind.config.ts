@@ -181,6 +181,8 @@ const config: Config = {
       fontSize: {
         // Academic Content Typography
         'academic-title': ['2.5rem', { lineHeight: '3rem', fontWeight: '700' }],
+        '0.8rem': '0.8rem',
+        '10px': '10px',
         'academic-subtitle': [
           '1.5rem',
           { lineHeight: '2rem', fontWeight: '600' },

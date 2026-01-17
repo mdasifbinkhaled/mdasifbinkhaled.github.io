@@ -67,7 +67,7 @@ export function StatCard({
           </div>
         </div>
         <div className="space-y-1">
-          <div className="text-sm font-bold text-foreground/90 uppercase tracking-wide text-[0.8rem]">
+          <div className="text-sm font-bold text-foreground/90 uppercase tracking-wide text-0.8rem">
             {label}
           </div>
           {description && (

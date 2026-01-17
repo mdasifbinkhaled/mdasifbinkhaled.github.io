@@ -31,7 +31,7 @@ export function CourseCardCompact({ course }: CourseCardCompactProps) {
             <Badge
               variant="secondary"
               className={cn(
-                'text-[10px] px-1.5 h-5',
+                'text-10px px-1.5 h-5',
                 getLevelStyle(course.level)
               )}
             >

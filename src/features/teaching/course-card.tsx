@@ -236,7 +236,7 @@ export const CourseCard = memo(function CourseCard({
                   <Badge
                     key={tech}
                     variant="outline"
-                    className="text-[10px] px-1.5 py-0 h-5 bg-background/50"
+                    className="text-10px px-1.5 py-0 h-5 bg-background/50"
                   >
                     {tech}
                   </Badge>
