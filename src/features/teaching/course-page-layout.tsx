@@ -9,7 +9,6 @@ import {
   GraduationCap,
   Star,
   Target,
-  Users,
   Layers,
   Award,
   Code2,
@@ -19,12 +18,7 @@ import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Progress } from '@/shared/components/ui/progress';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/shared/components/ui/tabs';
+
 import { Icon } from '@/shared/components/common/icons';
 import { cn } from '@/shared/lib/utils';
 import { getLevelStyle } from './styles';
@@ -39,6 +33,9 @@ interface CoursePageLayoutProps {
 
 // -----------------------------------------------------------------------------
 // Hero Section - Gradient header with course info + Back button
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Course Hero - Updated (No Rating/Students)
 // -----------------------------------------------------------------------------
 function CourseHero({ course }: { course: CourseData }) {
   return (
@@ -118,20 +115,8 @@ function CourseHero({ course }: { course: CourseData }) {
           </Badge>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-          <StatBlock
-            icon={<Users className="w-4 h-4 sm:w-5 sm:h-5" />}
-            label="Students"
-            value={course.enrollmentCount?.toString() || 'TBD'}
-          />
-          <StatBlock
-            icon={
-              <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400 text-yellow-400" />
-            }
-            label="Rating"
-            value={course.rating ? `${course.rating}/5.0` : 'N/A'}
-          />
+        {/* Quick Stats (Topics & Tech only) */}
+        <div className="flex flex-wrap gap-4">
           <StatBlock
             icon={<Layers className="w-4 h-4 sm:w-5 sm:h-5" />}
             label="Topics"
@@ -158,12 +143,30 @@ function StatBlock({
   value: string;
 }) {
   return (
-    <div className="bg-background/60 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-border/50">
+    <div className="bg-background/60 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-border/50 min-w-[140px]">
       <div className="flex items-center gap-2 text-muted-foreground mb-1">
         {icon}
         <span className="text-xs sm:text-sm">{label}</span>
       </div>
       <p className="text-xl sm:text-2xl font-bold">{value}</p>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Vertical Section Layout (Replaces Tabs)
+// -----------------------------------------------------------------------------
+function SectionHeader({
+  title,
+  icon: Icon,
+}: {
+  title: string;
+  icon?: React.ElementType;
+}) {
+  return (
+    <div className="flex items-center gap-2 mb-6 pb-2 border-b">
+      {Icon && <Icon className="w-5 h-5 text-primary" />}
+      <h2 className="text-2xl font-bold text-foreground">{title}</h2>
     </div>
   );
 }
@@ -397,65 +400,40 @@ function FeedbackSection({ course }: { course: CourseData }) {
   );
 }
 
-// -----------------------------------------------------------------------------
-// Main Layout Component
-// -----------------------------------------------------------------------------
 export function CoursePageLayout({ course }: CoursePageLayoutProps) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-12 pb-12">
       {/* Hero Section */}
       <CourseHero course={course} />
 
-      {/* Tabbed Content with Sticky Header */}
-      <Tabs defaultValue="overview" className="w-full">
-        <div className="sticky top-0 z-10 bg-background/98 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 -mx-4 px-4 py-2 border-b border-border/50">
-          <TabsList
-            className="w-full justify-start bg-transparent border-b-0 rounded-none p-0 gap-1 sm:gap-2 overflow-x-auto flex-nowrap scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            <TabsTrigger
-              value="overview"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"
-            >
-              Overview
-            </TabsTrigger>
-            <TabsTrigger
-              value="syllabus"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"
-            >
-              Syllabus
-            </TabsTrigger>
-            <TabsTrigger
-              value="resources"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"
-            >
-              Resources
-            </TabsTrigger>
-            <TabsTrigger
-              value="feedback"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary text-sm sm:text-base px-3 sm:px-4 whitespace-nowrap"
-            >
-              Feedback
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
-        <TabsContent value="overview" className="mt-6">
+      {/* Main Content - Vertical Stack */}
+      <div className="space-y-16 max-w-4xl mx-auto">
+        {/* Overview Section */}
+        <section id="overview" className="scroll-mt-24">
+          <SectionHeader title="Course Overview" icon={Target} />
           <OverviewSection course={course} />
-        </TabsContent>
+        </section>
 
-        <TabsContent value="syllabus" className="mt-6">
+        {/* Syllabus Section */}
+        <section id="syllabus" className="scroll-mt-24">
+          <SectionHeader title="Syllabus & Curriculum" icon={BookOpen} />
           <SyllabusSection course={course} />
-        </TabsContent>
+        </section>
 
-        <TabsContent value="resources" className="mt-6">
+        {/* Resources Section */}
+        <section id="resources" className="scroll-mt-24">
+          <SectionHeader title="Tools & Resources" icon={Code2} />
           <ResourcesSection course={course} />
-        </TabsContent>
+        </section>
 
-        <TabsContent value="feedback" className="mt-6">
-          <FeedbackSection course={course} />
-        </TabsContent>
-      </Tabs>
+        {/* Feedback Section (Optional - only if exists) */}
+        {course.feedback && course.feedback.length > 0 && (
+          <section id="feedback" className="scroll-mt-24">
+            <SectionHeader title="Student Feedback" icon={Star} />
+            <FeedbackSection course={course} />
+          </section>
+        )}
+      </div>
     </div>
   );
 }

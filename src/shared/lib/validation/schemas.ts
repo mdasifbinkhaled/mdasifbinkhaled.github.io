@@ -216,7 +216,7 @@ export const courseDataSchema = z.object({
   assessment: courseAssessmentBreakdownSchema.optional(),
 
   // Optional metrics
-  enrollmentCount: z.number().int().min(1).max(500).optional(),
+  enrollmentCount: z.number().int().min(0).max(500).optional(),
   rating: z.number().min(0).max(5).optional(),
   feedback: z.array(z.string().min(10)).max(20).optional(),
 

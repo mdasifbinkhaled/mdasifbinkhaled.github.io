@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Version:** 4.9.0 | **Status:** Active | **Updated:** 2026-01-17
+> **Version:** 4.9.2 | **Status:** Validated | **Updated:** 2026-01-17
 
 ---
 
@@ -166,18 +166,19 @@ npm run test:run   # Tests only
 
 ## 8. Changelog
 
-| Date       | Version | Changes                                                                |
-| ---------- | ------- | ---------------------------------------------------------------------- |
-| 2026-01-17 | 4.9.1   | Systematic cleanup: Semantic Tailwind tokens, hardcoded values removed |
-| 2026-01-17 | 4.9.0   | Performance & SEO Optimization (Next.font, JSON-LD)                    |
-| 2026-01-14 | 4.8.0   | Teaching module refactoring - data-driven architecture                 |
-| 2026-01-13 | 4.7.0   | Dependency audit, PMD sync (fix Tailwind version)                      |
-| 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup                |
-| 2025-12-20 | 4.5.0   | Cleanup & finalization, fixed barrel exports                           |
-| 2025-12-19 | 4.4.1   | Shape system unification                                               |
-| 2025-12-17 | 4.4.0   | AI signature cleanup, CourseCard unification                           |
-| 2025-12-16 | 4.3.0   | Teaching data verified                                                 |
-| 2025-12-16 | 4.0.0   | Major architecture overhaul                                            |
+| Date       | Version | Changes                                                                 |
+| ---------- | ------- | ----------------------------------------------------------------------- |
+| 2026-01-17 | 4.9.2   | Final Polish: Course Detail refactor restored, Zod Schema fix, Test fix |
+| 2026-01-17 | 4.9.1   | Systematic cleanup: Semantic Tailwind tokens, hardcoded values removed  |
+| 2026-01-17 | 4.9.0   | Performance & SEO Optimization (Next.font, JSON-LD)                     |
+| 2026-01-14 | 4.8.0   | Teaching module refactoring - data-driven architecture                  |
+| 2026-01-13 | 4.7.0   | Dependency audit, PMD sync (fix Tailwind version)                       |
+| 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup                 |
+| 2025-12-20 | 4.5.0   | Cleanup & finalization, fixed barrel exports                            |
+| 2025-12-19 | 4.4.1   | Shape system unification                                                |
+| 2025-12-17 | 4.4.0   | AI signature cleanup, CourseCard unification                            |
+| 2025-12-16 | 4.3.0   | Teaching data verified                                                  |
+| 2025-12-16 | 4.0.0   | Major architecture overhaul                                             |
 
 ---
 

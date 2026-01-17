@@ -12,9 +12,7 @@ import {
 import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
 import {
-  Users,
   BookOpen,
-  Star,
   Calendar,
   TrendingUp,
   GraduationCap,
@@ -141,11 +139,6 @@ export const CourseCard = memo(function CourseCard({
   const [open, setOpen] = useState(defaultOpen);
   const isCollapsible = variant === 'collapsible';
 
-  const enrollmentDisplay =
-    typeof course.enrollmentCount === 'number'
-      ? `${course.enrollmentCount} students`
-      : 'Enrollment TBD';
-
   // Use tier field (detailed = has separate page)
   const hasDetailPage = course.tier === 'detailed';
   const coursePath = `/teaching/${course.institution
@@ -211,20 +204,6 @@ export const CourseCard = memo(function CourseCard({
         >
           {course.description}
         </p>
-
-        {/* Quick Stats */}
-        <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Users className="w-3 h-3" />
-            {enrollmentDisplay}
-          </div>
-          {typeof course.rating === 'number' && (
-            <div className="flex items-center gap-1">
-              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-              {course.rating}/5.0
-            </div>
-          )}
-        </div>
 
         {/* Inline Tech Tags for cards without detail pages */}
         {!hasDetailPage &&

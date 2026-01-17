@@ -75,7 +75,7 @@ export const quickFacts: QuickFact[] = [
     id: 'qf-goal',
     icon: Target,
     label: 'Career Goal',
-    value: 'Pursuing PhD Opportunities',
+    value: 'Open for Collaboration',
   },
 ];
 

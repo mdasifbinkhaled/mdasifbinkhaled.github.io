@@ -13,8 +13,8 @@ export function CtaSection() {
             Let&apos;s Connect
           </h3>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            I&apos;m always open to discussing research collaborations, PhD
-            opportunities, or speaking engagements. Feel free to reach out!
+            I&apos;m always open to discussing research collaborations and new
+            ideas. Feel free to reach out!
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Button asChild size="lg">

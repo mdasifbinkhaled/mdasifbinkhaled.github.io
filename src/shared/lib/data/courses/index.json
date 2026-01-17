@@ -87,7 +87,7 @@
       "level": "undergraduate",
       "credits": 3,
       "semester": "Spring",
-      "year": 2024,
+      "year": 2026,
       "description": "Analysis and design of algorithms including sorting, searching, graph algorithms, dynamic programming, and complexity analysis.",
       "outcomes": [
         "Students can analyze algorithm complexity",
@@ -96,10 +96,10 @@
         "Students can apply algorithmic techniques to problems"
       ],
       "technologies": ["Python", "C++", "Algorithm Visualizers", "LeetCode"],
-      "enrollmentCount": 38,
-      "rating": 4.5,
+      "enrollmentCount": 0,
+      "rating": 0,
       "iconName": "Brain",
-      "status": "completed",
+      "status": "ongoing",
       "tier": "detailed"
     },
     {
