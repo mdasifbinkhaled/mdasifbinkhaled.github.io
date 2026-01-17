@@ -27,6 +27,7 @@ import {
 import { Separator } from '@/shared/components/ui/separator';
 import { cn } from '@/shared/lib/utils';
 import { mainNavItems } from '@/shared/config/navigation';
+import { TimeDisplay } from '@/shared/components/common/time-display';
 
 const iconMap: Record<string, React.ElementType> = {
   Home,
@@ -273,6 +274,14 @@ export const ProfileSidebar = memo(function ProfileSidebar({
                 </a>
               </Button>
             </div>
+
+            {/* Dual Time Display */}
+            {!hideNav && (
+              <TimeDisplay
+                userTimezone="Asia/Dhaka"
+                isCollapsed={isCollapsed}
+              />
+            )}
           </div>
         </div>
 

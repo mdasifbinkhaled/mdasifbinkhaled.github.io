@@ -223,6 +223,7 @@ vi.mock('lucide-react', () => {
     Heart: createMockIcon('heart'),
     Scroll: createMockIcon('scroll'),
     Globe: createMockIcon('globe'),
+    Clock: createMockIcon('clock'),
   };
 });
 
