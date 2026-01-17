@@ -53,7 +53,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci --prefer-offline --no-audit --progress=false
+          npm install --no-audit --progress=false
 
       - name: Build with Next.js
         run: npm run build
