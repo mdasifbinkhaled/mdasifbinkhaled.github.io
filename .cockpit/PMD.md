@@ -124,7 +124,7 @@ src/
 ### 6.1 Testing
 
 - **Framework**: Vitest
-- **Tests**: 89+
+- **Tests**: 98
 - **Coverage**: 80% threshold
 
 ### 6.2 CI/CD
