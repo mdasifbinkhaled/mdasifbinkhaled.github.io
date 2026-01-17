@@ -96,8 +96,8 @@ src/
 
 | Tier       | Display         | Count |
 | ---------- | --------------- | ----- |
-| `detailed` | Full page       | 3     |
-| `standard` | Expandable card | 4     |
+| `detailed` | Full page       | 1     |
+| `standard` | Expandable card | 6     |
 | `summary`  | Card only       | 4     |
 
 ### 5.3 Configuration

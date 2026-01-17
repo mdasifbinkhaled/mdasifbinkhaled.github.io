@@ -4,6 +4,9 @@ import { professionalExperiences } from '@/shared/lib/data/experience';
 import { educationData } from '@/shared/lib/data/education';
 import { newsItems } from '@/shared/lib/data/news';
 import { siteConfig } from '@/shared/config/site';
+// Note: about.ts, activities.ts have icon imports which require mocking
+// Testing them requires additional setup, skipping for now
+import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 
 describe('Data Layer Integrity', () => {
   describe('Courses Data', () => {
@@ -55,7 +58,6 @@ describe('Data Layer Integrity', () => {
       expect(professionalExperiences.length).toBeGreaterThan(0);
       professionalExperiences.forEach((exp) => {
         expect(exp.id).toBeDefined();
-        // The actual type might differ slightly, but checking basic fields
         expect(exp.type).toBeDefined();
       });
     });
@@ -77,7 +79,6 @@ describe('Data Layer Integrity', () => {
       if (newsItems.length > 0) {
         newsItems.forEach((news) => {
           expect(news.id).toBeDefined();
-          // News items might just have text, not title
           expect(news.text).toBeDefined();
         });
       }
@@ -90,6 +91,16 @@ describe('Data Layer Integrity', () => {
       expect(siteConfig.description).toBeDefined();
       expect(siteConfig.url).toBeDefined();
       expect(siteConfig.links.github).toBeDefined();
+    });
+  });
+
+  describe('Teaching Stats', () => {
+    it('should return valid teaching statistics', () => {
+      const stats = getTeachingStats();
+      expect(stats.totalStudents).toBeGreaterThan(0);
+      expect(stats.totalCourses).toBeGreaterThan(0);
+      expect(stats.averageRating).toBeGreaterThan(0);
+      expect(stats.yearsTeaching).toBeGreaterThan(0);
     });
   });
 });
