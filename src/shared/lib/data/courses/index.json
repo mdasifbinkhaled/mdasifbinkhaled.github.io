@@ -191,6 +191,16 @@
           "title": "Video Lectures (Watch It)",
           "items": [
             {
+              "label": "Autumn 2020 Lectures (Archive)",
+              "url": "https://drive.google.com/drive/folders/19RagPRHij-bEh4IMCRRAtiPVp735_Trn",
+              "description": "Complete video archive of the Autumn 2020 semester sessions."
+            },
+            {
+              "label": "Summer 2021 Python Lectures (Archive)",
+              "url": "https://drive.google.com/drive/folders/1CGvatwCUcu7owNt5DLAbZUUKcR9ISuZc",
+              "description": "Video archive of the Python-based sessions from Summer 2021."
+            },
+            {
               "label": "MIT 6.006: Intro to Algorithms",
               "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/",
               "description": "World-class university lectures covering foundational topics."

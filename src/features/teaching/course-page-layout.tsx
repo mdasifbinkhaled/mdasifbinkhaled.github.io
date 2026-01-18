@@ -406,39 +406,39 @@ function ResourcesSection({ course }: { course: CourseData }) {
                   <AccordionContent>
                     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-2 pt-2 pb-2">
                       {section.items.map((item, itemIdx) => (
-                        <div key={itemIdx}>
+                        <div key={itemIdx} className="h-full">
                           {item.url ? (
                             <Button
                               variant="outline"
                               asChild
-                              className="h-auto w-full justify-start p-4 whitespace-normal text-left hover:bg-background/80 hover:border-primary/30 transition-all group relative overflow-hidden"
+                              className="h-full w-full justify-start p-4 whitespace-normal text-left hover:bg-muted/50 hover:border-primary/40 transition-all duration-200 group relative overflow-hidden border-border/60"
                             >
                               <a
                                 href={item.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex flex-col gap-1.5"
+                                className="flex flex-col gap-2"
                               >
-                                <div className="flex items-start justify-between w-full gap-2">
-                                  <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                                <div className="flex items-start justify-between w-full gap-3">
+                                  <span className="font-semibold text-base text-foreground group-hover:text-primary transition-colors line-clamp-2">
                                     {item.label}
                                   </span>
-                                  <ExternalLink className="w-3.5 h-3.5 opacity-50 text-muted-foreground group-hover:opacity-100 group-hover:text-primary transition-all shrink-0 mt-1" />
+                                  <ExternalLink className="w-4 h-4 opacity-40 text-muted-foreground group-hover:opacity-100 group-hover:text-primary transition-all shrink-0 mt-0.5" />
                                 </div>
                                 {item.description && (
-                                  <span className="text-xs sm:text-sm text-muted-foreground leading-snug font-normal opacity-90">
+                                  <span className="text-sm text-muted-foreground leading-relaxed font-normal group-hover:text-muted-foreground/80">
                                     {item.description}
                                   </span>
                                 )}
                               </a>
                             </Button>
                           ) : (
-                            <div className="h-full p-4 border border-border/40 rounded-md bg-background/40 flex flex-col gap-1.5">
-                              <span className="font-semibold text-foreground/90">
+                            <div className="h-full w-full p-4 border border-border/40 rounded-md bg-muted/10 flex flex-col gap-2">
+                              <span className="font-semibold text-base text-foreground/90">
                                 {item.label}
                               </span>
                               {item.description && (
-                                <span className="text-xs sm:text-sm text-muted-foreground leading-snug">
+                                <span className="text-sm text-muted-foreground leading-relaxed">
                                   {item.description}
                                 </span>
                               )}
