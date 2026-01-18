@@ -131,117 +131,74 @@
       ],
       "resourceSections": [
         {
-          "title": "Important Resources",
+          "title": "Interactive Labs (Visualize It)",
           "items": [
             {
-              "label": "Notes on Algorithm",
-              "url": "https://drive.google.com/drive/folders/1M3VOGiV1J02tgRdDw3G_04FdR5io5eT0?usp=share_link",
-              "description": "Comprehensive notes for theory lectures."
+              "label": "VisuAlgo",
+              "url": "https://visualgo.net/en",
+              "description": "Visualize data structures and algorithms through animation."
             },
             {
-              "label": "Practice Problems & Solutions",
-              "url": "https://drive.google.com/drive/folders/1YYGEm47W9LqeWzaDqUJa5Rm3onIxooQQ?usp=sharing",
-              "description": "Collection of problems for practice."
+              "label": "Algorithm Visualizer",
+              "url": "https://algorithm-visualizer.org/",
+              "description": "View code execution and visualization side-by-side (JS/Java/C++)."
             },
             {
-              "label": "Sample Questions",
-              "url": "https://drive.google.com/drive/folders/1vTW_HwfOVin1EljVMJ_a4Esk99XFjLrK?usp=sharing",
-              "description": "Previous year questions and sample papers."
+              "label": "Python Tutor",
+              "url": "https://pythontutor.com/",
+              "description": "Step through code execution to understand memory and recursion frames."
             }
           ]
         },
         {
-          "title": "Recommended Books",
+          "title": "Practice Arena (Build It)",
           "items": [
             {
-              "label": "Introduction to Algorithms, 3rd Edition",
-              "description": "Thomas H. Cormen, Charles E. Leiserson, Ronald Rivest, Clifford Stein"
+              "label": "CSES Problem Set",
+              "url": "https://cses.fi/problemset/",
+              "description": "Standard collection of classic competitive programming problems."
             },
             {
-              "label": "The Algorithm Design Manual, 2nd Edition",
-              "description": "Steven S Skiena"
+              "label": "LeetCode: Algorithms",
+              "url": "https://leetcode.com/study-plan/algorithm/",
+              "description": "Structured study plan for interview preparation."
+            },
+            {
+              "label": "CP-Algorithms",
+              "url": "https://cp-algorithms.com/",
+              "description": "Comprehensive wiki with detailed explanations of advanced algorithms."
             }
           ]
         },
         {
-          "title": "Video Lectures",
+          "title": "Reference Library (Read It)",
           "items": [
             {
-              "label": "Autumn 2020 Lectures",
-              "url": "https://drive.google.com/drive/folders/19RagPRHij-bEh4IMCRRAtiPVp735_Trn",
-              "description": "Video Archive"
+              "label": "Grokking Algorithms",
+              "description": "Aditya Bhargava. A fully illustrated, friendly guide providing intuition."
             },
             {
-              "label": "Summer 2021 Python Lectures",
-              "url": "https://drive.google.com/drive/folders/1CGvatwCUcu7owNt5DLAbZUUKcR9ISuZc",
-              "description": "Video Archive"
+              "label": "The Algorithm Design Manual",
+              "description": "Steven Skiena. Focuses on real-world design and 'war stories'."
             },
             {
-              "label": "Introduction to Algorithms (MIT)",
-              "description": "MIT OpenCourseWare"
-            },
-            {
-              "label": "Algorithms (Khan Academy)",
-              "description": "Interactive lessons"
+              "label": "Introduction to Algorithms (CLRS)",
+              "description": "Cormen, Leiserson, Rivest, Stein. The definitive, comprehensive textbook."
             }
           ]
         },
         {
-          "title": "Math Review: Logarithms",
+          "title": "Video Lectures (Watch It)",
           "items": [
             {
-              "label": "Math is Fun: Logarithms",
-              "url": "https://www.mathsisfun.com/algebra/logarithms.html",
-              "description": "Beginner-friendly introduction."
+              "label": "MIT 6.006: Intro to Algorithms",
+              "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/",
+              "description": "World-class university lectures covering foundational topics."
             },
             {
-              "label": "BYJU’S: Logarithm Formula",
-              "url": "https://byjus.com/logarithm-formula/",
-              "description": "Formulas and properties."
-            },
-            {
-              "label": "Khan Academy: Logarithms",
-              "url": "https://www.khanacademy.org/math/algebra2/logarithms",
-              "description": "Video lessons and practice problems."
-            }
-          ]
-        },
-        {
-          "title": "Math Review: Sequence & Series",
-          "items": [
-            {
-              "label": "Math is Fun: Sequences and Series",
-              "url": "https://www.mathsisfun.com/algebra/sequences-series.html"
-            },
-            {
-              "label": "Math is Fun: Number Patterns",
-              "url": "https://www.mathsisfun.com/numberpatterns.html"
-            },
-            {
-              "label": "Math is Fun: Infinite Series",
-              "url": "https://www.mathsisfun.com/algebra/infinite-series.html"
-            },
-            {
-              "label": "Geometric Sequences and Sums",
-              "url": "https://www.mathsisfun.com/algebra/sequences-sums-geometric.html"
-            },
-            {
-              "label": "Arithmetic Sequences and Sums",
-              "url": "https://www.mathsisfun.com/algebra/sequences-sums-arithmetic.html"
-            }
-          ]
-        },
-        {
-          "title": "Competitive Programming Sites",
-          "items": [
-            {
-              "label": "Hacker Rank (Beginner)"
-            },
-            {
-              "label": "Code Chef"
-            },
-            {
-              "label": "LeetCode (Advanced)"
+              "label": "Abdul Bari's Algorithms",
+              "url": "https://www.youtube.com/playlist?list=PLDN4rrl48XKpZkf03iYFl-O29szjTrs_O",
+              "description": "Highly rated community tutorials simplifying complex concepts."
             }
           ]
         }

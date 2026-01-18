@@ -17,8 +17,15 @@ import {
   BookOpenText,
 } from 'lucide-react';
 import type { CourseData, CourseLink } from '@/shared/types';
-import { Badge } from '@/shared/components/ui/badge';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/shared/components/ui/accordion';
 import { Button } from '@/shared/components/ui/button';
+import { Badge } from '@/shared/components/ui/badge';
+
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Progress } from '@/shared/components/ui/progress';
 
@@ -385,49 +392,65 @@ function ResourcesSection({ course }: { course: CourseData }) {
             <BookOpenText className="w-5 h-5 text-primary" />
             Curated Library & Materials
           </h3>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {course.resourceSections.map((section, idx) => (
-              <Card
-                key={idx}
-                className="border border-border/50 shadow-sm hover:shadow-md transition-shadow bg-card/50"
-              >
-                <CardContent className="p-5">
-                  <h4 className="font-semibold text-base mb-4 pb-2 border-b border-border/30">
+          <div className="max-w-4xl">
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {course.resourceSections.map((section, idx) => (
+                <AccordionItem
+                  key={idx}
+                  value={`item-${idx}`}
+                  className="border border-border/40 rounded-lg px-4 bg-muted/20 data-[state=open]:bg-muted/30 transition-colors"
+                >
+                  <AccordionTrigger className="text-base sm:text-lg font-medium hover:no-underline">
                     {section.title}
-                  </h4>
-                  <ul className="space-y-3">
-                    {section.items.map((item, itemIdx) => (
-                      <li key={itemIdx} className="flex flex-col gap-0.5">
-                        {item.url ? (
-                          <a
-                            href={item.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm font-medium text-primary hover:text-primary/80 transition-colors flex items-start gap-1.5 group"
-                          >
-                            <span className="shrink-0 pt-0.5">
-                              <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
-                            </span>
-                            <span className="underline decoration-primary/20 underline-offset-4 group-hover:decoration-primary/50">
-                              {item.label}
-                            </span>
-                          </a>
-                        ) : (
-                          <span className="text-sm font-medium text-foreground/90">
-                            {item.label}
-                          </span>
-                        )}
-                        {item.description && (
-                          <span className="text-xs text-muted-foreground pl-4.5">
-                            {item.description}
-                          </span>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-2 pt-2 pb-2">
+                      {section.items.map((item, itemIdx) => (
+                        <div key={itemIdx}>
+                          {item.url ? (
+                            <Button
+                              variant="outline"
+                              asChild
+                              className="h-auto w-full justify-start p-4 whitespace-normal text-left hover:bg-background/80 hover:border-primary/30 transition-all group relative overflow-hidden"
+                            >
+                              <a
+                                href={item.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex flex-col gap-1.5"
+                              >
+                                <div className="flex items-start justify-between w-full gap-2">
+                                  <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                                    {item.label}
+                                  </span>
+                                  <ExternalLink className="w-3.5 h-3.5 opacity-50 text-muted-foreground group-hover:opacity-100 group-hover:text-primary transition-all shrink-0 mt-1" />
+                                </div>
+                                {item.description && (
+                                  <span className="text-xs sm:text-sm text-muted-foreground leading-snug font-normal opacity-90">
+                                    {item.description}
+                                  </span>
+                                )}
+                              </a>
+                            </Button>
+                          ) : (
+                            <div className="h-full p-4 border border-border/40 rounded-md bg-background/40 flex flex-col gap-1.5">
+                              <span className="font-semibold text-foreground/90">
+                                {item.label}
+                              </span>
+                              {item.description && (
+                                <span className="text-xs sm:text-sm text-muted-foreground leading-snug">
+                                  {item.description}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       )}
