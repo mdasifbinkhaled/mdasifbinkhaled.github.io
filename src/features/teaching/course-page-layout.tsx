@@ -1,8 +1,6 @@
 'use client';
 
-import Link from 'next/link';
 import {
-  ArrowLeft,
   BookOpen,
   CheckCircle,
   GraduationCap,
@@ -72,22 +70,7 @@ function CourseHero({ course }: { course: CourseData }) {
 
   return (
     <section className="relative overflow-hidden pt-8 pb-12 sm:pt-12 sm:pb-16 bg-background">
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Back Button */}
-        <div className="mb-8">
-          <Button
-            variant="ghost"
-            size="sm"
-            asChild
-            className="text-muted-foreground hover:text-foreground pl-0 -ml-2"
-          >
-            <Link href="/teaching">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to All Courses
-            </Link>
-          </Button>
-        </div>
-
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header Content */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start mb-12">
           {/* Icon */}
@@ -222,7 +205,7 @@ function SectionHeader({
 // -----------------------------------------------------------------------------
 function OverviewSection({ course }: { course: CourseData }) {
   return (
-    <div className="grid gap-6 md:gap-8 md:grid-cols-2">
+    <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-2">
       {course.objectives && course.objectives.length > 0 && (
         <Card className="border-primary/20">
           <CardContent className="p-5 sm:p-6">
@@ -402,7 +385,7 @@ function ResourcesSection({ course }: { course: CourseData }) {
             <BookOpenText className="w-5 h-5 text-primary" />
             Curated Library & Materials
           </h3>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {course.resourceSections.map((section, idx) => (
               <Card
                 key={idx}
@@ -480,7 +463,7 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
       <CourseHero course={course} />
 
       {/* Main Content - Vertical Stack */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 space-y-24">
         {/* Overview Section */}
         <section id="overview" className="scroll-mt-24">
           <SectionHeader
