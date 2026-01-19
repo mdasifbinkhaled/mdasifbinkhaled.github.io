@@ -402,8 +402,8 @@ function ResourcesSection({ course }: { course: CourseData }) {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {toolSections.map((section, idx) => {
               if (!section) return null;
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const sectionTitle =
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 ((section as any)?.title || '').split('(')[0].trim() ||
                 'Resources';
               const sectionItems = section?.items || [];
