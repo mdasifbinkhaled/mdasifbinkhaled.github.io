@@ -224,6 +224,15 @@ vi.mock('lucide-react', () => {
     Scroll: createMockIcon('scroll'),
     Globe: createMockIcon('globe'),
     Clock: createMockIcon('clock'),
+    Target: createMockIcon('target'),
+    Trophy: createMockIcon('trophy'),
+    FlaskConical: createMockIcon('flask-conical'),
+    Star: createMockIcon('star'),
+    Medal: createMockIcon('medal'),
+    ShieldCheck: createMockIcon('shield-check'),
+    Activity: createMockIcon('activity'),
+    Eye: createMockIcon('eye'),
+    Satellite: createMockIcon('satellite'),
   };
 });
 
