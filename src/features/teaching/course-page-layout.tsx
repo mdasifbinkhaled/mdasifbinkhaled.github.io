@@ -165,8 +165,8 @@ function CourseHero({ course }: { course: CourseData }) {
                     return (
                       <Button
                         key={idx}
-                        variant="outline"
-                        className="bg-background hover:bg-muted/50 border-input/50 rounded-lg h-10"
+                        variant="secondary"
+                        className="bg-secondary/50 hover:bg-secondary/80 text-secondary-foreground border border-border/50 shadow-sm rounded-lg h-10 px-5 font-medium transition-all"
                         asChild
                       >
                         <a href={link.url} target="_blank" rel="noreferrer">
@@ -327,11 +327,18 @@ function SyllabusSection({ course }: { course: CourseData }) {
 }
 
 // -----------------------------------------------------------------------------
-// Resources Tab - Technologies & Tools
+// Resources Tab - Technologies & Tools (The Friendly Hub)
 // -----------------------------------------------------------------------------
 function ResourcesSection({ course }: { course: CourseData }) {
+  // Separate Video Lectures from other resources for the "Hybrid" layout
+  const videoSection = course.resourceSections?.find((r) =>
+    r.title.includes('Video')
+  );
+  const toolSections =
+    course.resourceSections?.filter((r) => !r.title.includes('Video')) || [];
+
   return (
-    <div className="space-y-12">
+    <div className="space-y-16">
       {/* 1. Technologies & Assignments Grid */}
       <div className="grid gap-8 md:grid-cols-2">
         {course.technologies && course.technologies.length > 0 && (
@@ -385,71 +392,137 @@ function ResourcesSection({ course }: { course: CourseData }) {
         </div>
       </div>
 
-      {/* 3. Curated Resources Library */}
-      {course.resourceSections && course.resourceSections.length > 0 && (
+      {/* 3. Curated Resources Hub (Exposed Grid) */}
+      {toolSections.length > 0 && (
         <div className="pt-8 border-t border-border/40">
-          <h3 className="text-lg font-semibold mb-8 flex items-center gap-2">
-            <BookOpenText className="w-5 h-5 text-primary" />
-            Curated Library & Materials
-          </h3>
-          <div className="max-w-4xl">
-            <Accordion type="single" collapsible className="w-full space-y-4">
-              {course.resourceSections.map((section, idx) => (
-                <AccordionItem
+          <SectionHeader
+            title="Learning Hub"
+            subtitle="Curated tools and libraries to accelerate your mastery."
+          />
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {toolSections.map((section, idx) => {
+              if (!section) return null;
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const sectionTitle =
+                ((section as any)?.title || '').split('(')[0].trim() ||
+                'Resources';
+              const sectionItems = section?.items || [];
+
+              return (
+                <div
                   key={idx}
-                  value={`item-${idx}`}
-                  className="border border-border/40 rounded-lg px-4 bg-muted/20 data-[state=open]:bg-muted/30 transition-colors"
+                  className="flex flex-col gap-4 p-6 rounded-xl bg-muted/20 border border-border/40 hover:border-primary/20 transition-colors"
                 >
-                  <AccordionTrigger className="text-base sm:text-lg font-medium hover:no-underline">
-                    {section.title}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-2 pt-2 pb-2">
-                      {section.items.map((item, itemIdx) => (
-                        <div key={itemIdx} className="h-full">
-                          {item.url ? (
-                            <Button
-                              variant="outline"
-                              asChild
-                              className="h-full w-full justify-start p-4 whitespace-normal text-left hover:bg-muted/50 hover:border-primary/40 transition-all duration-200 group relative overflow-hidden border-border/60"
+                  <h4 className="font-semibold text-lg flex items-center gap-2 text-foreground">
+                    {idx === 0 ? (
+                      <Target className="w-5 h-5 text-primary" />
+                    ) : idx === 1 ? (
+                      <Code2 className="w-5 h-5 text-primary" />
+                    ) : (
+                      <BookOpenText className="w-5 h-5 text-primary" />
+                    )}
+                    {sectionTitle}
+                  </h4>
+                  <div className="space-y-3 flex-1">
+                    {sectionItems.map((item, itemIdx) => (
+                      <div key={itemIdx}>
+                        {item.url ? (
+                          <Button
+                            variant="secondary"
+                            asChild
+                            className="h-auto w-full justify-start p-3 whitespace-normal text-left bg-background hover:bg-background/80 hover:shadow-sm border border-transparent hover:border-primary/10 transition-all group"
+                          >
+                            <a
+                              href={item.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
                             >
-                              <a
-                                href={item.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex flex-col gap-2"
-                              >
-                                <div className="flex items-start justify-between w-full gap-3">
-                                  <span className="font-semibold text-base text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                              <div className="flex flex-col gap-1 w-full">
+                                <div className="flex items-center justify-between">
+                                  <span className="font-medium text-foreground group-hover:text-primary transition-colors">
                                     {item.label}
                                   </span>
-                                  <ExternalLink className="w-4 h-4 opacity-40 text-muted-foreground group-hover:opacity-100 group-hover:text-primary transition-all shrink-0 mt-0.5" />
+                                  <ExternalLink className="w-3.5 h-3.5 opacity-30 group-hover:opacity-100 transition-opacity" />
                                 </div>
                                 {item.description && (
-                                  <span className="text-sm text-muted-foreground leading-relaxed font-normal group-hover:text-muted-foreground/80">
+                                  <span className="text-xs text-muted-foreground font-normal line-clamp-2">
                                     {item.description}
                                   </span>
                                 )}
-                              </a>
-                            </Button>
-                          ) : (
-                            <div className="h-full w-full p-4 border border-border/40 rounded-md bg-muted/10 flex flex-col gap-2">
-                              <span className="font-semibold text-base text-foreground/90">
-                                {item.label}
+                              </div>
+                            </a>
+                          </Button>
+                        ) : (
+                          <div className="p-3 rounded-md bg-background/50 border border-border/20">
+                            <span className="font-medium text-sm text-foreground/90 block">
+                              {item.label}
+                            </span>
+                            {item.description && (
+                              <span className="text-xs text-muted-foreground mt-1 block">
+                                {item.description}
                               </span>
-                              {item.description && (
-                                <span className="text-sm text-muted-foreground leading-relaxed">
-                                  {item.description}
-                                </span>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* 4. Video Archives (Accordion Style for Density) */}
+      {videoSection && (
+        <div className="pt-8 border-t border-border/40">
+          <SectionHeader
+            title="Video Archives"
+            subtitle="Previous semester recordings and external lectures."
+          />
+          <div className="max-w-4xl mx-auto md:mx-0 md:max-w-full">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem
+                value="videos"
+                className="border border-border/40 rounded-xl px-0 bg-muted/20 overflow-hidden"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:bg-muted/30 hover:no-underline">
+                  <span className="flex items-center gap-3 text-lg font-medium">
+                    <Video className="w-5 h-5 text-primary" />
+                    Explore {videoSection?.items?.length || 0} Video Collections
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="pk-0">
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 p-6 bg-background/50 border-t border-border/40">
+                    {videoSection.items.map((item, idx) => (
+                      <Button
+                        key={idx}
+                        variant="outline"
+                        asChild
+                        className="h-auto flex-col items-start gap-2 p-4 border-border/40 hover:border-primary/30 hover:bg-background bg-card shadow-sm"
+                      >
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div className="flex items-center justify-between w-full">
+                            <Video className="w-4 h-4 text-primary" />
+                            <ExternalLink className="w-3 h-3 text-muted-foreground" />
+                          </div>
+                          <span className="font-semibold text-foreground text-left line-clamp-2 leading-tight">
+                            {item.label}
+                          </span>
+                          <span className="text-xs text-muted-foreground font-normal text-left line-clamp-3">
+                            {item.description}
+                          </span>
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </div>
         </div>
