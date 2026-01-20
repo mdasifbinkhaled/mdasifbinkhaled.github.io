@@ -55,7 +55,7 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
         className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 leading-none"
       >
         <Mail className="w-3 h-3" />
-        <span className="truncate max-w-[120px]">{email.split('@')[0]}</span>
+        <span className="truncate max-w-[200px]">{email}</span>
       </a>
     );
   };
