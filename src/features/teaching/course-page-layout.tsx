@@ -30,6 +30,7 @@ import { Card, CardContent } from '@/shared/components/ui/card';
 import { Progress } from '@/shared/components/ui/progress';
 
 import { Icon } from '@/shared/components/common/icons';
+import { ScheduleTable } from '@/features/teaching/components/schedule-table';
 
 // =============================================================================
 // COURSE PAGE LAYOUT - World-Class Teaching Portal Design
@@ -568,6 +569,13 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
           />
           <OverviewSection course={course} />
         </section>
+
+        {/* Class Schedule Section */}
+        {course.classSchedule && course.classSchedule.length > 0 && (
+          <section id="schedule" className="scroll-mt-24">
+            <ScheduleTable schedule={course.classSchedule} />
+          </section>
+        )}
 
         {/* Syllabus Section */}
         <section id="syllabus" className="scroll-mt-24">

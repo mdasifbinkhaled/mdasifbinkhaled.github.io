@@ -262,6 +262,29 @@ export const courseDataSchema = z.object({
     )
     .optional(),
 
+  // Class Schedule
+  classSchedule: z
+    .array(
+      z.object({
+        section: z.number(),
+        theory: z.object({
+          faculty: z.string(),
+          email: z.string().email().optional(),
+          days: z.string(),
+          time: z.string(),
+          room: z.string(),
+        }),
+        lab: z.object({
+          faculty: z.string(),
+          email: z.string().email().optional(),
+          days: z.string(),
+          time: z.string(),
+          room: z.string(),
+        }),
+      })
+    )
+    .optional(),
+
   // Deprecated: kept for backward compatibility
   hasDetailPage: z.boolean().optional(),
 });
@@ -394,4 +417,8 @@ export type CourseLink = NonNullable<
 >[number];
 export type CourseResourceSection = NonNullable<
   z.infer<typeof courseDataSchema>['resourceSections']
+>[number];
+
+export type ClassScheduleItem = NonNullable<
+  z.infer<typeof courseDataSchema>['classSchedule']
 >[number];
