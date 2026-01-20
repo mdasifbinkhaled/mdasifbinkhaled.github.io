@@ -15,7 +15,7 @@ import type {
 import { coursesArraySchema, validateData } from '../validation/schemas';
 
 // Import central index
-import coursesIndex from './courses/index.json';
+import { allCourses as rawAllCourses } from './courses/index';
 
 /**
  * Institution display names
@@ -27,9 +27,10 @@ export const institutionNames: Record<CourseInstitution, string> = {
 
 /**
  * All courses - validated from central index
+ * Now imported from type-safe TS files
  */
 export const allCourses: CourseData[] = validateData(
-  coursesIndex.courses,
+  rawAllCourses,
   coursesArraySchema,
   'courses'
 );
