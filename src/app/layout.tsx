@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { AppProviders } from '@/shared/providers/app-providers';
@@ -10,10 +10,17 @@ import { generatePersonStructuredData } from '@/shared/lib/structured-data';
 import '@/app/globals.css';
 import '@/styles/tokens.css';
 
-// Optimize font loading
+// Optimize font loading - Primary sans-serif
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+});
+
+// Monospace font for code, times, and technical data
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
   display: 'swap',
 });
 
@@ -37,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
         {/* JSON-LD Structured Data */}

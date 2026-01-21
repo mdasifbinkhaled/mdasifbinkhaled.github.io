@@ -47,7 +47,8 @@ const config: Config = {
       // FONT FAMILY SYSTEM
       // ==========================================
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'Fira Code', 'monospace'],
       },
 
       // ==========================================
