@@ -1,13 +1,12 @@
 'use client';
 
-import type { LucideIcon } from 'lucide-react';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { cn } from '@/shared/lib/utils';
 import { motion, useSpring, useTransform, useInView } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
 interface StatCardProps {
-  icon?: LucideIcon;
+  icon?: React.ReactNode;
   label?: string;
   number: number;
   suffix?: string;
@@ -43,7 +42,7 @@ function Counter({
 }
 
 export function StatCard({
-  icon: Icon,
+  icon,
   label,
   number,
   suffix = '',
@@ -55,17 +54,16 @@ export function StatCard({
   return (
     <Card
       className={cn(
-        'overflow-hidden transition-all duration-300 hover:shadow-lg',
-        variant === 'glass' &&
-          'bg-background/60 backdrop-blur-md border-primary/10',
+        'overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
+        variant === 'glass' && 'bg-background/80 border-primary/5 shadow-sm', // De-cluttered: Removed heavy blur and strong border
         className
       )}
     >
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
-          {Icon && (
+          {icon && (
             <div className="rounded-full bg-primary/10 p-3 text-primary ring-1 ring-inset ring-primary/20">
-              <Icon className="h-6 w-6" />
+              {icon}
             </div>
           )}
           <div className="flex flex-col">
