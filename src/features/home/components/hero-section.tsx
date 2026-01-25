@@ -13,6 +13,10 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { StatCard } from '@/shared/components/common/stat-card';
+import {
+  getYearsExperience,
+  RESEARCH_METRICS,
+} from '@/shared/lib/data/aggregators';
 
 /**
  * Hero Section Component
@@ -24,7 +28,7 @@ export function HeroSection() {
   const stats = [
     {
       id: 'stat-years',
-      number: 7,
+      number: getYearsExperience(),
       suffix: '+',
       label: 'Years Experience',
       icon: GraduationCap,
@@ -41,14 +45,14 @@ export function HeroSection() {
     },
     {
       id: 'stat-grants',
-      number: 4,
+      number: RESEARCH_METRICS.GRANTS_COUNT,
       label: 'Research Grants',
       icon: TrendingUp,
       description: 'Awarded as PI/Co-PI',
     },
     {
       id: 'stat-areas',
-      number: 5,
+      number: RESEARCH_METRICS.AREAS_COUNT,
       suffix: '+',
       label: 'Research Areas',
       icon: Brain,
