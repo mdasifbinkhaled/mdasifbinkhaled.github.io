@@ -33,13 +33,13 @@ export default function IUBTeachingPage() {
       {/* Quick Stats */}
       <div className="grid gap-4 md:grid-cols-3 mb-6">
         <StatCard
-          icon={Calendar}
+          icon={<Calendar className="h-6 w-6" />}
           label="Total Courses"
           number={coursesTaughtIUB.length}
           description="Across multiple semesters"
         />
         <StatCard
-          icon={Users}
+          icon={<Users className="h-6 w-6" />}
           label="Total Students"
           number={coursesTaughtIUB.reduce(
             (total, course) => total + (course.enrollmentCount ?? 0),
@@ -48,7 +48,7 @@ export default function IUBTeachingPage() {
           description="Students taught overall"
         />
         <StatCard
-          icon={Building2}
+          icon={<Building2 className="h-6 w-6" />}
           label="Avg. Rating"
           number={
             coursesTaughtIUB
