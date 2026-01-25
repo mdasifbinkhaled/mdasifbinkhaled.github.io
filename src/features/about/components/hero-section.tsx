@@ -6,7 +6,7 @@ import { siteConfig } from '@/shared/config/site';
 export function HeroSection() {
   return (
     <header className="text-center space-y-6">
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
         About {siteConfig.author}
       </h1>
       <p className="text-lg leading-8 text-muted-foreground max-w-3xl mx-auto">

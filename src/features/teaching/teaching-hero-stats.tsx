@@ -14,14 +14,14 @@ import {
  */
 export function TeachingHeroStats() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
       {/* Left Column: Key Stats */}
       <div className="lg:col-span-2 grid grid-cols-2 gap-4">
         <StatCard
           number={getTotalStudents()}
           suffix="+"
           label="Students Mentored"
-          icon={Users}
+          icon={<Users className="h-6 w-6" />}
           description="Across IUB & BRACU"
           variant="glass"
         />
@@ -30,7 +30,7 @@ export function TeachingHeroStats() {
           suffix="/5.0"
           decimals={2}
           label="Average Rating"
-          icon={Award}
+          icon={<Award className="h-6 w-6" />}
           description="Consistent high performance"
           variant="glass"
         />
@@ -38,7 +38,7 @@ export function TeachingHeroStats() {
           number={getTotalCourses()}
           suffix="+"
           label="Courses Taught"
-          icon={BookOpen}
+          icon={<BookOpen className="h-6 w-6" />}
           description="Theory & Lab Sections"
           variant="glass"
         />
@@ -46,7 +46,7 @@ export function TeachingHeroStats() {
           number={95}
           suffix="%"
           label="Pass Rate"
-          icon={Calculator}
+          icon={<Calculator className="h-6 w-6" />}
           description="Average success rate"
           variant="glass"
         />

@@ -93,7 +93,7 @@ export const PublicationList = React.memo(function PublicationList({
 
   return (
     <div className="space-y-8">
-      <Card className="p-4 sm:p-6 shadow-md sticky top-16 md:top-0 z-30 bg-background/90 backdrop-blur-sm">
+      <Card className="p-4 shadow-md sticky top-16 md:top-0 z-30 bg-background/90 backdrop-blur-sm">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
           <div>
             <label

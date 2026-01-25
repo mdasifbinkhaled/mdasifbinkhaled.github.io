@@ -66,7 +66,7 @@ export default function ResearchPage() {
           <span>Research Philosophy</span>
         </div>
 
-        <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-gradient">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-5xl text-gradient">
           Breaking Out of the Black Box
         </h1>
 

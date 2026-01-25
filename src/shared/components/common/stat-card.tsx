@@ -59,21 +59,21 @@ export function StatCard({
         className
       )}
     >
-      <CardContent className="p-6">
-        <div className="flex items-center gap-4">
+      <CardContent className="p-4">
+        <div className="flex items-center gap-3">
           {icon && (
-            <div className="rounded-full bg-primary/10 p-3 text-primary ring-1 ring-inset ring-primary/20">
+            <div className="rounded-full bg-primary/10 p-2.5 text-primary ring-1 ring-inset ring-primary/20">
               {icon}
             </div>
           )}
           <div className="flex flex-col">
             {label && (
-              <p className="text-sm font-medium text-muted-foreground">
+              <p className="text-xs font-medium text-muted-foreground">
                 {label}
               </p>
             )}
             <div className="flex items-baseline gap-1">
-              <h3 className="text-2xl font-bold tracking-tight">
+              <h3 className="text-xl font-bold tracking-tight">
                 <Counter value={number} decimals={decimals} />
                 {suffix}
               </h3>

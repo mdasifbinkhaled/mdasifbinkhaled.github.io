@@ -78,14 +78,14 @@ export function HeroSection() {
                 <Sparkles className="w-4 h-4" />
                 <span>Welcome to my academic portfolio</span>
               </div>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
                 {siteConfig.author}
               </h1>
             </div>
 
             {/* Title & Description */}
             <div className="space-y-3">
-              <p className="text-xl text-foreground md:text-2xl font-semibold">
+              <p className="text-lg text-foreground md:text-xl font-semibold">
                 {siteConfig.jobTitle}
               </p>
               <p className="text-muted-foreground text-base md:text-lg max-w-2xl leading-relaxed">
