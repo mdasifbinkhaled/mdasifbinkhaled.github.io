@@ -14,6 +14,7 @@ export interface TeachingStats {
   totalCourses: number;
   averageRating: number;
   yearsTeaching: number;
+  totalSemesters?: number;
 }
 
 /**

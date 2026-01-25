@@ -80,11 +80,11 @@ export const ANIMATION = {
  * Teaching & Career Constants
  */
 export const CAREER = {
-  /** Year teaching career began */
-  TEACHING_START_YEAR: 2015,
+  /** Year teaching career began (21 semesters ~= 7 years from 2024/2025) */
+  TEACHING_START_YEAR: 2017,
 
   /** First teaching position start date */
-  FIRST_TEACHING_POSITION: 'May 2015',
+  FIRST_TEACHING_POSITION: 'January 2017',
 
   /** Years of teaching experience (calculated dynamically) */
   get YEARS_TEACHING() {
@@ -102,9 +102,12 @@ export const TEACHING_METRICS = {
   /** Total approximate students taught (placeholder) */
   TOTAL_STUDENTS: 500,
 
-  /** Average student evaluation score out of 5.0 (from CV) */
-  AVERAGE_RATING: 4.32,
+  /** Average student evaluation score out of 5.0 (avg over 21 semesters) */
+  AVERAGE_RATING: 4.31,
 
   /** Maximum rating scale */
   MAX_RATING: 5.0,
+
+  /** Total number of semesters taught */
+  TOTAL_SEMESTERS: 21,
 } as const;

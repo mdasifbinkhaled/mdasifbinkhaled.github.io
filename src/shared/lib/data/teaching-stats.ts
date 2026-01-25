@@ -32,6 +32,7 @@ export function getTeachingStats(): TeachingStats {
     totalCourses,
     averageRating: TEACHING_METRICS.AVERAGE_RATING,
     yearsTeaching: CAREER.YEARS_TEACHING,
+    totalSemesters: TEACHING_METRICS.TOTAL_SEMESTERS,
   };
 }
 

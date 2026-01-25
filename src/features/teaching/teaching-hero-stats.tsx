@@ -6,6 +6,7 @@ interface TeachingHeroStatsProps {
   totalCourses: number;
   averageRating: number;
   yearsTeaching: number;
+  totalSemesters?: number;
 }
 
 /**
@@ -13,12 +14,8 @@ interface TeachingHeroStatsProps {
  * Displays key teaching statistics in a grid layout
  * Uses the shared StatCard component with compact variant
  */
-export function TeachingHeroStats({
-  totalStudents,
-  totalCourses,
-  averageRating,
-  yearsTeaching,
-}: TeachingHeroStatsProps) {
+export function TeachingHeroStats(props: TeachingHeroStatsProps) {
+  const { totalStudents, totalCourses, averageRating, yearsTeaching } = props;
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       <StatCard
@@ -39,14 +36,13 @@ export function TeachingHeroStats({
         label="Average Rating"
         number={averageRating}
         suffix="/5.0"
-        decimals={1}
+        decimals={2}
         variant="glass"
       />
       <StatCard
         icon={Calendar}
-        label="Years Teaching"
-        number={yearsTeaching}
-        suffix="+"
+        label="Semesters Taught"
+        number={props.totalSemesters || yearsTeaching}
         variant="glass"
       />
     </div>
