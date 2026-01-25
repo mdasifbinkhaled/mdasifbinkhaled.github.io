@@ -11,7 +11,7 @@ import { Button } from '@/shared/components/ui/button';
 
 /**
  * Research Highlights Section Component
- * Displays primary research areas and interests - World-class design
+ * Displays primary research areas and interests
  */
 export function ResearchHighlights() {
   const interests = getResearchInterests();

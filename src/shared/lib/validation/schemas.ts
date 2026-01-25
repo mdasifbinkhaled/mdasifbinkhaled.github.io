@@ -341,7 +341,6 @@ export function validateData<T>(
 
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line no-console
-    console.log(`✅ Validation passed for ${dataName}`);
   }
   return result.data;
 }

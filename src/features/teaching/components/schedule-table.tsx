@@ -1,5 +1,7 @@
 'use client';
 
+import { CURRENT_SEMESTER } from '@/shared/config/constants';
+
 import {
   Table,
   TableBody,
@@ -8,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/components/ui/table';
+import { TABLES } from '@/shared/config/constants';
 import { Badge } from '@/shared/components/ui/badge';
 import {
   Card,
@@ -85,31 +88,47 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
       <div className="w-full overflow-x-auto">
         <Table className="w-full border-collapse">
           <TableHeader className="bg-muted/40 sticky top-0 z-10">
-            <TableRow className="border-b border-border hover:bg-muted/40">
-              <TableHead className="w-[60px] text-center border-r border-border/50 h-10 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <TableRow className="bg-muted/50 hover:bg-muted/50 border-b border-border/50">
+              <TableHead
+                className={`w-[${TABLES.SCHEDULE.SECTION}] text-center border-r border-border/50 h-10 py-2 text-xxs font-semibold uppercase tracking-wider text-muted-foreground`}
+              >
                 Sec
               </TableHead>
 
-              {/* Theory Group */}
-              <TableHead className="min-w-[180px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
-                Theory Faculty
+              {/* Theory Times */}
+              <TableHead
+                colSpan={2}
+                className={`min-w-[${TABLES.SCHEDULE.THEORY}] border-r border-border/50 py-2 text-xxs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5`}
+              >
+                Theory Class
               </TableHead>
-              <TableHead className="w-[120px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
-                Time
+              <TableHead
+                className={`w-[${TABLES.SCHEDULE.LAB}] border-r border-border/50 py-2 text-xxs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5`}
+              >
+                Theory Room
               </TableHead>
-              <TableHead className="w-[80px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
-                Room
+              <TableHead
+                className={`w-[${TABLES.SCHEDULE.ROOM}] border-r border-border/50 py-2 text-xxs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5`}
+              >
+                T. Room
               </TableHead>
 
-              {/* Lab Group */}
-              <TableHead className="min-w-[180px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
-                Lab Faculty
+              {/* Lab Times */}
+              <TableHead
+                colSpan={2}
+                className={`min-w-[${TABLES.SCHEDULE.THEORY}] border-r border-border/50 py-2 text-xxs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20`}
+              >
+                Lab Class
               </TableHead>
-              <TableHead className="w-[120px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
-                Time
+              <TableHead
+                className={`w-[${TABLES.SCHEDULE.LAB}] border-r border-border/50 py-2 text-xxs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20`}
+              >
+                Lab Room
               </TableHead>
-              <TableHead className="w-[80px] py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
-                Room
+              <TableHead
+                className={`w-[${TABLES.SCHEDULE.ROOM}] py-2 text-xxs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20`}
+              >
+                L. Room
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -243,7 +262,9 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
           <h2 className="text-xl md:text-2xl font-bold tracking-tight">
             Class Schedule
           </h2>
-          <p className="text-sm text-muted-foreground">Spring 2026 Semester</p>
+          <p className="text-sm text-muted-foreground">
+            {CURRENT_SEMESTER} Semester
+          </p>
         </div>
       </div>
       <DesktopView />

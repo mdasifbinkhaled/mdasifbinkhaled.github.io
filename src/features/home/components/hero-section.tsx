@@ -1,6 +1,7 @@
 import { Button } from '@/shared/components/ui/button';
 import { siteConfig } from '@/shared/config';
 import { researchIdentity } from '@/shared/config/researcher-profile';
+import { getGlobalAverageRating } from '@/shared/lib/data/evaluations';
 import {
   ArrowRight,
   GraduationCap,
@@ -16,35 +17,39 @@ import { StatCard } from '@/shared/components/common/stat-card';
 /**
  * Hero Section Component
  * Main landing section with introduction, quick stats, and CTAs
- * World-class design with ambient backgrounds and glassmorphism
+ * Modern design with ambient backgrounds and glassmorphism
  */
 export function HeroSection() {
   // Stats data with unique IDs for stable React keys
   const stats = [
     {
       id: 'stat-years',
-      number: '7+',
+      number: 7,
+      suffix: '+',
       label: 'Years Experience',
       icon: GraduationCap,
       description: 'Teaching & Research\nin Academia',
     },
     {
       id: 'stat-score',
-      number: '4.0',
+      number: getGlobalAverageRating(),
+      suffix: '/5.0',
+      decimals: 2,
       label: 'Student Eval',
       icon: Target,
       description: 'Average Score\n(out of 5.0)',
     },
     {
       id: 'stat-grants',
-      number: '4',
+      number: 4,
       label: 'Research Grants',
       icon: TrendingUp,
       description: 'Awarded as PI/Co-PI',
     },
     {
       id: 'stat-areas',
-      number: '5+',
+      number: 5,
+      suffix: '+',
       label: 'Research Areas',
       icon: Brain,
       description: 'Multimedia & XAI\nFocus',
@@ -53,7 +58,7 @@ export function HeroSection() {
 
   return (
     <section className="w-full relative overflow-hidden">
-      {/* Ambient Background - World-Class Design */}
+      {/* Ambient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/8 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
@@ -131,6 +136,8 @@ export function HeroSection() {
               <StatCard
                 key={stat.id}
                 number={stat.number}
+                suffix={stat.suffix}
+                decimals={stat.decimals}
                 label={stat.label}
                 icon={stat.icon}
                 description={stat.description}

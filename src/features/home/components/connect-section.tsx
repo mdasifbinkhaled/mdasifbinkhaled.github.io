@@ -138,7 +138,7 @@ const socialLinks: SocialLink[] = [
 
 /**
  * Connect Section Component
- * Displays social links and contact CTA - World-class design
+ * Displays social links and contact CTA
  */
 export function ConnectSection() {
   return (

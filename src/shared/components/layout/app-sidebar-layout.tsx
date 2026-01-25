@@ -24,6 +24,7 @@ import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
 import { Navbar } from '@/shared/components/navigation/navbar';
 
 import { siteConfig } from '@/shared/config/site';
+import { LAYOUT } from '@/shared/config/constants';
 
 export default function AppSidebarLayout({
   children,
@@ -64,9 +65,9 @@ export default function AppSidebarLayout({
         <aside
           id="desktop-sidebar"
           className={cn(
-            'hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-60 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
+            'hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-sidebar shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
 
-            collapsed ? 'w-[60px]' : 'w-80'
+            collapsed ? `w-[${LAYOUT.SIDEBAR.COLLAPSED}]` : 'w-80'
           )}
         >
           <ProfileSidebar isCollapsed={collapsed} hideNav={true} />
@@ -80,10 +81,10 @@ export default function AppSidebarLayout({
           className={cn(
             'hidden lg:inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all duration-200',
 
-            'fixed top-[3.75rem] z-[80] h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent',
+            'fixed top-[3.75rem] z-modal h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent',
 
             collapsed
-              ? 'left-[60px] -translate-x-1/2'
+              ? `left-[${LAYOUT.SIDEBAR.COLLAPSED}] -translate-x-1/2`
               : 'left-80 -translate-x-1/2'
           )}
           onClick={() => setCollapsed(!collapsed)}
@@ -104,18 +105,18 @@ export default function AppSidebarLayout({
           className={cn(
             'flex-1 min-w-0 flex flex-col transition-all duration-300',
 
-            collapsed ? 'lg:ml-[60px]' : 'lg:ml-80'
+            collapsed ? `lg:ml-[${LAYOUT.SIDEBAR.COLLAPSED}]` : 'lg:ml-80'
           )}
         >
           <header
             role="banner"
             className={cn(
-              'fixed top-0 z-30 bg-background/95 backdrop-blur-md border-b shadow-sm transition-all duration-300',
+              'fixed top-0 z-navbar bg-background/95 backdrop-blur-md border-b shadow-sm transition-all duration-300',
 
               'left-0 w-full',
 
               collapsed
-                ? 'lg:left-[60px] lg:w-[calc(100%-60px)]'
+                ? `lg:left-[${LAYOUT.SIDEBAR.COLLAPSED}] lg:w-[calc(100%-${LAYOUT.SIDEBAR.COLLAPSED})]`
                 : 'lg:left-80 lg:w-[calc(100%-20rem)]'
             )}
           >
@@ -126,12 +127,14 @@ export default function AppSidebarLayout({
 
           {/* Spacer to account for fixed navbar height */}
 
-          <div className="h-[73px] flex-shrink-0" aria-hidden="true" />
+          <div
+            className={`h-[${LAYOUT.NAVBAR.HEIGHT_OFFSET}] flex-shrink-0`}
+            aria-hidden="true"
+          />
 
           <main
             id="main-content"
             className="flex-1 min-w-0 px-4 lg:px-6 scroll-mt-20"
-            style={{ scrollMarginTop: '5rem' }}
           >
             <div className="container mx-auto py-6">{children}</div>
           </main>

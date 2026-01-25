@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
 import { coursesTaughtIUB } from '@/shared/lib/data/courses';
 import { siteConfig } from '@/shared/config/site';
+import { INSTITUTIONS, ROLES } from '@/shared/config/constants';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { CourseCardCompact } from '@/features/teaching/course-card-compact';
 import { StatCard } from '@/shared/components/common/stat-card';
 import { Building2, Calendar, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'IUB Courses - Teaching Portfolio',
-  description: `Courses taught at Independent University, Bangladesh (IUB) by ${siteConfig.author}. ${siteConfig.description}`,
+  title: `${INSTITUTIONS.IUB.CODE} Courses - Teaching Portfolio`,
+  description: `Courses taught at ${INSTITUTIONS.IUB.FULL_NAME} by ${siteConfig.author}. ${siteConfig.description}`,
 };
 
 export default function IUBTeachingPage() {
@@ -20,12 +21,12 @@ export default function IUBTeachingPage() {
         <div className="flex items-center justify-center gap-3 mb-4">
           <Building2 className="w-8 h-8 text-primary" />
           <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
-            IUB Courses
+            {INSTITUTIONS.IUB.CODE} Courses
           </h1>
         </div>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          Courses taught at Independent University, Bangladesh as Senior
-          Lecturer & Lecturer
+          Courses taught at {INSTITUTIONS.IUB.NAME} as {ROLES.SENIOR_LECTURER} &{' '}
+          {ROLES.LECTURER}
         </p>
       </header>
 

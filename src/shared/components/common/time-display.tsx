@@ -71,7 +71,7 @@ export function TimeDisplay({
   return (
     <div className="mt-4 px-3 py-3 rounded-lg bg-sidebar-accent/20 border border-sidebar-border/30 space-y-2">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-[10px]">
+        <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-xxs">
           My Time (Dhaka)
         </span>
         <span className="text-orange-500/80">
@@ -82,13 +82,13 @@ export function TimeDisplay({
         <span className="text-sm font-mono font-semibold text-sidebar-foreground">
           {myTime}
         </span>
-        <span className="text-[10px] text-sidebar-foreground/50">{myDate}</span>
+        <span className="text-xxs text-sidebar-foreground/50">{myDate}</span>
       </div>
 
       <div className="h-px w-full bg-sidebar-border/30 my-1" />
 
       <div className="flex items-center justify-between text-xs">
-        <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-[10px]">
+        <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-xxs">
           Your Time
         </span>
         <span className="text-blue-500/80">
@@ -99,9 +99,7 @@ export function TimeDisplay({
         <span className="text-sm font-mono font-semibold text-sidebar-foreground">
           {yourTime}
         </span>
-        <span className="text-[10px] text-sidebar-foreground/50">
-          {yourDate}
-        </span>
+        <span className="text-xxs text-sidebar-foreground/50">{yourDate}</span>
       </div>
     </div>
   );

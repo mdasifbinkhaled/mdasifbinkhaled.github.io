@@ -1,136 +1,92 @@
-import { Card, CardContent } from '@/shared/components/ui/card';
-import type { LucideIcon } from 'lucide-react';
-import { cn } from '@/shared/lib/utils';
+'use client';
 
-/**
- * StatCard Props
- * Consolidated interface supporting all stat card use cases
- */
+import type { LucideIcon } from 'lucide-react';
+import { Card, CardContent } from '@/shared/components/ui/card';
+import { cn } from '@/shared/lib/utils';
+import { motion, useSpring, useTransform, useInView } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+
 interface StatCardProps {
-  /** Main numeric or string value */
-  number: string | number;
-  /** Label describing the stat */
-  label: string;
-  /** Lucide icon component */
-  icon: LucideIcon;
-  /** Optional description text */
-  description?: string;
-  /** Optional suffix (e.g., '+', '/5.0') */
+  icon?: LucideIcon;
+  label?: string;
+  number: number;
   suffix?: string;
-  /** Number of decimal places for numeric values */
   decimals?: number;
-  /** Visual variant */
-  variant?: 'default' | 'compact' | 'glass';
-  /** Additional CSS classes */
-  className?: string;
+  description?: string;
+  variant?: 'default' | 'glass';
+  className?: string; // Allow external layout control
 }
 
-/**
- * StatCard Component
- * Reusable statistics card with icon, number, label, and optional description
- */
+function Counter({
+  value,
+  decimals = 0,
+}: {
+  value: number;
+  decimals?: number;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-20px' });
+  const spring = useSpring(0, {
+    mass: 0.8,
+    stiffness: 75,
+    damping: 15,
+  });
+  const display = useTransform(spring, (current) => current.toFixed(decimals));
+
+  useEffect(() => {
+    if (inView) {
+      spring.set(value);
+    }
+  }, [spring, value, inView]);
+
+  return <motion.span ref={ref}>{display}</motion.span>;
+}
+
 export function StatCard({
-  number,
-  label,
   icon: Icon,
-  description,
+  label,
+  number,
   suffix = '',
   decimals = 0,
+  description,
   variant = 'default',
   className,
 }: StatCardProps) {
-  // Format the display value
-  const displayValue =
-    typeof number === 'number' && decimals > 0
-      ? number.toFixed(decimals)
-      : String(number);
-
-  const isCompact = variant === 'compact';
-  const isGlass = variant === 'glass';
-
-  // Glass Variant (Hero Style)
-  if (isGlass) {
-    return (
-      <div
-        className={cn(
-          'group relative flex flex-col p-5 rounded-xl bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-background/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm',
-          className
-        )}
-      >
-        <div className="flex items-center justify-between mb-3">
-          <div className="text-3xl font-bold text-primary tracking-tight">
-            {displayValue}
-            {suffix}
-          </div>
-          <div className="p-2 bg-primary/5 rounded-full group-hover:bg-primary/10 transition-colors">
-            <Icon className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
-          </div>
-        </div>
-        <div className="space-y-1">
-          <div className="text-sm font-bold text-foreground/90 uppercase tracking-wide text-0.8rem">
-            {label}
-          </div>
-          {description && (
-            <div className="text-xs text-muted-foreground font-medium leading-relaxed whitespace-pre-line">
-              {description}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  // Default & Compact Variants (Legacy support or alternative styles)
   return (
     <Card
       className={cn(
-        'backdrop-blur border shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105 group',
-        'bg-card/50 hover:bg-card/80 border-border/50 hover:border-primary/20',
+        'overflow-hidden transition-all duration-300 hover:shadow-lg',
+        variant === 'glass' &&
+          'bg-background/60 backdrop-blur-md border-primary/10',
         className
       )}
     >
-      <CardContent className={cn('text-center', isCompact ? 'p-5' : 'p-6')}>
-        <div
-          className={cn(
-            'mx-auto rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110',
-            'bg-primary/10 text-primary group-hover:bg-primary/20',
-            isCompact ? 'w-10 h-10 mb-3 p-2' : 'w-12 h-12 mb-4'
+      <CardContent className="p-6">
+        <div className="flex items-center gap-4">
+          {Icon && (
+            <div className="rounded-full bg-primary/10 p-3 text-primary ring-1 ring-inset ring-primary/20">
+              <Icon className="h-6 w-6" />
+            </div>
           )}
-        >
-          <Icon className={cn(isCompact ? 'w-5 h-5' : 'w-7 h-7')} />
-        </div>
-
-        {isCompact && (
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
-            {label}
-          </p>
-        )}
-
-        <div
-          className={cn(
-            'font-bold text-foreground',
-            isCompact ? 'text-3xl text-primary' : 'text-2xl mb-1'
-          )}
-        >
-          {displayValue}
-          {suffix && (
-            <span className={cn(isCompact ? 'text-xl' : 'text-lg')}>
-              {suffix}
-            </span>
-          )}
-        </div>
-
-        {!isCompact && (
-          <div className="text-sm font-medium text-muted-foreground mb-1">
-            {label}
+          <div className="flex flex-col">
+            {label && (
+              <p className="text-sm font-medium text-muted-foreground">
+                {label}
+              </p>
+            )}
+            <div className="flex items-baseline gap-1">
+              <h3 className="text-2xl font-bold tracking-tight">
+                <Counter value={number} decimals={decimals} />
+                {suffix}
+              </h3>
+            </div>
+            {description && (
+              <p className="text-xs text-muted-foreground mt-1 text-wrap">
+                {description}
+              </p>
+            )}
           </div>
-        )}
-
-        {description && (
-          <div className="text-xs text-muted-foreground/80 mt-2">
-            {description}
-          </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   );

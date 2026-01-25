@@ -66,6 +66,7 @@ const config: Config = {
       // ==========================================
       // COLOR SYSTEM
       // ==========================================
+
       colors: {
         // Foundation Colors
         // ────────────────────────────────────────
@@ -193,6 +194,7 @@ const config: Config = {
           '0.875rem',
           { lineHeight: '1.25rem', fontWeight: '500' },
         ],
+        xxs: ['0.625rem', { lineHeight: '1rem' }], // 10px
       },
 
       // ==========================================
@@ -208,6 +210,13 @@ const config: Config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+      },
+
+      zIndex: {
+        navbar: '30',
+        sidebar: '60',
+        modal: '80',
+        toast: '100',
       },
 
       animation: {

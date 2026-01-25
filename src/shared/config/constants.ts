@@ -111,3 +111,73 @@ export const TEACHING_METRICS = {
   /** Total number of semesters taught */
   TOTAL_SEMESTERS: 21,
 } as const;
+
+/**
+ * Institution details
+ */
+export const INSTITUTIONS = {
+  IUB: {
+    CODE: 'IUB',
+    NAME: 'Independent University, Bangladesh',
+    FULL_NAME: 'Independent University, Bangladesh (IUB)',
+  },
+  BRACU: {
+    CODE: 'BRACU',
+    NAME: 'BRAC University',
+    FULL_NAME: 'BRAC University (BRACU)',
+  },
+} as const;
+
+/**
+ * Academic Roles
+ */
+export const ROLES = {
+  SENIOR_LECTURER: 'Senior Lecturer',
+  LECTURER: 'Lecturer',
+  ADJUNCT_LECTURER: 'Adjunct Lecturer',
+  RESEARCHER: 'Researcher',
+  TEACHING_ASSISTANT: 'Teaching Assistant',
+} as const;
+
+/**
+ * Current Semester Configuration
+ * Update this when semester changes
+ */
+export const CURRENT_SEMESTER = 'Spring 2026';
+
+/**
+ * Layout Dimensions (in pixels or rem)
+ * Match these with tokens.css where applicable
+ */
+export const LAYOUT = {
+  SIDEBAR: {
+    EXPANDED: '20rem', // 80 (w-80)
+    COLLAPSED: '60px',
+  },
+  NAVBAR: {
+    HEIGHT_OFFSET: '73px',
+  },
+} as const;
+
+/**
+ * Z-Index Layers
+ * System-wide z-index management
+ */
+export const Z_INDEX = {
+  TOAST: 100,
+  MODAL: 80,
+  SIDEBAR: 60,
+  NAVBAR: 30,
+} as const;
+
+/**
+ * Table Column Widths
+ */
+export const TABLES = {
+  SCHEDULE: {
+    SECTION: '60px',
+    THEORY: '180px', // min-w
+    LAB: '120px', // w
+    ROOM: '80px', // w
+  },
+} as const;

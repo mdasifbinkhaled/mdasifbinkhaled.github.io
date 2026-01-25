@@ -33,7 +33,7 @@ import { Icon } from '@/shared/components/common/icons';
 import { ScheduleTable } from '@/features/teaching/components/schedule-table';
 
 // =============================================================================
-// COURSE PAGE LAYOUT - World-Class Teaching Portal Design
+// COURSE PAGE LAYOUT - Modern Teaching Portal Design
 // =============================================================================
 
 interface CoursePageLayoutProps {

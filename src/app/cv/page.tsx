@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { siteConfig } from '@/shared/config/site';
+import { INSTITUTIONS } from '@/shared/config/constants';
 import { researchIdentity } from '@/shared/config/researcher-profile';
 import { Button } from '@/shared/components/ui/button';
 import { Download, ExternalLinkIcon } from 'lucide-react';
@@ -92,7 +93,7 @@ export default function CVPage() {
               <CardContent className="space-y-4">
                 <div className="border-l-4 border-primary pl-4">
                   <h3 className="font-semibold">M.Sc in Computer Science</h3>
-                  <p>Independent University, Bangladesh (IUB)</p>
+                  <p>{INSTITUTIONS.IUB.FULL_NAME}</p>
                   <p className="text-sm text-muted-foreground">
                     Graduated with Distinction (Cum Laude)
                   </p>
@@ -106,7 +107,7 @@ export default function CVPage() {
                   <h3 className="font-semibold">
                     B.Sc in Computer Science and Engineering
                   </h3>
-                  <p>BRAC University (BRACU)</p>
+                  <p>{INSTITUTIONS.BRACU.FULL_NAME}</p>
                   <p className="text-sm text-muted-foreground">
                     Graduated with Highest Distinction (Summa Cum Laude)
                   </p>
@@ -175,7 +176,7 @@ export default function CVPage() {
                 <div className="border-l-4 border-primary pl-4">
                   <h3 className="font-semibold">Lecturer</h3>
                   <p className="text-sm">
-                    Independent University, Bangladesh • Jan 2019 - Feb 2023
+                    {INSTITUTIONS.IUB.NAME} • Jan 2019 - Feb 2023
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">
                     Taught core CSE courses and implemented OBE strategies.
@@ -185,8 +186,8 @@ export default function CVPage() {
                 <div className="border-l-4 border-primary pl-4">
                   <h3 className="font-semibold">Researcher</h3>
                   <p className="text-sm">
-                    Center for Cognitive Skill Enhancement (CCSE), IUB • May
-                    2017 - Dec 2023
+                    Center for Cognitive Skill Enhancement (CCSE),{' '}
+                    {INSTITUTIONS.IUB.CODE} • May 2017 - Dec 2023
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">
                     Conducted research on flood monitoring (Sentinel-1) and

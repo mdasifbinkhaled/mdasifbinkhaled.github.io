@@ -8,18 +8,18 @@ import {
   coursesTaughtIUB,
   coursesTaughtBRACU,
 } from '@/shared/lib/data/courses';
-import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
 import { TeachingCTA } from '@/features/teaching/teaching-cta';
 
+import { INSTITUTIONS } from '@/shared/config/constants';
+
 export const metadata: Metadata = {
   title: 'Teaching',
-  description: `${siteConfig.author}'s teaching portfolio, course details, teaching philosophy, and student mentorship at IUB and BRACU.`,
+  description: `${siteConfig.author}'s teaching portfolio, course details, teaching philosophy, and student mentorship at ${INSTITUTIONS.IUB.CODE} and ${INSTITUTIONS.BRACU.CODE}.`,
 };
 
 export default function TeachingPage() {
-  // Get teaching stats from centralized data source
-  const stats = getTeachingStats();
+  // Stats fetched internally by components for better encapsulation
 
   return (
     <div className="space-y-16">
@@ -30,12 +30,7 @@ export default function TeachingPage() {
         <h2 id="teaching-stats" className="sr-only">
           Teaching Statistics
         </h2>
-        <TeachingHeroStats
-          totalStudents={stats.totalStudents}
-          totalCourses={stats.totalCourses}
-          averageRating={stats.averageRating}
-          yearsTeaching={stats.yearsTeaching}
-        />
+        <TeachingHeroStats />
       </section>
 
       {/* Teaching Philosophy */}
