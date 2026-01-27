@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { StatCard } from '@/shared/components/common/stat-card';
+import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 
 /**
  * Hero Section Component
@@ -19,6 +20,8 @@ import { StatCard } from '@/shared/components/common/stat-card';
  * World-class design with ambient backgrounds and glassmorphism
  */
 export function HeroSection() {
+  const { averageRating } = getTeachingStats();
+
   // Stats data with unique IDs for stable React keys
   const stats = [
     {
@@ -30,7 +33,7 @@ export function HeroSection() {
     },
     {
       id: 'stat-score',
-      number: '4.0',
+      number: averageRating.toFixed(1),
       label: 'Student Eval',
       icon: Target,
       description: 'Average Score\n(out of 5.0)',
@@ -69,7 +72,7 @@ export function HeroSection() {
                 <Sparkles className="w-4 h-4" />
                 <span>Welcome to my academic portfolio</span>
               </div>
-              <h1 className="text-fluid-heading font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent pb-1">
+              <h1 className="font-serif text-fluid-heading font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent pb-1">
                 {siteConfig.author}
               </h1>
             </div>

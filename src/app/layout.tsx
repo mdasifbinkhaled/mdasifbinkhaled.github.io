@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google';
+import { Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { AppProviders } from '@/shared/providers/app-providers';
@@ -14,6 +14,18 @@ import '@/styles/tokens.css';
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
   display: 'swap',
 });
 
@@ -37,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${inter.variable} ${playfair.variable} ${jetbrains.variable} font-sans antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
         {/* JSON-LD Structured Data */}

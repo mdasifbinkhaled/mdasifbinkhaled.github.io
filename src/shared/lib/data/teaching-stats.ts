@@ -21,16 +21,40 @@ export function getTeachingStats(): TeachingStats {
   const calculatedStudents = getTotalStudentsFromCourses();
 
   // Use calculated value if available, otherwise fall back to constant
-  // This ensures we show real data when available
   const totalStudents =
     calculatedStudents > 0
       ? calculatedStudents
       : TEACHING_METRICS.TOTAL_STUDENTS;
 
+  // Calculate weighted average rating
+  // Formula: Sum(rating * enrollment) / Sum(enrollment)
+  // Only considers courses with valid ratings (>0) and enrollment
+  let totalWeightedRating = 0;
+  let totalRatedStudents = 0;
+
+  // Import locally to avoid circular dependency issues if any
+  // (though shared/lib/data/courses.ts is safe)
+  const coursesWithratings = [
+    ...coursesTaughtIUB,
+    ...coursesTaughtBRACU,
+  ].filter((c) => (c.rating || 0) > 0 && (c.enrollmentCount || 0) > 0);
+
+  coursesWithratings.forEach((c) => {
+    const rating = c.rating || 0;
+    const students = c.enrollmentCount || 0;
+    totalWeightedRating += rating * students;
+    totalRatedStudents += students;
+  });
+
+  const averageRating =
+    totalRatedStudents > 0
+      ? Number((totalWeightedRating / totalRatedStudents).toFixed(1))
+      : TEACHING_METRICS.AVERAGE_RATING;
+
   return {
     totalStudents,
     totalCourses,
-    averageRating: TEACHING_METRICS.AVERAGE_RATING,
+    averageRating,
     yearsTeaching: CAREER.YEARS_TEACHING,
   };
 }
