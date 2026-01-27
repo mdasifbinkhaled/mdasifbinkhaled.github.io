@@ -23,7 +23,6 @@
     "tailwindcss"
   ],
   "private": true,
-  "type": "module",
   "engines": {
     "node": ">=20",
     "npm": ">=10"
@@ -33,7 +32,7 @@
     "dev": "next dev",
     "build": "cross-env NEXT_TELEMETRY_DISABLED=1 next build",
     "build:production": "cross-env NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production npm run build",
-    "postbuild": "node -e \"import('fs').then(fs => { fs.mkdirSync('out', { recursive: true }); fs.writeFileSync('out/.nojekyll', ''); })\"",
+    "postbuild": "node -e \"const fs = require('fs'); fs.mkdirSync('out', { recursive: true }); fs.writeFileSync('out/.nojekyll', '');\"",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
