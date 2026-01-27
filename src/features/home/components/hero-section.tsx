@@ -72,7 +72,7 @@ export function HeroSection() {
                 <Sparkles className="w-4 h-4" />
                 <span>Welcome to my academic portfolio</span>
               </div>
-              <h1 className="font-serif text-fluid-heading font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent pb-1">
+              <h1 className="text-fluid-heading font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent pb-1">
                 {siteConfig.author}
               </h1>
             </div>

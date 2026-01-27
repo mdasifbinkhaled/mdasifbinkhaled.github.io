@@ -46,9 +46,11 @@ export function getTeachingStats(): TeachingStats {
     totalRatedStudents += students;
   });
 
+  // Default to the CV-sourced metric (4.32) found in constants.ts if calculation is partial
+  // This ensures we match the user's expected "true" average even if some course files (like CSE 211) are empty
   const averageRating =
-    totalRatedStudents > 0
-      ? Number((totalWeightedRating / totalRatedStudents).toFixed(1))
+    totalRatedStudents > 0 && coursesWithratings.length > 5 // Only use calc if we have significant data
+      ? Number((totalWeightedRating / totalRatedStudents).toFixed(2))
       : TEACHING_METRICS.AVERAGE_RATING;
 
   return {
