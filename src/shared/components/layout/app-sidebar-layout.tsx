@@ -42,7 +42,7 @@ export default function AppSidebarLayout({
         <SheetContent
           id="mobile-nav"
           side="left"
-          className="w-80 p-0 bg-sidebar text-sidebar-foreground border-r border-sidebar-border z-[60]"
+          className="w-80 p-0 bg-sidebar text-sidebar-foreground border-r border-sidebar-border z-sidebar"
         >
           <VisuallyHidden asChild>
             <SheetTitle>Navigation menu</SheetTitle>
@@ -64,7 +64,7 @@ export default function AppSidebarLayout({
         <aside
           id="desktop-sidebar"
           className={cn(
-            'hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-60 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
+            'hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-sidebar shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
 
             collapsed ? 'w-[60px]' : 'w-80'
           )}
@@ -80,7 +80,7 @@ export default function AppSidebarLayout({
           className={cn(
             'hidden lg:inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all duration-200',
 
-            'fixed top-[3.75rem] z-[80] h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent',
+            'fixed top-[3.75rem] z-sidebar-toggle h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent',
 
             collapsed
               ? 'left-[60px] -translate-x-1/2'
@@ -110,7 +110,7 @@ export default function AppSidebarLayout({
           <header
             role="banner"
             className={cn(
-              'fixed top-0 z-30 bg-background/95 backdrop-blur-md border-b shadow-sm transition-all duration-300',
+              'fixed top-0 z-navbar bg-background/95 backdrop-blur-md border-b shadow-sm transition-all duration-300',
 
               'left-0 w-full',
 
@@ -131,7 +131,6 @@ export default function AppSidebarLayout({
           <main
             id="main-content"
             className="flex-1 min-w-0 px-4 lg:px-6 scroll-mt-20"
-            style={{ scrollMarginTop: '5rem' }}
           >
             <div className="container mx-auto py-6">{children}</div>
           </main>

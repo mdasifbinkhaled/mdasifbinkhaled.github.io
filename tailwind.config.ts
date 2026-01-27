@@ -198,6 +198,20 @@ const config: Config = {
       // ==========================================
       // ANIMATION SYSTEM
       // ==========================================
+      zIndex: {
+        '0': '0',
+        '10': '10',
+        '20': '20',
+        '30': '30',
+        '40': '40',
+        '50': '50',
+        'navbar': '30', // Sticky navbar
+        'sidebar': '60', // Sidebar panel
+        'sidebar-toggle': '80', // Toggle button
+        'overlay': '90', // Modals/Backdrops
+        'toast': '100', // Toast notifications
+      },
+
       keyframes: {
         // Accordion Animations
         'accordion-down': {

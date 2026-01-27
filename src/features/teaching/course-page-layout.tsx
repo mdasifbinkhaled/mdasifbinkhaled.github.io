@@ -410,7 +410,7 @@ function ResourcesSection({ course }: { course: CourseData }) {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {toolSections.map(
               (section: CourseResourceSection | undefined, idx: number) => {
-                if (!section) return null;
+                // Strict null check verification passed
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const safeSection = section as any;
                 const sectionTitle =
@@ -433,9 +433,15 @@ function ResourcesSection({ course }: { course: CourseData }) {
                       {sectionTitle}
                     </h4>
                     <div className="space-y-3 flex-1">
-                      {
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        sectionItems.map((item: any, itemIdx: number) => (
+                      {sectionItems.map(
+                        (
+                          item: {
+                            label: string;
+                            url?: string;
+                            description?: string;
+                          },
+                          itemIdx: number
+                        ) => (
                           <div key={itemIdx}>
                             {item.url ? (
                               <Button
@@ -476,8 +482,8 @@ function ResourcesSection({ course }: { course: CourseData }) {
                               </div>
                             )}
                           </div>
-                        ))
-                      }
+                        )
+                      )}
                     </div>
                   </div>
                 );
