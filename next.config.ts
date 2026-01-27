@@ -23,6 +23,10 @@ const config: NextConfig = {
     // Already checking linting in a separate step
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    typedRoutes: true,
+    viewTransition: true,
+  },
   // Security headers for static export (applied during dev server)
   async headers() {
     return [

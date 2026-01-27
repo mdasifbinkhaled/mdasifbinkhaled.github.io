@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { test, expect } from 'vitest';
+import { test, expect, vi } from 'vitest';
 import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
 import { AppProviders } from '@/shared/providers/app-providers';
+
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/',
+  useRouter: () => ({ push: vi.fn() }),
+}));
 
 function TestWrapper({ children }: { children: React.ReactNode }) {
   return <AppProviders>{children}</AppProviders>;

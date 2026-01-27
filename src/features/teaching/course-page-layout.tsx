@@ -16,7 +16,11 @@ import {
   Presentation,
   BookOpenText,
 } from 'lucide-react';
-import type { CourseData, CourseLink } from '@/shared/types';
+import type {
+  CourseData,
+  CourseLink,
+  CourseResourceSection,
+} from '@/shared/types';
 import {
   Accordion,
   AccordionContent,
@@ -336,7 +340,10 @@ function ResourcesSection({ course }: { course: CourseData }) {
     r.title.includes('Video')
   );
   const toolSections =
-    course.resourceSections?.filter((r) => !r.title.includes('Video')) || [];
+    course.resourceSections?.filter(
+      (r): r is CourseResourceSection =>
+        r !== null && r !== undefined && !r.title.includes('Video')
+    ) || [];
 
   return (
     <div className="space-y-16">
@@ -401,76 +408,81 @@ function ResourcesSection({ course }: { course: CourseData }) {
             subtitle="Curated tools and libraries to accelerate your mastery."
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {toolSections.map((section, idx) => {
-              if (!section) return null;
-              const sectionTitle =
+            {toolSections.map(
+              (section: CourseResourceSection | undefined, idx: number) => {
+                if (!section) return null;
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                ((section as any)?.title || '').split('(')[0].trim() ||
-                'Resources';
-              const sectionItems = section?.items || [];
+                const safeSection = section as any;
+                const sectionTitle =
+                  (safeSection.title || '').split('(')[0].trim() || 'Resources';
+                const sectionItems = safeSection.items || [];
 
-              return (
-                <div
-                  key={idx}
-                  className="flex flex-col gap-4 p-6 rounded-xl bg-muted/20 border border-border/40 hover:border-primary/20 transition-colors"
-                >
-                  <h4 className="font-semibold text-lg flex items-center gap-2 text-foreground">
-                    {idx === 0 ? (
-                      <Target className="w-5 h-5 text-primary" />
-                    ) : idx === 1 ? (
-                      <Code2 className="w-5 h-5 text-primary" />
-                    ) : (
-                      <BookOpenText className="w-5 h-5 text-primary" />
-                    )}
-                    {sectionTitle}
-                  </h4>
-                  <div className="space-y-3 flex-1">
-                    {sectionItems.map((item, itemIdx) => (
-                      <div key={itemIdx}>
-                        {item.url ? (
-                          <Button
-                            variant="secondary"
-                            asChild
-                            className="h-auto w-full justify-start p-3 whitespace-normal text-left bg-background hover:bg-background/80 hover:shadow-sm border border-transparent hover:border-primary/10 transition-all group"
-                          >
-                            <a
-                              href={item.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <div className="flex flex-col gap-1 w-full">
-                                <div className="flex items-center justify-between">
-                                  <span className="font-medium text-foreground group-hover:text-primary transition-colors">
-                                    {item.label}
-                                  </span>
-                                  <ExternalLink className="w-3.5 h-3.5 opacity-30 group-hover:opacity-100 transition-opacity" />
-                                </div>
+                return (
+                  <div
+                    key={idx}
+                    className="flex flex-col gap-4 p-6 rounded-xl bg-muted/20 border border-border/40 hover:border-primary/20 transition-colors"
+                  >
+                    <h4 className="font-semibold text-lg flex items-center gap-2 text-foreground">
+                      {idx === 0 ? (
+                        <Target className="w-5 h-5 text-primary" />
+                      ) : idx === 1 ? (
+                        <Code2 className="w-5 h-5 text-primary" />
+                      ) : (
+                        <BookOpenText className="w-5 h-5 text-primary" />
+                      )}
+                      {sectionTitle}
+                    </h4>
+                    <div className="space-y-3 flex-1">
+                      {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        sectionItems.map((item: any, itemIdx: number) => (
+                          <div key={itemIdx}>
+                            {item.url ? (
+                              <Button
+                                variant="secondary"
+                                asChild
+                                className="h-auto w-full justify-start p-3 whitespace-normal text-left bg-background hover:bg-background/80 hover:shadow-sm border border-transparent hover:border-primary/10 transition-all group"
+                              >
+                                <a
+                                  href={item.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <div className="flex flex-col gap-1 w-full">
+                                    <div className="flex items-center justify-between">
+                                      <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                                        {item.label}
+                                      </span>
+                                      <ExternalLink className="w-3.5 h-3.5 opacity-30 group-hover:opacity-100 transition-opacity" />
+                                    </div>
+                                    {item.description && (
+                                      <span className="text-xs text-muted-foreground font-normal line-clamp-2">
+                                        {item.description}
+                                      </span>
+                                    )}
+                                  </div>
+                                </a>
+                              </Button>
+                            ) : (
+                              <div className="p-3 rounded-md bg-background/50 border border-border/20">
+                                <span className="font-medium text-sm text-foreground/90 block">
+                                  {item.label}
+                                </span>
                                 {item.description && (
-                                  <span className="text-xs text-muted-foreground font-normal line-clamp-2">
+                                  <span className="text-xs text-muted-foreground mt-1 block">
                                     {item.description}
                                   </span>
                                 )}
                               </div>
-                            </a>
-                          </Button>
-                        ) : (
-                          <div className="p-3 rounded-md bg-background/50 border border-border/20">
-                            <span className="font-medium text-sm text-foreground/90 block">
-                              {item.label}
-                            </span>
-                            {item.description && (
-                              <span className="text-xs text-muted-foreground mt-1 block">
-                                {item.description}
-                              </span>
                             )}
                           </div>
-                        )}
-                      </div>
-                    ))}
+                        ))
+                      }
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              }
+            )}
           </div>
         </div>
       )}

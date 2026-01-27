@@ -1,4 +1,5 @@
 import { Card, CardContent } from '@/shared/components/ui/card';
+import { SpotlightCard } from '@/shared/components/ui/spotlight-card';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 
@@ -20,7 +21,7 @@ interface StatCardProps {
   /** Number of decimal places for numeric values */
   decimals?: number;
   /** Visual variant */
-  variant?: 'default' | 'compact' | 'glass';
+  variant?: 'default' | 'compact' | 'glass' | 'spotlight';
   /** Additional CSS classes */
   className?: string;
 }
@@ -46,7 +47,41 @@ export function StatCard({
       : String(number);
 
   const isCompact = variant === 'compact';
+  const isSpotlight = variant === 'spotlight';
   const isGlass = variant === 'glass';
+
+  // Spotlight Variant (SOTA)
+  if (isSpotlight) {
+    return (
+      <SpotlightCard
+        className={cn(
+          'flex flex-col p-5 bg-background/60 border-border/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm',
+          className
+        )}
+        spotlightColor="rgba(124, 58, 237, 0.15)" // Primary purple hint
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-3xl font-bold text-primary tracking-tight">
+            {displayValue}
+            {suffix}
+          </div>
+          <div className="p-2 bg-primary/5 rounded-full group-hover:bg-primary/10 transition-colors">
+            <Icon className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
+          </div>
+        </div>
+        <div className="space-y-1">
+          <div className="text-sm font-bold text-foreground/90 uppercase tracking-wide text-0.8rem">
+            {label}
+          </div>
+          {description && (
+            <div className="text-xs text-muted-foreground font-medium leading-relaxed whitespace-pre-line">
+              {description}
+            </div>
+          )}
+        </div>
+      </SpotlightCard>
+    );
+  }
 
   // Glass Variant (Hero Style)
   if (isGlass) {

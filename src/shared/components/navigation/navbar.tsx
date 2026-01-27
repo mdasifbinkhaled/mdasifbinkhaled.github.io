@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/shared/lib/utils';
 import { GraduationCap, Menu } from 'lucide-react';
 import { ThemeSelector } from '@/shared/components/ui/theme-selector';
+import { CommandMenu } from '@/shared/components/ui/command-menu';
 import { mainNavItems } from '@/shared/config/navigation';
 import {
   coursesTaughtIUB,
@@ -95,6 +96,7 @@ export function Navbar({
           </button>
         )}
 
+        <CommandMenu />
         <ThemeSelector variant="compact" align="end" showLabel={false} />
       </div>
     </div>

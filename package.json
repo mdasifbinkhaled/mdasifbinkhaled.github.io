@@ -23,6 +23,7 @@
     "tailwindcss"
   ],
   "private": true,
+  "type": "module",
   "engines": {
     "node": ">=20",
     "npm": ">=10"
@@ -32,7 +33,7 @@
     "dev": "next dev",
     "build": "cross-env NEXT_TELEMETRY_DISABLED=1 next build",
     "build:production": "cross-env NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production npm run build",
-    "postbuild": "node -e \"const fs = require('fs'); fs.mkdirSync('out', { recursive: true }); fs.writeFileSync('out/.nojekyll', '');\"",
+    "postbuild": "node -e \"import('fs').then(fs => { fs.mkdirSync('out', { recursive: true }); fs.writeFileSync('out/.nojekyll', ''); })\"",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -58,6 +59,8 @@
     "@radix-ui/react-visually-hidden": "^1.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "framer-motion": "^12.29.0",
     "lucide-react": "^0.544.0",
     "next": "^15.5.9",
     "next-themes": "^0.4.6",

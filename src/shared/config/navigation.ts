@@ -118,3 +118,10 @@ export const bracuCourseNavItems: NavItem[] = [
     sectionId: 'mat361',
   },
 ];
+
+export const navItems = {
+  main: mainNavItems,
+  teaching: teachingNavItems,
+  iub: iubCourseNavItems,
+  bracu: bracuCourseNavItems,
+};

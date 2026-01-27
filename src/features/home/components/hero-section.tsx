@@ -134,7 +134,7 @@ export function HeroSection() {
                 label={stat.label}
                 icon={stat.icon}
                 description={stat.description}
-                variant="glass"
+                variant="spotlight"
               />
             ))}
           </div>

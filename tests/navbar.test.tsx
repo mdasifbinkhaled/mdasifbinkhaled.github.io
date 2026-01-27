@@ -7,6 +7,7 @@ import '@testing-library/jest-dom';
 const mockUsePathname = vi.fn();
 vi.mock('next/navigation', () => ({
   usePathname: () => mockUsePathname(),
+  useRouter: () => ({ push: vi.fn() }),
 }));
 
 // Mock theme selector
@@ -22,6 +23,8 @@ vi.mock('lucide-react', () => ({
   Menu: () => <div data-testid="menu-icon">Menu</div>,
   Sun: () => <div data-testid="sun-icon">Sun</div>,
   Moon: () => <div data-testid="moon-icon">Moon</div>,
+  Search: () => <div data-testid="search-icon">Search</div>,
+  X: () => <div data-testid="x-icon">X</div>,
 }));
 
 describe('Navbar', () => {

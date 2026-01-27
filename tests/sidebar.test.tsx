@@ -27,6 +27,7 @@ vi.mock('@/shared/components/common/back-to-top', () => ({
 // Mock next/navigation
 vi.mock('next/navigation', () => ({
   usePathname: () => '/',
+  useRouter: () => ({ push: vi.fn() }),
 }));
 
 // Mock lucide-react icons
