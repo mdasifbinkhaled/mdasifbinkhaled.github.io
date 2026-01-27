@@ -26,30 +26,32 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="container py-10 space-y-16">
-      <Breadcrumbs />
+    <div className="container-responsive py-10 space-y-16">
+      <div className="max-w-7xl mx-auto space-y-16">
+        <Breadcrumbs />
 
-      <HeroSection />
-      <QuickFacts />
-      <HighlightsSection />
-      <ResearchPhilosophy />
+        <HeroSection />
+        <QuickFacts />
+        <HighlightsSection />
+        <ResearchPhilosophy />
 
-      <div className="space-y-16">
-        <h2 className="sr-only">Professional Details</h2>
-        {/* Biography Section removed as redundant with Hero + QuickFacts */}
+        <div className="space-y-16">
+          <h2 className="sr-only">Professional Details</h2>
+          {/* Biography Section removed as redundant with Hero + QuickFacts */}
 
-        {/* 
-          Education & Experience moved to CV page as per new IA 
-          However, keeping brief highlights or skills here is good.
-        */}
+          {/* 
+            Education & Experience moved to CV page as per new IA 
+            However, keeping brief highlights or skills here is good.
+          */}
 
-        <SkillsSection />
-        <BeyondAcademia />
-        <CertificationsSection />
-        <AwardsSection />
+          <SkillsSection />
+          <BeyondAcademia />
+          <CertificationsSection />
+          <AwardsSection />
+        </div>
+
+        <CtaSection />
       </div>
-
-      <CtaSection />
     </div>
   );
 }
