@@ -23,9 +23,11 @@ const config: NextConfig = {
     // Already checking linting in a separate step
     ignoreDuringBuilds: true,
   },
+  // Enable typed routes (moved from experimental in Next.js 15.6+)
+  typedRoutes: true,
   experimental: {
-    typedRoutes: true,
     viewTransition: true,
+    scrollRestoration: true,
   },
   // Security headers for static export (applied during dev server)
   async headers() {

@@ -2,13 +2,56 @@
 
 import * as React from 'react';
 import { Command } from 'cmdk';
-import { Search } from 'lucide-react';
+import {
+  Search,
+  Home,
+  UserCircle,
+  Cpu,
+  BookOpenText,
+  Presentation,
+  Send,
+  LayoutDashboard,
+  Building2,
+  Code2,
+  Server,
+  Calculator,
+  Database,
+  Brain,
+  Laptop,
+  Sun,
+  Moon,
+  Monitor,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { type DialogProps } from '@radix-ui/react-dialog';
 
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog';
-import { navItems } from '@/shared/config/navigation';
+import {
+  navItems,
+  iubCourseNavItems,
+  bracuCourseNavItems,
+} from '@/shared/config/navigation';
+import { cn } from '@/shared/lib/utils';
+import type { NavItem } from '@/shared/types';
+
+// Map icon string names to actual components
+const IconMap: Record<string, React.ElementType> = {
+  Home,
+  UserCircle,
+  Cpu,
+  BookOpenText,
+  Presentation,
+  Send,
+  LayoutDashboard,
+  Building2,
+  Code2,
+  Server,
+  Calculator,
+  Database,
+  Brain,
+  Laptop,
+};
 
 export function CommandMenu({ ..._props }: DialogProps) {
   const router = useRouter();
@@ -41,13 +84,35 @@ export function CommandMenu({ ..._props }: DialogProps) {
     command();
   }, []);
 
+  const renderItems = (items: NavItem[]) => {
+    return items.map((navItem) => {
+      const Icon = navItem.icon ? IconMap[navItem.icon] : null;
+      return (
+        <Command.Item
+          key={navItem.href}
+          value={`${navItem.label} ${navItem.sectionId}`}
+          onSelect={() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            runCommand(() => router.push(navItem.href as any));
+          }}
+          className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+        >
+          {Icon && <Icon className="mr-2 h-4 w-4 opacity-70" />}
+          <span>{navItem.label}</span>
+        </Command.Item>
+      );
+    });
+  };
+
   return (
     <>
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input hover:bg-accent hover:text-accent-foreground px-4 py-2 relative h-8 w-full justify-start rounded-[0.5rem] bg-background text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-64"
+        className={cn(
+          'relative inline-flex h-9 w-full items-center justify-start rounded-md border border-input bg-background/50 px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 sm:pr-12 md:w-56 lg:w-64'
+        )}
       >
-        <span className="hidden lg:inline-flex">Search website...</span>
+        <span className="hidden lg:inline-flex">Search portfolio...</span>
         <span className="inline-flex lg:hidden">Search...</span>
         <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
           <span className="text-xs">⌘</span>K
@@ -55,7 +120,7 @@ export function CommandMenu({ ..._props }: DialogProps) {
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="overflow-hidden p-0 shadow-lg">
+        <DialogContent className="overflow-hidden p-0 shadow-2xl">
           <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
             <div
               className="flex items-center border-b px-3"
@@ -67,40 +132,55 @@ export function CommandMenu({ ..._props }: DialogProps) {
                 className="flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
               />
             </div>
-            <Command.List className="max-h-[300px] overflow-y-auto overflow-x-hidden">
+            <Command.List className="max-h-[300px] overflow-y-auto overflow-x-hidden p-2">
               <Command.Empty>No results found.</Command.Empty>
-              <Command.Group heading="Links">
-                {navItems.main.map((navItem) => (
-                  <Command.Item
-                    key={navItem.href}
-                    value={navItem.label}
-                    onSelect={() => {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      runCommand(() => router.push(navItem.href as any));
-                    }}
-                    className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-                  >
-                    <span>{navItem.label}</span>
-                  </Command.Item>
-                ))}
+
+              <Command.Group heading="Pages">
+                {renderItems(navItems.main)}
               </Command.Group>
+
+              <Command.Group heading="Teaching (IUB)">
+                {renderItems(iubCourseNavItems)}
+              </Command.Group>
+
+              <Command.Group heading="Teaching (BRACU)">
+                {renderItems(bracuCourseNavItems)}
+              </Command.Group>
+
+              <Command.Group heading="Actions">
+                <Command.Item
+                  value="Contact Email"
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onSelect={() =>
+                    runCommand(() => router.push('/contact' as any))
+                  }
+                  className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground"
+                >
+                  <Send className="mr-2 h-4 w-4 opacity-70" />
+                  <span>Contact Me</span>
+                </Command.Item>
+              </Command.Group>
+
               <Command.Group heading="Theme">
                 <Command.Item
                   onSelect={() => runCommand(() => setTheme('light'))}
                   className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground"
                 >
+                  <Sun className="mr-2 h-4 w-4 opacity-70" />
                   Light
                 </Command.Item>
                 <Command.Item
                   onSelect={() => runCommand(() => setTheme('dark'))}
                   className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground"
                 >
+                  <Moon className="mr-2 h-4 w-4 opacity-70" />
                   Dark
                 </Command.Item>
                 <Command.Item
                   onSelect={() => runCommand(() => setTheme('system'))}
                   className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground"
                 >
+                  <Monitor className="mr-2 h-4 w-4 opacity-70" />
                   System
                 </Command.Item>
               </Command.Group>
