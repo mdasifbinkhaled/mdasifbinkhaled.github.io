@@ -60,6 +60,7 @@ const config: Config = {
         lg: '1024px', // Laptop - Default Tailwind
         xl: '1280px', // Desktop - Default Tailwind
         '2xl': '1536px', // Large Desktop - Default Tailwind
+        '3xl': '1920px', // 4K Ready
       },
 
       // ==========================================

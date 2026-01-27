@@ -26,21 +26,23 @@ export function PublicationsPreview() {
   return (
     <section className="w-full py-8 md:py-10 bg-secondary/10">
       <div className="container-responsive">
-        <h2 className="text-2xl font-bold mb-6 text-primary">
-          Recent Publications
-        </h2>
-        <PublicationList
-          initialPublications={filteredPublications.slice(
-            0,
-            DISPLAY_LIMITS.HOMEPAGE_RECENT
-          )}
-        />
-        <div className="text-center mt-6">
-          <Button variant="outline" asChild>
-            <Link href="/publications">
-              View All Publications <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 text-primary">
+            Recent Publications
+          </h2>
+          <PublicationList
+            initialPublications={filteredPublications.slice(
+              0,
+              DISPLAY_LIMITS.HOMEPAGE_RECENT
+            )}
+          />
+          <div className="text-center mt-6">
+            <Button variant="outline" asChild>
+              <Link href="/publications">
+                View All Publications <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </section>
@@ -60,16 +62,18 @@ export function ExperiencePreview() {
   return (
     <section className="w-full py-8 md:py-10">
       <div className="container-responsive">
-        <h2 className="text-2xl font-bold mb-6 text-primary">
-          Work Experience
-        </h2>
-        <ExperienceCompact experiences={recentExperiences} />
-        <div className="text-center mt-6">
-          <Button variant="outline" asChild>
-            <Link href="/experience">
-              View Full Experience <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 text-primary">
+            Work Experience
+          </h2>
+          <ExperienceCompact experiences={recentExperiences} />
+          <div className="text-center mt-6">
+            <Button variant="outline" asChild>
+              <Link href="/experience">
+                View Full Experience <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

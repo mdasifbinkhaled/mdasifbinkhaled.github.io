@@ -3,6 +3,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  /* 
+   * SOTA Fluid Container
+   * Uses viewport-relative padding and max-width for "Top Class" feel.
+   * Clamps transition smoothly between mobile and ultra-wide.
+   */
+  .container-responsive {
+    @apply w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 3xl:px-24;
+    max-width: 1920px;
+    /* Cap at 3xl but allow full flowing width below */
+  }
+
+  /*
+   * Fluid Typography
+   * Scales strictly with viewport width using clamp()
+   * min: 16px, max: 20px (base text)
+   */
+  .text-fluid-base {
+    font-size: clamp(1rem, 0.9rem + 0.25vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .text-fluid-lg {
+    font-size: clamp(1.125rem, 1rem + 0.35vw, 1.5rem);
+    line-height: 1.5;
+  }
+
+  .text-fluid-heading {
+    font-size: clamp(2.5rem, 2rem + 3vw, 5rem);
+    line-height: 1.1;
+  }
+}
+
 /* Base styles without @apply directives */
 body {
   background: hsl(var(--background));
@@ -14,7 +47,8 @@ body {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem; /* Account for sticky navbar height */
+  scroll-padding-top: 5rem;
+  /* Account for sticky navbar height */
 }
 
 /* Smooth theme transitions - only for elements without existing transitions */
@@ -56,6 +90,7 @@ nav {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -67,6 +102,7 @@ nav {
     opacity: 1;
     transform: translateY(0);
   }
+
   to {
     opacity: 0;
     transform: translateY(-10px);
@@ -93,12 +129,15 @@ nav {
 
   /* Hide scrollbar for cleaner UI while maintaining scroll functionality */
   .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 
   .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
+    /* Chrome, Safari, Opera */
   }
 }
 
@@ -107,9 +146,11 @@ nav {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -126,6 +167,7 @@ nav {
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.8;
   }

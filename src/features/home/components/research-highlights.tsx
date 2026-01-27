@@ -33,7 +33,7 @@ export function ResearchHighlights() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
           {interests.map((interest) => {
             const Icon = interest.icon;
             return (

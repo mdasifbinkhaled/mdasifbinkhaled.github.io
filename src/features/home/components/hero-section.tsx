@@ -55,12 +55,12 @@ export function HeroSection() {
     <section className="w-full relative overflow-hidden">
       {/* Ambient Background - World-Class Design */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10" />
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/8 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
-      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary/5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute top-0 right-0 w-[30vw] h-[30vw] bg-primary/8 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-[25vw] h-[25vw] bg-secondary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
+      <div className="absolute top-1/2 left-1/2 w-[20vw] h-[20vw] bg-primary/5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
 
-      <div className="container-responsive relative z-10 py-2">
-        <div className="max-w-5xl">
+      <div className="container-responsive relative z-10 py-12 md:py-20 lg:py-24">
+        <div className="max-w-7xl mx-auto">
           {/* Header Content */}
           <div className="space-y-6 mb-8">
             {/* Name with Accent */}
@@ -69,7 +69,7 @@ export function HeroSection() {
                 <Sparkles className="w-4 h-4" />
                 <span>Welcome to my academic portfolio</span>
               </div>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+              <h1 className="text-fluid-heading font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent pb-1">
                 {siteConfig.author}
               </h1>
             </div>
