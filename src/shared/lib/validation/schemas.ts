@@ -296,6 +296,96 @@ export const publicationsArraySchema = z.array(publicationItemSchema);
 export const experiencesArraySchema = z.array(experienceItemSchema);
 export const coursesArraySchema = z.array(courseDataSchema);
 
+// Helper for keeping icon components (referenced but not rigorously validated)
+const iconSchema = z.any();
+
+/**
+ * Education Item Schema
+ */
+export const educationItemSchema = z.object({
+  id: z.string().min(1, 'ID is required'),
+  degree: z.string().min(3, 'Degree is required'),
+  institution: z.string().min(2, 'Institution is required'),
+  location: z.string().min(2, 'Location is required'),
+  duration: z.string().min(3, 'Duration is required'),
+  distinction: z.string().optional(),
+  thesis: z
+    .object({
+      title: z.string().min(5),
+      advisor: z.string().min(3),
+    })
+    .optional(),
+  achievements: z.array(z.string().min(5)).optional(),
+  icon: iconSchema,
+});
+
+export const educationArraySchema = z.array(educationItemSchema);
+
+/**
+ * Teaching Activity Schema
+ */
+export const teachingActivitySchema = z.object({
+  id: z.string().min(1, 'ID is required'),
+  type: z.enum(['support', 'workshop', 'seminar']),
+  title: z.string().min(3, 'Title is required'),
+  role: z.string().optional(),
+  institution: z.string().min(2, 'Institution is required'),
+  description: z.string().min(10, 'Description must be at least 10 chars'),
+  period: z.string().optional(),
+  students: z.number().optional(),
+  iconName: iconNameSchema.optional(),
+});
+
+export const teachingActivitiesArraySchema = z.array(teachingActivitySchema);
+
+/**
+ * About Page Schemas
+ */
+export const quickFactSchema = z.object({
+  id: z.string().min(1),
+  icon: iconSchema,
+  label: z.string().min(2),
+  value: z.string().min(1),
+});
+
+export const highlightStatsSchema = z.object({
+  id: z.string().min(1),
+  icon: iconSchema,
+  value: z.string().min(1),
+  label: z.string().min(2),
+});
+
+export const certificationSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(5),
+  institution: z.string().min(2),
+  date: z.string().min(3),
+  note: z.string().min(10),
+});
+
+export const awardItemSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(3),
+  institution: z.string().min(2),
+  date: z.string().min(3),
+  icon: iconSchema,
+});
+
+export const serviceItemSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(3),
+  organization: z.string().min(2),
+  duration: z.string().min(3),
+  description: z.string().min(10),
+  icon: iconSchema,
+});
+
+export const quickFactsArraySchema = z.array(quickFactSchema);
+export const highlightsArraySchema = z.array(highlightStatsSchema);
+export const certificationsArraySchema = z.array(certificationSchema);
+export const awardsArraySchema = z.array(awardItemSchema);
+export const servicesArraySchema = z.array(serviceItemSchema);
+
 /**
  * Testimonial Schema
  * Validates student testimonial data
@@ -422,3 +512,24 @@ export type CourseResourceSection = NonNullable<
 export type ClassScheduleItem = NonNullable<
   z.infer<typeof courseDataSchema>['classSchedule']
 >[number];
+
+/** QuickFact structure inferred from schema */
+export type QuickFact = z.infer<typeof quickFactSchema>;
+
+/** HighlightStats structure inferred from schema */
+export type HighlightStats = z.infer<typeof highlightStatsSchema>;
+
+/** Certification structure inferred from schema */
+export type Certification = z.infer<typeof certificationSchema>;
+
+/** AwardItem structure inferred from schema */
+export type AwardItem = z.infer<typeof awardItemSchema>;
+
+/** ServiceItem structure inferred from schema */
+export type ServiceItem = z.infer<typeof serviceItemSchema>;
+
+/** TeachingActivity type inferred from schema */
+export type TeachingActivity = z.infer<typeof teachingActivitySchema>;
+
+/** EducationItem structure inferred from schema */
+export type EducationItem = z.infer<typeof educationItemSchema>;

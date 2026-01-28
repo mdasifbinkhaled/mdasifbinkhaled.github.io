@@ -205,11 +205,11 @@ const config: Config = {
         '30': '30',
         '40': '40',
         '50': '50',
-        'navbar': '30', // Sticky navbar
-        'sidebar': '60', // Sidebar panel
+        navbar: '30', // Sticky navbar
+        sidebar: '60', // Sidebar panel
         'sidebar-toggle': '80', // Toggle button
-        'overlay': '90', // Modals/Backdrops
-        'toast': '100', // Toast notifications
+        overlay: '90', // Modals/Backdrops
+        toast: '100', // Toast notifications
       },
 
       keyframes: {

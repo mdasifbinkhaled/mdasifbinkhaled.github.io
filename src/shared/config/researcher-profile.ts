@@ -1,139 +1,40 @@
-// Central researcher profile configuration
-// Used across the entire site for consistency
+// Central researcher profile configuration (Aggregator)
+// Now largely redirects to @/shared/lib/data/ for SSOT content.
 
-import { siteConfig } from './site';
+import { METRICS } from '@/shared/lib/data/metrics';
+import { personalIdentity } from '@/shared/lib/data/personal';
+import {
+  researchData,
+  academicProfiles as profiles,
+} from '@/shared/lib/data/research';
 
 // Research identity
 export const researchIdentity = {
-  philosophy: {
-    statement:
-      'Whatever decisions are being taken should be explainable and trustworthy',
-    vision:
-      'Breaking out of the black box to make AI understandable, interpretable, and beneficial for humanity',
-    approach:
-      "Focusing on healthcare applications where explainability is not just important - it's essential for saving lives",
-  },
-
-  primaryAreas: [
-    {
-      id: 'healthcare-ai',
-      name: 'Healthcare AI',
-      description:
-        'Developing AI systems for healthcare applications with emphasis on explainability and trustworthiness',
-      icon: 'Heart',
-      keywords: ['Medical AI', 'Clinical Decision Support', 'Patient Safety'],
-    },
-    {
-      id: 'multimodal-ai',
-      name: 'Multimodal AI',
-      description:
-        'Integrating multiple data modalities to create comprehensive AI solutions',
-      icon: 'Layers',
-      keywords: [
-        'Data Fusion',
-        'Multi-source Learning',
-        'Cross-modal Analysis',
-      ],
-    },
-    {
-      id: 'xai',
-      name: 'Explainable AI (XAI)',
-      description:
-        'Making AI decisions transparent, interpretable, and understandable to stakeholders',
-      icon: 'Eye',
-      keywords: ['Interpretability', 'Transparency', 'Model Explanation'],
-    },
-  ],
-
-  currentFocus: {
-    primary: 'Stroke-related problems using AI/ML approaches',
-    domains: ['Healthcare', 'Remote Sensing', 'Signal Processing'],
-    methodology: 'Methodological research with emphasis on explainability',
-  },
-
-  goals: {
-    shortTerm: 'Advance explainable AI techniques in healthcare applications',
-    longTerm:
-      'Become an expert in the field working towards innovations that benefit humanity',
-    impact:
-      'Making AI decisions in critical domains transparent and trustworthy',
-  },
-
-  libraries: [
-    {
-      name: 'SortyPy',
-      description: 'Python sorting algorithms library',
-      status: 'In Development',
-      github: 'https://github.com/mdasifbinkhaled/SortyPy',
-    },
-    {
-      name: 'SearchyPy',
-      description: 'Python search algorithms library',
-      status: 'In Development',
-      github: 'https://github.com/mdasifbinkhaled/SearchyPy',
-    },
-  ],
+  philosophy: researchData.philosophy,
+  primaryAreas: researchData.areas,
+  currentFocus: researchData.focus,
+  goals: personalIdentity.goals,
+  libraries: researchData.libraries,
 } as const;
 
 // Academic profiles & metrics
 export const academicProfiles = {
-  profiles: [
-    {
-      platform: 'Google Scholar',
-      url: siteConfig.links.googleScholar,
-      icon: 'GraduationCap',
-      primary: true,
-    },
-    {
-      platform: 'ORCID',
-      id: siteConfig.links.orcid.split('/').pop() || '',
-      url: siteConfig.links.orcid,
-      icon: 'Award',
-      primary: true,
-    },
-    {
-      platform: 'ResearchGate',
-      url: siteConfig.links.researchGate,
-      icon: 'Network',
-      primary: true,
-    },
-    {
-      platform: 'Academia.edu',
-      url: 'https://iub-bd.academia.edu/mdasifbinkhaled',
-      icon: 'BookOpen',
-      primary: false,
-    },
-  ],
+  profiles: profiles.profiles,
+  github: profiles.github,
 
-  github: {
-    username: siteConfig.links.github.split('/').pop() || 'mdasifbinkhaled',
-    url: siteConfig.links.github,
-  },
-
-  // Private metrics (not displayed publicly)
+  // Private metrics (Legacy reference - use METRICS directy in new code)
   metrics: {
-    citations: 39,
-    hIndex: 3,
-    i10Index: 2,
+    citations: METRICS.CITATION_COUNT,
+    hIndex: METRICS.H_INDEX,
+    i10Index: METRICS.I10_INDEX,
     lastUpdated: '2025-10-26',
   },
 } as const;
 
 // Teaching philosophy
-export const teachingPhilosophy = {
-  core: 'Teach that inspires and makes students capable, impactful, and honest',
-  approach: 'Outcome-Based Education (OBE) with focus on practical application',
-  values: [
-    'Inspiration',
-    'Capability Building',
-    'Real-world Impact',
-    'Integrity',
-  ],
-  commitment:
-    'Fostering an environment where students develop both technical skills and ethical responsibility',
-} as const;
+export const teachingPhilosophy = personalIdentity.teachingPhilosophy;
 
-// Key learnings & insights
+// Key learnings & insights (Preserved here or move to personal?)
 export const keyLearnings = {
   research: {
     primary: 'Methodological research is very important',
@@ -147,63 +48,7 @@ export const keyLearnings = {
 
 // Research projects
 export const researchProjects = {
-  featured: [
-    {
-      id: 'stroke-research',
-      title: 'AI-Powered Stroke Analysis and Prediction',
-      tagline: 'Explainable AI for critical healthcare decisions',
-      description:
-        'Developing interpretable machine learning models for stroke-related problems, focusing on early detection and outcome prediction.',
-      status: 'Ongoing',
-      domain: 'Healthcare AI',
-      technologies: [],
-      methodologies: [],
-      outcomes: {
-        publications: [],
-        datasets: [],
-        code: null,
-      },
-      impact: 'Improving stroke diagnosis and treatment through explainable AI',
-      featured: true,
-      placeholder: true,
-    },
-    {
-      id: 'multimodal-healthcare',
-      title: 'Multimodal AI for Healthcare Diagnostics',
-      tagline: 'Integrating diverse data sources for comprehensive analysis',
-      description:
-        'Research on combining multiple data modalities for enhanced healthcare diagnostics.',
-      status: 'Ongoing',
-      domain: 'Multimodal AI',
-      technologies: [],
-      methodologies: [],
-      outcomes: {
-        publications: [],
-        datasets: [],
-        code: null,
-      },
-      featured: true,
-      placeholder: true,
-    },
-    {
-      id: 'remote-sensing-signal',
-      title: 'Remote Sensing and Signal Processing Applications',
-      tagline: 'Advanced signal analysis for real-world applications',
-      description:
-        'Applying signal processing and remote sensing techniques to solve practical problems.',
-      status: 'Ongoing',
-      domain: 'Signal Processing',
-      technologies: [],
-      methodologies: [],
-      outcomes: {
-        publications: [],
-        datasets: [],
-        code: null,
-      },
-      featured: true,
-      placeholder: true,
-    },
-  ],
+  featured: researchData.projects,
 } as const;
 
 // Notable publications
@@ -218,16 +63,7 @@ export const notablePublications = {
 } as const;
 
 // PhD interests (private - not displayed on public site)
-export const phdInterests = {
-  timeline: {
-    targetStart: 'Fall 2026',
-    applicationPeriod: '2025-2026',
-  },
-  targetLocations: ['Europe', 'Australia', 'Saudi Arabia'],
-  researchFocus: ['Healthcare AI', 'AI/ML', 'Explainable AI'],
-  supervisorPreferences: {},
-  isPrivate: true,
-} as const;
+export const phdInterests = personalIdentity.phdInterests;
 
 // Visual identity (placeholder)
 export const visualIdentity = {

@@ -92,19 +92,7 @@ export const CAREER = {
   },
 } as const;
 
-/**
- * Teaching metrics constants
+/*
+ * Note: TEACHING_METRICS has been moved to @/shared/lib/data/metrics.ts
+ * as part of the Data Architecture Redesign (SSOT).
  */
-export const TEACHING_METRICS = {
-  /** Average students per course */
-  AVERAGE_CLASS_SIZE: 30,
-
-  /** Total approximate students taught (placeholder) */
-  TOTAL_STUDENTS: 500,
-
-  /** Average student evaluation score out of 5.0 (from CV) */
-  AVERAGE_RATING: 4.32,
-
-  /** Maximum rating scale */
-  MAX_RATING: 5.0,
-} as const;

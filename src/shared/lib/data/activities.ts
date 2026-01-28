@@ -3,22 +3,17 @@
  * Central repository for non-course teaching activities (TA roles, workshops, etc.)
  */
 
-import type { IconName } from '@/shared/components/common/icons';
+import {
+  teachingActivitiesArraySchema,
+  validateData,
+} from '../validation/schemas';
+import type { TeachingActivity } from '../validation/schemas';
 
 /**
- * Activity type definition
+ * Activity type definition derived from Zod schema
  */
-export interface TeachingActivity {
-  id: string;
-  type: 'support' | 'workshop' | 'seminar';
-  title: string;
-  role?: string;
-  institution: string;
-  description: string;
-  period?: string;
-  students?: number;
-  iconName?: IconName;
-}
+// Re-export type for consumers
+export type { TeachingActivity } from '../validation/schemas';
 
 /**
  * Teaching support roles (TA, Tutor, etc.)
@@ -99,10 +94,19 @@ export const workshopsAndSeminars: TeachingActivity[] = [
 /**
  * All teaching activities combined
  */
-export const allTeachingActivities: TeachingActivity[] = [
+const rawAllTeachingActivities: TeachingActivity[] = [
   ...teachingSupportRoles,
   ...workshopsAndSeminars,
 ];
+
+/**
+ * All teaching activities combined (Validated)
+ */
+export const allTeachingActivities = validateData(
+  rawAllTeachingActivities,
+  teachingActivitiesArraySchema,
+  'teaching activities'
+);
 
 /**
  * Get activities by type

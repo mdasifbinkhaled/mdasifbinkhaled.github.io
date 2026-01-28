@@ -93,7 +93,7 @@ export function CommandMenu({ ..._props }: DialogProps) {
           value={`${navItem.label} ${navItem.sectionId}`}
           onSelect={() => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            runCommand(() => router.push(navItem.href as any));
+            runCommand(() => router.push(navItem.href as string));
           }}
           className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
         >
@@ -151,9 +151,7 @@ export function CommandMenu({ ..._props }: DialogProps) {
                 <Command.Item
                   value="Contact Email"
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  onSelect={() =>
-                    runCommand(() => router.push('/contact' as any))
-                  }
+                  onSelect={() => runCommand(() => router.push('/contact'))}
                   className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground"
                 >
                   <Send className="mr-2 h-4 w-4 opacity-70" />

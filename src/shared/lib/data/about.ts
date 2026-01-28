@@ -12,47 +12,43 @@ import {
   Medal,
   ShieldCheck,
 } from 'lucide-react';
+import {
+  quickFactsArraySchema,
+  highlightsArraySchema,
+  certificationsArraySchema,
+  awardsArraySchema,
+  servicesArraySchema,
+  validateData,
+} from '../validation/schemas';
+import type {
+  QuickFact as BaseQuickFact,
+  HighlightStats as BaseHighlightStats,
+  Certification,
+  AwardItem as BaseAwardItem,
+  ServiceItem as BaseServiceItem,
+} from '../validation/schemas';
 
-export interface QuickFact {
-  id: string;
+// Infer types from Zod schemas and add back LucideIcon
+export type QuickFact = Omit<BaseQuickFact, 'icon'> & {
   icon: LucideIcon;
-  label: string;
-  value: string;
-}
+};
 
-export interface HighlightStats {
-  id: string;
+export type HighlightStats = Omit<BaseHighlightStats, 'icon'> & {
   icon: LucideIcon;
-  value: string;
-  label: string;
-}
+};
 
-export interface Certification {
-  id: string;
-  title: string;
-  institution: string;
-  date: string;
-  note: string;
-}
+// Certification doesn't have an icon so we can use it directly
+export type { Certification };
 
-export interface AwardItem {
-  id: string;
-  title: string;
-  institution: string;
-  date: string;
+export type AwardItem = Omit<BaseAwardItem, 'icon'> & {
   icon: LucideIcon;
-}
+};
 
-export interface ServiceItem {
-  id: string;
-  title: string;
-  organization: string;
-  duration: string;
-  description: string;
+export type ServiceItem = Omit<BaseServiceItem, 'icon'> & {
   icon: LucideIcon;
-}
+};
 
-export const quickFacts: QuickFact[] = [
+const rawQuickFacts: QuickFact[] = [
   {
     id: 'qf-location',
     icon: MapPin,
@@ -79,7 +75,7 @@ export const quickFacts: QuickFact[] = [
   },
 ];
 
-export const highlights: HighlightStats[] = [
+const rawHighlights: HighlightStats[] = [
   {
     id: 'hl-publications',
     icon: BookOpen,
@@ -106,7 +102,7 @@ export const highlights: HighlightStats[] = [
   },
 ];
 
-export const certifications: Certification[] = [
+const rawCertifications: Certification[] = [
   {
     id: 'cert-obe-2024',
     title: 'Hands-on Orientation on Outcomes-Based Education (OBE)',
@@ -148,7 +144,7 @@ export const certifications: Certification[] = [
   },
 ];
 
-export const honorsAndAwards: AwardItem[] = [
+const rawHonorsAndAwards: AwardItem[] = [
   {
     id: 'award-vc-spring-2016',
     title: "Vice Chancellor's Award for Academic Excellence",
@@ -207,7 +203,7 @@ export const honorsAndAwards: AwardItem[] = [
   },
 ];
 
-export const professionalService: ServiceItem[] = [
+const rawProfessionalService: ServiceItem[] = [
   {
     id: 'svc-ieee-mentor',
     title: 'IEEE Computer Society Faculty Mentor',
@@ -245,3 +241,34 @@ export const professionalService: ServiceItem[] = [
     icon: ShieldCheck,
   },
 ];
+
+// Validate and export data
+export const quickFacts = validateData(
+  rawQuickFacts,
+  quickFactsArraySchema,
+  'quick facts'
+);
+
+export const highlights = validateData(
+  rawHighlights,
+  highlightsArraySchema,
+  'highlights'
+);
+
+export const certifications = validateData(
+  rawCertifications,
+  certificationsArraySchema,
+  'certifications'
+);
+
+export const honorsAndAwards = validateData(
+  rawHonorsAndAwards,
+  awardsArraySchema,
+  'awards'
+);
+
+export const professionalService = validateData(
+  rawProfessionalService,
+  servicesArraySchema,
+  'professional service'
+);
