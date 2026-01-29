@@ -141,9 +141,9 @@ export const CourseCard = memo(function CourseCard({
 
   // Use tier field (detailed = has separate page)
   const hasDetailPage = course.tier === 'detailed';
-  const coursePath = `/teaching/${course.institution
-    .toLowerCase()
-    .replace(/\s+/g, '')}/${course.code.toLowerCase().replace(/\s+/g, '')}`;
+  const courseSlug =
+    course.slug || course.code.toLowerCase().replace(/\s+/g, '');
+  const coursePath = `/teaching/${course.institution.toLowerCase().replace(/\s+/g, '')}/${courseSlug}`;
 
   return (
     <Card

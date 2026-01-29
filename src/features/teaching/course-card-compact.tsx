@@ -15,9 +15,9 @@ interface CourseCardCompactProps {
 export function CourseCardCompact({ course }: CourseCardCompactProps) {
   // Use tier field (detailed = has separate page)
   const hasDetailPage = course.tier === 'detailed';
-  const coursePath = `/teaching/${course.institution
-    .toLowerCase()
-    .replace(/\s+/g, '')}/${course.code.toLowerCase().replace(/\s+/g, '')}`;
+  const courseSlug =
+    course.slug || course.code.toLowerCase().replace(/\s+/g, '');
+  const coursePath = `/teaching/${course.institution.toLowerCase().replace(/\s+/g, '')}/${courseSlug}`;
 
   const content = (
     <Card className="h-full border-border/40 hover:border-primary/50 transition-all hover:shadow-sm bg-card/50 backdrop-blur-sm">
