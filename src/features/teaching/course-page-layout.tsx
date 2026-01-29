@@ -37,7 +37,8 @@ import { Icon } from '@/shared/components/common/icons';
 import { ScheduleTable } from '@/features/teaching/components/schedule-table';
 import { NoticeBoard } from '@/features/teaching/components/notice-board';
 import { ContestCountdown } from '@/features/teaching/components/contest-countdown';
-import { WeeklySchedule } from '@/features/teaching/components/weekly-schedule';
+import { SyllabusTable } from '@/features/teaching/components/syllabus-table';
+
 import { ExamSchedule } from '@/features/teaching/components/exam-schedule';
 
 // =============================================================================
@@ -311,12 +312,12 @@ function SyllabusSection({ course }: { course: CourseData }) {
       {/* NEW: Weekly Schedule (Replaces simple topic list if available) */}
       {course.weeklyModules && course.weeklyModules.length > 0 && (
         <div className="md:col-span-2">
-          <WeeklySchedule modules={course.weeklyModules} />
+          <SyllabusTable modules={course.weeklyModules} />
         </div>
       )}
 
       {course.assessment && (
-        <Card className="border-primary/20">
+        <Card className="border-primary/20 md:col-span-2">
           <CardContent className="p-5 sm:p-6">
             <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
               <Layers className="w-5 h-5 text-primary" />
