@@ -114,20 +114,17 @@ function CourseHero({ course }: { course: CourseData }) {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
                 {course.title}
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                {course.description}
-              </p>
-            </div>
 
-            {/* Quick Stats Row */}
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground pt-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/40 border border-border/50">
-                <GraduationCap className="w-4 h-4" />
-                {course.credits} Credits
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/40 border border-border/50">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                {course.status === 'ongoing' ? 'Active Course' : 'Completed'}
+              {/* Quick Stats Row (Restoring this as it's useful metadata in Hero) */}
+              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground pt-2">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/40 border border-border/50">
+                  <GraduationCap className="w-4 h-4" />
+                  {course.credits} Credits
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/40 border border-border/50">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  {course.status === 'ongoing' ? 'Active Course' : 'Completed'}
+                </div>
               </div>
             </div>
 
@@ -227,54 +224,70 @@ function SectionHeader({
 // -----------------------------------------------------------------------------
 // Overview Tab - Objectives & Outcomes
 // -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Overview Tab - Objectives & Outcomes
+// -----------------------------------------------------------------------------
 function OverviewSection({ course }: { course: CourseData }) {
   return (
-    <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-2">
-      {course.objectives && course.objectives.length > 0 && (
-        <Card className="border-primary/20">
-          <CardContent className="p-5 sm:p-6">
-            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
-              <Target className="w-5 h-5 text-primary" />
-              Learning Objectives
-            </h3>
-            <ul className="space-y-3">
-              {course.objectives.map((obj, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <div className="bg-primary/10 rounded-full p-1 mt-0.5 shrink-0">
-                    <CheckCircle className="w-4 h-4 text-primary" />
-                  </div>
-                  <span className="text-sm sm:text-base text-muted-foreground">
-                    {obj}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
+    <div className="space-y-8">
+      {/* Course Description */}
+      <Card className="border-primary/20">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <BookOpenText className="w-5 h-5 text-primary" />
+            Course Description
+          </h3>
+          <p className="text-muted-foreground leading-relaxed">
+            {course.description}
+          </p>
+        </CardContent>
+      </Card>
 
-      {course.outcomes && course.outcomes.length > 0 && (
-        <Card className="border-primary/20">
-          <CardContent className="p-5 sm:p-6">
-            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
-              <Award className="w-5 h-5 text-primary" />
-              Expected Outcomes
-            </h3>
-            <ul className="space-y-3">
-              {course.outcomes.map((outcome, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <div className="bg-green-500/10 rounded-full p-1 mt-0.5 shrink-0">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                  </div>
-                  <span className="text-sm sm:text-base text-muted-foreground">
-                    {outcome}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
+      <div className="grid gap-6 md:gap-8 md:grid-cols-2">
+        {course.objectives && course.objectives.length > 0 && (
+          <Card className="border-primary/20">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Target className="w-5 h-5 text-primary" />
+                Learning Objectives
+              </h3>
+              <ul className="space-y-3">
+                {course.objectives.map((obj, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <div className="bg-primary/10 rounded-full p-1 mt-0.5 shrink-0">
+                      <CheckCircle className="w-4 h-4 text-primary" />
+                    </div>
+                    <span className="text-muted-foreground">{obj}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        )}
+
+        {course.outcomes && course.outcomes.length > 0 && (
+          <Card className="border-primary/20">
+            <CardContent className="p-5 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
+                <Award className="w-5 h-5 text-primary" />
+                Expected Outcomes
+              </h3>
+              <ul className="space-y-3">
+                {course.outcomes.map((outcome, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <div className="bg-green-500/10 rounded-full p-1 mt-0.5 shrink-0">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                    </div>
+                    <span className="text-sm sm:text-base text-muted-foreground">
+                      {outcome}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }
@@ -282,42 +295,48 @@ function OverviewSection({ course }: { course: CourseData }) {
 // -----------------------------------------------------------------------------
 // Syllabus Tab - Topics & Assessment
 // -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Syllabus Tab - Topics & Assessment
+// -----------------------------------------------------------------------------
 function SyllabusSection({ course }: { course: CourseData }) {
   return (
-    <div className="grid gap-6 md:gap-8 md:grid-cols-2">
-      {course.topics && course.topics.length > 0 && (
-        <Card className="border-primary/20">
-          <CardContent className="p-5 sm:p-6">
-            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-primary" />
-              Course Topics
-            </h3>
-            <div className="grid gap-2">
-              {course.topics.map((topic, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
-                >
-                  <span className="bg-primary text-primary-foreground w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium shrink-0">
-                    {idx + 1}
-                  </span>
-                  <span className="text-sm sm:text-base">{topic}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+    <div className="space-y-8">
+      {/* 1. Topics Summary (Optional - can be redundant if Table exists) */}
+      {/* We only show simple topics if there is NO weekly schedule to avoid duplication */}
+      {(!course.weeklyModules || course.weeklyModules.length === 0) &&
+        course.topics &&
+        course.topics.length > 0 && (
+          <Card className="border-primary/20">
+            <CardContent className="p-5 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                Course Topics
+              </h3>
+              <div className="grid gap-2">
+                {course.topics.map((topic, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                  >
+                    <span className="bg-primary text-primary-foreground w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium shrink-0">
+                      {idx + 1}
+                    </span>
+                    <span className="text-sm sm:text-base">{topic}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
-      {/* NEW: Weekly Schedule (Replaces simple topic list if available) */}
+      {/* 2. Weekly Plan (The Main Attraction) */}
       {course.weeklyModules && course.weeklyModules.length > 0 && (
-        <div className="md:col-span-2">
-          <SyllabusTable modules={course.weeklyModules} />
-        </div>
+        <SyllabusTable modules={course.weeklyModules} />
       )}
 
+      {/* 3. Assessment Breakdown */}
       {course.assessment && (
-        <Card className="border-primary/20 md:col-span-2">
+        <Card className="border-primary/20">
           <CardContent className="p-5 sm:p-6">
             <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
               <Layers className="w-5 h-5 text-primary" />
@@ -325,7 +344,7 @@ function SyllabusSection({ course }: { course: CourseData }) {
             </h3>
             <div className="space-y-4">
               {Object.entries(course.assessment).map(([key, value]) => {
-                // Properly capitalize assessment labels (e.g., "midterm" -> "Midterm")
+                // Properly capitalize assessment labels
                 const label = key
                   .replace(/([A-Z])/g, ' $1')
                   .trim()
@@ -593,47 +612,51 @@ function FeedbackSection({ course }: { course: CourseData }) {
 export function CoursePageLayout({ course }: CoursePageLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
-      {/* Notice Board (Top Level) */}
-      {/* Notice Board (Top Level) - Only for Ongoing Courses */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
-        {course.status === 'ongoing' && course.notices && (
-          <NoticeBoard notices={course.notices} />
-        )}
-      </div>
-
       {/* Hero Section */}
       <CourseHero course={course} />
 
-      {/* Main Content - Vertical Stack */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 space-y-24">
+      {/* Main Content Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        {/* Notices Section - Explicitly defined as requested */}
+        {course.status === 'ongoing' && course.notices && (
+          <div className="mb-16">
+            <SectionHeader
+              title="Announcements"
+              subtitle="Latest updates and important notices"
+            />
+            <NoticeBoard notices={course.notices} />
+          </div>
+        )}
+
         {/* Overview Section */}
-        <section id="overview" className="scroll-mt-24">
-          <SectionHeader
-            title="Course Overview"
-            subtitle="Objectives, outcomes, and what you'll learn."
-          />
+        <div className="mb-16">
+          <SectionHeader title="Course Overview" />
           <OverviewSection course={course} />
-        </section>
+        </div>
+
+        {/* Syllabus Section */}
+        <div className="mb-16">
+          <SectionHeader
+            title="Course Syllabus"
+            subtitle="Weekly breakdown of topics and activities"
+          />
+          <SyllabusSection course={course} />
+        </div>
 
         {/* Class Schedule Section */}
         {course.classSchedule && course.classSchedule.length > 0 && (
-          <section id="schedule" className="scroll-mt-24">
+          <section id="schedule" className="scroll-mt-24 mb-16">
+            <SectionHeader
+              title="Class Schedule"
+              subtitle="Weekly lecture and lab timings."
+            />
             <ScheduleTable schedule={course.classSchedule} />
           </section>
         )}
 
-        {/* Syllabus Section */}
-        <section id="syllabus" className="scroll-mt-24">
-          <SectionHeader
-            title="Syllabus & Weekly Plan"
-            subtitle="Detailed breakdown of lectures and lab sessions."
-          />
-          <SyllabusSection course={course} />
-        </section>
-
         {/* Exam Schedule */}
         {course.exams && (
-          <section id="exams" className="scroll-mt-24">
+          <section id="exams" className="scroll-mt-24 mb-16">
             <SectionHeader
               title="Examination Schedule"
               subtitle="Midterm and Final Exam dates and seat plans."
@@ -643,7 +666,7 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
         )}
 
         {/* Resources Section */}
-        <section id="resources" className="scroll-mt-24">
+        <section id="resources" className="scroll-mt-24 mb-16">
           <SectionHeader
             title="Resources"
             subtitle="Tools, books, and reference materials."
