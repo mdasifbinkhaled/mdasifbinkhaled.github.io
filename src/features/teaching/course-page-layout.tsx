@@ -130,8 +130,8 @@ function CourseHero({ course }: { course: CourseData }) {
               </div>
             </div>
 
-            {/* Contest Countdown Widget */}
-            {course.activeContest && (
+            {/* Contest Countdown Widget - Only for Ongoing Courses */}
+            {course.status === 'ongoing' && course.activeContest && (
               <div className="pt-4">
                 <ContestCountdown contest={course.activeContest} />
               </div>
@@ -593,8 +593,11 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Notice Board (Top Level) */}
+      {/* Notice Board (Top Level) - Only for Ongoing Courses */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
-        {course.notices && <NoticeBoard notices={course.notices} />}
+        {course.status === 'ongoing' && course.notices && (
+          <NoticeBoard notices={course.notices} />
+        )}
       </div>
 
       {/* Hero Section */}
