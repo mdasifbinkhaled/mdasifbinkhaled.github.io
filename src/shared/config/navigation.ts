@@ -72,7 +72,8 @@ export const iubCourseNavItems: NavItem[] = [
     sectionId: 'cse203',
   },
   {
-    href: '/teaching/iub/cse211',
+    href: '/teaching/iub/cse211spr26',
+
     label: 'CSE 211 - Algorithms',
     icon: 'Brain',
     sectionId: 'cse211',

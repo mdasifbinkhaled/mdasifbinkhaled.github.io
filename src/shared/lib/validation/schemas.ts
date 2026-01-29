@@ -188,7 +188,9 @@ export const courseDataSchema = z.object({
       /^[A-Z]{3}\s?\d{3}/,
       'Course code must be in format: ABC 123 or ABC123'
     ),
+  slug: z.string().min(3).optional(), // Custom URL slug (e.g. cse211spr26)
   title: z.string().min(5, 'Course title must be at least 5 characters'),
+
   institution: courseInstitutionSchema,
   level: courseLevelSchema,
   credits: z.number().int().min(1).max(6, 'Credits must be between 1-6'),

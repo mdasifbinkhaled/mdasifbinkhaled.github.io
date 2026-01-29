@@ -18,7 +18,9 @@ interface CoursePageProps {
 export async function generateStaticParams() {
   return allCourses.map((course) => ({
     institution: course.institution.toLowerCase(),
-    courseCode: course.code.toLowerCase().replace(/\s+/g, ''),
+    courseCode: course.slug
+      ? course.slug.toLowerCase()
+      : course.code.toLowerCase().replace(/\s+/g, ''),
   }));
 }
 
@@ -30,12 +32,15 @@ export async function generateMetadata({
 }: CoursePageProps): Promise<Metadata> {
   const { institution, courseCode } = await params;
 
-  const course = allCourses.find(
-    (c) =>
+  const course = allCourses.find((c) => {
+    const slug = c.slug
+      ? c.slug.toLowerCase()
+      : c.code.toLowerCase().replace(/\s+/g, '');
+    return (
       c.institution.toLowerCase() === institution.toLowerCase() &&
-      c.code.toLowerCase().replace(/\s+/g, '') ===
-        courseCode.toLowerCase().replace(/\s+/g, '')
-  );
+      slug === courseCode.toLowerCase()
+    );
+  });
 
   if (!course) {
     return {
@@ -63,12 +68,15 @@ export async function generateMetadata({
 export default async function CoursePage({ params }: CoursePageProps) {
   const { institution, courseCode } = await params;
 
-  const course = allCourses.find(
-    (c) =>
+  const course = allCourses.find((c) => {
+    const slug = c.slug
+      ? c.slug.toLowerCase()
+      : c.code.toLowerCase().replace(/\s+/g, '');
+    return (
       c.institution.toLowerCase() === institution.toLowerCase() &&
-      c.code.toLowerCase().replace(/\s+/g, '') ===
-        courseCode.toLowerCase().replace(/\s+/g, '')
-  );
+      slug === courseCode.toLowerCase()
+    );
+  });
 
   if (!course) {
     notFound();

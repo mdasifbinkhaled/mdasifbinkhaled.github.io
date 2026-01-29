@@ -10,7 +10,8 @@ import { iubCse110 } from './iub-cse110';
 
 import { bracuCse423 } from './bracu-cse423';
 import { bracuCse284 } from './bracu-cse284';
-import { bracuCse420 } from './bracu-cse420';
+import { bracuCse420 } from './bracu-cse420/index';
+
 import { bracuCse489 } from './bracu-cse489';
 
 // Export individual courses for direct access if needed

@@ -10,8 +10,10 @@ import {
 } from './schedule';
 
 export const iubCse211: CourseData = {
-  id: 'iub-cse211',
+  id: 'iub-cse211-spring26',
   code: 'CSE 211',
+  slug: 'cse211spr26',
+
   title: 'Algorithms',
   institution: 'IUB',
   level: 'undergraduate',
