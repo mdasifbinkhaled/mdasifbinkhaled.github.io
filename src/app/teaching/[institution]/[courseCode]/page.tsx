@@ -16,12 +16,16 @@ interface CoursePageProps {
  * Generate static paths for all courses at build time
  */
 export async function generateStaticParams() {
-  return allCourses.map((course) => ({
-    institution: course.institution.toLowerCase(),
-    courseCode: course.slug
-      ? course.slug.toLowerCase()
-      : course.code.toLowerCase().replace(/\s+/g, ''),
-  }));
+  // ONLY generate pages for 'detailed' tier courses
+  // This matches the logic in CourseCard which only links if tier === 'detailed'
+  return allCourses
+    .filter((course) => course.tier === 'detailed')
+    .map((course) => ({
+      institution: course.institution.toLowerCase(),
+      courseCode: course.slug
+        ? course.slug.toLowerCase()
+        : course.code.toLowerCase().replace(/\s+/g, ''),
+    }));
 }
 
 /**
