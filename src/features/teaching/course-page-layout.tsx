@@ -35,6 +35,10 @@ import { Progress } from '@/shared/components/ui/progress';
 
 import { Icon } from '@/shared/components/common/icons';
 import { ScheduleTable } from '@/features/teaching/components/schedule-table';
+import { NoticeBoard } from '@/features/teaching/components/notice-board';
+import { ContestCountdown } from '@/features/teaching/components/contest-countdown';
+import { WeeklySchedule } from '@/features/teaching/components/weekly-schedule';
+import { ExamSchedule } from '@/features/teaching/components/exam-schedule';
 
 // =============================================================================
 // COURSE PAGE LAYOUT - World-Class Teaching Portal Design
@@ -125,6 +129,13 @@ function CourseHero({ course }: { course: CourseData }) {
                 {course.status === 'ongoing' ? 'Active Course' : 'Completed'}
               </div>
             </div>
+
+            {/* Contest Countdown Widget */}
+            {course.activeContest && (
+              <div className="pt-4">
+                <ContestCountdown contest={course.activeContest} />
+              </div>
+            )}
           </div>
         </div>
 
@@ -295,6 +306,13 @@ function SyllabusSection({ course }: { course: CourseData }) {
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* NEW: Weekly Schedule (Replaces simple topic list if available) */}
+      {course.weeklyModules && course.weeklyModules.length > 0 && (
+        <div className="md:col-span-2">
+          <WeeklySchedule modules={course.weeklyModules} />
+        </div>
       )}
 
       {course.assessment && (
@@ -574,6 +592,11 @@ function FeedbackSection({ course }: { course: CourseData }) {
 export function CoursePageLayout({ course }: CoursePageLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
+      {/* Notice Board (Top Level) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
+        {course.notices && <NoticeBoard notices={course.notices} />}
+      </div>
+
       {/* Hero Section */}
       <CourseHero course={course} />
 
@@ -598,11 +621,22 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
         {/* Syllabus Section */}
         <section id="syllabus" className="scroll-mt-24">
           <SectionHeader
-            title="Syllabus"
-            subtitle="Topics covered and assessment breakdown."
+            title="Syllabus & Weekly Plan"
+            subtitle="Detailed breakdown of lectures and lab sessions."
           />
           <SyllabusSection course={course} />
         </section>
+
+        {/* Exam Schedule */}
+        {course.exams && (
+          <section id="exams" className="scroll-mt-24">
+            <SectionHeader
+              title="Examination Schedule"
+              subtitle="Midterm and Final Exam dates and seat plans."
+            />
+            <ExamSchedule exams={course.exams} />
+          </section>
+        )}
 
         {/* Resources Section */}
         <section id="resources" className="scroll-mt-24">

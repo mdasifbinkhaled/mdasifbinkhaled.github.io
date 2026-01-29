@@ -285,6 +285,74 @@ export const courseDataSchema = z.object({
     )
     .optional(),
 
+  // Hub Features (New in Phase 41)
+  semesterEndDate: z.string().optional(), // '2026-04-16'
+
+  notices: z
+    .array(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+        date: z.string(),
+        type: z.enum(['alert', 'info', 'success', 'warning']),
+        link: z.string().optional(),
+        importance: z.enum(['high', 'medium', 'low']).default('medium'),
+      })
+    )
+    .optional(),
+
+  activeContest: z
+    .object({
+      title: z.string(),
+      url: z.string().url(),
+      startDate: z.string().optional(),
+      endDate: z.string(), // For countdown
+      platform: z.string().default('VJudge'),
+    })
+    .optional(),
+
+  weeklyModules: z
+    .array(
+      z.object({
+        week: z.number(),
+        title: z.string(),
+        description: z.string().optional(),
+        theory: z
+          .object({
+            topic: z.string(),
+            slides: z.string().optional(),
+            recording: z.string().optional(),
+          })
+          .optional(),
+        lab: z
+          .object({
+            topic: z.string(),
+            task: z.string().optional(),
+            repo: z.string().optional(),
+          })
+          .optional(),
+      })
+    )
+    .optional(),
+
+  exams: z
+    .object({
+      midterm: z
+        .object({
+          date: z.string().optional(),
+          seatPlanUrl: z.string().optional(),
+          syllabus: z.string().optional(),
+        })
+        .optional(),
+      final: z
+        .object({
+          date: z.string().optional(),
+          seatPlanUrl: z.string().optional(),
+        })
+        .optional(),
+    })
+    .optional(),
+
   // Deprecated: kept for backward compatibility
   hasDetailPage: z.boolean().optional(),
 });

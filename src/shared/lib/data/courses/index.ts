@@ -3,7 +3,7 @@ import type { CourseData } from '@/shared/types';
 import { iubCse101 } from './iub-cse101';
 import { iubCse201 } from './iub-cse201';
 import { iubCse203 } from './iub-cse203';
-import { iubCse211 } from './iub-cse211';
+import { iubCse211 } from './iub-cse211/index';
 import { iubCse317 } from './iub-cse317';
 import { iubCse331 } from './iub-cse331';
 import { iubCse110 } from './iub-cse110';

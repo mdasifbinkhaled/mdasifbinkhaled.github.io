@@ -17,6 +17,7 @@ export type {
   CourseData,
   CourseLink,
   CourseResourceSection,
+  ClassScheduleItem,
 } from '@/shared/lib/validation/schemas';
 
 // Navigation types
