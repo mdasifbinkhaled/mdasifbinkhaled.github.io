@@ -8,7 +8,7 @@ export const weeklyModules = [
       recording: '#',
     },
     lab: {
-      topic: 'Environment Setup & Basic Problem Solving',
+      topic: 'Lab 0: Review & Intro to Google Colaboratory',
       task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
@@ -19,7 +19,7 @@ export const weeklyModules = [
       topic: 'Big-O, Omega, Theta, Growth of Functions',
     },
     lab: {
-      topic: 'Complexity Analysis Practices',
+      topic: 'Lab 1: Asymptotic Analysis [Iterative & Recursive]',
       task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
@@ -28,7 +28,7 @@ export const weeklyModules = [
     title: 'Recurrences',
     theory: { topic: 'Substitution Method, Recursion Trees, Master Theorem' },
     lab: {
-      topic: 'Recursion & Recurrence Solving',
+      topic: 'Lab 2: Divide & Conquer',
       task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
@@ -37,7 +37,7 @@ export const weeklyModules = [
     title: 'Divide & Conquer',
     theory: { topic: 'Merge Sort, Quick Sort, Analysis' },
     lab: {
-      topic: 'Implementing Divide & Conquer Algorithms',
+      topic: 'Project Discussion',
       task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },

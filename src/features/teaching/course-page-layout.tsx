@@ -243,7 +243,7 @@ function OverviewSection({ course }: { course: CourseData }) {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 md:gap-8 md:grid-cols-2">
+      <div className="space-y-6 md:space-y-8">
         {course.objectives && course.objectives.length > 0 && (
           <Card className="border-primary/20">
             <CardContent className="p-6">
@@ -624,7 +624,10 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
               title="Announcements"
               subtitle="Latest updates and important notices"
             />
-            <NoticeBoard notices={course.notices} />
+            {/* Box Type Separation as requested: Wrapped in Card-like container */}
+            <div className="rounded-xl border border-border/60 bg-muted/10 p-6 shadow-sm">
+              <NoticeBoard notices={course.notices} />
+            </div>
           </div>
         )}
 
