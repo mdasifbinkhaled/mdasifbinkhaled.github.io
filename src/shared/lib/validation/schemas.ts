@@ -500,8 +500,7 @@ export function validateData<T>(
   }
 
   if (process.env.NODE_ENV === 'development') {
-    // eslint-disable-next-line no-console
-    console.log(`✅ Validation passed for ${dataName}`);
+    // Development logic
   }
   return result.data;
 }
@@ -513,7 +512,7 @@ export function validateData<T>(
 export function validateDataSafe<T>(
   data: unknown,
   schema: z.ZodSchema<T>,
-  dataName: string
+  _dataName: string
 ): { success: boolean; data?: T; errors?: string[] } {
   const result = schema.safeParse(data);
 
@@ -521,9 +520,6 @@ export function validateDataSafe<T>(
     const errors = result.error.issues.map(
       (err: z.ZodIssue) => `${err.path.join('.')}: ${err.message}`
     );
-
-    // eslint-disable-next-line no-console
-    console.warn(`⚠️ Validation warnings for ${dataName}:`, errors);
 
     return { success: false, errors };
   }

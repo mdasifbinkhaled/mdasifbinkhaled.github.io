@@ -28,7 +28,7 @@ export const trackEvent = (
   // For development, just log events
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line no-console
-    console.log('📊 Analytics Event:', { eventName, properties });
+
     return;
   }
 
