@@ -19,10 +19,7 @@ const config: NextConfig = {
       },
     ],
   },
-  eslint: {
-    // Already checking linting in a separate step
-    ignoreDuringBuilds: true,
-  },
+
   // Enable typed routes (moved from experimental in Next.js 15.6+)
   typedRoutes: true,
   experimental: {

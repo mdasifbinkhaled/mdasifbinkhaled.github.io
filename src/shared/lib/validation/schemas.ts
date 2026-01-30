@@ -482,9 +482,8 @@ export function validateData<T>(
   const result = schema.safeParse(data);
 
   if (!result.success) {
-    // eslint-disable-next-line no-console
     console.error(`❌ Validation failed for ${dataName}:`);
-    // eslint-disable-next-line no-console
+
     console.error(result.error.format());
 
     // Create detailed error message
