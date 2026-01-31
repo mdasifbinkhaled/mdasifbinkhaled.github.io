@@ -26,6 +26,11 @@ export const links: CourseLink[] = [
     url: 'https://github.com/ehmatthes/pcc_3e/blob/main/cheat_sheets/color_sheets/beginners_python_cheat_sheet_pcc_all.pdf',
     type: 'note',
   },
+  {
+    title: 'Discord Community',
+    url: 'https://discord.gg/N5PSCt5q',
+    type: 'discord',
+  },
 ];
 
 export const resourceSections: CourseResourceSection[] = [

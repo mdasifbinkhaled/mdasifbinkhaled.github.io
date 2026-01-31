@@ -8,7 +8,7 @@ export const notices = [
     title: 'Join the Official Discord Server',
     date: '2026-01-20',
     type: 'info' as const,
-    link: 'https://discord.gg/qSp9gRAu',
+    link: 'https://discord.gg/N5PSCt5q',
     importance: 'high' as const,
   },
 ];
