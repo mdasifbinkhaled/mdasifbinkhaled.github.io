@@ -258,6 +258,7 @@ export const courseDataSchema = z.object({
             label: z.string(),
             url: z.string().url().optional(),
             description: z.string().optional(),
+            icon: iconNameSchema.optional(),
           })
         ),
       })
