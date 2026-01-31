@@ -274,7 +274,11 @@ function CollapsibleSection({
 // -----------------------------------------------------------------------------
 function OverviewSection({ course }: { course: CourseData }) {
   return (
-    <CollapsibleSection title="Course Overview" icon={BookOpenText}>
+    <CollapsibleSection
+      title="Course Overview"
+      icon={BookOpenText}
+      defaultOpen={false}
+    >
       <Accordion
         type="multiple"
         defaultValue={['description', 'objectives', 'outcomes']}
@@ -365,7 +369,11 @@ function ScheduleSection({ course }: { course: CourseData }) {
   if (!hasSchedule && !hasExams) return null;
 
   return (
-    <CollapsibleSection title="Class Schedule" icon={Calendar}>
+    <CollapsibleSection
+      title="Class Schedule"
+      icon={Calendar}
+      defaultOpen={false}
+    >
       <div className="p-6">
         {hasSchedule && (
           <div className="mb-0">
@@ -401,7 +409,11 @@ function SyllabusSection({ course }: { course: CourseData }) {
   if (!hasContent) return null;
 
   return (
-    <CollapsibleSection title="Syllabus & Curriculum" icon={Layers}>
+    <CollapsibleSection
+      title="Syllabus & Curriculum"
+      icon={Layers}
+      defaultOpen={false}
+    >
       <div className="p-6">
         {/* Assessment Breakdown (if available) - Kept visible inside the section */}
         {course.assessment && (
@@ -474,7 +486,11 @@ function ResourcesSection({ course }: { course: CourseData }) {
   if (!hasContent) return null;
 
   return (
-    <CollapsibleSection title="Resources & Tools" icon={Globe}>
+    <CollapsibleSection
+      title="Resources & Tools"
+      icon={Globe}
+      defaultOpen={false}
+    >
       <div className="p-6 space-y-8">
         {/* 1. Technologies & Assignments Grid */}
         <div className="grid gap-8 md:grid-cols-2">
