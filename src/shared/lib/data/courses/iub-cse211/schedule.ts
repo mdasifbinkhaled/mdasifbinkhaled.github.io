@@ -95,7 +95,8 @@ export const classSchedule: ClassScheduleItem[] = [
       room: 'MK4008',
     },
     lab: {
-      faculty: 'Mohammad Arshad Ratul',
+      faculty: 'Mohammad Arshad Hossain Ratul',
+      email: 'ratularshadsets@iub.edu.bd',
       days: 'S',
       time: '11:20-12:50',
       room: 'MK7005L',
@@ -112,6 +113,7 @@ export const classSchedule: ClassScheduleItem[] = [
     },
     lab: {
       faculty: 'Sumaia Anjum Shaba',
+      email: 'sumaiaanjumshabasets@iub.edu.bd',
       days: 'M',
       time: '09:40-11:10',
       room: 'MK7005L',
