@@ -78,9 +78,6 @@ function getLinkIcon(type: CourseLink['type']) {
 // -----------------------------------------------------------------------------
 // Hero Section - Gradient header with course info + Back button
 // -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-// Course Hero - Minimalist & Organized
-// -----------------------------------------------------------------------------
 function CourseHero({ course }: { course: CourseData }) {
   // Sort links: Primary (Site, Discord) vs Content (Slides, Outline, etc.)
   const primaryLinks =
@@ -204,217 +201,230 @@ function CourseHero({ course }: { course: CourseData }) {
 }
 
 // -----------------------------------------------------------------------------
-// Vertical Section Layout (Replaces Tabs)
+// REUSABLE COLLAPSIBLE SECTION COMPONENT (Systematic Standardization)
 // -----------------------------------------------------------------------------
-function SectionHeader({
-  title,
-  subtitle,
-}: {
+interface CollapsibleSectionProps {
   title: string;
-  subtitle?: string;
-}) {
-  return (
-    <div className="mb-8 md:mb-10">
-      <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-2">
-        {title}
-      </h2>
-      {subtitle && <p className="text-muted-foreground text-lg">{subtitle}</p>}
-      <div className="h-1 w-12 bg-primary/20 mt-4 rounded-full" />
-    </div>
-  );
+  icon: React.ElementType;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+  className?: string;
 }
 
-// -----------------------------------------------------------------------------
-// Overview Tab - Objectives & Outcomes
-// -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-// Overview Tab - Objectives & Outcomes
-// -----------------------------------------------------------------------------
-function OverviewSection({ course }: { course: CourseData }) {
-  const [isOpen, setIsOpen] = useState(true);
+function CollapsibleSection({
+  title,
+  icon: Icon,
+  children,
+  defaultOpen = true,
+  className,
+}: CollapsibleSectionProps) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="mb-16">
-      <Card className="border-primary/20 overflow-hidden shadow-sm">
-        {/* Main Header / Trigger */}
+    <div className={cn('mb-8', className)}>
+      <Card
+        className={cn(
+          'border-primary/20 overflow-hidden shadow-sm transition-all duration-300',
+          isOpen ? 'shadow-md' : 'shadow-sm'
+        )}
+      >
         <div
           role="button"
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            'w-full flex items-center justify-between p-6 cursor-pointer hover:bg-muted/30 transition-colors select-none',
+            'w-full flex items-center justify-between p-6 cursor-pointer hover:bg-muted/30 transition-colors select-none group',
             !isOpen && 'border-b-0',
             isOpen && 'border-b'
           )}
         >
           <div className="flex items-center gap-3">
-            <BookOpenText className="w-6 h-6 text-primary" />
-            <h2 className="text-xl md:text-2xl font-bold">Course Overview</h2>
+            <div className="p-2 bg-primary/5 rounded-lg group-hover:bg-primary/10 transition-colors">
+              <Icon className="w-6 h-6 text-primary" />
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold text-foreground">
+              {title}
+            </h2>
           </div>
           <ChevronDown
             className={cn(
-              'w-5 h-5 text-muted-foreground transition-transform duration-200',
+              'w-5 h-5 text-muted-foreground transition-transform duration-300',
               isOpen && 'rotate-180'
             )}
           />
         </div>
 
-        {/* Collapsible Content */}
-        {isOpen && (
-          <CardContent className="p-0">
-            <Accordion
-              type="multiple"
-              defaultValue={['description', 'objectives', 'outcomes']}
-              className="w-full"
-            >
-              {/* 1. Description */}
-              <AccordionItem value="description" className="border-b px-6">
-                <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
-                  Course Description
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed text-base pb-6">
-                  {course.description}
-                </AccordionContent>
-              </AccordionItem>
-
-              {/* 2. Objectives */}
-              {course.objectives && course.objectives.length > 0 && (
-                <AccordionItem value="objectives" className="border-b px-6">
-                  <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
-                    <div className="flex items-center gap-2">
-                      <Target className="w-5 h-5 text-primary/80" />
-                      Learning Objectives
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-6">
-                    <ul className="space-y-3">
-                      {course.objectives.map((obj, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <div className="bg-primary/10 rounded-full p-1 mt-0.5 shrink-0">
-                            <CheckCircle className="w-4 h-4 text-primary" />
-                          </div>
-                          <span className="text-muted-foreground">{obj}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
-
-              {/* 3. Outcomes */}
-              {course.outcomes && course.outcomes.length > 0 && (
-                <AccordionItem value="outcomes" className="px-6 border-b-0">
-                  <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
-                    <div className="flex items-center gap-2">
-                      <Award className="w-5 h-5 text-primary/80" />
-                      Expected Outcomes
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-6">
-                    <ul className="space-y-3">
-                      {course.outcomes.map((outcome, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <div className="bg-green-500/10 rounded-full p-1 mt-0.5 shrink-0">
-                            <CheckCircle className="w-4 h-4 text-green-500" />
-                          </div>
-                          <span className="text-sm sm:text-base text-muted-foreground">
-                            {outcome}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
-            </Accordion>
-          </CardContent>
-        )}
+        <div
+          className={cn(
+            'grid transition-all duration-300 ease-in-out',
+            isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+          )}
+        >
+          <div className="overflow-hidden">
+            <CardContent className="p-0">{children}</CardContent>
+          </div>
+        </div>
       </Card>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-// Syllabus Tab - Topics & Assessment
+// Overview Section (Standardized)
 // -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-// Syllabus Tab - Topics & Assessment
-// -----------------------------------------------------------------------------
-function SyllabusSection({ course }: { course: CourseData }) {
+function OverviewSection({ course }: { course: CourseData }) {
   return (
-    <div className="space-y-8">
-      {/* 1. Topics Summary (Optional - can be redundant if Table exists) */}
-      {/* We only show simple topics if there is NO weekly schedule to avoid duplication */}
-      {(!course.weeklyModules || course.weeklyModules.length === 0) &&
-        course.topics &&
-        course.topics.length > 0 && (
-          <Card className="border-primary/20">
-            <CardContent className="p-5 sm:p-6">
-              <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-primary" />
-                Course Topics
-              </h3>
-              <div className="grid gap-2">
-                {course.topics.map((topic, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
-                  >
-                    <span className="bg-primary text-primary-foreground w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium shrink-0">
-                      {idx + 1}
-                    </span>
-                    <span className="text-sm sm:text-base">{topic}</span>
-                  </div>
-                ))}
+    <CollapsibleSection title="Course Overview" icon={BookOpenText}>
+      <Accordion
+        type="multiple"
+        defaultValue={['description', 'objectives', 'outcomes']}
+        className="w-full"
+      >
+        <AccordionItem value="description" className="border-b px-6">
+          <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
+            Course Description
+          </AccordionTrigger>
+          <AccordionContent className="text-muted-foreground leading-relaxed text-base pb-6">
+            {course.description}
+          </AccordionContent>
+        </AccordionItem>
+
+        {course.objectives && course.objectives.length > 0 && (
+          <AccordionItem value="objectives" className="border-b px-6">
+            <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
+              <div className="flex items-center gap-2">
+                <Target className="w-5 h-5 text-primary/80" />
+                Learning Objectives
               </div>
-            </CardContent>
-          </Card>
+            </AccordionTrigger>
+            <AccordionContent className="pb-6">
+              <ul className="space-y-3">
+                {course.objectives.map((obj, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <div className="bg-primary/10 rounded-full p-1 mt-0.5 shrink-0">
+                      <CheckCircle className="w-4 h-4 text-primary" />
+                    </div>
+                    <span className="text-muted-foreground">{obj}</span>
+                  </li>
+                ))}
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
         )}
 
-      {/* 2. Weekly Plan (The Main Attraction) */}
-      {course.weeklyModules && course.weeklyModules.length > 0 && (
-        <SyllabusTable modules={course.weeklyModules} />
-      )}
+        {course.outcomes && course.outcomes.length > 0 && (
+          <AccordionItem value="outcomes" className="px-6 border-b-0">
+            <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-primary/80" />
+                Expected Outcomes
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pb-6">
+              <ul className="space-y-3">
+                {course.outcomes.map((outcome, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <div className="bg-green-500/10 rounded-full p-1 mt-0.5 shrink-0">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                    </div>
+                    <span className="text-sm sm:text-base text-muted-foreground">
+                      {outcome}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
+        )}
+      </Accordion>
+    </CollapsibleSection>
+  );
+}
 
-      {/* 3. Assessment Breakdown */}
-      {course.assessment && (
-        <Card className="border-primary/20">
-          <CardContent className="p-5 sm:p-6">
-            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
-              <Layers className="w-5 h-5 text-primary" />
+// -----------------------------------------------------------------------------
+// Syllabus Section (Standardized)
+// -----------------------------------------------------------------------------
+function SyllabusSection({ course }: { course: CourseData }) {
+  // Determine if we have content to show
+  const hasContent =
+    (course.weeklyModules && course.weeklyModules.length > 0) ||
+    (course.topics && course.topics.length > 0);
+
+  if (!hasContent) return null;
+
+  return (
+    <CollapsibleSection title="Syllabus & Schedule" icon={Layers}>
+      <div className="p-6">
+        {/* Assessment Breakdown (if available) - Kept visible inside the section */}
+        {course.assessment && (
+          <div className="mb-8 p-6 bg-muted/30 rounded-xl border border-border/40">
+            <h3 className="text-base font-semibold mb-4 flex items-center gap-2">
+              <Target className="w-4 h-4 text-primary" />
               Assessment Breakdown
             </h3>
             <div className="space-y-4">
               {Object.entries(course.assessment).map(([key, value]) => {
-                // Properly capitalize assessment labels
-                const label = key
-                  .replace(/([A-Z])/g, ' $1')
-                  .trim()
-                  .split(' ')
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(' ');
+                if (typeof value !== 'number' || value <= 0) return null;
                 return (
-                  <div key={key}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm">{label}</span>
-                      <span className="font-semibold text-sm">{value}%</span>
+                  <div key={key} className="space-y-1.5">
+                    <div className="flex justify-between text-sm">
+                      <span className="capitalize font-medium text-muted-foreground">
+                        {key}
+                      </span>
+                      <span className="font-bold">{value}%</span>
                     </div>
                     <Progress value={value} className="h-2" />
                   </div>
                 );
               })}
             </div>
-          </CardContent>
-        </Card>
-      )}
-    </div>
+          </div>
+        )}
+
+        {/* Class Schedule Table - Restored */}
+        {course.classSchedule && course.classSchedule.length > 0 && (
+          <div className="mb-8">
+            <ScheduleTable schedule={course.classSchedule} />
+          </div>
+        )}
+
+        {/* Syllabus Table (Weekly Components) */}
+        {course.weeklyModules && course.weeklyModules.length > 0 ? (
+          <SyllabusTable modules={course.weeklyModules} />
+        ) : (
+          /* Fallback: Simple Topics List */
+          course.topics &&
+          course.topics.length > 0 && (
+            <Card className="border-border/40 bg-muted/20">
+              <CardContent className="p-6">
+                <h3 className="text-base font-semibold mb-4">Course Topics</h3>
+                <ul className="grid sm:grid-cols-2 gap-3">
+                  {course.topics.map((topic, idx) => (
+                    <li key={idx} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
+                      <span className="text-muted-foreground">{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          )
+        )}
+
+        {/* Exam Schedule - Restored */}
+        {course.exams && (
+          <div className="mt-8 border-t border-border/40 pt-8">
+            <ExamSchedule exams={course.exams} />
+          </div>
+        )}
+      </div>
+    </CollapsibleSection>
   );
 }
 
 // -----------------------------------------------------------------------------
-// Resources Tab - Technologies & Tools (The Friendly Hub)
+// Resources Section (Standardized)
 // -----------------------------------------------------------------------------
 function ResourcesSection({ course }: { course: CourseData }) {
-  // Separate Video Lectures from other resources for the "Hybrid" layout
   const videoSection = course.resourceSections?.find((r) =>
     r.title.includes('Video')
   );
@@ -424,170 +434,167 @@ function ResourcesSection({ course }: { course: CourseData }) {
         r !== null && r !== undefined && !r.title.includes('Video')
     ) || [];
 
-  return (
-    <div className="space-y-16">
-      {/* 1. Technologies & Assignments Grid */}
-      <div className="grid gap-8 md:grid-cols-2">
-        {course.technologies && course.technologies.length > 0 && (
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-              Technologies
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {course.technologies.map((tech) => (
-                <Badge
-                  key={tech}
-                  variant="secondary"
-                  className="px-3 py-1 text-sm bg-muted/60"
-                >
-                  {tech}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        )}
+  const hasContent = videoSection || toolSections.length > 0;
 
-        {/* 2. Assignments & Projects */}
-        <div className="space-y-6">
-          {(course.assignments?.length ?? 0) > 0 && (
+  if (!hasContent) return null;
+
+  return (
+    <CollapsibleSection title="Resources & Tools" icon={Globe}>
+      <div className="p-6 space-y-8">
+        {/* 1. Technologies & Assignments Grid */}
+        <div className="grid gap-8 md:grid-cols-2">
+          {course.technologies && course.technologies.length > 0 && (
             <div className="space-y-4">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                Evaluation Types
+                Technologies
               </h3>
-              <div className="flex flex-wrap gap-x-6 gap-y-2">
-                {course.assignments?.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="flex items-center gap-2 text-sm text-foreground/80"
+              <div className="flex flex-wrap gap-2">
+                {course.technologies.map((tech) => (
+                  <Badge
+                    key={tech}
+                    variant="secondary"
+                    className="px-3 py-1 text-sm bg-muted/60"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-                    {item}
-                  </span>
-                ))}
-                {course.projects?.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="flex items-center gap-2 text-sm text-foreground/80"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500/40" />
-                    {item}
-                  </span>
+                    {tech}
+                  </Badge>
                 ))}
               </div>
             </div>
           )}
-        </div>
-      </div>
 
-      {/* 3. Curated Resources Hub (Exposed Grid) */}
-      {toolSections.length > 0 && (
-        <div className="pt-8 border-t border-border/40">
-          <SectionHeader
-            title="Learning Hub"
-            subtitle="Curated tools and libraries to accelerate your mastery."
-          />
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {toolSections.map(
-              (section: CourseResourceSection | undefined, idx: number) => {
-                // Strict null check verification passed
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const safeSection = section as any;
-                const sectionTitle =
-                  (safeSection.title || '').split('(')[0].trim() || 'Resources';
-                const sectionItems = safeSection.items || [];
-
-                return (
-                  <div
-                    key={idx}
-                    className="flex flex-col gap-4 p-6 rounded-xl bg-muted/20 border border-border/40 hover:border-primary/20 transition-colors"
-                  >
-                    <h4 className="font-semibold text-lg flex items-center gap-2 text-foreground">
-                      {idx === 0 ? (
-                        <Target className="w-5 h-5 text-primary" />
-                      ) : idx === 1 ? (
-                        <Code2 className="w-5 h-5 text-primary" />
-                      ) : (
-                        <BookOpenText className="w-5 h-5 text-primary" />
-                      )}
-                      {sectionTitle}
-                    </h4>
-                    <div className="space-y-3 flex-1">
-                      {sectionItems.map(
-                        (
-                          item: {
-                            label: string;
-                            url?: string;
-                            description?: string;
-                          },
-                          itemIdx: number
-                        ) => (
-                          <div key={itemIdx}>
-                            {item.url ? (
-                              <Button
-                                variant="secondary"
-                                asChild
-                                className="h-auto w-full justify-start p-3 whitespace-normal text-left bg-background hover:bg-background/80 hover:shadow-sm border border-transparent hover:border-primary/10 transition-all group"
-                              >
-                                <a
-                                  href={item.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  <div className="flex flex-col gap-1 w-full">
-                                    <div className="flex items-center justify-between">
-                                      <span className="font-medium text-foreground group-hover:text-primary transition-colors">
-                                        {item.label}
-                                      </span>
-                                      <ExternalLink className="w-3.5 h-3.5 opacity-30 group-hover:opacity-100 transition-opacity" />
-                                    </div>
-                                    {item.description && (
-                                      <span className="text-xs text-muted-foreground font-normal line-clamp-2">
-                                        {item.description}
-                                      </span>
-                                    )}
-                                  </div>
-                                </a>
-                              </Button>
-                            ) : (
-                              <div className="p-3 rounded-md bg-background/50 border border-border/20">
-                                <span className="font-medium text-sm text-foreground/90 block">
-                                  {item.label}
-                                </span>
-                                {item.description && (
-                                  <span className="text-xs text-muted-foreground mt-1 block">
-                                    {item.description}
-                                  </span>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div>
-                );
-              }
+          {/* 2. Assignments & Projects */}
+          <div className="space-y-6">
+            {(course.assignments?.length ?? 0) > 0 && (
+              <div className="space-y-4">
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                  Evaluation Types
+                </h3>
+                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                  {course.assignments?.map((item, idx) => (
+                    <span
+                      key={idx}
+                      className="flex items-center gap-2 text-sm text-foreground/80"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                      {item}
+                    </span>
+                  ))}
+                  {course.projects?.map((item, idx) => (
+                    <span
+                      key={idx}
+                      className="flex items-center gap-2 text-sm text-foreground/80"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500/40" />
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
         </div>
-      )}
 
-      {/* 4. Video Archives (Accordion Style for Density) */}
-      {videoSection && (
-        <div className="pt-8 border-t border-border/40">
-          <SectionHeader
-            title="Video Archives"
-            subtitle="Previous semester recordings and external lectures."
-          />
-          <div className="max-w-4xl mx-auto md:mx-0 md:max-w-full">
+        {/* 3. Curated Resources Hub */}
+        {toolSections.length > 0 && (
+          <div className="pt-8 border-t border-border/40">
+            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+              <Target className="w-5 h-5 text-primary" />
+              Learning Hub
+            </h3>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {toolSections.map(
+                (section: CourseResourceSection | undefined, idx: number) => {
+                  /* eslint-disable @typescript-eslint/no-explicit-any */
+                  const safeSection = section as any;
+                  const sectionTitle =
+                    (safeSection.title || '').split('(')[0].trim() ||
+                    'Resources';
+                  const sectionItems = safeSection.items || [];
+                  /* eslint-enable @typescript-eslint/no-explicit-any */
+
+                  return (
+                    <div
+                      key={idx}
+                      className="flex flex-col gap-4 p-5 rounded-xl bg-muted/20 border border-border/40 hover:border-primary/20 transition-colors"
+                    >
+                      <h4 className="font-semibold text-base text-foreground">
+                        {sectionTitle}
+                      </h4>
+                      <div className="space-y-3 flex-1">
+                        {sectionItems.map(
+                          (
+                            item: {
+                              label: string;
+                              url?: string;
+                              description?: string;
+                            },
+                            itemIdx: number
+                          ) => (
+                            <div key={itemIdx}>
+                              {item.url ? (
+                                <Button
+                                  variant="secondary"
+                                  asChild
+                                  className="h-auto w-full justify-start p-3 whitespace-normal text-left bg-background hover:bg-background/80 hover:shadow-sm border border-transparent hover:border-primary/10 transition-all group"
+                                >
+                                  <a
+                                    href={item.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <div className="flex flex-col gap-1 w-full">
+                                      <div className="flex items-center justify-between">
+                                        <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                                          {item.label}
+                                        </span>
+                                        <ExternalLink className="w-3.5 h-3.5 opacity-30 group-hover:opacity-100 transition-opacity" />
+                                      </div>
+                                      {item.description && (
+                                        <span className="text-xs text-muted-foreground font-normal line-clamp-2">
+                                          {item.description}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </a>
+                                </Button>
+                              ) : (
+                                <div className="p-3 rounded-md bg-background/50 border border-border/20">
+                                  <span className="font-medium text-sm text-foreground/90 block">
+                                    {item.label}
+                                  </span>
+                                  {item.description && (
+                                    <span className="text-xs text-muted-foreground mt-1 block">
+                                      {item.description}
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* 4. Video Archives */}
+        {videoSection && (
+          <div className="pt-8 border-t border-border/40">
+            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+              <Video className="w-5 h-5 text-primary" />
+              Video Archives
+            </h3>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem
                 value="videos"
                 className="border border-border/40 rounded-xl px-0 bg-muted/20 overflow-hidden"
               >
                 <AccordionTrigger className="px-6 py-4 hover:bg-muted/30 hover:no-underline">
-                  <span className="flex items-center gap-3 text-lg font-medium">
-                    <Video className="w-5 h-5 text-primary" />
+                  <span className="text-base font-medium">
                     Explore {videoSection?.items?.length || 0} Video Collections
                   </span>
                 </AccordionTrigger>
@@ -612,9 +619,6 @@ function ResourcesSection({ course }: { course: CourseData }) {
                           <span className="font-semibold text-foreground text-left line-clamp-2 leading-tight">
                             {item.label}
                           </span>
-                          <span className="text-xs text-muted-foreground font-normal text-left line-clamp-3">
-                            {item.description}
-                          </span>
                         </a>
                       </Button>
                     ))}
@@ -623,9 +627,9 @@ function ResourcesSection({ course }: { course: CourseData }) {
               </AccordionItem>
             </Accordion>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </CollapsibleSection>
   );
 }
 
@@ -652,81 +656,49 @@ function FeedbackSection({ course }: { course: CourseData }) {
 
 export function CoursePageLayout({ course }: CoursePageLayoutProps) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20">
       {/* Hero Section */}
       <CourseHero course={course} />
 
       {/* Main Content Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
         {/* Notices Section - Explicitly defined as requested */}
         {course.status === 'ongoing' && course.notices && (
-          <div className="mb-16">
-            <SectionHeader
-              title="Announcements"
-              subtitle="Latest updates and important notices"
-            />
-            {/* Box Type Separation as requested: Wrapped in Card-like container */}
+          <div className="mb-8">
             <div className="rounded-xl border border-border/60 bg-muted/10 p-6 shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <MessageCircle className="w-6 h-6 text-primary" />
+                </div>
+                <h2 className="text-xl md:text-2xl font-bold text-foreground">
+                  Announcements
+                </h2>
+              </div>
               <NoticeBoard notices={course.notices} />
             </div>
           </div>
         )}
 
         {/* Overview Section */}
-        <div className="mb-16">
-          <SectionHeader title="Course Overview" />
-          <OverviewSection course={course} />
-        </div>
+        <OverviewSection course={course} />
 
-        {/* Syllabus Section */}
-        <div className="mb-16">
-          <SectionHeader
-            title="Course Syllabus"
-            subtitle="Weekly breakdown of topics and activities"
-          />
-          <SyllabusSection course={course} />
-        </div>
+        {/* Syllabus Section - Now Standardized */}
+        <SyllabusSection course={course} />
 
-        {/* Class Schedule Section */}
-        {course.classSchedule && course.classSchedule.length > 0 && (
-          <section id="schedule" className="scroll-mt-24 mb-16">
-            <SectionHeader
-              title="Class Schedule"
-              subtitle="Weekly lecture and lab timings."
-            />
-            <ScheduleTable schedule={course.classSchedule} />
-          </section>
-        )}
+        {/* Resources Section - Now Standardized */}
+        <ResourcesSection course={course} />
 
-        {/* Exam Schedule */}
-        {course.exams && (
-          <section id="exams" className="scroll-mt-24 mb-16">
-            <SectionHeader
-              title="Examination Schedule"
-              subtitle="Midterm and Final Exam dates and seat plans."
-            />
-            <ExamSchedule exams={course.exams} />
-          </section>
-        )}
-
-        {/* Resources Section */}
-        <section id="resources" className="scroll-mt-24 mb-16">
-          <SectionHeader
-            title="Resources"
-            subtitle="Tools, books, and reference materials."
-          />
-          <ResourcesSection course={course} />
-        </section>
-
-        {/* Feedback Section (Optional) */}
-        {course.feedback && course.feedback.length > 0 && (
-          <section
-            id="feedback"
-            className="scroll-mt-24 border-t border-border/40 pt-16"
+        {/* Feedback Section - If any */}
+        {(course.feedback?.length ?? 0) > 0 && (
+          <CollapsibleSection
+            title="Student Feedback"
+            icon={MessageCircle}
+            defaultOpen={false}
           >
-            <SectionHeader title="Student Feedback" />
-            <FeedbackSection course={course} />
-          </section>
+            <div className="p-6">
+              <FeedbackSection course={course} />
+            </div>
+          </CollapsibleSection>
         )}
       </div>
     </div>
