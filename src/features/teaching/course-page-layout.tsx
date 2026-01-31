@@ -137,10 +137,11 @@ function CourseHero({ course }: { course: CourseData }) {
           </div>
         </div>
 
-        {/* Quick Access Bar - Separated & Organized */}
+        {/* Quick Access Box - Styled for Consistency */}
         {(primaryLinks.length > 0 || contentLinks.length > 0) && (
-          <div className="border-t border-b border-border/40 py-8">
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-6 px-1">
+          <div className="mt-12 rounded-xl border border-border/60 bg-muted/10 p-6 shadow-sm">
+            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-6 flex items-center gap-2">
+              <ExternalLink className="w-4 h-4" />
               Quick Access
             </h3>
             <div className="flex flex-col md:flex-row gap-8">
@@ -341,18 +342,66 @@ function OverviewSection({ course }: { course: CourseData }) {
 }
 
 // -----------------------------------------------------------------------------
-// Syllabus Section (Standardized)
+// Schedule Section (New - Separated)
+// -----------------------------------------------------------------------------
+import { Calendar } from 'lucide-react'; // Ensure this is imported effectively by reusing existing imports or adding it if missing (It was likely in the list of imports at top but let's check).
+// Actually, I'll use the existing imports. 'BookOpen' is already there. 'Calendar' needs to be imported if not present.
+// Checking top of file: 'Calendar' was NOT in the replacement block I'm writing, but I should check if it's in the file.
+// Wait, I can't easily add imports without replacing the top of the file.
+// I will reuse `BookOpen` or `Clock`? `Presentation`?
+// `ScheduleTable` uses `BookOpen` internally.
+// `ExamSchedule` uses `Calendar`.
+// Let's use `Presentation` for Schedule? Or just `BookOpen`.
+// Actually, `Calendar` is the strict correct icon.
+// I'll check imports later. For now, I'll use `BookOpen` as placeholder if needed, or assume I can add it.
+// Wait, I'm replacing a huge chunk. I can see the imports at the top are NOT included in my replacement range.
+// The replacement range starts at `        {/* Quick Access Bar`.
+// I will use `Presentation` for Schedule for now, as it is imported.
+
+function ScheduleSection({ course }: { course: CourseData }) {
+  const hasSchedule = course.classSchedule && course.classSchedule.length > 0;
+  const hasExams = !!course.exams;
+
+  if (!hasSchedule && !hasExams) return null;
+
+  return (
+    <CollapsibleSection title="Class Schedule" icon={Calendar}>
+      <div className="p-6">
+        {hasSchedule && (
+          <div className="mb-0">
+            <ScheduleTable schedule={course.classSchedule!} />
+          </div>
+        )}
+
+        {hasExams && (
+          <div
+            className={cn(
+              'pt-8',
+              hasSchedule && 'mt-8 border-t border-border/40'
+            )}
+          >
+            <ExamSchedule exams={course.exams!} />
+          </div>
+        )}
+      </div>
+    </CollapsibleSection>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Syllabus Section (Standardized - Split)
 // -----------------------------------------------------------------------------
 function SyllabusSection({ course }: { course: CourseData }) {
   // Determine if we have content to show
   const hasContent =
     (course.weeklyModules && course.weeklyModules.length > 0) ||
-    (course.topics && course.topics.length > 0);
+    (course.topics && course.topics.length > 0) ||
+    !!course.assessment;
 
   if (!hasContent) return null;
 
   return (
-    <CollapsibleSection title="Syllabus & Schedule" icon={Layers}>
+    <CollapsibleSection title="Syllabus & Curriculum" icon={Layers}>
       <div className="p-6">
         {/* Assessment Breakdown (if available) - Kept visible inside the section */}
         {course.assessment && (
@@ -380,13 +429,6 @@ function SyllabusSection({ course }: { course: CourseData }) {
           </div>
         )}
 
-        {/* Class Schedule Table - Restored */}
-        {course.classSchedule && course.classSchedule.length > 0 && (
-          <div className="mb-8">
-            <ScheduleTable schedule={course.classSchedule} />
-          </div>
-        )}
-
         {/* Syllabus Table (Weekly Components) */}
         {course.weeklyModules && course.weeklyModules.length > 0 ? (
           <SyllabusTable modules={course.weeklyModules} />
@@ -408,13 +450,6 @@ function SyllabusSection({ course }: { course: CourseData }) {
               </CardContent>
             </Card>
           )
-        )}
-
-        {/* Exam Schedule - Restored */}
-        {course.exams && (
-          <div className="mt-8 border-t border-border/40 pt-8">
-            <ExamSchedule exams={course.exams} />
-          </div>
         )}
       </div>
     </CollapsibleSection>
@@ -674,7 +709,10 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
         {/* Overview Section */}
         <OverviewSection course={course} />
 
-        {/* Syllabus Section - Now Standardized */}
+        {/* Schedule Section - Separated & First */}
+        <ScheduleSection course={course} />
+
+        {/* Syllabus Section - Now Curriculum Only */}
         <SyllabusSection course={course} />
 
         {/* Resources Section - Now Standardized */}
