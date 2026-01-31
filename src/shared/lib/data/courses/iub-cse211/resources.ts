@@ -21,6 +21,11 @@ export const links: CourseLink[] = [
     url: 'https://drive.google.com/drive/folders/19RagPRHij-bEh4IMCRRAtiPVp735_Trn',
     type: 'video',
   },
+  {
+    title: 'Python Cheat Sheet',
+    url: 'https://github.com/ehmatthes/pcc_3e/blob/main/cheat_sheets/color_sheets/beginners_python_cheat_sheet_pcc_all.pdf',
+    type: 'note',
+  },
 ];
 
 export const resourceSections: CourseResourceSection[] = [
