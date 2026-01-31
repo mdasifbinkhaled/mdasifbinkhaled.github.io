@@ -15,7 +15,10 @@ import {
   ExternalLink,
   Presentation,
   BookOpenText,
+  ChevronDown,
 } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/shared/lib/utils';
 import type {
   CourseData,
   CourseLink,
@@ -228,66 +231,104 @@ function SectionHeader({
 // Overview Tab - Objectives & Outcomes
 // -----------------------------------------------------------------------------
 function OverviewSection({ course }: { course: CourseData }) {
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
-    <div className="space-y-8">
-      {/* Course Description */}
-      <Card className="border-primary/20">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <BookOpenText className="w-5 h-5 text-primary" />
-            Course Description
-          </h3>
-          <p className="text-muted-foreground leading-relaxed">
-            {course.description}
-          </p>
-        </CardContent>
+    <div className="mb-16">
+      <Card className="border-primary/20 overflow-hidden shadow-sm">
+        {/* Main Header / Trigger */}
+        <div
+          role="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className={cn(
+            'w-full flex items-center justify-between p-6 cursor-pointer hover:bg-muted/30 transition-colors select-none',
+            !isOpen && 'border-b-0',
+            isOpen && 'border-b'
+          )}
+        >
+          <div className="flex items-center gap-3">
+            <BookOpenText className="w-6 h-6 text-primary" />
+            <h2 className="text-xl md:text-2xl font-bold">Course Overview</h2>
+          </div>
+          <ChevronDown
+            className={cn(
+              'w-5 h-5 text-muted-foreground transition-transform duration-200',
+              isOpen && 'rotate-180'
+            )}
+          />
+        </div>
+
+        {/* Collapsible Content */}
+        {isOpen && (
+          <CardContent className="p-0">
+            <Accordion
+              type="multiple"
+              defaultValue={['description', 'objectives', 'outcomes']}
+              className="w-full"
+            >
+              {/* 1. Description */}
+              <AccordionItem value="description" className="border-b px-6">
+                <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
+                  Course Description
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed text-base pb-6">
+                  {course.description}
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 2. Objectives */}
+              {course.objectives && course.objectives.length > 0 && (
+                <AccordionItem value="objectives" className="border-b px-6">
+                  <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
+                    <div className="flex items-center gap-2">
+                      <Target className="w-5 h-5 text-primary/80" />
+                      Learning Objectives
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-6">
+                    <ul className="space-y-3">
+                      {course.objectives.map((obj, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <div className="bg-primary/10 rounded-full p-1 mt-0.5 shrink-0">
+                            <CheckCircle className="w-4 h-4 text-primary" />
+                          </div>
+                          <span className="text-muted-foreground">{obj}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+
+              {/* 3. Outcomes */}
+              {course.outcomes && course.outcomes.length > 0 && (
+                <AccordionItem value="outcomes" className="px-6 border-b-0">
+                  <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
+                    <div className="flex items-center gap-2">
+                      <Award className="w-5 h-5 text-primary/80" />
+                      Expected Outcomes
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-6">
+                    <ul className="space-y-3">
+                      {course.outcomes.map((outcome, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <div className="bg-green-500/10 rounded-full p-1 mt-0.5 shrink-0">
+                            <CheckCircle className="w-4 h-4 text-green-500" />
+                          </div>
+                          <span className="text-sm sm:text-base text-muted-foreground">
+                            {outcome}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+            </Accordion>
+          </CardContent>
+        )}
       </Card>
-
-      <div className="space-y-6 md:space-y-8">
-        {course.objectives && course.objectives.length > 0 && (
-          <Card className="border-primary/20">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Target className="w-5 h-5 text-primary" />
-                Learning Objectives
-              </h3>
-              <ul className="space-y-3">
-                {course.objectives.map((obj, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <div className="bg-primary/10 rounded-full p-1 mt-0.5 shrink-0">
-                      <CheckCircle className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">{obj}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        )}
-
-        {course.outcomes && course.outcomes.length > 0 && (
-          <Card className="border-primary/20">
-            <CardContent className="p-5 sm:p-6">
-              <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
-                <Award className="w-5 h-5 text-primary" />
-                Expected Outcomes
-              </h3>
-              <ul className="space-y-3">
-                {course.outcomes.map((outcome, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <div className="bg-green-500/10 rounded-full p-1 mt-0.5 shrink-0">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                    </div>
-                    <span className="text-sm sm:text-base text-muted-foreground">
-                      {outcome}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        )}
-      </div>
     </div>
   );
 }
