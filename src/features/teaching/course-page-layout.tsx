@@ -662,21 +662,13 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
 
       {/* Main Content Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
-        {/* Notices Section - Explicitly defined as requested */}
+        {/* Notice Board Section */}
         {course.status === 'ongoing' && course.notices && (
-          <div className="mb-8">
-            <div className="rounded-xl border border-border/60 bg-muted/10 p-6 shadow-sm">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <MessageCircle className="w-6 h-6 text-primary" />
-                </div>
-                <h2 className="text-xl md:text-2xl font-bold text-foreground">
-                  Announcements
-                </h2>
-              </div>
+          <CollapsibleSection title="Notice Board" icon={MessageCircle}>
+            <div className="p-6">
               <NoticeBoard notices={course.notices} />
             </div>
-          </div>
+          </CollapsibleSection>
         )}
 
         {/* Overview Section */}
