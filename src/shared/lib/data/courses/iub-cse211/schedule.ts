@@ -44,7 +44,7 @@ export const classSchedule: ClassScheduleItem[] = [
       room: 'BC6012',
     },
     lab: {
-      faculty: 'Junayed Hossain',
+      faculty: 'Md Junayed Hossain',
       email: 'junayed.nde16sets@iub.edu.bd',
       days: 'S',
       time: '09:40-11:10',
@@ -61,7 +61,7 @@ export const classSchedule: ClassScheduleItem[] = [
       room: 'MK5007',
     },
     lab: {
-      faculty: 'Junayed Hossain',
+      faculty: 'Md Junayed Hossain',
       email: 'junayed.nde16sets@iub.edu.bd',
       days: 'S',
       time: '08:00-09:30',
@@ -78,8 +78,8 @@ export const classSchedule: ClassScheduleItem[] = [
       room: 'MK5006',
     },
     lab: {
-      faculty: 'Shad Ahmed',
-      email: 'sashaikot07sets@iub.edu.bd',
+      faculty: 'Md Junayed Hossain',
+      email: 'junayed.nde16sets@iub.edu.bd',
       days: 'S',
       time: '13:00-14:30',
       room: 'MK7005L',
@@ -95,8 +95,7 @@ export const classSchedule: ClassScheduleItem[] = [
       room: 'MK4008',
     },
     lab: {
-      faculty: 'Shad Ahmed',
-      email: 'sashaikot07sets@iub.edu.bd',
+      faculty: 'Mohammad Arshad Ratul',
       days: 'S',
       time: '11:20-12:50',
       room: 'MK7005L',
@@ -112,8 +111,7 @@ export const classSchedule: ClassScheduleItem[] = [
       room: 'MK5010',
     },
     lab: {
-      faculty: 'Shad Ahmed',
-      email: 'sashaikot07sets@iub.edu.bd',
+      faculty: 'Sumaia Anjum Shaba',
       days: 'M',
       time: '09:40-11:10',
       room: 'MK7005L',
@@ -130,7 +128,7 @@ export const classSchedule: ClassScheduleItem[] = [
       // No email update
     },
     lab: {
-      faculty: 'Junayed Hossain',
+      faculty: 'Md Junayed Hossain',
       email: 'junayed.nde16sets@iub.edu.bd',
       days: 'M',
       time: '08:00-09:30',
