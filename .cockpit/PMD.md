@@ -1,6 +1,6 @@
 # Project Master Document (PMD)
 
-> **Version:** 5.0.0 | **Status:** ✅ VERIFIED | **Updated:** 2026-01-27
+> **Version:** 5.1.0 | **Status:** ✅ VERIFIED | **Updated:** 2026-02-05
 
 ---
 
@@ -27,7 +27,7 @@ src/
 │   ├── components/   # common, layout, navigation, ui
 │   ├── config/       # Site configuration (SSoT)
 │   ├── hooks/        # Custom React hooks
-│   ├── lib/          # data, seo, validation
+│   ├── lib/          # data, seo, validation, course-utils
 │   └── types/        # Type definitions
 └── styles/           # Global CSS tokens
 ```
@@ -126,7 +126,7 @@ src/
 ### 6.1 Testing
 
 - **Framework**: Vitest
-- **Tests**: 98 (100% Passing)
+- **Tests**: 109 (100% Passing)
 - **Coverage**: 80% threshold
 
 ### 6.2 CI/CD
@@ -169,21 +169,22 @@ npm run test:run   # Tests only
 
 ## 8. Changelog
 
-| Date       | Version | Changes                                                                          |
-| ---------- | ------- | -------------------------------------------------------------------------------- |
-| 2026-01-27 | 5.0.0   | **SOTA Integration**: Command Menu, Spotlight UI, Typed Routes, View Transitions |
-| 2026-01-18 | 4.10.0  | **System Rebuild**: Clean install, dependencies verified, PMD updated            |
-| 2026-01-17 | 4.9.2   | Final Polish: Course Detail refactor restored, Zod Schema fix, Test fix          |
-| 2026-01-17 | 4.9.1   | Systematic cleanup: Semantic Tailwind tokens, hardcoded values removed           |
-| 2026-01-17 | 4.9.0   | Performance & SEO Optimization (Next.font, JSON-LD)                              |
-| 2026-01-14 | 4.8.0   | Teaching module refactoring - data-driven architecture                           |
-| 2026-01-13 | 4.7.0   | Dependency audit, PMD sync (fix Tailwind version)                                |
-| 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup                          |
-| 2025-12-20 | 4.5.0   | Cleanup & finalization, fixed barrel exports                                     |
-| 2025-12-19 | 4.4.1   | Shape system unification                                                         |
-| 2025-12-17 | 4.4.0   | AI signature cleanup, CourseCard unification                                     |
-| 2025-12-16 | 4.3.0   | Teaching data verified                                                           |
-| 2025-12-16 | 4.0.0   | Major architecture overhaul                                                      |
+| Date       | Version | Changes                                                                                                              |
+| ---------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| 2026-02-05 | 5.1.0   | **UX & Polish**: Enhanced Course Page (Quick Facts, Mobile Table), Breadcrumb Logic Centralized, Full Codebase Audit |
+| 2026-01-27 | 5.0.0   | **SOTA Integration**: Command Menu, Spotlight UI, Typed Routes, View Transitions                                     |
+| 2026-01-18 | 4.10.0  | **System Rebuild**: Clean install, dependencies verified, PMD updated                                                |
+| 2026-01-17 | 4.9.2   | Final Polish: Course Detail refactor restored, Zod Schema fix, Test fix                                              |
+| 2026-01-17 | 4.9.1   | Systematic cleanup: Semantic Tailwind tokens, hardcoded values removed                                               |
+| 2026-01-17 | 4.9.0   | Performance & SEO Optimization (Next.font, JSON-LD)                                                                  |
+| 2026-01-14 | 4.8.0   | Teaching module refactoring - data-driven architecture                                                               |
+| 2026-01-13 | 4.7.0   | Dependency audit, PMD sync (fix Tailwind version)                                                                    |
+| 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup                                                              |
+| 2025-12-20 | 4.5.0   | Cleanup & finalization, fixed barrel exports                                                                         |
+| 2025-12-19 | 4.4.1   | Shape system unification                                                                                             |
+| 2025-12-17 | 4.4.0   | AI signature cleanup, CourseCard unification                                                                         |
+| 2025-12-16 | 4.3.0   | Teaching data verified                                                                                               |
+| 2025-12-16 | 4.0.0   | Major architecture overhaul                                                                                          |
 
 ---
 

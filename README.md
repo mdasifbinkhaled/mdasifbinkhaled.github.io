@@ -16,7 +16,7 @@ A modern, accessible academic portfolio built with **Next.js 15**, **TypeScript*
 | **Framework** | Next.js 15 (App Router, Static Export) |
 | **Language**  | TypeScript (Strict Mode)               |
 | **Styling**   | Tailwind CSS 3.4                       |
-| **Testing**   | Vitest (89+ tests)                     |
+| **Testing**   | Vitest (109+ tests)                    |
 | **Linting**   | ESLint + Prettier                      |
 | **CI/CD**     | GitHub Actions                         |
 | **Security**  | CodeQL, npm audit                      |
