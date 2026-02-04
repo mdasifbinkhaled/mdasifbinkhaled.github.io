@@ -1,12 +1,12 @@
 {
-  "name": "Md Asif Bin Khaled - Academic Portfolio",
-  "short_name": "Academic Assemblage",
+  "name": "MABK Academic Portfolio",
+  "short_name": "MABK",
   "description": "The professional academic portfolio of Md Asif Bin Khaled.",
   "icons": [
     {
-      "src": "/favicon.ico",
+      "src": "/favicon-48.png",
       "sizes": "48x48",
-      "type": "image/x-icon"
+      "type": "image/png"
     }
   ],
   "theme_color": "#31708E",
