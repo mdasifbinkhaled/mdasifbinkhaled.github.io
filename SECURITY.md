@@ -16,7 +16,7 @@ We take the security of this portfolio website seriously. If you discover a secu
 ### How to Report
 
 1. **DO NOT** open a public issue
-2. Email security concerns to: **mdasifbinkhaled@gmail.com**
+2. Email security concerns to: **<mdasifbinkhaled@gmail.com>**
 3. Include the following information:
    - Type of vulnerability
    - Full paths of source file(s) related to the vulnerability
@@ -68,7 +68,7 @@ The following vulnerability exists in a development dependency and is **NOT expl
 
 **Note**: This vulnerability is in development tooling only and does not affect the production build or runtime security of the deployed website. The production bundle is completely static HTML/CSS/JS with no vulnerable code. The glob vulnerability has been mitigated by downgrading to stable version 10.1.0.
 
-**Last Updated**: 2025-11-19
+**Last Updated**: 2026-02-05
 
 ## Responsible Disclosure
 
