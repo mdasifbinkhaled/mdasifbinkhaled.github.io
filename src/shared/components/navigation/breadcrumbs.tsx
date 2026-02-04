@@ -53,10 +53,31 @@ export function Breadcrumbs() {
             title = segment.toUpperCase();
           }
         } else {
-          // Normal title case for other segments
-          title = segment
-            .replace(/-/g, ' ')
-            .replace(/\b\w/g, (c) => c.toUpperCase());
+          // Complex course codes: "cse211spr26" -> "CSE 211 Spring 2026"
+          const complexMatch = segment.match(
+            /^([a-z]+)(\d+)(spr|sum|aut|win|fal)(\d{2})$/i
+          );
+          if (complexMatch) {
+            // Since regex matched, we know these groups exist at these indices
+            const code = complexMatch[1]!;
+            const num = complexMatch[2]!;
+            const sem = complexMatch[3]!;
+            const year = complexMatch[4]!;
+
+            const semesterMap: Record<string, string> = {
+              spr: 'Spring',
+              sum: 'Summer',
+              aut: 'Autumn',
+              win: 'Winter',
+              fal: 'Fall',
+            };
+            title = `${code.toUpperCase()} ${num} ${semesterMap[sem.toLowerCase()] || sem} 20${year}`;
+          } else {
+            // Normal title case for other segments
+            title = segment
+              .replace(/-/g, ' ')
+              .replace(/\b\w/g, (c) => c.toUpperCase());
+          }
         }
 
         const Icon = pageIcons[segment as keyof typeof pageIcons];

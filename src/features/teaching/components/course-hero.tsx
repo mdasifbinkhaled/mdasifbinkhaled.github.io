@@ -58,7 +58,7 @@ export function CourseHero({ course }: { course: CourseData }) {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Navigation Breadcrumb */}
-        <div className="mb-8">
+        <div className="mb-4">
           <Button
             variant="ghost"
             size="sm"
