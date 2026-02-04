@@ -11,6 +11,13 @@ export const notices = [
     link: 'https://discord.gg/N5PSCt5q',
     importance: 'high' as const,
   },
+  {
+    id: 'n-contest-password',
+    title: 'Contest passwords will be provided by your Lab faculty',
+    date: '2026-01-25',
+    type: 'info' as const,
+    importance: 'medium' as const,
+  },
 ];
 
 export const activeContest = {

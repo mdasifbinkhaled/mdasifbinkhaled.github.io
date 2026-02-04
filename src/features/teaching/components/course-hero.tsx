@@ -194,6 +194,35 @@ export function CourseHero({ course }: { course: CourseData }) {
             </div>
           </div>
         )}
+
+        {/* Consultation Hours - Only for ongoing courses */}
+        {course.status === 'ongoing' && (
+          <div className="mt-8 rounded-xl border border-primary/20 bg-primary/5 p-6 shadow-sm relative z-20">
+            <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-4 flex items-center gap-2">
+              <GraduationCap className="w-4 h-4" />
+              Consultation Hours
+            </h3>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 text-sm">
+              <div className="flex flex-col gap-1">
+                <span className="text-muted-foreground">Office</span>
+                <span className="font-medium">BC5010 - D</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted-foreground">Hours</span>
+                <span className="font-medium">
+                  Mon & Wed, 2:40 PM - 4:10 PM
+                </span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted-foreground">Contact</span>
+                <span className="font-medium">01676076329</span>
+              </div>
+              <div className="flex flex-col gap-1 text-xs text-muted-foreground italic">
+                Please make an appointment before visiting.
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -17,11 +17,6 @@ export const links: CourseLink[] = [
     type: 'slides',
   },
   {
-    title: 'Previous Year Lectures',
-    url: 'https://drive.google.com/drive/folders/19RagPRHij-bEh4IMCRRAtiPVp735_Trn',
-    type: 'video',
-  },
-  {
     title: 'Python Cheat Sheet',
     url: 'https://github.com/ehmatthes/pcc_3e/blob/main/cheat_sheets/color_sheets/beginners_python_cheat_sheet_pcc_all.pdf',
     type: 'note',
@@ -30,6 +25,11 @@ export const links: CourseLink[] = [
     title: 'Discord Community',
     url: 'https://discord.gg/N5PSCt5q',
     type: 'discord',
+  },
+  {
+    title: 'Anonymous Feedback',
+    url: 'https://forms.gle/zpz4ZFWBgMyZB9h27',
+    type: 'site',
   },
 ];
 
@@ -90,6 +90,21 @@ export const resourceSections: CourseResourceSection[] = [
         label: 'Lecture Slides',
         url: 'https://drive.google.com/drive/folders/1Ill6_PRGVmZO7WxDHyP5x9RWfKwCSknH?usp=sharing',
         description: 'Google Drive folder with all class slides.',
+      },
+      {
+        label: 'Sample Case Studies & Problems',
+        url: 'https://drive.google.com/drive/folders/19LFOumXwkUuqjf0JhlaI71rgGUNCjm69?usp=drive_link',
+        description: 'Practice problems and case study materials.',
+      },
+    ],
+  },
+  {
+    title: 'Video Archive',
+    items: [
+      {
+        label: 'Previous Year Lectures',
+        url: 'https://drive.google.com/drive/folders/19RagPRHij-bEh4IMCRRAtiPVp735_Trn',
+        description: 'Recorded lectures from previous semesters.',
       },
     ],
   },
