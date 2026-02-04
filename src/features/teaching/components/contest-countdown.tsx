@@ -29,15 +29,15 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
   if (!timeLeft) return null;
 
   return (
-    <Card className="border-primary/20 bg-primary/5 relative overflow-hidden">
+    <Card className="border-border/60 bg-muted/10 relative overflow-hidden">
       <div className="absolute top-0 right-0 p-4 opacity-10">
         <Trophy className="w-24 h-24 rotate-12" />
       </div>
       <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
         <div className="space-y-2 text-center sm:text-left">
           <Badge
-            variant="default"
-            className="bg-primary text-primary-foreground"
+            variant="secondary"
+            className="bg-primary/10 text-primary border border-primary/20"
           >
             <Timer className="w-3 h-3 mr-1" />
             Active Contest
@@ -54,7 +54,7 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
         <div className="flex items-center gap-6">
           <div className="flex gap-4 text-center">
             <div>
-              <div className="text-3xl font-bold font-mono text-primary">
+              <div className="text-3xl font-bold font-mono text-foreground">
                 {String(timeLeft.days).padStart(2, '0')}
               </div>
               <div className="text-xs uppercase tracking-wider text-muted-foreground">
@@ -65,7 +65,7 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
               :
             </div>
             <div>
-              <div className="text-3xl font-bold font-mono text-primary">
+              <div className="text-3xl font-bold font-mono text-foreground">
                 {String(timeLeft.hours).padStart(2, '0')}
               </div>
               <div className="text-xs uppercase tracking-wider text-muted-foreground">

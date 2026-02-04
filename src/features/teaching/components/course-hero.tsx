@@ -125,15 +125,15 @@ export function CourseHero({ course }: { course: CourseData }) {
                 </div>
               </div>
             </div>
-
-            {/* Contest Countdown Widget - Only for Ongoing Courses */}
-            {course.status === 'ongoing' && course.activeContest && (
-              <div className="pt-4 pointer-events-auto">
-                <ContestCountdown contest={course.activeContest} />
-              </div>
-            )}
           </div>
         </div>
+
+        {/* Contest Countdown - Separate styled section */}
+        {course.status === 'ongoing' && course.activeContest && (
+          <div className="mt-8 rounded-xl relative z-20">
+            <ContestCountdown contest={course.activeContest} />
+          </div>
+        )}
 
         {/* Quick Access Box - Styled for Consistency */}
         {(primaryLinks.length > 0 || contentLinks.length > 0) && (
