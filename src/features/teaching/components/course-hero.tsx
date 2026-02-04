@@ -1,9 +1,9 @@
-import { BookOpen, ExternalLink, GraduationCap, ArrowLeft } from 'lucide-react';
+import { BookOpen, ExternalLink, GraduationCap } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Icon } from '@/shared/components/common/icons';
 import { ContestCountdown } from '@/features/teaching/components/contest-countdown';
 import type { CourseData } from '@/shared/types';
-import Link from 'next/link';
+
 import { cn } from '@/shared/lib/utils';
 import { getCourseLinkIcon } from '@/shared/lib/course-utils';
 
@@ -25,21 +25,6 @@ export function CourseHero({ course }: { course: CourseData }) {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Navigation Breadcrumb */}
-        <div className="mb-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            asChild
-            className="text-muted-foreground hover:text-primary -ml-2 gap-1 group"
-          >
-            <Link href="/teaching">
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Back to Courses
-            </Link>
-          </Button>
-        </div>
-
         {/* Header Content */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start mb-8">
           {/* Icon */}
