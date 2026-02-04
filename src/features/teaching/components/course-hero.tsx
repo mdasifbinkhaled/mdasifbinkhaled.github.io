@@ -73,7 +73,7 @@ export function CourseHero({ course }: { course: CourseData }) {
         </div>
 
         {/* Header Content */}
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start mb-12">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start mb-8">
           {/* Icon */}
           <div className="bg-primary/5 p-6 rounded-2xl shrink-0 border border-primary/10 shadow-sm">
             {course.iconName ? (
@@ -137,60 +137,38 @@ export function CourseHero({ course }: { course: CourseData }) {
 
         {/* Quick Access Box - Styled for Consistency */}
         {(primaryLinks.length > 0 || contentLinks.length > 0) && (
-          <div className="mt-12 rounded-xl border border-border/60 bg-muted/10 p-6 shadow-sm relative z-20">
-            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-6 flex items-center gap-2">
+          <div className="mt-6 rounded-xl border border-border/60 bg-muted/10 p-6 shadow-sm relative z-20">
+            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
               <ExternalLink className="w-4 h-4" />
               Quick Access
             </h3>
-            <div className="flex flex-col md:flex-row gap-8">
-              {/* Primary Destinations */}
-              {primaryLinks.length > 0 && (
-                <div className="flex flex-wrap gap-3">
-                  {primaryLinks.map((link, idx) => {
-                    const LinkIcon = getLinkIcon(link.type);
-                    return (
-                      <Button
-                        key={idx}
-                        variant="default"
-                        className="shadow-md hover:shadow-lg transition-all rounded-lg h-10 px-5 cursor-pointer relative z-30"
-                        asChild
-                      >
-                        <a href={link.url} target="_blank" rel="noreferrer">
-                          <LinkIcon className="w-4 h-4 mr-2" />
-                          {link.title}
-                        </a>
-                      </Button>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* Separator for larger screens */}
-              {primaryLinks.length > 0 && contentLinks.length > 0 && (
-                <div className="hidden md:block w-px bg-border/50 self-stretch" />
-              )}
-
-              {/* Resource Links */}
-              {contentLinks.length > 0 && (
-                <div className="flex flex-wrap gap-3 flex-1">
-                  {contentLinks.map((link, idx) => {
-                    const LinkIcon = getLinkIcon(link.type);
-                    return (
-                      <Button
-                        key={idx}
-                        variant="secondary"
-                        className="bg-secondary/50 hover:bg-secondary/80 text-secondary-foreground border border-border/50 shadow-sm rounded-lg h-10 px-5 font-medium transition-all cursor-pointer relative z-30"
-                        asChild
-                      >
-                        <a href={link.url} target="_blank" rel="noreferrer">
-                          <LinkIcon className="w-4 h-4 mr-2 text-primary" />
-                          {link.title}
-                        </a>
-                      </Button>
-                    );
-                  })}
-                </div>
-              )}
+            <div className="flex flex-wrap gap-3">
+              {course.links?.map((link, idx) => {
+                const LinkIcon = getLinkIcon(link.type);
+                const isHighlight = ['site', 'discord'].includes(link.type);
+                return (
+                  <Button
+                    key={idx}
+                    variant={isHighlight ? 'default' : 'secondary'}
+                    className={cn(
+                      'shadow-sm hover:shadow-md transition-all rounded-lg h-10 px-5 cursor-pointer relative z-30',
+                      !isHighlight &&
+                        'bg-secondary/50 hover:bg-secondary/80 text-secondary-foreground border border-border/50'
+                    )}
+                    asChild
+                  >
+                    <a href={link.url} target="_blank" rel="noreferrer">
+                      <LinkIcon
+                        className={cn(
+                          'w-4 h-4 mr-2',
+                          !isHighlight && 'text-primary'
+                        )}
+                      />
+                      {link.title}
+                    </a>
+                  </Button>
+                );
+              })}
             </div>
           </div>
         )}
