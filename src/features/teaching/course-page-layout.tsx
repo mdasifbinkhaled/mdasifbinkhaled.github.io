@@ -48,7 +48,7 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
       <CourseHero course={course} />
 
       {/* Main Content Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-10">
         {/* Notice Board Section (Always Open) */}
         {course.status === 'ongoing' && course.notices && (
           <CollapsibleSection
@@ -62,14 +62,26 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
           </CollapsibleSection>
         )}
 
+        {/* Section Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
         {/* Overview Section */}
         <OverviewSection course={course} />
+
+        {/* Section Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
         {/* Schedule Section - Separated & First */}
         <ScheduleSection course={course} />
 
+        {/* Section Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
         {/* Syllabus Section - Now Curriculum Only */}
         <SyllabusSection course={course} />
+
+        {/* Section Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
         {/* Resources Section */}
         <ResourcesSection course={course} />

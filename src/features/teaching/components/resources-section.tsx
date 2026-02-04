@@ -78,6 +78,11 @@ export function ResourcesSection({ course }: { course: CourseData }) {
                           <span className="text-sm font-medium group-hover:text-primary transition-colors">
                             {item.label}
                           </span>
+                          {'isNew' in item && item.isNew && (
+                            <Badge className="text-[10px] px-1.5 py-0 h-4 bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20">
+                              New
+                            </Badge>
+                          )}
                         </div>
                         {item.url && (
                           <Button
