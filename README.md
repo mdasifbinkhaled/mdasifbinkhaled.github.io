@@ -5,7 +5,7 @@
 [![Security](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/security.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/security.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A modern, accessible academic portfolio built with **Next.js 15**, **TypeScript**, and **Tailwind CSS**. Designed to showcase research, publications, teaching, and professional experience with high visual fidelity.
+A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript**, and **Tailwind CSS**. Designed to showcase research, publications, teaching, and professional experience with high visual fidelity.
 
 ---
 
@@ -13,7 +13,7 @@ A modern, accessible academic portfolio built with **Next.js 15**, **TypeScript*
 
 | Category      | Technology                             |
 | ------------- | -------------------------------------- |
-| **Framework** | Next.js 15 (App Router, Static Export) |
+| **Framework** | Next.js 16 (App Router, Static Export) |
 | **Language**  | TypeScript (Strict Mode)               |
 | **Styling**   | Tailwind CSS 3.4                       |
 | **Testing**   | Vitest (109+ tests)                    |

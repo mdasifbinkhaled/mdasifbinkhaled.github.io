@@ -1,4 +1,4 @@
-# Contributing to Academic Assemblage
+# Contributing to Academic Portfolio
 
 Thank you for your interest in contributing! This document provides guidelines and instructions for contributing to this project.
 

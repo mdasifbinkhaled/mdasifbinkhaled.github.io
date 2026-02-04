@@ -11,7 +11,7 @@
 | **Project** | Academic Portfolio                                             |
 | **Domain**  | [mdasifbinkhaled.github.io](https://mdasifbinkhaled.github.io) |
 | **Type**    | Static Site (GitHub Pages)                                     |
-| **Stack**   | Next.js 15.5 · TypeScript · Tailwind CSS                       |
+| **Stack**   | Next.js 16 · TypeScript · Tailwind CSS                         |
 
 ---
 
@@ -48,14 +48,14 @@ src/
 
 | Category   | Technology   | Version |
 | ---------- | ------------ | ------- |
-| Framework  | Next.js      | 15.5.9  |
-| Language   | TypeScript   | 5.6.x   |
-| Styling    | Tailwind CSS | 3.4.13  |
-| Validation | Zod          | 4.1.9   |
+| Framework  | Next.js      | 16.1.4  |
+| Language   | TypeScript   | 5.9.3   |
+| Styling    | Tailwind CSS | 3.4.19  |
+| Validation | Zod          | 4.3.6   |
 | Testing    | Vitest       | 3.2.4   |
 | Components | Radix UI     | Latest  |
 
-**Note:** `eslint` pinned to `^8.57.1` for stability. `next` pinned to `15.5.9`. Vitest issue resolved by ESM configuration.
+**Note:** `eslint` pinned to `^8.57.1` for stability. Vitest issue resolved by ESM configuration.
 
 ---
 
