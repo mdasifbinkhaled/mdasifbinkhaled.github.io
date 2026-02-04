@@ -154,8 +154,8 @@ export const classSchedule: ClassScheduleItem[] = [
       room: 'C6007',
     },
     lab: {
-      faculty: 'Shad Ahmed',
-      email: 'sashaikot07sets@iub.edu.bd',
+      faculty: 'Md Junayed Hossain',
+      email: 'junayed.nde16sets@iub.edu.bd',
       days: 'M',
       time: '11:20-12:50',
       room: 'MK7005L',
