@@ -3,6 +3,7 @@
 import { ChevronRight, Home, BookOpen, Users, Award, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { formatBreadcrumbTitle } from '@/shared/lib/course-utils';
 
 const pageIcons = {
   publications: BookOpen,
@@ -37,48 +38,8 @@ export function Breadcrumbs() {
         const isLast = index === segments.length - 1;
 
         // Smart title formatting
-        let title: string;
-        const institutionCodes = ['iub', 'bracu', 'nsu', 'aiub'];
-        const courseCodePattern = /^[a-z]{2,4}\d{3,4}$/i;
-
-        if (institutionCodes.includes(segment.toLowerCase())) {
-          // Institution codes should be UPPERCASE
-          title = segment.toUpperCase();
-        } else if (courseCodePattern.test(segment)) {
-          // Course codes: "cse211" -> "CSE 211"
-          const match = segment.match(/^([a-z]+)(\d+)$/i);
-          if (match && match[1] && match[2]) {
-            title = `${match[1].toUpperCase()} ${match[2]}`;
-          } else {
-            title = segment.toUpperCase();
-          }
-        } else {
-          // Complex course codes: "cse211spr26" -> "CSE 211 Spring 2026"
-          const complexMatch = segment.match(
-            /^([a-z]+)(\d+)(spr|sum|aut|win|fal)(\d{2})$/i
-          );
-          if (complexMatch) {
-            // Since regex matched, we know these groups exist at these indices
-            const code = complexMatch[1]!;
-            const num = complexMatch[2]!;
-            const sem = complexMatch[3]!;
-            const year = complexMatch[4]!;
-
-            const semesterMap: Record<string, string> = {
-              spr: 'Spring',
-              sum: 'Summer',
-              aut: 'Autumn',
-              win: 'Winter',
-              fal: 'Fall',
-            };
-            title = `${code.toUpperCase()} ${num} ${semesterMap[sem.toLowerCase()] || sem} 20${year}`;
-          } else {
-            // Normal title case for other segments
-            title = segment
-              .replace(/-/g, ' ')
-              .replace(/\b\w/g, (c) => c.toUpperCase());
-          }
-        }
+        // Smart title formatting using shared utility
+        const title = formatBreadcrumbTitle(segment);
 
         const Icon = pageIcons[segment as keyof typeof pageIcons];
 

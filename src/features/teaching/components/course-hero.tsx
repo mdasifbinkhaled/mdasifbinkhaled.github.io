@@ -1,45 +1,13 @@
-import {
-  BookOpen,
-  Code2,
-  ExternalLink,
-  FileText,
-  Globe,
-  GraduationCap,
-  MessageCircle,
-  Presentation,
-  Video,
-  BookOpenText,
-  ArrowLeft,
-} from 'lucide-react';
+import { BookOpen, ExternalLink, GraduationCap, ArrowLeft } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Icon } from '@/shared/components/common/icons';
 import { ContestCountdown } from '@/features/teaching/components/contest-countdown';
-import type { CourseData, CourseLink } from '@/shared/types';
+import type { CourseData } from '@/shared/types';
 import Link from 'next/link';
 import { cn } from '@/shared/lib/utils';
+import { getCourseLinkIcon } from '@/shared/lib/course-utils';
 
-// Helper to get icon for link type
-function getLinkIcon(type: CourseLink['type']) {
-  switch (type) {
-    case 'outline':
-      return FileText;
-    case 'slides':
-      return Presentation;
-    case 'video':
-      return Video;
-    case 'discord':
-      return MessageCircle;
-    case 'site':
-      return Globe;
-    case 'problem-set':
-      return Code2;
-    case 'note':
-      return BookOpenText;
-    case 'other':
-    default:
-      return ExternalLink;
-  }
-}
+// Helper to get icon for link type - MOVED to shared/lib/course-utils
 
 export function CourseHero({ course }: { course: CourseData }) {
   // Sort links: Primary (Site, Discord) vs Content (Slides, Outline, etc.)
@@ -144,7 +112,7 @@ export function CourseHero({ course }: { course: CourseData }) {
             </h3>
             <div className="flex flex-wrap gap-3">
               {course.links?.map((link, idx) => {
-                const LinkIcon = getLinkIcon(link.type);
+                const LinkIcon = getCourseLinkIcon(link.type);
                 const isHighlight = ['site', 'discord'].includes(link.type);
                 return (
                   <Button
