@@ -51,7 +51,7 @@ export function ResourcesSection({ course }: { course: CourseData }) {
             return (
               <Card
                 key={idx}
-                className="border-border/40 shadow-sm hover:shadow-md transition-all"
+                className="border-border/40 shadow-sm hover:shadow-md hover:border-primary/20 transition-all group"
               >
                 <div className="p-4 border-b bg-muted/10 flex items-center gap-3">
                   <div className="p-2 bg-background rounded-lg border shadow-sm">
@@ -86,7 +86,12 @@ export function ResourcesSection({ course }: { course: CourseData }) {
                             asChild
                             className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
                           >
-                            <a href={item.url} target="_blank" rel="noreferrer">
+                            <a
+                              href={item.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              aria-label={`Open ${item.label}`}
+                            >
                               <ExternalLink className="w-3 h-3 text-muted-foreground" />
                             </a>
                           </Button>

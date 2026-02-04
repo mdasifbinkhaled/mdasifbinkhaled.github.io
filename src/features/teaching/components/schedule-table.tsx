@@ -9,12 +9,7 @@ import {
   TableRow,
 } from '@/shared/components/ui/table';
 import { Badge } from '@/shared/components/ui/badge';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/components/ui/card';
+import { Card } from '@/shared/components/ui/card';
 import { Mail, Monitor, BookOpen } from 'lucide-react';
 import type { ClassScheduleItem } from '@/shared/lib/validation/schemas';
 import { cn } from '@/shared/lib/utils';
@@ -117,7 +112,11 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
             {schedule.map((item) => (
               <TableRow
                 key={item.section}
-                className="group border-b border-border/50 last:border-0 hover:bg-muted/5 transition-colors"
+                className={cn(
+                  'group border-b border-border/50 last:border-0 transition-colors',
+                  // Placeholder for active logic: if active, add "bg-primary/5"
+                  'hover:bg-muted/5'
+                )}
               >
                 {/* Section */}
                 <TableCell className="text-center font-bold text-sm text-foreground/70 bg-muted/5 border-r border-border/50 py-3">
@@ -171,66 +170,63 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
 
   // Mobile Clean Card View (Vertical Stack for small screens)
   const MobileView = () => (
-    <div className="lg:hidden space-y-4">
+    <div className="lg:hidden space-y-3">
       {schedule.map((item) => (
         <Card
           key={item.section}
           className="overflow-hidden border-border/60 shadow-sm"
         >
-          <CardHeader className="py-3 px-4 bg-muted/10 border-b border-border/50 flex flex-row items-center justify-between">
-            <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Badge variant="outline" className="bg-background">
+          <div className="flex flex-col divide-y divide-border/50">
+            {/* Header */}
+            <div className="px-4 py-2 bg-muted/20 flex items-center justify-between">
+              <Badge
+                variant="outline"
+                className="bg-background font-mono text-xs"
+              >
                 Sec {String(item.section).padStart(2, '0')}
               </Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="divide-y divide-border/50">
-              {/* Theory Row */}
-              <div className="p-4 bg-background">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
-                    <BookOpen className="w-3.5 h-3.5" /> Theory
-                  </div>
-                  <BadgeCell text={item.theory.room} />
+              {/* Placeholder for Active Badge */}
+            </div>
+
+            {/* Content Grid */}
+            <div className="grid grid-cols-2 divide-x divide-border/50">
+              {/* Theory Column */}
+              <div className="p-3 space-y-2">
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-primary uppercase tracking-wider">
+                  <BookOpen className="w-3 h-3" /> Theory
                 </div>
-                <div className="space-y-1 mb-3">
-                  <div className="text-sm font-medium">
+                <div className="space-y-0.5">
+                  <div className="text-xs font-semibold line-clamp-1">
                     {item.theory.faculty}
                   </div>
-                  <EmailLink email={item.theory.email} />
-                </div>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono bg-muted/20 px-2 py-1.5 rounded w-fit">
-                  <span className="font-semibold text-foreground">
-                    {item.theory.days}
-                  </span>
-                  <span className="h-3 w-px bg-border" />
-                  <span>{item.theory.time}</span>
+                  <div className="text-[10px] text-muted-foreground font-mono">
+                    {item.theory.days} • {item.theory.time}
+                  </div>
+                  <div className="text-[10px] font-medium bg-muted/30 w-fit px-1.5 rounded">
+                    {item.theory.room}
+                  </div>
                 </div>
               </div>
 
-              {/* Lab Row */}
-              <div className="p-4 bg-muted/5">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                    <Monitor className="w-3.5 h-3.5" /> Lab
+              {/* Lab Column */}
+              <div className="p-3 space-y-2 bg-muted/5">
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <Monitor className="w-3 h-3" /> Lab
+                </div>
+                <div className="space-y-0.5">
+                  <div className="text-xs font-semibold line-clamp-1">
+                    {item.lab.faculty}
                   </div>
-                  <BadgeCell text={item.lab.room} />
-                </div>
-                <div className="space-y-1 mb-3">
-                  <div className="text-sm font-medium">{item.lab.faculty}</div>
-                  <EmailLink email={item.lab.email} />
-                </div>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono bg-muted/20 px-2 py-1.5 rounded w-fit">
-                  <span className="font-semibold text-foreground">
-                    {item.lab.days}
-                  </span>
-                  <span className="h-3 w-px bg-border" />
-                  <span>{item.lab.time}</span>
+                  <div className="text-[10px] text-muted-foreground font-mono">
+                    {item.lab.days} • {item.lab.time}
+                  </div>
+                  <div className="text-[10px] font-medium bg-muted/30 w-fit px-1.5 rounded">
+                    {item.lab.room}
+                  </div>
                 </div>
               </div>
             </div>
-          </CardContent>
+          </div>
         </Card>
       ))}
     </div>

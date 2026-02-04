@@ -59,9 +59,11 @@ export function SyllabusSection({ course }: { course: CourseData }) {
                 <h3 className="text-base font-semibold mb-4">Course Topics</h3>
                 <ul className="grid sm:grid-cols-2 gap-3">
                   {course.topics.map((topic, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
-                      <span className="text-muted-foreground">{topic}</span>
+                    <li key={idx} className="flex items-start gap-3 group">
+                      <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
+                      <span className="text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
+                        {topic}
+                      </span>
                     </li>
                   ))}
                 </ul>
