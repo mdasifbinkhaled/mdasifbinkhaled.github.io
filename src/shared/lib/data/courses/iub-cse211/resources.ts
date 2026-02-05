@@ -34,14 +34,24 @@ export const links: CourseLink[] = [
 ];
 
 export const resourceSections: CourseResourceSection[] = [
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LEARN: Visualization & Interactive Tools
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     title: 'Interactive Labs (Visualize It)',
     items: [
       {
+        label: 'VisuAlgo',
+        url: 'https://visualgo.net/en',
+        description:
+          'Step-by-step algorithm animations used by top universities worldwide.',
+        isNew: true,
+      },
+      {
         label: 'Red Blob Games (Graphs)',
         url: 'https://www.redblobgames.com/',
         description:
-          'The world’s best interactive guide to A*, BFS, and pathfinding.',
+          "The world's best interactive guide to A*, BFS, and pathfinding.",
       },
       {
         label: 'USFCA Visualizations',
@@ -57,9 +67,18 @@ export const resourceSections: CourseResourceSection[] = [
       },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PRACTICE: Coding Challenges & Contests
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     title: 'Practice Arena (Build It)',
     items: [
+      {
+        label: 'VJudge Contest',
+        url: 'https://vjudge.net/contest/782172',
+        description: '🏆 The official class programming contest.',
+      },
       {
         label: 'CSES Problem Set',
         url: 'https://cses.fi/problemset/',
@@ -72,12 +91,57 @@ export const resourceSections: CourseResourceSection[] = [
         description: 'Structured study plan for interview preparation.',
       },
       {
-        label: 'VJudge Contest',
-        url: 'https://vjudge.net/contest/782172',
-        description: 'The official class programming contest.',
+        label: 'AtCoder',
+        url: 'https://atcoder.jp/',
+        description:
+          'High-quality algorithmic contests from Japan. Great for practice.',
+        isNew: true,
+      },
+      {
+        label: 'Codeforces EDU',
+        url: 'https://codeforces.com/edu/courses',
+        description:
+          'Free courses on Segment Trees, DP, and more (ITMO Academy).',
+        isNew: true,
       },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // REFERENCE: Algorithms Encyclopedia
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    title: 'Reference & Deep Dives',
+    items: [
+      {
+        label: 'CP-Algorithms',
+        url: 'https://cp-algorithms.com/',
+        description:
+          'Comprehensive encyclopedia of algorithms with code and explanations.',
+        isNew: true,
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // READ: Recommended Learning Resources
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    title: 'Recommended Reading',
+    items: [
+      {
+        label: 'MIT 6.006 Video Lectures',
+        url: 'https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/',
+        description:
+          'World-renowned algorithm lectures from MIT (free, full course).',
+        isNew: true,
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CLASS: Official Course Materials
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     title: 'Course Materials',
     items: [
@@ -98,6 +162,10 @@ export const resourceSections: CourseResourceSection[] = [
       },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // VIDEO: Lecture Recordings
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     title: 'Video Archive',
     items: [
