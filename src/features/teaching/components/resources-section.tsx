@@ -59,37 +59,44 @@ export function ResourcesSection({ course }: { course: CourseData }) {
                   </div>
                   <h4 className="font-semibold">{section.title}</h4>
                 </div>
-                <CardContent className="p-4 pt-6">
-                  <ul className="space-y-3">
+                <CardContent className="p-6">
+                  <ul className="space-y-4">
                     {section.items.map((item, i) => (
                       <li
                         key={i}
                         className="flex items-start justify-between group"
                       >
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-start gap-3">
                           {item.icon ? (
                             <Icon
                               name={item.icon}
-                              className="w-4 h-4 text-muted-foreground"
+                              className="w-4 h-4 text-muted-foreground mt-0.5"
                             />
                           ) : (
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-2 shrink-0" />
                           )}
-                          <span className="text-sm font-medium group-hover:text-primary transition-colors">
-                            {item.label}
-                          </span>
-                          {'isNew' in item && item.isNew && (
-                            <Badge className="text-[10px] px-1.5 py-0 h-4 bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20">
-                              New
-                            </Badge>
-                          )}
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-sm font-medium group-hover:text-primary transition-colors flex items-center gap-2">
+                              {item.label}
+                              {'isNew' in item && item.isNew && (
+                                <Badge className="text-[10px] px-1.5 py-0 h-4 bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20">
+                                  New
+                                </Badge>
+                              )}
+                            </span>
+                            {item.description && (
+                              <span className="text-xs text-muted-foreground line-clamp-1">
+                                {item.description}
+                              </span>
+                            )}
+                          </div>
                         </div>
                         {item.url && (
                           <Button
                             variant="ghost"
                             size="sm"
                             asChild
-                            className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                           >
                             <a
                               href={item.url}
@@ -97,7 +104,7 @@ export function ResourcesSection({ course }: { course: CourseData }) {
                               rel="noreferrer"
                               aria-label={`Open ${item.label}`}
                             >
-                              <ExternalLink className="w-3 h-3 text-muted-foreground" />
+                              <ExternalLink className="w-4 h-4 text-muted-foreground" />
                             </a>
                           </Button>
                         )}
@@ -113,11 +120,11 @@ export function ResourcesSection({ course }: { course: CourseData }) {
         {/* 2. Video Resources (Full Width) */}
         {videoSection && (
           <Card className="border-border/40 shadow-sm overflow-hidden">
-            <div className="p-4 border-b bg-muted/10 flex items-center gap-3">
+            <div className="p-6 border-b bg-muted/10 flex items-center gap-4">
               <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg border shadow-sm text-red-600 dark:text-red-400">
                 <Video className="w-5 h-5" />
               </div>
-              <h4 className="font-semibold">{videoSection.title}</h4>
+              <h4 className="font-semibold text-lg">{videoSection.title}</h4>
               <Badge variant="outline" className="ml-auto">
                 {videoSection.items.length} Videos
               </Badge>
@@ -126,7 +133,7 @@ export function ResourcesSection({ course }: { course: CourseData }) {
               {videoSection.items.map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-4 flex items-center justify-between hover:bg-muted/5 transition-colors group"
+                  className="p-6 flex items-center justify-between hover:bg-muted/5 transition-colors group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform">
