@@ -40,17 +40,6 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       primary: 'hsl(199, 89%, 48%)',
     },
   },
-  warm: {
-    name: 'warm',
-    label: 'Warm',
-    description: 'Cozy beige and earth tones for comfortable reading',
-    category: 'natural',
-    preview: {
-      background: 'hsl(40, 40%, 98%)',
-      foreground: 'hsl(30, 20%, 20%)',
-      primary: 'hsl(25, 60%, 40%)',
-    },
-  },
   forest: {
     name: 'forest',
     label: 'Forest',
@@ -63,29 +52,7 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
     },
   },
 
-  // Vibrant themes
-  midnight: {
-    name: 'midnight',
-    label: 'Midnight',
-    description: 'Deep blue night sky with high contrast',
-    category: 'vibrant',
-    preview: {
-      background: 'hsl(220, 40%, 8%)',
-      foreground: 'hsl(210, 40%, 98%)',
-      primary: 'hsl(210, 100%, 60%)',
-    },
-  },
-  sunset: {
-    name: 'sunset',
-    label: 'Sunset',
-    description: 'Warm orange and pink hues like twilight',
-    category: 'vibrant',
-    preview: {
-      background: 'hsl(20, 80%, 98%)',
-      foreground: 'hsl(15, 30%, 20%)',
-      primary: 'hsl(15, 80%, 50%)',
-    },
-  },
+  // Vibrant theme
   lavender: {
     name: 'lavender',
     label: 'Lavender',
@@ -98,7 +65,7 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
     },
   },
 
-  // Professional themes
+  // Professional theme
   slate: {
     name: 'slate',
     label: 'Slate',
@@ -108,50 +75,6 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
       background: 'hsl(215, 16%, 97%)',
       foreground: 'hsl(215, 25%, 17%)',
       primary: 'hsl(215, 50%, 45%)',
-    },
-  },
-  crimson: {
-    name: 'crimson',
-    label: 'Crimson',
-    description: 'Traditional academic red with sophistication',
-    category: 'professional',
-    preview: {
-      background: 'hsl(355, 90%, 98%)',
-      foreground: 'hsl(355, 30%, 20%)',
-      primary: 'hsl(355, 70%, 45%)',
-    },
-  },
-  emerald: {
-    name: 'emerald',
-    label: 'Emerald',
-    description: 'Rich green for growth and innovation',
-    category: 'professional',
-    preview: {
-      background: 'hsl(160, 60%, 98%)',
-      foreground: 'hsl(160, 30%, 18%)',
-      primary: 'hsl(160, 85%, 38%)',
-    },
-  },
-  indigo: {
-    name: 'indigo',
-    label: 'Indigo',
-    description: 'Deep blue for academic excellence',
-    category: 'professional',
-    preview: {
-      background: 'hsl(230, 55%, 98%)',
-      foreground: 'hsl(230, 25%, 20%)',
-      primary: 'hsl(230, 70%, 50%)',
-    },
-  },
-  vintage: {
-    name: 'vintage',
-    label: 'Vintage',
-    description: 'Warm golden tones with classic academic elegance',
-    category: 'professional',
-    preview: {
-      background: 'hsl(42, 40%, 96%)',
-      foreground: 'hsl(30, 30%, 18%)',
-      primary: 'hsl(38, 75%, 45%)',
     },
   },
 };

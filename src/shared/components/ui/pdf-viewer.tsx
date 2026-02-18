@@ -14,13 +14,13 @@ interface PDFViewerProps {
 export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
   return (
     <Card
-      className={`w-full max-w-4xl mx-auto bg-white shadow-lg ${className || ''}`}
+      className={`w-full max-w-4xl mx-auto bg-card shadow-lg ${className || ''}`}
     >
       {/* PDF Controls */}
-      <div className="p-4 border-b bg-gray-50 flex items-center justify-between">
+      <div className="p-4 border-b bg-muted/50 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <FileText className="h-5 w-5 text-primary" />
-          <span className="font-medium text-gray-700">CV Viewer</span>
+          <span className="font-medium text-foreground">CV Viewer</span>
         </div>
 
         {downloadLink && (
@@ -44,8 +44,8 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
       </div>
 
       {/* Fallback message */}
-      <div className="p-4 text-center bg-gray-50 border-t">
-        <p className="text-sm text-gray-600">
+      <div className="p-4 text-center bg-muted/50 border-t">
+        <p className="text-sm text-muted-foreground">
           Cannot view the PDF?
           {downloadLink && (
             <a

@@ -1,191 +1,163 @@
-# Project Master Document (PMD)
+# PMD.md — Project Master Document
 
-> **Version:** 5.1.0 | **Status:** ✅ VERIFIED | **Updated:** 2026-02-05
+> **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
+> **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
+> **URL**: https://mdasifbinkhaled.github.io
+> **Last Updated**: 2025-02-18
 
----
+## Mission
 
-## 1. Overview
+A comprehensive academic portfolio showcasing research, publications, teaching activities, and professional experience for Md Asif Bin Khaled, deployed as a static site on GitHub Pages.
 
-| Field       | Value                                                          |
-| ----------- | -------------------------------------------------------------- |
-| **Project** | Academic Portfolio                                             |
-| **Domain**  | [mdasifbinkhaled.github.io](https://mdasifbinkhaled.github.io) |
-| **Type**    | Static Site (GitHub Pages)                                     |
-| **Stack**   | Next.js 16 · TypeScript · Tailwind CSS                         |
+## Tech Stack
 
----
+| Layer         | Technology                           | Version |
+| ------------- | ------------------------------------ | ------- |
+| Framework     | Next.js (App Router)                 | 16.1.4  |
+| UI Library    | React                                | 19.2.3  |
+| Language      | TypeScript (strict)                  | 5.6     |
+| Styling       | Tailwind CSS + CSS custom properties | 3.4.13  |
+| Validation    | Zod (schema-first types)             | 4.1.9   |
+| Animation     | Framer Motion                        | 12.29.0 |
+| Icons         | Lucide React                         | 0.544.0 |
+| Themes        | next-themes + 6 color themes         | 0.4.6   |
+| UI Primitives | Radix UI (10 packages)               | various |
+| Testing       | Vitest + Testing Library + jsdom     | 3.2.4   |
+| Linting       | ESLint 9 (flat config)               | 9.39.2  |
+| Formatting    | Prettier                             | 3.6.2   |
+| Git Hooks     | Husky + lint-staged + commitlint     | 9.1.7   |
+| Deployment    | GitHub Pages (static export)         | —       |
+| CI/CD         | GitHub Actions (3 workflows)         | —       |
 
-## 2. Architecture
+## Architecture
 
-### 2.1 Directory Layout
+### 4-Layer Design
 
-```text
-src/
-├── app/              # Next.js App Router
-├── features/         # Feature modules (about, home, teaching, publications)
-├── shared/           # Shared infrastructure
-│   ├── components/   # common, layout, navigation, ui
-│   ├── config/       # Site configuration (SSoT)
-│   ├── hooks/        # Custom React hooks
-│   ├── lib/          # data, seo, validation, course-utils
-│   └── types/        # Type definitions
-└── styles/           # Global CSS tokens
+```
+┌─────────────────────────────────────────────┐
+│  App Layer (2,262 LOC / 14%)                │  Page routes, layouts, error boundaries
+│  src/app/                                    │  13 routes, 18 pages
+├─────────────────────────────────────────────┤
+│  Features Layer (3,599 LOC / 23%)           │  Domain modules
+│  src/features/{about,academic,home,          │  Self-contained feature code
+│                 publications,teaching}       │
+├─────────────────────────────────────────────┤
+│  Shared Layer (9,150 LOC / 59%)             │  Cross-cutting infrastructure
+│  src/shared/{components,config,hooks,        │  UI primitives, config, data,
+│              lib,providers,types}            │  validation, analytics
+├─────────────────────────────────────────────┤
+│  Data + Validation (bottom of shared/)      │  29 data files + Zod schemas
+│  src/shared/lib/data/ + validation/          │  Import-time validation
+└─────────────────────────────────────────────┘
 ```
 
-### 2.2 Principles
+### Key Patterns
 
-| Principle         | Implementation                      |
-| ----------------- | ----------------------------------- |
-| **SSoT**          | Config files drive all content      |
-| **Type Safety**   | Zod schemas + `z.infer<>`           |
-| **Server First**  | Use `'use client'` only when needed |
-| **Static Export** | `output: 'export'`                  |
-| **Clean Deps**    | `shared/` never imports `features/` |
+1. **Static Export**: `output: 'export'` — all pages pre-rendered at build time. No server.
+2. **Zod-First Types**: All domain types inferred from Zod schemas. Single source of truth.
+3. **Import-Time Validation**: `validateData()` runs Zod `parse()` when data files are imported.
+4. **Tiered Courses**: Summary (inline data) → Standard (separate file) → Detailed (multi-file directory).
+5. **3-Tier Error Boundaries**: Global (`global-error.tsx`) → Root (`error.tsx`) → Route-level.
+6. **6-Theme System**: CSS custom properties in `tokens.css`, managed by `next-themes` (light, dark, ocean, forest, lavender, slate).
+7. **Domain-Split Validation**: Schemas split into 7 domain files (`common`, `publication`, `experience`, `course`, `education`, `about`, `teaching`) with barrel re-export.
 
----
+## Metrics
 
-## 3. Tech Stack
+| Metric            | Value    |
+| ----------------- | -------- |
+| Source files      | 172      |
+| Lines of code     | 15,496   |
+| Components (.tsx) | 107      |
+| Client components | 44 (41%) |
+| Server components | 63 (59%) |
+| Data files        | 29       |
+| Config files      | 7        |
+| Barrel exports    | 8        |
+| Test files        | 17       |
+| Test count        | 109      |
+| Pages generated   | 18       |
+| Themes            | 6        |
+| Git commits       | 403      |
 
-| Category   | Technology   | Version |
-| ---------- | ------------ | ------- |
-| Framework  | Next.js      | 16.1.4  |
-| Language   | TypeScript   | 5.9.3   |
-| Styling    | Tailwind CSS | 3.4.19  |
-| Validation | Zod          | 4.3.6   |
-| Testing    | Vitest       | 3.2.4   |
-| Components | Radix UI     | Latest  |
+### Largest Files
 
-**Note:** `eslint` pinned to `^8.57.1` for stability. Vitest issue resolved by ESM configuration.
+| File                         | LOC | Purpose                                  |
+| ---------------------------- | --- | ---------------------------------------- |
+| `validation/schemas.ts`      | 14  | Barrel re-export (7 domain schema files) |
+| `layout/profile-sidebar.tsx` | 419 | Sidebar component                        |
+| `ui/theme-selector.tsx`      | 397 | Theme picker                             |
+| `app/research/page.tsx`      | 384 | Research page                            |
+| `lib/analytics.ts`           | 345 | GA event tracking                        |
+| `teaching/course-card.tsx`   | 281 | Course card component                    |
+| `navigation/navbar.tsx`      | 279 | Top navigation                           |
+| `data/about.ts`              | 274 | About page data                          |
 
----
+### LOC Distribution
 
-## 4. Design System
-
-### 4.1 Theming
-
-- **13 themes** defined in `config/themes.ts`
-- **Tokens** in `styles/tokens.css`
-- **Categories**: Classic, Natural, Vibrant, Professional
-
-### 4.2 Shape Standards
-
-| Element      | Style          |
-| ------------ | -------------- |
-| Cards        | `rounded-xl`   |
-| Icons/Badges | `rounded-full` |
-
-### 4.3 Components
-
-**UI (17)**: Button, Card, Badge, Sheet, Tabs, Select, DropdownMenu, Toast, Toaster, ThemeSelector, Progress, Skeleton, ErrorBoundary, Input, Separator, PDFViewer, PDFViewerWrapper
-
-**Common (14)**: AcademicProfiles, StatCard, BackToTop, SkipLink, NewsFeed, PublicationList, Icons, ErrorFallback, ExperienceCompact, FooterYear, HashScroll, MotionPage, StructuredData, PublicationCard
-
----
-
-## 5. Data Layer
-
-### 5.1 Sources
-
-| Type         | Location                      |
-| ------------ | ----------------------------- |
-| Courses      | `lib/data/courses/index.json` |
-| Publications | `lib/data/publications.ts`    |
-| Experience   | `lib/data/experience.ts`      |
-| Activities   | `lib/data/activities.ts`      |
-| News         | `lib/data/news.ts`            |
-
-### 5.2 Course Tier System
-
-| Tier       | Display         | Count |
-| ---------- | --------------- | ----- |
-| `detailed` | Full page       | 1     |
-| `standard` | Expandable card | 6     |
-| `summary`  | Card only       | 4     |
-
-### 5.3 Configuration
-
-| Config                  | Purpose                   |
-| ----------------------- | ------------------------- |
-| `site.ts`               | Site metadata             |
-| `navigation.ts`         | Nav structure             |
-| `themes.ts`             | Theme definitions         |
-| `constants.ts`          | Display limits            |
-| `researcher-profile.ts` | Research areas & identity |
-| `structured-data.ts`    | SEO & Schema logic        |
-
-### 5.4 SEO & Structured Data
-
-- **Implementation**: `src/shared/lib/structured-data.ts`
-- **Schema Support**: `Person` (Global), `Course` (Teaching), `ScholarlyArticle` (Publications)
-- **Optimization**: `next/font/google` (Zero CLS), Dynamic Metadata generation
-
----
-
-## 6. Quality Assurance
-
-### 6.1 Testing
-
-- **Framework**: Vitest
-- **Tests**: 109 (100% Passing)
-- **Coverage**: 80% threshold
-
-### 6.2 CI/CD
-
-| Workflow       | Trigger      | Purpose               |
-| -------------- | ------------ | --------------------- |
-| `ci.yml`       | PR           | Lint, test, typecheck |
-| `nextjs.yml`   | Push to main | Build & deploy        |
-| `security.yml` | Schedule     | CodeQL, audit         |
-
-### 6.3 Verification Commands
-
-```bash
-npm run validate   # Full check (Passes all)
-npm run typecheck  # Types only
-npm run lint:check # Lint only
-npm run test:run   # Tests only
+```
+shared/    9,150 (59%)  ████████████████████████████████████
+features/  3,599 (23%)  ██████████████
+app/       2,262 (14%)  █████████
+styles/      485  (3%)  ███
 ```
 
----
+## Feature Modules
 
-## 7. Conventions
+| Module              | Files | Purpose                                          |
+| ------------------- | ----- | ------------------------------------------------ |
+| `teaching/`         | 16    | Course cards, detail pages, schedules, syllabi   |
+| `about/`            | 10    | Hero, awards, certifications, skills, philosophy |
+| `home/`             | 5     | Hero, news, research highlights, connect         |
+| `academic/`         | 8     | Cross-cutting search with filters                |
+| ~~`publications/`~~ | —     | _Deleted: was empty re-export only_              |
 
-### 7.1 Code
+## Pages & Routes
 
-- **Files**: `kebab-case.tsx`
-- **Components**: `PascalCase`
-- **Hooks**: `use-*.ts`
-- **Commits**: [Conventional Commits](https://www.conventionalcommits.org/)
+| Route                     | Type     | Purpose                              |
+| ------------------------- | -------- | ------------------------------------ |
+| `/`                       | Static   | Homepage                             |
+| `/about`                  | Static   | About with sections (anchored)       |
+| `/publications`           | Static   | Publications with search/filter      |
+| `/research`               | Static   | Research interests, libraries, goals |
+| `/teaching`               | Static   | Teaching hub with institution tabs   |
+| `/teaching/iub`           | Static   | IUB courses listing                  |
+| `/teaching/bracu`         | Static   | BRACU courses listing                |
+| `/teaching/[inst]/[code]` | SSG      | Dynamic course detail pages          |
+| `/cv`                     | Static   | PDF CV viewer                        |
+| `/contact`                | Static   | Contact & social links               |
+| `/experience`             | Redirect | → /about#experience                  |
+| `/service`                | Redirect | → /about#honors-awards               |
+| `/service-awards`         | Redirect | → /about#honors-awards               |
 
-### 7.2 Banned Patterns
+## Quality Status
 
-- `key={index}` in lists
-- Dynamic Tailwind classes
-- `as any`, `@ts-ignore`
-- Console logs without env check
-- Non-explicit imports (Barrel files only for modules)
+| Check      | Status | Details                                              |
+| ---------- | ------ | ---------------------------------------------------- |
+| TypeScript | ✅     | 0 errors (strict mode)                               |
+| ESLint     | ✅     | 0 errors                                             |
+| Prettier   | ✅     | All formatted                                        |
+| Tests      | ✅     | 109/109 pass                                         |
+| Build      | ✅     | 18 pages exported                                    |
+| Audit      | ⚠️     | 10 vulns (all mitigated — dev-only or static export) |
 
----
+## Architecture Observations
 
-## 8. Changelog
+### Strengths
 
-| Date       | Version | Changes                                                                                                              |
-| ---------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| 2026-02-05 | 5.1.0   | **UX & Polish**: Enhanced Course Page (Quick Facts, Mobile Table), Breadcrumb Logic Centralized, Full Codebase Audit |
-| 2026-01-27 | 5.0.0   | **SOTA Integration**: Command Menu, Spotlight UI, Typed Routes, View Transitions                                     |
-| 2026-01-18 | 4.10.0  | **System Rebuild**: Clean install, dependencies verified, PMD updated                                                |
-| 2026-01-17 | 4.9.2   | Final Polish: Course Detail refactor restored, Zod Schema fix, Test fix                                              |
-| 2026-01-17 | 4.9.1   | Systematic cleanup: Semantic Tailwind tokens, hardcoded values removed                                               |
-| 2026-01-17 | 4.9.0   | Performance & SEO Optimization (Next.font, JSON-LD)                                                                  |
-| 2026-01-14 | 4.8.0   | Teaching module refactoring - data-driven architecture                                                               |
-| 2026-01-13 | 4.7.0   | Dependency audit, PMD sync (fix Tailwind version)                                                                    |
-| 2025-12-21 | 4.6.0   | Documentation overhaul (README/PMD), systematic cleanup                                                              |
-| 2025-12-20 | 4.5.0   | Cleanup & finalization, fixed barrel exports                                                                         |
-| 2025-12-19 | 4.4.1   | Shape system unification                                                                                             |
-| 2025-12-17 | 4.4.0   | AI signature cleanup, CourseCard unification                                                                         |
-| 2025-12-16 | 4.3.0   | Teaching data verified                                                                                               |
-| 2025-12-16 | 4.0.0   | Major architecture overhaul                                                                                          |
+- Clean 4-layer separation with clear dependency direction
+- Type safety via Zod-first approach (catches data errors at import time)
+- Comprehensive error boundary coverage
+- Good test foundation (109 tests, CI-enforced)
+- Professional CI/CD with conventional commits
 
----
+### Concerns
 
-> This document is the single source of truth. All changes require verification.
+- **shared/ layer is 59% of codebase** — risk of becoming a grab-bag
+- **~42 client components** — reduced (removed unnecessary `'use client'` from `teaching-cta.tsx`, deleted `footer-year.tsx`)
+- ~~**19 barrel files**~~ → **8 barrel files** — removed 10 dead barrels, remaining are all actively imported
+- ~~**614-line schema file**~~ → **7 domain schema files** + barrel re-export — clean domain boundaries
+- ~~**13 themes**~~ → **6 themes** — reduced to light, dark, ocean, forest, lavender, slate
+- **345 LOC analytics** — heavy for a portfolio site
+- ~~**`publications/` feature is empty**~~ → _Deleted_
+
+See [ISSUES.md](ISSUES.md) for full finding tracker.

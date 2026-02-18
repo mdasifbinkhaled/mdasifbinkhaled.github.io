@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorFallback } from '@/shared/components/common';
+import { ErrorFallback } from '@/shared/components/common/error-fallback';
 
 export default function Error({
   error,

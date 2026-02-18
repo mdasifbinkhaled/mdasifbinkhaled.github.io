@@ -1,7 +1,21 @@
 // SEO Structured Data utilities for academic content
 import { siteConfig } from '@/shared/config/site';
+import { assetPaths } from '@/shared/config/assets';
 import { institutionNames } from '@/shared/lib/data/courses';
 import type { CourseInstitution } from '@/shared/types';
+
+/**
+ * Sanitize JSON-LD output to prevent XSS injection via script breakout.
+ * Escapes `<`, `>`, `&`, and Unicode line/paragraph separators.
+ */
+export function sanitizeJsonLd(data: unknown): string {
+  return JSON.stringify(data, null, 2)
+    .replace(/</g, '\\u003C')
+    .replace(/>/g, '\\u003E')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
 
 export interface AcademicPersonStructuredData {
   '@context': 'https://schema.org';
@@ -89,7 +103,7 @@ export function generatePersonStructuredData(): AcademicPersonStructuredData {
     knowsAbout: researchIdentity.primaryAreas.map((area) => area.name),
     description: siteConfig.description,
     email: siteConfig.email,
-    image: `${siteConfig.url}/photo/Photo_Md Asif Bin Khaled.png`,
+    image: `${siteConfig.url}${assetPaths.profile}`,
   };
 }
 
@@ -202,14 +216,6 @@ export function generateWebsiteStructuredData() {
     author: {
       '@type': 'Person',
       name: siteConfig.author,
-    },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${siteConfig.url}/search?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
     },
   };
 }

@@ -58,8 +58,10 @@ export function Icon({ name, className, ...props }: IconComponentProps) {
   const LucideComponent = iconComponents[name];
 
   if (!LucideComponent) {
-    console.warn(`Icon "${name}" not found.`);
-    return null; // Or a default fallback icon
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(`Icon "${name}" not found.`);
+    }
+    return null;
   }
 
   return <LucideComponent className={className} {...props} />;

@@ -324,7 +324,11 @@ export default function ResearchPage() {
                 </CardHeader>
                 <CardContent>
                   <Button variant="outline" size="sm" asChild>
-                    <Link href={library.github} target="_blank">
+                    <Link
+                      href={library.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       View on GitHub <ExternalLink className="ml-2 h-3 w-3" />
                     </Link>
                   </Button>
@@ -368,7 +372,11 @@ export default function ResearchPage() {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link href={academicProfiles.github.url} target="_blank">
+              <Link
+                href={academicProfiles.github.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Code className="mr-2 h-4 w-4" />
                 GitHub Projects
               </Link>

@@ -101,7 +101,7 @@ export function ResourcesSection({ course }: { course: CourseData }) {
                             <a
                               href={item.url}
                               target="_blank"
-                              rel="noreferrer"
+                              rel="noopener noreferrer"
                               aria-label={`Open ${item.label}`}
                             >
                               <ExternalLink className="w-4 h-4 text-muted-foreground" />
@@ -148,7 +148,11 @@ export function ResourcesSection({ course }: { course: CourseData }) {
                       asChild
                       className="text-xs h-8"
                     >
-                      <a href={item.url} target="_blank" rel="noreferrer">
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         Watch
                         <ExternalLink className="w-3 h-3 ml-2 opacity-50" />
                       </a>

@@ -110,7 +110,11 @@ export function CourseHero({ course }: { course: CourseData }) {
                     )}
                     asChild
                   >
-                    <a href={link.url} target="_blank" rel="noreferrer">
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <LinkIcon
                         className={cn(
                           'w-4 h-4 mr-2',

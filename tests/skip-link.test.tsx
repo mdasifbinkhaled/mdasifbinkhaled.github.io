@@ -11,7 +11,7 @@ describe('SkipLink', () => {
     });
     expect(skipLink).toBeInTheDocument();
     expect(skipLink).toHaveAttribute('href', '#main-content');
-    expect(skipLink).toHaveAttribute('tabIndex', '1');
+    expect(skipLink).toHaveAttribute('tabIndex', '0');
   });
 
   it('has proper accessibility classes', () => {

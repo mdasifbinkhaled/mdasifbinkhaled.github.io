@@ -6,7 +6,10 @@ import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
 import { SkipLink } from '@/shared/components/common/skip-link';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
-import { generatePersonStructuredData } from '@/shared/lib/structured-data';
+import {
+  generatePersonStructuredData,
+  sanitizeJsonLd,
+} from '@/shared/lib/structured-data';
 import '@/app/globals.css';
 import '@/styles/tokens.css';
 
@@ -26,7 +29,21 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
   alternates: { canonical: '/' },
-  openGraph: { title: siteConfig.author, images: [assetPaths.ogImage] },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: siteConfig.name,
+    title: siteConfig.author,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    images: [assetPaths.ogImage],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.author,
+    description: siteConfig.description,
+    images: [assetPaths.ogImage],
+  },
 };
 
 export default function RootLayout({
@@ -40,10 +57,10 @@ export default function RootLayout({
         className={`${inter.variable} font-sans antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
-        {/* JSON-LD Structured Data */}
+        {/* JSON-LD Structured Data — sanitized to prevent XSS */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: sanitizeJsonLd(jsonLd) }}
         />
 
         {/* Google Analytics 4 - Only loads if configured */}

@@ -96,22 +96,15 @@ export type ThemeName =
   | 'light'
   | 'dark'
   | 'ocean'
-  | 'warm'
   | 'forest'
-  | 'midnight'
-  | 'sunset'
   | 'lavender'
-  | 'slate'
-  | 'crimson'
-  | 'emerald'
-  | 'indigo'
-  | 'vintage';
+  | 'slate';
 
 export interface ThemeConfig {
   name: ThemeName;
   label: string;
   description: string;
-  category: 'classic' | 'dramatic' | 'natural' | 'vibrant' | 'professional';
+  category: 'classic' | 'natural' | 'vibrant' | 'professional';
   preview: {
     background: string;
     foreground: string;

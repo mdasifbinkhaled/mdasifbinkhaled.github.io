@@ -30,6 +30,15 @@ export const iubCse211: CourseData = {
     'Understand NP-completeness and intractability.',
   ],
   technologies: ['Python', 'C++', 'Jupyter Notebook'],
+  assignments: [
+    {
+      title: 'Assignment 1 Specification',
+      link: 'https://docs.google.com/document/d/1zpuJU5Us3u_ZXNavkciqvSvQeB2ZmoFqvhbLo-6sIEk/edit?usp=sharing',
+      status: 'active',
+      description:
+        'Review the detailed requirement specification for Assignment 1.',
+    },
+  ],
   enrollmentCount: 0,
   rating: 0,
   iconName: 'Brain',

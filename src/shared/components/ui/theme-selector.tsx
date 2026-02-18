@@ -18,16 +18,9 @@ import {
   Moon,
   Check,
   Waves,
-  Coffee,
   Trees,
-  CloudMoon,
-  Sunrise,
   Flower,
   Briefcase,
-  Heart,
-  Leaf,
-  Sparkles,
-  Scroll,
 } from 'lucide-react';
 
 const themes = [
@@ -58,14 +51,6 @@ const themes = [
     category: 'Natural',
   },
   {
-    name: 'warm',
-    label: 'Warm',
-    description: 'Cozy beige and earth tones',
-    icon: Coffee,
-    preview: 'bg-gradient-to-br from-amber-50 to-orange-50',
-    category: 'Natural',
-  },
-  {
     name: 'forest',
     label: 'Forest',
     description: 'Fresh green tones inspired by nature',
@@ -73,23 +58,7 @@ const themes = [
     preview: 'bg-gradient-to-br from-emerald-50 to-green-100',
     category: 'Natural',
   },
-  // Vibrant Themes
-  {
-    name: 'midnight',
-    label: 'Midnight',
-    description: 'Deep blue night sky with high contrast',
-    icon: CloudMoon,
-    preview: 'bg-gradient-to-br from-indigo-950 to-blue-900',
-    category: 'Vibrant',
-  },
-  {
-    name: 'sunset',
-    label: 'Sunset',
-    description: 'Warm orange and pink hues like twilight',
-    icon: Sunrise,
-    preview: 'bg-gradient-to-br from-orange-100 to-pink-100',
-    category: 'Vibrant',
-  },
+  // Vibrant Theme
   {
     name: 'lavender',
     label: 'Lavender',
@@ -98,7 +67,7 @@ const themes = [
     preview: 'bg-gradient-to-br from-purple-100 to-pink-50',
     category: 'Vibrant',
   },
-  // Professional Themes
+  // Professional Theme
   {
     name: 'slate',
     label: 'Slate',
@@ -106,38 +75,6 @@ const themes = [
     icon: Briefcase,
     preview: 'bg-gradient-to-br from-gray-100 to-slate-200',
     category: 'Professional',
-  },
-  {
-    name: 'crimson',
-    label: 'Crimson',
-    description: 'Traditional academic red with sophistication',
-    icon: Heart,
-    preview: 'bg-gradient-to-br from-red-50 to-rose-100',
-    category: 'Professional',
-  },
-  {
-    name: 'emerald',
-    label: 'Emerald',
-    description: 'Rich green for growth and innovation',
-    icon: Leaf,
-    preview: 'bg-gradient-to-br from-emerald-100 to-teal-100',
-    category: 'Professional',
-  },
-  {
-    name: 'indigo',
-    label: 'Indigo',
-    description: 'Deep blue for academic excellence',
-    icon: Sparkles,
-    preview: 'bg-gradient-to-br from-indigo-100 to-blue-200',
-    category: 'Professional',
-  },
-  {
-    name: 'vintage',
-    label: 'Vintage',
-    description: 'Warm golden tones with classic elegance',
-    icon: Scroll,
-    preview: 'bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50',
-    category: 'Classic',
   },
 ] as const;
 

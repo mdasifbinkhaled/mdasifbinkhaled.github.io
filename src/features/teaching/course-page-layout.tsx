@@ -12,6 +12,7 @@ import { OverviewSection } from '@/features/teaching/components/overview-section
 import { ScheduleSection } from '@/features/teaching/components/schedule-section';
 import { SyllabusSection } from '@/features/teaching/components/syllabus-section';
 import { ResourcesSection } from '@/features/teaching/components/resources-section';
+import { AssignmentsSection } from '@/features/teaching/components/assignments-section';
 
 interface CoursePageLayoutProps {
   course: CourseData;
@@ -79,6 +80,12 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
 
         {/* Syllabus Section - Now Curriculum Only */}
         <SyllabusSection course={course} />
+
+        {/* Section Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+        {/* Assignments Section */}
+        <AssignmentsSection course={course} />
 
         {/* Section Divider */}
         <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />

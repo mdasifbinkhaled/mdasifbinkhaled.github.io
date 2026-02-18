@@ -1,0 +1,76 @@
+# HISTORY.md — Development Timeline
+
+> 403 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
+
+## Timeline
+
+### Phase 1 — Initial Scaffold (Early Development)
+
+- **`ccc9819`** — Initial scaffold
+- Rapid iteration through NextJS errors and multi-page restructuring
+- Navigation moved from sidebar to top bar
+- Basic page structure established
+
+### Phase 2 — Content & Feature Build-out
+
+- Course pages built (IUB + BRACU institutions)
+- Teaching feature module developed (assignments, schedules, resources, syllabus)
+- Publications listing with search
+- Research page with interests, libraries, goals
+- About page with modular sections (awards, certifications, skills, etc.)
+- Contact page with social links
+
+### Phase 3 — UI Modernization & Polish
+
+- collapsible sections with shared `CollapsibleSection` component
+- Schedule and Syllabus sections separated
+- Notice Board standardized
+- Overview section redesigned with nested accordion
+- Quick Access box styling
+- Course page modularized (`bf57124`)
+
+### Phase 4 — Stack Modernization
+
+- **`166b4a3`** `chore(release): stable state push` — Next.js 16, React 19
+- Modern stack: Next 16, React 19, TypeScript 5.6, Zod 4
+- Conventional commits adopted
+- `checkpoint-pre-sota` tag set
+
+### Phase 5 — Quality & Governance
+
+- `v1.1.0-stable` tag
+- `v1.1.1-stable` tag
+- CI/CD: GitHub Actions (ci.yml, nextjs.yml, security.yml)
+- Husky + lint-staged + commitlint
+- Vitest test suite (109 tests)
+- CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md, LICENSE
+
+### Phase 6 — Content & Polish (Recent)
+
+- CSE211 page: consultation hours, feedback, resources reorganization
+- Lab faculty updates, Discord link updates
+- Python cheat sheet resource added
+- Algorithm resources added
+- Spacing and alignment optimizations
+
+### Phase 7 — Cockpit Audit & Fixes (Current)
+
+- Comprehensive forensic analysis (172 files, 15,496 LOC)
+- 44 findings documented (0 critical, 6 high, 15 medium, 14 low, 9 info)
+- Fixes applied: XSS (JSON-LD), sitemap, accessibility, security headers, theme consistency
+- `.cockpit/` intelligence hub created
+- All quality gates passing: 0 lint errors, 0 type errors, 109/109 tests, build OK
+
+## Tags
+
+| Tag                   | Description                            |
+| --------------------- | -------------------------------------- |
+| `checkpoint-pre-sota` | Pre-modernization checkpoint           |
+| `v1.1.0-stable`       | First stable release with modern stack |
+| `v1.1.1-stable`       | Patch release                          |
+
+## Branch Strategy
+
+- **`main`** — Single production branch, deploys to GitHub Pages on push
+- **`dependabot/*`** — Automated dependency update PRs (25+ branches)
+- No feature branch strategy currently in use
