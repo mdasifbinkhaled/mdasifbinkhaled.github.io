@@ -3,7 +3,7 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2025-02-18
+> **Last Updated**: 2026-02-18
 
 ## Mission
 
@@ -35,18 +35,18 @@ A comprehensive academic portfolio showcasing research, publications, teaching a
 
 ```
 ┌─────────────────────────────────────────────┐
-│  App Layer (2,262 LOC / 14%)                │  Page routes, layouts, error boundaries
+│  App Layer (2,270 LOC / 15%)                │  Page routes, layouts, error boundaries
 │  src/app/                                    │  13 routes, 18 pages
 ├─────────────────────────────────────────────┤
-│  Features Layer (3,599 LOC / 23%)           │  Domain modules
+│  Features Layer (3,593 LOC / 24%)           │  Domain modules
 │  src/features/{about,academic,home,          │  Self-contained feature code
-│                 publications,teaching}       │
+│                 teaching}                    │
 ├─────────────────────────────────────────────┤
-│  Shared Layer (9,150 LOC / 59%)             │  Cross-cutting infrastructure
+│  Shared Layer (9,011 LOC / 60%)             │  Cross-cutting infrastructure
 │  src/shared/{components,config,hooks,        │  UI primitives, config, data,
 │              lib,providers,types}            │  validation, analytics
 ├─────────────────────────────────────────────┤
-│  Data + Validation (bottom of shared/)      │  29 data files + Zod schemas
+│  Data + Validation (bottom of shared/)      │  28 data files + 7 domain Zod schemas
 │  src/shared/lib/data/ + validation/          │  Import-time validation
 └─────────────────────────────────────────────┘
 ```
@@ -65,51 +65,50 @@ A comprehensive academic portfolio showcasing research, publications, teaching a
 
 | Metric            | Value    |
 | ----------------- | -------- |
-| Source files      | 172      |
-| Lines of code     | 15,496   |
-| Components (.tsx) | 107      |
-| Client components | 44 (41%) |
-| Server components | 63 (59%) |
-| Data files        | 29       |
+| Source files      | 167      |
+| Lines of code     | 15,135   |
+| Components (.tsx) | 105      |
+| Client components | 44 (42%) |
+| Server components | 61 (58%) |
+| Data files        | 28       |
 | Config files      | 7        |
 | Barrel exports    | 8        |
 | Test files        | 17       |
 | Test count        | 109      |
 | Pages generated   | 18       |
 | Themes            | 6        |
-| Git commits       | 403      |
+| Git commits       | 404      |
 
 ### Largest Files
 
-| File                         | LOC | Purpose                                  |
-| ---------------------------- | --- | ---------------------------------------- |
-| `validation/schemas.ts`      | 14  | Barrel re-export (7 domain schema files) |
-| `layout/profile-sidebar.tsx` | 419 | Sidebar component                        |
-| `ui/theme-selector.tsx`      | 397 | Theme picker                             |
-| `app/research/page.tsx`      | 384 | Research page                            |
-| `lib/analytics.ts`           | 345 | GA event tracking                        |
-| `teaching/course-card.tsx`   | 281 | Course card component                    |
-| `navigation/navbar.tsx`      | 279 | Top navigation                           |
-| `data/about.ts`              | 274 | About page data                          |
+| File                          | LOC | Purpose                   |
+| ----------------------------- | --- | ------------------------- |
+| `layout/profile-sidebar.tsx`  | 419 | Sidebar component         |
+| `app/research/page.tsx`       | 392 | Research page             |
+| `lib/analytics.ts`            | 345 | GA event tracking         |
+| `ui/theme-selector.tsx`       | 334 | Theme picker              |
+| `validation/course-schema.ts` | 287 | Course domain Zod schemas |
+| `teaching/course-card.tsx`    | 281 | Course card component     |
+| `navigation/navbar.tsx`       | 279 | Top navigation            |
+| `data/about.ts`               | 274 | About page data           |
 
 ### LOC Distribution
 
 ```
-shared/    9,150 (59%)  ████████████████████████████████████
-features/  3,599 (23%)  ██████████████
-app/       2,262 (14%)  █████████
-styles/      485  (3%)  ███
+shared/    9,011 (60%)  ████████████████████████████████████
+features/  3,593 (24%)  ██████████████
+app/       2,270 (15%)  █████████
+styles/      261  (2%)  ██
 ```
 
 ## Feature Modules
 
-| Module              | Files | Purpose                                          |
-| ------------------- | ----- | ------------------------------------------------ |
-| `teaching/`         | 16    | Course cards, detail pages, schedules, syllabi   |
-| `about/`            | 10    | Hero, awards, certifications, skills, philosophy |
-| `home/`             | 5     | Hero, news, research highlights, connect         |
-| `academic/`         | 8     | Cross-cutting search with filters                |
-| ~~`publications/`~~ | —     | _Deleted: was empty re-export only_              |
+| Module      | Files | Purpose                                          |
+| ----------- | ----- | ------------------------------------------------ |
+| `teaching/` | 17    | Course cards, detail pages, schedules, syllabi   |
+| `about/`    | 10    | Hero, awards, certifications, skills, philosophy |
+| `home/`     | 6     | Hero, news, research highlights, connect         |
+| `academic/` | 8     | Cross-cutting search with filters                |
 
 ## Pages & Routes
 
@@ -152,12 +151,11 @@ styles/      485  (3%)  ███
 
 ### Concerns
 
-- **shared/ layer is 59% of codebase** — risk of becoming a grab-bag
-- **~42 client components** — reduced (removed unnecessary `'use client'` from `teaching-cta.tsx`, deleted `footer-year.tsx`)
-- ~~**19 barrel files**~~ → **8 barrel files** — removed 10 dead barrels, remaining are all actively imported
-- ~~**614-line schema file**~~ → **7 domain schema files** + barrel re-export — clean domain boundaries
-- ~~**13 themes**~~ → **6 themes** — reduced to light, dark, ocean, forest, lavender, slate
+- **shared/ layer is 60% of codebase** — risk of becoming a grab-bag
+- **44 client components** — acceptable (error boundaries, interactive UI, animations)
+- **8 barrel files** — all actively imported, healthy
+- **7 domain schema files** — clean domain boundaries via barrel re-export
+- **6 themes** — light, dark, ocean, forest, lavender, slate
 - **345 LOC analytics** — heavy for a portfolio site
-- ~~**`publications/` feature is empty**~~ → _Deleted_
 
 See [ISSUES.md](ISSUES.md) for full finding tracker.

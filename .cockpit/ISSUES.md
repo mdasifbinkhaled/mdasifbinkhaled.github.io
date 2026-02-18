@@ -1,7 +1,7 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2025-02-18 | **Auditor**: GitHub Copilot (Claude Opus 4.6)
-> **Total Findings**: 44 | **Resolved**: 23 | **Open**: 21
+> **Last Audit**: 2026-02-18 | **Auditor**: GitHub Copilot (Claude Opus 4.6)
+> **Total Findings**: 48 | **Resolved**: 25 | **Open**: 23
 
 ## Dashboard
 
@@ -9,8 +9,8 @@
 CRITICAL:  0 (0 open)
 HIGH:      6 (2 open)
 MEDIUM:   15 (7 open)
-LOW:      14 (7 open)
-INFO:      9 (5 open)
+LOW:      16 (8 open)
+INFO:     11 (6 open)
 ```
 
 ## Quality Gates Status
@@ -152,7 +152,7 @@ Format:      ✅ All formatted
 #### F-025 — CI: Dependabot Branch Accumulation
 
 - **Category**: CI/CD | **Severity**: LOW
-- **Issue**: 25+ dependabot branches accumulating. Should be merged or closed regularly.
+- **Issue**: 24 dependabot branches accumulating. Should be merged or closed regularly.
 - **Fix**: Set up auto-merge for patch updates, review and close stale branches.
 
 #### F-026 — DOC: Package Version Mismatch
@@ -160,6 +160,13 @@ Format:      ✅ All formatted
 - **Category**: Documentation | **Severity**: LOW
 - **Issue**: `package.json` says `1.0.0` but git tags say `v1.1.1-stable`. Version not bumped.
 - **Fix**: Bump package.json version to match latest tag, or adopt a versioning strategy.
+
+#### F-047 — A11Y: Hardcoded Colors in Notice Board
+
+- **Category**: Accessibility | **Severity**: LOW
+- **File**: `src/features/teaching/components/notice-board.tsx`
+- **Issue**: "NEW" badge uses hardcoded `bg-red-500 text-white` instead of theme tokens. Bypasses theme system.
+- **Fix**: Replace with semantic token (e.g., `bg-destructive text-destructive-foreground`) or create a badge variant.
 
 ### INFO
 
@@ -188,35 +195,49 @@ Format:      ✅ All formatted
 - **Issue**: Only main branch deploys. No staging URL for review.
 - **Note**: GitHub Pages only supports one branch. Consider Vercel for preview deployments.
 
+#### F-048 — INFO: Error Boundary Console Statements Unguarded
+
+- **Files**: `src/shared/components/common/error-fallback.tsx`, `src/shared/components/ui/error-boundary.tsx`, `src/app/cv/error.tsx`
+- **Issue**: Error boundaries use `console.error()` without `process.env.NODE_ENV` guard. Unlike other console statements, these are in error-handling code paths.
+- **Note**: Acceptable behavior — error boundaries are the correct place to log errors. When a real error reporting service (Sentry, etc.) is added, these would be replaced. No action required unless adding error tracking.
+
+#### F-049 — INFO: global-error.tsx Uses Hardcoded Colors
+
+- **File**: `src/app/global-error.tsx`
+- **Issue**: Uses hardcoded `bg-white`, `bg-gray-*`, `text-gray-*`, `bg-blue-600` colors instead of theme tokens.
+- **Note**: Intentional — `global-error.tsx` catches errors in the root layout, which means the theme provider may not be available. Hardcoded colors are the only safe fallback. No action needed.
+
 ---
 
 ## Resolved Findings
 
-### Resolved in Cockpit Audit (2025-02-18)
+### Resolved in Cockpit Audit (2026-02-18)
 
-| ID    | Category      | Severity | Title                                                         | Resolution                                                    |
-| ----- | ------------- | -------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| F-001 | Security      | HIGH     | XSS in JSON-LD via raw `JSON.stringify`                       | Added `sanitizeJsonLd()` with HTML entity escaping            |
-| F-002 | Security      | HIGH     | Missing HSTS and CSP headers                                  | Added to `public/_headers`                                    |
-| F-032 | SEO           | HIGH     | Sitemap includes redirect stubs, missing teaching routes      | Rewrote sitemap with dynamic course generation                |
-| F-033 | SEO           | MEDIUM   | Bogus SearchAction in structured data                         | Removed (no /search page exists)                              |
-| F-034 | SEO           | MEDIUM   | Incomplete OpenGraph metadata                                 | Added type, locale, siteName, description, url, Twitter cards |
-| F-035 | Data          | MEDIUM   | Structured data image path wrong                              | Fixed to use `assetPaths.profile`                             |
-| F-036 | A11Y          | MEDIUM   | Skip-link `tabIndex={1}` (WCAG anti-pattern)                  | Changed to `tabIndex={0}`                                     |
-| F-037 | A11Y          | MEDIUM   | PDF viewer hardcoded colors bypass theme                      | Replaced with theme tokens                                    |
-| F-038 | Perf          | LOW      | `teaching-cta.tsx` unnecessary `'use client'`                 | Removed directive                                             |
-| F-039 | Perf          | LOW      | `footer-year.tsx` unnecessary `'use client'`                  | Removed directive                                             |
-| F-040 | Quality       | LOW      | Console statements in production code                         | Guarded behind `process.env.NODE_ENV !== 'production'`        |
-| F-041 | Quality       | LOW      | Double-redirect chain (/service → /service-awards → /about)   | Direct redirect to `/about#honors-awards`                     |
-| F-042 | Quality       | LOW      | 7 `target="_blank"` links missing `rel="noopener noreferrer"` | Fixed all 7 instances                                         |
-| F-043 | Quality       | LOW      | Test asserting buggy `tabIndex={1}` behavior                  | Updated test to expect `tabIndex={0}`                         |
-| F-009 | Architecture  | MEDIUM   | 614-line monolithic `schemas.ts`                              | Split into 7 domain modules + barrel                          |
-| F-011 | Architecture  | MEDIUM   | 13 themes (695 LOC) overengineered                            | Reduced to 6 themes, saved ~308 LOC                           |
-| F-012 | Architecture  | MEDIUM   | Empty publications feature module                             | Deleted dead re-export                                        |
-| F-014 | Architecture  | MEDIUM   | 19 barrel files hurt tree-shaking                             | Removed 10 dead barrels, kept 8 healthy                       |
-| F-017 | Architecture  | LOW      | Unused FooterYear component                                   | Deleted dead code                                             |
-| F-019 | Architecture  | LOW      | ThemeSelector bloated by 13 themes                            | Reduced to 6, removed 7 icon imports                          |
-| F-024 | Accessibility | LOW      | 13 themes = 26 contrast combos                                | Reduced to 6 themes, manageable audit scope                   |
+| ID    | Category      | Severity | Title                                                          | Resolution                                                    |
+| ----- | ------------- | -------- | -------------------------------------------------------------- | ------------------------------------------------------------- |
+| F-001 | Security      | HIGH     | XSS in JSON-LD via raw `JSON.stringify`                        | Added `sanitizeJsonLd()` with HTML entity escaping            |
+| F-002 | Security      | HIGH     | Missing HSTS and CSP headers                                   | Added to `public/_headers`                                    |
+| F-032 | SEO           | HIGH     | Sitemap includes redirect stubs, missing teaching routes       | Rewrote sitemap with dynamic course generation                |
+| F-033 | SEO           | MEDIUM   | Bogus SearchAction in structured data                          | Removed (no /search page exists)                              |
+| F-034 | SEO           | MEDIUM   | Incomplete OpenGraph metadata                                  | Added type, locale, siteName, description, url, Twitter cards |
+| F-035 | Data          | MEDIUM   | Structured data image path wrong                               | Fixed to use `assetPaths.profile`                             |
+| F-036 | A11Y          | MEDIUM   | Skip-link `tabIndex={1}` (WCAG anti-pattern)                   | Changed to `tabIndex={0}`                                     |
+| F-037 | A11Y          | MEDIUM   | PDF viewer hardcoded colors bypass theme                       | Replaced with theme tokens                                    |
+| F-038 | Perf          | LOW      | `teaching-cta.tsx` unnecessary `'use client'`                  | Removed directive                                             |
+| F-039 | Perf          | LOW      | `footer-year.tsx` unnecessary `'use client'`                   | Removed directive                                             |
+| F-040 | Quality       | LOW      | Console statements in production code                          | Guarded behind `process.env.NODE_ENV !== 'production'`        |
+| F-041 | Quality       | LOW      | Double-redirect chain (/service → /service-awards → /about)    | Direct redirect to `/about#honors-awards`                     |
+| F-042 | Quality       | LOW      | 7 `target="_blank"` links missing `rel="noopener noreferrer"`  | Fixed all 7 instances                                         |
+| F-043 | Quality       | LOW      | Test asserting buggy `tabIndex={1}` behavior                   | Updated test to expect `tabIndex={0}`                         |
+| F-009 | Architecture  | MEDIUM   | 614-line monolithic `schemas.ts`                               | Split into 7 domain modules + barrel                          |
+| F-011 | Architecture  | MEDIUM   | 13 themes (695 LOC) overengineered                             | Reduced to 6 themes, saved ~308 LOC                           |
+| F-012 | Architecture  | MEDIUM   | Empty publications feature module                              | Deleted dead re-export                                        |
+| F-014 | Architecture  | MEDIUM   | 19 barrel files hurt tree-shaking                              | Removed 10 dead barrels, kept 8 healthy                       |
+| F-017 | Architecture  | LOW      | Unused FooterYear component                                    | Deleted dead code                                             |
+| F-019 | Architecture  | LOW      | ThemeSelector bloated by 13 themes                             | Reduced to 6, removed 7 icon imports                          |
+| F-024 | Accessibility | LOW      | 13 themes = 26 contrast combos                                 | Reduced to 6 themes, manageable audit scope                   |
+| F-045 | Documentation | INFO     | Cockpit docs had 30+ stale data points after architecture work | Full cross-validation and sync of all 10 cockpit documents    |
+| F-046 | Architecture  | LOW      | Empty `src/features/publications/` directory left behind       | Deleted empty directory                                       |
 
 ### Previously Acceptable (No Action Needed)
 

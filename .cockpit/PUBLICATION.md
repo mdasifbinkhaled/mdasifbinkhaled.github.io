@@ -83,4 +83,4 @@ Push to main
 - Active for GitHub Actions versions
 - Active for npm packages
 - Groups: linting, testing, UI, react
-- 25+ automated branches
+- 24 automated branches

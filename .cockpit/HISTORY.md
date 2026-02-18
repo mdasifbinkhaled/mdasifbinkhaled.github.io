@@ -1,6 +1,6 @@
 # HISTORY.md — Development Timeline
 
-> 403 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
+> 404 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
 
 ## Timeline
 
@@ -53,12 +53,17 @@
 - Algorithm resources added
 - Spacing and alignment optimizations
 
-### Phase 7 — Cockpit Audit & Fixes (Current)
+### Phase 7 — Cockpit Audit & Architecture Cleanup (Current)
 
-- Comprehensive forensic analysis (172 files, 15,496 LOC)
+- Comprehensive forensic analysis (167 files, 15,135 LOC)
 - 44 findings documented (0 critical, 6 high, 15 medium, 14 low, 9 info)
 - Fixes applied: XSS (JSON-LD), sitemap, accessibility, security headers, theme consistency
-- `.cockpit/` intelligence hub created
+- Architecture improvements:
+  - Themes reduced from 13 → 6 (light, dark, ocean, forest, lavender, slate)
+  - Validation schemas split from 1 monolithic file → 7 domain modules + barrel
+  - Dead barrels removed (18 → 8), dead code deleted (FooterYear, publications)
+  - Empty publications directory removed
+- `.cockpit/` intelligence hub created and synchronized
 - All quality gates passing: 0 lint errors, 0 type errors, 109/109 tests, build OK
 
 ## Tags
@@ -72,5 +77,5 @@
 ## Branch Strategy
 
 - **`main`** — Single production branch, deploys to GitHub Pages on push
-- **`dependabot/*`** — Automated dependency update PRs (25+ branches)
+- **`dependabot/*`** — Automated dependency update PRs (24 branches)
 - No feature branch strategy currently in use

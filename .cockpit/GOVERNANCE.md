@@ -23,7 +23,7 @@
 - **CSS custom properties** for all colors — use `bg-background`, `text-foreground`, etc.
 - **Never use hardcoded colors** (e.g., `bg-gray-50`, `text-gray-700`) — always use theme tokens
 - **`cn()` utility** from `tailwind-merge` + `clsx` for conditional classes
-- **13 themes** via CSS custom properties in `tokens.css`
+- **6 themes** via CSS custom properties in `tokens.css`
 
 ### Data Layer
 

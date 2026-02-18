@@ -23,7 +23,7 @@ Package version has not been bumped since initial setup. Git tags track actual m
 - Pre-modernization checkpoint
 - Marked before major stack upgrade
 
-## Unreleased (Current HEAD: `78a43f8`)
+## Unreleased (Current HEAD: `85a3946`)
 
 ### Fixes Applied (Cockpit Audit)
 

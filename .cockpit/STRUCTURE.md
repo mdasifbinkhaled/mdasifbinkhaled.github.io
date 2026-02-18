@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2025-02-18 | 172 source files | 15,496 LOC
+> Last Updated: 2026-02-18 | 167 source files | 15,135 LOC
 
 ## Root Configuration
 
@@ -28,9 +28,9 @@ public/
 └── images/                 — Static images (profile photo, OG image, favicons)
 ```
 
-## Source Tree — `src/` (15,496 LOC)
+## Source Tree — `src/` (15,135 LOC)
 
-### App Layer — `src/app/` (2,262 LOC)
+### App Layer — `src/app/` (2,270 LOC)
 
 Page routes using Next.js App Router. Each route has error boundary.
 
@@ -82,7 +82,7 @@ src/app/
             └── page.tsx    — Dynamic course detail pages (SSG)
 ```
 
-### Features Layer — `src/features/` (3,599 LOC)
+### Features Layer — `src/features/` (3,593 LOC)
 
 Domain-specific feature modules. Each is self-contained.
 
@@ -121,7 +121,7 @@ src/features/
 │   ├── research-highlights.tsx
 │   └── index.ts
 │
-└── teaching/               — Teaching feature (15 files, largest module)
+└── teaching/               — Teaching feature (17 files, largest module)
     ├── course-card.tsx         — Full course card (281 LOC)
     ├── course-card-compact.tsx — Compact variant
     ├── course-page-layout.tsx  — Course detail page template
@@ -142,7 +142,7 @@ src/features/
         └── syllabus-table.tsx
 ```
 
-### Shared Layer — `src/shared/` (9,150 LOC, 59% of codebase)
+### Shared Layer — `src/shared/` (9,011 LOC, 60% of codebase)
 
 Cross-cutting infrastructure: components, config, data, hooks, lib, types.
 
@@ -170,7 +170,7 @@ src/shared/
 │   ├── navigation/         — Nav components (2 files)
 │   │   ├── breadcrumbs.tsx
 │   │   └── navbar.tsx       — 279 LOC
-│   └── ui/                 — Primitive UI (shadcn/ui based, 19 files)
+│   └── ui/                 — Primitive UI (shadcn/ui based, 24 files)
 │       ├── accordion.tsx, alert.tsx, badge.tsx, button.tsx
 │       ├── card.tsx, collapsible-section.tsx, command-menu.tsx
 │       ├── dialog.tsx, dropdown-menu.tsx, error-boundary.tsx
@@ -236,7 +236,7 @@ src/shared/
     └── teaching.ts         — Teaching-specific types
 ```
 
-### Styles — `src/styles/` (485 LOC)
+### Styles — `src/styles/` (261 LOC)
 
 ```
 src/styles/
