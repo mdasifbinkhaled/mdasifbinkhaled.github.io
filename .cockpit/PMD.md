@@ -3,7 +3,7 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2026-02-18
+> **Last Updated**: 2026-02-19
 
 ## Mission
 
@@ -65,16 +65,16 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value    |
 | ----------------- | -------- |
-| Source files      | 173      |
-| Lines of code     | 14,934   |
+| Source files      | 174      |
+| Lines of code     | 14,820   |
 | Components (.tsx) | 110      |
 | Client components | 48 (44%) |
 | Server components | 62 (56%) |
 | Data files        | 28       |
 | Config files      | 7        |
 | Barrel exports    | 8        |
-| Test files        | 21       |
-| Test count        | 129      |
+| Test files        | 22       |
+| Test count        | 136      |
 | Pages generated   | 18       |
 | Themes            | 6        |
 | Git commits       | 404      |
@@ -83,9 +83,9 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | File                          | LOC | Purpose                   |
 | ----------------------------- | --- | ------------------------- |
-| `layout/profile-sidebar.tsx`  | 419 | Sidebar component         |
+| `layout/profile-sidebar.tsx`  | 406 | Sidebar component         |
 | `app/research/page.tsx`       | 392 | Research page             |
-| `lib/analytics.ts`            | 345 | GA event tracking         |
+| `lib/analytics.ts`            | 54  | GA event tracking         |
 | `ui/theme-selector.tsx`       | 334 | Theme picker              |
 | `validation/course-schema.ts` | 287 | Course domain Zod schemas |
 | `teaching/course-card.tsx`    | 281 | Course card component     |
@@ -95,10 +95,10 @@ An academic portfolio showcasing research, publications, teaching activities, an
 ### LOC Distribution
 
 ```
-shared/    8,751 (59%)  ████████████████████████████████████
-features/  3,587 (24%)  ██████████████
-app/       2,157 (14%)  █████████
-styles/      439  (3%)  ██
+shared/    8,640 (58%)  ████████████████████████████████████
+features/  3,599 (24%)  ██████████████
+app/       2,155 (15%)  █████████
+styles/      248  (2%)  █
 ```
 
 ## Feature Modules
@@ -135,7 +135,7 @@ styles/      439  (3%)  ██
 | TypeScript | ✅     | 0 errors (strict mode)                               |
 | ESLint     | ✅     | 0 errors, 0 warnings                                 |
 | Prettier   | ✅     | All formatted                                        |
-| Tests      | ✅     | 129/129 pass (21 files)                              |
+| Tests      | ✅     | 136/136 pass (22 files)                              |
 | Build      | ✅     | 18 pages exported                                    |
 | Audit      | ⚠️     | 10 vulns (all mitigated — dev-only or static export) |
 
@@ -156,7 +156,7 @@ styles/      439  (3%)  ██
 - **8 barrel files** — all actively imported, healthy
 - **7 domain schema files** — clean domain boundaries via barrel re-export
 - **6 themes** — light, dark, ocean, forest, lavender, slate
-- **345 LOC analytics** — heavy for a portfolio site
+- **54 LOC analytics** — lean, only 4 wired events (viewCV, downloadCV, viewPublication, downloadPublication)
 - **All hardcoded colors migrated** — only documented exceptions remain (global-error.tsx, brand colors)
 
 See [ISSUES.md](ISSUES.md) for full finding tracker.

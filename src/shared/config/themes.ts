@@ -79,23 +79,6 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
   },
 };
 
-/**
- * Motion preferences for accessibility
- */
-export const motionPreferences = {
-  respectReducedMotion: true,
-  durations: {
-    fast: '150ms',
-    normal: '300ms',
-    slow: '500ms',
-  },
-  easings: {
-    easeOut: 'cubic-bezier(0.16, 1, 0.3, 1)',
-    easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
-    easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
-  },
-} as const;
-
 // Theme utility functions
 
 /**

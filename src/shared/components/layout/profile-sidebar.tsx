@@ -17,26 +17,13 @@ import {
   User,
   Globe,
   Award,
-  Home,
-  UserCircle,
-  Cpu,
   BookOpenText,
-  Presentation,
-  Send,
 } from 'lucide-react';
 import { Separator } from '@/shared/components/ui/separator';
 import { cn } from '@/shared/lib/utils';
 import { mainNavItems } from '@/shared/config/navigation';
+import { navIconMap } from '@/shared/lib/nav-icon-map';
 import { TimeDisplay } from '@/shared/components/common/time-display';
-
-const iconMap: Record<string, React.ElementType> = {
-  Home,
-  UserCircle,
-  Cpu,
-  BookOpenText,
-  Presentation,
-  Send,
-};
 
 interface ProfileSidebarProps {
   onLinkClick?: () => void;
@@ -135,7 +122,7 @@ export const ProfileSidebar = memo(function ProfileSidebar({
             <nav className={cn('space-y-1', isCollapsed && 'space-y-1')}>
               {mainNavItems.map((item) => {
                 const IconComponent =
-                  (item.icon && iconMap[item.icon]) || Globe;
+                  (item.icon && navIconMap[item.icon]) || Globe;
                 const active = isActive(item.href);
 
                 return (

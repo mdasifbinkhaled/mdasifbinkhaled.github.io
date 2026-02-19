@@ -225,9 +225,11 @@ function MobileView({ schedule }: { schedule: ClassScheduleItem[] }) {
 
 interface ScheduleTableProps {
   schedule: ClassScheduleItem[];
+  /** e.g. "Spring 2026 Semester" — derived from course metadata */
+  semesterLabel?: string;
 }
 
-export function ScheduleTable({ schedule }: ScheduleTableProps) {
+export function ScheduleTable({ schedule, semesterLabel }: ScheduleTableProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -235,7 +237,9 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
           <h2 className="text-xl md:text-2xl font-bold tracking-tight">
             Class Schedule
           </h2>
-          <p className="text-sm text-muted-foreground">Spring 2026 Semester</p>
+          {semesterLabel && (
+            <p className="text-sm text-muted-foreground">{semesterLabel}</p>
+          )}
         </div>
       </div>
       <DesktopView schedule={schedule} />

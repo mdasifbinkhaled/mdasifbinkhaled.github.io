@@ -4,16 +4,8 @@ import {
   generateCourseStructuredData,
   generatePersonStructuredData,
   generatePublicationStructuredData,
+  sanitizeJsonLd,
 } from '@/shared/lib/structured-data';
-
-function sanitizeJsonLd(data: unknown): string {
-  return JSON.stringify(data, null, 2)
-    .replace(/</g, '\\u003C')
-    .replace(/>/g, '\\u003E')
-    .replace(/&/g, '\\u0026')
-    .replace(/\u2028/g, '\\u2028')
-    .replace(/\u2029/g, '\\u2029');
-}
 
 function JsonLdScript({ data }: { data: unknown }): React.JSX.Element {
   return (

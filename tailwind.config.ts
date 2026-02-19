@@ -106,7 +106,7 @@ const config: Config = {
       },
 
       maxWidth: {
-        content: 'var(--max-content-width)',
+        content: 'var(--content-max-width)',
       },
 
       fontSize: {

@@ -2,26 +2,7 @@
 
 import * as React from 'react';
 import { Command } from 'cmdk';
-import {
-  Search,
-  Home,
-  UserCircle,
-  Cpu,
-  BookOpenText,
-  Presentation,
-  Send,
-  LayoutDashboard,
-  Building2,
-  Code2,
-  Server,
-  Calculator,
-  Database,
-  Brain,
-  Laptop,
-  Sun,
-  Moon,
-  Monitor,
-} from 'lucide-react';
+import { Search, Send, Sun, Moon, Monitor } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { type DialogProps } from '@radix-ui/react-dialog';
@@ -32,26 +13,9 @@ import {
   iubCourseNavItems,
   bracuCourseNavItems,
 } from '@/shared/config/navigation';
+import { navIconMap } from '@/shared/lib/nav-icon-map';
 import { cn } from '@/shared/lib/utils';
 import type { NavItem } from '@/shared/types';
-
-// Map icon string names to actual components
-const IconMap: Record<string, React.ElementType> = {
-  Home,
-  UserCircle,
-  Cpu,
-  BookOpenText,
-  Presentation,
-  Send,
-  LayoutDashboard,
-  Building2,
-  Code2,
-  Server,
-  Calculator,
-  Database,
-  Brain,
-  Laptop,
-};
 
 export function CommandMenu(_props: DialogProps) {
   const router = useRouter();
@@ -86,7 +50,7 @@ export function CommandMenu(_props: DialogProps) {
 
   const renderItems = (items: NavItem[]) => {
     return items.map((navItem) => {
-      const Icon = navItem.icon ? IconMap[navItem.icon] : null;
+      const Icon = navItem.icon ? navIconMap[navItem.icon] : null;
       return (
         <Command.Item
           key={navItem.href}

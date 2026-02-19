@@ -1,4 +1,4 @@
-import { assetPaths, getAssetUrl } from './assets';
+import { assetPaths, getAssetUrl, SITE_URL } from './assets';
 
 type SiteLinks = {
   github: string;
@@ -46,7 +46,7 @@ export const siteConfig: SiteConfig = {
   shortName: 'Md Asif Bin Khaled',
   description:
     'The professional academic portfolio of Md Asif Bin Khaled, Senior Lecturer & Researcher. Showcasing research in Explainable AI (XAI) and Multimodal AI (MMAI) for healthcare, teaching experience, publications, and grants.',
-  url: 'https://mdasifbinkhaled.github.io',
+  url: SITE_URL,
   ogImage: getAssetUrl(assetPaths.ogImage),
   links: {
     github: 'https://github.com/mdasifbinkhaled',

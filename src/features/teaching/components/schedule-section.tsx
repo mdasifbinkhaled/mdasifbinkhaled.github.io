@@ -11,6 +11,11 @@ export function ScheduleSection({ course }: { course: CourseData }) {
 
   if (!hasSchedule && !hasExams) return null;
 
+  const semesterLabel =
+    course.semester && course.year
+      ? `${course.semester} ${course.year} Semester`
+      : undefined;
+
   return (
     <CollapsibleSection
       title="Class Schedule"
@@ -20,7 +25,10 @@ export function ScheduleSection({ course }: { course: CourseData }) {
       <div className="p-6">
         {hasSchedule && (
           <div className="mb-0">
-            <ScheduleTable schedule={course.classSchedule!} />
+            <ScheduleTable
+              schedule={course.classSchedule!}
+              semesterLabel={semesterLabel}
+            />
           </div>
         )}
 

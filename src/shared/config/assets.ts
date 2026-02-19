@@ -3,6 +3,13 @@
  * Centralized configuration for all static assets
  */
 
+/**
+ * Canonical site URL — single source of truth shared with site.ts.
+ * Kept here (not in site.ts) to avoid the circular dependency:
+ *   site.ts → assets.ts → site.ts
+ */
+export const SITE_URL = 'https://mdasifbinkhaled.github.io';
+
 export const assetPaths = {
   // Images
   profile: '/images/profile.svg',
@@ -32,9 +39,6 @@ export const assetConfig = {
 } as const;
 
 // Helper function to get full asset URL
-export const getAssetUrl = (
-  path: string,
-  baseUrl = 'https://mdasifbinkhaled.github.io'
-): string => {
+export const getAssetUrl = (path: string, baseUrl = SITE_URL): string => {
   return `${baseUrl}${path}`;
 };

@@ -1,16 +1,16 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-02-18 | **Auditor**: Manual Review
-> **Total Findings**: 68 | **Resolved**: 52 | **Open**: 16
+> **Last Audit**: 2026-02-19 | **Auditor**: Forensic Re-Audit (Session 8)
+> **Total Findings**: 79 | **Resolved**: 63 | **Open**: 16
 
 ## Dashboard
 
 ```
 CRITICAL:  0 (0 open)
-HIGH:      8 (0 open)
-MEDIUM:   27 (4 open)
-LOW:      24 (6 open)
-INFO:      9 (6 open)
+HIGH:      12 (0 open)
+MEDIUM:   30 (4 open)
+LOW:      27 (6 open)
+INFO:      10 (6 open)
 ```
 
 ## Quality Gates Status
@@ -18,7 +18,7 @@ INFO:      9 (6 open)
 ```
 TypeScript:  ✅ 0 errors
 ESLint:      ✅ 0 errors, 0 warnings (eslint-config-next@16, native flat config)
-Tests:       ✅ 129/129 pass (21 files)
+Tests:       ✅ 136/136 pass (22 files)
 Build:       ✅ 18 pages exported
 Format:      ✅ All formatted
 ```
@@ -139,6 +139,22 @@ _None — all HIGH findings resolved._
 ---
 
 ## Resolved Findings
+
+### Resolved in Session 8 Deep Re-Audit (2026-02-19)
+
+| ID    | Category     | Severity | Title                                                                 | Resolution                                                                                        |
+| ----- | ------------ | -------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| F-071 | Quality      | HIGH     | CSS variable mismatch: `--max-content-width` vs `--content-max-width` | Fixed tailwind.config.ts to use `var(--content-max-width)` matching tokens.css                    |
+| F-072 | Architecture | HIGH     | Duplicate `sanitizeJsonLd` in structured-data.ts and .tsx             | Removed local copy in .tsx, imports from shared lib                                               |
+| F-073 | Architecture | HIGH     | 8 dead `academicEvents` methods in analytics.ts                       | Pruned to 4 wired methods (viewCV, downloadCV, viewPublication, downloadPublication). 138→54 LOC  |
+| F-074 | Testing      | HIGH     | Coverage thresholds at 15% — no quality gate                          | Raised to 30% lines/branches/statements, 20% functions                                            |
+| F-075 | Architecture | MEDIUM   | Dead `motionPreferences` export in themes.ts (never imported)         | Deleted ~14 LOC                                                                                   |
+| F-076 | Quality      | MEDIUM   | Custom `.sr-only` CSS duplicates Tailwind's built-in                  | Removed from tokens.css (~12 LOC)                                                                 |
+| F-077 | Testing      | MEDIUM   | `basic.test.ts` placeholder (`1+1=2`) provides zero value             | Replaced with 8 meaningful smoke tests (site config, navigation, themes, analytics exports)       |
+| F-078 | Data         | HIGH     | Hardcoded "Spring 2026 Semester" in schedule-table.tsx                | Made `semesterLabel` prop, derived from course `semester` + `year` fields in schedule-section.tsx |
+| F-079 | Architecture | MEDIUM   | Hardcoded `baseUrl` in assets.ts (not centralized)                    | Created `SITE_URL` constant in assets.ts, used by both `getAssetUrl()` and `siteConfig.url`       |
+| F-080 | Architecture | MEDIUM   | 2 duplicate nav icon maps (profile-sidebar, command-menu)             | Created shared `navIconMap` in `src/shared/lib/nav-icon-map.ts`, both components import it        |
+| F-081 | Architecture | LOW      | Garbage `--version/` directory (17 husky scripts) at root             | Deleted                                                                                           |
 
 ### Resolved in Phase 4 Deep Audit (2026-02-18)
 

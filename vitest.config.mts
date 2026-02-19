@@ -37,12 +37,10 @@ export default defineConfig({
         'next-env.d.ts',
       ],
       thresholds: {
-        // Realistic thresholds for a static portfolio site
-        // Data files and config don't need unit tests - e2e is more appropriate
-        lines: 15,
-        functions: 15,
-        branches: 15,
-        statements: 15,
+        lines: 30,
+        functions: 20,
+        branches: 30,
+        statements: 30,
       },
       all: true,
       clean: true,
