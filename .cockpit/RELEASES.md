@@ -1,8 +1,8 @@
 # RELEASES.md — Version History
 
-## Current: v1.0.0 (package.json)
+## Current: v1.2.0 (package.json)
 
-Package version has not been bumped since initial setup. Git tags track actual milestones.
+Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial release.
 
 ## Git Tags
 
@@ -48,11 +48,24 @@ Package version has not been bumped since initial setup. Git tags track actual m
 - **ARCH-03**: Dead barrel cleanup — removed 10 unused barrel index.ts files, updated 8 error page imports. Reduced from 18 → 8 barrels.
 - **ARCH-04**: Dead code removed — deleted unused `FooterYear` component and empty `features/publications/index.ts` barrel.
 
+### Phase 3 — Hardening
+
+- **SEO**: CV page refactored — extracted `cv-content.client.tsx`, page is now a server component with `export const metadata`
+- **SEO**: OG image converted from SVG to 1200x630 PNG
+- **PWA**: Generated 192x192 and 512x512 icons, updated `site.webmanifest`
+- **A11Y**: Migrated all hardcoded Tailwind colors to semantic tokens (7 files, 12 replacements)
+- **A11Y**: Confirmed teaching tabs keyboard support via Radix Tabs (closed F-006)
+- **ARCH**: Added 3 missing error boundaries (`teaching/iub`, `teaching/bracu`, `teaching/[institution]/[courseCode]`)
+- **TEST**: Added 4 test files (20 tests): `course-utils`, `get-type-icon`, `teaching/styles`, `useDebounce`
+- **QUALITY**: Removed AI fingerprints (emoji in console, stale eslint-disable, AI-language in docs)
+- **DOC**: Updated `humans.txt` (Next.js 15→16, date), `package.json` version 1.0.0→1.2.0
+
 ### Quality Status
 
 - TypeScript: 0 errors
-- ESLint: 0 errors
-- Tests: 109/109 passing
+- ESLint: 0 errors, 0 warnings
+- Tests: 129/129 passing (21 files)
+- Coverage: 35.78% stmts | 68.26% branch | 22.63% funcs
 - Build: 18 pages exported successfully
 
 ## Recommended Next Release

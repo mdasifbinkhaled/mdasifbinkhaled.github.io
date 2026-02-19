@@ -6,7 +6,7 @@
 export const assetPaths = {
   // Images
   profile: '/images/profile.svg',
-  ogImage: '/images/og-image.svg',
+  ogImage: '/images/og-image.png',
   favicon: '/favicon.ico',
 
   // Documents

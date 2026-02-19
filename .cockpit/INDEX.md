@@ -2,7 +2,7 @@
 
 > **Last Updated**: 2026-02-18
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.0.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 3.4
+> **Version**: 1.2.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 3.4
 
 ## Quick Navigation
 
@@ -24,7 +24,7 @@
 ```
 Typecheck:  ✅ PASS (0 errors)
 Lint:       ✅ PASS (0 errors)
-Tests:      ✅ 109/109 PASS (17 files)
+Tests:      ✅ 129/129 PASS (21 files)
 Build:      ✅ 18 pages exported
 Format:     ✅ All files formatted
 ```
@@ -33,21 +33,21 @@ Format:     ✅ All files formatted
 
 | Metric            | Value            |
 | ----------------- | ---------------- |
-| Source files      | 167              |
-| Lines of code     | 15,135           |
-| Client components | 44 of 105 (.tsx) |
-| Server components | 61 of 105 (.tsx) |
+| Source files      | 173              |
+| Lines of code     | 14,934           |
+| Client components | 48 of 110 (.tsx) |
+| Server components | 62 of 110 (.tsx) |
 | Data files        | 28               |
 | Config files      | 7                |
 | Barrel exports    | 8                |
-| Test files        | 17               |
+| Test files        | 21               |
 | Themes            | 6                |
 
 ## Architecture Layers (LOC Distribution)
 
 ```
-shared/    9,011 LOC (60%) — Infrastructure, data, UI primitives
-features/  3,593 LOC (24%) — Feature modules (teaching, about, home, academic)
-app/       2,270 LOC (15%) — Page routes and layouts
-styles/      261 LOC  (2%) — Design tokens
+shared/    8,751 LOC (59%) — Infrastructure, data, UI primitives
+features/  3,587 LOC (24%) — Feature modules (teaching, about, home, academic)
+app/       2,157 LOC (14%) — Page routes and layouts
+styles/      439 LOC  (3%) — Design tokens + globals
 ```

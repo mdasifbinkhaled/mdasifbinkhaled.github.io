@@ -44,7 +44,7 @@ export function validateData<T>(
 
   if (!result.success) {
     if (process.env.NODE_ENV !== 'production') {
-      console.error(`❌ Validation failed for ${dataName}:`);
+      console.error(`Validation failed for ${dataName}:`);
       console.error(result.error.format());
     }
 

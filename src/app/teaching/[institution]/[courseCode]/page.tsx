@@ -67,7 +67,7 @@ export async function generateMetadata({
 }
 
 /**
- * Course Detail Page - World-Class Teaching Portal
+ * Course Detail Page
  */
 export default async function CoursePage({ params }: CoursePageProps) {
   const { institution, courseCode } = await params;

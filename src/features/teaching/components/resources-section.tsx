@@ -79,7 +79,7 @@ export function ResourcesSection({ course }: { course: CourseData }) {
                             <span className="text-sm font-medium group-hover:text-primary transition-colors flex items-center gap-2">
                               {item.label}
                               {'isNew' in item && item.isNew && (
-                                <Badge className="text-[10px] px-1.5 py-0 h-4 bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20">
+                                <Badge className="text-[10px] px-1.5 py-0 h-4 bg-success/10 text-success border-success/20">
                                   New
                                 </Badge>
                               )}
@@ -121,7 +121,7 @@ export function ResourcesSection({ course }: { course: CourseData }) {
         {videoSection && (
           <Card className="border-border/40 shadow-sm overflow-hidden">
             <div className="p-6 border-b bg-muted/10 flex items-center gap-4">
-              <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg border shadow-sm text-red-600 dark:text-red-400">
+              <div className="p-2 bg-destructive/10 rounded-lg border shadow-sm text-destructive">
                 <Video className="w-5 h-5" />
               </div>
               <h4 className="font-semibold text-lg">{videoSection.title}</h4>
@@ -136,7 +136,7 @@ export function ResourcesSection({ course }: { course: CourseData }) {
                   className="p-6 flex items-center justify-between hover:bg-muted/5 transition-colors group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform">
+                    <div className="w-8 h-8 rounded-full bg-destructive/10 flex items-center justify-center text-destructive group-hover:scale-110 transition-transform">
                       <Video className="w-4 h-4" />
                     </div>
                     <span className="font-medium text-sm">{item.label}</span>

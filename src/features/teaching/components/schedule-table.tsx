@@ -14,21 +14,18 @@ import { Mail, Monitor, BookOpen } from 'lucide-react';
 import type { ClassScheduleItem } from '@/shared/lib/validation/schemas';
 import { cn } from '@/shared/lib/utils';
 
-interface ScheduleTableProps {
-  schedule: ClassScheduleItem[];
-}
+/* ── Helper Components (module-level to avoid re-creation on render) ── */
 
-export function ScheduleTable({ schedule }: ScheduleTableProps) {
-  // Helper for Cell Data
-  const CellContent = ({
-    text,
-    subtext,
-    icon: Icon,
-  }: {
-    text: string;
-    subtext?: string;
-    icon?: React.ElementType;
-  }) => (
+function CellContent({
+  text,
+  subtext,
+  icon: Icon,
+}: {
+  text: string;
+  subtext?: string;
+  icon?: React.ElementType;
+}) {
+  return (
     <div className="flex flex-col justify-center h-full">
       <div className="flex items-center gap-1.5 font-medium text-foreground/90 text-sm">
         {Icon && <Icon className="w-3.5 h-3.5 text-muted-foreground" />}
@@ -41,27 +38,29 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
       )}
     </div>
   );
+}
 
-  const EmailLink = ({ email }: { email?: string }) => {
-    if (!email) return <span className="text-muted-foreground">-</span>;
-    return (
-      <a
-        href={`mailto:${email}`}
-        className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 leading-none"
-      >
-        <Mail className="w-3 h-3" />
-        <span className="truncate max-w-[200px]">{email}</span>
-      </a>
-    );
-  };
+function EmailLink({ email }: { email?: string }) {
+  if (!email) return <span className="text-muted-foreground">-</span>;
+  return (
+    <a
+      href={`mailto:${email}`}
+      className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 leading-none"
+    >
+      <Mail className="w-3 h-3" />
+      <span className="truncate max-w-[200px]">{email}</span>
+    </a>
+  );
+}
 
-  const BadgeCell = ({
-    text,
-    variant = 'outline',
-  }: {
-    text: string;
-    variant?: 'outline' | 'secondary' | 'default';
-  }) => (
+function BadgeCell({
+  text,
+  variant = 'outline',
+}: {
+  text: string;
+  variant?: 'outline' | 'secondary' | 'default';
+}) {
+  return (
     <Badge
       variant={variant}
       className={cn(
@@ -73,9 +72,12 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
       {text}
     </Badge>
   );
+}
 
-  // Desktop Excel-Style Grid
-  const DesktopView = () => (
+/* ── Desktop View ── */
+
+function DesktopView({ schedule }: { schedule: ClassScheduleItem[] }) {
+  return (
     <div className="hidden lg:block rounded-lg border border-border shadow-sm overflow-hidden bg-background">
       <div className="w-full overflow-x-auto">
         <Table className="w-full border-collapse">
@@ -84,8 +86,6 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
               <TableHead className="w-[60px] text-center border-r border-border/50 h-10 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Sec
               </TableHead>
-
-              {/* Theory Group */}
               <TableHead className="min-w-[180px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
                 Theory Faculty
               </TableHead>
@@ -95,8 +95,6 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
               <TableHead className="w-[80px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
                 Room
               </TableHead>
-
-              {/* Lab Group */}
               <TableHead className="min-w-[180px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
                 Lab Faculty
               </TableHead>
@@ -114,16 +112,12 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
                 key={item.section}
                 className={cn(
                   'group border-b border-border/50 last:border-0 transition-colors',
-                  // Placeholder for active logic: if active, add "bg-primary/5"
                   'hover:bg-muted/5'
                 )}
               >
-                {/* Section */}
                 <TableCell className="text-center font-bold text-sm text-foreground/70 bg-muted/5 border-r border-border/50 py-3">
                   {String(item.section).padStart(2, '0')}
                 </TableCell>
-
-                {/* Theory Data */}
                 <TableCell className="border-r border-border/50 py-3">
                   <div className="flex flex-col gap-1">
                     <CellContent text={item.theory.faculty} icon={BookOpen} />
@@ -141,8 +135,6 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
                 <TableCell className="border-r border-border/50 py-3">
                   <BadgeCell text={item.theory.room} variant="outline" />
                 </TableCell>
-
-                {/* Lab Data */}
                 <TableCell className="border-r border-border/50 py-3 bg-muted/5">
                   <div className="flex flex-col gap-1">
                     <CellContent text={item.lab.faculty} icon={Monitor} />
@@ -167,9 +159,12 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
       </div>
     </div>
   );
+}
 
-  // Mobile Clean Card View (Vertical Stack for small screens)
-  const MobileView = () => (
+/* ── Mobile View ── */
+
+function MobileView({ schedule }: { schedule: ClassScheduleItem[] }) {
+  return (
     <div className="lg:hidden space-y-3">
       {schedule.map((item) => (
         <Card
@@ -177,7 +172,6 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
           className="overflow-hidden border-border/60 shadow-sm"
         >
           <div className="flex flex-col divide-y divide-border/50">
-            {/* Header */}
             <div className="px-4 py-2 bg-muted/20 flex items-center justify-between">
               <Badge
                 variant="outline"
@@ -185,12 +179,8 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
               >
                 Sec {String(item.section).padStart(2, '0')}
               </Badge>
-              {/* Placeholder for Active Badge */}
             </div>
-
-            {/* Content Grid */}
             <div className="grid grid-cols-2 divide-x divide-border/50">
-              {/* Theory Column */}
               <div className="p-3 space-y-2">
                 <div className="flex items-center gap-1.5 text-[10px] font-bold text-primary uppercase tracking-wider">
                   <BookOpen className="w-3 h-3" /> Theory
@@ -207,8 +197,6 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
                   </div>
                 </div>
               </div>
-
-              {/* Lab Column */}
               <div className="p-3 space-y-2 bg-muted/5">
                 <div className="flex items-center gap-1.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                   <Monitor className="w-3 h-3" /> Lab
@@ -231,7 +219,15 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
       ))}
     </div>
   );
+}
 
+/* ── Main Component ── */
+
+interface ScheduleTableProps {
+  schedule: ClassScheduleItem[];
+}
+
+export function ScheduleTable({ schedule }: ScheduleTableProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -242,8 +238,8 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
           <p className="text-sm text-muted-foreground">Spring 2026 Semester</p>
         </div>
       </div>
-      <DesktopView />
-      <MobileView />
+      <DesktopView schedule={schedule} />
+      <MobileView schedule={schedule} />
     </div>
   );
 }

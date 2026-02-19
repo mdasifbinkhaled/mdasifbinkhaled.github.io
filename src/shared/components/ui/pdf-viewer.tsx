@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Download, FileText } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Card } from '@/shared/components/ui/card';

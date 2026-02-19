@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Clock, Globe } from 'lucide-react';
+import { useIsClient } from '@/shared/hooks/use-is-client';
 
 interface TimeDisplayProps {
-  userTimezone: string; // e.g., 'Asia/Dhaka'
+  userTimezone: string;
   isCollapsed?: boolean;
 }
 
@@ -10,21 +11,18 @@ export function TimeDisplay({
   userTimezone,
   isCollapsed = false,
 }: TimeDisplayProps) {
-  const [mounted, setMounted] = useState(false);
-  const [now, setNow] = useState<Date | null>(null);
+  const isClient = useIsClient();
+  const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
-    setMounted(true);
-    setNow(new Date());
-
     const timer = setInterval(() => {
       setNow(new Date());
-    }, 1000); // Update every second to keep synced, though we usually show minutes
+    }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
-  if (!mounted || !now) return null;
+  if (!isClient) return null;
 
   // Format options for 12-hour time
   const timeOptions: Intl.DateTimeFormatOptions = {
@@ -74,7 +72,7 @@ export function TimeDisplay({
         <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-[10px]">
           My Time (Dhaka)
         </span>
-        <span className="text-orange-500/80">
+        <span className="text-warning/80">
           <Globe className="w-3 h-3" />
         </span>
       </div>
@@ -91,7 +89,7 @@ export function TimeDisplay({
         <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-[10px]">
           Your Time
         </span>
-        <span className="text-blue-500/80">
+        <span className="text-info/80">
           <Clock className="w-3 h-3" />
         </span>
       </div>

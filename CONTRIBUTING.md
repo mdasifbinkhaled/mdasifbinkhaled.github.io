@@ -42,7 +42,7 @@ npm run pre-commit   # TypeScript type checking
 
 ### Testing
 
-We maintain comprehensive test coverage. Run tests during development:
+Run tests during development:
 
 ```bash
 npm run test        # Interactive mode with file watching

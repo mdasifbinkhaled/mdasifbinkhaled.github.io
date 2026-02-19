@@ -1,40 +1,10 @@
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
 
-/**
- * ==========================================
- * Tailwind CSS Configuration for Academic Portfolio
- * ==========================================
- *
- * A comprehensive design system with CSS custom properties for theming.
- *
- * 🌟 ACTIVE THEMES:
- * ├── Light      → Classic professional with clean whites
- * └── Dark       → Enhanced contrast with deep backgrounds
- *
- * 🚧 PLANNED EXPANSION:
- * ├── Retro      → Vintage aesthetics with film grain overlay
- * ├── Cyberpunk  → Neon matrix effects with digital glitch
- * └── Ocean      → Animated wave patterns with blue gradients
- *
- * 🎨 DESIGN FEATURES:
- * ├── CSS custom properties for seamless theme switching
- * ├── Academic-specific semantic color system
- * ├── Responsive layout utilities and spacing
- * ├── Sidebar and navigation theming
- * ├── Typography scales for academic content
- * └── Animation system for enhanced UX
- *
- * @author Md Asif Bin Khaled
- * @version 2.0
- */
-
+/** Tailwind CSS configuration — CSS custom properties for multi-theme support. */
 const config: Config = {
   darkMode: 'class',
 
-  // ==========================================
-  // CONTENT PATHS
-  // ==========================================
   content: [
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/features/**/*.{js,ts,jsx,tsx,mdx}',
@@ -43,37 +13,19 @@ const config: Config = {
 
   theme: {
     extend: {
-      // ==========================================
-      // FONT FAMILY SYSTEM
-      // ==========================================
       fontFamily: {
         sans: ['var(--font-inter)', 'sans-serif'],
       },
 
-      // ==========================================
-      // RESPONSIVE BREAKPOINTS
-      // ==========================================
       screens: {
-        xs: '375px', // Mobile S - iPhone SE
-        sm: '640px', // Mobile L - Default Tailwind
-        md: '768px', // Tablet - Default Tailwind
-        lg: '1024px', // Laptop - Default Tailwind
-        xl: '1280px', // Desktop - Default Tailwind
-        '2xl': '1536px', // Large Desktop - Default Tailwind
-        '3xl': '1920px', // 4K Ready
+        xs: '375px',
+        '3xl': '1920px',
       },
 
-      // ==========================================
-      // COLOR SYSTEM
-      // ==========================================
       colors: {
-        // Foundation Colors
-        // ────────────────────────────────────────
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
 
-        // Brand & Interactive Colors
-        // ────────────────────────────────────────
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -102,9 +54,6 @@ const config: Config = {
           DEFAULT: 'hsl(var(--info))',
           foreground: 'hsl(var(--info-foreground))',
         },
-
-        // Content & Layout Colors
-        // ────────────────────────────────────────
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
@@ -117,15 +66,10 @@ const config: Config = {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
-
-        // Form & Input Colors
-        // ────────────────────────────────────────
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
 
-        // Navigation Sidebar Colors
-        // ────────────────────────────────────────
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',
           foreground: 'hsl(var(--sidebar-foreground))',
@@ -137,50 +81,35 @@ const config: Config = {
           ring: 'hsl(var(--sidebar-ring))',
         },
 
-        // Academic Portfolio Semantic Colors
-        // ────────────────────────────────────────
         academic: {
-          primary: 'hsl(var(--academic-primary))', // Research highlights
-          accent: 'hsl(var(--academic-accent))', // Publication emphasis
-          muted: 'hsl(var(--academic-muted))', // Subdued content
-          card: 'hsl(var(--academic-card))', // Content cards
-          highlight: 'hsl(var(--academic-highlight))', // Key achievements
+          primary: 'hsl(var(--academic-primary))',
+          accent: 'hsl(var(--academic-accent))',
+          muted: 'hsl(var(--academic-muted))',
+          card: 'hsl(var(--academic-card))',
+          highlight: 'hsl(var(--academic-highlight))',
         },
       },
 
-      // ==========================================
-      // BORDER RADIUS SYSTEM
-      // ==========================================
       borderRadius: {
-        lg: 'var(--radius)', // Large radius for cards and modals
-        md: 'calc(var(--radius) - 2px)', // Medium radius for buttons
-        sm: 'calc(var(--radius) - 4px)', // Small radius for inputs
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
 
-      // ==========================================
-      // LAYOUT & SPACING SYSTEM
-      // ==========================================
       spacing: {
-        // Layout Components
         'sidebar-width': 'var(--sidebar-width)',
         'navbar-height': 'var(--navbar-height)',
         'content-padding': 'var(--content-padding)',
-
-        // Academic Content Spacing
-        'academic-section': '3rem', // Between major sections
-        'academic-content': '1.5rem', // Between content blocks
-        'academic-card': '1rem', // Inside cards and components
+        'academic-section': '3rem',
+        'academic-content': '1.5rem',
+        'academic-card': '1rem',
       },
 
       maxWidth: {
-        content: 'var(--max-content-width)', // Maximum content width
+        content: 'var(--max-content-width)',
       },
 
-      // ==========================================
-      // TYPOGRAPHY SYSTEM
-      // ==========================================
       fontSize: {
-        // Academic Content Typography
         'academic-title': ['2.5rem', { lineHeight: '3rem', fontWeight: '700' }],
         '0.8rem': '0.8rem',
         '10px': '10px',
@@ -195,25 +124,15 @@ const config: Config = {
         ],
       },
 
-      // ==========================================
-      // ANIMATION SYSTEM
-      // ==========================================
       zIndex: {
-        '0': '0',
-        '10': '10',
-        '20': '20',
-        '30': '30',
-        '40': '40',
-        '50': '50',
-        navbar: '30', // Sticky navbar
-        sidebar: '60', // Sidebar panel
-        'sidebar-toggle': '80', // Toggle button
-        overlay: '90', // Modals/Backdrops
-        toast: '100', // Toast notifications
+        navbar: '30',
+        sidebar: '60',
+        'sidebar-toggle': '80',
+        overlay: '90',
+        toast: '100',
       },
 
       keyframes: {
-        // Accordion Animations
         'accordion-down': {
           from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
@@ -225,25 +144,18 @@ const config: Config = {
       },
 
       animation: {
-        // Component Animations
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
 
-      // ==========================================
-      // ACADEMIC CONTENT UTILITIES
-      // ==========================================
       gap: {
-        'academic-section': '3rem', // Major section gaps
-        'academic-content': '1.5rem', // Content block gaps
-        'academic-card': '1rem', // Card internal gaps
+        'academic-section': '3rem',
+        'academic-content': '1.5rem',
+        'academic-card': '1rem',
       },
     },
   },
 
-  // ==========================================
-  // PLUGINS
-  // ==========================================
   plugins: [tailwindcssAnimate],
 };
 

@@ -32,7 +32,7 @@ export function AssignmentsSection({ course }: AssignmentsSectionProps) {
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 gap-4">
               <div className="flex items-start gap-4">
-                <div className="p-2.5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400 shrink-0">
+                <div className="p-2.5 bg-primary/10 rounded-lg text-primary shrink-0">
                   <ClipboardList className="w-5 h-5" />
                 </div>
                 <div className="space-y-1">
@@ -51,7 +51,7 @@ export function AssignmentsSection({ course }: AssignmentsSectionProps) {
                         }
                         className={cn(
                           'text-[10px] px-1.5 h-5 capitalize',
-                          assignment.status === 'active' && 'bg-indigo-600'
+                          assignment.status === 'active' && 'bg-primary'
                         )}
                       >
                         {assignment.status}

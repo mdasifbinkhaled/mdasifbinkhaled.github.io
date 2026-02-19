@@ -7,7 +7,7 @@
 
 ## Mission
 
-A comprehensive academic portfolio showcasing research, publications, teaching activities, and professional experience for Md Asif Bin Khaled, deployed as a static site on GitHub Pages.
+An academic portfolio showcasing research, publications, teaching activities, and professional experience for Md Asif Bin Khaled, deployed as a static site on GitHub Pages.
 
 ## Tech Stack
 
@@ -35,14 +35,14 @@ A comprehensive academic portfolio showcasing research, publications, teaching a
 
 ```
 ┌─────────────────────────────────────────────┐
-│  App Layer (2,270 LOC / 15%)                │  Page routes, layouts, error boundaries
+│  App Layer (2,157 LOC / 14%)                │  Page routes, layouts, error boundaries
 │  src/app/                                    │  13 routes, 18 pages
 ├─────────────────────────────────────────────┤
-│  Features Layer (3,593 LOC / 24%)           │  Domain modules
+│  Features Layer (3,587 LOC / 24%)           │  Domain modules
 │  src/features/{about,academic,home,          │  Self-contained feature code
 │                 teaching}                    │
 ├─────────────────────────────────────────────┤
-│  Shared Layer (9,011 LOC / 60%)             │  Cross-cutting infrastructure
+│  Shared Layer (8,751 LOC / 59%)             │  Cross-cutting infrastructure
 │  src/shared/{components,config,hooks,        │  UI primitives, config, data,
 │              lib,providers,types}            │  validation, analytics
 ├─────────────────────────────────────────────┤
@@ -65,16 +65,16 @@ A comprehensive academic portfolio showcasing research, publications, teaching a
 
 | Metric            | Value    |
 | ----------------- | -------- |
-| Source files      | 167      |
-| Lines of code     | 15,135   |
-| Components (.tsx) | 105      |
-| Client components | 44 (42%) |
-| Server components | 61 (58%) |
+| Source files      | 173      |
+| Lines of code     | 14,934   |
+| Components (.tsx) | 110      |
+| Client components | 48 (44%) |
+| Server components | 62 (56%) |
 | Data files        | 28       |
 | Config files      | 7        |
 | Barrel exports    | 8        |
-| Test files        | 17       |
-| Test count        | 109      |
+| Test files        | 21       |
+| Test count        | 129      |
 | Pages generated   | 18       |
 | Themes            | 6        |
 | Git commits       | 404      |
@@ -95,10 +95,10 @@ A comprehensive academic portfolio showcasing research, publications, teaching a
 ### LOC Distribution
 
 ```
-shared/    9,011 (60%)  ████████████████████████████████████
-features/  3,593 (24%)  ██████████████
-app/       2,270 (15%)  █████████
-styles/      261  (2%)  ██
+shared/    8,751 (59%)  ████████████████████████████████████
+features/  3,587 (24%)  ██████████████
+app/       2,157 (14%)  █████████
+styles/      439  (3%)  ██
 ```
 
 ## Feature Modules
@@ -133,9 +133,9 @@ styles/      261  (2%)  ██
 | Check      | Status | Details                                              |
 | ---------- | ------ | ---------------------------------------------------- |
 | TypeScript | ✅     | 0 errors (strict mode)                               |
-| ESLint     | ✅     | 0 errors                                             |
+| ESLint     | ✅     | 0 errors, 0 warnings                                 |
 | Prettier   | ✅     | All formatted                                        |
-| Tests      | ✅     | 109/109 pass                                         |
+| Tests      | ✅     | 129/129 pass (21 files)                              |
 | Build      | ✅     | 18 pages exported                                    |
 | Audit      | ⚠️     | 10 vulns (all mitigated — dev-only or static export) |
 
@@ -152,10 +152,11 @@ styles/      261  (2%)  ██
 ### Concerns
 
 - **shared/ layer is 60% of codebase** — risk of becoming a grab-bag
-- **44 client components** — acceptable (error boundaries, interactive UI, animations)
+- **47 client components** — acceptable (error boundaries, interactive UI, animations)
 - **8 barrel files** — all actively imported, healthy
 - **7 domain schema files** — clean domain boundaries via barrel re-export
 - **6 themes** — light, dark, ocean, forest, lavender, slate
 - **345 LOC analytics** — heavy for a portfolio site
+- **All hardcoded colors migrated** — only documented exceptions remain (global-error.tsx, brand colors)
 
 See [ISSUES.md](ISSUES.md) for full finding tracker.

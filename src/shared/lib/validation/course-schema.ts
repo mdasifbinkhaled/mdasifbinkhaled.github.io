@@ -49,7 +49,6 @@ export const courseAssessmentBreakdownSchema = z
 
 /**
  * Course Data Schema
- * Validates course data with comprehensive rules
  */
 export const courseDataSchema = z.object({
   // Required base info

@@ -11,9 +11,9 @@ Radix UI - Accessible Components
 Tailwind CSS - Utility CSS Framework
 
 /* SITE */
-Last update: 2025/10/19
+Last update: 2026/02/18
 Standards: HTML5, CSS3, JavaScript ES6+, TypeScript
-Components: React 19, Next.js 15
+Components: React 19, Next.js 16
 Accessibility: WCAG 2.1 AA compliant
 Performance: Optimized static export
 IDE: Visual Studio Code

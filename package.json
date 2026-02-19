@@ -1,6 +1,6 @@
 {
   "name": "mdasifbinkhaled.github.io",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Academic portfolio showcasing research, publications, teaching activities, and professional experience",
   "author": {
     "name": "Md Asif Bin Khaled",
@@ -70,8 +70,6 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^20.0.0",
-    "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.36.0",
     "@testing-library/jest-dom": "^6.x",
     "@testing-library/react": "^16.x",
     "@testing-library/user-event": "^14.6.1",
@@ -83,7 +81,7 @@
     "commitlint": "^20.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.39.2",
-    "eslint-config-next": "15.5.4",
+    "eslint-config-next": "^16.1.4",
     "husky": "^9.1.7",
     "jsdom": "^25.x",
     "lint-staged": "^15.5.2",
@@ -96,6 +94,7 @@
     "vitest": "^3.2.4"
   },
   "overrides": {
-    "glob": "10.1.0"
+    "glob": "10.1.0",
+    "typescript-eslint": "8.53.1"
   }
 }

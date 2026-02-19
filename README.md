@@ -28,13 +28,13 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 | **Framework**  | Next.js 16 (App Router, Static Export) |
 | **Language**   | TypeScript 5.9 (Strict Mode)           |
 | **Styling**    | Tailwind CSS 3.4                       |
-| **Validation** | Zod 4.3 (Runtime Schema Validation)    |
-| **Testing**    | Vitest (109+ tests, 80% coverage)      |
-| **Linting**    | ESLint 8 + Prettier                    |
+| **Validation** | Zod 4 (Runtime Schema Validation)      |
+| **Testing**    | Vitest (129+ tests)                    |
+| **Linting**    | ESLint 9 + Prettier                    |
 | **CI/CD**      | GitHub Actions (3 workflows)           |
 | **Security**   | CodeQL, npm audit                      |
 | **A11y**       | WCAG 2.1 AA Compliant                  |
-| **Themes**     | 13 color themes (light/dark support)   |
+| **Themes**     | 6 color themes (light/dark support)    |
 
 ---
 
@@ -115,8 +115,7 @@ Available environment variables:
 | Command              | Description                                        |
 | -------------------- | -------------------------------------------------- |
 | `npm run dev`        | Start development server (hot reload)              |
-| `npm run build`      | Create optimized production build                  |
-| `npm run start`      | Start production server locally                    |
+| `npm run build`      | Create optimized static export                     |
 | `npm run test`       | Run tests in watch mode                            |
 | `npm run test:run`   | Run tests once (for CI)                            |
 | `npm run lint`       | Lint and auto-fix code                             |
@@ -163,7 +162,7 @@ All content is configured in `src/shared/config/` and `src/shared/lib/data/`:
 | -------------------------- | -------------------------------- |
 | `config/site.ts`           | Site name, URL, author info      |
 | `config/navigation.ts`     | Navigation menu structure        |
-| `config/themes.ts`         | Theme definitions (13 themes)    |
+| `config/themes.ts`         | Theme definitions (6 themes)     |
 | `lib/data/publications.ts` | Publication entries              |
 | `lib/data/experience.ts`   | Work experience items            |
 | `lib/data/courses/`        | Course data (per-course folders) |

@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-02-18 | 167 source files | 15,135 LOC
+> Last Updated: 2026-02-18 | 171 source files | 15,215 LOC
 
 ## Root Configuration
 
@@ -28,9 +28,9 @@ public/
 └── images/                 — Static images (profile photo, OG image, favicons)
 ```
 
-## Source Tree — `src/` (15,135 LOC)
+## Source Tree — `src/` (15,215 LOC)
 
-### App Layer — `src/app/` (2,270 LOC)
+### App Layer — `src/app/` (2,175 LOC)
 
 Page routes using Next.js App Router. Each route has error boundary.
 
@@ -52,7 +52,8 @@ src/app/
 │   ├── page.tsx            — Contact page with social links
 │   └── error.tsx
 ├── cv/
-│   ├── page.tsx            — CV viewer (client component — PDF viewer)
+│   ├── page.tsx            — CV page (server component — exports metadata)
+│   ├── cv-content.client.tsx — Client-side CV viewer (tabs, PDF, analytics)
 │   └── error.tsx
 ├── experience/
 │   ├── page.tsx            — Redirects → /about#experience
@@ -74,15 +75,18 @@ src/app/
     ├── error.tsx
     ├── teaching-tabs.client.tsx — Tab switching client component
     ├── iub/
-    │   └── page.tsx        — IUB institution page
+    │   ├── page.tsx        — IUB institution page
+    │   └── error.tsx       — IUB error boundary
     ├── bracu/
-    │   └── page.tsx        — BRAC University institution page
+    │   ├── page.tsx        — BRAC University institution page
+    │   └── error.tsx       — BRACU error boundary
     └── [institution]/
         └── [courseCode]/
-            └── page.tsx    — Dynamic course detail pages (SSG)
+            ├── page.tsx    — Dynamic course detail pages (SSG)
+            └── error.tsx   — Course page error boundary
 ```
 
-### Features Layer — `src/features/` (3,593 LOC)
+### Features Layer — `src/features/` (3,591 LOC)
 
 Domain-specific feature modules. Each is self-contained.
 
@@ -189,13 +193,14 @@ src/shared/
 │   ├── themes.ts           — 6-theme definitions (light/dark/ocean/forest/lavender/slate)
 │   └── index.ts
 │
-├── hooks/                  — Custom React hooks (3 files)
+├── hooks/                  — Custom React hooks (4 files)
 │   ├── use-debounce.ts
+│   ├── use-is-client.ts    — SSR hydration detection via useSyncExternalStore
 │   ├── use-toast.ts        — 224 LOC (toast notification system)
 │   └── index.ts
 │
 ├── lib/                    — Core utilities (37 files, 5,000+ LOC)
-│   ├── analytics.ts        — Google Analytics helpers (345 LOC)
+│   ├── analytics.ts        — Google Analytics helpers (138 LOC)
 │   ├── course-utils.ts     — Course data helpers
 │   ├── structured-data.ts  — Schema.org JSON-LD generators (222 LOC)
 │   ├── utils.ts            — cn() utility
@@ -236,18 +241,18 @@ src/shared/
     └── teaching.ts         — Teaching-specific types
 ```
 
-### Styles — `src/styles/` (261 LOC)
+### Styles — `src/styles/` (439 LOC)
 
 ```
 src/styles/
 └── tokens.css              — Design tokens: colors, spacing, typography for 6 themes
 ```
 
-## Tests — `tests/` (17 files, 109 tests)
+## Tests — `tests/` (21 files, 129 tests)
 
 ```
 tests/
-├── setup.ts                — Vitest setup (jest-dom matchers)
+├── setup.ts                — Vitest setup (jest-dom matchers, lucide mocks)
 ├── analytics.test.tsx
 ├── back-to-top.test.tsx
 ├── basic.test.ts
@@ -263,7 +268,14 @@ tests/
 ├── structured-data.test.ts
 ├── tabs.test.tsx
 ├── theme-selector.test.tsx
+├── use-debounce.test.ts    — useDebounce hook timing tests
 ├── use-toast.test.tsx
+├── features/
+│   ├── academic/
+│   │   └── get-type-icon.test.ts   — Academic type icon mapping
+│   └── teaching/
+│       └── styles.test.ts          — Level styles semantic token checks
 └── shared/lib/
-    └── data.test.ts        — Data layer tests
+    ├── course-utils.test.ts        — Breadcrumb formatting + link icons
+    └── data.test.ts                — Data layer tests
 ```

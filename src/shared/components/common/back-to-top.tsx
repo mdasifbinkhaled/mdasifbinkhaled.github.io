@@ -1,20 +1,29 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useSyncExternalStore } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { SCROLL } from '@/shared/config';
 
-export const BackToTop = React.memo(function BackToTop() {
-  const [isVisible, setIsVisible] = useState(false);
+function subscribeToScroll(callback: () => void) {
+  window.addEventListener('scroll', callback, { passive: true });
+  return () => window.removeEventListener('scroll', callback);
+}
 
-  const toggleVisibility = useCallback(() => {
-    if (window.pageYOffset > SCROLL.BACK_TO_TOP_THRESHOLD) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  }, []);
+function getScrollSnapshot() {
+  return window.pageYOffset > SCROLL.BACK_TO_TOP_THRESHOLD;
+}
+
+function getServerSnapshot() {
+  return false;
+}
+
+export const BackToTop = React.memo(function BackToTop() {
+  const isVisible = useSyncExternalStore(
+    subscribeToScroll,
+    getScrollSnapshot,
+    getServerSnapshot
+  );
 
   const scrollToTop = useCallback(() => {
     window.scrollTo({
@@ -22,14 +31,6 @@ export const BackToTop = React.memo(function BackToTop() {
       behavior: SCROLL.BEHAVIOR,
     });
   }, []);
-
-  useEffect(() => {
-    // Check initial scroll position
-    toggleVisibility();
-
-    window.addEventListener('scroll', toggleVisibility, { passive: true });
-    return () => window.removeEventListener('scroll', toggleVisibility);
-  }, [toggleVisibility]);
 
   if (!isVisible) {
     return null;

@@ -42,10 +42,7 @@ jobs:
       - name: Run type check
         run: npm run typecheck
 
-      - name: Run tests
-        run: npm run test:run
-
-      - name: Generate test coverage
+      - name: Run tests with coverage
         run: npm run test:coverage
 
       - name: Check coverage thresholds

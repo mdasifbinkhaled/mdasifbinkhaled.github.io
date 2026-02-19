@@ -13,7 +13,7 @@ export default function Error({
     <ErrorFallback
       error={error}
       reset={reset}
-      section="CV page"
+      section="BRACU courses"
       fullUI={false}
     />
   );

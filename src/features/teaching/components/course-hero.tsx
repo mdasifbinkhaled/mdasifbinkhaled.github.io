@@ -67,7 +67,7 @@ export function CourseHero({ course }: { course: CourseData }) {
                     className={cn(
                       'w-2 h-2 rounded-full animate-pulse',
                       course.status === 'ongoing'
-                        ? 'bg-green-500'
+                        ? 'bg-success'
                         : 'bg-muted-foreground'
                     )}
                   />

@@ -53,7 +53,7 @@ const IconMap: Record<string, React.ElementType> = {
   Laptop,
 };
 
-export function CommandMenu({ ..._props }: DialogProps) {
+export function CommandMenu(_props: DialogProps) {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const { setTheme } = useTheme();

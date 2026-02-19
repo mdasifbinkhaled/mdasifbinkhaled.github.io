@@ -13,8 +13,7 @@ import { METRICS } from '@/shared/lib/data/metrics';
 import type { TeachingStats } from '@/shared/types/teaching';
 
 /**
- * Get comprehensive teaching statistics
- * Calculates real values from course data rather than hardcoded constants
+ * Calculates teaching statistics from course data
  */
 export function getTeachingStats(): TeachingStats {
   const totalCourses = coursesTaughtIUB.length + coursesTaughtBRACU.length;

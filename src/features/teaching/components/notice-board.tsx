@@ -55,8 +55,8 @@ export function NoticeBoard({ notices }: NoticeBoardProps) {
             key={notice.id}
             variant={getVariant(notice.type)}
             className={`
-            ${notice.type === 'info' ? 'border-blue-500/50 bg-blue-500/10 text-blue-600 dark:text-blue-400' : ''}
-            ${notice.type === 'success' ? 'border-green-500/50 bg-green-500/10 text-green-600 dark:text-green-400' : ''}
+            ${notice.type === 'info' ? 'border-info/50 bg-info/10 text-info' : ''}
+            ${notice.type === 'success' ? 'border-success/50 bg-success/10 text-success' : ''}
           `}
           >
             <Icon className="h-4 w-4" />
@@ -65,7 +65,7 @@ export function NoticeBoard({ notices }: NoticeBoardProps) {
                 <AlertTitle className="mb-1 flex items-center gap-2">
                   {notice.title}
                   {notice.importance === 'high' && (
-                    <span className="text-[10px] uppercase bg-red-500 text-white px-1.5 py-0.5 rounded-full font-bold">
+                    <span className="text-[10px] uppercase bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded-full font-bold">
                       New
                     </span>
                   )}

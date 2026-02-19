@@ -233,6 +233,11 @@ vi.mock('lucide-react', () => {
     Activity: createMockIcon('activity'),
     Eye: createMockIcon('eye'),
     Satellite: createMockIcon('satellite'),
+    Video: createMockIcon('video'),
+    MessageCircle: createMockIcon('message-circle'),
+    CheckCircle: createMockIcon('check-circle'),
+    ClipboardList: createMockIcon('clipboard-list'),
+    AlertCircle: createMockIcon('alert-circle'),
   };
 });
 

@@ -56,7 +56,7 @@ export function HeroSection() {
 
   return (
     <section className="w-full relative overflow-hidden">
-      {/* Ambient Background - World-Class Design */}
+      {/* Ambient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10" />
       <div className="absolute top-0 right-0 w-[30vw] h-[30vw] bg-primary/8 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
       <div className="absolute bottom-0 left-0 w-[25vw] h-[25vw] bg-secondary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />

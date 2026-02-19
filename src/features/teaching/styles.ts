@@ -8,10 +8,8 @@
  * Used by CourseCard and CourseCardCompact
  */
 export const LEVEL_STYLES = {
-  undergraduate:
-    'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-  graduate:
-    'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+  undergraduate: 'bg-primary/10 text-primary',
+  graduate: 'bg-secondary text-secondary-foreground',
 } as const;
 
 /**

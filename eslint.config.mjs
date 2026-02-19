@@ -1,45 +1,24 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTypescript from 'eslint-config-next/typescript';
 
 const config = [
   {
     ignores: [
-      // Build outputs
       '.next/**',
       'out/**',
       'dist/**',
       'build/**',
-
-      // Dependencies
       'node_modules/**',
-
-      // Test coverage
       'coverage/**',
       '.nyc_output/**',
-
-      // TypeScript build info
       '*.tsbuildinfo',
-
-      // Cache directories
       '.turbo/**',
       '.eslintcache',
-
-      // Public assets (no linting needed)
       'public/**',
     ],
   },
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...nextCoreWebVitals,
+  ...nextTypescript,
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     rules: {

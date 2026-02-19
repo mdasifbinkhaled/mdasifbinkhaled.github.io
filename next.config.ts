@@ -3,30 +3,17 @@ import type { NextConfig } from 'next';
 const config: NextConfig = {
   output: 'export',
   trailingSlash: true,
-  outputFileTracingRoot: process.cwd(),
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'raw.githubusercontent.com',
-        pathname: '/**',
-      },
-    ],
   },
 
-  // Enable typed routes (moved from experimental in Next.js 15.6+)
   typedRoutes: true,
   experimental: {
     viewTransition: true,
     scrollRestoration: true,
   },
-  // Security headers for static export (applied during dev server)
+
+  // Security headers (dev server only; production uses public/_headers)
   async headers() {
     return [
       {

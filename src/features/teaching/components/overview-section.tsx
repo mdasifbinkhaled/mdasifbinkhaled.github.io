@@ -48,7 +48,7 @@ export function OverviewSection({ course }: { course: CourseData }) {
                 className={cn(
                   'w-2 h-2 rounded-full',
                   course.status === 'ongoing'
-                    ? 'bg-green-500 animate-pulse'
+                    ? 'bg-success animate-pulse'
                     : 'bg-muted-foreground'
                 )}
               />
@@ -106,8 +106,8 @@ export function OverviewSection({ course }: { course: CourseData }) {
                 <ul className="space-y-3">
                   {course.outcomes.map((outcome, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <div className="bg-green-500/10 rounded-full p-1 mt-0.5 shrink-0">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                      <div className="bg-success/10 rounded-full p-1 mt-0.5 shrink-0">
+                        <CheckCircle className="w-4 h-4 text-success" />
                       </div>
                       <span className="text-sm sm:text-base text-muted-foreground">
                         {outcome}
