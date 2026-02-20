@@ -146,6 +146,10 @@ describe('ProfileSidebar', () => {
     const emailLink = screen.getByRole('link', {
       name: /mdasifbinkhaled@gmail\.com/i,
     });
+
+    // Prevent JSDOM from navigating to mailto link asynchronously
+    emailLink.addEventListener('click', (e) => e.preventDefault());
+
     fireEvent.click(emailLink);
 
     expect(mockOnLinkClick).toHaveBeenCalledTimes(1);

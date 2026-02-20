@@ -128,7 +128,13 @@ describe('Sheet Component', () => {
   it('should render different sides correctly', () => {
     const { rerender } = render(
       <Sheet open={true}>
-        <SheetContent side="left">Content</SheetContent>
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>Left Side</SheetTitle>
+            <SheetDescription>Left Content</SheetDescription>
+          </SheetHeader>
+          Content
+        </SheetContent>
       </Sheet>
     );
 
@@ -137,7 +143,13 @@ describe('Sheet Component', () => {
 
     rerender(
       <Sheet open={true}>
-        <SheetContent side="right">Content</SheetContent>
+        <SheetContent side="right">
+          <SheetHeader>
+            <SheetTitle>Right Side</SheetTitle>
+            <SheetDescription>Right Content</SheetDescription>
+          </SheetHeader>
+          Content
+        </SheetContent>
       </Sheet>
     );
 
