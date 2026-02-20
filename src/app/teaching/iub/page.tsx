@@ -6,6 +6,9 @@ import { InstitutionCoursesPage } from '@/features/teaching/components/instituti
 export const metadata: Metadata = {
   title: 'IUB Courses - Teaching Portfolio',
   description: `Courses taught at Independent University, Bangladesh (IUB) by ${siteConfig.author}. ${siteConfig.description}`,
+  alternates: {
+    canonical: `${siteConfig.url}/teaching/iub`,
+  },
 };
 
 export default function IUBTeachingPage() {

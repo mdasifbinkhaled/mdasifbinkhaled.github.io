@@ -22,9 +22,12 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
-    const timer = setInterval(() => {
-      setTicker((t) => t + 1);
-    }, 1000 * 60 * 60);
+    const timer = setInterval(
+      () => {
+        setTicker((t) => t + 1);
+      },
+      1000 * 60 * 60
+    );
 
     return () => clearInterval(timer);
   }, [contest.endDate]);
@@ -32,10 +35,13 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
   if (!isMounted) return null;
 
   const difference = +new Date(contest.endDate) - +new Date();
-  const timeLeft = difference > 0 ? {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-  } : null;
+  const timeLeft =
+    difference > 0
+      ? {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        }
+      : null;
 
   if (!timeLeft) return null;
 

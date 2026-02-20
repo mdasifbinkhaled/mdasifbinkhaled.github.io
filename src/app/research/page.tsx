@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   title: 'Research',
   description: `${siteConfig.author}'s research in Explainable AI, Healthcare AI, and Multimodal AI. ${researchIdentity.philosophy.statement}`,
   alternates: {
-    canonical: '/research',
+    canonical: `${siteConfig.url}/research`,
   },
   openGraph: {
     title: `Research - ${siteConfig.author}`,

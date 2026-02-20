@@ -173,13 +173,13 @@ See [ISSUES.md](ISSUES.md) for the full finding tracker (152 findings, 89 open).
 
 ## ADRs (Architecture Decision Records)
 
-| ADR | Title | Status |
-| --- | --- | --- |
-| ADR-001 | Static Export over SSR | Accepted |
-| ADR-002 | Zod-First Type System | Accepted |
-| ADR-003 | 6-Theme System | Accepted |
+| ADR     | Title                       | Status   |
+| ------- | --------------------------- | -------- |
+| ADR-001 | Static Export over SSR      | Accepted |
+| ADR-002 | Zod-First Type System       | Accepted |
+| ADR-003 | 6-Theme System              | Accepted |
 | ADR-004 | Feature Module Architecture | Accepted |
-| ADR-005 | Student-Facing Tools Tab | Proposed |
+| ADR-005 | Student-Facing Tools Tab    | Proposed |
 
 See [adr/](adr/) for full records.
 

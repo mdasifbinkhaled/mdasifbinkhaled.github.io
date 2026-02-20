@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     description: `Learn more about ${siteConfig.author}'s academic journey, research interests, and professional background.`,
     images: [assetPaths.ogImage],
   },
+  alternates: {
+    canonical: `${siteConfig.url}/about`,
+  },
 };
 
 export default function AboutPage() {

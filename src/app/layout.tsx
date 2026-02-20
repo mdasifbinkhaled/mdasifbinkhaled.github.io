@@ -10,6 +10,8 @@ import {
   generatePersonStructuredData,
   sanitizeJsonLd,
 } from '@/shared/lib/structured-data';
+import { RouteAnnouncer } from '@/shared/components/common/route-announcer';
+import { WebVitalsReporter } from '@/shared/components/common/web-vitals-reporter';
 import '@/app/globals.css';
 import '@/styles/tokens.css';
 
@@ -44,6 +46,12 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [assetPaths.ogImage],
   },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
@@ -82,8 +90,10 @@ export default function RootLayout({
             </Script>
           </>
         )}
+        <WebVitalsReporter />
 
         <SkipLink />
+        <RouteAnnouncer />
         <AppProviders>
           <AppSidebarLayout>{children}</AppSidebarLayout>
         </AppProviders>

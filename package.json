@@ -41,6 +41,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml}\"",
     "typecheck": "tsc --noEmit",
+    "analyze": "cross-env ANALYZE=true next build",
+    "audit:ci": "npm audit --audit-level=high",
     "pre-commit": "lint-staged",
     "prepare": "husky",
     "validate": "npm run lint:check && npm run format:check && npm run test:run && npm run typecheck"
@@ -70,6 +72,7 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^20.0.0",
+    "@next/bundle-analyzer": "^16.1.6",
     "@testing-library/jest-dom": "^6.x",
     "@testing-library/react": "^16.x",
     "@testing-library/user-event": "^14.6.1",

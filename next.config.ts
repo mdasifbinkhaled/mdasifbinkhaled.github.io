@@ -1,4 +1,9 @@
 import type { NextConfig } from 'next';
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+const analyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const config: NextConfig = {
   output: 'export',
@@ -47,9 +52,14 @@ const config: NextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
           },
+          {
+            key: 'Content-Security-Policy',
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com; frame-src 'self' https://www.youtube.com;",
+          },
         ],
       },
     ];
   },
 };
-export default config;
+export default analyzer(config);

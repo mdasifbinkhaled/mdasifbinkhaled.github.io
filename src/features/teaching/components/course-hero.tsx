@@ -107,7 +107,7 @@ export function CourseHero({ course }: { course: CourseData }) {
                     className={cn(
                       'shadow-sm hover:shadow-md transition-all rounded-lg h-10 px-5 cursor-pointer relative z-30',
                       !isHighlight &&
-                      'bg-secondary/50 hover:bg-secondary/80 text-secondary-foreground border border-border/50'
+                        'bg-secondary/50 hover:bg-secondary/80 text-secondary-foreground border border-border/50'
                     )}
                     asChild
                   >

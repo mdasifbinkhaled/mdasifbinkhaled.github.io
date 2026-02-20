@@ -146,7 +146,9 @@ export default function CVContent() {
             <CardContent className="space-y-4">
               {professionalExperiences.slice(0, 3).map((exp) => (
                 <div key={exp.id} className="border-l-4 border-primary pl-4">
-                  <h3 className="font-semibold">{exp.title.split('–')[0]?.trim() || exp.title}</h3>
+                  <h3 className="font-semibold">
+                    {exp.title.split('–')[0]?.trim() || exp.title}
+                  </h3>
                   <p className="text-sm">
                     {exp.institution} • {exp.duration}
                   </p>

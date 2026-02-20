@@ -24,7 +24,7 @@ export function InstitutionCoursesPage({
   const avgRating =
     ratedCourses.length > 0
       ? ratedCourses.reduce((sum, course) => sum + (course.rating || 0), 0) /
-      ratedCourses.length
+        ratedCourses.length
       : 0;
 
   return (

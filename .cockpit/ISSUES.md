@@ -448,7 +448,7 @@ Commit:      ✅ 675e6e4
 #### F-145 — INFO: academic-profiles.tsx String Template Instead of cn()
 
 - **File**: `src/shared/components/common/academic-profiles.tsx`
-- **Issue**: Uses string template `\`${baseClasses} ${colorClasses}\`` for className instead of `cn()` used everywhere else. Also casts icon type unsafely.
+- **Issue**: Uses string template `\`${baseClasses} ${colorClasses}\``for className instead of`cn()` used everywhere else. Also casts icon type unsafely.
 - **Note**: Minor inconsistency. Fix when touching the file.
 
 #### F-146 — INFO: time-display.tsx Hardcoded Label
@@ -499,28 +499,27 @@ Commit:      ✅ 675e6e4
 
 ### Resolved in Phase 4 System Audit Remediation (2026-02-20)
 
-| ID | Category | Severity | Title | Resolution |
-| --- | --- | --- | --- | --- |
-| F-099 | Bug | CRITICAL | Division-by-Zero in IUB Page Average Rating | Added defensive guard against length 0. |
-| F-100 | Security/Data | CRITICAL | PII Hardcoded in Source Code (Phone Number) | Replaced with siteConfig references. |
-| F-101 | Data | CRITICAL | CV Content Hardcoded (Data Drift Risk) | Sourced from dynamic CV data arrays. |
-| F-102 | Bug | HIGH | Contest Countdown Never Ticks | Converted to dynamic ticker state with derived calculations. |
-| F-103 | Bug | HIGH | Missing 'use client' in collapsible-section.tsx | Added 'use client' directive. |
-| F-104 | Bug | HIGH | Missing 'use client' in publication-card.tsx | Added 'use client' directive. |
-| F-105 | SEO/Data | HIGH | Structured Data timeRequired: 'P1S' (1 second) | Changed to 'P16W'. |
-| F-106 | Theme | HIGH | spotlight-card.tsx Hardcoded Dark Colors | Replaced with theme-aware semantic tokens. |
-| F-107 | Accessibility | HIGH | collapsible-section.tsx Not Keyboard Accessible | Replaced div with native semantic button element. |
-| F-108 | Architecture | HIGH | Duplicate Metadata in Publications Page and Layout | Removed duplicated metadata from layout.tsx. |
-| F-109 | Type Safety | MEDIUM | z.any() Bypasses Type Safety in 3 Schema Files | Replaced with z.custom<LucideIcon>(). |
-| F-110 | Data | MEDIUM | TOTAL_STUDENTS: 1000 Contradicts Dynamic Calculation | Calculated dynamically using getTotalStudentsFromCourses(). |
-| F-113 | Theme | MEDIUM | darkMode: 'class' vs attribute="data-theme" Mismatch | Synchronized with next-themes specific selector. |
-| F-118 | Type Safety | MEDIUM | Notice Board Type Drifts from Schema | Derived directly from CourseData['notices']. |
-| F-119 | DRY | MEDIUM | Course URL Construction Duplicated | Extracted to getCoursePath() utility in course-utils.ts. |
-| F-126 | DRY | MEDIUM | 11 Identical Error Boundary Files | Consolidated using a HOC factory function createErrorBoundary. |
-| F-128 | DRY | LOW | theme-selector.tsx 335 LOC with 3 Duplicated Variant Blocks | Extracted ThemeCategoryList subcomponent. |
-| F-129 | Architecture | LOW | pdf-viewer.tsx Domain Components in ui/ Primitives | Moved to shared/components/common/. |
-| F-140 | DRY | LOW | bracu/page.tsx and iub/page.tsx Near-Identical | Extracted into shared InstitutionCoursesPage. |
-
+| ID    | Category      | Severity | Title                                                       | Resolution                                                     |
+| ----- | ------------- | -------- | ----------------------------------------------------------- | -------------------------------------------------------------- |
+| F-099 | Bug           | CRITICAL | Division-by-Zero in IUB Page Average Rating                 | Added defensive guard against length 0.                        |
+| F-100 | Security/Data | CRITICAL | PII Hardcoded in Source Code (Phone Number)                 | Replaced with siteConfig references.                           |
+| F-101 | Data          | CRITICAL | CV Content Hardcoded (Data Drift Risk)                      | Sourced from dynamic CV data arrays.                           |
+| F-102 | Bug           | HIGH     | Contest Countdown Never Ticks                               | Converted to dynamic ticker state with derived calculations.   |
+| F-103 | Bug           | HIGH     | Missing 'use client' in collapsible-section.tsx             | Added 'use client' directive.                                  |
+| F-104 | Bug           | HIGH     | Missing 'use client' in publication-card.tsx                | Added 'use client' directive.                                  |
+| F-105 | SEO/Data      | HIGH     | Structured Data timeRequired: 'P1S' (1 second)              | Changed to 'P16W'.                                             |
+| F-106 | Theme         | HIGH     | spotlight-card.tsx Hardcoded Dark Colors                    | Replaced with theme-aware semantic tokens.                     |
+| F-107 | Accessibility | HIGH     | collapsible-section.tsx Not Keyboard Accessible             | Replaced div with native semantic button element.              |
+| F-108 | Architecture  | HIGH     | Duplicate Metadata in Publications Page and Layout          | Removed duplicated metadata from layout.tsx.                   |
+| F-109 | Type Safety   | MEDIUM   | z.any() Bypasses Type Safety in 3 Schema Files              | Replaced with z.custom<LucideIcon>().                          |
+| F-110 | Data          | MEDIUM   | TOTAL_STUDENTS: 1000 Contradicts Dynamic Calculation        | Calculated dynamically using getTotalStudentsFromCourses().    |
+| F-113 | Theme         | MEDIUM   | darkMode: 'class' vs attribute="data-theme" Mismatch        | Synchronized with next-themes specific selector.               |
+| F-118 | Type Safety   | MEDIUM   | Notice Board Type Drifts from Schema                        | Derived directly from CourseData['notices'].                   |
+| F-119 | DRY           | MEDIUM   | Course URL Construction Duplicated                          | Extracted to getCoursePath() utility in course-utils.ts.       |
+| F-126 | DRY           | MEDIUM   | 11 Identical Error Boundary Files                           | Consolidated using a HOC factory function createErrorBoundary. |
+| F-128 | DRY           | LOW      | theme-selector.tsx 335 LOC with 3 Duplicated Variant Blocks | Extracted ThemeCategoryList subcomponent.                      |
+| F-129 | Architecture  | LOW      | pdf-viewer.tsx Domain Components in ui/ Primitives          | Moved to shared/components/common/.                            |
+| F-140 | DRY           | LOW      | bracu/page.tsx and iub/page.tsx Near-Identical              | Extracted into shared InstitutionCoursesPage.                  |
 
 ### Resolved in Session 8 Deep Re-Audit (2026-02-19)
 

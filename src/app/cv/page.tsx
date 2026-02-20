@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     description: `Academic CV of ${siteConfig.author}, ${siteConfig.role}.`,
     images: [assetPaths.ogImage],
   },
+  alternates: {
+    canonical: `${siteConfig.url}/cv`,
+  },
 };
 
 export default function CVPage() {

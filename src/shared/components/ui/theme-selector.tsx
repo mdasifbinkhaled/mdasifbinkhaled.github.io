@@ -98,7 +98,9 @@ function ThemeCategoryList({
         return (
           <div
             key={category}
-            className={variant === 'floating' || variant === 'default' ? 'py-2' : 'py-1'}
+            className={
+              variant === 'floating' || variant === 'default' ? 'py-2' : 'py-1'
+            }
           >
             <div className="px-2 py-1">
               <Badge variant="secondary" className="text-xs">
@@ -129,7 +131,9 @@ function ThemeCategoryList({
                       >
                         <themeOption.icon className="h-3 w-3 text-foreground/70" />
                       </div>
-                      <span className="text-sm flex-1">{themeOption.label}</span>
+                      <span className="text-sm flex-1">
+                        {themeOption.label}
+                      </span>
                       {isActive && <Check className="h-3 w-3 text-primary" />}
                     </DropdownMenuItem>
                   );
@@ -153,7 +157,9 @@ function ThemeCategoryList({
                           <span className="font-medium text-xs">
                             {themeOption.label}
                           </span>
-                          {isActive && <Check className="h-2 w-2 text-primary" />}
+                          {isActive && (
+                            <Check className="h-2 w-2 text-primary" />
+                          )}
                         </div>
                       </div>
                     </DropdownMenuItem>

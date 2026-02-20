@@ -126,4 +126,3 @@ export function createErrorBoundary(sectionName: string) {
     );
   };
 }
-

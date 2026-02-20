@@ -19,20 +19,23 @@ export function sanitizeJsonLd(data: unknown): string {
 
 export interface AcademicPersonStructuredData {
   '@context': 'https://schema.org';
-  '@type': 'Person';
-  name: string;
-  jobTitle: string;
-  affiliation: {
-    '@type': 'EducationalOrganization';
+  '@type': 'ProfilePage';
+  mainEntity: {
+    '@type': 'Person';
     name: string;
-    url?: string;
+    jobTitle: string;
+    affiliation: {
+      '@type': 'EducationalOrganization';
+      name: string;
+      url?: string;
+    };
+    url: string;
+    sameAs: string[];
+    knowsAbout: string[];
+    description: string;
+    email?: string;
+    image?: string;
   };
-  url: string;
-  sameAs: string[];
-  knowsAbout: string[];
-  description: string;
-  email?: string;
-  image?: string;
 }
 
 export interface CourseStructuredData {
@@ -90,20 +93,23 @@ export function generatePersonStructuredData(): AcademicPersonStructuredData {
 
   return {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: siteConfig.author,
-    jobTitle: siteConfig.jobTitle,
-    affiliation: {
-      '@type': 'EducationalOrganization',
-      name: siteConfig.institution,
-      url: 'https://www.iub.edu.bd',
+    '@type': 'ProfilePage',
+    mainEntity: {
+      '@type': 'Person',
+      name: siteConfig.author,
+      jobTitle: siteConfig.jobTitle,
+      affiliation: {
+        '@type': 'EducationalOrganization',
+        name: siteConfig.institution,
+        url: 'https://www.iub.edu.bd',
+      },
+      url: siteConfig.url,
+      sameAs,
+      knowsAbout: researchIdentity.primaryAreas.map((area) => area.name),
+      description: siteConfig.description,
+      email: siteConfig.email,
+      image: `${siteConfig.url}${assetPaths.profile}`,
     },
-    url: siteConfig.url,
-    sameAs,
-    knowsAbout: researchIdentity.primaryAreas.map((area) => area.name),
-    description: siteConfig.description,
-    email: siteConfig.email,
-    image: `${siteConfig.url}${assetPaths.profile}`,
   };
 }
 

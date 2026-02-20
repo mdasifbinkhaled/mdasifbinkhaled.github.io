@@ -8,17 +8,19 @@ describe('generatePersonStructuredData', () => {
     const placeholderIndicators = ['YOUR_', 'yourusername'];
 
     expect(
-      personData.sameAs.every(
-        (url) =>
+      personData.mainEntity.sameAs.every(
+        (url: string) =>
           !placeholderIndicators.some((indicator) => url.includes(indicator))
       )
     ).toBe(true);
-    expect(personData.sameAs).toContain(siteConfig.links.github);
-    expect(personData.sameAs).toContain(siteConfig.links.linkedin);
-    expect(personData.sameAs).toContain(siteConfig.links.googleScholar);
+    expect(personData.mainEntity.sameAs).toContain(siteConfig.links.github);
+    expect(personData.mainEntity.sameAs).toContain(siteConfig.links.linkedin);
+    expect(personData.mainEntity.sameAs).toContain(
+      siteConfig.links.googleScholar
+    );
 
     if (siteConfig.links.orcid) {
-      expect(personData.sameAs).toContain(siteConfig.links.orcid);
+      expect(personData.mainEntity.sameAs).toContain(siteConfig.links.orcid);
     }
   });
 });

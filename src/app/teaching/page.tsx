@@ -15,6 +15,9 @@ import { TeachingCTA } from '@/features/teaching/teaching-cta';
 export const metadata: Metadata = {
   title: 'Teaching',
   description: `${siteConfig.author}'s teaching portfolio, course details, teaching philosophy, and student mentorship at IUB and BRACU.`,
+  alternates: {
+    canonical: `${siteConfig.url}/teaching`,
+  },
 };
 
 export default function TeachingPage() {

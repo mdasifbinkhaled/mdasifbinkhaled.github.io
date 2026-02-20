@@ -24,6 +24,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/publications`,
   },
+  other: {
+    // Google Scholar explicit indexing parameters
+    citation_author: siteConfig.author,
+    citation_journal_title: 'Academic Portfolio',
+  },
 };
 
 export default function PublicationsPage() {
