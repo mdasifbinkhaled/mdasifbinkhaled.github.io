@@ -1,3 +1,5 @@
+'use client';
+
 import { memo } from 'react';
 import {
   Card,
@@ -48,38 +50,38 @@ export const PublicationCard = memo(function PublicationCard({
 
         {(publication.abstract ||
           (publication.keywords && publication.keywords.length > 0)) && (
-          <details className="mt-3 group">
-            <summary className="cursor-pointer font-medium text-primary hover:text-primary/80 transition-colors flex items-center list-none">
-              <ChevronDown className="h-4 w-4 mr-1 transition-transform group-open:rotate-180" />
-              <span className="select-none">Show more</span>
-            </summary>
+            <details className="mt-3 group">
+              <summary className="cursor-pointer font-medium text-primary hover:text-primary/80 transition-colors flex items-center list-none">
+                <ChevronDown className="h-4 w-4 mr-1 transition-transform group-open:rotate-180" />
+                <span className="select-none">Show more</span>
+              </summary>
 
-            <div className="mt-3 space-y-3">
-              {publication.abstract && (
-                <div>
-                  <h4 className="font-semibold text-sm mb-1">Abstract</h4>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
-                    {publication.abstract}
-                  </p>
-                </div>
-              )}
+              <div className="mt-3 space-y-3">
+                {publication.abstract && (
+                  <div>
+                    <h4 className="font-semibold text-sm mb-1">Abstract</h4>
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                      {publication.abstract}
+                    </p>
+                  </div>
+                )}
 
-              {publication.keywords && publication.keywords.length > 0 && (
-                <div className="flex flex-wrap gap-1">
-                  {publication.keywords.map((keyword) => (
-                    <Badge
-                      key={keyword}
-                      variant="outline"
-                      className="text-xs bg-background"
-                    >
-                      {keyword}
-                    </Badge>
-                  ))}
-                </div>
-              )}
-            </div>
-          </details>
-        )}
+                {publication.keywords && publication.keywords.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {publication.keywords.map((keyword) => (
+                      <Badge
+                        key={keyword}
+                        variant="outline"
+                        className="text-xs bg-background"
+                      >
+                        {keyword}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </details>
+          )}
       </CardContent>
       <CardFooter className="border-t pt-4">
         <div className="flex gap-2 w-full">

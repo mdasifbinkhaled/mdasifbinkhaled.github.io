@@ -3,7 +3,7 @@ import { samplePublications } from '@/shared/lib/data/publications';
 import { siteConfig } from '@/shared/config/site';
 import { PublicationList } from '@/shared/components/common/publication-list';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
+import { ErrorBoundary } from '@/shared/components/common/error-boundary';
 import { researchIdentity } from '@/shared/config/researcher-profile';
 import { AcademicProfiles } from '@/shared/components/common/academic-profiles';
 import { Card, CardContent } from '@/shared/components/ui/card';

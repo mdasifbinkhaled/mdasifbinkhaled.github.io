@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { ChevronDown } from 'lucide-react';
@@ -29,11 +31,12 @@ export function CollapsibleSection({
           isOpen ? 'shadow-md' : 'shadow-sm'
         )}
       >
-        <div
-          role="button"
+        <button
+          type="button"
           onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
           className={cn(
-            'w-full flex items-center justify-between p-6 cursor-pointer hover:bg-muted/30 transition-colors select-none group',
+            'w-full flex items-center justify-between p-6 cursor-pointer hover:bg-muted/30 transition-colors group',
             !isOpen && 'border-b-0',
             isOpen && 'border-b'
           )}
@@ -52,7 +55,7 @@ export function CollapsibleSection({
               isOpen && 'rotate-180'
             )}
           />
-        </div>
+        </button>
 
         <div
           className={cn(

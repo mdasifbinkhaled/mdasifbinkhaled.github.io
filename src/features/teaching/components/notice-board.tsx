@@ -6,14 +6,9 @@ import {
 import { Megaphone, AlertCircle, Info, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 
-interface Notice {
-  id: string;
-  title: string;
-  date: string;
-  type: 'alert' | 'info' | 'success' | 'warning';
-  link?: string;
-  importance: 'high' | 'medium' | 'low';
-}
+import type { CourseData } from '@/shared/types';
+
+type Notice = NonNullable<CourseData['notices']>[number];
 
 interface NoticeBoardProps {
   notices: Notice[];

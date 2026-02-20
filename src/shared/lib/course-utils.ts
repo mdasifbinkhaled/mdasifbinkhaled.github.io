@@ -81,3 +81,11 @@ export function getCourseLinkIcon(type: CourseLink['type']): LucideIcon {
       return ExternalLink;
   }
 }
+
+/**
+ * Generates the canonical local URL path for a course detail page.
+ */
+export function getCoursePath(course: { slug?: string; code: string; institution: string }): string {
+  const courseSlug = course.slug || course.code.toLowerCase().replace(/\s+/g, '');
+  return `/teaching/${course.institution.toLowerCase().replace(/\s+/g, '')}/${courseSlug}`;
+}

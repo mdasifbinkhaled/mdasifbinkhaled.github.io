@@ -26,6 +26,7 @@ import type { CourseData } from '@/shared/types';
 import { Icon } from '@/shared/components/common/icons';
 import { DISPLAY_LIMITS } from '@/shared/config';
 import { cn } from '@/shared/lib/utils';
+import { getCoursePath } from '@/shared/lib/course-utils';
 import { getLevelStyle } from './styles';
 
 // -----------------------------------------------------------------------------
@@ -141,9 +142,7 @@ export const CourseCard = memo(function CourseCard({
 
   // Use tier field (detailed = has separate page)
   const hasDetailPage = course.tier === 'detailed';
-  const courseSlug =
-    course.slug || course.code.toLowerCase().replace(/\s+/g, '');
-  const coursePath = `/teaching/${course.institution.toLowerCase().replace(/\s+/g, '')}/${courseSlug}`;
+  const coursePath = getCoursePath(course);
 
   return (
     <Card

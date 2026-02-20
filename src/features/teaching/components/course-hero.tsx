@@ -1,4 +1,5 @@
 import { BookOpen, ExternalLink, GraduationCap } from 'lucide-react';
+import { siteConfig } from '@/shared/config/site';
 import { Button } from '@/shared/components/ui/button';
 import { Icon } from '@/shared/components/common/icons';
 import { ContestCountdown } from '@/features/teaching/components/contest-countdown';
@@ -106,7 +107,7 @@ export function CourseHero({ course }: { course: CourseData }) {
                     className={cn(
                       'shadow-sm hover:shadow-md transition-all rounded-lg h-10 px-5 cursor-pointer relative z-30',
                       !isHighlight &&
-                        'bg-secondary/50 hover:bg-secondary/80 text-secondary-foreground border border-border/50'
+                      'bg-secondary/50 hover:bg-secondary/80 text-secondary-foreground border border-border/50'
                     )}
                     asChild
                   >
@@ -152,7 +153,7 @@ export function CourseHero({ course }: { course: CourseData }) {
               <div className="hidden sm:block w-px h-4 bg-border/50" />
               <div className="flex items-center gap-2">
                 <span className="text-muted-foreground">Contact:</span>
-                <span className="font-medium">01676076329</span>
+                <span className="font-medium">{siteConfig.phone}</span>
               </div>
               <span className="text-xs text-muted-foreground italic ml-auto">
                 Please make an appointment before visiting.

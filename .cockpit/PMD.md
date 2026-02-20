@@ -3,7 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2026-02-19
+> **Last Updated**: 2026-02-20 (Session 10 — Deep Module-by-Module Audit)
+> **Commit**: 675e6e4 (`chore(audit): verify and finalize 11 architectural fixes`)
 
 ## Mission
 
@@ -146,8 +147,41 @@ styles/      248  (2%)  █
 - Clean 4-layer separation with clear dependency direction
 - Type safety via Zod-first approach (catches data errors at import time)
 - Comprehensive error boundary coverage
-- Good test foundation (109 tests, CI-enforced)
+- Good test foundation (136 tests, CI-enforced)
 - Professional CI/CD with conventional commits
+
+### Gaps Identified (Session 10 Deep Audit — 152 findings, 89 open)
+
+- **CRITICAL (3 open)**: IUB page division-by-zero (F-099), PII phone number in source (F-100), CV content hardcoded/drift risk (F-101)
+- **SEO**: Missing Google Scholar `citation_*` meta tags, canonical URLs on 15/18 pages, `ProfilePage` schema, structured data `timeRequired: 'P1S'` incorrect (F-105)
+- **Security**: CSP `<meta>` tag needed (F-015 confirmed `_headers` doesn’t work on GitHub Pages)
+- **Schema Integrity**: `z.any()` bypasses type safety in 3 schemas (F-109), METRICS vs dynamic calc contradiction (F-110), duplicate course types (F-111), navIconMap mismatch with iconNameSchema (F-112)
+- **Accessibility**: No aria-live route announcer, collapsible-section not keyboard accessible (F-107), hover-only resource links (F-138), missing table caption (F-148)
+- **DRY Violations**: 11 identical error boundaries (F-126), near-identical IUB/BRACU pages (F-140), contest countdown broken (F-102), 3 near-identical theme-selector variants (F-128)
+- **Theme Consistency**: `darkMode:'class'` vs `data-theme` attribute conflict (F-113), spotlight-card hardcoded dark colors (F-106), stat-card hardcoded purple (F-131)
+- **Data Staleness**: hero-section hardcoded stats (F-115), FeaturedGrant inline (F-117), researcher-profile placeholder data (F-114)
+- **Testing**: 4.9% feature module coverage (2/41 tested), no page render tests, mocks-only tests (F-125), duplicated icon mocks (F-124)
+- **PWA**: Manifest exists but no service worker — site not installable
+- **Modern Web**: View Transitions flag enabled but unused, no container queries
+- **Monitoring**: No Web Vitals reporting, no error tracking (Sentry)
+- **DX**: No bundle analyzer, no Lighthouse CI
+- **Content**: No blog, no talks page, no research timeline
+- **Student Tools**: No interactive tools (grade calculator, seat plan generator)
+
+See [ROADMAP.md](ROADMAP.md) for the improvement plan (37 items across Phases 5-10).
+See [ISSUES.md](ISSUES.md) for the full finding tracker (152 findings, 89 open).
+
+## ADRs (Architecture Decision Records)
+
+| ADR | Title | Status |
+| --- | --- | --- |
+| ADR-001 | Static Export over SSR | Accepted |
+| ADR-002 | Zod-First Type System | Accepted |
+| ADR-003 | 6-Theme System | Accepted |
+| ADR-004 | Feature Module Architecture | Accepted |
+| ADR-005 | Student-Facing Tools Tab | Proposed |
+
+See [adr/](adr/) for full records.
 
 ### Concerns
 
@@ -158,5 +192,6 @@ styles/      248  (2%)  █
 - **6 themes** — light, dark, ocean, forest, lavender, slate
 - **54 LOC analytics** — lean, only 4 wired events (viewCV, downloadCV, viewPublication, downloadPublication)
 - **All hardcoded colors migrated** — only documented exceptions remain (global-error.tsx, brand colors)
+- **Session 10 deep audit**: Read every file in codebase (174 files), found 54 new issues (3 CRITICAL, 7 HIGH, 19 MEDIUM, 17 LOW, 8 INFO)
 
 See [ISSUES.md](ISSUES.md) for full finding tracker.

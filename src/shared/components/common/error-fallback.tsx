@@ -103,3 +103,27 @@ export function ErrorFallback({
     </div>
   );
 }
+
+/**
+ * Factory function to create a concise error boundary component for a specific section.
+ * Reduces boilerplate in nested error.tsx files.
+ */
+export function createErrorBoundary(sectionName: string) {
+  return function GenericErrorBoundary({
+    error,
+    reset,
+  }: {
+    error: Error & { digest?: string };
+    reset: () => void;
+  }) {
+    return (
+      <ErrorFallback
+        error={error}
+        reset={reset}
+        section={sectionName}
+        fullUI={false}
+      />
+    );
+  };
+}
+

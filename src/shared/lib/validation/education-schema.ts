@@ -4,9 +4,10 @@
  */
 
 import { z } from 'zod';
+import type { LucideIcon } from 'lucide-react';
 
 // Helper for keeping icon components (referenced but not rigorously validated)
-const iconSchema = z.any();
+const iconSchema = z.custom<LucideIcon>((val) => typeof val === 'function' || typeof val === 'object', 'Expected a valid Icon component');
 
 /**
  * Education Item Schema

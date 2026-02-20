@@ -80,6 +80,127 @@ const themes = [
 
 const categories = ['Classic', 'Natural', 'Vibrant', 'Professional'] as const;
 
+function ThemeCategoryList({
+  variant,
+  currentThemeName,
+  setTheme,
+}: {
+  variant: 'default' | 'compact' | 'floating';
+  currentThemeName: string | undefined;
+  setTheme: (name: string) => void;
+}) {
+  return (
+    <>
+      {categories.map((category) => {
+        const categoryThemes = themes.filter((t) => t.category === category);
+        if (categoryThemes.length === 0) return null;
+
+        return (
+          <div
+            key={category}
+            className={variant === 'floating' || variant === 'default' ? 'py-2' : 'py-1'}
+          >
+            <div className="px-2 py-1">
+              <Badge variant="secondary" className="text-xs">
+                {category}
+              </Badge>
+            </div>
+            <div
+              className={
+                variant === 'floating'
+                  ? 'grid grid-cols-2 gap-1'
+                  : variant === 'default'
+                    ? 'grid grid-cols-1 gap-1'
+                    : 'space-y-0.5'
+              }
+            >
+              {categoryThemes.map((themeOption) => {
+                const isActive = currentThemeName === themeOption.name;
+
+                if (variant === 'compact') {
+                  return (
+                    <DropdownMenuItem
+                      key={themeOption.name}
+                      onClick={() => setTheme(themeOption.name)}
+                      className="flex items-center gap-2 px-2 py-1.5 rounded-md cursor-pointer"
+                    >
+                      <div
+                        className={`w-5 h-5 rounded ${themeOption.preview} flex items-center justify-center border border-border/50`}
+                      >
+                        <themeOption.icon className="h-3 w-3 text-foreground/70" />
+                      </div>
+                      <span className="text-sm flex-1">{themeOption.label}</span>
+                      {isActive && <Check className="h-3 w-3 text-primary" />}
+                    </DropdownMenuItem>
+                  );
+                }
+
+                if (variant === 'floating') {
+                  return (
+                    <DropdownMenuItem
+                      key={themeOption.name}
+                      onClick={() => setTheme(themeOption.name)}
+                      className="flex items-center gap-2 p-2 rounded-lg cursor-pointer theme-selector-grid-item"
+                      aria-label={`Switch to ${themeOption.label} theme`}
+                    >
+                      <div
+                        className={`w-6 h-6 rounded-md ${themeOption.preview} flex items-center justify-center border border-border/50 theme-preview-animation`}
+                      >
+                        <themeOption.icon className="h-3 w-3 text-foreground/70" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium text-xs">
+                            {themeOption.label}
+                          </span>
+                          {isActive && <Check className="h-2 w-2 text-primary" />}
+                        </div>
+                      </div>
+                    </DropdownMenuItem>
+                  );
+                }
+
+                return (
+                  <DropdownMenuItem
+                    key={themeOption.name}
+                    onClick={() => setTheme(themeOption.name)}
+                    className="flex items-center gap-3 p-3 rounded-lg cursor-pointer theme-selector-grid-item"
+                    aria-label={`Switch to ${themeOption.label} theme: ${themeOption.description}`}
+                  >
+                    <div className="flex items-center gap-3 flex-1">
+                      <div
+                        className={`w-8 h-8 rounded-md ${themeOption.preview} flex items-center justify-center border border-border/50 theme-preview-animation`}
+                      >
+                        <themeOption.icon className="h-4 w-4 text-foreground/70" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-sm">
+                            {themeOption.label}
+                          </span>
+                          {isActive && (
+                            <Check
+                              className="h-3 w-3 text-primary"
+                              aria-label="Currently selected"
+                            />
+                          )}
+                        </div>
+                        <p className="text-xs text-muted-foreground truncate">
+                          {themeOption.description}
+                        </p>
+                      </div>
+                    </div>
+                  </DropdownMenuItem>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
 interface ThemeSelectorProps {
   variant?: 'default' | 'compact' | 'floating';
   align?: 'start' | 'center' | 'end';
@@ -126,46 +247,11 @@ export function ThemeSelector({
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          {categories.map((category) => {
-            const categoryThemes = themes.filter(
-              (t) => t.category === category
-            );
-            if (categoryThemes.length === 0) return null;
-
-            return (
-              <div key={category} className="py-1">
-                <div className="px-2 py-1">
-                  <Badge variant="secondary" className="text-xs">
-                    {category}
-                  </Badge>
-                </div>
-                <div className="space-y-0.5">
-                  {categoryThemes.map((themeOption) => (
-                    <DropdownMenuItem
-                      key={themeOption.name}
-                      onClick={() => setTheme(themeOption.name)}
-                      className="flex items-center gap-2 px-2 py-1.5 rounded-md cursor-pointer"
-                    >
-                      <div
-                        className={`
-                        w-5 h-5 rounded ${themeOption.preview} 
-                        flex items-center justify-center border border-border/50
-                      `}
-                      >
-                        <themeOption.icon className="h-3 w-3 text-foreground/70" />
-                      </div>
-                      <span className="text-sm flex-1">
-                        {themeOption.label}
-                      </span>
-                      {theme === themeOption.name && (
-                        <Check className="h-3 w-3 text-primary" />
-                      )}
-                    </DropdownMenuItem>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+          <ThemeCategoryList
+            variant="compact"
+            currentThemeName={theme}
+            setTheme={setTheme}
+          />
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -195,51 +281,11 @@ export function ThemeSelector({
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          {categories.map((category) => {
-            const categoryThemes = themes.filter(
-              (t) => t.category === category
-            );
-            if (categoryThemes.length === 0) return null;
-
-            return (
-              <div key={category} className="py-2">
-                <div className="px-2 py-1">
-                  <Badge variant="secondary" className="text-xs">
-                    {category}
-                  </Badge>
-                </div>
-                <div className="grid grid-cols-2 gap-1">
-                  {categoryThemes.map((themeOption) => (
-                    <DropdownMenuItem
-                      key={themeOption.name}
-                      onClick={() => setTheme(themeOption.name)}
-                      className="flex items-center gap-2 p-2 rounded-lg cursor-pointer theme-selector-grid-item"
-                      aria-label={`Switch to ${themeOption.label} theme`}
-                    >
-                      <div
-                        className={`
-                        w-6 h-6 rounded-md ${themeOption.preview} 
-                        flex items-center justify-center border border-border/50 theme-preview-animation
-                      `}
-                      >
-                        <themeOption.icon className="h-3 w-3 text-foreground/70" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1">
-                          <span className="font-medium text-xs">
-                            {themeOption.label}
-                          </span>
-                          {theme === themeOption.name && (
-                            <Check className="h-2 w-2 text-primary" />
-                          )}
-                        </div>
-                      </div>
-                    </DropdownMenuItem>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+          <ThemeCategoryList
+            variant="floating"
+            currentThemeName={theme}
+            setTheme={setTheme}
+          />
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -266,57 +312,11 @@ export function ThemeSelector({
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        {categories.map((category) => {
-          const categoryThemes = themes.filter((t) => t.category === category);
-          if (categoryThemes.length === 0) return null;
-
-          return (
-            <div key={category} className="py-2">
-              <div className="px-2 py-1">
-                <Badge variant="secondary" className="text-xs">
-                  {category}
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 gap-1">
-                {categoryThemes.map((themeOption) => (
-                  <DropdownMenuItem
-                    key={themeOption.name}
-                    onClick={() => setTheme(themeOption.name)}
-                    className="flex items-center gap-3 p-3 rounded-lg cursor-pointer theme-selector-grid-item"
-                    aria-label={`Switch to ${themeOption.label} theme: ${themeOption.description}`}
-                  >
-                    <div className="flex items-center gap-3 flex-1">
-                      <div
-                        className={`
-                        w-8 h-8 rounded-md ${themeOption.preview} 
-                        flex items-center justify-center border border-border/50 theme-preview-animation
-                      `}
-                      >
-                        <themeOption.icon className="h-4 w-4 text-foreground/70" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm">
-                            {themeOption.label}
-                          </span>
-                          {theme === themeOption.name && (
-                            <Check
-                              className="h-3 w-3 text-primary"
-                              aria-label="Currently selected"
-                            />
-                          )}
-                        </div>
-                        <p className="text-xs text-muted-foreground truncate">
-                          {themeOption.description}
-                        </p>
-                      </div>
-                    </div>
-                  </DropdownMenuItem>
-                ))}
-              </div>
-            </div>
-          );
-        })}
+        <ThemeCategoryList
+          variant="default"
+          currentThemeName={theme}
+          setTheme={setTheme}
+        />
 
         <DropdownMenuSeparator />
         <div className="p-2 text-xs text-muted-foreground">

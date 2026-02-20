@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { Skeleton } from './skeleton';
+import { Skeleton } from '../ui/skeleton';
 
 const PDFViewer = dynamic(
   () => import('./pdf-viewer').then((mod) => ({ default: mod.PDFViewer })),

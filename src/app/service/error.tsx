@@ -1,20 +1,5 @@
 'use client';
 
-import { ErrorFallback } from '@/shared/components/common/error-fallback';
+import { createErrorBoundary } from '@/shared/components/common/error-fallback';
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
-  return (
-    <ErrorFallback
-      error={error}
-      reset={reset}
-      section="Service page"
-      fullUI={false}
-    />
-  );
-}
+export default createErrorBoundary('Service page');

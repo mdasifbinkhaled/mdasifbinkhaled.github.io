@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-02-19 | 174 source files | 14,820 LOC
+> Last Updated: 2026-02-19 (Session 9) | 174 source files | 14,820 LOC
 
 ## Root Configuration
 
@@ -248,14 +248,14 @@ src/styles/
 └── tokens.css              — Design tokens: colors, spacing, typography for 6 themes
 ```
 
-## Tests — `tests/` (21 files, 129 tests)
+## Tests — `tests/` (22 files, 136 tests)
 
 ```
 tests/
 ├── setup.ts                — Vitest setup (jest-dom matchers, lucide mocks)
 ├── analytics.test.tsx
 ├── back-to-top.test.tsx
-├── basic.test.ts
+├── basic.test.ts           — 8 smoke tests (config, navigation, themes, analytics)
 ├── components.test.tsx
 ├── data-integrity.test.ts  — Validates all Zod schemas at test time
 ├── navbar.active.test.tsx
@@ -278,4 +278,23 @@ tests/
 └── shared/lib/
     ├── course-utils.test.ts        — Breadcrumb formatting + link icons
     └── data.test.ts                — Data layer tests
+```
+
+## Cockpit — `.cockpit/` (Project Intelligence)
+
+```
+.cockpit/
+├── INDEX.md                — Navigation hub + health dashboard
+├── PMD.md                  — Project Master Document (architecture, metrics)
+├── ISSUES.md               — Finding tracker (97 findings, 34 open)
+├── ROADMAP.md              — Improvement roadmap (Phases 5-10, 37 items)
+├── STRUCTURE.md            — This file
+├── HISTORY.md              — Development timeline
+├── GOVERNANCE.md           — Standards and conventions
+├── PACKAGING.md            — Dependencies and build pipeline
+├── RELEASES.md             — Version changelog
+├── PUBLICATION.md          — Deployment details
+└── adr/
+    ├── TEMPLATE.md         — ADR template + inline ADRs 001-004
+    └── ADR-005-student-tools.md — Student tools feature design
 ```

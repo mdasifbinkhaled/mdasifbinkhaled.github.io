@@ -135,7 +135,7 @@ export function generateCourseStructuredData(course: {
     },
     courseCode: course.code,
     educationalLevel: course.level,
-    timeRequired: 'P1S', // One semester
+    timeRequired: 'P16W', // One semester (~16 weeks)
     teaches: course.outcomes,
     url: `${siteConfig.url}/teaching#${course.code.toLowerCase().replace(/\s+/g, '-')}`,
   };

@@ -3,7 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate';
 
 /** Tailwind CSS configuration — CSS custom properties for multi-theme support. */
 const config: Config = {
-  darkMode: 'class',
+  darkMode: ['selector', '[data-theme="dark"]'],
 
   content: [
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',

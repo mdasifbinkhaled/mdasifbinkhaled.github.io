@@ -3,6 +3,9 @@
 import { useEffect } from 'react';
 import { siteConfig } from '@/shared/config/site';
 import { researchIdentity } from '@/shared/config/researcher-profile';
+import { educationData } from '@/shared/lib/data/education';
+import { professionalExperiences } from '@/shared/lib/data/experience';
+import { samplePublications } from '@/shared/lib/data/publications';
 import { Button } from '@/shared/components/ui/button';
 import { Download, ExternalLinkIcon } from 'lucide-react';
 import {
@@ -20,7 +23,7 @@ import {
 } from '@/shared/components/ui/card';
 import { Skeleton } from '@/shared/components/ui/skeleton';
 import { academicEvents } from '@/shared/lib/analytics';
-import { PDFViewerWrapper } from '@/shared/components/ui/pdf-viewer-wrapper';
+import { PDFViewerWrapper } from '@/shared/components/common/pdf-viewer-wrapper';
 import { useIsClient } from '@/shared/hooks/use-is-client';
 
 export default function CVContent() {
@@ -77,34 +80,27 @@ export default function CVContent() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="border-l-4 border-primary pl-4">
-                <h3 className="font-semibold">M.Sc in Computer Science</h3>
-                <p>Independent University, Bangladesh (IUB)</p>
-                <p className="text-sm text-muted-foreground">
-                  Graduated with Distinction (Cum Laude)
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Thesis: Word Sense Disambiguation of Bengali Words using
-                  FP-Growth Algorithm
-                </p>
-              </div>
-
-              <div className="border-l-4 border-primary pl-4">
-                <h3 className="font-semibold">
-                  B.Sc in Computer Science and Engineering
-                </h3>
-                <p>BRAC University (BRACU)</p>
-                <p className="text-sm text-muted-foreground">
-                  Graduated with Highest Distinction (Summa Cum Laude)
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Achieved Vice Chancellor&apos;s Award 6 times
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Thesis: Exploring Deep Features: Deeper Fully Convolutional
-                  Neural Network for Image Segmentation
-                </p>
-              </div>
+              {educationData.map((edu) => (
+                <div key={edu.id} className="border-l-4 border-primary pl-4">
+                  <h3 className="font-semibold">{edu.degree}</h3>
+                  <p>{edu.institution}</p>
+                  {edu.distinction && (
+                    <p className="text-sm text-muted-foreground">
+                      {edu.distinction}
+                    </p>
+                  )}
+                  {edu.thesis && (
+                    <p className="text-sm text-muted-foreground">
+                      Thesis: {edu.thesis.title}
+                    </p>
+                  )}
+                  {edu.achievements?.map((achievement, idx) => (
+                    <p key={idx} className="text-sm text-muted-foreground">
+                      {achievement}
+                    </p>
+                  ))}
+                </div>
+              ))}
             </CardContent>
           </Card>
 
@@ -148,38 +144,17 @@ export default function CVContent() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="border-l-4 border-primary pl-4">
-                <h3 className="font-semibold">{siteConfig.role}</h3>
-                <div className="text-sm text-muted-foreground flex items-center gap-1">
-                  {siteConfig.institution} • Feb 2023 - Present
+              {professionalExperiences.slice(0, 3).map((exp) => (
+                <div key={exp.id} className="border-l-4 border-primary pl-4">
+                  <h3 className="font-semibold">{exp.title.split('–')[0]?.trim() || exp.title}</h3>
+                  <p className="text-sm">
+                    {exp.institution} • {exp.duration}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                    {exp.description[0]}
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Teaching advanced CSE courses and supervising student
-                  research.
-                </p>
-              </div>
-
-              <div className="border-l-4 border-primary pl-4">
-                <h3 className="font-semibold">Lecturer</h3>
-                <p className="text-sm">
-                  Independent University, Bangladesh • Jan 2019 - Feb 2023
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Taught core CSE courses and implemented OBE strategies.
-                </p>
-              </div>
-
-              <div className="border-l-4 border-primary pl-4">
-                <h3 className="font-semibold">Researcher</h3>
-                <p className="text-sm">
-                  Center for Cognitive Skill Enhancement (CCSE), IUB • May 2017
-                  - Dec 2023
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Conducted research on flood monitoring (Sentinel-1) and
-                  facilitated workshops.
-                </p>
-              </div>
+              ))}
               <Button
                 variant="link"
                 asChild
@@ -199,19 +174,11 @@ export default function CVContent() {
               <CardDescription>Recent scholarly contributions</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                <strong>
-                  Conceptual Design and Evaluation Plan of a Mobile Relational
-                  Agent...
-                </strong>{' '}
-                (DESRIST 2024)
-              </p>
-              <p className="text-sm text-muted-foreground">
-                <strong>
-                  Advancements in Bangla Speech Emotion Recognition...
-                </strong>{' '}
-                (IEEE VTC 2024)
-              </p>
+              {samplePublications.slice(0, 2).map((pub) => (
+                <p key={pub.id} className="text-sm text-muted-foreground">
+                  <strong>{pub.title}...</strong> ({pub.year})
+                </p>
+              ))}
               <Button
                 variant="link"
                 asChild

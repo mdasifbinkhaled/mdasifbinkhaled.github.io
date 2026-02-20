@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { Timer, ExternalLink, Trophy } from 'lucide-react';
@@ -13,18 +16,26 @@ interface ContestCountdownProps {
 }
 
 export function ContestCountdown({ contest }: ContestCountdownProps) {
-  const calculateTimeLeft = () => {
-    const difference = +new Date(contest.endDate) - +new Date();
-    if (difference > 0) {
-      return {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      };
-    }
-    return null;
-  };
+  const [isMounted, setIsMounted] = useState(false);
+  const [, setTicker] = useState(0);
 
-  const timeLeft = calculateTimeLeft();
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+    const timer = setInterval(() => {
+      setTicker((t) => t + 1);
+    }, 1000 * 60 * 60);
+
+    return () => clearInterval(timer);
+  }, [contest.endDate]);
+
+  if (!isMounted) return null;
+
+  const difference = +new Date(contest.endDate) - +new Date();
+  const timeLeft = difference > 0 ? {
+    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+  } : null;
 
   if (!timeLeft) return null;
 

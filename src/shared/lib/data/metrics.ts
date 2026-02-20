@@ -3,11 +3,12 @@
  * Single Source of Truth for all numerical data used across the site.
  * No more scattered constants or duplicated values.
  */
+import { getTotalStudentsFromCourses } from '@/shared/lib/data/courses';
 
 export const METRICS = {
   // Teaching
   AVERAGE_RATING: 4.32, // Source: CV, verified 2026
-  TOTAL_STUDENTS: 1000, // Source: Approx count from 2019-2025
+  TOTAL_STUDENTS: getTotalStudentsFromCourses(),
   YEARS_TEACHING: new Date().getFullYear() - 2015,
   AVERAGE_CLASS_SIZE: 30,
 

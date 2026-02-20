@@ -1,10 +1,7 @@
 import type { Metadata } from 'next';
 import { coursesTaughtBRACU } from '@/shared/lib/data/courses';
 import { siteConfig } from '@/shared/config/site';
-import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { CourseCardCompact } from '@/features/teaching/course-card-compact';
-import { StatCard } from '@/shared/components/common/stat-card';
-import { Building2, Calendar, Users } from 'lucide-react';
+import { InstitutionCoursesPage } from '@/features/teaching/components/institution-courses-page';
 
 export const metadata: Metadata = {
   title: 'BRACU Courses - Teaching Portfolio',
@@ -13,71 +10,10 @@ export const metadata: Metadata = {
 
 export default function BRACUTeachingPage() {
   return (
-    <div className="space-y-12">
-      <Breadcrumbs />
-
-      <header className="text-center">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <Building2 className="w-8 h-8 text-primary" />
-          <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
-            BRACU Courses
-          </h1>
-        </div>
-        <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          Courses taught at BRAC University as Teaching Assistant & Instructor
-        </p>
-      </header>
-
-      {/* Quick Stats */}
-      <div className="grid gap-4 md:grid-cols-3 mb-6">
-        <StatCard
-          icon={Calendar}
-          label="Total Courses"
-          number={coursesTaughtBRACU.length}
-          description="Across multiple semesters"
-        />
-        <StatCard
-          icon={Users}
-          label="Total Students"
-          number={coursesTaughtBRACU.reduce(
-            (total, course) => total + (course.enrollmentCount ?? 0),
-            0
-          )}
-          description="Students taught overall"
-        />
-        <StatCard
-          icon={Building2}
-          label="Avg. Rating"
-          number={
-            coursesTaughtBRACU.filter((course) => course.rating).length > 0
-              ? coursesTaughtBRACU
-                  .filter((course) => course.rating)
-                  .reduce((sum, course) => sum + (course.rating || 0), 0) /
-                coursesTaughtBRACU.filter((course) => course.rating).length
-              : 0
-          }
-          suffix="/5.0"
-          decimals={1}
-          description="Student feedback"
-        />
-      </div>
-
-      {/* Course Overview */}
-      <section>
-        <h2 className="text-2xl font-bold text-center mb-8 text-primary">
-          Courses Taught
-        </h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {coursesTaughtBRACU.map((course) => (
-            <div
-              key={course.id}
-              id={course.code.toLowerCase().replace(' ', '')}
-            >
-              <CourseCardCompact course={course} />
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
+    <InstitutionCoursesPage
+      title="BRACU Courses"
+      subtitle="Courses taught at BRAC University as Teaching Assistant & Instructor"
+      courses={coursesTaughtBRACU}
+    />
   );
 }

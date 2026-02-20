@@ -6,6 +6,7 @@ import { Card } from '@/shared/components/ui/card';
 import { Calendar, ChevronRight } from 'lucide-react';
 import type { CourseData } from '@/shared/types';
 import { cn } from '@/shared/lib/utils';
+import { getCoursePath } from '@/shared/lib/course-utils';
 import { getLevelStyle } from './styles';
 
 interface CourseCardCompactProps {
@@ -15,9 +16,7 @@ interface CourseCardCompactProps {
 export function CourseCardCompact({ course }: CourseCardCompactProps) {
   // Use tier field (detailed = has separate page)
   const hasDetailPage = course.tier === 'detailed';
-  const courseSlug =
-    course.slug || course.code.toLowerCase().replace(/\s+/g, '');
-  const coursePath = `/teaching/${course.institution.toLowerCase().replace(/\s+/g, '')}/${courseSlug}`;
+  const coursePath = getCoursePath(course);
 
   const content = (
     <Card className="h-full border-border/40 hover:border-primary/50 transition-all hover:shadow-sm bg-card/50 backdrop-blur-sm">

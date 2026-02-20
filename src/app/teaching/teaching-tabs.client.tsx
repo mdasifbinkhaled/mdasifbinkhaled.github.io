@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { GraduationCap, Building2, Presentation } from 'lucide-react';
-import { ErrorBoundary } from '@/shared/components/ui/error-boundary';
+import { ErrorBoundary } from '@/shared/components/common/error-boundary';
 import { Badge } from '@/shared/components/ui/badge';
 import {
   Tabs,

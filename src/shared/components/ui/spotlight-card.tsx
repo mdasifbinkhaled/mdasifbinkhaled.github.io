@@ -27,7 +27,7 @@ export function SpotlightCard({
   return (
     <div
       className={cn(
-        'group relative border border-neutral-800 bg-neutral-900 overflow-hidden rounded-xl',
+        'group relative border border-border bg-card overflow-hidden rounded-xl',
         className
       )}
       onMouseMove={handleMouseMove}
