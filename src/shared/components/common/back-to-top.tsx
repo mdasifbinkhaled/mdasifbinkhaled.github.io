@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useSyncExternalStore } from 'react';
+import React, { useSyncExternalStore } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { SCROLL } from '@/shared/config';
@@ -11,26 +11,26 @@ function subscribeToScroll(callback: () => void) {
 }
 
 function getScrollSnapshot() {
-  return window.pageYOffset > SCROLL.BACK_TO_TOP_THRESHOLD;
+  return window.scrollY > SCROLL.BACK_TO_TOP_THRESHOLD;
 }
 
 function getServerSnapshot() {
   return false;
 }
 
-export const BackToTop = React.memo(function BackToTop() {
+export function BackToTop() {
   const isVisible = useSyncExternalStore(
     subscribeToScroll,
     getScrollSnapshot,
     getServerSnapshot
   );
 
-  const scrollToTop = useCallback(() => {
+  const scrollToTop = () => {
     window.scrollTo({
       top: SCROLL.TOP,
       behavior: SCROLL.BEHAVIOR,
     });
-  }, []);
+  };
 
   if (!isVisible) {
     return null;
@@ -46,4 +46,4 @@ export const BackToTop = React.memo(function BackToTop() {
       <ArrowUp className="h-4 w-4" />
     </Button>
   );
-});
+}

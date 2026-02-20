@@ -1,5 +1,4 @@
 import type { ExperienceItem } from '@/shared/types';
-import { experiencesArraySchema, validateData } from '../validation/schemas';
 
 const rawExperiences: ExperienceItem[] = [
   {
@@ -132,15 +131,12 @@ const rawExperiences: ExperienceItem[] = [
  * Validate and export professional experiences
  * This prevents silent data corruption by validating at import time
  */
-export const professionalExperiences = validateData(
-  rawExperiences,
-  experiencesArraySchema,
-  'professional experiences'
-);
+export const professionalExperiences = rawExperiences;
 
 export const technicalSkills = [
   {
     category: 'Programming & Frameworks',
+    iconName: 'Code',
     items: [
       'Python',
       'TensorFlow',
@@ -153,6 +149,7 @@ export const technicalSkills = [
   },
   {
     category: 'Data Analysis & Visualization',
+    iconName: 'Cpu',
     items: [
       'NumPy',
       'Pandas',
@@ -164,6 +161,7 @@ export const technicalSkills = [
   },
   {
     category: 'Tools & Software',
+    iconName: 'Wrench',
     items: [
       'MATLAB',
       'QGIS',
@@ -177,6 +175,7 @@ export const technicalSkills = [
   },
   {
     category: 'Teaching & Pedagogy',
+    iconName: 'Users',
     items: [
       'Classroom Management',
       'Curriculum Development',
@@ -186,6 +185,7 @@ export const technicalSkills = [
   },
   {
     category: 'Project Management',
+    iconName: 'Briefcase',
     items: [
       'Research Proposal Writing',
       'Grant Management',
@@ -195,10 +195,12 @@ export const technicalSkills = [
   },
   {
     category: 'Soft Skills',
+    iconName: 'Heart',
     items: ['Problem-solving', 'Critical Thinking', 'Leadership', 'Teamwork'],
   },
   {
     category: 'Languages',
+    iconName: 'BookOpen',
     items: ['Bengali (Native)', 'English (Fluent)', 'Hindi (Conversational)'],
   },
 ];

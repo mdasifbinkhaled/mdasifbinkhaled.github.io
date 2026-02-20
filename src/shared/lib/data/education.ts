@@ -1,12 +1,18 @@
 import { GraduationCap } from 'lucide-react';
-import { educationArraySchema, validateData } from '../validation/schemas';
-import type { z } from 'zod';
-
-// Infer type from schema to ensure consistency
-export type EducationItem = z.infer<typeof educationArraySchema>[number] & {
-  // Add back the non-serializable component properties that Zod skips
+export interface EducationItem {
+  id: string;
+  degree: string;
+  institution: string;
+  location?: string;
+  duration: string;
+  distinction?: string;
+  thesis?: {
+    title: string;
+    advisor: string;
+  };
+  achievements?: string[];
   icon: typeof GraduationCap;
-};
+}
 
 const rawEducationData: EducationItem[] = [
   {
@@ -42,8 +48,4 @@ const rawEducationData: EducationItem[] = [
   },
 ];
 
-export const educationData = validateData(
-  rawEducationData,
-  educationArraySchema,
-  'education'
-);
+export const educationData = rawEducationData;

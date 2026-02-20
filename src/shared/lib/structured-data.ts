@@ -87,6 +87,7 @@ export function generatePersonStructuredData(): AcademicPersonStructuredData {
     siteConfig.links.googleScholar,
     siteConfig.links.orcid,
     siteConfig.links.researchGate,
+    siteConfig.links.academiaEdu,
   ];
 
   const sameAs = profileLinks.filter((url): url is string => Boolean(url));

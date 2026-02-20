@@ -27,6 +27,8 @@ export type SiteConfig = {
   email: string;
   phone: string;
   address: string;
+  /** Short location label for isolated string usages like TimeDisplay */
+  locationLabel: string;
   /** Short job role (e.g. Senior Lecturer) */
   role: string;
   /** Primary job title for consistent usage across the site */
@@ -91,6 +93,7 @@ export const siteConfig: SiteConfig = {
   email: 'mdasifbinkhaled@gmail.com',
   phone: '(+88) 01676076329',
   address: 'Dhaka, Bangladesh',
+  locationLabel: 'Dhaka',
   role: 'Senior Lecturer',
   jobTitle: 'Senior Lecturer & Researcher',
   institution: 'Independent University, Bangladesh (IUB)',

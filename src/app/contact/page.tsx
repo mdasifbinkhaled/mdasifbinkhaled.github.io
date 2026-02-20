@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: 'Contact Me',
   description: `Get in touch with ${siteConfig.author} for collaborations or research inquiries. ${siteConfig.description}`,
   alternates: {
-    canonical: `${siteConfig.url}/contact`,
+    canonical: '/contact',
   },
 };
 

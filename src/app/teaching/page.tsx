@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: 'Teaching',
   description: `${siteConfig.author}'s teaching portfolio, course details, teaching philosophy, and student mentorship at IUB and BRACU.`,
   alternates: {
-    canonical: `${siteConfig.url}/teaching`,
+    canonical: '/teaching',
   },
 };
 
@@ -72,65 +72,49 @@ export default function TeachingPage() {
             {/* Three Pillars */}
             {/* Three Pillars - Modernized */}
             <div className="grid gap-6 md:grid-cols-3">
-              {/* Pillar 1: Hands-On Learning */}
-              <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
-                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <Users className="h-24 w-24 text-primary" />
-                </div>
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                    <Users className="h-6 w-6" />
+              {[
+                {
+                  id: 'pillar-1',
+                  icon: Users,
+                  title: 'Hands-On Learning',
+                  description:
+                    'Bridging theory and industry practice through real-world projects, interactive coding sessions, and practical applications.',
+                },
+                {
+                  id: 'pillar-2',
+                  icon: Target,
+                  title: 'Outcome-Based',
+                  description:
+                    'Structuring courses with clear learning objectives, measurable outcomes, and continuous assessment aligned with international OBE standards.',
+                },
+                {
+                  id: 'pillar-3',
+                  icon: Award,
+                  title: 'Student Success',
+                  description:
+                    'Fostering potential through personalized mentorship, career guidance, and building confidence to tackle complex technical challenges.',
+                },
+              ].map((pillar) => (
+                <div
+                  key={pillar.id}
+                  className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <pillar.icon className="h-24 w-24 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 tracking-tight">
-                    Hands-On Learning
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    Bridging theory and industry practice through real-world
-                    projects, interactive coding sessions, and practical
-                    applications.
-                  </p>
-                </div>
-              </div>
-
-              {/* Pillar 2: OBE Methodology */}
-              <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
-                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <Target className="h-24 w-24 text-primary" />
-                </div>
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                    <Target className="h-6 w-6" />
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                      <pillar.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 tracking-tight">
+                      {pillar.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                      {pillar.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 tracking-tight">
-                    Outcome-Based
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    Structuring courses with clear learning objectives,
-                    measurable outcomes, and continuous assessment aligned with
-                    international OBE standards.
-                  </p>
                 </div>
-              </div>
-
-              {/* Pillar 3: Student Success */}
-              <div className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1">
-                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <Award className="h-24 w-24 text-primary" />
-                </div>
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                    <Award className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 tracking-tight">
-                    Student Success
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    Fostering potential through personalized mentorship, career
-                    guidance, and building confidence to tackle complex
-                    technical challenges.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>

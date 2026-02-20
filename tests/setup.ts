@@ -70,61 +70,6 @@ beforeAll(() => {
   };
 });
 
-// Mock Radix UI components
-vi.mock('@radix-ui/react-dialog', () => {
-  const React = require('react');
-  // Filter out Radix-specific props that shouldn't be passed to DOM
-  const filterDomProps = ({ asChild, onOpenChange, ...rest }: any) => rest;
-  const mockComponent = ({ children, ...props }: any) =>
-    React.createElement('div', filterDomProps(props), children);
-  return {
-    Root: mockComponent,
-    Trigger: ({ children, ...props }: any) =>
-      React.createElement(
-        'button',
-        { 'data-testid': 'dialog-trigger', ...props },
-        children
-      ),
-    Portal: mockComponent,
-    Overlay: mockComponent,
-    Content: mockComponent,
-    Close: ({ children, ...props }: any) =>
-      React.createElement(
-        'button',
-        { 'data-testid': 'dialog-close', ...props },
-        children
-      ),
-    Title: ({ children, ...props }: any) =>
-      React.createElement(
-        'h2',
-        { 'data-testid': 'dialog-title', ...props },
-        children
-      ),
-    Description: ({ children, ...props }: any) =>
-      React.createElement(
-        'p',
-        { 'data-testid': 'dialog-description', ...props },
-        children
-      ),
-  };
-});
-
-vi.mock('@radix-ui/react-visually-hidden', () => {
-  const React = require('react');
-  return {
-    VisuallyHidden: ({ children, asChild, ...props }: any) =>
-      React.createElement(
-        'span',
-        {
-          'data-testid': 'visually-hidden',
-          style: { position: 'absolute', left: '-10000px' },
-          ...props,
-        },
-        children
-      ),
-  };
-});
-
 // Mock lucide-react icons
 vi.mock('lucide-react', () => {
   const React = require('react');
@@ -162,6 +107,7 @@ vi.mock('lucide-react', () => {
     // Action icons
     X: createMockIcon('x'),
     Check: createMockIcon('check'),
+    Copy: createMockIcon('copy'),
     Search: createMockIcon('search'),
     Filter: createMockIcon('filter'),
     RefreshCw: createMockIcon('refresh-cw'),
@@ -195,6 +141,9 @@ vi.mock('lucide-react', () => {
     UserCircle: createMockIcon('user-circle'),
     BookUser: createMockIcon('book-user'),
     MapPin: createMockIcon('map-pin'),
+    Book: createMockIcon('book'),
+    Newspaper: createMockIcon('newspaper'),
+    Clipboard: createMockIcon('clipboard'),
 
     // Status icons
     AlertTriangle: createMockIcon('alert-triangle'),
@@ -220,6 +169,7 @@ vi.mock('lucide-react', () => {
     Sunrise: createMockIcon('sunrise'),
     Flower: createMockIcon('flower'),
     Briefcase: createMockIcon('briefcase'),
+    Radio: createMockIcon('radio'),
     Heart: createMockIcon('heart'),
     Scroll: createMockIcon('scroll'),
     Globe: createMockIcon('globe'),

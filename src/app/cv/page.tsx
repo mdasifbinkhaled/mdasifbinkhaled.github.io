@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     images: [assetPaths.ogImage],
   },
   alternates: {
-    canonical: `${siteConfig.url}/cv`,
+    canonical: '/cv',
   },
 };
 

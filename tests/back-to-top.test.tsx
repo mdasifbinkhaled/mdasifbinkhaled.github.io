@@ -14,9 +14,13 @@ Object.defineProperty(window, 'scrollTo', {
   writable: true,
 });
 
-// Mock window.pageYOffset to make component visible by default
+// Mock window.pageYOffset and window.scrollY to make component visible by default
 Object.defineProperty(window, 'pageYOffset', {
   value: 400, // Greater than 300 to make component visible
+  writable: true,
+});
+Object.defineProperty(window, 'scrollY', {
+  value: 400,
   writable: true,
 });
 
@@ -28,10 +32,15 @@ describe('BackToTop', () => {
       value: 400,
       writable: true,
     });
+    Object.defineProperty(window, 'scrollY', {
+      value: 400,
+      writable: true,
+    });
   });
 
   it('renders back to top button', () => {
     render(<BackToTop />);
+    fireEvent.scroll(window);
 
     const button = screen.getByRole('button', { name: /scroll back to top/i });
     expect(button).toBeInTheDocument();
@@ -39,6 +48,7 @@ describe('BackToTop', () => {
 
   it('has proper accessibility attributes', () => {
     render(<BackToTop />);
+    fireEvent.scroll(window);
 
     const button = screen.getByRole('button', { name: /scroll back to top/i });
     expect(button).toHaveAttribute('aria-label', 'Scroll back to top');
@@ -49,6 +59,7 @@ describe('BackToTop', () => {
     window.scrollTo = mockScrollTo;
 
     render(<BackToTop />);
+    fireEvent.scroll(window);
 
     const button = screen.getByRole('button', { name: /scroll back to top/i });
     fireEvent.click(button);
@@ -65,8 +76,13 @@ describe('BackToTop', () => {
       value: 200, // Below 300 threshold
       writable: true,
     });
+    Object.defineProperty(window, 'scrollY', {
+      value: 200,
+      writable: true,
+    });
 
     render(<BackToTop />);
+    fireEvent.scroll(window);
 
     const button = screen.queryByRole('button', {
       name: /scroll back to top/i,
@@ -79,6 +95,7 @@ describe('BackToTop', () => {
     window.scrollTo = mockScrollTo;
 
     render(<BackToTop />);
+    fireEvent.scroll(window);
 
     const button = screen.getByRole('button', { name: /scroll back to top/i });
 
@@ -92,6 +109,7 @@ describe('BackToTop', () => {
     window.scrollTo = mockScrollTo;
 
     render(<BackToTop />);
+    fireEvent.scroll(window);
 
     const button = screen.getByRole('button', { name: /scroll back to top/i });
     fireEvent.click(button);

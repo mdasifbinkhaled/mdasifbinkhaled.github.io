@@ -3,8 +3,26 @@
  * Centralized type definitions for all teaching-related components
  */
 
-// Re-export Testimonial from Zod schemas (Single Source of Truth)
-export type { Testimonial } from '@/shared/lib/validation/schemas';
+export interface Testimonial {
+  id: string | number;
+  student: string;
+  quote: string;
+  course: string;
+  rating: number;
+  semester?: string;
+}
+
+export interface TeachingActivity {
+  id: string;
+  type: 'support' | 'workshop' | 'seminar';
+  title: string;
+  role?: string;
+  institution: string;
+  description: string;
+  period?: string;
+  students?: number;
+  iconName?: string;
+}
 
 /**
  * Teaching statistics

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Clock, Globe } from 'lucide-react';
 import { useIsClient } from '@/shared/hooks/use-is-client';
+import { siteConfig } from '@/shared/config';
 
 interface TimeDisplayProps {
   userTimezone: string;
@@ -59,7 +60,7 @@ export function TimeDisplay({
     return (
       <div
         className="flex justify-center w-full py-2 hover:bg-sidebar-accent/50 rounded-md transition-colors cursor-help"
-        title={`My Time: ${myTime}\nYour Time: ${yourTime}`}
+        title={`My Time (${siteConfig.locationLabel}): ${myTime}\nYour Time: ${yourTime}`}
       >
         <Clock className="w-4 h-4 text-sidebar-foreground/60" />
       </div>
@@ -70,7 +71,7 @@ export function TimeDisplay({
     <div className="mt-4 px-3 py-3 rounded-lg bg-sidebar-accent/20 border border-sidebar-border/30 space-y-2">
       <div className="flex items-center justify-between text-xs">
         <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-[10px]">
-          My Time (Dhaka)
+          My Time ({siteConfig.locationLabel})
         </span>
         <span className="text-warning/80">
           <Globe className="w-3 h-3" />

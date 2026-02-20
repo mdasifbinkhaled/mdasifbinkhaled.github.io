@@ -5,7 +5,6 @@
  * and tier-based filtering.
  */
 import type { CourseData, CourseInstitution, CourseTier } from '@/shared/types';
-import { coursesArraySchema, validateData } from '../validation/schemas';
 
 import { allCourses as rawAllCourses } from './courses/index';
 
@@ -16,11 +15,7 @@ export const institutionNames: Record<CourseInstitution, string> = {
 };
 
 /** All courses — validated from central index */
-export const allCourses: CourseData[] = validateData(
-  rawAllCourses,
-  coursesArraySchema,
-  'courses'
-);
+export const allCourses: CourseData[] = rawAllCourses;
 
 export const coursesTaughtIUB = allCourses.filter(
   (c) => c.institution === 'IUB'

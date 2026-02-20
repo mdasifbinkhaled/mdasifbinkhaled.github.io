@@ -11,7 +11,7 @@ interface ContestCountdownProps {
     title: string;
     url: string;
     endDate: string;
-    platform: string;
+    platform?: string;
   };
 }
 

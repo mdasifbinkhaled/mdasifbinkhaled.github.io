@@ -28,27 +28,24 @@ describe('Sheet Component', () => {
 
     render(
       <Sheet>
-        <SheetTrigger data-testid="dialog-trigger">Open Sheet</SheetTrigger>
+        <SheetTrigger>Open Sheet</SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle data-testid="dialog-title">Sheet Title</SheetTitle>
-            <SheetDescription data-testid="dialog-description">
-              Sheet Description
-            </SheetDescription>
+            <SheetTitle>Sheet Title</SheetTitle>
+            <SheetDescription>Sheet Description</SheetDescription>
           </SheetHeader>
         </SheetContent>
       </Sheet>
     );
 
-    const trigger = screen.getByTestId('dialog-trigger');
+    const trigger = screen.getByRole('button', { name: 'Open Sheet' });
     await user.click(trigger);
 
     await waitFor(() => {
-      // Since the components are mocked, we look for the content instead of dialog role
-      expect(screen.getByTestId('dialog-title')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(screen.getByText('Sheet Title')).toBeInTheDocument();
       expect(screen.getByText('Sheet Description')).toBeInTheDocument();
-      expect(screen.getByTestId('dialog-close')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
     });
   });
 
@@ -57,28 +54,27 @@ describe('Sheet Component', () => {
 
     render(
       <Sheet>
-        <SheetTrigger data-testid="dialog-trigger">Open Sheet</SheetTrigger>
+        <SheetTrigger>Open Sheet</SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle data-testid="dialog-title">Sheet Title</SheetTitle>
+            <SheetTitle>Sheet Title</SheetTitle>
             <SheetDescription>Sheet Description</SheetDescription>
           </SheetHeader>
         </SheetContent>
       </Sheet>
     );
 
-    const trigger = screen.getByTestId('dialog-trigger');
+    const trigger = screen.getByRole('button', { name: 'Open Sheet' });
     await user.click(trigger);
 
     await waitFor(() => {
-      expect(screen.getByTestId('dialog-title')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
     await user.keyboard('{Escape}');
 
     await waitFor(() => {
-      // With mocked components, escape behavior won't work, but we can test that content is still present
-      expect(screen.getByTestId('dialog-title')).toBeInTheDocument();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
 
@@ -89,16 +85,15 @@ describe('Sheet Component', () => {
       <Sheet open={true} onOpenChange={onOpenChange}>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle data-testid="dialog-title">Sheet Title</SheetTitle>
-            <SheetDescription data-testid="dialog-description">
-              Sheet Description
-            </SheetDescription>
+            <SheetTitle>Sheet Title</SheetTitle>
+            <SheetDescription>Sheet Description</SheetDescription>
           </SheetHeader>
         </SheetContent>
       </Sheet>
     );
 
-    expect(screen.getByTestId('dialog-title')).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByText('Sheet Title')).toBeInTheDocument();
   });
 
   it('should have proper accessibility attributes', async () => {
@@ -106,56 +101,47 @@ describe('Sheet Component', () => {
 
     render(
       <Sheet>
-        <SheetTrigger data-testid="dialog-trigger">Open Sheet</SheetTrigger>
+        <SheetTrigger>Open Sheet</SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle data-testid="dialog-title">Sheet Title</SheetTitle>
-            <SheetDescription data-testid="dialog-description">
-              Sheet Description
-            </SheetDescription>
+            <SheetTitle>Sheet Title</SheetTitle>
+            <SheetDescription>Sheet Description</SheetDescription>
           </SheetHeader>
         </SheetContent>
       </Sheet>
     );
 
-    const trigger = screen.getByTestId('dialog-trigger');
+    const trigger = screen.getByRole('button', { name: 'Open Sheet' });
     await user.click(trigger);
 
     await waitFor(() => {
-      const title = screen.getByTestId('dialog-title');
-      const description = screen.getByTestId('dialog-description');
-      const closeButton = screen.getByTestId('dialog-close');
+      const dialog = screen.getByRole('dialog');
+      expect(dialog).toBeInTheDocument();
+      expect(dialog).toHaveAttribute('aria-labelledby');
+      expect(dialog).toHaveAttribute('aria-describedby');
 
-      expect(title).toBeInTheDocument();
-      expect(description).toBeInTheDocument();
+      const closeButton = screen.getByRole('button', { name: 'Close' });
       expect(closeButton).toBeInTheDocument();
-
-      // Check for close button accessibility
-      expect(closeButton).toHaveTextContent('Close');
     });
   });
 
   it('should render different sides correctly', () => {
     const { rerender } = render(
       <Sheet open={true}>
-        <SheetContent side="left" data-testid="sheet-content">
-          Content
-        </SheetContent>
+        <SheetContent side="left">Content</SheetContent>
       </Sheet>
     );
 
-    let content = screen.getByTestId('sheet-content');
+    let content = screen.getByRole('dialog');
     expect(content).toBeInTheDocument();
 
     rerender(
       <Sheet open={true}>
-        <SheetContent side="right" data-testid="sheet-content">
-          Content
-        </SheetContent>
+        <SheetContent side="right">Content</SheetContent>
       </Sheet>
     );
 
-    content = screen.getByTestId('sheet-content');
+    content = screen.getByRole('dialog');
     expect(content).toBeInTheDocument();
   });
 
@@ -164,10 +150,10 @@ describe('Sheet Component', () => {
 
     render(
       <Sheet>
-        <SheetTrigger data-testid="dialog-trigger">Open Sheet</SheetTrigger>
+        <SheetTrigger>Open Sheet</SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle data-testid="dialog-title">Sheet Title</SheetTitle>
+            <SheetTitle>Sheet Title</SheetTitle>
             <SheetDescription>Sheet Description</SheetDescription>
           </SheetHeader>
           <button>First Button</button>
@@ -176,15 +162,13 @@ describe('Sheet Component', () => {
       </Sheet>
     );
 
-    const trigger = screen.getByTestId('dialog-trigger');
+    const trigger = screen.getByRole('button', { name: 'Open Sheet' });
     await user.click(trigger);
 
     await waitFor(() => {
-      expect(screen.getByTestId('dialog-title')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    // With mocked components, focus trap won't work exactly as expected
-    // But we can verify the content is accessible
     const buttons = screen.getAllByRole('button');
     expect(buttons.length).toBeGreaterThan(0);
   });

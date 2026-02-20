@@ -85,12 +85,12 @@ export const CAREER = {
 
   /** First teaching position start date */
   FIRST_TEACHING_POSITION: 'May 2015',
-
-  /** Years of teaching experience (calculated dynamically) */
-  get YEARS_TEACHING() {
-    return new Date().getFullYear() - this.TEACHING_START_YEAR;
-  },
 } as const;
+
+/** Years of teaching experience (calculated dynamically) */
+export function getYearsTeaching() {
+  return new Date().getFullYear() - CAREER.TEACHING_START_YEAR;
+}
 
 /*
  * Note: TEACHING_METRICS has been moved to @/shared/lib/data/metrics.ts

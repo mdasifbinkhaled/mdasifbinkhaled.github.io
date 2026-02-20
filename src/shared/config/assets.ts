@@ -12,7 +12,7 @@ export const SITE_URL = 'https://mdasifbinkhaled.github.io';
 
 export const assetPaths = {
   // Images
-  profile: '/images/profile.svg',
+  profile: '/images/abstract_profile.png',
   ogImage: '/images/og-image.png',
   favicon: '/favicon.ico',
 

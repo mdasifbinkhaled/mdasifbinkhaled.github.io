@@ -71,8 +71,10 @@
     "zod": "^4.1.9"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
     "@commitlint/config-conventional": "^20.0.0",
     "@next/bundle-analyzer": "^16.1.6",
+    "@playwright/test": "^1.58.0",
     "@testing-library/jest-dom": "^6.x",
     "@testing-library/react": "^16.x",
     "@testing-library/user-event": "^14.6.1",

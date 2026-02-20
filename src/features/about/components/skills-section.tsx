@@ -5,16 +5,7 @@ import {
   CardContent,
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
-import {
-  Code,
-  Cpu,
-  Wrench,
-  Users,
-  Briefcase,
-  Heart,
-  BookOpen,
-  Layers,
-} from 'lucide-react';
+import { Icon, type IconName } from '@/shared/components/common/icons';
 import { technicalSkills } from '@/shared/lib/data/experience';
 
 export function SkillsSection() {
@@ -25,17 +16,6 @@ export function SkillsSection() {
       </h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {technicalSkills.map((skillGroup) => {
-          const iconMap: Record<string, typeof Code> = {
-            'Programming & Frameworks': Code,
-            'Data Analysis & Visualization': Cpu,
-            'Tools & Software': Wrench,
-            'Teaching & Pedagogy': Users,
-            'Project Management': Briefcase,
-            'Soft Skills': Heart,
-            Languages: BookOpen,
-          };
-          const IconComponent = iconMap[skillGroup.category] || Layers;
-
           return (
             <Card
               key={skillGroup.category}
@@ -44,7 +24,13 @@ export function SkillsSection() {
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-3 text-lg">
                   <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <IconComponent className="w-5 h-5 text-primary" />
+                    <Icon
+                      name={
+                        ((skillGroup as { category: string; iconName?: string })
+                          .iconName || 'Layers') as IconName
+                      }
+                      className="w-5 h-5 text-primary"
+                    />
                   </div>
                   {skillGroup.category}
                 </CardTitle>

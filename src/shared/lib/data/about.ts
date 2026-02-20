@@ -11,22 +11,51 @@ import {
   Star,
   Medal,
   ShieldCheck,
+  Radio,
+  Heart,
 } from 'lucide-react';
-import {
-  quickFactsArraySchema,
-  highlightsArraySchema,
-  certificationsArraySchema,
-  awardsArraySchema,
-  servicesArraySchema,
-  validateData,
-} from '../validation/schemas';
-import type {
-  QuickFact as BaseQuickFact,
-  HighlightStats as BaseHighlightStats,
-  Certification,
-  AwardItem as BaseAwardItem,
-  ServiceItem as BaseServiceItem,
-} from '../validation/schemas';
+export interface BaseQuickFact {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export interface BaseHighlightStats {
+  id: string;
+  value: string;
+  label: string;
+}
+
+export interface Certification {
+  id: string;
+  title: string;
+  institution: string;
+  date: string;
+  note?: string;
+  link?: string;
+}
+
+export interface BaseAwardItem {
+  id: string;
+  title: string;
+  institution: string;
+  date: string;
+  description?: string;
+}
+
+export interface BaseServiceItem {
+  id: string;
+  title: string;
+  organization: string;
+  duration: string;
+  description: string;
+}
+
+export interface BaseInterestItem {
+  id: string;
+  title: string;
+  description: string;
+}
 
 // Infer types from Zod schemas and add back LucideIcon
 export type QuickFact = Omit<BaseQuickFact, 'icon'> & {
@@ -37,14 +66,15 @@ export type HighlightStats = Omit<BaseHighlightStats, 'icon'> & {
   icon: LucideIcon;
 };
 
-// Certification doesn't have an icon so we can use it directly
-export type { Certification };
-
 export type AwardItem = Omit<BaseAwardItem, 'icon'> & {
   icon: LucideIcon;
 };
 
 export type ServiceItem = Omit<BaseServiceItem, 'icon'> & {
+  icon: LucideIcon;
+};
+
+export type InterestItem = Omit<BaseInterestItem, 'icon'> & {
   icon: LucideIcon;
 };
 
@@ -242,33 +272,26 @@ const rawProfessionalService: ServiceItem[] = [
   },
 ];
 
-// Validate and export data
-export const quickFacts = validateData(
-  rawQuickFacts,
-  quickFactsArraySchema,
-  'quick facts'
-);
+const rawPersonalInterests: InterestItem[] = [
+  {
+    id: 'int-radio',
+    icon: Radio,
+    title: 'Amateur Radio Operator',
+    description:
+      'Licensed by BTRC, Bangladesh. Passionate about radio communications and emergency response networks.',
+  },
+  {
+    id: 'int-community',
+    icon: Heart,
+    title: 'Community Engagement',
+    description:
+      'Actively mentoring students and contributing to academic community development through workshops and seminars.',
+  },
+];
 
-export const highlights = validateData(
-  rawHighlights,
-  highlightsArraySchema,
-  'highlights'
-);
-
-export const certifications = validateData(
-  rawCertifications,
-  certificationsArraySchema,
-  'certifications'
-);
-
-export const honorsAndAwards = validateData(
-  rawHonorsAndAwards,
-  awardsArraySchema,
-  'awards'
-);
-
-export const professionalService = validateData(
-  rawProfessionalService,
-  servicesArraySchema,
-  'professional service'
-);
+export const quickFacts = rawQuickFacts;
+export const highlights = rawHighlights;
+export const certifications = rawCertifications;
+export const honorsAndAwards = rawHonorsAndAwards;
+export const professionalService = rawProfessionalService;
+export const personalInterests = rawPersonalInterests;

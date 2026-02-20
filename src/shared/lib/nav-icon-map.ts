@@ -20,6 +20,10 @@ import {
   Database,
   Brain,
   Laptop,
+  BookOpen,
+  Users,
+  Award,
+  Rss,
 } from 'lucide-react';
 import type { ElementType } from 'react';
 
@@ -38,4 +42,8 @@ export const navIconMap: Record<string, ElementType> = {
   Database,
   Brain,
   Laptop,
+  BookOpen,
+  Users,
+  Award,
+  Rss,
 };

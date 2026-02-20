@@ -15,6 +15,7 @@ import {
   Globe,
   Github,
 } from 'lucide-react';
+import { cn } from '@/shared/lib/utils';
 import { academicProfiles } from '@/shared/config/researcher-profile';
 
 const iconMap = {
@@ -65,7 +66,7 @@ export function AcademicProfiles({
   };
 
   return (
-    <div className={`${variantClasses[variant]} ${className}`}>
+    <div className={cn(variantClasses[variant], className)}>
       {profiles.map((profile) => {
         const Icon = iconMap[profile.icon as keyof typeof iconMap];
 

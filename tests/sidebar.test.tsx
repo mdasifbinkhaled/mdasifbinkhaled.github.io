@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import AppSidebarLayout from '../src/shared/components/layout/app-sidebar-layout';
 import '@testing-library/jest-dom';
@@ -39,76 +39,6 @@ vi.mock('lucide-react', () => ({
   GraduationCap: () => <div data-testid="graduation-cap">GraduationCap</div>,
 }));
 
-// Mock shadcn/ui components
-// Mock Dialog components (we now use Dialog instead of Sheet)
-vi.mock('@radix-ui/react-dialog', () => ({
-  Root: ({ children, open, onOpenChange }: any) => (
-    <div
-      data-testid="dialog-root"
-      data-open={open}
-      onClick={() => onOpenChange?.(false)}
-    >
-      {children}
-    </div>
-  ),
-  Portal: ({ children }: any) => (
-    <div data-testid="dialog-portal">{children}</div>
-  ),
-  Overlay: ({ className, ...props }: any) => (
-    <div data-testid="dialog-overlay" className={className} {...props} />
-  ),
-  Content: ({ children, className, ...props }: any) => (
-    <div data-testid="dialog-content" className={className} {...props}>
-      {children}
-    </div>
-  ),
-  Title: ({ children, ...props }: any) => (
-    <h2 data-testid="dialog-title" {...props}>
-      {children}
-    </h2>
-  ),
-  Description: ({ children, ...props }: any) => (
-    <p data-testid="dialog-description" {...props}>
-      {children}
-    </p>
-  ),
-  Close: ({ children, className, ...props }: any) => (
-    <button data-testid="dialog-close" className={className} {...props}>
-      {children}
-    </button>
-  ),
-  Trigger: ({ children, ...props }: any) => (
-    <button data-testid="dialog-trigger" {...props}>
-      {children}
-    </button>
-  ),
-}));
-
-vi.mock('@radix-ui/react-visually-hidden', () => ({
-  VisuallyHidden: ({ children }: { children: React.ReactNode }) => (
-    <span className="sr-only">{children}</span>
-  ),
-  Root: ({ children }: { children: React.ReactNode }) => (
-    <span className="sr-only">{children}</span>
-  ),
-}));
-
-vi.mock('@/shared/components/ui/button', () => ({
-  Button: ({
-    children,
-    onClick,
-    ...props
-  }: {
-    children: React.ReactNode;
-    onClick?: () => void;
-    [key: string]: unknown;
-  }) => (
-    <button onClick={onClick} {...props} data-testid="button">
-      {children}
-    </button>
-  ),
-}));
-
 describe('AppSidebarLayout', () => {
   const mockChildren = <div data-testid="main-content">Main Content</div>;
 
@@ -138,43 +68,46 @@ describe('AppSidebarLayout', () => {
     expect(desktopSidebar).toBeInTheDocument();
   });
 
-  it('opens mobile dialog when mobile menu is triggered', () => {
+  it('opens mobile dialog when mobile menu is triggered', async () => {
     render(<AppSidebarLayout>{mockChildren}</AppSidebarLayout>);
 
-    // Get mobile version specifically (first in the array)
     const mobileMenuTriggers = screen.getAllByTestId('mobile-menu-trigger');
     const mobileMenuTrigger = mobileMenuTriggers[0];
-    const dialog = screen.getByTestId('dialog-root');
 
-    // Initial state
-    expect(dialog).toBeInTheDocument();
+    // Initial state: dialog should not be rendered natively
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-    // Simulate click to open
     if (mobileMenuTrigger) {
       fireEvent.click(mobileMenuTrigger);
     }
 
-    // Note: Since we're using mocked components, the state doesn't actually change
-    // In real implementation, this would toggle the dialog
-    expect(mobileMenuTrigger).toBeInTheDocument();
+    // Wait for native Radix portal to mount and render
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toBeInTheDocument();
   });
 
-  it('closes mobile dialog when close button is clicked', () => {
+  it('closes mobile dialog when close button is clicked', async () => {
     render(<AppSidebarLayout>{mockChildren}</AppSidebarLayout>);
 
-    // Get mobile version specifically (first in the array)
     const mobileMenuTriggers = screen.getAllByTestId('mobile-menu-trigger');
     const mobileMenuTrigger = mobileMenuTriggers[0];
-    const dialog = screen.getByTestId('dialog-root');
 
-    // Test interaction
+    // Open first
     if (mobileMenuTrigger) {
       fireEvent.click(mobileMenuTrigger);
     }
 
-    // Since we're using mocked components, we just verify the elements exist
+    const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
-    expect(mobileMenuTrigger).toBeInTheDocument();
+
+    // Close
+    const closeButton = screen.getByRole('button', { name: /Close/i });
+    fireEvent.click(closeButton);
+
+    // Dialog unmounts asynchronously
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 
   it('has proper semantics and structure', () => {
@@ -199,20 +132,20 @@ describe('AppSidebarLayout', () => {
     expect(footer).toBeInTheDocument();
   });
 
-  it('renders mobile sidebar in dialog with proper accessibility', () => {
+  it('renders mobile sidebar in dialog with proper accessibility', async () => {
     render(<AppSidebarLayout>{mockChildren}</AppSidebarLayout>);
 
-    // Check that dialog exists (header and title are rendered by actual Dialog component)
-    expect(screen.getByTestId('dialog-root')).toBeInTheDocument();
-    expect(screen.getByTestId('dialog-content')).toBeInTheDocument();
+    const mobileMenuTriggers = screen.getAllByTestId('mobile-menu-trigger');
+    if (mobileMenuTriggers[0]) {
+      fireEvent.click(mobileMenuTriggers[0]);
+    }
 
-    // Verify navbar exists in header
-    const navbar = screen.getByTestId('navbar');
-    expect(navbar).toBeInTheDocument();
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toBeInTheDocument();
 
-    // Check accessibility elements in mobile dialog
-    expect(screen.getByTestId('dialog-title')).toBeInTheDocument();
-    expect(screen.getByTestId('dialog-description')).toBeInTheDocument();
+    // Verify properties
+    expect(dialog).toHaveAttribute('aria-labelledby');
+    expect(dialog).toHaveAttribute('aria-describedby');
   });
 
   it('includes back to top component globally', () => {
@@ -245,40 +178,33 @@ describe('AppSidebarLayout', () => {
     expect(desktopSidebar).toHaveClass('hidden', 'lg:flex');
   });
 
-  it('manages mobile dialog state correctly', () => {
+  it('manages mobile dialog state correctly', async () => {
     render(<AppSidebarLayout>{mockChildren}</AppSidebarLayout>);
 
-    // Get mobile version specifically (first in the array)
     const mobileMenuTriggers = screen.getAllByTestId('mobile-menu-trigger');
     const mobileMenuTrigger = mobileMenuTriggers[0];
-    const dialog = screen.getByTestId('dialog-root');
 
-    // Initial state
-    expect(dialog).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-    // Simulate click to open
     if (mobileMenuTrigger) {
       fireEvent.click(mobileMenuTrigger);
     }
-    // Note: In a real implementation, this would update the state
-    // For now, we just verify the trigger is clickable
-    expect(mobileMenuTrigger).toBeInTheDocument();
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
   });
 
-  it('supports keyboard navigation', () => {
+  it('supports keyboard navigation', async () => {
     render(<AppSidebarLayout>{mockChildren}</AppSidebarLayout>);
 
-    // Get mobile version specifically (first in the array)
     const mobileMenuTriggers = screen.getAllByTestId('mobile-menu-trigger');
     const mobileMenuTrigger = mobileMenuTriggers[0];
 
-    // Test keyboard interaction
     if (mobileMenuTrigger) {
       fireEvent.keyDown(mobileMenuTrigger, { key: 'Enter' });
-      fireEvent.click(mobileMenuTrigger); // Simulate actual click
+      fireEvent.click(mobileMenuTrigger);
     }
 
-    const dialog = screen.getByTestId('dialog-root');
-    expect(dialog).toBeInTheDocument(); // Dialog is present
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toBeInTheDocument();
   });
 });

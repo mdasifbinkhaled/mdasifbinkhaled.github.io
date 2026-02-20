@@ -16,7 +16,7 @@ interface SearchResultCardProps {
  */
 export function SearchResultCard({ item }: SearchResultCardProps) {
   return (
-    <Card className="hover:shadow-md transition-shadow cursor-pointer">
+    <Card className="hover:shadow-md transition-shadow">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">

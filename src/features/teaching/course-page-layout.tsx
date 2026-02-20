@@ -19,6 +19,15 @@ interface CoursePageLayoutProps {
 }
 
 // -----------------------------------------------------------------------------
+// UI Helpers
+// -----------------------------------------------------------------------------
+function CourseSectionDivider() {
+  return (
+    <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+  );
+}
+
+// -----------------------------------------------------------------------------
 // Feedback Tab - Student Testimonials (Hidden if empty, simplified)
 // -----------------------------------------------------------------------------
 function FeedbackSection({ course }: { course: CourseData }) {
@@ -64,31 +73,31 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
         )}
 
         {/* Section Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <CourseSectionDivider />
 
         {/* Overview Section */}
         <OverviewSection course={course} />
 
         {/* Section Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <CourseSectionDivider />
 
         {/* Schedule Section - Separated & First */}
         <ScheduleSection course={course} />
 
         {/* Section Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <CourseSectionDivider />
 
         {/* Syllabus Section - Now Curriculum Only */}
         <SyllabusSection course={course} />
 
         {/* Section Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <CourseSectionDivider />
 
         {/* Assignments Section */}
         <AssignmentsSection course={course} />
 
         {/* Section Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <CourseSectionDivider />
 
         {/* Resources Section */}
         <ResourcesSection course={course} />

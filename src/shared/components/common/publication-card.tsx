@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -9,7 +9,7 @@ import {
   CardContent,
   CardFooter,
 } from '@/shared/components/ui/card';
-import { ExternalLink, FileText, ChevronDown } from 'lucide-react';
+import { ExternalLink, FileText, ChevronDown, Copy, Check } from 'lucide-react';
 import { Badge } from '@/shared/components/ui/badge';
 import type { PublicationItem } from '@/shared/types';
 import { cn } from '@/shared/lib/utils';
@@ -22,6 +22,56 @@ interface PublicationCardProps {
 export const PublicationCard = memo(function PublicationCard({
   publication,
 }: PublicationCardProps) {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopyCitation = async () => {
+    // Generate BibTeX
+    const formatAuthors = (authors: string[]) => {
+      if (!authors || authors.length === 0) return '';
+      return authors.join(' and ');
+    };
+
+    const bibtexType =
+      publication.type === 'Journal' ? 'article' : 'inproceedings';
+    const bibtexId =
+      publication.id ||
+      publication.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '')
+        .substring(0, 10) + publication.year;
+
+    let bibtex = `@${bibtexType}{${bibtexId},\n`;
+    bibtex += `  title={${publication.title}},\n`;
+    bibtex += `  author={${formatAuthors(publication.authors)}},\n`;
+
+    if (publication.type === 'Journal') {
+      bibtex += `  journal={${publication.venue}},\n`;
+    } else {
+      bibtex += `  booktitle={${publication.venue}},\n`;
+    }
+
+    bibtex += `  year={${publication.year}}`;
+
+    if (publication.volume) bibtex += `,\n  volume={${publication.volume}}`;
+    if (publication.issue) bibtex += `,\n  number={${publication.issue}}`;
+    if (publication.pages) bibtex += `,\n  pages={${publication.pages}}`;
+    if (publication.doi) bibtex += `,\n  doi={${publication.doi}}`;
+
+    bibtex += '\n}';
+
+    try {
+      await navigator.clipboard.writeText(bibtex);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+      academicEvents.downloadPublication(
+        publication.id || publication.title,
+        publication.title + ' (citation)'
+      );
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
   return (
     <Card
       className={cn(
@@ -117,6 +167,22 @@ export const PublicationCard = memo(function PublicationCard({
               <FileText className="mr-2 h-4 w-4" /> PDF
             </a>
           )}
+        </div>
+        <div className="flex w-full pt-3">
+          <button
+            onClick={handleCopyCitation}
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 w-full"
+          >
+            {isCopied ? (
+              <>
+                <Check className="mr-2 h-4 w-4 text-green-500" /> Copied BibTeX
+              </>
+            ) : (
+              <>
+                <Copy className="mr-2 h-4 w-4" /> Copy Citation
+              </>
+            )}
+          </button>
         </div>
       </CardFooter>
     </Card>

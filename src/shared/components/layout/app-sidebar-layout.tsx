@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { cn } from '@/shared/lib/utils';
 
 import { Button } from '@/shared/components/ui/button';
+import Link from 'next/link';
 
 import {
   Sheet,
@@ -135,12 +136,66 @@ export default function AppSidebarLayout({
             <div className="container mx-auto py-6">{children}</div>
           </main>
 
-          <footer className="shrink-0 py-6 px-6 text-center border-t bg-background/50 backdrop-blur">
-            <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} {siteConfig.author}.
-            </p>
+          <footer className="shrink-0 py-8 px-6 border-t bg-background/50 backdrop-blur">
+            <div className="container mx-auto max-w-5xl flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="text-center md:text-left">
+                <p className="text-sm font-medium text-foreground">
+                  {siteConfig.author}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  &copy; {new Date().getFullYear()} All rights reserved.
+                </p>
+              </div>
 
-            <BackToTop />
+              <nav className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
+                <Link href="/" className="hover:text-primary transition-colors">
+                  Home
+                </Link>
+                <Link
+                  href="/about"
+                  className="hover:text-primary transition-colors"
+                >
+                  About
+                </Link>
+                <Link
+                  href="/research"
+                  className="hover:text-primary transition-colors"
+                >
+                  Research
+                </Link>
+                <Link
+                  href="/publications"
+                  className="hover:text-primary transition-colors"
+                >
+                  Publications
+                </Link>
+                <Link
+                  href="/teaching"
+                  className="hover:text-primary transition-colors"
+                >
+                  Teaching
+                </Link>
+                <Link
+                  href="/experience"
+                  className="hover:text-primary transition-colors"
+                >
+                  Experience
+                </Link>
+                <Link
+                  href="/contact"
+                  className="hover:text-primary transition-colors"
+                >
+                  Contact
+                </Link>
+              </nav>
+
+              <div className="text-center md:text-right flex flex-col items-center md:items-end gap-3">
+                <p className="text-xs text-muted-foreground">
+                  Last updated: February 2026
+                </p>
+                <BackToTop />
+              </div>
+            </div>
           </footer>
         </div>
       </div>

@@ -40,12 +40,12 @@ export function SyllabusTable({ modules }: SyllabusTableProps) {
       <Table>
         <TableHeader className="bg-muted/40">
           <TableRow className="hover:bg-transparent">
-            <TableHead className="w-[100px]">Week</TableHead>
-            <TableHead className="min-w-[200px]">Module / Topic</TableHead>
-            <TableHead className="min-w-[250px] hidden md:table-cell">
+            <TableHead className="w-24">Week</TableHead>
+            <TableHead className="min-w-48">Module / Topic</TableHead>
+            <TableHead className="min-w-64 hidden md:table-cell">
               Theory Details
             </TableHead>
-            <TableHead className="min-w-[250px] hidden md:table-cell">
+            <TableHead className="min-w-64 hidden md:table-cell">
               Lab Activity
             </TableHead>
           </TableRow>

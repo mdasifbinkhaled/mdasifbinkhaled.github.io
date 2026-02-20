@@ -17,8 +17,7 @@ export function HashScroll({ behavior = 'smooth' }: HashScrollProps) {
         // Account for sticky navbar height (approximately 5rem = 80px)
         const navbarHeight = 80;
         const elementPosition = el.getBoundingClientRect().top;
-        const offsetPosition =
-          elementPosition + window.pageYOffset - navbarHeight;
+        const offsetPosition = elementPosition + window.scrollY - navbarHeight;
 
         window.scrollTo({
           top: offsetPosition,
@@ -30,10 +29,15 @@ export function HashScroll({ behavior = 'smooth' }: HashScrollProps) {
     const t = window.setTimeout(scroll, 50);
     // React to hash changes
 
-    const onHash = () => setTimeout(scroll, 0);
+    let hashTimeoutId: number;
+    const onHash = () => {
+      hashTimeoutId = window.setTimeout(scroll, 0);
+    };
+
     window.addEventListener('hashchange', onHash);
     return () => {
       window.clearTimeout(t);
+      window.clearTimeout(hashTimeoutId);
       window.removeEventListener('hashchange', onHash);
     };
   }, [behavior]);

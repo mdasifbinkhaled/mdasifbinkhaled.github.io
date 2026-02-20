@@ -106,6 +106,16 @@ export const researchData = {
       placeholder: true,
     },
   ],
+  grants: [
+    {
+      id: 'vcrf-2024-013',
+      title: 'Unveiling the Linguistic Diversity of Bangla',
+      role: "Principal Investigator, VC's Research Fund 2024-2025 (No. VCRF-SETS:24-013)",
+      description:
+        "Leading research on enhancing dialect detection through AI and Machine Learning techniques, contributing to the preservation and understanding of Bangladesh's rich linguistic heritage.",
+      featured: true,
+    },
+  ],
   libraries: [
     {
       name: 'SortyPy',

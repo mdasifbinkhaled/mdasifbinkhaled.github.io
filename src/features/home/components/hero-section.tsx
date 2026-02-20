@@ -1,6 +1,8 @@
 import { Button } from '@/shared/components/ui/button';
 import { siteConfig } from '@/shared/config';
 import { researchIdentity } from '@/shared/config/researcher-profile';
+import { METRICS } from '@/shared/lib/data/metrics';
+import { researchData } from '@/shared/lib/data/research';
 import {
   ArrowRight,
   GraduationCap,
@@ -26,7 +28,7 @@ export function HeroSection() {
   const stats = [
     {
       id: 'stat-years',
-      number: '7+',
+      number: `${METRICS.YEARS_TEACHING}+`,
       label: 'Years Experience',
       icon: GraduationCap,
       description: 'Teaching & Research\nin Academia',
@@ -40,14 +42,14 @@ export function HeroSection() {
     },
     {
       id: 'stat-grants',
-      number: '4',
+      number: researchData.projects.length.toString(),
       label: 'Research Grants',
       icon: TrendingUp,
       description: 'Awarded as PI/Co-PI',
     },
     {
       id: 'stat-areas',
-      number: '5+',
+      number: `${researchIdentity.primaryAreas.length}+`,
       label: 'Research Areas',
       icon: Brain,
       description: 'Multimedia & XAI\nFocus',
@@ -67,8 +69,8 @@ export function HeroSection() {
           {/* Header Content */}
           <div className="space-y-6 mb-8">
             {/* Name with Accent */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm text-primary font-medium">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 text-sm text-primary font-medium bg-primary/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-primary/20 w-fit">
                 <Sparkles className="w-4 h-4" />
                 <span>Welcome to my academic portfolio</span>
               </div>

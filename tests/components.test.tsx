@@ -3,7 +3,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
 import { PublicationCard } from '@/shared/components/common/publication-card';
 import { ExperienceCompact } from '@/shared/components/common/experience-compact';
-import type { PublicationItem, ExperienceItem } from '@/shared/types';
+import { HeroSection } from '@/features/home/components/hero-section';
+import { NewsSection } from '@/features/home/components/news-section';
+import { CourseCard } from '@/features/teaching/course-card';
+import { SearchInput } from '@/features/academic/components/search-input';
+import type {
+  PublicationItem,
+  ExperienceItem,
+  CourseData,
+} from '@/shared/types';
 import { AppProviders } from '@/shared/providers/app-providers';
 
 // Type definitions for mocks
@@ -89,12 +97,14 @@ vi.mock('lucide-react', async (importOriginal) => {
   const actual = await importOriginal<typeof import('lucide-react')>();
   const MockIcon = () => null;
 
-  return {
-    ...actual,
-    MapPin: MockIcon,
-    Calendar: MockIcon,
-    Building2: MockIcon,
-  };
+  return new Proxy(actual as any, {
+    get: (target, prop) => {
+      if (typeof prop === 'string' && /^[A-Z]/.test(prop)) {
+        return MockIcon;
+      }
+      return Reflect.get(target, prop);
+    },
+  });
 });
 
 // Test utilities
@@ -405,5 +415,88 @@ describe('Performance', () => {
     expect(end - start - baseline).toBeLessThan(150);
 
     nowSpy.mockRestore();
+  });
+});
+
+describe('SearchInput', () => {
+  it('renders with placeholder and handles input', () => {
+    const onChange = vi.fn();
+    const onClear = vi.fn();
+
+    renderWithTheme(
+      <SearchInput
+        value=""
+        onChange={onChange}
+        onClear={onClear}
+        placeholder="Find papers..."
+      />
+    );
+
+    const input = screen.getByPlaceholderText('Find papers...');
+    expect(input).toBeInTheDocument();
+
+    fireEvent.change(input, { target: { value: 'test' } });
+    expect(onChange).toHaveBeenCalledWith('test');
+  });
+
+  it('shows clear button only when value exists and triggers onClear', () => {
+    const onChange = vi.fn();
+    const onClear = vi.fn();
+
+    const { rerender } = renderWithTheme(
+      <SearchInput value="" onChange={onChange} onClear={onClear} />
+    );
+
+    expect(
+      screen.queryByRole('button', { name: /clear/i })
+    ).not.toBeInTheDocument();
+
+    // Rerender with value
+    rerender(
+      <AppProviders>
+        <SearchInput
+          value="search query"
+          onChange={onChange}
+          onClear={onClear}
+        />
+      </AppProviders>
+    );
+
+    const clearButton = screen.getByRole('button', { name: /clear/i });
+    expect(clearButton).toBeInTheDocument();
+
+    fireEvent.click(clearButton);
+    expect(onClear).toHaveBeenCalled();
+  });
+});
+
+describe('CourseCard', () => {
+  const mockCourse: CourseData = {
+    code: 'CSE 123',
+    title: 'Test Course 101',
+    institution: 'IUB',
+    semester: 'Fall',
+    year: 2026,
+    credits: 3,
+    level: 'Undergraduate',
+    tier: 'standard',
+    description: 'This is a test course description.',
+  };
+
+  it('renders essential course information', () => {
+    renderWithTheme(<CourseCard course={mockCourse} variant="static" />);
+
+    expect(screen.getByText('CSE 123')).toBeInTheDocument();
+    expect(screen.getByText('Test Course 101')).toBeInTheDocument();
+  });
+
+  it('renders detailed tier link state accurately', () => {
+    const detailedCourse = { ...mockCourse, tier: 'detailed' as const };
+    renderWithTheme(
+      <CourseCard course={detailedCourse} variant="collapsible" />
+    );
+
+    // Detailed courses render a "View Course" anchor/button
+    expect(screen.getByText(/View/)).toBeInTheDocument();
   });
 });

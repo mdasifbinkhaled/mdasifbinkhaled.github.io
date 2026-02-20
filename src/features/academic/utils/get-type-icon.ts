@@ -1,19 +1,22 @@
+import { FileText, Book, Briefcase, Newspaper, Clipboard } from 'lucide-react';
+import React from 'react';
+
 /**
- * Returns an emoji icon for a given content type.
+ * Returns a React component for a given content type.
  * @param type - The content type (publication, course, experience, news)
- * @returns An emoji string representing the type
+ * @returns A Lucide React icon representing the type
  */
-export function getTypeIcon(type: string): string {
+export function getTypeIcon(type: string): React.ReactNode {
   switch (type) {
     case 'publication':
-      return '📄';
+      return React.createElement(FileText, { className: 'w-4 h-4' });
     case 'course':
-      return '📚';
+      return React.createElement(Book, { className: 'w-4 h-4' });
     case 'experience':
-      return '💼';
+      return React.createElement(Briefcase, { className: 'w-4 h-4' });
     case 'news':
-      return '📰';
+      return React.createElement(Newspaper, { className: 'w-4 h-4' });
     default:
-      return '📋';
+      return React.createElement(Clipboard, { className: 'w-4 h-4' });
   }
 }

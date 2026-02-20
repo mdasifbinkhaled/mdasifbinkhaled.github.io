@@ -1,7 +1,7 @@
 'use client';
 
 import type { PublicationItem, PublicationType } from '@/shared/types';
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Card } from '@/shared/components/ui/card';
 import {
   Select,
@@ -30,39 +30,34 @@ const publicationTypeOptions: PublicationType[] = [
   'Thesis',
 ];
 
-export const PublicationList = React.memo(function PublicationList({
-  initialPublications,
-}: PublicationListProps) {
+export function PublicationList({ initialPublications }: PublicationListProps) {
   const [publications] = useState<PublicationItem[]>(initialPublications);
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<PublicationType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const debouncedSearchTerm = useDebounce(searchTerm, TIMING.SEARCH_DEBOUNCE);
 
-  const uniqueYears = useMemo(() => {
+  const uniqueYears = (() => {
     const years = new Set(initialPublications.map((p) => p.year.toString()));
     return [
       'all',
       ...Array.from(years).sort((a, b) => parseInt(b) - parseInt(a)),
     ];
-  }, [initialPublications]);
+  })();
 
-  const handleYearChange = useCallback((value: string) => {
+  const handleYearChange = (value: string) => {
     setYearFilter(value);
-  }, []);
+  };
 
-  const handleTypeChange = useCallback((value: string) => {
+  const handleTypeChange = (value: string) => {
     setTypeFilter(value as PublicationType | 'all');
-  }, []);
+  };
 
-  const handleSearchChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchTerm(e.target.value);
-    },
-    []
-  );
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
 
-  const filteredPublications = useMemo(() => {
+  const filteredPublications = (() => {
     return publications.filter((pub) => {
       const yearMatch =
         yearFilter === 'all' || pub.year.toString() === yearFilter;
@@ -81,7 +76,7 @@ export const PublicationList = React.memo(function PublicationList({
             .includes(debouncedSearchTerm.toLowerCase()));
       return yearMatch && typeMatch && searchMatch;
     });
-  }, [publications, yearFilter, typeFilter, debouncedSearchTerm]);
+  })();
 
   if (!initialPublications || initialPublications.length === 0) {
     return (
@@ -155,7 +150,13 @@ export const PublicationList = React.memo(function PublicationList({
       </Card>
 
       {filteredPublications.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-6">
+        <div
+          className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-8"
+          style={{
+            contentVisibility: 'auto',
+            containIntrinsicSize: 'auto 500px',
+          }}
+        >
           {filteredPublications.map((pub) => (
             <PublicationCard key={pub.id} publication={pub} />
           ))}
@@ -173,4 +174,4 @@ export const PublicationList = React.memo(function PublicationList({
       )}
     </div>
   );
-});
+}

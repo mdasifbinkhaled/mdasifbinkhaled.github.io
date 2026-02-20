@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Table,
   TableBody,
@@ -11,7 +9,7 @@ import {
 import { Badge } from '@/shared/components/ui/badge';
 import { Card } from '@/shared/components/ui/card';
 import { Mail, Monitor, BookOpen } from 'lucide-react';
-import type { ClassScheduleItem } from '@/shared/lib/validation/schemas';
+import type { ClassScheduleItem } from '@/shared/types';
 import { cn } from '@/shared/lib/utils';
 
 /* ── Helper Components (module-level to avoid re-creation on render) ── */
@@ -48,7 +46,7 @@ function EmailLink({ email }: { email?: string }) {
       className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 leading-none"
     >
       <Mail className="w-3 h-3" />
-      <span className="truncate max-w-[200px]">{email}</span>
+      <span className="truncate max-w-48">{email}</span>
     </a>
   );
 }
@@ -76,32 +74,41 @@ function BadgeCell({
 
 /* ── Desktop View ── */
 
-function DesktopView({ schedule }: { schedule: ClassScheduleItem[] }) {
+function DesktopView({
+  schedule,
+  semesterLabel,
+}: {
+  schedule: ClassScheduleItem[];
+  semesterLabel?: string;
+}) {
   return (
     <div className="hidden lg:block rounded-lg border border-border shadow-sm overflow-hidden bg-background">
       <div className="w-full overflow-x-auto">
         <Table className="w-full border-collapse">
+          <caption className="sr-only">
+            Course schedule{semesterLabel ? ` for ${semesterLabel}` : ''}
+          </caption>
           <TableHeader className="bg-muted/40 sticky top-0 z-10">
             <TableRow className="border-b border-border hover:bg-muted/40">
-              <TableHead className="w-[60px] text-center border-r border-border/50 h-10 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              <TableHead className="w-14 text-center border-r border-border/50 h-10 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Sec
               </TableHead>
-              <TableHead className="min-w-[180px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
+              <TableHead className="min-w-44 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
                 Theory Faculty
               </TableHead>
-              <TableHead className="w-[120px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
+              <TableHead className="w-28 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
                 Time
               </TableHead>
-              <TableHead className="w-[80px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
+              <TableHead className="w-20 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
                 Room
               </TableHead>
-              <TableHead className="min-w-[180px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
+              <TableHead className="min-w-44 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
                 Lab Faculty
               </TableHead>
-              <TableHead className="w-[120px] border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
+              <TableHead className="w-28 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
                 Time
               </TableHead>
-              <TableHead className="w-[80px] py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
+              <TableHead className="w-20 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
                 Room
               </TableHead>
             </TableRow>
@@ -242,7 +249,7 @@ export function ScheduleTable({ schedule, semesterLabel }: ScheduleTableProps) {
           )}
         </div>
       </div>
-      <DesktopView schedule={schedule} />
+      <DesktopView schedule={schedule} semesterLabel={semesterLabel} />
       <MobileView schedule={schedule} />
     </div>
   );

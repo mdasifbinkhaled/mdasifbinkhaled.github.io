@@ -13,6 +13,7 @@ import { ExperienceCompact } from '@/shared/components/common/experience-compact
 import { samplePublications } from '@/shared/lib/data/publications';
 import { professionalExperiences } from '@/shared/lib/data/experience';
 import { DISPLAY_LIMITS } from '@/shared/config';
+import { researchData } from '@/shared/lib/data/research';
 
 /**
  * Publications Preview Section
@@ -85,6 +86,11 @@ export function ExperiencePreview() {
  * Highlights primary research grant
  */
 export function FeaturedGrant() {
+  const grant =
+    researchData.grants.find((g) => g.featured) || researchData.grants[0];
+
+  if (!grant) return null;
+
   return (
     <section className="w-full py-12 md:py-16 bg-gradient-to-br from-primary/5 to-accent/5">
       <div className="container-responsive">
@@ -93,20 +99,13 @@ export function FeaturedGrant() {
         </h2>
         <Card className="shadow-xl hover:shadow-2xl transition-all duration-300 max-w-3xl mx-auto border-primary/20">
           <CardHeader>
-            <CardTitle className="text-2xl">
-              Unveiling the Linguistic Diversity of Bangla
-            </CardTitle>
+            <CardTitle className="text-2xl">{grant.title}</CardTitle>
             <CardDescription className="text-base">
-              Principal Investigator, VC&apos;s Research Fund 2024-2025 (No.
-              VCRF-SETS:24-013)
+              {grant.role}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground mb-4">
-              Leading research on enhancing dialect detection through AI and
-              Machine Learning techniques, contributing to the preservation and
-              understanding of Bangladesh&apos;s rich linguistic heritage.
-            </p>
+            <p className="text-muted-foreground mb-4">{grant.description}</p>
             <Button variant="outline" asChild className="mt-2">
               <Link href="/research">
                 View All Research Projects{' '}

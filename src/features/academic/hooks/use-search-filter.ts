@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import type { SearchableContent } from '../types';
 
 interface UseSearchFilterOptions {
@@ -27,35 +26,32 @@ export function useSearchFilter({
   selectedYear,
   maxResults = 10,
 }: UseSearchFilterOptions): UseSearchFilterReturn {
-  return useMemo(() => {
-    // Filter content based on search query and filters
-    const filtered = content.filter((item) => {
-      const matchesQuery =
-        !query ||
-        item.title.toLowerCase().includes(query.toLowerCase()) ||
-        item.content.toLowerCase().includes(query.toLowerCase()) ||
-        item.tags.some((tag) =>
-          tag.toLowerCase().includes(query.toLowerCase())
-        );
+  const q = query.toLowerCase();
 
-      const matchesType =
-        selectedTypes.length === 0 || selectedTypes.includes(item.type);
-      const matchesYear =
-        !selectedYear || item.year?.toString() === selectedYear;
+  // Filter content based on search query and filters
+  const filtered = content.filter((item) => {
+    const matchesQuery =
+      !q ||
+      item.title.toLowerCase().includes(q) ||
+      item.content.toLowerCase().includes(q) ||
+      item.tags.some((tag) => tag.toLowerCase().includes(q));
 
-      return matchesQuery && matchesType && matchesYear;
-    });
+    const matchesType =
+      selectedTypes.length === 0 || selectedTypes.includes(item.type);
+    const matchesYear = !selectedYear || item.year?.toString() === selectedYear;
 
-    // Get available years and types from content
-    const years = [
-      ...new Set(content.map((item) => item.year).filter(Boolean)),
-    ].sort((a, b) => b! - a!);
-    const types = [...new Set(content.map((item) => item.type))];
+    return matchesQuery && matchesType && matchesYear;
+  });
 
-    return {
-      filteredContent: filtered.slice(0, maxResults),
-      availableYears: years,
-      contentTypes: types,
-    };
-  }, [content, query, selectedTypes, selectedYear, maxResults]);
+  // Get available years and types from content
+  const years = [
+    ...new Set(content.map((item) => item.year).filter(Boolean)),
+  ].sort((a, b) => b! - a!);
+  const types = [...new Set(content.map((item) => item.type))];
+
+  return {
+    filteredContent: filtered.slice(0, maxResults),
+    availableYears: years,
+    contentTypes: types,
+  };
 }

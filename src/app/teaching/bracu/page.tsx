@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'BRACU Courses - Teaching Portfolio',
   description: `Courses taught at BRAC University (BRACU) by ${siteConfig.author}. ${siteConfig.description}`,
   alternates: {
-    canonical: `${siteConfig.url}/teaching/bracu`,
+    canonical: '/teaching/bracu',
   },
 };
 

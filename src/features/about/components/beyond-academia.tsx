@@ -5,8 +5,11 @@ import {
   CardDescription,
   CardContent,
 } from '@/shared/components/ui/card';
-import { Radio, Heart } from 'lucide-react';
-import { professionalService } from '@/shared/lib/data/about';
+import { Radio } from 'lucide-react';
+import {
+  professionalService,
+  personalInterests,
+} from '@/shared/lib/data/about';
 
 export function BeyondAcademia() {
   return (
@@ -24,30 +27,22 @@ export function BeyondAcademia() {
         <CardContent>
           <div className="space-y-4">
             {/* Personal Interests */}
-            <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
-              <Radio className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-foreground">
-                  Amateur Radio Operator
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Licensed by BTRC, Bangladesh. Passionate about radio
-                  communications and emergency response networks.
-                </p>
+            {personalInterests.map((interest) => (
+              <div
+                key={interest.id}
+                className="flex items-start gap-4 p-4 rounded-lg bg-background/50"
+              >
+                <interest.icon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-foreground">
+                    {interest.title}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {interest.description}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
-              <Heart className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-foreground">
-                  Community Engagement
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Actively mentoring students and contributing to academic
-                  community development through workshops and seminars.
-                </p>
-              </div>
-            </div>
+            ))}
 
             {/* Professional Service */}
             <div className="pt-4 mt-4 border-t border-border/50">

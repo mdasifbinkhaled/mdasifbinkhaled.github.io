@@ -36,34 +36,34 @@ const colorClasses: Record<
   { bg: string; bgHover: string; text: string }
 > = {
   blue: {
-    bg: 'bg-blue-500/10',
-    bgHover: 'group-hover:bg-blue-500/20',
-    text: 'text-blue-500',
+    bg: 'bg-primary/10',
+    bgHover: 'group-hover:bg-primary/20',
+    text: 'text-primary',
   },
   teal: {
-    bg: 'bg-teal-500/10',
-    bgHover: 'group-hover:bg-teal-500/20',
-    text: 'text-teal-500',
+    bg: 'bg-secondary/10',
+    bgHover: 'group-hover:bg-secondary/20',
+    text: 'text-secondary',
   },
   green: {
-    bg: 'bg-green-600/10',
-    bgHover: 'group-hover:bg-green-600/20',
-    text: 'text-green-600',
+    bg: 'bg-accent/10',
+    bgHover: 'group-hover:bg-accent/20',
+    text: 'text-accent',
   },
   purple: {
-    bg: 'bg-purple-500/10',
-    bgHover: 'group-hover:bg-purple-500/20',
-    text: 'text-purple-500',
+    bg: 'bg-primary/10',
+    bgHover: 'group-hover:bg-primary/20',
+    text: 'text-primary',
   },
   indigo: {
-    bg: 'bg-indigo-500/10',
-    bgHover: 'group-hover:bg-indigo-500/20',
-    text: 'text-indigo-500',
+    bg: 'bg-secondary/10',
+    bgHover: 'group-hover:bg-secondary/20',
+    text: 'text-secondary',
   },
   rose: {
-    bg: 'bg-rose-500/10',
-    bgHover: 'group-hover:bg-rose-500/20',
-    text: 'text-rose-500',
+    bg: 'bg-accent/10',
+    bgHover: 'group-hover:bg-accent/20',
+    text: 'text-accent',
   },
   primary: {
     bg: 'bg-primary/10',

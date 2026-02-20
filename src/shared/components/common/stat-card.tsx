@@ -1,8 +1,13 @@
 import { Card, CardContent } from '@/shared/components/ui/card';
-import { SpotlightCard } from '@/shared/components/ui/spotlight-card';
+import dynamic from 'next/dynamic';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 
+const SpotlightCard = dynamic(() =>
+  import('@/shared/components/ui/spotlight-card').then(
+    (mod) => mod.SpotlightCard
+  )
+);
 /**
  * StatCard Props
  * Consolidated interface supporting all stat card use cases
@@ -58,7 +63,7 @@ export function StatCard({
           'flex flex-col p-5 bg-background/60 border-border/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm',
           className
         )}
-        spotlightColor="rgba(124, 58, 237, 0.15)" // Primary purple hint
+        spotlightColor="hsl(var(--primary) / 0.15)"
       >
         <div className="flex items-center justify-between mb-3">
           <div className="text-3xl font-bold text-primary tracking-tight">

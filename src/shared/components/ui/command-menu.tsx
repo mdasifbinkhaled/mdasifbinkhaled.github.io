@@ -43,10 +43,10 @@ export function CommandMenu(_props: DialogProps) {
     return () => document.removeEventListener('keydown', down);
   }, []);
 
-  const runCommand = React.useCallback((command: () => unknown) => {
+  const runCommand = (command: () => unknown) => {
     setOpen(false);
     command();
-  }, []);
+  };
 
   const renderItems = (items: NavItem[]) => {
     return items.map((navItem) => {
