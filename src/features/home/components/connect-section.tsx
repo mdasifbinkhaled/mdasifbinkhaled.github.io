@@ -136,10 +136,7 @@ const socialLinks: SocialLink[] = [
   },
 ];
 
-/**
- * Connect Section Component
- * Displays social links and contact CTA - World-class design
- */
+/** Displays social links and contact CTA. */
 export function ConnectSection() {
   return (
     <section className="w-full py-12 md:py-16 relative overflow-hidden">

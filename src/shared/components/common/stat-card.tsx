@@ -55,7 +55,7 @@ export function StatCard({
   const isSpotlight = variant === 'spotlight';
   const isGlass = variant === 'glass';
 
-  // Spotlight Variant (SOTA)
+  // Spotlight variant
   if (isSpotlight) {
     return (
       <SpotlightCard

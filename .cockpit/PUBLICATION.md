@@ -37,6 +37,12 @@ Push to main
 - Triggers: Push to `main`
 - Builds and deploys to GitHub Pages
 
+### `lhci.yml` — Lighthouse CI
+
+- Triggers: Pull requests to `main`
+- Runs: Lighthouse audits against static build
+- Enforces performance and accessibility budgets
+
 ### `security.yml` — Security Audit
 
 - Triggers: Weekly schedule + on push
@@ -56,7 +62,7 @@ Push to main
 | Asset         | Location                   | Status                      |
 | ------------- | -------------------------- | --------------------------- |
 | `robots.txt`  | `/robots.txt` (generated)  | ✅                          |
-| `sitemap.xml` | `/sitemap.xml` (generated) | ✅ (18+ URLs)               |
+| `sitemap.xml` | `/sitemap.xml` (generated) | ✅ (20+ URLs)               |
 | `humans.txt`  | `/humans.txt` (static)     | ✅                          |
 | JSON-LD       | Embedded in `<head>`       | ✅ Person + Website schemas |
 | OpenGraph     | `<meta>` tags in layout    | ✅                          |
@@ -67,15 +73,15 @@ Push to main
 | Asset                        | Status                          |
 | ---------------------------- | ------------------------------- |
 | `site.webmanifest`           | ✅ Present                      |
-| App icons (192x192, 512x512) | ⚠️ Referenced but may not exist |
-| Service Worker               | ❌ Not implemented              |
-| Offline support              | ❌ Not implemented              |
+| App icons (192x192, 512x512) | ✅ Present                      |
+| Service Worker               | ✅ `public/sw.js`               |
+| Offline support              | ✅ Cache-first for static pages |
 
 ## Analytics
 
 - **Google Analytics**: GA4 via `gtag.js`
-- **Implementation**: `src/shared/lib/analytics.ts` (345 LOC)
-- **Events tracked**: Page views, clicks, form submissions, theme changes
+- **Implementation**: `src/shared/lib/analytics.ts` (54 LOC)
+- **Events tracked**: viewCV, downloadCV, viewPublication, downloadPublication
 - **Privacy**: Telemetry disabled in build (`NEXT_TELEMETRY_DISABLED=1`)
 
 ## Dependabot

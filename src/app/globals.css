@@ -4,11 +4,7 @@
 @tailwind utilities;
 
 @layer components {
-  /* 
-   * SOTA Fluid Container
-   * Uses viewport-relative padding and max-width for "Top Class" feel.
-   * Clamps transition smoothly between mobile and ultra-wide.
-   */
+  /* Fluid responsive container with viewport-relative padding */
   .container-responsive {
     @apply w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 3xl:px-24;
     max-width: 1920px;

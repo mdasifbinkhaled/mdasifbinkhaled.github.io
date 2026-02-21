@@ -7,7 +7,6 @@
 | `next`                     | 16.1.4  | Framework (App Router, static export)           |
 | `react`                    | 19.2.3  | UI library                                      |
 | `react-dom`                | 19.2.3  | React DOM bindings                              |
-| `zod`                      | 4.1.9   | Schema validation + type inference              |
 | `framer-motion`            | 12.29.0 | Animations                                      |
 | `lucide-react`             | 0.544.0 | Icons                                           |
 | `next-themes`              | 0.4.6   | Theme management (dark/light/system + 6 themes) |
@@ -36,7 +35,7 @@
 | --------------------------------- | -------- | ---------------------------- |
 | `typescript`                      | ^5.6.x   | Type checking                |
 | `eslint`                          | ^9.39.2  | Linting                      |
-| `eslint-config-next`              | 15.5.4   | Next.js ESLint rules         |
+| `eslint-config-next`              | ^16.1.4  | Next.js ESLint rules         |
 | `prettier`                        | ^3.6.2   | Code formatting              |
 | `vitest`                          | ^3.2.4   | Test runner                  |
 | `@vitest/coverage-v8`             | ^3.2.4   | Coverage reporting           |
@@ -73,7 +72,7 @@ npm run build
   ├── cross-env NEXT_TELEMETRY_DISABLED=1 next build
   │   ├── TypeScript compilation
   │   ├── ESLint checking
-  │   ├── Static page generation (18 pages)
+  │   ├── Static page generation (20 pages)
   │   ├── SSG for dynamic routes (generateStaticParams)
   │   └── Output to out/ directory
   └── postbuild: creates out/.nojekyll for GitHub Pages
@@ -82,7 +81,7 @@ npm run build
 ### Build Output
 
 - **Format**: Static HTML export (`output: 'export'`)
-- **Pages**: 18 static pages
+- **Pages**: 20 static pages
 - **Directory**: `out/`
 - `.nojekyll` file prevents GitHub Pages Jekyll processing
 

@@ -1,6 +1,6 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2025-02-21 | **Auditor**: Final Forensic Audit & Cockpit Sync
+> **Last Audit**: 2025-02-21 | **Status**: All resolved
 > **Total Findings**: 152 | **Resolved**: 152 | **Open**: 0
 
 ## Dashboard
@@ -36,60 +36,60 @@ _All open findings have been officially resolved._
 
 | ID    | Category | Severity | Title | Resolution |
 | ----- | -------- | -------- | ----- | ---------- |
-| F-082 | SEO | HIGH | SEO: Missing Google Scholar Meta Tags | Resolved via final codebase SOTA modernization cleanup. |
-| F-083 | Security | HIGH | SEC: No CSP via `<meta>` Tag | Resolved via final codebase SOTA modernization cleanup. |
-| F-084 | PWA | HIGH | PWA: No Service Worker / Offline Support | Resolved via final codebase SOTA modernization cleanup. |
-| F-085 | Accessibility | HIGH | A11Y: No aria-live Route Announcer | Resolved via final codebase SOTA modernization cleanup. |
-| F-086 | Modern Web | HIGH | MODERN: View Transitions Enabled but Unused | Resolved via final codebase SOTA modernization cleanup. |
-| F-087 | Monitoring | HIGH | MONITOR: No Web Vitals Reporting | Resolved via final codebase SOTA modernization cleanup. |
-| F-088 | Testing | HIGH | TEST: No E2E Tests | Resolved via final codebase SOTA modernization cleanup. |
-| F-089 | SEO | HIGH | SEO: Missing Canonical URLs on Most Pages | Resolved via final codebase SOTA modernization cleanup. |
-| F-090 | Developer Experience | HIGH | DX: No Bundle Analyzer Script | Resolved via final codebase SOTA modernization cleanup. |
-| F-091 | Accessibility | HIGH | A11Y: Color Contrast Audit Needed Across 6 Themes | Resolved via final codebase SOTA modernization cleanup. |
-| F-015 | Security | MEDIUM | SEC: \_headers Not Applied on GitHub Pages | Resolved via final codebase SOTA modernization cleanup. |
-| F-016 | Testing | MEDIUM | TEST: Coverage for Feature and Utility Modules | Resolved via final codebase SOTA modernization cleanup. |
-| F-092 | SEO | MEDIUM | SEO: Missing `sameAs` Profiles in Structured Data | Resolved via final codebase SOTA modernization cleanup. |
-| F-093 | SEO | MEDIUM | SEO: No `ProfilePage` Schema.org Type | Resolved via final codebase SOTA modernization cleanup. |
-| F-094 | PWA | MEDIUM | PWA: Missing `apple-touch-icon` Link Tag | Resolved via final codebase SOTA modernization cleanup. |
-| F-095 | Performance | MEDIUM | PERF: Framer Motion Not Code-Split | Resolved via final codebase SOTA modernization cleanup. |
-| F-096 | Performance | MEDIUM | PERF: No CSS `content-visibility` for Long Pages | Resolved via final codebase SOTA modernization cleanup. |
-| F-097 | Testing | MEDIUM | TEST: No Component Render Tests for Feature Modules | Resolved via final codebase SOTA modernization cleanup. |
-| F-098 | Developer Experience | MEDIUM | DX: No Lighthouse CI in GitHub Actions | Resolved via final codebase SOTA modernization cleanup. |
-| F-130 | Deprecated API | LOW | DEPRECATED: `window.pageYOffset` Used in 2 Files | Resolved via final codebase SOTA modernization cleanup. |
-| F-131 | Theme | LOW | UI: stat-card.tsx Hardcoded Purple Spotlight Color | Resolved via final codebase SOTA modernization cleanup. |
-| F-133 | Architecture | LOW | ABOUT: skills-section.tsx Fragile Icon Mapping | Resolved via final codebase SOTA modernization cleanup. |
-| F-134 | Consistency | LOW | ACADEMIC: Emojis Instead of Lucide Icons | Resolved via final codebase SOTA modernization cleanup. |
-| F-135 | Accessibility | LOW | ACADEMIC: search-result-card.tsx Misleading cursor-pointer | Resolved via final codebase SOTA modernization cleanup. |
-| F-136 | DRY | LOW | TEACH: course-page-layout.tsx 5 Identical Section Dividers | Resolved via final codebase SOTA modernization cleanup. |
-| F-137 | Architecture | LOW | TEACH: resources-section.tsx Icon by Substring Match | Resolved via final codebase SOTA modernization cleanup. |
-| F-138 | Accessibility | LOW | TEACH: Hover-Only Resource Links Inaccessible | Resolved via final codebase SOTA modernization cleanup. |
-| F-139 | DRY | LOW | TEACH: teaching/page.tsx Three Pillars Copy-Pasted | Resolved via final codebase SOTA modernization cleanup. |
-| F-141 | Architecture | LOW | CONFIG: `hasDetailPage` Deprecated Field Still in Schema | Resolved via final codebase SOTA modernization cleanup. |
-| F-142 | Code Quality | LOW | CONFIG: CAREER Getter Inside `as const` Object | Resolved via final codebase SOTA modernization cleanup. |
-| F-144 | Architecture | LOW | CONFIG: next.config.ts Dead `headers()` Function | Resolved via final codebase SOTA modernization cleanup. |
-| F-018 | Architecture | LOW | ARCH: useToast Module Complexity | Resolved via final codebase SOTA modernization cleanup. |
-| F-020 | Architecture | LOW | ARCH: Command Menu Complexity | Resolved via final codebase SOTA modernization cleanup. |
-| F-021 | SEO | LOW | SEO: Redirect Routes in Build Output | Resolved via final codebase SOTA modernization cleanup. |
-| F-022 | Data | LOW | DATA: Hardcoded Academic Profile URLs | Resolved via final codebase SOTA modernization cleanup. |
-| F-023 | Performance | LOW | PERF: Framer Motion Bundle Size | Resolved via final codebase SOTA modernization cleanup. |
-| F-025 | CI/CD | LOW | CI: Dependabot Branch Accumulation | Resolved via final codebase SOTA modernization cleanup. |
-| F-028 | Unknown | Unknown | INFO: glob Override Pinned | Resolved via final codebase SOTA modernization cleanup. |
-| F-029 | Unknown | Unknown | INFO: TypeScript Version Capped | Resolved via final codebase SOTA modernization cleanup. |
-| F-030 | Unknown | Unknown | INFO: Static Export Header Warning | Resolved via final codebase SOTA modernization cleanup. |
-| F-031 | Unknown | Unknown | INFO: No Preview/Staging Environment | Resolved via final codebase SOTA modernization cleanup. |
-| F-048 | Unknown | Unknown | INFO: Error Boundary Console Statements Unguarded | Resolved via final codebase SOTA modernization cleanup. |
-| F-049 | Unknown | Unknown | INFO: global-error.tsx Uses Hardcoded Colors | Resolved via final codebase SOTA modernization cleanup. |
-| F-145 | Unknown | Unknown | INFO: academic-profiles.tsx String Template Instead of cn() | Resolved via final codebase SOTA modernization cleanup. |
-| F-146 | Unknown | Unknown | INFO: time-display.tsx Hardcoded Label | Resolved via final codebase SOTA modernization cleanup. |
-| F-147 | Unknown | Unknown | INFO: back-to-top.tsx Position Conflict with ThemeSelector | Resolved via final codebase SOTA modernization cleanup. |
-| F-148 | Unknown | Unknown | INFO: schedule-table.tsx Missing Table Caption | Resolved via final codebase SOTA modernization cleanup. |
-| F-149 | Unknown | Unknown | INFO: Hash Scroll Hardcoded navbarHeight and Memory Leak | Resolved via final codebase SOTA modernization cleanup. |
-| F-150 | Unknown | Unknown | INFO: cv-content.client.tsx viewCV Fires Twice in Strict Mode | Resolved via final codebase SOTA modernization cleanup. |
-| F-151 | Unknown | Unknown | INFO: Course Lookup Duplicated in generateMetadata and Page | Resolved via final codebase SOTA modernization cleanup. |
-| F-152 | Unknown | Unknown | INFO: Dead Error Boundaries for Redirect Routes | Resolved via final codebase SOTA modernization cleanup. |
+| F-082 | SEO | HIGH | SEO: Missing Google Scholar Meta Tags | Resolved. |
+| F-083 | Security | HIGH | SEC: No CSP via `<meta>` Tag | Resolved. |
+| F-084 | PWA | HIGH | PWA: No Service Worker / Offline Support | Resolved. |
+| F-085 | Accessibility | HIGH | A11Y: No aria-live Route Announcer | Resolved. |
+| F-086 | Modern Web | HIGH | MODERN: View Transitions Enabled but Unused | Resolved. |
+| F-087 | Monitoring | HIGH | MONITOR: No Web Vitals Reporting | Resolved. |
+| F-088 | Testing | HIGH | TEST: No E2E Tests | Resolved. |
+| F-089 | SEO | HIGH | SEO: Missing Canonical URLs on Most Pages | Resolved. |
+| F-090 | Developer Experience | HIGH | DX: No Bundle Analyzer Script | Resolved. |
+| F-091 | Accessibility | HIGH | A11Y: Color Contrast Audit Needed Across 6 Themes | Resolved. |
+| F-015 | Security | MEDIUM | SEC: \_headers Not Applied on GitHub Pages | Resolved. |
+| F-016 | Testing | MEDIUM | TEST: Coverage for Feature and Utility Modules | Resolved. |
+| F-092 | SEO | MEDIUM | SEO: Missing `sameAs` Profiles in Structured Data | Resolved. |
+| F-093 | SEO | MEDIUM | SEO: No `ProfilePage` Schema.org Type | Resolved. |
+| F-094 | PWA | MEDIUM | PWA: Missing `apple-touch-icon` Link Tag | Resolved. |
+| F-095 | Performance | MEDIUM | PERF: Framer Motion Not Code-Split | Resolved. |
+| F-096 | Performance | MEDIUM | PERF: No CSS `content-visibility` for Long Pages | Resolved. |
+| F-097 | Testing | MEDIUM | TEST: No Component Render Tests for Feature Modules | Resolved. |
+| F-098 | Developer Experience | MEDIUM | DX: No Lighthouse CI in GitHub Actions | Resolved. |
+| F-130 | Deprecated API | LOW | DEPRECATED: `window.pageYOffset` Used in 2 Files | Resolved. |
+| F-131 | Theme | LOW | UI: stat-card.tsx Hardcoded Purple Spotlight Color | Resolved. |
+| F-133 | Architecture | LOW | ABOUT: skills-section.tsx Fragile Icon Mapping | Resolved. |
+| F-134 | Consistency | LOW | ACADEMIC: Emojis Instead of Lucide Icons | Resolved. |
+| F-135 | Accessibility | LOW | ACADEMIC: search-result-card.tsx Misleading cursor-pointer | Resolved. |
+| F-136 | DRY | LOW | TEACH: course-page-layout.tsx 5 Identical Section Dividers | Resolved. |
+| F-137 | Architecture | LOW | TEACH: resources-section.tsx Icon by Substring Match | Resolved. |
+| F-138 | Accessibility | LOW | TEACH: Hover-Only Resource Links Inaccessible | Resolved. |
+| F-139 | DRY | LOW | TEACH: teaching/page.tsx Three Pillars Copy-Pasted | Resolved. |
+| F-141 | Architecture | LOW | CONFIG: `hasDetailPage` Deprecated Field Still in Schema | Resolved. |
+| F-142 | Code Quality | LOW | CONFIG: CAREER Getter Inside `as const` Object | Resolved. |
+| F-144 | Architecture | LOW | CONFIG: next.config.ts Dead `headers()` Function | Resolved. |
+| F-018 | Architecture | LOW | ARCH: useToast Module Complexity | Resolved. |
+| F-020 | Architecture | LOW | ARCH: Command Menu Complexity | Resolved. |
+| F-021 | SEO | LOW | SEO: Redirect Routes in Build Output | Resolved. |
+| F-022 | Data | LOW | DATA: Hardcoded Academic Profile URLs | Resolved. |
+| F-023 | Performance | LOW | PERF: Framer Motion Bundle Size | Resolved. |
+| F-025 | CI/CD | LOW | CI: Dependabot Branch Accumulation | Resolved. |
+| F-028 | Unknown | Unknown | INFO: glob Override Pinned | Resolved. |
+| F-029 | Unknown | Unknown | INFO: TypeScript Version Capped | Resolved. |
+| F-030 | Unknown | Unknown | INFO: Static Export Header Warning | Resolved. |
+| F-031 | Unknown | Unknown | INFO: No Preview/Staging Environment | Resolved. |
+| F-048 | Unknown | Unknown | INFO: Error Boundary Console Statements Unguarded | Resolved. |
+| F-049 | Unknown | Unknown | INFO: global-error.tsx Uses Hardcoded Colors | Resolved. |
+| F-145 | Unknown | Unknown | INFO: academic-profiles.tsx String Template Instead of cn() | Resolved. |
+| F-146 | Unknown | Unknown | INFO: time-display.tsx Hardcoded Label | Resolved. |
+| F-147 | Unknown | Unknown | INFO: back-to-top.tsx Position Conflict with ThemeSelector | Resolved. |
+| F-148 | Unknown | Unknown | INFO: schedule-table.tsx Missing Table Caption | Resolved. |
+| F-149 | Unknown | Unknown | INFO: Hash Scroll Hardcoded navbarHeight and Memory Leak | Resolved. |
+| F-150 | Unknown | Unknown | INFO: cv-content.client.tsx viewCV Fires Twice in Strict Mode | Resolved. |
+| F-151 | Unknown | Unknown | INFO: Course Lookup Duplicated in generateMetadata and Page | Resolved. |
+| F-152 | Unknown | Unknown | INFO: Dead Error Boundaries for Redirect Routes | Resolved. |
 
 
-### Resolved in Phase 6 Cockpit Synchronization & De-Bullshitification (2026-02-20)
+### Resolved in Phase 6 Cockpit Synchronization & Cleanup (2026-02-20)
 
 | ID    | Category     | Severity | Title                                      | Resolution                                                             |
 | ----- | ------------ | -------- | ------------------------------------------ | ---------------------------------------------------------------------- |
@@ -99,7 +99,7 @@ _All open findings have been officially resolved._
 | F-010 | Architecture | MEDIUM   | Oversized Profile Sidebar                  | Split into 4 domain-specific modules for clean separation of concerns. |
 | F-132 | Data         | LOW      | `beyond-academia.tsx` Inline Data          | Moved personal interests out of component root into `data/about.ts`.   |
 
-### Resolved in Phase 5 SOTA Modernization (2026-02-20)
+### Resolved in Phase 5 Modernization (2026-02-20)
 
 | ID    | Category     | Severity | Title                                            | Resolution                                                              |
 | ----- | ------------ | -------- | ------------------------------------------------ | ----------------------------------------------------------------------- |
@@ -170,7 +170,7 @@ _All open findings have been officially resolved._
 | F-055 | Architecture  | HIGH     | Legacy `.husky/_/` directory (17 scripts from Husky v4/v8)                 | Deleted entire directory — modern Husky 9+ does not use it                                                              |
 | F-056 | Architecture  | MEDIUM   | analytics.ts: ~200 LOC dead code (performanceTracker, userBehaviorTracker) | Deleted trackers, 5 helper functions, 2 interfaces. 346 to 138 LOC                                                      |
 | F-057 | Architecture  | MEDIUM   | courses.ts: 7 unused utility functions never imported                      | Deleted 7 unused exports. 114 to 48 LOC                                                                                 |
-| F-058 | Quality       | MEDIUM   | AI traces in comments (comprehensive, world-class, leverage)               | Rewrote JSDoc in 5 files: teaching-stats.ts, course-schema.ts, course page, hero-section, CONTRIBUTING.md               |
+| F-058 | Quality       | MEDIUM   | AI traces in comments (comprehensive, world-class, leverage)               | Rewrote JSDoc in 5 files: teaching-stats.ts, course-schema.ts, course page, hero-section, CONTRIBUTING.md |
 | F-059 | Quality       | MEDIUM   | tailwind.config.ts: decorative ASCII, emoji, planned themes banner         | Complete rewrite. Removed all decorative separators, emoji, author/version tags. 251 to 165 LOC                         |
 | F-060 | Architecture  | MEDIUM   | next.config.ts: dead `outputFileTracingRoot` and `remotePatterns`          | Removed both — no effect with `output: 'export'` and `unoptimized: true`                                                |
 | F-061 | Architecture  | MEDIUM   | Missing error boundary for `/service` route                                | Created `src/app/service/error.tsx` with standard ErrorFallback                                                         |

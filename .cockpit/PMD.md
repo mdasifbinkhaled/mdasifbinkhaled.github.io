@@ -3,7 +3,7 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2025-02-21 (Final Forensic Audit & Cockpit Sync)
+> **Last Updated**: 2025-02-21
 > **Commit**: 1d521d2
 
 ## Mission
@@ -164,7 +164,7 @@ Key resolutions:
 - **3 CRITICAL**: Division-by-zero, PII exposure, CV data drift --- all fixed
 - **30 HIGH**: XSS, CSP, route announcer, keyboard a11y, error boundaries --- all fixed
 - **55 MEDIUM**: Schema integrity, DRY violations, theme consistency --- all fixed
-- **40 LOW**: Dead code, stale docs, minor DX issues --- all fixed
+- **40 LOW**: Dead code, stale docs, minor DX issues — all fixed
 - **24 INFO**: Cosmetic and informational items --- all addressed
 
 See [ROADMAP.md](ROADMAP.md) for the improvement plan (Phases 7-11).

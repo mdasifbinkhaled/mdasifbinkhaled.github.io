@@ -16,11 +16,7 @@ import Link from 'next/link';
 import { StatCard } from '@/shared/components/common/stat-card';
 import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 
-/**
- * Hero Section Component
- * Main landing section with introduction, quick stats, and CTAs
- * World-class design with ambient backgrounds and glassmorphism
- */
+/** Main landing section with introduction, quick stats, and CTAs. */
 export function HeroSection() {
   const { averageRating } = getTeachingStats();
 
