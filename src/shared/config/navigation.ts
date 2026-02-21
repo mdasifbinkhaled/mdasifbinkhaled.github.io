@@ -13,6 +13,12 @@ export const mainNavItems: NavItem[] = [
     sectionId: 'publications',
   },
   {
+    href: '/apps',
+    label: 'Student Apps',
+    icon: 'Wrench',
+    sectionId: 'apps',
+  },
+  {
     href: '/teaching',
     label: 'Teaching',
     icon: 'Presentation',

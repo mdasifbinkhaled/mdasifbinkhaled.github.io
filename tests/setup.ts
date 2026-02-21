@@ -109,8 +109,12 @@ vi.mock('lucide-react', () => {
     Check: createMockIcon('check'),
     Copy: createMockIcon('copy'),
     Search: createMockIcon('search'),
-    Filter: createMockIcon('filter'),
     RefreshCw: createMockIcon('refresh-cw'),
+    Plus: createMockIcon('plus'),
+    Trash2: createMockIcon('trash2'),
+    Timer: createMockIcon('timer'),
+    CalendarDays: createMockIcon('calendar-days'),
+    Filter: createMockIcon('filter'),
 
     // Contact icons
     Mail: createMockIcon('mail'),

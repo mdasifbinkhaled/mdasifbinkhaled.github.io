@@ -1,10 +1,3 @@
-/**
- * Shared mapping from navigation icon string names → Lucide React components.
- *
- * Used by profile-sidebar and command-menu to resolve the `icon` field
- * defined in navigation.ts config items. Keep this in sync with any
- * new icon names added to mainNavItems / teachingNavItems / courseNavItems.
- */
 import {
   Home,
   UserCircle,
@@ -24,6 +17,9 @@ import {
   Users,
   Award,
   Rss,
+  Wrench,
+  Timer,
+  CalendarDays,
 } from 'lucide-react';
 import type { ElementType } from 'react';
 
@@ -46,4 +42,7 @@ export const navIconMap: Record<string, ElementType> = {
   Users,
   Award,
   Rss,
+  Wrench,
+  Timer,
+  CalendarDays,
 };

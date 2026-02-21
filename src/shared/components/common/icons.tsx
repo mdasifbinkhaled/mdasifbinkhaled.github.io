@@ -1,5 +1,4 @@
-// @/shared/components/common/icons.tsx
-'use client'; // Ensure this can be used in other client components
+'use client';
 
 import {
   Home,
@@ -20,10 +19,12 @@ import {
   BookOpen,
   Server,
   Users,
+  Wrench,
+  Timer,
+  CalendarDays,
   type LucideProps,
 } from 'lucide-react';
 
-// Define the IconName type based on the keys of iconComponents
 export type IconName = keyof typeof iconComponents;
 
 const iconComponents = {
@@ -45,10 +46,13 @@ const iconComponents = {
   BookOpen,
   Server,
   Users,
+  Wrench,
+  Timer,
+  CalendarDays,
 };
 
 interface IconComponentProps extends LucideProps {
-  name?: IconName; // Use the IconName type
+  name?: IconName;
 }
 
 export function Icon({ name, className, ...props }: IconComponentProps) {
