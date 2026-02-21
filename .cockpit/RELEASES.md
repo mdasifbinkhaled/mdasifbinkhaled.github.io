@@ -23,7 +23,7 @@ Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial rel
 - Pre-modernization checkpoint
 - Marked before major stack upgrade
 
-## Unreleased (Current HEAD: `85a3946`)
+## Unreleased (Current HEAD: `0cc9fa6`)
 
 ### Fixes Applied (Cockpit Audit)
 
@@ -64,9 +64,8 @@ Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial rel
 
 - TypeScript: 0 errors
 - ESLint: 0 errors, 0 warnings
-- Tests: 129/129 passing (21 files)
-- Coverage: 35.78% stmts | 68.26% branch | 22.63% funcs
-- Build: 18 pages exported successfully
+- Tests: 143/143 passing (23 files)
+- Build: 20 pages exported successfully
 
 ## Recommended Next Release
 

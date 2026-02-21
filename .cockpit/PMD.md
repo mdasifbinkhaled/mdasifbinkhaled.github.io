@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2025-02-21
-> **Commit**: 1d521d2
+> **Last Updated**: 2026-02-21
+> **Commit**: 0cc9fa6
 
 ## Mission
 
@@ -39,11 +39,11 @@ An academic portfolio showcasing research, publications, teaching activities, an
 |  App Layer (1,582 LOC / 11%)                |  Page routes, layouts, error boundaries
 |  src/app/                                    |  15 routes, 20 pages
 +---------------------------------------------+
-|  Features Layer (4,556 LOC / 31%)           |  Domain modules
+|  Features Layer (4,546 LOC / 31%)           |  Domain modules
 |  src/features/{about,academic,apps,home,     |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
-|  Shared Layer (8,403 LOC / 58%)             |  Cross-cutting infrastructure
+|  Shared Layer (8,367 LOC / 58%)             |  Cross-cutting infrastructure
 |  src/shared/{components,config,hooks,        |  UI primitives, config, data,
 |              lib,providers,types}            |  analytics, types
 +---------------------------------------------+
@@ -66,7 +66,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Metric            | Value    |
 | ----------------- | -------- |
 | Source files      | 187      |
-| Lines of code     | 14,541   |
+| Lines of code     | 14,495   |
 | Components (.tsx) | 131      |
 | Client components | 54 (41%) |
 | Server components | 77 (59%) |
@@ -77,7 +77,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Test count        | 143      |
 | Pages generated   | 20       |
 | Themes            | 6        |
-| Git commits       | 413      |
+| Git commits       | 415      |
 
 ### Largest Files
 
@@ -95,8 +95,8 @@ An academic portfolio showcasing research, publications, teaching activities, an
 ### LOC Distribution
 
 ```
-shared/    8,403 (58%)  ####################################
-features/  4,556 (31%)  ###################
+shared/    8,367 (58%)  ####################################
+features/  4,546 (31%)  ###################
 app/       1,582 (11%)  ######
 ```
 
@@ -104,7 +104,7 @@ app/       1,582 (11%)  ######
 
 | Module      | Files | Purpose                                          |
 | ----------- | ----- | ------------------------------------------------ |
-| `teaching/` | 19    | Course cards, detail pages, schedules, syllabi   |
+| `teaching/` | 18    | Course cards, detail pages, schedules, syllabi   |
 | `about/`    | 10    | Hero, awards, certifications, skills, philosophy |
 | `research/` | 8     | Research areas, projects, open source, vision    |
 | `home/`     | 6     | Hero, news, research highlights, connect         |
@@ -140,7 +140,7 @@ app/       1,582 (11%)  ######
 | Prettier   | PASS   | All formatted                                        |
 | Tests      | PASS   | 143/143 pass (23 files)                              |
 | Build      | PASS   | 20 pages exported                                    |
-| Audit      | NOTE   | 10 vulns (all mitigated --- dev-only or static export) |
+| Audit      | NOTE   | 20 vulns (1 moderate, 19 high — all mitigated: dev-only or static export) |
 
 ## Architecture Observations
 
@@ -173,13 +173,9 @@ See [ROADMAP.md](ROADMAP.md) for the improvement plan (Phases 7-11).
 
 | ADR     | Title                       | Status   |
 | ------- | --------------------------- | -------- |
-| ADR-001 | Static Export over SSR      | Accepted |
-| ADR-002 | Plain TypeScript Types      | Accepted |
-| ADR-003 | 6-Theme System              | Accepted |
-| ADR-004 | Feature Module Architecture | Accepted |
 | ADR-005 | Student Apps Feature        | Accepted |
 
-See [adr/](adr/) for full records.
+See [adr/](adr/) for the full record and template.
 
 ### Notes
 

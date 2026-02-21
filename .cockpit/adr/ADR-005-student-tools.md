@@ -10,7 +10,7 @@ The academic portfolio currently serves as a read-only showcase. Students visit 
 
 1. Increase student engagement and repeat visits
 2. Differentiate from standard academic portfolios
-3. Leverage existing course data (Zod schemas, assessment breakdowns)
+3. Leverage existing course data (TypeScript types, assessment breakdowns)
 4. Remain compatible with static export (no server required)
 
 The `courseAssessmentBreakdownSchema` already supports `midterm`, `final`, `assignments`, `projects`, `quizzes`, and `participation` weights — but no course data files populate the `assessment` field yet. This ADR establishes the architecture for adding tools incrementally.
@@ -102,7 +102,7 @@ Add `Wrench` to `navIconMap` in `nav-icon-map.ts`.
 - **No data leaves browser**: Student data (grades, names) is never transmitted.
 - **Progressive**: Tools work without JS for basic display, enhanced with client components.
 - **Bundle budget**: Each tool should add < 30KB gzipped. Lazy-load heavy dependencies.
-- **Schema-first**: Any new data shapes get Zod schemas before implementation.
+- **Schema-first**: Any new data shapes get TypeScript interfaces before implementation.
 
 ### 6. Data Changes Required
 
@@ -126,7 +126,7 @@ assessment: {
 - Students get practical value from the portfolio (not just information)
 - Increased engagement and return visits
 - Demonstrates technical capability (interactive tools on static site)
-- Leverages existing Zod schemas and course data architecture
+- Leverages existing TypeScript types and course data architecture
 - All processing is client-side — no privacy concerns, no server costs
 
 ### Negative

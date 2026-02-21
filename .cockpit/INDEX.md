@@ -1,8 +1,8 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2025-02-21
+> **Last Updated**: 2026-02-21
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.2.0 | **Commit**: 1d521d2 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 3.4
+> **Version**: 1.2.0 | **Commit**: 0cc9fa6 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 3.4
 
 ## Quick Navigation
 
@@ -18,7 +18,7 @@
 | [PACKAGING.md](PACKAGING.md)     | Dependencies, build pipeline, deployment                   |
 | [RELEASES.md](RELEASES.md)       | Version history and changelog                              |
 | [PUBLICATION.md](PUBLICATION.md) | Deployment, hosting, and distribution details              |
-| [adr/](adr/)                     | Architecture Decision Records (ADR-001 through ADR-005)    |
+| [adr/](adr/)                     | Architecture Decision Records (ADR-005 + template)         |
 
 ## Health Dashboard
 
@@ -27,7 +27,7 @@
     Tests:      143/143 PASS (23 files)
     Build:      20 pages exported
     Format:     All files formatted
-    Commit:     1d521d2 (0 open findings)
+    Commit:     0cc9fa6 (0 open findings)
 
 ## Findings Summary
 
@@ -48,19 +48,19 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 2. **Seat Plan Generator**: Planned — upload student list, generate layout.
 3. **GPA Calculator**: Planned — multi-course semester GPA computation.
 
-**Phases 6, 8, 9 (Code Quality, Modern Web, Testing): COMPLETED**
+**Phase 6 (Code Quality): COMPLETED**
+**Phase 8 (Modern Web): 2/6 DONE** — Service worker + Lighthouse CI added.
+**Phase 9 (Testing): 2/6 DONE** — Playwright E2E + axe-core added.
 
-- Axe-Core accessibility checks and Lighthouse CI gating added.
-- End-to-end Playwright test coverage added.
+- 143/143 tests passing (23 files).
 - Legacy code and unused files removed.
-- 143/143 tests passing.
 
 ## Project Vitals
 
 | Metric            | Value            |
 | ----------------- | ---------------- |
 | Source files      | 187              |
-| Lines of code     | 14,541           |
+| Lines of code     | 14,495           |
 | Client components | 54 of 131 (.tsx) |
 | Server components | 77 of 131 (.tsx) |
 | Data files        | 28               |
@@ -68,11 +68,11 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 | Barrel exports    | 9                |
 | Test files        | 23               |
 | Themes            | 6                |
-| ADRs              | 5 (001-005)      |
+| ADRs              | 2 (ADR-005 + template) |
 
 ## Architecture Layers (LOC Distribution)
 
-    shared/    8,403 LOC (58%) — Infrastructure, data, UI primitives
-    features/  4,556 LOC (31%) — Feature modules (teaching, about, research, academic, home, apps)
+    shared/    8,367 LOC (58%) — Infrastructure, data, UI primitives
+    features/  4,546 LOC (31%) — Feature modules (teaching, about, research, academic, home, apps)
     app/       1,582 LOC (11%) — Page routes and layouts
     styles/      248 LOC  (2%) — Design tokens + globals

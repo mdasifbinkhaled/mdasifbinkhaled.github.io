@@ -42,14 +42,14 @@ What becomes easier or more difficult to do because of this change?
 - **Decision**: Use `output: 'export'` for fully static site. No API routes, no server components that fetch at request time.
 - **Consequences**: (+) Zero hosting cost, maximum performance, CDN-cached. (-) No server-side features (forms, auth, ISR). All data is build-time.
 
-### ADR-002: Zod-First Type System
+### ADR-002: Plain TypeScript Types (was: Zod-First Type System)
 
-- **Date**: Phase 4
-- **Status**: Accepted
-- **Context**: 28 data files need consistent validation. Manual TypeScript interfaces drift from actual data shape.
-- **Decision**: Define all domain types as Zod schemas, infer TypeScript types with `z.infer<>`. Validate at import time.
-- **Consequences**: (+) Single source of truth, runtime validation, better error messages. (-) Zod 4 is newer/less stable.
-- **Update (Phase 7)**: Monolithic 614-line `schemas.ts` split into 7 domain files with barrel re-export.
+- **Date**: Phase 4 (revised Phase 8)
+- **Status**: Accepted (revised)
+- **Context**: Originally used Zod schemas for all 28 data files with `z.infer<>` type inference. Zod was later removed — runtime validation unnecessary for a static site with build-time type checking.
+- **Decision**: All domain types as plain TypeScript interfaces in `src/shared/types/`. Type-checked via `satisfies` assertions. No runtime schema validation.
+- **Consequences**: (+) Simpler, smaller bundle, no Zod dependency. (-) No runtime validation (acceptable for static export).
+- **History**: Phase 7 split monolithic 614-line `schemas.ts` into 7 domain files. Phase 8 removed Zod entirely, consolidated types to `src/shared/types/index.ts`.
 
 ### ADR-003: 6-Theme System
 

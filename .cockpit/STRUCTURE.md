@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2025-02-21 | 187 source files | 14,541 LOC
+> Last Updated: 2026-02-21 | 187 source files | 14,495 LOC
 
 ## Root Configuration
 
@@ -30,7 +30,7 @@ public/
 └── images/                 — Static images (profile photo, OG image, favicons)
 ```
 
-## Source Tree — `src/` (14,541 LOC)
+## Source Tree — `src/` (14,495 LOC)
 
 ### App Layer — `src/app/` (1,582 LOC)
 
@@ -93,7 +93,7 @@ src/app/
             └── error.tsx
 ```
 
-### Features Layer — `src/features/` (4,556 LOC)
+### Features Layer — `src/features/` (4,546 LOC)
 
 Domain-specific feature modules. Each is self-contained.
 
@@ -149,14 +149,13 @@ src/features/
 │   ├── research-hero.tsx
 │   └── research-vision.tsx
 │
-└── teaching/               — Teaching feature (19 files, largest module)
+└── teaching/               — Teaching feature (18 files, largest module)
     ├── course-card.tsx
     ├── course-card-compact.tsx
     ├── course-page-layout.tsx
     ├── teaching-cta.tsx
     ├── teaching-hero-stats.tsx
     ├── styles.ts
-    ├── index.ts
     └── components/
         ├── assignments-section.tsx
         ├── contest-countdown.tsx
@@ -172,7 +171,7 @@ src/features/
         └── syllabus-table.tsx
 ```
 
-### Shared Layer — `src/shared/` (8,403 LOC, 58% of codebase)
+### Shared Layer — `src/shared/` (8,367 LOC, 58% of codebase)
 
 Cross-cutting infrastructure: components, config, data, hooks, lib, types.
 

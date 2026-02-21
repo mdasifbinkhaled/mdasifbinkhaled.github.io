@@ -1,6 +1,6 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2025-02-21 | **Status**: All resolved
+> **Last Audit**: 2026-02-21 | **Status**: All resolved
 > **Total Findings**: 152 | **Resolved**: 152 | **Open**: 0
 
 ## Dashboard
@@ -21,7 +21,7 @@ ESLint:      ✅ 0 errors, 0 warnings (eslint-config-next@16, native flat config
 Tests:       ✅ 143/143 pass (23 files)
 Build:       ✅ 20 pages exported
 Format:      ✅ All formatted
-Commit:      ✅ 1d521d2
+Commit:      ✅ 0cc9fa6
 ```
 
 ---
@@ -231,4 +231,4 @@ _All open findings have been officially resolved._
 
 | ID    | Category | Severity | Title                         | Reason                                                    |
 | ----- | -------- | -------- | ----------------------------- | --------------------------------------------------------- |
-| F-044 | Security | INFO     | npm audit: 10 vulnerabilities | ajv is dev-only; Next.js vulns mitigated by static export |
+| F-044 | Security | INFO     | npm audit: 20 vulnerabilities (1 moderate, 19 high) | ajv is dev-only; Next.js vulns mitigated by static export |
