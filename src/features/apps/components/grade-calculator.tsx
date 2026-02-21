@@ -95,7 +95,7 @@ export function GradeCalculator() {
   // Determine required remaining points to hit target
   const targetRequirement = useMemo(() => {
     const scale = STANDARD_GRADING_SCALE.find((s) => s.label === targetGrade);
-    const targetPercentage = scale ? scale.minPercentage : 90;
+    const targetPercentage = scale ? scale.minPercentage : (STANDARD_GRADING_SCALE[0]?.minPercentage ?? 90);
 
     // Total points needed in the course (out of 100)
     const pointsNeeded = targetPercentage;

@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { Timer, ExternalLink, Trophy } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
+import { useIsClient } from '@/shared/hooks/use-is-client';
 
 interface ContestCountdownProps {
   contest: {
@@ -16,12 +17,10 @@ interface ContestCountdownProps {
 }
 
 export function ContestCountdown({ contest }: ContestCountdownProps) {
-  const [isMounted, setIsMounted] = useState(false);
+  const isClient = useIsClient();
   const [, setTicker] = useState(0);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsMounted(true);
     const timer = setInterval(
       () => {
         setTicker((t) => t + 1);
@@ -32,7 +31,7 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
     return () => clearInterval(timer);
   }, [contest.endDate]);
 
-  if (!isMounted) return null;
+  if (!isClient) return null;
 
   const difference = +new Date(contest.endDate) - +new Date();
   const timeLeft =

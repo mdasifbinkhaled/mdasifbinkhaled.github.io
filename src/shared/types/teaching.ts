@@ -1,3 +1,5 @@
+import type { IconName } from '@/shared/components/common/icons';
+
 /**
  * Teaching Domain Types
  * Centralized type definitions for all teaching-related components
@@ -21,7 +23,7 @@ export interface TeachingActivity {
   description: string;
   period?: string;
   students?: number;
-  iconName?: string;
+  iconName?: IconName;
 }
 
 /**

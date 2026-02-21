@@ -22,63 +22,19 @@ import {
   Flower,
   Briefcase,
 } from 'lucide-react';
+import { themeConfigs } from '@/shared/config/themes';
+import { useIsClient } from '@/shared/hooks/use-is-client';
 
-const themes = [
-  // Classic Themes
-  {
-    name: 'light',
-    label: 'Light',
-    description: 'Clean and professional light theme',
-    icon: Sun,
-    preview: 'bg-gradient-to-br from-slate-50 to-blue-50',
-    category: 'Classic',
-  },
-  {
-    name: 'dark',
-    label: 'Dark',
-    description: 'Professional dark theme with enhanced contrast',
-    icon: Moon,
-    preview: 'bg-gradient-to-br from-slate-900 to-slate-800',
-    category: 'Classic',
-  },
-  // Natural Themes
-  {
-    name: 'ocean',
-    label: 'Ocean',
-    description: 'Cool blue tones inspired by ocean depths',
-    icon: Waves,
-    preview: 'bg-gradient-to-br from-cyan-50 to-blue-100',
-    category: 'Natural',
-  },
-  {
-    name: 'forest',
-    label: 'Forest',
-    description: 'Fresh green tones inspired by nature',
-    icon: Trees,
-    preview: 'bg-gradient-to-br from-emerald-50 to-green-100',
-    category: 'Natural',
-  },
-  // Vibrant Theme
-  {
-    name: 'lavender',
-    label: 'Lavender',
-    description: 'Soft purple tones for a calming experience',
-    icon: Flower,
-    preview: 'bg-gradient-to-br from-purple-100 to-pink-50',
-    category: 'Vibrant',
-  },
-  // Professional Theme
-  {
-    name: 'slate',
-    label: 'Slate',
-    description: 'Professional neutral gray for serious work',
-    icon: Briefcase,
-    preview: 'bg-gradient-to-br from-gray-100 to-slate-200',
-    category: 'Professional',
-  },
-] as const;
+const themeUIMap: Record<string, { icon: React.ElementType; previewClass: string }> = {
+  light: { icon: Sun, previewClass: 'bg-gradient-to-br from-slate-50 to-blue-50' },
+  dark: { icon: Moon, previewClass: 'bg-gradient-to-br from-slate-900 to-slate-800' },
+  ocean: { icon: Waves, previewClass: 'bg-gradient-to-br from-cyan-50 to-blue-100' },
+  forest: { icon: Trees, previewClass: 'bg-gradient-to-br from-emerald-50 to-green-100' },
+  lavender: { icon: Flower, previewClass: 'bg-gradient-to-br from-purple-100 to-pink-50' },
+  slate: { icon: Briefcase, previewClass: 'bg-gradient-to-br from-gray-100 to-slate-200' },
+};
 
-const categories = ['Classic', 'Natural', 'Vibrant', 'Professional'] as const;
+const categories = ['classic', 'natural', 'vibrant', 'professional'] as const;
 
 function ThemeCategoryList({
   variant,
@@ -92,7 +48,9 @@ function ThemeCategoryList({
   return (
     <>
       {categories.map((category) => {
-        const categoryThemes = themes.filter((t) => t.category === category);
+        const categoryThemes = Object.values(themeConfigs).filter(
+          (t) => t.category === category
+        );
         if (categoryThemes.length === 0) return null;
 
         return (
@@ -103,7 +61,7 @@ function ThemeCategoryList({
             }
           >
             <div className="px-2 py-1">
-              <Badge variant="secondary" className="text-xs">
+              <Badge variant="secondary" className="text-xs capitalize">
                 {category}
               </Badge>
             </div>
@@ -118,6 +76,8 @@ function ThemeCategoryList({
             >
               {categoryThemes.map((themeOption) => {
                 const isActive = currentThemeName === themeOption.name;
+                const uiConfig = themeUIMap[themeOption.name] || { icon: Palette, previewClass: 'bg-muted' };
+                const Icon = uiConfig.icon;
 
                 if (variant === 'compact') {
                   return (
@@ -127,9 +87,9 @@ function ThemeCategoryList({
                       className="flex items-center gap-2 px-2 py-1.5 rounded-md cursor-pointer"
                     >
                       <div
-                        className={`w-5 h-5 rounded ${themeOption.preview} flex items-center justify-center border border-border/50`}
+                        className={`w-5 h-5 rounded ${uiConfig.previewClass} flex items-center justify-center border border-border/50`}
                       >
-                        <themeOption.icon className="h-3 w-3 text-foreground/70" />
+                        <Icon className="h-3 w-3 text-foreground/70" />
                       </div>
                       <span className="text-sm flex-1">
                         {themeOption.label}
@@ -148,9 +108,9 @@ function ThemeCategoryList({
                       aria-label={`Switch to ${themeOption.label} theme`}
                     >
                       <div
-                        className={`w-6 h-6 rounded-md ${themeOption.preview} flex items-center justify-center border border-border/50 theme-preview-animation`}
+                        className={`w-6 h-6 rounded-md ${uiConfig.previewClass} flex items-center justify-center border border-border/50 theme-preview-animation`}
                       >
-                        <themeOption.icon className="h-3 w-3 text-foreground/70" />
+                        <Icon className="h-3 w-3 text-foreground/70" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1">
@@ -175,9 +135,9 @@ function ThemeCategoryList({
                   >
                     <div className="flex items-center gap-3 flex-1">
                       <div
-                        className={`w-8 h-8 rounded-md ${themeOption.preview} flex items-center justify-center border border-border/50 theme-preview-animation`}
+                        className={`w-8 h-8 rounded-md ${uiConfig.previewClass} flex items-center justify-center border border-border/50 theme-preview-animation`}
                       >
-                        <themeOption.icon className="h-4 w-4 text-foreground/70" />
+                        <Icon className="h-4 w-4 text-foreground/70" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
@@ -219,13 +179,9 @@ export function ThemeSelector({
   showLabel = true,
 }: ThemeSelectorProps) {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const isClient = useIsClient();
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
+  if (!isClient) {
     return (
       <Button variant="ghost" size="icon">
         <Palette className="h-4 w-4" />
@@ -234,8 +190,8 @@ export function ThemeSelector({
     );
   }
 
-  const currentTheme = themes.find((t) => t.name === theme) || themes[0];
-  const CurrentIcon = currentTheme?.icon || Palette;
+  const currentTheme = themeConfigs[theme as keyof typeof themeConfigs] || themeConfigs.light;
+  const CurrentIcon = themeUIMap[currentTheme.name]?.icon || Palette;
 
   if (variant === 'compact') {
     return (

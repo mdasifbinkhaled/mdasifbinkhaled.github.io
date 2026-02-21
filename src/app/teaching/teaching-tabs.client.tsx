@@ -66,12 +66,9 @@ function ActivityCard({ activity }: { activity: TeachingActivity }) {
     <Card className="transition-all duration-200 hover:shadow-lg h-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-base flex items-center gap-2">
-          {activity.iconName &&
-            (() => {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              const iconName = activity.iconName as any;
-              return <Icon name={iconName} className="h-4 w-4 text-primary" />;
-            })()}
+          {activity.iconName && (
+            <Icon name={activity.iconName} className="h-4 w-4 text-primary" />
+          )}
           {activity.title}
         </CardTitle>
         {activity.period && (

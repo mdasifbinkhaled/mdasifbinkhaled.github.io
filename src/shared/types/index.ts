@@ -1,5 +1,5 @@
 // Shared type definitions
-// Types with Zod schemas are re-exported from validation/schemas.ts
+// All domain types are plain TypeScript interfaces. No runtime schema validation.
 
 import type { IconName } from '@/shared/components/common/icons';
 
