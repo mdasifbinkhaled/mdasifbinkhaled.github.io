@@ -6,7 +6,7 @@
 
 - **Strict mode**: `strict: true`, `noUncheckedIndexedAccess: true`
 - **Path aliases**: `@/*` → `src/*`
-- **Types**: Inferred from Zod schemas (`z.infer<typeof Schema>`) — no manual interfaces for domain types
+- **Types**: Plain TypeScript interfaces in `src/shared/types/` — no runtime schema validation
 - **No `any`**: ESLint enforced
 - **No unused vars**: ESLint enforced (underscore prefix `_` for intentional ignores)
 
@@ -19,7 +19,7 @@
 
 ### CSS / Styling
 
-- **Tailwind CSS 3.4** with `darkMode: 'class'`
+- **Tailwind CSS 3.4** with `darkMode: ['selector', '[data-theme="dark"]']`
 - **CSS custom properties** for all colors — use `bg-background`, `text-foreground`, etc.
 - **Never use hardcoded colors** (e.g., `bg-gray-50`, `text-gray-700`) — always use theme tokens
 - **`cn()` utility** from `tailwind-merge` + `clsx` for conditional classes
@@ -28,7 +28,7 @@
 ### Data Layer
 
 - All domain data in `src/shared/lib/data/` as TypeScript objects
-- Validated at import time via `validateData()` with Zod schemas
+- Type-checked at compile time via TypeScript interfaces (`satisfies` assertions)
 - Tiered course system: summary (inline) → standard (separate file) → detailed (multi-file directory)
 
 ## Naming Conventions

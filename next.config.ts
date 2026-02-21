@@ -13,8 +13,5 @@ const config: NextConfig = {
   },
 
   typedRoutes: true,
-  experimental: {
-    scrollRestoration: true,
-  },
 };
 export default analyzer(config);

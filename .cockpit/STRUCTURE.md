@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-02-19 (Session 9) | 174 source files | 14,820 LOC
+> Last Updated: 2025-02-21 (Final Forensic Audit & Cockpit Sync) | 187 source files | 14,541 LOC
 
 ## Root Configuration
 
@@ -13,6 +13,7 @@
 ├── eslint.config.mjs       — ESLint flat config
 ├── commitlint.config.mjs   — Conventional commits enforcement
 ├── vitest.config.mts       — Vitest + jsdom + v8 coverage
+├── playwright.config.ts    — Playwright E2E config (static export)
 ├── components.json         — shadcn/ui configuration
 └── next-env.d.ts           — Next.js type declarations
 ```
@@ -24,19 +25,20 @@ public/
 ├── _headers                — Security headers (HSTS, CSP) for CDN hosting
 ├── humans.txt              — Humans.txt standard
 ├── site.webmanifest        — PWA manifest
+├── sw.js                   — Service worker (offline caching)
 ├── cv/                     — PDF CV files
 └── images/                 — Static images (profile photo, OG image, favicons)
 ```
 
-## Source Tree — `src/` (15,215 LOC)
+## Source Tree — `src/` (14,541 LOC)
 
-### App Layer — `src/app/` (2,175 LOC)
+### App Layer — `src/app/` (1,582 LOC)
 
 Page routes using Next.js App Router. Each route has error boundary.
 
 ```
 src/app/
-├── layout.tsx              — Root layout: fonts, metadata, JSON-LD, providers
+├── layout.tsx              — Root layout: fonts, metadata, JSON-LD, CSP, providers
 ├── page.tsx                — Homepage
 ├── globals.css             — Global styles + CSS custom properties
 ├── error.tsx               — Root error boundary
@@ -48,6 +50,11 @@ src/app/
 ├── about/
 │   ├── page.tsx            — About page (server component, renders feature components)
 │   └── error.tsx
+├── apps/
+│   ├── page.tsx            — Student apps hub (tool cards grid)
+│   ├── error.tsx           — Error boundary (factory pattern)
+│   └── grade-calculator/
+│       └── page.tsx        — Grade calculator tool page
 ├── contact/
 │   ├── page.tsx            — Contact page with social links
 │   └── error.tsx
@@ -76,24 +83,24 @@ src/app/
     ├── teaching-tabs.client.tsx — Tab switching client component
     ├── iub/
     │   ├── page.tsx        — IUB institution page
-    │   └── error.tsx       — IUB error boundary
+    │   └── error.tsx
     ├── bracu/
     │   ├── page.tsx        — BRAC University institution page
-    │   └── error.tsx       — BRACU error boundary
+    │   └── error.tsx
     └── [institution]/
         └── [courseCode]/
             ├── page.tsx    — Dynamic course detail pages (SSG)
-            └── error.tsx   — Course page error boundary
+            └── error.tsx
 ```
 
-### Features Layer — `src/features/` (3,591 LOC)
+### Features Layer — `src/features/` (4,556 LOC)
 
 Domain-specific feature modules. Each is self-contained.
 
 ```
 src/features/
 ├── about/components/       — About page sections (10 files)
-│   ├── hero-section.tsx    — Profile hero with CV download
+│   ├── hero-section.tsx
 │   ├── awards-section.tsx
 │   ├── certifications-section.tsx
 │   ├── cta-section.tsx
@@ -102,11 +109,11 @@ src/features/
 │   ├── research-philosophy.tsx
 │   ├── skills-section.tsx
 │   ├── beyond-academia.tsx
-│   └── index.ts            — Barrel export
+│   └── index.ts
 │
 ├── academic/               — Cross-cutting academic search (8 files)
-│   ├── academic-search.tsx — Main search orchestrator
-│   ├── types.ts            — Search types
+│   ├── academic-search.tsx
+│   ├── types.ts
 │   ├── components/
 │   │   ├── filter-bar.tsx
 │   │   ├── search-input.tsx
@@ -117,7 +124,14 @@ src/features/
 │   └── utils/
 │       └── get-type-icon.ts
 │
-├── home/components/        — Homepage sections (5 files)
+├── apps/                   — Student apps feature (4 files)
+│   └── components/
+│       ├── grade-calculator.tsx — Weighted grade calculator (363 LOC)
+│       ├── tool-card.tsx       — Reusable tool card component
+│       ├── tools-hero.tsx      — Apps page hero section
+│       └── index.ts
+│
+├── home/components/        — Homepage sections (6 files)
 │   ├── hero-section.tsx
 │   ├── connect-section.tsx
 │   ├── content-previews.tsx
@@ -125,18 +139,30 @@ src/features/
 │   ├── research-highlights.tsx
 │   └── index.ts
 │
-└── teaching/               — Teaching feature (17 files, largest module)
-    ├── course-card.tsx         — Full course card (281 LOC)
-    ├── course-card-compact.tsx — Compact variant
-    ├── course-page-layout.tsx  — Course detail page template
-    ├── teaching-cta.tsx        — CTA card (server component)
-    ├── teaching-hero-stats.tsx — Stats banner
-    ├── styles.ts               — Shared teaching styles
+├── research/components/    — Research page sections (8 files)
+│   ├── current-focus.tsx
+│   ├── featured-projects.tsx
+│   ├── looking-ahead.tsx
+│   ├── open-source.tsx
+│   ├── primary-areas.tsx
+│   ├── research-cta.tsx
+│   ├── research-hero.tsx
+│   └── research-vision.tsx
+│
+└── teaching/               — Teaching feature (19 files, largest module)
+    ├── course-card.tsx
+    ├── course-card-compact.tsx
+    ├── course-page-layout.tsx
+    ├── teaching-cta.tsx
+    ├── teaching-hero-stats.tsx
+    ├── styles.ts
+    ├── index.ts
     └── components/
         ├── assignments-section.tsx
         ├── contest-countdown.tsx
         ├── course-hero.tsx
         ├── exam-schedule.tsx
+        ├── institution-courses-page.tsx — Shared institution page template
         ├── notice-board.tsx
         ├── overview-section.tsx
         ├── resources-section.tsx
@@ -146,109 +172,111 @@ src/features/
         └── syllabus-table.tsx
 ```
 
-### Shared Layer — `src/shared/` (9,011 LOC, 60% of codebase)
+### Shared Layer — `src/shared/` (8,403 LOC, 58% of codebase)
 
 Cross-cutting infrastructure: components, config, data, hooks, lib, types.
 
 ```
 src/shared/
-├── components/             — Reusable UI components
-│   ├── common/             — Domain-aware shared components (14 files)
+├── components/
+│   ├── common/             — Domain-aware shared components (19 files)
 │   │   ├── academic-profiles.tsx
 │   │   ├── back-to-top.tsx
+│   │   ├── error-boundary.tsx  — Error boundary wrapper
+│   │   ├── error-card.tsx      — Reusable error display card
 │   │   ├── error-fallback.tsx
 │   │   ├── experience-compact.tsx
 │   │   ├── hash-scroll.tsx
 │   │   ├── icons.tsx
-│   │   ├── motion-page.tsx
 │   │   ├── news-feed.tsx
+│   │   ├── pdf-viewer.tsx
+│   │   ├── pdf-viewer-wrapper.tsx
 │   │   ├── publication-card.tsx
 │   │   ├── publication-list.tsx
+│   │   ├── route-announcer.tsx — aria-live route change announcer
 │   │   ├── skip-link.tsx
 │   │   ├── stat-card.tsx
 │   │   ├── structured-data.tsx
-│   │   └── time-display.tsx
-│   ├── layout/             — Layout components (2 files)
+│   │   ├── time-display.tsx
+│   │   └── web-vitals-reporter.tsx — Core Web Vitals reporting
+│   ├── layout/             — Layout components (6 files)
 │   │   ├── app-sidebar-layout.tsx
-│   │   └── profile-sidebar.tsx  — 419 LOC (largest component)
+│   │   ├── profile-sidebar.tsx   — Sidebar orchestrator
+│   │   └── sidebar/             — Sidebar domain modules
+│   │       ├── actions-section.tsx
+│   │       ├── navigation-section.tsx
+│   │       ├── profile-section.tsx
+│   │       └── socials-section.tsx
 │   ├── navigation/         — Nav components (2 files)
 │   │   ├── breadcrumbs.tsx
-│   │   └── navbar.tsx       — 279 LOC
-│   └── ui/                 — Primitive UI (shadcn/ui based, 24 files)
+│   │   └── navbar.tsx
+│   └── ui/                 — Primitive UI (shadcn/ui based, 21 files)
 │       ├── accordion.tsx, alert.tsx, badge.tsx, button.tsx
 │       ├── card.tsx, collapsible-section.tsx, command-menu.tsx
-│       ├── dialog.tsx, dropdown-menu.tsx, error-boundary.tsx
-│       ├── input.tsx, pdf-viewer.tsx, pdf-viewer-wrapper.tsx
-│       ├── progress.tsx, select.tsx, separator.tsx
+│       ├── dialog.tsx, dropdown-menu.tsx
+│       ├── input.tsx, progress.tsx, select.tsx, separator.tsx
 │       ├── sheet.tsx, skeleton.tsx, spotlight-card.tsx
 │       ├── table.tsx, tabs.tsx, theme-selector.tsx
 │       └── toast.tsx, toaster.tsx
 │
 ├── config/                 — Static configuration (7 files)
-│   ├── assets.ts           — Asset path constants
-│   ├── constants.ts        — App-wide constants
-│   ├── navigation.ts       — Nav menu structure
-│   ├── researcher-profile.ts — Academic profile data
-│   ├── site.ts             — Site metadata (URL, name, links)
-│   ├── themes.ts           — 6-theme definitions (light/dark/ocean/forest/lavender/slate)
+│   ├── assets.ts
+│   ├── constants.ts
+│   ├── navigation.ts
+│   ├── researcher-profile.ts
+│   ├── site.ts
+│   ├── themes.ts
 │   └── index.ts
 │
 ├── hooks/                  — Custom React hooks (4 files)
 │   ├── use-debounce.ts
 │   ├── use-is-client.ts    — SSR hydration detection via useSyncExternalStore
-│   ├── use-toast.ts        — 224 LOC (toast notification system)
+│   ├── use-toast.ts
 │   └── index.ts
 │
-├── lib/                    — Core utilities (37 files, 5,000+ LOC)
-│   ├── analytics.ts        — Google Analytics helpers (138 LOC)
+├── lib/                    — Core utilities (34 files)
+│   ├── analytics.ts        — Google Analytics helpers
 │   ├── course-utils.ts     — Course data helpers
-│   ├── structured-data.ts  — Schema.org JSON-LD generators (222 LOC)
+│   ├── nav-icon-map.ts     — Shared navigation icon mapping
+│   ├── structured-data.ts  — Schema.org JSON-LD generators
 │   ├── utils.ts            — cn() utility
-│   ├── data/               — Domain data layer (29 files, TypeScript objects)
-│   │   ├── about.ts        — About page data (274 LOC)
-│   │   ├── activities.ts
-│   │   ├── courses.ts      — Course registry + helpers
-│   │   ├── courses/        — Individual course definitions (14 files)
-│   │   │   ├── index.ts
-│   │   │   ├── bracu-cse284.ts, bracu-cse420/, bracu-cse423.ts, bracu-cse489.ts
-│   │   │   ├── iub-cse101.ts, iub-cse110.ts, iub-cse201.ts, iub-cse203.ts
-│   │   │   ├── iub-cse211/ (4 files: index, modules, resources, schedule)
-│   │   │   ├── iub-cse317.ts, iub-cse331.ts
-│   │   ├── education.ts
-│   │   ├── experience.ts   — 204 LOC
-│   │   ├── metrics.ts
-│   │   ├── news.ts
-│   │   ├── personal.ts
-│   │   ├── publications.ts — 187 LOC
-│   │   ├── research-interests.ts
-│   │   ├── research.ts
-│   │   └── teaching-stats.ts
-│   └── validation/         — Zod schemas split into 7 domain files
-│       ├── schemas.ts      — Barrel re-export (entry point)
-│       ├── common-schema.ts        — iconNameSchema, validateData, validateDataSafe
-│       ├── publication-schema.ts   — Publication schemas + types
-│       ├── experience-schema.ts    — Experience schemas + types
-│       ├── course-schema.ts        — Course schemas + types (270 LOC, largest)
-│       ├── education-schema.ts     — Education schemas + types
-│       ├── about-schema.ts         — About page schemas + types
-│       └── teaching-schema.ts      — Teaching/testimonial schemas + types
+│   └── data/               — Domain data layer (28 files, TypeScript objects)
+│       ├── about.ts
+│       ├── activities.ts
+│       ├── courses.ts      — Course registry + helpers
+│       ├── courses/        — Individual course definitions (14 files)
+│       │   ├── index.ts
+│       │   ├── bracu-cse284.ts, bracu-cse420/, bracu-cse423.ts, bracu-cse489.ts
+│       │   ├── iub-cse101.ts, iub-cse110.ts, iub-cse201.ts, iub-cse203.ts
+│       │   ├── iub-cse211/ (4 files: index, modules, resources, schedule)
+│       │   ├── iub-cse317.ts, iub-cse331.ts
+│       ├── education.ts
+│       ├── experience.ts
+│       ├── metrics.ts
+│       ├── news.ts
+│       ├── personal.ts
+│       ├── publications.ts
+│       ├── research-interests.ts
+│       ├── research.ts
+│       └── teaching-stats.ts
 │
 ├── providers/
 │   └── app-providers.tsx   — ThemeProvider + Toaster wrapper
 │
-└── types/
-    ├── index.ts            — Re-exports from Zod inferred types
-    └── teaching.ts         — Teaching-specific types
+└── types/                  — Plain TypeScript interfaces (3 files)
+    ├── index.ts            — Domain types (CourseData, Publication, etc.)
+    ├── teaching.ts         — Teaching-specific types
+    └── tools.ts            — Student apps types + STANDARD_GRADING_SCALE
 ```
 
-### Styles — `src/styles/` (439 LOC)
+### Styles — `src/styles/` (248 LOC)
 
 ```
 src/styles/
 └── tokens.css              — Design tokens: colors, spacing, typography for 6 themes
 ```
 
-## Tests — `tests/` (22 files, 136 tests)
+## Tests — `tests/` (23 files, 143 tests)
 
 ```
 tests/
@@ -257,7 +285,8 @@ tests/
 ├── back-to-top.test.tsx
 ├── basic.test.ts           — 8 smoke tests (config, navigation, themes, analytics)
 ├── components.test.tsx
-├── data-integrity.test.ts  — Validates all Zod schemas at test time
+├── data-integrity.test.ts  — Validates data layer integrity at test time
+├── grade-calculator.test.tsx — Grade calculator component tests
 ├── navbar.active.test.tsx
 ├── navbar.test.tsx
 ├── select.test.tsx
@@ -268,16 +297,18 @@ tests/
 ├── structured-data.test.ts
 ├── tabs.test.tsx
 ├── theme-selector.test.tsx
-├── use-debounce.test.ts    — useDebounce hook timing tests
+├── use-debounce.test.ts
 ├── use-toast.test.tsx
+├── e2e/
+│   └── smoke.spec.ts      — Playwright E2E smoke + accessibility tests
 ├── features/
 │   ├── academic/
-│   │   └── get-type-icon.test.ts   — Academic type icon mapping
+│   │   └── get-type-icon.test.ts
 │   └── teaching/
-│       └── styles.test.ts          — Level styles semantic token checks
+│       └── styles.test.ts
 └── shared/lib/
-    ├── course-utils.test.ts        — Breadcrumb formatting + link icons
-    └── data.test.ts                — Data layer tests
+    ├── course-utils.test.ts
+    └── data.test.ts
 ```
 
 ## Cockpit — `.cockpit/` (Project Intelligence)
@@ -286,8 +317,8 @@ tests/
 .cockpit/
 ├── INDEX.md                — Navigation hub + health dashboard
 ├── PMD.md                  — Project Master Document (architecture, metrics)
-├── ISSUES.md               — Finding tracker (97 findings, 34 open)
-├── ROADMAP.md              — Improvement roadmap (Phases 5-10, 37 items)
+├── ISSUES.md               — Finding tracker (152 findings, 0 open)
+├── ROADMAP.md              — Improvement roadmap (Phases 7-11)
 ├── STRUCTURE.md            — This file
 ├── HISTORY.md              — Development timeline
 ├── GOVERNANCE.md           — Standards and conventions
@@ -296,5 +327,5 @@ tests/
 ├── PUBLICATION.md          — Deployment details
 └── adr/
     ├── TEMPLATE.md         — ADR template + inline ADRs 001-004
-    └── ADR-005-student-tools.md — Student tools feature design
+    └── ADR-005-student-tools.md — Student apps feature design
 ```

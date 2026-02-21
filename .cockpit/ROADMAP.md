@@ -1,7 +1,7 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-02-21 (Phase 8.6 Completion)
-> **Current Version**: 1.2.0 | **Quality**: All gates green (140/140 tests, 0 TS/ESLint errors, 18/18 pages)
+> **Created**: 2025-02-19 | **Updated**: 2025-02-21 (Final Forensic Audit & Cockpit Sync)
+> **Current Version**: 1.2.0 | **Quality**: All gates green (143/143 tests, 0 TS/ESLint errors, 20/20 pages)
 > **Open Findings**: 0 (0 CRITICAL, 0 HIGH, 0 MEDIUM, 0 LOW, 0 INFO)
 
 ## Phase 6: Code Quality & De-Bullshitification
@@ -13,20 +13,20 @@
 | 6.3 | **Split Monolithic Components** (e.g. `research/page`)   | Architecture | HARD       | HIGH   |
 | 6.4 | **Standardize Inline Data** into `shared/lib/data` files | Data         | EASY       | MEDIUM |
 
-## Phase 7: Student Tools (New Feature — `/tools`)
+## Phase 7: Student Apps (New Feature — `/apps`)
 
-Add a new `/tools` route with client-side interactive tools for students. All tools run purely in the browser — no server required. Compatible with static export.
+Add a new `/apps` route with client-side interactive tools for students. All tools run purely in the browser — no server required. Compatible with static export.
 
 See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 
 | #   | Tool                                                           | Complexity | Priority | Status      |
 | --- | -------------------------------------------------------------- | ---------- | -------- | ----------- |
-| 6.1 | **Grade Calculator** — per-course weighted grade projection    | MODERATE   | HIGH     | Planned     |
-| 6.2 | **Seat Plan Generator** — upload student list, generate layout | MODERATE   | HIGH     | Planned     |
-| 6.3 | **GPA Calculator** — multi-course semester GPA computation     | EASY       | MEDIUM   | Planned     |
-| 6.4 | **Office Hours** — structured schedule with booking CTA        | EASY       | MEDIUM   | Planned     |
-| 6.5 | **Exam Countdown** — per-course countdown timers               | EASY       | LOW      | Planned     |
-| 6.6 | **PDF Study Aid** — upload PDF, produce AI summary (WebLLM)    | HARD       | LOW      | Exploration |
+| 7.1 | **Grade Calculator** — per-course weighted grade projection    | MODERATE   | HIGH     | Done        |
+| 7.2 | **Seat Plan Generator** — upload student list, generate layout | MODERATE   | HIGH     | Planned     |
+| 7.3 | **GPA Calculator** — multi-course semester GPA computation     | EASY       | MEDIUM   | Planned     |
+| 7.4 | **Office Hours** — structured schedule with booking CTA        | EASY       | MEDIUM   | Planned     |
+| 7.5 | **Exam Countdown** — per-course countdown timers               | EASY       | LOW      | Planned     |
+| 7.6 | **PDF Study Aid** — upload PDF, produce AI summary (WebLLM)    | HARD       | LOW      | Exploration |
 
 ## Phase 8: Modern Web & Performance
 
@@ -78,7 +78,7 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 | Phase 4A/B/C (CRITICAL/DRY)  | 18     | EASY-MODERATE | Completed     |
 | Phase 5 (SOTA Modernization) | 10     | MODERATE      | Completed     |
 | Phase 6 (Code Quality)       | 4      | MODERATE-HARD | Completed     |
-| Phase 7 (Student Tools)      | 6      | MODERATE      | 3-4           |
+| Phase 7 (Student Apps)       | 6      | MODERATE      | 2-3 remaining |
 | Phase 8 (Modern Web)         | 6      | MODERATE      | Completed     |
 | Phase 9 (Testing)            | 6      | MODERATE      | Completed     |
 | Phase 10 (Content)           | 5      | MIXED         | 3-5           |

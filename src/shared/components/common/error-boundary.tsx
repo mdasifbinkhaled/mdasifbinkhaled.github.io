@@ -35,10 +35,6 @@ export class ErrorBoundary extends Component<Props, State> {
     window.location.reload();
   };
 
-  private handleHome = () => {
-    window.location.href = '/';
-  };
-
   public override render() {
     if (this.state.hasError) {
       if (this.props.fallback) {
