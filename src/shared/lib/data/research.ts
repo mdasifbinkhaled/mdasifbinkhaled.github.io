@@ -27,7 +27,7 @@ export const researchData = {
       id: 'multimodal-ai',
       name: 'Multimodal AI',
       description:
-        'Integrating multiple data modalities to create comprehensive AI solutions',
+        'Integrating multiple data modalities to create complete AI solutions',
       icon: 'Layers',
       keywords: [
         'Data Fusion',
@@ -72,7 +72,7 @@ export const researchData = {
     {
       id: 'multimodal-healthcare',
       title: 'Multimodal AI for Healthcare Diagnostics',
-      tagline: 'Integrating diverse data sources for comprehensive analysis',
+      tagline: 'Integrating diverse data sources for complete analysis',
       description:
         'Research on combining multiple data modalities for enhanced healthcare diagnostics.',
       status: 'Ongoing',

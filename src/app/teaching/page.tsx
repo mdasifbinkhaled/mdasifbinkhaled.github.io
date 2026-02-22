@@ -92,7 +92,7 @@ export default function TeachingPage() {
                   icon: Award,
                   title: 'Student Success',
                   description:
-                    'Fostering potential through personalized mentorship, career guidance, and building confidence to tackle complex technical challenges.',
+                    'Nurturing potential through personalized mentorship, career guidance, and building confidence to tackle complex technical challenges.',
                 },
               ].map((pillar) => (
                 <div

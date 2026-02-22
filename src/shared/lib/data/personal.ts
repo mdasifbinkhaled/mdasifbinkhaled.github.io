@@ -22,7 +22,7 @@ export const personalIdentity = {
       'Integrity',
     ],
     commitment:
-      'Fostering an environment where students develop both technical skills and ethical responsibility',
+      'Creating an environment where students develop both technical skills and ethical responsibility',
   },
   phdInterests: {
     timeline: {

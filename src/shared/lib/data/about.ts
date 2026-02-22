@@ -249,7 +249,7 @@ const rawProfessionalService: ServiceItem[] = [
     organization: 'Independent University, Bangladesh (IUB)',
     duration: 'Apr 2019 - Dec 2022',
     description:
-      'Judged and organized 5 tech fest events, fostering innovation and technical skills among students.',
+      'Judged and organized 5 tech fest events, encouraging creativity and technical skills among students.',
     icon: ShieldCheck,
   },
   {
@@ -258,7 +258,7 @@ const rawProfessionalService: ServiceItem[] = [
     organization: 'Bangladesh Innovation Forum',
     duration: 'Feb 2020',
     description:
-      'Mentored student teams in developing innovative solutions for national challenges.',
+      'Mentored student teams in developing practical solutions for national challenges.',
     icon: Users,
   },
   {

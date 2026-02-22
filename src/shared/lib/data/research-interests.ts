@@ -43,7 +43,7 @@ export const researchInterests: ResearchInterest[] = [
     title: 'Multimodal AI',
     icon: Eye,
     description:
-      'Integrating imaging, text, clinical records, and sensor data for comprehensive analysis. Building systems that leverage diverse data modalities for holistic insights.',
+      'Integrating imaging, text, clinical records, and sensor data for complete analysis. Building systems that use diverse data modalities for deeper insights.',
   },
   {
     id: 'remote-sensing',

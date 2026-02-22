@@ -1,16 +1,16 @@
 # ISSUES.md — Finding Tracker
 
 > **Last Audit**: 2026-02-22 | **Status**: All resolved
-> **Total Findings**: 173 | **Resolved**: 167 | **Open**: 6
+> **Total Findings**: 173 | **Resolved**: 173 | **Open**: 0
 
 ## Dashboard
 
 ```
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      30 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    59 (1 open)  — Performance, DRY, architecture, testing gaps
-LOW:       49 (4 open)  — Polish, minor config, cosmetic
-INFO:      31 (1 open)  — Informational, acceptable trade-offs
+MEDIUM:    59 (0 open)  — Performance, DRY, architecture, testing gaps
+LOW:       49 (0 open)  — Polish, minor config, cosmetic
+INFO:      31 (0 open)  — Informational, acceptable trade-offs
 ```
 
 ## Quality Gates
@@ -27,14 +27,7 @@ Bundle:      ✅ No heavy deps  (framer-motion removed)
 
 ## Open Findings
 
-| ID    | Category | Severity | Title                                                                   | Status |
-| ----- | -------- | -------- | ----------------------------------------------------------------------- | ------ |
-| F-166 | Content  | MEDIUM   | AI trace in `research-interests.ts` (comprehensive, leverage, holistic) | Open   |
-| F-167 | Content  | LOW      | AI trace in `about.ts` (fostering innovation, innovative solutions)     | Open   |
-| F-168 | Content  | LOW      | AI trace in `teaching/page.tsx` (Fostering potential)                   | Open   |
-| F-169 | Content  | LOW      | AI trace in `personal.ts` (Fostering an environment)                    | Open   |
-| F-170 | Content  | LOW      | AI trace in `research.ts` (comprehensive AI solutions)                  | Open   |
-| F-171 | History  | INFO     | AI trace in commit messages (`1d521d2`, `e766fbd` contain "SOTA")       | Open   |
+_All findings resolved._
 
 ## Resolved Findings
 
@@ -42,6 +35,12 @@ Bundle:      ✅ No heavy deps  (framer-motion removed)
 
 | ID    | Category      | Severity | Title                                                   | Resolution                                                                                                                                   |
 | ----- | ------------- | -------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| F-166 | Content       | MEDIUM   | AI trace in `research-interests.ts`                     | Replaced "comprehensive", "leverage", "holistic" with "complete", "use", "deeper"                                                            |
+| F-167 | Content       | LOW      | AI trace in `about.ts`                                  | Replaced "fostering innovation", "innovative solutions" with "encouraging creativity", "practical solutions"                                 |
+| F-168 | Content       | LOW      | AI trace in `teaching/page.tsx`                         | Replaced "Fostering potential" with "Nurturing potential"                                                                                    |
+| F-169 | Content       | LOW      | AI trace in `personal.ts`                               | Replaced "Fostering an environment" with "Creating an environment"                                                                           |
+| F-170 | Content       | LOW      | AI trace in `research.ts`                               | Replaced "comprehensive AI solutions" with "complete AI solutions"                                                                           |
+| F-171 | History       | INFO     | AI trace in commit messages (`1d521d2`, `e766fbd`)      | Accepted — Commits are already pushed to remote. Amending would require force-push. No action needed.                                        |
 | F-172 | Documentation | LOW      | AI trace in `ADR-005-student-tools.md` (Leverage)       | Replaced "Leverage" with "Use" and "Uses"                                                                                                    |
 | F-173 | Documentation | LOW      | AI trace in `HISTORY.md`, `PMD.md`, `STRUCTURE.md`      | Replaced "Comprehensive" with "Full", "orchestrator" with "manager"                                                                          |
 | F-161 | PWA           | MEDIUM   | sw.js pre-cache list incomplete (7 of 12 static routes) | Added `/cv/`, `/apps/`, `/apps/grade-calculator/`, `/teaching/iub/`, `/teaching/bracu/` to `URLS_TO_CACHE`. Bumped cache version to v2.      |
