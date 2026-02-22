@@ -1,16 +1,16 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-02-22 | **Status**: All resolved
-> **Total Findings**: 173 | **Resolved**: 173 | **Open**: 0
+> **Last Audit**: 2026-02-23 | **Status**: All resolved
+> **Total Findings**: 181 | **Resolved**: 181 | **Open**: 0
 
 ## Dashboard
 
 ```
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      30 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    59 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       49 (0 open)  — Polish, minor config, cosmetic
-INFO:      31 (0 open)  — Informational, acceptable trade-offs
+MEDIUM:    62 (0 open)  — Performance, DRY, architecture, testing gaps
+LOW:       52 (0 open)  — Polish, minor config, cosmetic
+INFO:      33 (0 open)  — Informational, acceptable trade-offs
 ```
 
 ## Quality Gates
@@ -30,6 +30,19 @@ Bundle:      ✅ No heavy deps  (framer-motion removed)
 _All findings resolved._
 
 ## Resolved Findings
+
+### Resolved in Deep Quality Audit (2026-02-23)
+
+| ID    | Category     | Severity | Title                                               | Resolution                                                                                                                             |
+| ----- | ------------ | -------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| F-174 | Dead Code    | MEDIUM   | Dead export `getMaxRating()` in `teaching-stats.ts` | Removed — exported but never imported anywhere                                                                                         |
+| F-175 | Dead Code    | MEDIUM   | Dead export `formatMetric()` in `metrics.ts`        | Removed — exported but never imported anywhere                                                                                         |
+| F-176 | Dead Code    | LOW      | 5 unused METRICS constants in `metrics.ts`          | Removed `AVERAGE_CLASS_SIZE`, `IMPACT_FACTOR_TOTAL`, `PUBLICATIONS`, `AWARDS`, `GRANTS` — never used outside file                      |
+| F-177 | Dead CSS     | MEDIUM   | 6 dead CSS utility classes in `globals.css`         | Removed `.glow-effect`, `.hover-lift`, `.hover-glow`, `.scrollbar-hide`, `.animate-gradient`, `.animate-pulse-soft` + 2 dead keyframes |
+| F-178 | Architecture | LOW      | Inline data in `teaching/page.tsx` (pillar array)   | Extracted to `src/shared/lib/data/teaching-pillars.ts` data file                                                                       |
+| F-179 | Consistency  | LOW      | Duplicate comment in `teaching/page.tsx`            | Removed redundant `/* Three Pillars - Modernized */` comment                                                                           |
+| F-180 | DRY          | MEDIUM   | StatCard glass/spotlight/compact variant redundancy | Merged glass+spotlight into single glass variant with `spotlight` boolean prop; removed unused compact variant                         |
+| F-181 | DRY          | LOW      | ConnectSection 7 color variants → 3 unique colors   | Reduced to 3 semantic variants (`primary`, `secondary`, `accent`) matching actual unique color mappings                                |
 
 ### Resolved in Full Project Tree Audit (2026-02-22)
 

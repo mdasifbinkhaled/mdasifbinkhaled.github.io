@@ -11,7 +11,7 @@ interface TeachingHeroStatsProps {
 /**
  * TeachingHeroStats Component
  * Displays key teaching statistics in a grid layout
- * Uses the shared StatCard component with compact variant
+ * Uses the shared StatCard component with glass variant
  */
 export function TeachingHeroStats({
   totalStudents,

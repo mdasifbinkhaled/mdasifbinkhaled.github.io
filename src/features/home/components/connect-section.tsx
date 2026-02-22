@@ -16,16 +16,9 @@ import { cn } from '@/shared/lib/utils';
 
 /**
  * Social link color variants
- * Uses static Tailwind classes to ensure proper purging at build time
+ * Three semantic colors matching the design system tokens
  */
-type ColorVariant =
-  | 'blue'
-  | 'teal'
-  | 'green'
-  | 'purple'
-  | 'indigo'
-  | 'rose'
-  | 'primary';
+type ColorVariant = 'primary' | 'secondary' | 'accent';
 
 /**
  * Static color class mappings
@@ -35,40 +28,20 @@ const colorClasses: Record<
   ColorVariant,
   { bg: string; bgHover: string; text: string }
 > = {
-  blue: {
-    bg: 'bg-primary/10',
-    bgHover: 'group-hover:bg-primary/20',
-    text: 'text-primary',
-  },
-  teal: {
-    bg: 'bg-secondary/10',
-    bgHover: 'group-hover:bg-secondary/20',
-    text: 'text-secondary',
-  },
-  green: {
-    bg: 'bg-accent/10',
-    bgHover: 'group-hover:bg-accent/20',
-    text: 'text-accent',
-  },
-  purple: {
-    bg: 'bg-primary/10',
-    bgHover: 'group-hover:bg-primary/20',
-    text: 'text-primary',
-  },
-  indigo: {
-    bg: 'bg-secondary/10',
-    bgHover: 'group-hover:bg-secondary/20',
-    text: 'text-secondary',
-  },
-  rose: {
-    bg: 'bg-accent/10',
-    bgHover: 'group-hover:bg-accent/20',
-    text: 'text-accent',
-  },
   primary: {
     bg: 'bg-primary/10',
     bgHover: 'group-hover:bg-primary/20',
     text: 'text-primary',
+  },
+  secondary: {
+    bg: 'bg-secondary/10',
+    bgHover: 'group-hover:bg-secondary/20',
+    text: 'text-secondary',
+  },
+  accent: {
+    bg: 'bg-accent/10',
+    bgHover: 'group-hover:bg-accent/20',
+    text: 'text-accent',
   },
 };
 
@@ -91,7 +64,7 @@ const socialLinks: SocialLink[] = [
     name: 'Google Scholar',
     href: siteConfig.links.googleScholar,
     icon: BookUser,
-    colorVariant: 'blue',
+    colorVariant: 'primary',
     isExternal: true,
   },
   {
@@ -99,7 +72,7 @@ const socialLinks: SocialLink[] = [
     name: 'ResearchGate',
     href: siteConfig.links.researchGate,
     icon: Globe,
-    colorVariant: 'teal',
+    colorVariant: 'secondary',
     isExternal: true,
   },
   {
@@ -107,7 +80,7 @@ const socialLinks: SocialLink[] = [
     name: 'ORCID',
     href: siteConfig.links.orcid,
     icon: Award,
-    colorVariant: 'green',
+    colorVariant: 'accent',
     isExternal: true,
   },
   {
@@ -115,7 +88,7 @@ const socialLinks: SocialLink[] = [
     name: 'GitHub',
     href: siteConfig.links.github,
     icon: Github,
-    colorVariant: 'purple',
+    colorVariant: 'primary',
     isExternal: true,
   },
   {
@@ -123,7 +96,7 @@ const socialLinks: SocialLink[] = [
     name: 'LinkedIn',
     href: siteConfig.links.linkedin,
     icon: Linkedin,
-    colorVariant: 'indigo',
+    colorVariant: 'secondary',
     isExternal: true,
   },
   {
@@ -131,7 +104,7 @@ const socialLinks: SocialLink[] = [
     name: 'Email',
     href: `mailto:${siteConfig.email}`,
     icon: Mail,
-    colorVariant: 'rose',
+    colorVariant: 'accent',
     isExternal: false,
   },
 ];

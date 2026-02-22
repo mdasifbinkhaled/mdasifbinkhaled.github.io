@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { Target, Users, Award } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import TeachingTabsClient from './teaching-tabs.client';
@@ -9,6 +8,7 @@ import {
   coursesTaughtBRACU,
 } from '@/shared/lib/data/courses';
 import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
+import { teachingPillars } from '@/shared/lib/data/teaching-pillars';
 import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
 import { TeachingCTA } from '@/features/teaching/teaching-cta';
 
@@ -70,31 +70,8 @@ export default function TeachingPage() {
             </div>
 
             {/* Three Pillars */}
-            {/* Three Pillars - Modernized */}
             <div className="grid gap-6 md:grid-cols-3">
-              {[
-                {
-                  id: 'pillar-1',
-                  icon: Users,
-                  title: 'Hands-On Learning',
-                  description:
-                    'Bridging theory and industry practice through real-world projects, interactive coding sessions, and practical applications.',
-                },
-                {
-                  id: 'pillar-2',
-                  icon: Target,
-                  title: 'Outcome-Based',
-                  description:
-                    'Structuring courses with clear learning objectives, measurable outcomes, and continuous assessment aligned with international OBE standards.',
-                },
-                {
-                  id: 'pillar-3',
-                  icon: Award,
-                  title: 'Student Success',
-                  description:
-                    'Nurturing potential through personalized mentorship, career guidance, and building confidence to tackle complex technical challenges.',
-                },
-              ].map((pillar) => (
+              {teachingPillars.map((pillar) => (
                 <div
                   key={pillar.id}
                   className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1"

@@ -37,10 +37,3 @@ export function getTeachingStats(): TeachingStats {
     yearsTeaching: METRICS.YEARS_TEACHING,
   };
 }
-
-/**
- * Get maximum rating value for display
- */
-export function getMaxRating(): number {
-  return 5.0; // Standard 5.0 scale
-}
