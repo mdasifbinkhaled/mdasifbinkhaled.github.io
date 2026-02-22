@@ -10,7 +10,7 @@
 | -------------------------------- | ---------------------------------------------------------- |
 | [INDEX.md](INDEX.md)             | This file — navigation hub                                 |
 | [PMD.md](PMD.md)                 | Project Master Document — architecture, metrics, decisions |
-| [ISSUES.md](ISSUES.md)           | Active findings tracker (165 findings, 0 open)             |
+| [ISSUES.md](ISSUES.md)           | Active findings tracker (173 findings, 6 open)             |
 | [ROADMAP.md](ROADMAP.md)         | Improvement roadmap — Phases 7-11 (27 items)               |
 | [STRUCTURE.md](STRUCTURE.md)     | Annotated file tree with LOC and responsibilities          |
 | [HISTORY.md](HISTORY.md)         | Development timeline and milestones                        |

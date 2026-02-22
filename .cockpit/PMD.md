@@ -149,7 +149,7 @@ app/       1,582 (11%)  ######
 
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
-- Comprehensive error boundary coverage (factory pattern)
+- Full error boundary coverage (factory pattern)
 - Strong test foundation (143 tests, CI-enforced)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`

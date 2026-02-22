@@ -202,7 +202,7 @@ src/shared/
 │   │   └── web-vitals-reporter.tsx — Core Web Vitals reporting
 │   ├── layout/             — Layout components (6 files)
 │   │   ├── app-sidebar-layout.tsx
-│   │   ├── profile-sidebar.tsx   — Sidebar orchestrator
+│   │   ├── profile-sidebar.tsx   — Sidebar manager
 │   │   └── sidebar/             — Sidebar domain modules
 │   │       ├── actions-section.tsx
 │   │       ├── navigation-section.tsx

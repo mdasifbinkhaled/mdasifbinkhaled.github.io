@@ -1,16 +1,16 @@
 # ISSUES.md — Finding Tracker
 
 > **Last Audit**: 2026-02-22 | **Status**: All resolved
-> **Total Findings**: 165 | **Resolved**: 165 | **Open**: 0
+> **Total Findings**: 173 | **Resolved**: 167 | **Open**: 6
 
 ## Dashboard
 
 ```
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      30 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    58 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       43 (0 open)  — Polish, minor config, cosmetic
-INFO:      30 (0 open)  — Informational, acceptable trade-offs
+MEDIUM:    59 (1 open)  — Performance, DRY, architecture, testing gaps
+LOW:       49 (4 open)  — Polish, minor config, cosmetic
+INFO:      31 (1 open)  — Informational, acceptable trade-offs
 ```
 
 ## Quality Gates
@@ -27,7 +27,14 @@ Bundle:      ✅ No heavy deps  (framer-motion removed)
 
 ## Open Findings
 
-_All findings resolved._
+| ID    | Category | Severity | Title                                                                   | Status |
+| ----- | -------- | -------- | ----------------------------------------------------------------------- | ------ |
+| F-166 | Content  | MEDIUM   | AI trace in `research-interests.ts` (comprehensive, leverage, holistic) | Open   |
+| F-167 | Content  | LOW      | AI trace in `about.ts` (fostering innovation, innovative solutions)     | Open   |
+| F-168 | Content  | LOW      | AI trace in `teaching/page.tsx` (Fostering potential)                   | Open   |
+| F-169 | Content  | LOW      | AI trace in `personal.ts` (Fostering an environment)                    | Open   |
+| F-170 | Content  | LOW      | AI trace in `research.ts` (comprehensive AI solutions)                  | Open   |
+| F-171 | History  | INFO     | AI trace in commit messages (`1d521d2`, `e766fbd` contain "SOTA")       | Open   |
 
 ## Resolved Findings
 
@@ -35,6 +42,8 @@ _All findings resolved._
 
 | ID    | Category      | Severity | Title                                                   | Resolution                                                                                                                                   |
 | ----- | ------------- | -------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| F-172 | Documentation | LOW      | AI trace in `ADR-005-student-tools.md` (Leverage)       | Replaced "Leverage" with "Use" and "Uses"                                                                                                    |
+| F-173 | Documentation | LOW      | AI trace in `HISTORY.md`, `PMD.md`, `STRUCTURE.md`      | Replaced "Comprehensive" with "Full", "orchestrator" with "manager"                                                                          |
 | F-161 | PWA           | MEDIUM   | sw.js pre-cache list incomplete (7 of 12 static routes) | Added `/cv/`, `/apps/`, `/apps/grade-calculator/`, `/teaching/iub/`, `/teaching/bracu/` to `URLS_TO_CACHE`. Bumped cache version to v2.      |
 | F-162 | Config        | LOW      | `.mypy_cache/` directory not in `.gitignore`            | Added `.mypy_cache` to `.gitignore` under Temporary/Cache section.                                                                           |
 | F-163 | Resilience    | INFO     | `apps/grade-calculator/` missing own `error.tsx`        | Created `src/app/apps/grade-calculator/error.tsx` using `createErrorBoundary()` factory pattern. Now every route has its own error boundary. |
