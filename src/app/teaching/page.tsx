@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import TeachingTabsClient from './teaching-tabs.client';
+import TeachingTabsClient from '@/features/teaching/components/teaching-tabs.client';
 import {
   coursesTaughtIUB,
   coursesTaughtBRACU,
