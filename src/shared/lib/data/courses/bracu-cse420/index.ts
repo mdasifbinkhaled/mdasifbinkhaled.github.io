@@ -25,9 +25,5 @@ export const bracuCse420: CourseData = {
   status: 'completed',
   tier: 'detailed',
 
-  // Actually, to test the Hub layout, I should set it to 'detailed' or ensure the layout handles 'summary' too.
-  // But the prompt implies "Archived Course" usually still has details.
-  // I will add modules but keep it "completed".
-
   weeklyModules,
 };
