@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2026-02-22
-> **Commit**: b687d8e
+> **Last Updated**: 2026-02-23
+> **Commit**: bdb61cb
 
 ## Mission
 
@@ -74,11 +74,11 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Data files        | 30       |
 | Config files      | 7        |
 | Barrel exports    | 12       |
-| Test files        | 21       |
-| Test count        | 141      |
+| Test files        | 22       |
+| Test count        | 153      |
 | Pages generated   | 20       |
 | Themes            | 6        |
-| Git commits       | 427      |
+| Git commits       | 429      |
 
 ### Largest Files
 
@@ -139,7 +139,7 @@ styles/      360  (2%)  ##
 | TypeScript | PASS   | 0 errors (strict mode)                                                    |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                      |
 | Prettier   | PASS   | All formatted                                                             |
-| Tests      | PASS   | 141/141 pass (21 files)                                                   |
+| Tests      | PASS   | 153/153 pass (22 files)                                                   |
 | Build      | PASS   | 20 pages exported                                                         |
 | Audit      | NOTE   | 20 vulns (1 moderate, 19 high — all mitigated: dev-only or static export) |
 
@@ -150,16 +150,16 @@ styles/      360  (2%)  ##
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (141 tests, CI-enforced)
+- Strong test foundation (153 tests, CI-enforced)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`
 - Service worker for offline caching
 - Playwright E2E + axe-core accessibility testing
 - Route announcer for screen reader navigation
 
-### All 215 Findings Resolved
+### All 221 Findings Resolved
 
-All 215 findings from 13 audit sessions have been resolved (3 false positives). See [ISSUES.md](ISSUES.md) for the complete tracker.
+All 221 findings from 14 audit sessions have been resolved (3 false positives). See [ISSUES.md](ISSUES.md) for the complete tracker.
 
 Key resolutions:
 

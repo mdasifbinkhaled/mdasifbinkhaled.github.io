@@ -124,6 +124,17 @@
 - **Verification**: 40-point cross-check (39/40 pass), dead AcademicAward type + dead CSS variable removed
 - All quality gates green: 0 TS errors, 0 lint errors, 141/141 tests (21 files), 20 pages exported
 
+### Production Polish (2026-02-23)
+
+- **Commit**: `bdb61cb`
+- **Findings**: F-218 – F-221
+- Changes:
+  - 4 raw `<a>` internal links converted to Next.js `<Link>` (cv-content: 3, search-result-card: 1)
+  - 4 non-null assertions (`!`) replaced with nullish coalescing (`?? ''`) in course-utils.ts
+  - Type assertion removed in skills-section.tsx — `iconName` added to Skill interface + `satisfies Skill[]` on data
+  - 12 smoke render tests added for About, Home, Research, Publications feature modules
+- Quality gates: 0 TS errors, 0 lint errors, 153/153 tests (22 files), 20 pages exported
+
 ## Tags
 
 | Tag                   | Description                            |

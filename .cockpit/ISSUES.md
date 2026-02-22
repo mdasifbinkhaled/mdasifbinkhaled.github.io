@@ -1,7 +1,7 @@
 # ISSUES.md — Finding Tracker
 
 > **Last Audit**: 2026-02-22 | **Status**: All resolved
-> **Total Findings**: 215 | **Resolved**: 212 | **False Positives**: 3 | **Open**: 0
+> **Total Findings**: 221 | **Resolved**: 218 | **False Positives**: 3 | **Open**: 0
 
 ## Dashboard
 
@@ -340,6 +340,15 @@ _All findings resolved._
 | F-024 | Accessibility | LOW      | 13 themes = 26 contrast combos                                | Reduced to 6 themes, manageable audit scope                   |
 | F-045 | Documentation | INFO     | Cockpit docs had 30+ stale data points                        | Full cross-validation and sync of all cockpit documents       |
 | F-046 | Architecture  | LOW      | Empty `src/features/publications/` directory                  | Deleted empty directory                                       |
+
+### Resolved in Production Polish (2026-02-23)
+
+| ID    | Category    | Severity | Title                                                       | Resolution                                                                   |
+| ----- | ----------- | -------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| F-218 | Navigation  | LOW      | 4 raw `<a>` tags for internal routes bypass Next.js routing | Converted to `<Link>` in cv-content (3) and search-result-card (1)           |
+| F-219 | Type Safety | LOW      | 4 non-null assertions (`!`) in course-utils.ts              | Replaced with nullish coalescing (`?? ''`) for safe regex group access       |
+| F-220 | Type Safety | LOW      | Type assertion cast in skills-section.tsx                   | Added `iconName` to Skill interface + `satisfies Skill[]` to data            |
+| F-221 | Testing     | LOW      | 4 feature modules (About, Home, Research, Pubs) untested    | Added 12 smoke render tests covering key components from each feature module |
 
 ### Previously Acceptable (No Action Needed)
 
