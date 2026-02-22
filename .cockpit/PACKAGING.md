@@ -13,7 +13,7 @@
 | `clsx`                     | 2.1.1   | Conditional class joining                       |
 | `class-variance-authority` | 0.7.1   | Component variant API                           |
 | `cmdk`                     | 1.1.1   | Command palette                                 |
-| `@radix-ui/*`              | various | Headless UI primitives (10 packages)            |
+| `@radix-ui/*`              | various | Headless UI primitives (9 packages)             |
 
 ### Radix UI Packages
 
@@ -25,7 +25,6 @@
 - `react-separator` ^1.1.7
 - `react-slot` ^1.2.3
 - `react-tabs` ^1.1.13
-- `react-toast` ^1.2.15
 - `react-visually-hidden` ^1.0.3
 
 ## Dev Dependencies

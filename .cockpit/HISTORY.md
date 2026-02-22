@@ -1,6 +1,6 @@
 # HISTORY.md — Development Timeline
 
-> 417 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
+> 427 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
 
 ## Timeline
 
@@ -91,6 +91,38 @@
 - Fixed Turbopack workspace root warning by adding `turbopack: { root: '.' }` to `next.config.ts`
 - Full stability audit: 0 remaining boundary violations, 0 `any` types, 0 memory leaks, 0 lint errors
 - All quality gates green: 0 TS errors, 0 warnings, 143/143 tests, 20 pages exported
+
+### Phase 10 — Architecture Refactoring (2026-02-22)
+
+- **5-phase refactoring** addressing 28 findings (F-188 through F-217) from a fresh-perspective audit
+- **Phase 1 — Data & Types** (`a2b6607`):
+  - Duplicate courses.ts merged into courses/index.ts barrel
+  - NewsItem type moved from inline to shared/types
+  - Grading scale extracted from types to data layer
+  - 6 dead type interfaces removed
+  - teaching-pillars.ts decoupled from React icon imports
+  - researcher-profile moved from config/ to data layer (16 import sites updated)
+  - Navbar refactored to use config-driven nav items
+- **Phase 2 — Feature Modules** (`b821ef1`):
+  - teaching-tabs.client.tsx moved from app/ to features/teaching/
+  - Barrel files created for research, teaching, and academic feature modules
+- **Phase 3 — Navigation & Layout** (`4a6730e`):
+  - Footer nav links driven by config (replaces 7 hardcoded Link elements)
+  - Footer lastUpdated read from siteConfig
+  - Navbar height extracted to LAYOUT.NAVBAR_HEIGHT constant
+  - Breadcrumbs rewritten to use navIconMap + config
+- **Phase 4 — SEO & Dead Code** (`aa317f3`):
+  - System theme option removed from command menu
+  - Homepage metadata export added
+  - 3 canonical URLs normalized to relative paths
+  - Dead structured data functions removed
+- **Phase 5 — Dead Code & Polish** (`b687d8e`):
+  - 3 redirect-only error.tsx files deleted
+  - Entire toast system removed (use-toast, toast.tsx, toaster.tsx, @radix-ui/react-toast)
+  - Error boundary label casing fixed (Cv→CV, Bracu→BRACU, Iub→IUB)
+  - 15 unused Tailwind config extensions cleaned up
+- **Verification**: 40-point cross-check (39/40 pass), dead AcademicAward type + dead CSS variable removed
+- All quality gates green: 0 TS errors, 0 lint errors, 141/141 tests (21 files), 20 pages exported
 
 ## Tags
 

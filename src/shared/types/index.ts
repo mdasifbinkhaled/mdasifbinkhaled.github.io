@@ -209,17 +209,6 @@ export interface Skill {
 }
 
 // Academic types
-export interface AcademicAward {
-  id: string;
-  title: string;
-  organization: string;
-  year: number;
-  description: string;
-  type: 'award' | 'grant' | 'fellowship' | 'recognition';
-  amount?: string;
-  duration?: string;
-}
-
 export interface ResearchArea {
   id: string;
   name: string;

@@ -1,16 +1,17 @@
 # ISSUES.md — Finding Tracker
 
 > **Last Audit**: 2026-02-22 | **Status**: All resolved
-> **Total Findings**: 187 | **Resolved**: 187 | **Open**: 0
+> **Total Findings**: 215 | **Resolved**: 212 | **False Positives**: 3 | **Open**: 0
 
 ## Dashboard
 
 ```
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      30 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    62 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       57 (0 open)  — Polish, minor config, cosmetic
-INFO:      34 (0 open)  — Informational, acceptable trade-offs
+MEDIUM:    65 (0 open)  — Performance, DRY, architecture, testing gaps
+LOW:       75 (0 open)  — Polish, minor config, cosmetic
+INFO:      38 (0 open)  — Informational, acceptable trade-offs
+FALSE POS: 3            — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
 ```
 
 ## Quality Gates
@@ -18,9 +19,9 @@ INFO:      34 (0 open)  — Informational, acceptable trade-offs
 ```
 TypeScript:  ✅ 0 errors  (strict mode, zero `any`)
 ESLint:      ✅ 0 errors, 0 warnings  (eslint-config-next@16, native flat config)
-Tests:       ✅ 143/143 pass  (22 files, vitest)
+Tests:       ✅ 141/141 pass  (21 files, vitest)
 Build:       ✅ 20 pages exported  (static, 0 warnings)
-Bundle:      ✅ No heavy deps  (framer-motion removed)
+Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast removed)
 ```
 
 ---
@@ -30,6 +31,61 @@ Bundle:      ✅ No heavy deps  (framer-motion removed)
 _All findings resolved._
 
 ## Resolved Findings
+
+### Resolved in Architecture Refactoring — Phase 5: Dead Code & Polish (2026-02-22)
+
+| ID    | Category    | Severity | Title                                                 | Resolution                                                                                                     |
+| ----- | ----------- | -------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| F-209 | Dead Code   | LOW      | Redirect-only routes have unnecessary error.tsx files | Deleted error.tsx for `/experience`, `/service`, `/service-awards` — `redirect()` never triggers boundaries    |
+| F-210 | Dead Code   | MEDIUM   | Entire toast system is dead code                      | Removed use-toast.ts, toast.tsx, toaster.tsx, test, TOAST_DURATION constant, uninstalled @radix-ui/react-toast |
+| F-211 | Consistency | LOW      | Error label acronym casing: Cv, Bracu, Iub            | Fixed to CV, BRACU, IUB in createErrorBoundary labels                                                          |
+| F-212 | FALSE POS   | —        | CSS token dedup between tokens.css and globals.css    | No duplicates exist — audit was wrong                                                                          |
+| F-213 | Dead Config | MEDIUM   | 15 unused Tailwind config extensions                  | Removed unused screens.xs, spacing._, maxWidth.content, fontSize.academic-_, gap.\*, zIndex.toast              |
+| F-214 | FALSE POS   | —        | Config barrel re-exports hurt tree-shaking            | All exports are small static constants; webpack/turbopack tree-shakes correctly                                |
+| F-215 | FALSE POS   | —        | Typos in codebase                                     | Zero typos found for 19 searched terms                                                                         |
+| F-216 | Dead Code   | LOW      | Dead `AcademicAward` type never imported              | Removed from types/index.ts — found during cross-check verification                                            |
+| F-217 | Dead CSS    | LOW      | Dead `--content-max-width` CSS variable in tokens.css | Removed — Tailwind utility that consumed it was already cleaned up in F-213                                    |
+
+### Resolved in Architecture Refactoring — Phase 4: SEO & Dead Code (2026-02-22)
+
+| ID    | Category  | Severity | Title                                                | Resolution                                                                                                                         |
+| ----- | --------- | -------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| F-205 | Dead Code | LOW      | Command menu "System" theme option is a no-op        | Removed System theme CommandItem and unused Monitor icon import (enableSystem=false in ThemeProvider)                              |
+| F-206 | SEO       | MEDIUM   | Homepage missing explicit metadata export            | Added metadata export with title, description, canonical to page.tsx                                                               |
+| F-207 | SEO       | LOW      | 3 pages use full-URL canonicals instead of relative  | Normalized apps, apps/grade-calculator, research to relative paths (metadataBase resolves them)                                    |
+| F-208 | Dead Code | MEDIUM   | Dead structured data functions and duplicate JSON-LD | Removed generateBreadcrumbStructuredData, generateWebsiteStructuredData, ScholarStructuredDataScript, duplicate about page JSON-LD |
+
+### Resolved in Architecture Refactoring — Phase 3: Navigation & Layout (2026-02-22)
+
+| ID    | Category     | Severity | Title                                             | Resolution                                                                                       |
+| ----- | ------------ | -------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| F-200 | Architecture | MEDIUM   | Footer nav links hardcoded (7 Link elements)      | Replaced with mainNavItems.map() loop driven by navigation config                                |
+| F-201 | Architecture | LOW      | Footer "Last updated" date hardcoded              | Added siteConfig.lastUpdated field; footer reads from config                                     |
+| F-202 | Architecture | LOW      | Navbar spacer uses magic height h-[73px]          | Added LAYOUT.NAVBAR_HEIGHT constant (73); spacer uses inline style from constant                 |
+| F-203 | Architecture | MEDIUM   | Breadcrumbs hardcode icon map with direct imports | Rewritten to use navIconMap + mainNavItems config; removed 5 hardcoded lucide-react icon imports |
+| F-204 | DRY          | LOW      | Duplicate comment in breadcrumbs                  | Removed (included in F-203 rewrite)                                                              |
+
+### Resolved in Architecture Refactoring — Phase 2: Feature Modules (2026-02-22)
+
+| ID    | Category     | Severity | Title                                                   | Resolution                                                                 |
+| ----- | ------------ | -------- | ------------------------------------------------------- | -------------------------------------------------------------------------- |
+| F-195 | Architecture | —        | Contact page decomposition (reassessed)                 | Only 113 lines — no decomposition needed                                   |
+| F-196 | Architecture | —        | CommandMenu imports from navigation config (reassessed) | Imports are appropriate — commands source from navigation config by design |
+| F-197 | Architecture | LOW      | teaching-tabs.client.tsx in app/ instead of features/   | Moved to src/features/teaching/components/teaching-tabs.client.tsx         |
+| F-198 | Architecture | MEDIUM   | Research feature module has no barrel file              | Created src/features/research/index.ts with 8 component exports            |
+| F-199 | Architecture | MEDIUM   | Teaching and Academic features missing barrel files     | Created barrel index.ts for both features with all public API exports      |
+
+### Resolved in Architecture Refactoring — Phase 1: Data & Types (2026-02-22)
+
+| ID    | Category     | Severity | Title                                                    | Resolution                                                                                                          |
+| ----- | ------------ | -------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| F-188 | DRY          | MEDIUM   | Duplicate courses.ts alongside courses/ directory        | Deleted courses.ts; absorbed exports into courses/index.ts barrel                                                   |
+| F-189 | Architecture | LOW      | NewsItem type defined inline in news-feed.tsx            | Moved to shared/types/index.ts; news-feed.tsx imports from there                                                    |
+| F-190 | Architecture | MEDIUM   | STANDARD_GRADING_SCALE embedded in types/tools.ts        | Extracted to shared/lib/data/grading.ts (data belongs in data layer, not type defs)                                 |
+| F-191 | Dead Code    | LOW      | 6 dead type interfaces in shared/types/index.ts          | Removed unused types that had zero imports                                                                          |
+| F-192 | Architecture | MEDIUM   | teaching-pillars.ts imports React for icon components    | Decoupled: uses iconName strings + navIconMap lookup instead of direct React imports                                |
+| F-193 | Architecture | LOW      | researcher-profile.ts in config/ (it's data, not config) | Moved to shared/lib/data/researcher-profile.ts; updated 16 import sites                                             |
+| F-194 | Architecture | MEDIUM   | Navbar imports raw course data to build nav items        | Refactored to use iubCourseNavItems/bracuCourseNavItems from navigation config; InstitutionFlyout accepts NavItem[] |
 
 ### Resolved in Root Organization Cleanup (2026-02-22)
 

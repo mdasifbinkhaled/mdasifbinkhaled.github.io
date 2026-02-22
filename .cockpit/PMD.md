@@ -4,7 +4,7 @@
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
 > **Last Updated**: 2026-02-22
-> **Commit**: 93be3a3
+> **Commit**: b687d8e
 
 ## Mission
 
@@ -21,7 +21,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Animation     | Vanilla JS (no library)              | ---     |
 | Icons         | Lucide React                         | 0.544.0 |
 | Themes        | next-themes + 6 color themes         | 0.4.6   |
-| UI Primitives | Radix UI (10 packages)               | various |
+| UI Primitives | Radix UI (9 packages)                | various |
 | Testing       | Vitest + Testing Library + jsdom     | 3.2.4   |
 | E2E Testing   | Playwright + axe-core                | 1.52.0  |
 | Linting       | ESLint 9 (flat config)               | 9.39.2  |
@@ -36,18 +36,18 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ```
 +---------------------------------------------+
-|  App Layer (1,582 LOC / 11%)                |  Page routes, layouts, error boundaries
+|  App Layer (1,370 LOC / 10%)                |  Page routes, layouts, error boundaries
 |  src/app/                                    |  15 routes, 20 pages
 +---------------------------------------------+
-|  Features Layer (4,546 LOC / 31%)           |  Domain modules
+|  Features Layer (4,741 LOC / 33%)           |  Domain modules
 |  src/features/{about,academic,apps,home,     |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
-|  Shared Layer (8,367 LOC / 58%)             |  Cross-cutting infrastructure
+|  Shared Layer (7,823 LOC / 55%)             |  Cross-cutting infrastructure
 |  src/shared/{components,config,hooks,        |  UI primitives, config, data,
 |              lib,providers,types}            |  analytics, types
 +---------------------------------------------+
-|  Data Layer (bottom of shared/)             |  28 data files (TypeScript objects)
+|  Data Layer (bottom of shared/)             |  30 data files (TypeScript objects)
 |  src/shared/lib/data/                        |  Type-checked via satisfies assertions
 +---------------------------------------------+
 ```
@@ -65,20 +65,20 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value    |
 | ----------------- | -------- |
-| Source files      | 191      |
-| Lines of code     | 14,405   |
-| Components (.tsx) | 132      |
-| Client components | 51 (39%) |
-| Server components | 81 (61%) |
-| Custom hooks      | 4        |
-| Data files        | 28       |
+| Source files      | 189      |
+| Lines of code     | 14,294   |
+| Components (.tsx) | 127      |
+| Client components | 47 (37%) |
+| Server components | 80 (63%) |
+| Custom hooks      | 3        |
+| Data files        | 30       |
 | Config files      | 7        |
-| Barrel exports    | 9        |
-| Test files        | 22       |
-| Test count        | 143      |
+| Barrel exports    | 12       |
+| Test files        | 21       |
+| Test count        | 141      |
 | Pages generated   | 20       |
 | Themes            | 6        |
-| Git commits       | 417      |
+| Git commits       | 427      |
 
 ### Largest Files
 
@@ -86,19 +86,19 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | ------------------------------------ | --- | ------------------------- |
 | `features/apps/grade-calculator.tsx` | 363 | Weighted grade calculator |
 | `ui/theme-selector.tsx`              | 340 | Theme picker (6 themes)   |
-| `shared/types/index.ts`              | 295 | Domain type definitions   |
+| `shared/types/index.ts`              | 254 | Domain type definitions   |
 | `teaching/course-card.tsx`           | 280 | Course card component     |
 | `navigation/navbar.tsx`              | 279 | Top navigation bar        |
 | `teaching/schedule-table.tsx`        | 256 | Course schedule table     |
-| `lib/structured-data.ts`             | 228 | Schema.org JSON-LD        |
-| `hooks/use-toast.ts`                 | 224 | Toast notification system |
+| `lib/structured-data.ts`             | 199 | Schema.org JSON-LD        |
 
 ### LOC Distribution
 
 ```
-shared/    8,367 (58%)  ####################################
-features/  4,546 (31%)  ###################
-app/       1,582 (11%)  ######
+shared/    7,823 (55%)  ##################################
+features/  4,741 (33%)  ####################
+app/       1,370 (10%)  ######
+styles/      360  (2%)  ##
 ```
 
 ## Feature Modules
@@ -139,7 +139,7 @@ app/       1,582 (11%)  ######
 | TypeScript | PASS   | 0 errors (strict mode)                                                    |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                      |
 | Prettier   | PASS   | All formatted                                                             |
-| Tests      | PASS   | 143/143 pass (23 files)                                                   |
+| Tests      | PASS   | 141/141 pass (21 files)                                                   |
 | Build      | PASS   | 20 pages exported                                                         |
 | Audit      | NOTE   | 20 vulns (1 moderate, 19 high — all mitigated: dev-only or static export) |
 
@@ -150,24 +150,25 @@ app/       1,582 (11%)  ######
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (143 tests, CI-enforced)
+- Strong test foundation (141 tests, CI-enforced)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`
 - Service worker for offline caching
 - Playwright E2E + axe-core accessibility testing
 - Route announcer for screen reader navigation
 
-### All 157 Findings Resolved
+### All 215 Findings Resolved
 
-All 157 findings from 11 audit sessions have been resolved. See [ISSUES.md](ISSUES.md) for the complete tracker.
+All 215 findings from 13 audit sessions have been resolved (3 false positives). See [ISSUES.md](ISSUES.md) for the complete tracker.
 
 Key resolutions:
 
 - **3 CRITICAL**: Division-by-zero, PII exposure, CV data drift --- all fixed
 - **30 HIGH**: XSS, CSP, route announcer, keyboard a11y, error boundaries --- all fixed
-- **57 MEDIUM**: Schema integrity, DRY violations, performance, theme consistency --- all fixed
-- **41 LOW**: Dead code, stale docs, minor DX issues, timeout cleanup — all fixed
-- **26 INFO**: Cosmetic and informational items (incl. `'use client'` cleanup, framer-motion removal) --- all addressed
+- **67 MEDIUM**: Schema integrity, DRY violations, architecture, SEO, dead code --- all fixed
+- **55 LOW**: Dead code, stale docs, config cleanup, consistency --- all fixed
+- **57 INFO**: Cosmetic items, `'use client'` cleanup, framer-motion removal --- all addressed
+- **3 FALSE POSITIVES**: F-212 (CSS token dedup), F-214 (barrel tree-shaking), F-215 (typos)
 
 See [ROADMAP.md](ROADMAP.md) for the improvement plan (Phases 7-11).
 
@@ -182,9 +183,9 @@ See [adr/](adr/) for the full record and template.
 ### Notes
 
 - **shared/ layer is 58% of codebase** --- acceptable for an infrastructure-heavy portfolio site
-- **49 client components** --- justified (error boundaries, interactive UI); 5 unnecessary directives removed
-- **4 custom hooks** --- `useDebounce`, `useIsClient`, `useToast`, `useHoverDelay`
-- **9 barrel files** --- all actively imported, healthy
+- **47 client components** --- justified (error boundaries, interactive UI); redirect error.tsx files + toast removed
+- **3 custom hooks** --- `useDebounce`, `useIsClient`, `useHoverDelay` (useToast removed with dead toast system)
+- **12 barrel files** --- all actively imported, 3 added for teaching/research/academic feature modules
 - **6 themes** --- light, dark, ocean, forest, lavender, slate
 - **54 LOC analytics** --- lean, only 4 wired events (viewCV, downloadCV, viewPublication, downloadPublication)
 - **Zero animation libraries** --- framer-motion removed; spotlight effect now vanilla JS (15 LOC)
