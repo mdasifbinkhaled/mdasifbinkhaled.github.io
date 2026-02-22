@@ -5,11 +5,12 @@ import { cn } from '@/shared/lib/utils';
 import { GraduationCap, Menu } from 'lucide-react';
 import { ThemeSelector } from '@/shared/components/ui/theme-selector';
 import { CommandMenu } from '@/shared/components/ui/command-menu';
-import { mainNavItems } from '@/shared/config/navigation';
 import {
-  coursesTaughtIUB,
-  coursesTaughtBRACU,
-} from '@/shared/lib/data/courses';
+  mainNavItems,
+  iubCourseNavItems,
+  bracuCourseNavItems,
+} from '@/shared/config/navigation';
+import type { NavItem } from '@/shared/types';
 import { useHoverDelay } from '@/shared/hooks';
 
 interface NavbarProps {
@@ -149,14 +150,12 @@ function TeachingDropdown({
           <InstitutionFlyout
             label="IUB"
             href="/teaching?tab=iub#courses-taught"
-            courses={coursesTaughtIUB}
-            institution="iub"
+            navItems={iubCourseNavItems}
           />
           <InstitutionFlyout
             label="BRACU"
             href="/teaching?tab=bracu#courses-taught"
-            courses={coursesTaughtBRACU}
-            institution="bracu"
+            navItems={bracuCourseNavItems}
           />
           <Link
             className="block px-3 py-2 hover:bg-accent/50"
@@ -171,17 +170,14 @@ function TeachingDropdown({
 }
 
 // Institution Flyout Component with delay on unhover
-// Institution Flyout Component with delay on unhover
 function InstitutionFlyout({
   label,
   href,
-  courses,
-  institution,
+  navItems,
 }: {
   label: string;
   href: string;
-  courses: Array<{ code: string; title: string }>;
-  institution: string;
+  navItems: NavItem[];
 }) {
   const { isOpen, handleMouseEnter, handleMouseLeave } = useHoverDelay();
 
@@ -203,13 +199,13 @@ function InstitutionFlyout({
             : 'invisible opacity-0 pointer-events-none'
         )}
       >
-        {courses.map((c) => (
+        {navItems.map((item) => (
           <Link
-            key={c.code}
+            key={item.href}
             className="block px-3 py-2 hover:bg-accent/50 text-sm"
-            href={`/teaching?tab=${institution}#${c.code.toLowerCase().replace(' ', '')}`}
+            href={item.href}
           >
-            {c.title}
+            {item.label}
           </Link>
         ))}
       </div>

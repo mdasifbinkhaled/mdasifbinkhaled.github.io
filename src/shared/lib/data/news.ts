@@ -3,7 +3,7 @@
  * Central repository for all news items and recent achievements
  */
 
-import type { NewsItem } from '@/shared/components/common/news-feed';
+import type { NewsItem } from '@/shared/types';
 
 /**
  * Recent news and achievements (displayed on homepage)

@@ -208,39 +208,6 @@ export interface Skill {
   items: string[];
 }
 
-// Extended course types (composition pattern)
-export interface BaseCourseInfo {
-  id: string;
-  code: string;
-  title: string;
-  institution: 'IUB' | 'BRACU';
-  level: 'undergraduate' | 'graduate';
-  credits: number;
-  semester: string;
-  year: number;
-  description: string;
-  outcomes: string[];
-}
-
-export interface CourseDetails {
-  objectives?: string[];
-  topics?: string[];
-  technologies?: string[];
-  assignments?: string[];
-  projects?: string[];
-}
-
-export interface CourseMetrics {
-  enrollmentCount?: number;
-  rating?: number;
-  feedback?: string[];
-}
-
-export interface CoursePresentation {
-  iconName?: IconName;
-  status?: 'completed' | 'ongoing' | 'upcoming';
-}
-
 // Academic types
 export interface AcademicAward {
   id: string;
@@ -283,13 +250,16 @@ export interface ThemeConfig {
   };
 }
 
-// Component prop types
-export interface BaseComponentProps {
-  className?: string;
-  children?: React.ReactNode;
-}
-
-export interface ErrorBoundaryProps extends BaseComponentProps {
-  fallback?: React.ComponentType<{ error: Error; reset: () => void }>;
-  onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
+// News types
+export interface NewsItem {
+  /** Unique identifier for stable React keys */
+  id: string;
+  /** Display date (e.g., '[2025/03]') */
+  date: string;
+  /** Main text content */
+  text: string;
+  /** Optional highlighted portion (displayed in accent color) */
+  highlight?: string;
+  /** Optional description following the highlight */
+  description?: string;
 }

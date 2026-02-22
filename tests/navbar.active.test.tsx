@@ -54,6 +54,7 @@ vi.mock('lucide-react', () => ({
   Leaf: () => <div data-testid="leaf-icon">Leaf</div>,
   Sparkles: () => <div data-testid="sparkles-icon">Sparkles</div>,
   Scroll: () => <div data-testid="scroll-icon">Scroll</div>,
+  Target: () => <div data-testid="target-icon">Target</div>,
 }));
 
 test('active link has aria-current', () => {

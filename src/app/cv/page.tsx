@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
-import { researchIdentity } from '@/shared/config/researcher-profile';
+import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 import CVContent from './cv-content.client';
 
 export const metadata: Metadata = {

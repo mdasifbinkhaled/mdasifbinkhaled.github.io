@@ -1,8 +1,8 @@
-import { Target, Users, Award, type LucideIcon } from 'lucide-react';
+import type { IconName } from '@/shared/components/common/icons';
 
 export interface TeachingPillar {
   id: string;
-  icon: LucideIcon;
+  iconName: IconName;
   title: string;
   description: string;
 }
@@ -14,21 +14,21 @@ export interface TeachingPillar {
 export const teachingPillars: TeachingPillar[] = [
   {
     id: 'pillar-1',
-    icon: Users,
+    iconName: 'Users',
     title: 'Hands-On Learning',
     description:
       'Bridging theory and industry practice through real-world projects, interactive coding sessions, and practical applications.',
   },
   {
     id: 'pillar-2',
-    icon: Target,
+    iconName: 'Target',
     title: 'Outcome-Based',
     description:
       'Structuring courses with clear learning objectives, measurable outcomes, and continuous assessment aligned with international OBE standards.',
   },
   {
     id: 'pillar-3',
-    icon: Award,
+    iconName: 'Award',
     title: 'Student Success',
     description:
       'Nurturing potential through personalized mentorship, career guidance, and building confidence to tackle complex technical challenges.',

@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
-import { researchIdentity } from '@/shared/config/researcher-profile';
+import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 
 const iconMap = {
   Heart,

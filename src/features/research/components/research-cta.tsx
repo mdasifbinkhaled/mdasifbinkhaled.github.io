@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Code } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
-import { academicProfiles } from '@/shared/config/researcher-profile';
+import { academicProfiles } from '@/shared/lib/data/researcher-profile';
 
 export function ResearchCTA() {
   return (

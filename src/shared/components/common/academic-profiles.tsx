@@ -16,7 +16,7 @@ import {
   Github,
 } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
-import { academicProfiles } from '@/shared/config/researcher-profile';
+import { academicProfiles } from '@/shared/lib/data/researcher-profile';
 
 const iconMap = {
   GraduationCap,

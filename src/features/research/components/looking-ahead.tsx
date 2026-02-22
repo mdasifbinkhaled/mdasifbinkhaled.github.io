@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card';
-import { researchIdentity } from '@/shared/config/researcher-profile';
+import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 
 export function LookingAhead() {
   return (

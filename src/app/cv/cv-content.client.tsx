@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { siteConfig } from '@/shared/config/site';
-import { researchIdentity } from '@/shared/config/researcher-profile';
+import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 import { educationData } from '@/shared/lib/data/education';
 import { professionalExperiences } from '@/shared/lib/data/experience';
 import { samplePublications } from '@/shared/lib/data/publications';

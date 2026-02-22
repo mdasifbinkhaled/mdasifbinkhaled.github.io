@@ -1,6 +1,6 @@
 import { Button } from '@/shared/components/ui/button';
 import { siteConfig } from '@/shared/config';
-import { researchIdentity } from '@/shared/config/researcher-profile';
+import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 import { METRICS } from '@/shared/lib/data/metrics';
 import { researchData } from '@/shared/lib/data/research';
 import {

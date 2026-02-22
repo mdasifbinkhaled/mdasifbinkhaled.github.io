@@ -20,6 +20,7 @@ import {
   Wrench,
   Timer,
   CalendarDays,
+  Target,
   type LucideProps,
 } from 'lucide-react';
 
@@ -47,6 +48,7 @@ const iconComponents = {
   Wrench,
   Timer,
   CalendarDays,
+  Target,
 };
 
 interface IconComponentProps extends LucideProps {

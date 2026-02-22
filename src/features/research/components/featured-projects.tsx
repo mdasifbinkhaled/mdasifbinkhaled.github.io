@@ -1,7 +1,7 @@
 import { AlertCircle } from 'lucide-react';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
-import { researchProjects } from '@/shared/config/researcher-profile';
+import { researchProjects } from '@/shared/lib/data/researcher-profile';
 
 export function FeaturedProjects() {
   return (

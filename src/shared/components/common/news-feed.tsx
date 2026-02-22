@@ -1,20 +1,7 @@
 import { cn } from '@/shared/lib/utils';
+import type { NewsItem } from '@/shared/types';
 
-/**
- * NewsItem interface for news feed data
- */
-export interface NewsItem {
-  /** Unique identifier for stable React keys */
-  id: string;
-  /** Display date (e.g., '[2025/03]') */
-  date: string;
-  /** Main text content */
-  text: string;
-  /** Optional highlighted portion (displayed in accent color) */
-  highlight?: string;
-  /** Optional description following the highlight */
-  description?: string;
-}
+export type { NewsItem };
 
 interface NewsFeedProps {
   items: NewsItem[];

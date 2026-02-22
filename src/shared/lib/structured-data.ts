@@ -77,7 +77,7 @@ export interface PublicationStructuredData {
   doi?: string;
 }
 
-import { researchIdentity } from '@/shared/config/researcher-profile';
+import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 
 export function generatePersonStructuredData(): AcademicPersonStructuredData {
   // Collect all social profile links (no placeholder detection needed since Twitter is removed)

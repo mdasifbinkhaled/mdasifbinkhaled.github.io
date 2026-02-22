@@ -9,6 +9,7 @@ import {
 } from '@/shared/lib/data/courses';
 import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 import { teachingPillars } from '@/shared/lib/data/teaching-pillars';
+import { navIconMap } from '@/shared/lib/nav-icon-map';
 import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
 import { TeachingCTA } from '@/features/teaching/teaching-cta';
 
@@ -71,27 +72,32 @@ export default function TeachingPage() {
 
             {/* Three Pillars */}
             <div className="grid gap-6 md:grid-cols-3">
-              {teachingPillars.map((pillar) => (
-                <div
-                  key={pillar.id}
-                  className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1"
-                >
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <pillar.icon className="h-24 w-24 text-primary" />
-                  </div>
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                      <pillar.icon className="h-6 w-6" />
+              {teachingPillars.map((pillar) => {
+                const IconComponent = navIconMap[pillar.iconName];
+                return (
+                  <div
+                    key={pillar.id}
+                    className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1"
+                  >
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                      {IconComponent && (
+                        <IconComponent className="h-24 w-24 text-primary" />
+                      )}
                     </div>
-                    <h3 className="text-xl font-bold mb-3 tracking-tight">
-                      {pillar.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                      {pillar.description}
-                    </p>
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="mb-4 rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                        {IconComponent && <IconComponent className="h-6 w-6" />}
+                      </div>
+                      <h3 className="text-xl font-bold mb-3 tracking-tight">
+                        {pillar.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                        {pillar.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

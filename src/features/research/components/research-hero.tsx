@@ -1,5 +1,5 @@
 import { Lightbulb } from 'lucide-react';
-import { researchIdentity } from '@/shared/config/researcher-profile';
+import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 import { AcademicProfiles } from '@/shared/components/common/academic-profiles';
 
 export function ResearchHero() {

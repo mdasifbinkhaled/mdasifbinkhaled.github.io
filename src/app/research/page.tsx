@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { siteConfig } from '@/shared/config/site';
-import { researchIdentity } from '@/shared/config/researcher-profile';
+import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 import { assetPaths } from '@/shared/config/assets';
 
 import { ResearchHero } from '@/features/research/components/research-hero';

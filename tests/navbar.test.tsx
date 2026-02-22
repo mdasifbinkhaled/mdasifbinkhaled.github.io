@@ -49,6 +49,7 @@ vi.mock('lucide-react', () => ({
   Wrench: () => <div data-testid="wrench-icon">Wrench</div>,
   Timer: () => <div data-testid="timer-icon">Timer</div>,
   CalendarDays: () => <div data-testid="calendar-days-icon">CalendarDays</div>,
+  Target: () => <div data-testid="target-icon">Target</div>,
 }));
 
 describe('Navbar', () => {

@@ -20,6 +20,7 @@ import {
   Wrench,
   Timer,
   CalendarDays,
+  Target,
 } from 'lucide-react';
 import type { ElementType } from 'react';
 
@@ -45,4 +46,5 @@ export const navIconMap: Record<string, ElementType> = {
   Wrench,
   Timer,
   CalendarDays,
+  Target,
 };

@@ -1,4 +1,10 @@
-import type { CourseData } from '@/shared/types';
+/**
+ * Course Data — Single Source of Truth
+ *
+ * All course data, institution groupings, tier-based filtering,
+ * and derived calculations live here. No wrapper layers.
+ */
+import type { CourseData, CourseInstitution, CourseTier } from '@/shared/types';
 
 import { iubCse101 } from './iub-cse101';
 import { iubCse201 } from './iub-cse201';
@@ -29,6 +35,12 @@ export {
   bracuCse489,
 };
 
+/** Institution display names */
+export const institutionNames: Record<CourseInstitution, string> = {
+  IUB: 'Independent University, Bangladesh (IUB)',
+  BRACU: 'BRAC University',
+};
+
 // Aggregate by Institution
 export const coursesTaughtIUB: CourseData[] = [
   iubCse211, // Featured/Detailed first
@@ -53,7 +65,15 @@ export const allCourses: CourseData[] = [
   ...coursesTaughtBRACU,
 ];
 
-// Helper to get total students (calculated dynamically)
+/** Get courses by tier */
+export const getCoursesByTier = (tier: CourseTier): CourseData[] =>
+  allCourses.filter((c) => c.tier === tier);
+
+/** Get detailed courses (for generating static pages) */
+export const getDetailedCourses = (): CourseData[] =>
+  allCourses.filter((c) => c.tier === 'detailed');
+
+/** Calculate total students from enrollment data */
 export function getTotalStudentsFromCourses(): number {
   return allCourses.reduce(
     (total, course) => total + (course.enrollmentCount || 0),

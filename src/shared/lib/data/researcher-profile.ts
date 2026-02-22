@@ -22,7 +22,7 @@ export const academicProfiles = {
   profiles: profiles.profiles,
   github: profiles.github,
 
-  // Private metrics (Legacy reference - use METRICS directy in new code)
+  // Private metrics (Legacy reference - use METRICS directly in new code)
   metrics: {
     citations: METRICS.CITATION_COUNT,
     hIndex: METRICS.H_INDEX,

@@ -20,7 +20,7 @@ import {
 } from '@/shared/components/ui/select';
 import { Plus, Trash2, Calculator as CalculatorIcon } from 'lucide-react';
 import type { GradeComponent } from '@/shared/types/tools';
-import { STANDARD_GRADING_SCALE } from '@/shared/types/tools';
+import { STANDARD_GRADING_SCALE } from '@/shared/lib/data/grading';
 
 export function GradeCalculator() {
   const [components, setComponents] = useState<GradeComponent[]>([
