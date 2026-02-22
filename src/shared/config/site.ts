@@ -41,6 +41,8 @@ export type SiteConfig = {
   department: string;
   /** School/Faculty name */
   school: string;
+  /** Last updated date string shown in footer */
+  lastUpdated: string;
 };
 
 export const siteConfig: SiteConfig = {
@@ -100,4 +102,5 @@ export const siteConfig: SiteConfig = {
   institutionShort: 'IUB',
   department: 'Computer Science & Engineering',
   school: 'School of Engineering, Technology & Sciences (SETS)',
+  lastUpdated: 'February 2026',
 };

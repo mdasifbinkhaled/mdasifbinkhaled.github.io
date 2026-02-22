@@ -29,6 +29,14 @@ export const DISPLAY_LIMITS = {
 } as const;
 
 /**
+ * Layout dimension constants
+ */
+export const LAYOUT = {
+  /** Fixed navbar height in pixels — used for scroll-offset spacers */
+  NAVBAR_HEIGHT: 73,
+} as const;
+
+/**
  * Scroll behavior constants
  */
 export const SCROLL = {

@@ -26,6 +26,10 @@ import { Navbar } from '@/shared/components/navigation/navbar';
 
 import { siteConfig } from '@/shared/config/site';
 
+import { mainNavItems } from '@/shared/config/navigation';
+
+import { LAYOUT } from '@/shared/config/constants';
+
 export default function AppSidebarLayout({
   children,
 }: {
@@ -127,7 +131,12 @@ export default function AppSidebarLayout({
 
           {/* Spacer to account for fixed navbar height */}
 
-          <div className="h-[73px] flex-shrink-0" aria-hidden="true" />
+          {/* Spacer to account for fixed navbar height */}
+          <div
+            className="flex-shrink-0"
+            style={{ height: LAYOUT.NAVBAR_HEIGHT }}
+            aria-hidden="true"
+          />
 
           <main
             id="main-content"
@@ -151,47 +160,20 @@ export default function AppSidebarLayout({
                 <Link href="/" className="hover:text-primary transition-colors">
                   Home
                 </Link>
-                <Link
-                  href="/about"
-                  className="hover:text-primary transition-colors"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/research"
-                  className="hover:text-primary transition-colors"
-                >
-                  Research
-                </Link>
-                <Link
-                  href="/publications"
-                  className="hover:text-primary transition-colors"
-                >
-                  Publications
-                </Link>
-                <Link
-                  href="/teaching"
-                  className="hover:text-primary transition-colors"
-                >
-                  Teaching
-                </Link>
-                <Link
-                  href="/experience"
-                  className="hover:text-primary transition-colors"
-                >
-                  Experience
-                </Link>
-                <Link
-                  href="/contact"
-                  className="hover:text-primary transition-colors"
-                >
-                  Contact
-                </Link>
+                {mainNavItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </nav>
 
               <div className="text-center md:text-right flex flex-col items-center md:items-end gap-3">
                 <p className="text-xs text-muted-foreground">
-                  Last updated: February 2026
+                  Last updated: {siteConfig.lastUpdated}
                 </p>
                 <BackToTop />
               </div>

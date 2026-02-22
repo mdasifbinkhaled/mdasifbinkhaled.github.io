@@ -1,20 +1,18 @@
 'use client';
 
-import { ChevronRight, Home, BookOpen, Users, Award, User } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { formatBreadcrumbTitle } from '@/shared/lib/course-utils';
+import { mainNavItems } from '@/shared/config/navigation';
+import { navIconMap } from '@/shared/lib/nav-icon-map';
 
-const pageIcons = {
-  publications: BookOpen,
-  teaching: Users,
-  experience: Award,
-  research: BookOpen,
-  'service-awards': Award,
-  cv: Award,
-  contact: User,
-  about: User,
-} as const;
+/** Build a lookup from URL segment → icon name using navigation config */
+const segmentIconMap: Record<string, string> = {};
+for (const item of mainNavItems) {
+  const segment = item.href.replace(/^\//, '') || 'home';
+  if (item.icon) segmentIconMap[segment] = item.icon;
+}
 
 export function Breadcrumbs() {
   const pathname = usePathname();
@@ -29,7 +27,10 @@ export function Breadcrumbs() {
         href="/"
         className="flex items-center gap-1 hover:text-primary transition-colors"
       >
-        <Home className="w-4 h-4" />
+        {(() => {
+          const HomeIcon = navIconMap['Home'];
+          return HomeIcon ? <HomeIcon className="w-4 h-4" /> : null;
+        })()}
         <span className="hidden sm:inline">Home</span>
       </Link>
 
@@ -37,11 +38,11 @@ export function Breadcrumbs() {
         const href = '/' + segments.slice(0, index + 1).join('/');
         const isLast = index === segments.length - 1;
 
-        // Smart title formatting
         // Smart title formatting using shared utility
         const title = formatBreadcrumbTitle(segment);
 
-        const Icon = pageIcons[segment as keyof typeof pageIcons];
+        const iconName = segmentIconMap[segment];
+        const Icon = iconName ? navIconMap[iconName] : undefined;
 
         return (
           <div key={segment} className="flex items-center space-x-2">
