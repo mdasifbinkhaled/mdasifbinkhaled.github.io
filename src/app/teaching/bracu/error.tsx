@@ -2,4 +2,4 @@
 
 import { createErrorBoundary } from '@/shared/components/common/error-fallback';
 
-export default createErrorBoundary('Teaching Bracu page');
+export default createErrorBoundary('Teaching BRACU page');

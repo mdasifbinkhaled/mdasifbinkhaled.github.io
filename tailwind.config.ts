@@ -18,7 +18,6 @@ const config: Config = {
       },
 
       screens: {
-        xs: '375px',
         '3xl': '1920px',
       },
 
@@ -96,32 +95,9 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
 
-      spacing: {
-        'sidebar-width': 'var(--sidebar-width)',
-        'navbar-height': 'var(--navbar-height)',
-        'content-padding': 'var(--content-padding)',
-        'academic-section': '3rem',
-        'academic-content': '1.5rem',
-        'academic-card': '1rem',
-      },
-
-      maxWidth: {
-        content: 'var(--content-max-width)',
-      },
-
       fontSize: {
-        'academic-title': ['2.5rem', { lineHeight: '3rem', fontWeight: '700' }],
         '0.8rem': '0.8rem',
         '10px': '10px',
-        'academic-subtitle': [
-          '1.5rem',
-          { lineHeight: '2rem', fontWeight: '600' },
-        ],
-        'academic-body': ['1rem', { lineHeight: '1.75rem', fontWeight: '400' }],
-        'academic-caption': [
-          '0.875rem',
-          { lineHeight: '1.25rem', fontWeight: '500' },
-        ],
       },
 
       zIndex: {
@@ -129,7 +105,6 @@ const config: Config = {
         sidebar: '60',
         'sidebar-toggle': '80',
         overlay: '90',
-        toast: '100',
       },
 
       keyframes: {
@@ -148,11 +123,6 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
 
-      gap: {
-        'academic-section': '3rem',
-        'academic-content': '1.5rem',
-        'academic-card': '1rem',
-      },
     },
   },
 

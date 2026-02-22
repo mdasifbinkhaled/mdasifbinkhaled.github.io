@@ -57,9 +57,6 @@ export const TIMING = {
   /** Debounce delay for search inputs (in milliseconds) */
   SEARCH_DEBOUNCE: 300,
 
-  /** Toast notification duration (in milliseconds) */
-  TOAST_DURATION: 3000,
-
   /** Animation transition duration (in milliseconds) */
   TRANSITION: 200,
 } as const;
