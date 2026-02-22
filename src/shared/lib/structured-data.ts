@@ -197,32 +197,3 @@ export function generatePublicationStructuredData(publication: {
 
   return structuredData;
 }
-
-export function generateBreadcrumbStructuredData(
-  items: Array<{ name: string; url: string }>
-) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: item.url,
-    })),
-  };
-}
-
-export function generateWebsiteStructuredData() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Website',
-    name: siteConfig.name,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    author: {
-      '@type': 'Person',
-      name: siteConfig.author,
-    },
-  };
-}

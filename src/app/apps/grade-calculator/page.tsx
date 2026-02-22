@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     'Calculate your current course standing and dynamically project the required assignment scores for your desired final grade.',
   alternates: {
-    canonical: `${siteConfig.url}/apps/grade-calculator`,
+    canonical: '/apps/grade-calculator',
   },
 };
 

@@ -2,7 +2,6 @@ import { samplePublications } from '@/shared/lib/data/publications';
 import type { CourseData } from '@/shared/types';
 import {
   generateCourseStructuredData,
-  generatePersonStructuredData,
   generatePublicationStructuredData,
   sanitizeJsonLd,
 } from '@/shared/lib/structured-data';
@@ -15,10 +14,6 @@ function JsonLdScript({ data }: { data: unknown }): React.JSX.Element {
       dangerouslySetInnerHTML={{ __html: sanitizeJsonLd(data) }}
     />
   );
-}
-
-export function ScholarStructuredDataScript(): React.JSX.Element {
-  return <JsonLdScript data={generatePersonStructuredData()} />;
 }
 
 export function PublicationStructuredDataScript(): React.JSX.Element | null {

@@ -7,6 +7,7 @@
  * - Modular component architecture
  */
 
+import type { Metadata } from 'next';
 import {
   HeroSection,
   NewsSection,
@@ -16,6 +17,13 @@ import {
   FeaturedGrant,
   ConnectSection,
 } from '@/features/home/components';
+import { siteConfig } from '@/shared/config/site';
+
+export const metadata: Metadata = {
+  title: siteConfig.name,
+  description: siteConfig.description,
+  alternates: { canonical: '/' },
+};
 
 export default function HomePage() {
   return (

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Command } from 'cmdk';
-import { Search, Send, Sun, Moon, Monitor } from 'lucide-react';
+import { Search, Send, Sun, Moon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { type DialogProps } from '@radix-ui/react-dialog';
@@ -135,13 +135,6 @@ export function CommandMenu(_props: DialogProps) {
                 >
                   <Moon className="mr-2 h-4 w-4 opacity-70" />
                   Dark
-                </Command.Item>
-                <Command.Item
-                  onSelect={() => runCommand(() => setTheme('system'))}
-                  className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground"
-                >
-                  <Monitor className="mr-2 h-4 w-4 opacity-70" />
-                  System
                 </Command.Item>
               </Command.Group>
             </Command.List>

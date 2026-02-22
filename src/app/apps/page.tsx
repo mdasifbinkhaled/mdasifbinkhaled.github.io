@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'A suite of interactive academic utilities including grade calculators, seat planners, and study aids.',
   alternates: {
-    canonical: `${siteConfig.url}/apps`,
+    canonical: '/apps',
   },
 };
 
