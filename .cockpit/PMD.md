@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2026-02-21
-> **Commit**: 0cc9fa6
+> **Last Updated**: 2026-02-22
+> **Commit**: 93be3a3
 
 ## Mission
 
@@ -18,7 +18,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | UI Library    | React                                | 19.2.3  |
 | Language      | TypeScript (strict)                  | 5.6     |
 | Styling       | Tailwind CSS + CSS custom properties | 3.4.13  |
-| Animation     | Framer Motion                        | 12.29.0 |
+| Animation     | Vanilla JS (no library)              | ---     |
 | Icons         | Lucide React                         | 0.544.0 |
 | Themes        | next-themes + 6 color themes         | 0.4.6   |
 | UI Primitives | Radix UI (10 packages)               | various |
@@ -65,32 +65,33 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value    |
 | ----------------- | -------- |
-| Source files      | 187      |
-| Lines of code     | 14,495   |
-| Components (.tsx) | 131      |
-| Client components | 54 (41%) |
-| Server components | 77 (59%) |
+| Source files      | 191      |
+| Lines of code     | 14,405   |
+| Components (.tsx) | 132      |
+| Client components | 51 (39%) |
+| Server components | 81 (61%) |
+| Custom hooks      | 4        |
 | Data files        | 28       |
 | Config files      | 7        |
 | Barrel exports    | 9        |
-| Test files        | 23       |
+| Test files        | 22       |
 | Test count        | 143      |
 | Pages generated   | 20       |
 | Themes            | 6        |
-| Git commits       | 415      |
+| Git commits       | 417      |
 
 ### Largest Files
 
-| File                                | LOC | Purpose                     |
-| ----------------------------------- | --- | --------------------------- |
-| `features/apps/grade-calculator.tsx`| 363 | Weighted grade calculator   |
-| `ui/theme-selector.tsx`             | 340 | Theme picker (6 themes)     |
-| `shared/types/index.ts`            | 295 | Domain type definitions     |
-| `teaching/course-card.tsx`          | 280 | Course card component       |
-| `navigation/navbar.tsx`             | 279 | Top navigation bar          |
-| `teaching/schedule-table.tsx`       | 256 | Course schedule table       |
-| `lib/structured-data.ts`            | 228 | Schema.org JSON-LD          |
-| `hooks/use-toast.ts`                | 224 | Toast notification system   |
+| File                                 | LOC | Purpose                   |
+| ------------------------------------ | --- | ------------------------- |
+| `features/apps/grade-calculator.tsx` | 363 | Weighted grade calculator |
+| `ui/theme-selector.tsx`              | 340 | Theme picker (6 themes)   |
+| `shared/types/index.ts`              | 295 | Domain type definitions   |
+| `teaching/course-card.tsx`           | 280 | Course card component     |
+| `navigation/navbar.tsx`              | 279 | Top navigation bar        |
+| `teaching/schedule-table.tsx`        | 256 | Course schedule table     |
+| `lib/structured-data.ts`             | 228 | Schema.org JSON-LD        |
+| `hooks/use-toast.ts`                 | 224 | Toast notification system |
 
 ### LOC Distribution
 
@@ -133,13 +134,13 @@ app/       1,582 (11%)  ######
 
 ## Quality Status
 
-| Check      | Status | Details                                              |
-| ---------- | ------ | ---------------------------------------------------- |
-| TypeScript | PASS   | 0 errors (strict mode)                               |
-| ESLint     | PASS   | 0 errors, 0 warnings                                 |
-| Prettier   | PASS   | All formatted                                        |
-| Tests      | PASS   | 143/143 pass (23 files)                              |
-| Build      | PASS   | 20 pages exported                                    |
+| Check      | Status | Details                                                                   |
+| ---------- | ------ | ------------------------------------------------------------------------- |
+| TypeScript | PASS   | 0 errors (strict mode)                                                    |
+| ESLint     | PASS   | 0 errors, 0 warnings                                                      |
+| Prettier   | PASS   | All formatted                                                             |
+| Tests      | PASS   | 143/143 pass (23 files)                                                   |
+| Build      | PASS   | 20 pages exported                                                         |
 | Audit      | NOTE   | 20 vulns (1 moderate, 19 high — all mitigated: dev-only or static export) |
 
 ## Architecture Observations
@@ -156,34 +157,37 @@ app/       1,582 (11%)  ######
 - Playwright E2E + axe-core accessibility testing
 - Route announcer for screen reader navigation
 
-### All 152 Findings Resolved
+### All 157 Findings Resolved
 
-All 152 findings from 10 audit sessions have been resolved. See [ISSUES.md](ISSUES.md) for the complete tracker.
+All 157 findings from 11 audit sessions have been resolved. See [ISSUES.md](ISSUES.md) for the complete tracker.
 
 Key resolutions:
+
 - **3 CRITICAL**: Division-by-zero, PII exposure, CV data drift --- all fixed
 - **30 HIGH**: XSS, CSP, route announcer, keyboard a11y, error boundaries --- all fixed
-- **55 MEDIUM**: Schema integrity, DRY violations, theme consistency --- all fixed
-- **40 LOW**: Dead code, stale docs, minor DX issues — all fixed
-- **24 INFO**: Cosmetic and informational items --- all addressed
+- **57 MEDIUM**: Schema integrity, DRY violations, performance, theme consistency --- all fixed
+- **41 LOW**: Dead code, stale docs, minor DX issues, timeout cleanup — all fixed
+- **26 INFO**: Cosmetic and informational items (incl. `'use client'` cleanup, framer-motion removal) --- all addressed
 
 See [ROADMAP.md](ROADMAP.md) for the improvement plan (Phases 7-11).
 
 ## ADRs (Architecture Decision Records)
 
-| ADR     | Title                       | Status   |
-| ------- | --------------------------- | -------- |
-| ADR-005 | Student Apps Feature        | Accepted |
+| ADR     | Title                | Status   |
+| ------- | -------------------- | -------- |
+| ADR-005 | Student Apps Feature | Accepted |
 
 See [adr/](adr/) for the full record and template.
 
 ### Notes
 
 - **shared/ layer is 58% of codebase** --- acceptable for an infrastructure-heavy portfolio site
-- **54 client components** --- justified (error boundaries, interactive UI, animations)
+- **49 client components** --- justified (error boundaries, interactive UI); 5 unnecessary directives removed
+- **4 custom hooks** --- `useDebounce`, `useIsClient`, `useToast`, `useHoverDelay`
 - **9 barrel files** --- all actively imported, healthy
 - **6 themes** --- light, dark, ocean, forest, lavender, slate
 - **54 LOC analytics** --- lean, only 4 wired events (viewCV, downloadCV, viewPublication, downloadPublication)
+- **Zero animation libraries** --- framer-motion removed; spotlight effect now vanilla JS (15 LOC)
 - **All hardcoded colors migrated** --- only documented exceptions remain (global-error.tsx, brand colors)
 - **4 GitHub workflows**: ci.yml (lint/test/build), lhci.yml (Lighthouse CI), nextjs.yml (deploy), security.yml (audit)
 

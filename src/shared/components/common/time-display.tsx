@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Clock, Globe } from 'lucide-react';
 import { useIsClient } from '@/shared/hooks/use-is-client';
@@ -16,9 +18,10 @@ export function TimeDisplay({
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
+    // Only display hours & minutes — update once per minute, not every second
     const timer = setInterval(() => {
       setNow(new Date());
-    }, 1000);
+    }, 60_000);
 
     return () => clearInterval(timer);
   }, []);

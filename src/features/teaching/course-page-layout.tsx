@@ -1,5 +1,3 @@
-'use client';
-
 import { MessageCircle } from 'lucide-react';
 import type { CourseData } from '@/shared/types';
 import { Card, CardContent } from '@/shared/components/ui/card';
@@ -63,7 +61,7 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
         {course.status === 'ongoing' && course.notices && (
           <CollapsibleSection
             title="Notice Board"
-            icon={MessageCircle}
+            icon={<MessageCircle className="w-6 h-6 text-primary" />}
             defaultOpen={true}
           >
             <div className="p-6">
@@ -106,7 +104,7 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
         {(course.feedback?.length ?? 0) > 0 && (
           <CollapsibleSection
             title="Student Feedback"
-            icon={MessageCircle}
+            icon={<MessageCircle className="w-6 h-6 text-primary" />}
             defaultOpen={false}
           >
             <div className="p-6">

@@ -7,7 +7,6 @@
 | `next`                     | 16.1.4  | Framework (App Router, static export)           |
 | `react`                    | 19.2.3  | UI library                                      |
 | `react-dom`                | 19.2.3  | React DOM bindings                              |
-| `framer-motion`            | 12.29.0 | Animations                                      |
 | `lucide-react`             | 0.544.0 | Icons                                           |
 | `next-themes`              | 0.4.6   | Theme management (dark/light/system + 6 themes) |
 | `tailwind-merge`           | 3.3.1   | Tailwind class conflict resolution              |

@@ -29,11 +29,6 @@ interface ImageProps {
   [key: string]: unknown;
 }
 
-interface MotionProps {
-  children: React.ReactNode;
-  [key: string]: unknown;
-}
-
 // Mock next/image for testing
 vi.mock('next/image', () => ({
   default: ({
@@ -78,19 +73,6 @@ vi.mock('next/image', () => ({
       <img {...imgProps} />
     );
   },
-}));
-
-// Mock framer-motion to avoid animation issues in tests
-vi.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: MotionProps) => (
-      <div {...props}>{children}</div>
-    ),
-    section: ({ children, ...props }: MotionProps) => (
-      <section {...props}>{children}</section>
-    ),
-  },
-  AnimatePresence: ({ children }: MotionProps) => children,
 }));
 
 vi.mock('lucide-react', async (importOriginal) => {

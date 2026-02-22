@@ -8,7 +8,7 @@ import React from 'react';
 
 export interface CollapsibleSectionProps {
   title: string;
-  icon: React.ElementType;
+  icon: React.ReactNode;
   children: React.ReactNode;
   defaultOpen?: boolean;
   className?: string;
@@ -16,7 +16,7 @@ export interface CollapsibleSectionProps {
 
 export function CollapsibleSection({
   title,
-  icon: Icon,
+  icon,
   children,
   defaultOpen = true,
   className,
@@ -43,7 +43,7 @@ export function CollapsibleSection({
         >
           <div className="flex items-center gap-3">
             <div className="p-2 bg-primary/5 rounded-lg group-hover:bg-primary/10 transition-colors">
-              <Icon className="w-6 h-6 text-primary" />
+              {icon}
             </div>
             <h2 className="text-xl md:text-2xl font-bold text-foreground">
               {title}

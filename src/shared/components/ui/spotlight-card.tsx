@@ -1,7 +1,7 @@
 'use client';
 
+import { useRef, useCallback } from 'react';
 import { cn } from '@/shared/lib/utils';
-import { useMotionTemplate, useMotionValue, motion } from 'framer-motion';
 import type { MouseEvent } from 'react';
 
 interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -14,15 +14,20 @@ export function SpotlightCard({
   spotlightColor = 'rgba(255, 255, 255, 0.1)',
   ...props
 }: SpotlightCardProps) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
+  const handleMouseMove = useCallback(
+    ({ currentTarget, clientX, clientY }: MouseEvent) => {
+      const { left, top } = currentTarget.getBoundingClientRect();
+      const x = clientX - left;
+      const y = clientY - top;
 
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
+      if (overlayRef.current) {
+        overlayRef.current.style.background = `radial-gradient(650px circle at ${x}px ${y}px, ${spotlightColor}, transparent 80%)`;
+      }
+    },
+    [spotlightColor]
+  );
 
   return (
     <div
@@ -33,17 +38,9 @@ export function SpotlightCard({
       onMouseMove={handleMouseMove}
       {...props}
     >
-      <motion.div
+      <div
+        ref={overlayRef}
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
-              ${spotlightColor},
-              transparent 80%
-            )
-          `,
-        }}
       />
       <div className="relative">{children}</div>
     </div>

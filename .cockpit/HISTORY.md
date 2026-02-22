@@ -1,6 +1,6 @@
 # HISTORY.md — Development Timeline
 
-> 415 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
+> 417 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
 
 ## Timeline
 
@@ -65,6 +65,32 @@
   - Empty publications directory removed
 - `.cockpit/` intelligence hub created and synchronized
 - All quality gates passing: 0 lint errors, 0 type errors, 109/109 tests, build OK
+
+### Phase 8 — Forensic Code Audit: State & Performance (2026-02-22)
+
+- **`93be3a3`** `refactor: fix code smells, anti-patterns, and technical debt`
+- Systematic 3-phase forensic audit (Architecture, State Management, Performance & Bundle)
+- 5 new findings (F-153 through F-157), all resolved in-session
+- State management fixes:
+  - `time-display.tsx`: Interval reduced from 1s to 60s (display only shows hours:minutes)
+  - `navbar.tsx`: Duplicated hover-delay logic (~30 LOC × 2) extracted to `useHoverDelay` shared hook
+  - `publication-card.tsx`: Added `useRef`-based setTimeout cleanup to prevent memory leaks
+- Performance & bundle fixes:
+  - `framer-motion` dependency removed entirely (5.3 MB saved) — replaced with vanilla JS (15 LOC)
+  - `'use client'` removed from 5 pure-render components (client: 54 → 49, server: 77 → 82)
+- Cockpit skill added: `.cockpit/SKILL.md` — forensic code audit methodology (240+ checks, 7 phases)
+- All quality gates green: 0 TS errors, 143/143 tests, 20 pages exported
+
+### Phase 9 — Stabilization & Regression Fix (2026-02-22)
+
+- Server→client boundary regression from F-156 fixed:
+  - Removing `'use client'` from `course-page-layout.tsx` made it a server component, but it passed Lucide icon functions (non-serializable) to `CollapsibleSection` (a `'use client'` component)
+  - Fix: Changed `CollapsibleSection` `icon` prop from `React.ElementType` to `React.ReactNode`
+  - Updated all 7 icon prop usages across 6 consumer files to pass pre-rendered JSX instead of function references
+- Added missing `'use client'` directive to `time-display.tsx` (uses `useState`/`useEffect` directly)
+- Fixed Turbopack workspace root warning by adding `turbopack: { root: '.' }` to `next.config.ts`
+- Comprehensive stability audit: 0 remaining boundary violations, 0 `any` types, 0 memory leaks, 0 lint errors
+- All quality gates green: 0 TS errors, 0 warnings, 143/143 tests, 20 pages exported
 
 ## Tags
 

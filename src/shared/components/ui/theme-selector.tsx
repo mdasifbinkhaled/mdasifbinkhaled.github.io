@@ -25,13 +25,34 @@ import {
 import { themeConfigs } from '@/shared/config/themes';
 import { useIsClient } from '@/shared/hooks/use-is-client';
 
-const themeUIMap: Record<string, { icon: React.ElementType; previewClass: string }> = {
-  light: { icon: Sun, previewClass: 'bg-gradient-to-br from-slate-50 to-blue-50' },
-  dark: { icon: Moon, previewClass: 'bg-gradient-to-br from-slate-900 to-slate-800' },
-  ocean: { icon: Waves, previewClass: 'bg-gradient-to-br from-cyan-50 to-blue-100' },
-  forest: { icon: Trees, previewClass: 'bg-gradient-to-br from-emerald-50 to-green-100' },
-  lavender: { icon: Flower, previewClass: 'bg-gradient-to-br from-purple-100 to-pink-50' },
-  slate: { icon: Briefcase, previewClass: 'bg-gradient-to-br from-gray-100 to-slate-200' },
+const themeUIMap: Record<
+  string,
+  { icon: React.ElementType; previewClass: string }
+> = {
+  light: {
+    icon: Sun,
+    previewClass: 'bg-gradient-to-br from-slate-50 to-blue-50',
+  },
+  dark: {
+    icon: Moon,
+    previewClass: 'bg-gradient-to-br from-slate-900 to-slate-800',
+  },
+  ocean: {
+    icon: Waves,
+    previewClass: 'bg-gradient-to-br from-cyan-50 to-blue-100',
+  },
+  forest: {
+    icon: Trees,
+    previewClass: 'bg-gradient-to-br from-emerald-50 to-green-100',
+  },
+  lavender: {
+    icon: Flower,
+    previewClass: 'bg-gradient-to-br from-purple-100 to-pink-50',
+  },
+  slate: {
+    icon: Briefcase,
+    previewClass: 'bg-gradient-to-br from-gray-100 to-slate-200',
+  },
 };
 
 const categories = ['classic', 'natural', 'vibrant', 'professional'] as const;
@@ -76,7 +97,10 @@ function ThemeCategoryList({
             >
               {categoryThemes.map((themeOption) => {
                 const isActive = currentThemeName === themeOption.name;
-                const uiConfig = themeUIMap[themeOption.name] || { icon: Palette, previewClass: 'bg-muted' };
+                const uiConfig = themeUIMap[themeOption.name] || {
+                  icon: Palette,
+                  previewClass: 'bg-muted',
+                };
                 const Icon = uiConfig.icon;
 
                 if (variant === 'compact') {
@@ -190,7 +214,8 @@ export function ThemeSelector({
     );
   }
 
-  const currentTheme = themeConfigs[theme as keyof typeof themeConfigs] || themeConfigs.light;
+  const currentTheme =
+    themeConfigs[theme as keyof typeof themeConfigs] || themeConfigs.light;
   const CurrentIcon = themeUIMap[currentTheme.name]?.icon || Palette;
 
   if (variant === 'compact') {

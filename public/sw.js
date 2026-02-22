@@ -1,11 +1,16 @@
-const CACHE_NAME = 'mabk-portfolio-cache-v1';
+const CACHE_NAME = 'mabk-portfolio-cache-v2';
 const URLS_TO_CACHE = [
   '/',
   '/about/',
   '/research/',
   '/teaching/',
+  '/teaching/iub/',
+  '/teaching/bracu/',
   '/publications/',
   '/contact/',
+  '/cv/',
+  '/apps/',
+  '/apps/grade-calculator/',
   '/favicon.ico',
 ];
 

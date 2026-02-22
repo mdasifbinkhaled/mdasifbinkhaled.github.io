@@ -1,5 +1,4 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/shared/lib/utils';
@@ -11,6 +10,7 @@ import {
   coursesTaughtIUB,
   coursesTaughtBRACU,
 } from '@/shared/lib/data/courses';
+import { useHoverDelay } from '@/shared/hooks';
 
 interface NavbarProps {
   onMobileMenuOpen?: () => void;
@@ -113,34 +113,7 @@ function TeachingDropdown({
   label: string;
   active: boolean;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const HIDE_DELAY = 200; // Delay in milliseconds before hiding
-
-  const handleMouseEnter = () => {
-    // Clear any pending hide timeout
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    setIsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    // Set a timeout to hide the dropdown after delay
-    timeoutRef.current = setTimeout(() => {
-      setIsOpen(false);
-    }, HIDE_DELAY);
-  };
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
+  const { isOpen, handleMouseEnter, handleMouseLeave } = useHoverDelay();
 
   return (
     <div
@@ -198,6 +171,7 @@ function TeachingDropdown({
 }
 
 // Institution Flyout Component with delay on unhover
+// Institution Flyout Component with delay on unhover
 function InstitutionFlyout({
   label,
   href,
@@ -209,34 +183,7 @@ function InstitutionFlyout({
   courses: Array<{ code: string; title: string }>;
   institution: string;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const HIDE_DELAY = 200; // Delay in milliseconds before hiding
-
-  const handleMouseEnter = () => {
-    // Clear any pending hide timeout
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    setIsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    // Set a timeout to hide the flyout after delay
-    timeoutRef.current = setTimeout(() => {
-      setIsOpen(false);
-    }, HIDE_DELAY);
-  };
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
+  const { isOpen, handleMouseEnter, handleMouseLeave } = useHoverDelay();
 
   return (
     <div

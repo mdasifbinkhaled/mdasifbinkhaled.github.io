@@ -31,7 +31,6 @@ const publicationTypeOptions: PublicationType[] = [
 ];
 
 export function PublicationList({ initialPublications }: PublicationListProps) {
-  const [publications] = useState<PublicationItem[]>(initialPublications);
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<PublicationType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -58,7 +57,7 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
   };
 
   const filteredPublications = (() => {
-    return publications.filter((pub) => {
+    return initialPublications.filter((pub) => {
       const yearMatch =
         yearFilter === 'all' || pub.year.toString() === yearFilter;
       const typeMatch = typeFilter === 'all' || pub.type === typeFilter;

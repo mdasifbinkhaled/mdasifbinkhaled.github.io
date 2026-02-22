@@ -1,9 +1,9 @@
-export * from './hero-section';
-export * from './quick-facts';
-export * from './highlights-section';
-export * from './research-philosophy';
-export * from './skills-section';
-export * from './beyond-academia';
-export * from './certifications-section';
-export * from './awards-section';
-export * from './cta-section';
+export { HeroSection } from './hero-section';
+export { QuickFacts } from './quick-facts';
+export { HighlightsSection } from './highlights-section';
+export { ResearchPhilosophy } from './research-philosophy';
+export { SkillsSection } from './skills-section';
+export { BeyondAcademia } from './beyond-academia';
+export { CertificationsSection } from './certifications-section';
+export { AwardsSection } from './awards-section';
+export { CtaSection } from './cta-section';

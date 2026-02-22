@@ -17,7 +17,7 @@ export function SyllabusSection({ course }: { course: CourseData }) {
   return (
     <CollapsibleSection
       title="Syllabus & Curriculum"
-      icon={Layers}
+      icon={<Layers className="w-6 h-6 text-primary" />}
       defaultOpen={false}
     >
       <div className="p-6">

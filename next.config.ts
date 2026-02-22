@@ -12,6 +12,10 @@ const config: NextConfig = {
     unoptimized: true,
   },
 
+  turbopack: {
+    root: '.',
+  },
+
   typedRoutes: true,
 };
 export default analyzer(config);

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useState, useRef, useEffect } from 'react';
 import {
   Card,
   CardHeader,
@@ -23,6 +23,16 @@ export const PublicationCard = memo(function PublicationCard({
   publication,
 }: PublicationCardProps) {
   const [isCopied, setIsCopied] = useState(false);
+  const copyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Cleanup copy-feedback timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleCopyCitation = async () => {
     // Generate BibTeX
@@ -62,7 +72,7 @@ export const PublicationCard = memo(function PublicationCard({
     try {
       await navigator.clipboard.writeText(bibtex);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
+      copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
       academicEvents.downloadPublication(
         publication.id || publication.title,
         publication.title + ' (citation)'

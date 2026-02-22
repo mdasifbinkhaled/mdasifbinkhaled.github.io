@@ -1,6 +1,6 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-02-21
+> **Created**: 2026-02-19 | **Updated**: 2026-02-22
 > **Current Version**: 1.2.0 | **Quality**: All gates green (143/143 tests, 0 TS/ESLint errors, 20/20 pages)
 > **Open Findings**: 0 (0 CRITICAL, 0 HIGH, 0 MEDIUM, 0 LOW, 0 INFO)
 
@@ -8,7 +8,7 @@
 
 | #   | Item                                                     | Category     | Complexity | Impact |
 | --- | -------------------------------------------------------- | ------------ | ---------- | ------ |
-| 6.1 | **Remove Unnecessary Hooks** (useMemo/useEffect)        | Refactor     | MODERATE   | HIGH   |
+| 6.1 | **Remove Unnecessary Hooks** (useMemo/useEffect)         | Refactor     | MODERATE   | HIGH   |
 | 6.2 | **Eliminate Magic Numbers & Hardcoded UI sizing**        | UI/Style     | EASY       | MEDIUM |
 | 6.3 | **Split Monolithic Components** (e.g. `research/page`)   | Architecture | HARD       | HIGH   |
 | 6.4 | **Standardize Inline Data** into `shared/lib/data` files | Data         | EASY       | MEDIUM |
@@ -30,14 +30,14 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 
 ## Phase 8: Modern Web & Performance
 
-| #   | Item                                                     | Category    | Complexity | Impact | Status  |
-| --- | -------------------------------------------------------- | ----------- | ---------- | ------ | ------- |
-| 8.1 | **Wire up View Transitions** (flag enabled but not used) | Modern      | MODERATE   | HIGH   | Planned |
-| 8.2 | **Service worker** for offline + PWA installability      | PWA         | MODERATE   | HIGH   | Done    |
-| 8.3 | **Container queries** for course/publication cards       | Modern      | MODERATE   | MEDIUM | Planned |
-| 8.4 | **Lighthouse CI** in GitHub Actions                      | Performance | MODERATE   | MEDIUM | Done    |
-| 8.5 | **Code split Framer Motion** (only 1 component uses it)  | Performance | MODERATE   | MEDIUM | Planned |
-| 8.6 | **CSS `content-visibility: auto`** on long pages         | Performance | EASY       | LOW    | Planned |
+| #   | Item                                                     | Category    | Complexity   | Impact     | Status  |
+| --- | -------------------------------------------------------- | ----------- | ------------ | ---------- | ------- |
+| 8.1 | **Wire up View Transitions** (flag enabled but not used) | Modern      | MODERATE     | HIGH       | Planned |
+| 8.2 | **Service worker** for offline + PWA installability      | PWA         | MODERATE     | HIGH       | Done    |
+| 8.3 | **Container queries** for course/publication cards       | Modern      | MODERATE     | MEDIUM     | Planned |
+| 8.4 | **Lighthouse CI** in GitHub Actions                      | Performance | MODERATE     | MEDIUM     | Done    |
+| 8.5 | **~~Code split Framer Motion~~** — Removed entirely      | Performance | ~~MODERATE~~ | ~~MEDIUM~~ | Done    |
+| 8.6 | **CSS `content-visibility: auto`** on long pages         | Performance | EASY         | LOW        | Planned |
 
 ## Phase 9: Testing & Confidence
 
@@ -73,14 +73,14 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 
 ## Summary
 
-| Phase                        | Items  | Complexity    | Est. Sessions |
-| ---------------------------- | ------ | ------------- | ------------- |
-| Phase 4A/B/C (CRITICAL/DRY)  | 18     | EASY-MODERATE | Completed     |
+| Phase                       | Items  | Complexity    | Est. Sessions |
+| --------------------------- | ------ | ------------- | ------------- |
+| Phase 4A/B/C (CRITICAL/DRY) | 18     | EASY-MODERATE | Completed     |
 | Phase 5 (Modernization)     | 10     | MODERATE      | Completed     |
-| Phase 6 (Code Quality)       | 4      | MODERATE-HARD | Completed     |
-| Phase 7 (Student Apps)       | 6      | MODERATE      | 2-3 remaining |
-| Phase 8 (Modern Web)         | 6      | MODERATE      | 2/6 done      |
-| Phase 9 (Testing)            | 6      | MODERATE      | 2/6 done      |
-| Phase 10 (Content)           | 5      | MIXED         | 3-5           |
-| Phase 11 (Monitoring)        | 4      | EASY-MODERATE | 1-2           |
-| **Total**                    | **59** |               | **15-24**     |
+| Phase 6 (Code Quality)      | 4      | MODERATE-HARD | Completed     |
+| Phase 7 (Student Apps)      | 6      | MODERATE      | 2-3 remaining |
+| Phase 8 (Modern Web)        | 6      | MODERATE      | 3/6 done      |
+| Phase 9 (Testing)           | 6      | MODERATE      | 2/6 done      |
+| Phase 10 (Content)          | 5      | MIXED         | 3-5           |
+| Phase 11 (Monitoring)       | 4      | EASY-MODERATE | 1-2           |
+| **Total**                   | **59** |               | **15-24**     |

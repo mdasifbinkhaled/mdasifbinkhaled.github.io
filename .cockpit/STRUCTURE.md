@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-02-21 | 187 source files | 14,495 LOC
+> Last Updated: 2026-02-22 | 188 source files | 14,405 LOC
 
 ## Root Configuration
 
@@ -34,7 +34,7 @@ public/
 
 ### App Layer — `src/app/` (1,582 LOC)
 
-Page routes using Next.js App Router. Each route has error boundary.
+Page routes using Next.js App Router. Each route has its own error boundary.
 
 ```
 src/app/
@@ -54,7 +54,8 @@ src/app/
 │   ├── page.tsx            — Student apps hub (tool cards grid)
 │   ├── error.tsx           — Error boundary (factory pattern)
 │   └── grade-calculator/
-│       └── page.tsx        — Grade calculator tool page
+│       ├── page.tsx        — Grade calculator tool page
+│       └── error.tsx       — Error boundary (factory pattern)
 ├── contact/
 │   ├── page.tsx            — Contact page with social links
 │   └── error.tsx
@@ -73,7 +74,8 @@ src/app/
 │   ├── page.tsx            — Research interests, libraries, philosophy
 │   └── error.tsx
 ├── service/
-│   └── page.tsx            — Redirects → /about#honors-awards
+│   ├── page.tsx            — Redirects → /about#honors-awards
+│   └── error.tsx
 ├── service-awards/
 │   ├── page.tsx            — Redirects → /about#honors-awards
 │   └── error.tsx
@@ -227,8 +229,9 @@ src/shared/
 │   ├── themes.ts
 │   └── index.ts
 │
-├── hooks/                  — Custom React hooks (4 files)
+├── hooks/                  — Custom React hooks (5 files)
 │   ├── use-debounce.ts
+│   ├── use-hover-delay.ts  — Hover-triggered menu open/close with configurable delay
 │   ├── use-is-client.ts    — SSR hydration detection via useSyncExternalStore
 │   ├── use-toast.ts
 │   └── index.ts
@@ -316,7 +319,7 @@ tests/
 .cockpit/
 ├── INDEX.md                — Navigation hub + health dashboard
 ├── PMD.md                  — Project Master Document (architecture, metrics)
-├── ISSUES.md               — Finding tracker (152 findings, 0 open)
+├── ISSUES.md               — Finding tracker (157 findings, 0 open)
 ├── ROADMAP.md              — Improvement roadmap (Phases 7-11)
 ├── STRUCTURE.md            — This file
 ├── HISTORY.md              — Development timeline
@@ -324,6 +327,7 @@ tests/
 ├── PACKAGING.md            — Dependencies and build pipeline
 ├── RELEASES.md             — Version changelog
 ├── PUBLICATION.md          — Deployment details
+├── SKILL.md               — Forensic code audit skill definition (240+ checks)
 └── adr/
     ├── TEMPLATE.md         — ADR template + inline ADRs 001-004
     └── ADR-005-student-tools.md — Student apps feature design

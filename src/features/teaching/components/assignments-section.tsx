@@ -21,7 +21,7 @@ export function AssignmentsSection({ course }: AssignmentsSectionProps) {
   return (
     <CollapsibleSection
       title="Assignments"
-      icon={ClipboardList}
+      icon={<ClipboardList className="w-6 h-6 text-primary" />}
       defaultOpen={true}
     >
       <div className="p-6 space-y-4">

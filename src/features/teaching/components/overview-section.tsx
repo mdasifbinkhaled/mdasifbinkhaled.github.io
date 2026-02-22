@@ -13,7 +13,7 @@ export function OverviewSection({ course }: { course: CourseData }) {
   return (
     <CollapsibleSection
       title="Course Overview"
-      icon={BookOpenText}
+      icon={<BookOpenText className="w-6 h-6 text-primary" />}
       defaultOpen={true}
     >
       <div className="p-6 space-y-8">

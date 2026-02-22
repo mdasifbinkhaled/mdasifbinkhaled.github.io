@@ -23,7 +23,29 @@ Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial rel
 - Pre-modernization checkpoint
 - Marked before major stack upgrade
 
-## Unreleased (Current HEAD: `0cc9fa6`)
+## Unreleased (Current HEAD: `93be3a3`)
+
+### Stabilization & Regression Fix (2026-02-22)
+
+- **F-158 (CRITICAL)**: BUILD BREAK — `CollapsibleSection` icon prop changed from `React.ElementType` to `React.ReactNode`, updated 7 usages across 6 files. Regression from F-156.
+- **F-159 (LOW)**: Added missing `'use client'` to `time-display.tsx`
+- **F-160 (INFO)**: Added `turbopack: { root: '.' }` to `next.config.ts`
+
+### Full Project Tree Audit (2026-02-22)
+
+- **Discovered 5 new findings**: F-161 (sw.js pre-cache), F-162 (.mypy_cache), F-163 (grade-calculator error boundary), F-164 (humans.txt date), F-165 (.nvmrc mismatch)
+- **COCKPIT**: Fixed 14 "Unknown" category/severity entries to proper categories
+- **COCKPIT**: Synchronized INDEX.md, PMD.md, STRUCTURE.md metrics with actual project state (source files: 190, client: 50, findings: 165)
+
+### Forensic Code Audit — State & Performance (2026-02-22)
+
+- **F-153 (PERF)**: `time-display.tsx` interval reduced from 1s to 60s — only displays hours:minutes
+- **F-154 (DRY)**: Duplicated hover-delay logic in `navbar.tsx` extracted to `useHoverDelay` shared hook
+- **F-155 (BUG)**: `publication-card.tsx` uncleaned `setTimeout` — added `useRef`-based cleanup
+- **F-156 (PERF)**: Removed unnecessary `'use client'` from 5 components (`experience-compact`, `skip-link`, `icons`, `course-page-layout`, `table`) — client: 54 → 49
+- **F-157 (PERF)**: `framer-motion` dependency removed entirely (5.3 MB) — replaced with vanilla JS in `spotlight-card.tsx`
+- **COCKPIT**: Added `SKILL.md` — forensic code audit skill definition (240+ checks, 7 phases)
+- **COCKPIT**: All cockpit files synchronized with current truth
 
 ### Fixes Applied (Cockpit Audit)
 

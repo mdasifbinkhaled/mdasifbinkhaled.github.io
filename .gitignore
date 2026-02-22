@@ -54,3 +54,4 @@ Thumbs.db
 # Temporary/Cache
 .turbo
 .eslintcache
+.mypy_cache

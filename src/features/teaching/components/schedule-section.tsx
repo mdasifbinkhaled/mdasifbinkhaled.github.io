@@ -19,7 +19,7 @@ export function ScheduleSection({ course }: { course: CourseData }) {
   return (
     <CollapsibleSection
       title="Class Schedule"
-      icon={Calendar}
+      icon={<Calendar className="w-6 h-6 text-primary" />}
       defaultOpen={false}
     >
       <div className="p-6">
