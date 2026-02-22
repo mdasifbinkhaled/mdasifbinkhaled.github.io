@@ -1,7 +1,7 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-02-23 | **Status**: All resolved
-> **Total Findings**: 181 | **Resolved**: 181 | **Open**: 0
+> **Last Audit**: 2026-02-22 | **Status**: All resolved
+> **Total Findings**: 187 | **Resolved**: 187 | **Open**: 0
 
 ## Dashboard
 
@@ -9,8 +9,8 @@
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      30 (0 open)  — Functional bugs, SEO/a11y violations, dead code
 MEDIUM:    62 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       52 (0 open)  — Polish, minor config, cosmetic
-INFO:      33 (0 open)  — Informational, acceptable trade-offs
+LOW:       57 (0 open)  — Polish, minor config, cosmetic
+INFO:      34 (0 open)  — Informational, acceptable trade-offs
 ```
 
 ## Quality Gates
@@ -31,7 +31,18 @@ _All findings resolved._
 
 ## Resolved Findings
 
-### Resolved in Deep Quality Audit (2026-02-23)
+### Resolved in Root Organization Cleanup (2026-02-22)
+
+| ID    | Category     | Severity | Title                                                      | Resolution                                                                  |
+| ----- | ------------ | -------- | ---------------------------------------------------------- | --------------------------------------------------------------------------- |
+| F-182 | Organization | LOW      | Community docs cluttering root                             | Moved `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SECURITY.md` → `.github/`   |
+| F-183 | Organization | LOW      | `.prettierrc.json` standalone config file                  | Merged into `package.json` `"prettier"` key, deleted file                   |
+| F-184 | Organization | LOW      | `.lintstagedrc.json` standalone config file                | Merged into `package.json` `"lint-staged"` key, deleted file                |
+| F-185 | Redundancy   | LOW      | `.prettierignore` 39 lines duplicating `.gitignore`        | Reduced to 4 lines — Prettier v3 auto-reads `.gitignore`                    |
+| F-186 | Organization | LOW      | Test configs (`tsconfig.test.json`, `vitest.d.ts`) in root | Moved to `tests/tsconfig.json` and `tests/vitest.d.ts`, updated references  |
+| F-187 | Organization | INFO     | `.lighthouserc.js` in root, only used in CI                | Moved to `.github/lighthouserc.js`, updated `lhci.yml` with `--config` flag |
+
+### Resolved in Deep Quality Audit (2026-02-22)
 
 | ID    | Category     | Severity | Title                                               | Resolution                                                                                                                             |
 | ----- | ------------ | -------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |

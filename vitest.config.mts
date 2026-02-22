@@ -11,7 +11,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
     typecheck: {
-      tsconfig: './tsconfig.test.json',
+      tsconfig: './tests/tsconfig.json',
     },
     coverage: {
       provider: 'v8',
