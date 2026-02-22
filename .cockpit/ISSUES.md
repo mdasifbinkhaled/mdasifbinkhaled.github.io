@@ -19,7 +19,7 @@ FALSE POS: 3            — F-212 (CSS dedup), F-214 (config barrel), F-215 (typ
 ```
 TypeScript:  ✅ 0 errors  (strict mode, zero `any`)
 ESLint:      ✅ 0 errors, 0 warnings  (eslint-config-next@16, native flat config)
-Tests:       ✅ 141/141 pass  (21 files, vitest)
+Tests:       ✅ 153/153 pass  (22 files, vitest)
 Build:       ✅ 20 pages exported  (static, 0 warnings)
 Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast removed)
 ```
