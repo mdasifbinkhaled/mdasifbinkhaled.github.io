@@ -6,6 +6,7 @@ import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 import { educationData } from '@/shared/lib/data/education';
 import { professionalExperiences } from '@/shared/lib/data/experience';
 import { samplePublications } from '@/shared/lib/data/publications';
+import Link from 'next/link';
 import { Button } from '@/shared/components/ui/button';
 import { Download, ExternalLinkIcon } from 'lucide-react';
 import {
@@ -128,10 +129,10 @@ export default function CVContent() {
                 asChild
                 className="p-0 h-auto mt-2 text-primary"
               >
-                <a href="/research">
+                <Link href="/research">
                   Learn more about my research{' '}
                   <ExternalLinkIcon className="ml-1 h-4 w-4" />
-                </a>
+                </Link>
               </Button>
             </CardContent>
           </Card>
@@ -162,10 +163,10 @@ export default function CVContent() {
                 asChild
                 className="p-0 h-auto mt-2 text-primary"
               >
-                <a href="/experience">
+                <Link href="/experience">
                   View all experiences{' '}
                   <ExternalLinkIcon className="ml-1 h-4 w-4" />
-                </a>
+                </Link>
               </Button>
             </CardContent>
           </Card>
@@ -186,10 +187,10 @@ export default function CVContent() {
                 asChild
                 className="p-0 h-auto mt-2 text-primary"
               >
-                <a href="/publications">
+                <Link href="/publications">
                   Explore all publications{' '}
                   <ExternalLinkIcon className="ml-1 h-4 w-4" />
-                </a>
+                </Link>
               </Button>
             </CardContent>
           </Card>

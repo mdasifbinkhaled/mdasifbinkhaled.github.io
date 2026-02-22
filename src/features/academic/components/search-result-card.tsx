@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent } from '@/shared/components/ui/card';
@@ -57,7 +58,7 @@ export function SearchResultCard({ item }: SearchResultCardProps) {
             )}
           </div>
           <Button variant="ghost" size="sm" asChild>
-            <a href={item.url}>View</a>
+            <Link href={item.url}>View</Link>
           </Button>
         </div>
       </CardContent>

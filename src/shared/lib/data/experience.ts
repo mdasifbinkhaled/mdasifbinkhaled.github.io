@@ -1,4 +1,4 @@
-import type { ExperienceItem } from '@/shared/types';
+import type { ExperienceItem, Skill } from '@/shared/types';
 
 const rawExperiences: ExperienceItem[] = [
   {
@@ -203,4 +203,4 @@ export const technicalSkills = [
     iconName: 'BookOpen',
     items: ['Bengali (Native)', 'English (Fluent)', 'Hindi (Conversational)'],
   },
-];
+] satisfies Skill[];

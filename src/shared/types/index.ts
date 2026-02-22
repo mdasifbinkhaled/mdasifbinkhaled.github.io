@@ -205,6 +205,7 @@ export interface NavItem {
 // Skill types
 export interface Skill {
   category: string;
+  iconName?: string;
   items: string[];
 }
 

@@ -38,10 +38,10 @@ export function formatBreadcrumbTitle(segment: string): string {
   );
 
   if (complexMatch) {
-    const code = complexMatch[1]!;
-    const num = complexMatch[2]!;
-    const sem = complexMatch[3]!;
-    const year = complexMatch[4]!;
+    const code = complexMatch[1] ?? '';
+    const num = complexMatch[2] ?? '';
+    const sem = complexMatch[3] ?? '';
+    const year = complexMatch[4] ?? '';
 
     const semesterMap: Record<string, string> = {
       spr: 'Spring',
