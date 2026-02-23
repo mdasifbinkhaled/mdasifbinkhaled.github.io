@@ -30,14 +30,29 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn() }),
 }));
 
-// Mock lucide-react icons
-vi.mock('lucide-react', () => ({
-  ChevronLeft: () => <div data-testid="chevron-left">ChevronLeft</div>,
-  ChevronRight: () => <div data-testid="chevron-right">ChevronRight</div>,
-  X: () => <div data-testid="x-icon">X</div>,
-  ArrowUp: () => <div data-testid="arrow-up">ArrowUp</div>,
-  GraduationCap: () => <div data-testid="graduation-cap">GraduationCap</div>,
-}));
+// Mock lucide-react icons — Proxy auto-catches all icon imports
+vi.mock('lucide-react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('lucide-react')>();
+  const MockIcon = (name: string) => {
+    const Icon = (props: Record<string, unknown>) => (
+      <div
+        data-testid={`${name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}-icon`}
+        {...props}
+      >
+        {name}
+      </div>
+    );
+    Icon.displayName = name;
+    return Icon;
+  };
+  return new Proxy(actual as object, {
+    get: (target, prop) => {
+      if (typeof prop === 'string' && /^[A-Z]/.test(prop))
+        return MockIcon(prop);
+      return Reflect.get(target, prop);
+    },
+  });
+});
 
 describe('AppSidebarLayout', () => {
   const mockChildren = <div data-testid="main-content">Main Content</div>;

@@ -16,9 +16,12 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { type DialogProps } from '@radix-ui/react-dialog';
 
-import { Dialog, DialogContent } from '@/shared/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from '@/shared/components/ui/dialog';
 import {
   navItems,
   iubCourseNavItems,
@@ -37,7 +40,7 @@ const itemClass =
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
-export function CommandMenu(_props: DialogProps) {
+export function CommandMenu() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const { setTheme } = useTheme();
@@ -111,6 +114,7 @@ export function CommandMenu(_props: DialogProps) {
       {/* Command dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="overflow-hidden p-0 shadow-2xl sm:max-w-lg">
+          <DialogTitle className="sr-only">Search portfolio</DialogTitle>
           <Command
             className={cn(
               '[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground/70',

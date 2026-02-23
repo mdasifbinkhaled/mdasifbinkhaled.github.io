@@ -1,7 +1,36 @@
 import type { NavItem } from '@/shared/types';
-// Icon components are no longer directly imported here.
-// We will use string names that map to icons in a client component.
+import {
+  coursesTaughtIUB,
+  coursesTaughtBRACU,
+} from '@/shared/lib/data/courses';
+import type { CourseData } from '@/shared/types';
 
+// ---------------------------------------------------------------------------
+// Helper: derive a NavItem from the single source of truth (CourseData)
+// ---------------------------------------------------------------------------
+function courseToNavItem(course: CourseData): NavItem {
+  const institutionSlug = course.institution.toLowerCase(); // 'iub' | 'bracu'
+  const courseSlug = course.slug
+    ? course.slug.toLowerCase()
+    : course.code.toLowerCase().replace(/\s+/g, '');
+
+  // Only 'detailed' tier courses get their own page (via generateStaticParams)
+  const href =
+    course.tier === 'detailed'
+      ? `/teaching/${institutionSlug}/${courseSlug}`
+      : `/teaching/${institutionSlug}`;
+
+  return {
+    href,
+    label: `${course.code} - ${course.title}`,
+    icon: course.iconName ?? 'BookOpen',
+    sectionId: course.code.toLowerCase().replace(/\s+/g, ''),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Main navigation (navbar + sidebar)
+// ---------------------------------------------------------------------------
 export const mainNavItems: NavItem[] = [
   { href: '/', label: 'Home', icon: 'Home', sectionId: 'home' },
   { href: '/about', label: 'About', icon: 'UserCircle', sectionId: 'about' },
@@ -25,11 +54,11 @@ export const mainNavItems: NavItem[] = [
     sectionId: 'teaching',
   },
   { href: '/contact', label: 'Contact', icon: 'Send', sectionId: 'contact' },
-  // Removed: /experience and /service-awards - content merged into /about
-  // { href: "/blog", label: "Blog", icon: "Rss", sectionId: "blog" }, // Uncomment when blog is ready
 ];
 
-// Teaching sub-navigation with institutions and courses
+// ---------------------------------------------------------------------------
+// Teaching sub-navigation
+// ---------------------------------------------------------------------------
 export const teachingNavItems: NavItem[] = [
   {
     href: '/teaching',
@@ -51,81 +80,23 @@ export const teachingNavItems: NavItem[] = [
   },
 ];
 
-// IUB course navigation - synced with actual course data
-// Only 'detailed' tier courses link to their own page; others link to the institution overview
+// ---------------------------------------------------------------------------
+// Course navigation — derived from the course data (single source of truth)
+// Detailed-tier courses appear first (they have their own page).
+// ---------------------------------------------------------------------------
 export const iubCourseNavItems: NavItem[] = [
-  {
-    href: '/teaching/iub/cse211spr26',
-    label: 'CSE 211 - Algorithms',
-    icon: 'Brain',
-    sectionId: 'cse211',
-  },
-  {
-    href: '/teaching/iub',
-    label: 'CSE 101 - Introduction to Programming',
-    icon: 'Code2',
-    sectionId: 'cse101',
-  },
-  {
-    href: '/teaching/iub',
-    label: 'CSE 110 - Fundamentals of Computer System',
-    icon: 'Server',
-    sectionId: 'cse110',
-  },
-  {
-    href: '/teaching/iub',
-    label: 'CSE 201 - Discrete Mathematics',
-    icon: 'Calculator',
-    sectionId: 'cse201',
-  },
-  {
-    href: '/teaching/iub',
-    label: 'CSE 203 - Data Structures',
-    icon: 'Database',
-    sectionId: 'cse203',
-  },
-  {
-    href: '/teaching/iub',
-    label: 'CSE 317 - Numerical Methods',
-    icon: 'Calculator',
-    sectionId: 'cse317',
-  },
-  {
-    href: '/teaching/iub',
-    label: 'CSE 331 - Microprocessors',
-    icon: 'Cpu',
-    sectionId: 'cse331',
-  },
-];
+  ...coursesTaughtIUB.filter((c) => c.tier === 'detailed'),
+  ...coursesTaughtIUB.filter((c) => c.tier !== 'detailed'),
+].map(courseToNavItem);
 
-// BRACU course navigation - synced with actual course data
 export const bracuCourseNavItems: NavItem[] = [
-  {
-    href: '/teaching/bracu/cse420',
-    label: 'CSE 420 - Compiler Design Lab',
-    icon: 'Code2',
-    sectionId: 'cse420',
-  },
-  {
-    href: '/teaching/bracu',
-    label: 'CSE 284 - Data Structures & Algorithms Lab',
-    icon: 'Database',
-    sectionId: 'cse284',
-  },
-  {
-    href: '/teaching/bracu',
-    label: 'CSE 423 - Computer Graphics Lab',
-    icon: 'Code2',
-    sectionId: 'cse423',
-  },
-  {
-    href: '/teaching/bracu',
-    label: 'CSE 489 - Android Development Lab',
-    icon: 'Code2',
-    sectionId: 'cse489',
-  },
-];
+  ...coursesTaughtBRACU.filter((c) => c.tier === 'detailed'),
+  ...coursesTaughtBRACU.filter((c) => c.tier !== 'detailed'),
+].map(courseToNavItem);
 
+// ---------------------------------------------------------------------------
+// Aggregated export
+// ---------------------------------------------------------------------------
 export const navItems = {
   main: mainNavItems,
   teaching: teachingNavItems,

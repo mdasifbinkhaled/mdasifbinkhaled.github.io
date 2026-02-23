@@ -15,46 +15,29 @@ vi.mock('@/shared/components/ui/theme-selector', () => ({
   ThemeSelector: () => <div data-testid="theme-selector">Theme Selector</div>,
 }));
 
-// Mock lucide-react icons
-vi.mock('lucide-react', () => ({
-  GraduationCap: () => (
-    <div data-testid="graduation-cap-icon">GraduationCap</div>
-  ),
-  Menu: () => <div data-testid="menu-icon">Menu</div>,
-  Sun: () => <div data-testid="sun-icon">Sun</div>,
-  Moon: () => <div data-testid="moon-icon">Moon</div>,
-  Search: () => <div data-testid="search-icon">Search</div>,
-  X: () => <div data-testid="x-icon">X</div>,
-  Home: () => <div data-testid="home-icon">Home</div>,
-  UserCircle: () => <div data-testid="user-circle-icon">UserCircle</div>,
-  Cpu: () => <div data-testid="cpu-icon">Cpu</div>,
-  BookOpenText: () => <div data-testid="book-open-text-icon">BookOpenText</div>,
-  Presentation: () => <div data-testid="presentation-icon">Presentation</div>,
-  Send: () => <div data-testid="send-icon">Send</div>,
-  LayoutDashboard: () => (
-    <div data-testid="layout-dashboard-icon">LayoutDashboard</div>
-  ),
-  Building2: () => <div data-testid="building-2-icon">Building2</div>,
-  Code2: () => <div data-testid="code-2-icon">Code2</div>,
-  Server: () => <div data-testid="server-icon">Server</div>,
-  Calculator: () => <div data-testid="calculator-icon">Calculator</div>,
-  Database: () => <div data-testid="database-icon">Database</div>,
-  Brain: () => <div data-testid="brain-icon">Brain</div>,
-  Laptop: () => <div data-testid="laptop-icon">Laptop</div>,
-  BookOpen: () => <div data-testid="book-open-icon">BookOpen</div>,
-  Users: () => <div data-testid="users-icon">Users</div>,
-  Award: () => <div data-testid="award-icon">Award</div>,
-  Rss: () => <div data-testid="rss-icon">Rss</div>,
-  Monitor: () => <div data-testid="monitor-icon">Monitor</div>,
-  Wrench: () => <div data-testid="wrench-icon">Wrench</div>,
-  Timer: () => <div data-testid="timer-icon">Timer</div>,
-  CalendarDays: () => <div data-testid="calendar-days-icon">CalendarDays</div>,
-  Target: () => <div data-testid="target-icon">Target</div>,
-  Download: () => <div data-testid="download-icon">Download</div>,
-  ArrowRight: () => <div data-testid="arrow-right-icon">ArrowRight</div>,
-  ExternalLink: () => <div data-testid="external-link-icon">ExternalLink</div>,
-  FileText: () => <div data-testid="file-text-icon">FileText</div>,
-}));
+// Mock lucide-react icons — Proxy auto-catches all icon imports
+vi.mock('lucide-react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('lucide-react')>();
+  const MockIcon = (name: string) => {
+    const Icon = (props: Record<string, unknown>) => (
+      <div
+        data-testid={`${name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}-icon`}
+        {...props}
+      >
+        {name}
+      </div>
+    );
+    Icon.displayName = name;
+    return Icon;
+  };
+  return new Proxy(actual as object, {
+    get: (target, prop) => {
+      if (typeof prop === 'string' && /^[A-Z]/.test(prop))
+        return MockIcon(prop);
+      return Reflect.get(target, prop);
+    },
+  });
+});
 
 describe('Navbar', () => {
   const mockOnMobileMenuOpen = vi.fn();
