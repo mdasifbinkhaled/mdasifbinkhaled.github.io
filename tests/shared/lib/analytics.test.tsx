@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { PublicationCard } from '../src/shared/components/common/publication-card';
-import { academicEvents } from '../src/shared/lib/analytics';
-import type { PublicationItem } from '../src/shared/types';
+import { PublicationCard } from '@/shared/components/common/publication-card';
+import { academicEvents } from '@/shared/lib/analytics';
+import type { PublicationItem } from '@/shared/types';
 
 // Mock analytics
 vi.mock('@/shared/lib/analytics', () => ({

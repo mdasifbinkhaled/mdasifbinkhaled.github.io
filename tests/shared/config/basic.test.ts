@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { siteConfig } from '../src/shared/config/site';
-import { mainNavItems } from '../src/shared/config/navigation';
-import { themeConfigs, getThemeConfig } from '../src/shared/config/themes';
-import { academicEvents } from '../src/shared/lib/analytics';
+import { siteConfig } from '@/shared/config/site';
+import { mainNavItems } from '@/shared/config/navigation';
+import { themeConfigs, getThemeConfig } from '@/shared/config/themes';
+import { academicEvents } from '@/shared/lib/analytics';
 
 describe('Site configuration smoke tests', () => {
   it('siteConfig has required fields', () => {

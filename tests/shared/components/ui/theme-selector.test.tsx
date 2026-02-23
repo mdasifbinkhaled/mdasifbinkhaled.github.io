@@ -2,8 +2,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
-import { ThemeSelector } from '../src/shared/components/ui/theme-selector';
-import { AppProviders } from '../src/shared/providers/app-providers';
+import { ThemeSelector } from '@/shared/components/ui/theme-selector';
+import { AppProviders } from '@/shared/providers/app-providers';
 
 // Mock next-themes module
 vi.mock('next-themes', async (importOriginal) => {

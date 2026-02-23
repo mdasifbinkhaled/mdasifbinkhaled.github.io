@@ -16,7 +16,7 @@ import {
   ExperiencePreview,
   FeaturedGrant,
   ConnectSection,
-} from '@/features/home/components';
+} from '@/features/home';
 import { siteConfig } from '@/shared/config/site';
 
 export const metadata: Metadata = {

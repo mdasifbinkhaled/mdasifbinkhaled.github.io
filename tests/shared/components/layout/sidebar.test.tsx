@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import AppSidebarLayout from '../src/shared/components/layout/app-sidebar-layout';
+import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
 
 // Mock child components
 vi.mock('@/shared/components/navigation/navbar', () => ({

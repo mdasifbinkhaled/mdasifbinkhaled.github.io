@@ -3,8 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
 import { PublicationCard } from '@/shared/components/common/publication-card';
 import { ExperienceCompact } from '@/shared/components/common/experience-compact';
-import { HeroSection } from '@/features/home/components/hero-section';
-import { NewsSection } from '@/features/home/components/news-section';
+import { HeroSection, NewsSection } from '@/features/home';
 import { CourseCard } from '@/features/teaching/course-card';
 import { SearchInput } from '@/features/academic/components/search-input';
 import type {

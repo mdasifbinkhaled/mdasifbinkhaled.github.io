@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { ToolsHero } from '@/features/apps/components/tools-hero';
-import { ToolCard } from '@/features/apps/components/tool-card';
+import { ToolsHero, ToolCard } from '@/features/apps';
 import { siteConfig } from '@/shared/config/site';
 
 export const metadata: Metadata = {

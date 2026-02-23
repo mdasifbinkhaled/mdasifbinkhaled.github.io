@@ -1,46 +1,9 @@
-import {
-  Home,
-  UserCircle,
-  Cpu,
-  BookOpenText,
-  Presentation,
-  Send,
-  LayoutDashboard,
-  Building2,
-  Code2,
-  Server,
-  Calculator,
-  Database,
-  Brain,
-  BookOpen,
-  Users,
-  Award,
-  Wrench,
-  Timer,
-  CalendarDays,
-  Target,
-} from 'lucide-react';
 import type { ElementType } from 'react';
 
-export const navIconMap: Record<string, ElementType> = {
-  Home,
-  UserCircle,
-  Cpu,
-  BookOpenText,
-  Presentation,
-  Send,
-  LayoutDashboard,
-  Building2,
-  Code2,
-  Server,
-  Calculator,
-  Database,
-  Brain,
-  BookOpen,
-  Users,
-  Award,
-  Wrench,
-  Timer,
-  CalendarDays,
-  Target,
-};
+import { iconComponents } from '@/shared/components/common/icons';
+
+/**
+ * Navigation icon map — re-exported from the single icon registry.
+ * Add new icons to `iconComponents` in `@/shared/components/common/icons.tsx`.
+ */
+export const navIconMap: Record<string, ElementType> = iconComponents;

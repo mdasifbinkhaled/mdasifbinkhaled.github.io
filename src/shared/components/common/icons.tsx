@@ -27,7 +27,7 @@ import {
 
 export type IconName = keyof typeof iconComponents;
 
-const iconComponents = {
+export const iconComponents = {
   Home,
   UserCircle,
   Briefcase,

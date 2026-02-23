@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../src/shared/components/ui/select';
+} from '@/shared/components/ui/select';
 
 describe('Select Component', () => {
   it('should render with placeholder', () => {

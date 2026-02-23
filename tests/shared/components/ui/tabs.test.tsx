@@ -7,7 +7,7 @@ import {
   TabsList,
   TabsTrigger,
   TabsContent,
-} from '../src/shared/components/ui/tabs';
+} from '@/shared/components/ui/tabs';
 
 describe('Tabs Component', () => {
   it('should render tab list and triggers', () => {

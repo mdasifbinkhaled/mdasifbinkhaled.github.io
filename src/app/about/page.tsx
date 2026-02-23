@@ -12,7 +12,7 @@ import {
   CertificationsSection,
   AwardsSection,
   CtaSection,
-} from '@/features/about/components';
+} from '@/features/about';
 
 export const metadata: Metadata = {
   title: 'About',
