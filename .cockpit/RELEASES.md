@@ -23,7 +23,26 @@ Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial rel
 - Pre-modernization checkpoint
 - Marked before major stack upgrade
 
-## Unreleased (Current HEAD: `93be3a3`)
+## Unreleased (Current HEAD: `8d4953d`)
+
+### Structural Cleanup — Phase 11 (2026-02-24)
+
+- **F-218 (MEDIUM)**: Reorganized 14 flat test files into structured directories mirroring src/
+- **F-219 (MEDIUM)**: Fixed 12 broken relative `../src/` imports → `@/` path alias
+- **F-220 (MEDIUM)**: Consolidated dual icon registries (nav-icon-map.ts re-exports from icons.tsx)
+- **F-221 (LOW)**: Added barrel exports for home/, about/, apps/ feature modules
+- **F-222 (LOW)**: Re-added error.tsx to 3 redirect pages for consistency
+- **F-223 (LOW)**: Cleaned .playwright-mcp/ stale log directory
+- **F-224 (LOW)**: Synced all 7 .cockpit/ documentation files to match reality
+- Quality gates: 0 TS errors, 0 lint errors, 153/153 tests (23 files), 20 pages exported
+
+### Production Polish (2026-02-23)
+
+- 4 raw `<a>` internal links converted to Next.js `<Link>` (cv-content: 3, search-result-card: 1)
+- 4 non-null assertions (`!`) replaced with nullish coalescing (`?? ''`) in course-utils.ts
+- Type assertion removed in skills-section.tsx — `iconName` added to Skill interface + `satisfies Skill[]`
+- 12 smoke render tests added for About, Home, Research, Publications feature modules
+- **Commit**: `bdb61cb`
 
 ### Stabilization & Regression Fix (2026-02-22)
 
@@ -35,7 +54,7 @@ Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial rel
 
 - **Discovered 5 new findings**: F-161 (sw.js pre-cache), F-162 (.mypy_cache), F-163 (grade-calculator error boundary), F-164 (humans.txt date), F-165 (.nvmrc mismatch)
 - **COCKPIT**: Fixed 14 "Unknown" category/severity entries to proper categories
-- **COCKPIT**: Synchronized INDEX.md, PMD.md, STRUCTURE.md metrics with actual project state (source files: 190, client: 50, findings: 165)
+- **COCKPIT**: Synchronized INDEX.md, PMD.md, STRUCTURE.md metrics with actual project state
 
 ### Forensic Code Audit — State & Performance (2026-02-22)
 
@@ -86,7 +105,7 @@ Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial rel
 
 - TypeScript: 0 errors
 - ESLint: 0 errors, 0 warnings
-- Tests: 143/143 passing (23 files)
+- Tests: 153/153 passing (23 files)
 - Build: 20 pages exported successfully
 
 ## Recommended Next Release

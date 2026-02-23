@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2026-02-23
-> **Commit**: bdb61cb
+> **Last Updated**: 2026-02-24
+> **Commit**: 8d4953d
 
 ## Mission
 
@@ -23,7 +23,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Themes        | next-themes + 6 color themes         | 0.4.6   |
 | UI Primitives | Radix UI (9 packages)                | various |
 | Testing       | Vitest + Testing Library + jsdom     | 3.2.4   |
-| E2E Testing   | Playwright + axe-core                | 1.52.0  |
+| E2E Testing   | Playwright + axe-core                | 1.58.0  |
 | Linting       | ESLint 9 (flat config)               | 9.39.2  |
 | Formatting    | Prettier                             | 3.6.2   |
 | Git Hooks     | Husky + lint-staged + commitlint     | 9.1.7   |
@@ -36,14 +36,14 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ```
 +---------------------------------------------+
-|  App Layer (1,370 LOC / 10%)                |  Page routes, layouts, error boundaries
+|  App Layer (1,385 LOC / 10%)                |  Page routes, layouts, error boundaries
 |  src/app/                                    |  15 routes, 20 pages
 +---------------------------------------------+
-|  Features Layer (4,741 LOC / 33%)           |  Domain modules
+|  Features Layer (4,778 LOC / 33%)           |  Domain modules
 |  src/features/{about,academic,apps,home,     |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
-|  Shared Layer (7,823 LOC / 55%)             |  Cross-cutting infrastructure
+|  Shared Layer (7,865 LOC / 55%)             |  Cross-cutting infrastructure
 |  src/shared/{components,config,hooks,        |  UI primitives, config, data,
 |              lib,providers,types}            |  analytics, types
 +---------------------------------------------+
@@ -65,20 +65,20 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value    |
 | ----------------- | -------- |
-| Source files      | 189      |
-| Lines of code     | 14,294   |
-| Components (.tsx) | 127      |
-| Client components | 47 (37%) |
-| Server components | 80 (63%) |
-| Custom hooks      | 3        |
+| Source files      | 195      |
+| Lines of code     | 14,388   |
+| Components (.tsx) | 130      |
+| Client components | 49 (38%) |
+| Server components | 81 (62%) |
+| Custom hooks      | 4        |
 | Data files        | 30       |
-| Config files      | 7        |
-| Barrel exports    | 12       |
-| Test files        | 22       |
+| Config files      | 10       |
+| Barrel exports    | 15       |
+| Test files        | 23       |
 | Test count        | 153      |
 | Pages generated   | 20       |
 | Themes            | 6        |
-| Git commits       | 429      |
+| Git commits       | 438      |
 
 ### Largest Files
 
@@ -95,10 +95,10 @@ An academic portfolio showcasing research, publications, teaching activities, an
 ### LOC Distribution
 
 ```
-shared/    7,823 (55%)  ##################################
-features/  4,741 (33%)  ####################
-app/       1,370 (10%)  ######
-styles/      360  (2%)  ##
+shared/    7,865 (55%)  ##################################
+features/  4,778 (33%)  ####################
+app/       1,385 (10%)  ######
+styles/      247  (2%)  ##
 ```
 
 ## Feature Modules
@@ -139,7 +139,7 @@ styles/      360  (2%)  ##
 | TypeScript | PASS   | 0 errors (strict mode)                                                    |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                      |
 | Prettier   | PASS   | All formatted                                                             |
-| Tests      | PASS   | 153/153 pass (22 files)                                                   |
+| Tests      | PASS   | 153/153 pass (23 files)                                                   |
 | Build      | PASS   | 20 pages exported                                                         |
 | Audit      | NOTE   | 20 vulns (1 moderate, 19 high — all mitigated: dev-only or static export) |
 
@@ -157,9 +157,9 @@ styles/      360  (2%)  ##
 - Playwright E2E + axe-core accessibility testing
 - Route announcer for screen reader navigation
 
-### All 221 Findings Resolved
+### All 228 Findings Resolved
 
-All 221 findings from 14 audit sessions have been resolved (3 false positives). See [ISSUES.md](ISSUES.md) for the complete tracker.
+All 228 findings from 15 audit sessions have been resolved (3 false positives). See [ISSUES.md](ISSUES.md) for the complete tracker.
 
 Key resolutions:
 
@@ -182,14 +182,15 @@ See [adr/](adr/) for the full record and template.
 
 ### Notes
 
-- **shared/ layer is 58% of codebase** --- acceptable for an infrastructure-heavy portfolio site
-- **47 client components** --- justified (error boundaries, interactive UI); redirect error.tsx files + toast removed
-- **3 custom hooks** --- `useDebounce`, `useIsClient`, `useHoverDelay` (useToast removed with dead toast system)
-- **12 barrel files** --- all actively imported, 3 added for teaching/research/academic feature modules
+- **shared/ layer is 55% of codebase** --- acceptable for an infrastructure-heavy portfolio site
+- **49 client components** --- justified (error boundaries, interactive UI); includes redirect error.tsx for consistency
+- **4 custom hooks** --- `useDebounce`, `useIsClient`, `useHoverDelay`, `useToast`
+- **15 barrel files** --- all actively imported; organized per feature module and shared layers
 - **6 themes** --- light, dark, ocean, forest, lavender, slate
 - **54 LOC analytics** --- lean, only 4 wired events (viewCV, downloadCV, viewPublication, downloadPublication)
 - **Zero animation libraries** --- framer-motion removed; spotlight effect now vanilla JS (15 LOC)
 - **All hardcoded colors migrated** --- only documented exceptions remain (global-error.tsx, brand colors)
 - **4 GitHub workflows**: ci.yml (lint/test/build), lhci.yml (Lighthouse CI), nextjs.yml (deploy), security.yml (audit)
+- **Tests reorganized** --- mirroring src/ directory structure under tests/shared/ and tests/features/
 
 See [ISSUES.md](ISSUES.md) for full finding tracker.

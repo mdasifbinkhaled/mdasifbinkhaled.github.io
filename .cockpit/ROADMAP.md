@@ -1,17 +1,17 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-02-22
-> **Current Version**: 1.2.0 | **Quality**: All gates green (143/143 tests, 0 TS/ESLint errors, 20/20 pages)
-> **Open Findings**: 0 (0 CRITICAL, 0 HIGH, 0 MEDIUM, 0 LOW, 0 INFO)
+> **Created**: 2026-02-19 | **Updated**: 2026-02-24
+> **Current Version**: 1.2.0 | **Quality**: All gates green (153/153 tests, 0 TS/ESLint errors, 20/20 pages)
+> **Open Findings**: 0 (228 total, 225 resolved, 3 false positives)
 
 ## Phase 6: Code Quality & Cleanup
 
-| #   | Item                                                     | Category     | Complexity | Impact |
-| --- | -------------------------------------------------------- | ------------ | ---------- | ------ |
-| 6.1 | **Remove Unnecessary Hooks** (useMemo/useEffect)         | Refactor     | MODERATE   | HIGH   |
-| 6.2 | **Eliminate Magic Numbers & Hardcoded UI sizing**        | UI/Style     | EASY       | MEDIUM |
-| 6.3 | **Split Monolithic Components** (e.g. `research/page`)   | Architecture | HARD       | HIGH   |
-| 6.4 | **Standardize Inline Data** into `shared/lib/data` files | Data         | EASY       | MEDIUM |
+| #   | Item                                                     | Category     | Complexity | Impact | Status    |
+| --- | -------------------------------------------------------- | ------------ | ---------- | ------ | --------- |
+| 6.1 | **Remove Unnecessary Hooks** (useMemo/useEffect)         | Refactor     | MODERATE   | HIGH   | Completed |
+| 6.2 | **Eliminate Magic Numbers & Hardcoded UI sizing**        | UI/Style     | EASY       | MEDIUM | Completed |
+| 6.3 | **Split Monolithic Components** (e.g. `research/page`)   | Architecture | HARD       | HIGH   | Completed |
+| 6.4 | **Standardize Inline Data** into `shared/lib/data` files | Data         | EASY       | MEDIUM | Completed |
 
 ## Phase 7: Student Apps (New Feature — `/apps`)
 

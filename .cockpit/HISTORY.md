@@ -1,6 +1,6 @@
 # HISTORY.md — Development Timeline
 
-> 427 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
+> 438 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
 
 ## Timeline
 
@@ -134,6 +134,21 @@
   - Type assertion removed in skills-section.tsx — `iconName` added to Skill interface + `satisfies Skill[]` on data
   - 12 smoke render tests added for About, Home, Research, Publications feature modules
 - Quality gates: 0 TS errors, 0 lint errors, 153/153 tests (22 files), 20 pages exported
+
+### Phase 11 — Structural Cleanup (2026-02-24)
+
+- **Commits**: `634e466`, `25838a6`, `8d4953d`
+- **7 findings** (F-218 through F-224), all resolved
+- **Test reorganization**: 14 flat test files reorganized into structured directories mirroring src/
+  - tests/shared/{components/{common,layout,navigation,ui},config,hooks,lib}/
+  - tests/features/{academic,apps,teaching}/
+- **Import cleanup**: 12 broken relative `../src/` imports replaced with `@/` path alias across 6 files
+- **Icon consolidation**: Dual icon registries merged — nav-icon-map.ts now re-exports from icons.tsx
+- **Barrel exports**: Added feature-level index.ts for home/, about/, apps/ modules; updated all page consumers
+- **Error boundary consistency**: Re-added error.tsx to 3 redirect pages (/experience, /service, /service-awards)
+- **Stale artifacts**: Deleted .playwright-mcp/ log directory
+- **Cockpit sync**: All 7 .cockpit/ documentation files updated to match codebase reality
+- Quality gates: 0 TS errors, 0 lint errors, 153/153 tests (23 files), 20 pages exported
 
 ## Tags
 

@@ -52,16 +52,19 @@
 | `@commitlint/config-conventional` | ^20.0.0  | Conventional commit rules    |
 | `cross-env`                       | ^7.0.3   | Cross-platform env vars      |
 | `tsc-files`                       | ^1.1.4   | Type-check staged files only |
+| `@playwright/test`                | ^1.58.0  | E2E testing + accessibility  |
 
 ## Overrides
 
 ```json
 {
-  "glob": "10.1.0"
+  "glob": "10.1.0",
+  "typescript-eslint": "8.53.1"
 }
 ```
 
-Pinned to avoid breaking changes in glob used by transitive deps.
+- `glob` pinned to avoid breaking changes in transitive deps.
+- `typescript-eslint` pinned for ESLint flat config compatibility.
 
 ## Build Pipeline
 

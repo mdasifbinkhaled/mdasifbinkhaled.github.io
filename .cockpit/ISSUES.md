@@ -1,15 +1,15 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-02-22 | **Status**: All resolved
-> **Total Findings**: 221 | **Resolved**: 218 | **False Positives**: 3 | **Open**: 0
+> **Last Audit**: 2026-02-24 | **Status**: All resolved
+> **Total Findings**: 228 | **Resolved**: 225 | **False Positives**: 3 | **Open**: 0
 
 ## Dashboard
 
 ```
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      30 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    65 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       75 (0 open)  — Polish, minor config, cosmetic
+MEDIUM:    68 (0 open)  — Performance, DRY, architecture, testing gaps
+LOW:       79 (0 open)  — Polish, minor config, cosmetic
 INFO:      38 (0 open)  — Informational, acceptable trade-offs
 FALSE POS: 3            — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
 ```
@@ -19,7 +19,7 @@ FALSE POS: 3            — F-212 (CSS dedup), F-214 (config barrel), F-215 (typ
 ```
 TypeScript:  ✅ 0 errors  (strict mode, zero `any`)
 ESLint:      ✅ 0 errors, 0 warnings  (eslint-config-next@16, native flat config)
-Tests:       ✅ 153/153 pass  (22 files, vitest)
+Tests:       ✅ 153/153 pass  (23 files, vitest)
 Build:       ✅ 20 pages exported  (static, 0 warnings)
 Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast removed)
 ```
@@ -31,6 +31,18 @@ Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast re
 _All findings resolved._
 
 ## Resolved Findings
+
+### Resolved in Structural Cleanup — Phase 11 (2026-02-24)
+
+| ID    | Category      | Severity | Title                                                     | Resolution                                                                                                                              |
+| ----- | ------------- | -------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| F-218 | Organization  | MEDIUM   | 14 flat test files not mirroring src/ directory structure | Reorganized into tests/shared/{components/{common,layout,navigation,ui},config,hooks,lib}/ and tests/features/{academic,apps,teaching}/ |
+| F-219 | Imports       | MEDIUM   | 12 broken relative `../src/` imports across 6 test files  | Replaced all with `@/` path alias (configured in vitest.config.mts)                                                                     |
+| F-220 | DRY           | MEDIUM   | Dual icon registries: icons.tsx and nav-icon-map.ts       | Consolidated — nav-icon-map.ts now re-exports `iconComponents` from icons.tsx, single source of truth                                   |
+| F-221 | Architecture  | LOW      | Missing feature-level barrel exports (home, about, apps)  | Created index.ts barrels for home/, about/, and apps/; updated all page consumers                                                       |
+| F-222 | Consistency   | LOW      | 3 redirect pages missing error.tsx error boundaries       | Re-added error.tsx to /experience, /service, /service-awards for consistency (reverses F-209)                                           |
+| F-223 | Cleanup       | LOW      | .playwright-mcp/ log directory committed to repo          | Deleted stale Playwright MCP log files                                                                                                  |
+| F-224 | Documentation | LOW      | .cockpit/ docs stale after 6 structural changes           | Synced all 7 cockpit docs to match codebase reality (this update)                                                                       |
 
 ### Resolved in Architecture Refactoring — Phase 5: Dead Code & Polish (2026-02-22)
 

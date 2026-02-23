@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-02-22 | 188 source files | 14,405 LOC
+> Last Updated: 2026-02-24 | 195 source files | 14,388 LOC
 
 ## Root Configuration
 
@@ -32,7 +32,7 @@ public/
 
 ## Source Tree — `src/` (14,495 LOC)
 
-### App Layer — `src/app/` (1,582 LOC)
+### App Layer — `src/app/` (1,385 LOC)
 
 Page routes using Next.js App Router. Each route has its own error boundary.
 
@@ -95,7 +95,7 @@ src/app/
             └── error.tsx
 ```
 
-### Features Layer — `src/features/` (4,546 LOC)
+### Features Layer — `src/features/` (4,778 LOC)
 
 Domain-specific feature modules. Each is self-contained.
 
@@ -173,7 +173,7 @@ src/features/
         └── syllabus-table.tsx
 ```
 
-### Shared Layer — `src/shared/` (8,367 LOC, 58% of codebase)
+### Shared Layer — `src/shared/` (7,865 LOC, 55% of codebase)
 
 Cross-cutting infrastructure: components, config, data, hooks, lib, types.
 
@@ -271,46 +271,62 @@ src/shared/
     └── tools.ts            — Student apps types + STANDARD_GRADING_SCALE
 ```
 
-### Styles — `src/styles/` (248 LOC)
+### Styles — `src/styles/` (247 LOC)
 
 ```
 src/styles/
 └── tokens.css              — Design tokens: colors, spacing, typography for 6 themes
 ```
 
-## Tests — `tests/` (23 files, 143 tests)
+## Tests — `tests/` (23 files, 153 tests)
+
+Organized to mirror `src/` directory structure.
 
 ```
 tests/
-├── setup.ts                — Vitest setup (jest-dom matchers, lucide mocks)
-├── analytics.test.tsx
-├── back-to-top.test.tsx
-├── basic.test.ts           — 8 smoke tests (config, navigation, themes, analytics)
-├── components.test.tsx
-├── data-integrity.test.ts  — Validates data layer integrity at test time
-├── grade-calculator.test.tsx — Grade calculator component tests
-├── navbar.active.test.tsx
-├── navbar.test.tsx
-├── select.test.tsx
-├── sheet.test.tsx
-├── sidebar.a11y.test.tsx
-├── sidebar.test.tsx
-├── skip-link.test.tsx
-├── structured-data.test.ts
-├── tabs.test.tsx
-├── theme-selector.test.tsx
-├── use-debounce.test.ts
-├── use-toast.test.tsx
+├── setup.ts                    — Vitest setup (jest-dom matchers, lucide mocks)
+├── tsconfig.json               — Test-specific TypeScript config
+├── vitest.d.ts                 — Vitest type declarations
+│
 ├── e2e/
-│   └── smoke.spec.ts      — Playwright E2E smoke + accessibility tests
+│   └── smoke.spec.ts           — Playwright E2E smoke + accessibility tests
+│
 ├── features/
+│   ├── pages-smoke.test.tsx    — Page-level smoke tests
 │   ├── academic/
 │   │   └── get-type-icon.test.ts
+│   ├── apps/
+│   │   └── grade-calculator.test.tsx — Grade calculator component tests
 │   └── teaching/
 │       └── styles.test.ts
-└── shared/lib/
-    ├── course-utils.test.ts
-    └── data.test.ts
+│
+└── shared/
+    ├── config/
+    │   └── basic.test.ts       — 8 smoke tests (config, navigation, themes, analytics)
+    ├── hooks/
+    │   └── use-debounce.test.ts
+    ├── lib/
+    │   ├── analytics.test.tsx
+    │   ├── course-utils.test.ts
+    │   ├── data-integrity.test.ts  — Validates data layer integrity at test time
+    │   ├── data.test.ts
+    │   └── structured-data.test.ts
+    └── components/
+        ├── common/
+        │   ├── back-to-top.test.tsx
+        │   ├── components.test.tsx
+        │   └── skip-link.test.tsx
+        ├── layout/
+        │   ├── sidebar.a11y.test.tsx
+        │   └── sidebar.test.tsx
+        ├── navigation/
+        │   ├── navbar.active.test.tsx
+        │   └── navbar.test.tsx
+        └── ui/
+            ├── select.test.tsx
+            ├── sheet.test.tsx
+            ├── tabs.test.tsx
+            └── theme-selector.test.tsx
 ```
 
 ## Cockpit — `.cockpit/` (Project Intelligence)
@@ -319,7 +335,7 @@ tests/
 .cockpit/
 ├── INDEX.md                — Navigation hub + health dashboard
 ├── PMD.md                  — Project Master Document (architecture, metrics)
-├── ISSUES.md               — Finding tracker (157 findings, 0 open)
+├── ISSUES.md               — Finding tracker (228 findings, 0 open)
 ├── ROADMAP.md              — Improvement roadmap (Phases 7-11)
 ├── STRUCTURE.md            — This file
 ├── HISTORY.md              — Development timeline
