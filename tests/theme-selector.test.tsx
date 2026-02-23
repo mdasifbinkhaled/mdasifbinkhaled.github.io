@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
+
 import { ThemeSelector } from '../src/shared/components/ui/theme-selector';
 import { AppProviders } from '../src/shared/providers/app-providers';
 

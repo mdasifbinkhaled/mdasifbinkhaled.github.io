@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Navbar } from '@/shared/components/navigation/navbar';
-import '@testing-library/jest-dom';
 
 // Mock next/navigation
 const mockUsePathname = vi.fn();
@@ -14,30 +13,6 @@ vi.mock('next/navigation', () => ({
 vi.mock('@/shared/components/ui/theme-selector', () => ({
   ThemeSelector: () => <div data-testid="theme-selector">Theme Selector</div>,
 }));
-
-// Mock lucide-react icons — Proxy auto-catches all icon imports
-vi.mock('lucide-react', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('lucide-react')>();
-  const MockIcon = (name: string) => {
-    const Icon = (props: Record<string, unknown>) => (
-      <div
-        data-testid={`${name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}-icon`}
-        {...props}
-      >
-        {name}
-      </div>
-    );
-    Icon.displayName = name;
-    return Icon;
-  };
-  return new Proxy(actual as object, {
-    get: (target, prop) => {
-      if (typeof prop === 'string' && /^[A-Z]/.test(prop))
-        return MockIcon(prop);
-      return Reflect.get(target, prop);
-    },
-  });
-});
 
 describe('Navbar', () => {
   const mockOnMobileMenuOpen = vi.fn();

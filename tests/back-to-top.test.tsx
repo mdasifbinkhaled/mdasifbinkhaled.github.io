@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BackToTop } from '@/shared/components/common/back-to-top';
-import '@testing-library/jest-dom';
 
 // Mock next/navigation
 vi.mock('next/navigation', () => ({
