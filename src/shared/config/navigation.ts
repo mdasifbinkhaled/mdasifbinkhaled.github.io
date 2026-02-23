@@ -51,78 +51,78 @@ export const teachingNavItems: NavItem[] = [
   },
 ];
 
-// IUB course navigation - synced with actual course JSON files
+// IUB course navigation - synced with actual course data
+// Only 'detailed' tier courses link to their own page; others link to the institution overview
 export const iubCourseNavItems: NavItem[] = [
   {
-    href: '/teaching/iub/cse101',
-    label: 'CSE 101 - Introduction to Programming',
-    icon: 'Code2',
-    sectionId: 'cse101',
-  },
-  {
-    href: '/teaching/iub/cse110',
-    label: 'CSE 110 - Fundamentals of Computer System',
-    icon: 'Server',
-    sectionId: 'cse110',
-  },
-  {
-    href: '/teaching/iub/cse201',
-    label: 'CSE 201 - Discrete Mathematics',
-    icon: 'Calculator',
-    sectionId: 'cse201',
-  },
-  {
-    href: '/teaching/iub/cse203',
-    label: 'CSE 203 - Data Structures',
-    icon: 'Database',
-    sectionId: 'cse203',
-  },
-  {
     href: '/teaching/iub/cse211spr26',
-
     label: 'CSE 211 - Algorithms',
     icon: 'Brain',
     sectionId: 'cse211',
   },
   {
-    href: '/teaching/iub/cse317',
+    href: '/teaching/iub',
+    label: 'CSE 101 - Introduction to Programming',
+    icon: 'Code2',
+    sectionId: 'cse101',
+  },
+  {
+    href: '/teaching/iub',
+    label: 'CSE 110 - Fundamentals of Computer System',
+    icon: 'Server',
+    sectionId: 'cse110',
+  },
+  {
+    href: '/teaching/iub',
+    label: 'CSE 201 - Discrete Mathematics',
+    icon: 'Calculator',
+    sectionId: 'cse201',
+  },
+  {
+    href: '/teaching/iub',
+    label: 'CSE 203 - Data Structures',
+    icon: 'Database',
+    sectionId: 'cse203',
+  },
+  {
+    href: '/teaching/iub',
     label: 'CSE 317 - Numerical Methods',
     icon: 'Calculator',
     sectionId: 'cse317',
   },
   {
-    href: '/teaching/iub/cse401',
-    label: 'CSE 401 - Finite Automata and Computability',
-    icon: 'Brain',
-    sectionId: 'cse401',
+    href: '/teaching/iub',
+    label: 'CSE 331 - Microprocessors',
+    icon: 'Cpu',
+    sectionId: 'cse331',
   },
 ];
 
-// BRACU course navigation - synced with actual course JSON files
+// BRACU course navigation - synced with actual course data
 export const bracuCourseNavItems: NavItem[] = [
   {
     href: '/teaching/bracu/cse420',
     label: 'CSE 420 - Compiler Design Lab',
-    icon: 'Brain',
+    icon: 'Code2',
     sectionId: 'cse420',
   },
   {
-    href: '/teaching/bracu/cse423',
+    href: '/teaching/bracu',
+    label: 'CSE 284 - Data Structures & Algorithms Lab',
+    icon: 'Database',
+    sectionId: 'cse284',
+  },
+  {
+    href: '/teaching/bracu',
     label: 'CSE 423 - Computer Graphics Lab',
     icon: 'Code2',
     sectionId: 'cse423',
   },
   {
-    href: '/teaching/bracu/cse489',
+    href: '/teaching/bracu',
     label: 'CSE 489 - Android Development Lab',
     icon: 'Code2',
     sectionId: 'cse489',
-  },
-  {
-    href: '/teaching/bracu/mat361',
-    label: 'MAT 361 - Numerical Methods Lab',
-    icon: 'Calculator',
-    sectionId: 'mat361',
   },
 ];
 

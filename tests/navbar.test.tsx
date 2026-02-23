@@ -50,6 +50,10 @@ vi.mock('lucide-react', () => ({
   Timer: () => <div data-testid="timer-icon">Timer</div>,
   CalendarDays: () => <div data-testid="calendar-days-icon">CalendarDays</div>,
   Target: () => <div data-testid="target-icon">Target</div>,
+  Download: () => <div data-testid="download-icon">Download</div>,
+  ArrowRight: () => <div data-testid="arrow-right-icon">ArrowRight</div>,
+  ExternalLink: () => <div data-testid="external-link-icon">ExternalLink</div>,
+  FileText: () => <div data-testid="file-text-icon">FileText</div>,
 }));
 
 describe('Navbar', () => {

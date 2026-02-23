@@ -201,7 +201,7 @@ function InstitutionFlyout({
       >
         {navItems.map((item) => (
           <Link
-            key={item.href}
+            key={`${item.href}-${item.sectionId}`}
             className="block px-3 py-2 hover:bg-accent/50 text-sm"
             href={item.href}
           >

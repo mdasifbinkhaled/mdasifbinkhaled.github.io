@@ -70,6 +70,9 @@ vi.mock('lucide-react', () => ({
   Award: () => <div data-testid="award-icon">Award</div>,
   Clock: () => <div data-testid="clock-icon">Clock</div>,
   Target: () => <div data-testid="target-icon">Target</div>,
+  Download: () => <div data-testid="download-icon">Download</div>,
+  ArrowRight: () => <div data-testid="arrow-right-icon">ArrowRight</div>,
+  ExternalLink: () => <div data-testid="external-link-icon">ExternalLink</div>,
 }));
 
 function TestWrapper({ children }: { children: React.ReactNode }) {
