@@ -2,7 +2,15 @@
 // Seat Planner — CSV / Excel‑compatible export
 // ────────────────────────────────────────────────
 
-import type { Student, ExamDetails, RoomAllocation } from './types';
+import type { Student, ExamDetails } from './types';
+
+// ── CSV value escaping ──────────────────────────
+
+/** Wrap value in quotes if it contains commas, quotes, or newlines */
+function csvCell(value: string): string {
+  if (/[",\n\r]/.test(value)) return `"${value.replace(/"/g, '""')}"`;
+  return value;
+}
 
 // ── master list CSV ─────────────────────────────
 
@@ -13,35 +21,12 @@ export function exportMasterListCSV(
   const header = 'SL,Student ID,Student Name,Section,Room Number';
   const rows = students.map(
     (s, i) =>
-      `${i + 1},${s.id},"${s.name}",${s.section},${s.room ?? 'Unassigned'}`
+      `${i + 1},${csvCell(s.id)},${csvCell(s.name)},${s.section},${csvCell(s.room ?? 'Unassigned')}`
   );
 
   download(
     [header, ...rows].join('\n'),
     csvFilename(details, 'Master_List'),
-    'text/csv'
-  );
-}
-
-// ── per‑room CSV ────────────────────────────────
-
-export function exportRoomCSV(
-  alloc: RoomAllocation,
-  details: ExamDetails
-): void {
-  const meta = [
-    `"Room: ${alloc.room.name}"`,
-    `"${details.courseCodes}${details.courseTitle ? ` — ${details.courseTitle}` : ''}"`,
-    '',
-  ];
-  const header = 'SL,Student ID,Student Name,Section';
-  const rows = alloc.students.map(
-    (s, i) => `${i + 1},${s.id},"${s.name}",${s.section}`
-  );
-
-  download(
-    [...meta, header, ...rows].join('\n'),
-    csvFilename(details, alloc.room.name),
     'text/csv'
   );
 }

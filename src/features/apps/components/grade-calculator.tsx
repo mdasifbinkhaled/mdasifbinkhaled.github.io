@@ -64,7 +64,7 @@ export function GradeCalculator() {
     setComponents([
       ...components,
       {
-        id: Math.random().toString(36).substring(7),
+        id: crypto.randomUUID(),
         name: `Component ${components.length + 1}`,
         weight: 0,
         score: 0,
@@ -80,14 +80,14 @@ export function GradeCalculator() {
   const handleChange = (
     id: string,
     field: keyof GradeComponent,
-    value: number | string
+    value: string
   ) => {
     setComponents(
       components.map((c) => {
-        if (c.id === id) {
-          return { ...c, [field]: value };
-        }
-        return c;
+        if (c.id !== id) return c;
+        if (field === 'name') return { ...c, [field]: value };
+        const num = value === '' ? 0 : Number(value);
+        return { ...c, [field]: isNaN(num) ? c[field] : num };
       })
     );
   };

@@ -122,14 +122,17 @@ export function parseStudentData(text: string): ParseResult {
     students.push({ id, name, section });
   }
 
-  // duplicate‑ID check
+  // duplicate‑ID check — keep only the first occurrence
   const seen = new Set<string>();
+  const deduped: Student[] = [];
   for (const s of students) {
     if (seen.has(s.id)) {
-      errors.push(`Duplicate student ID: ${s.id}`);
+      errors.push(`Duplicate student ID "${s.id}" — keeping first occurrence`);
+    } else {
+      seen.add(s.id);
+      deduped.push(s);
     }
-    seen.add(s.id);
   }
 
-  return { students, errors };
+  return { students: deduped, errors };
 }

@@ -196,7 +196,8 @@ function renderRoomPage(
   });
 
   // footer — attendance & invigilator lines
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // jspdf-autotable augments the jsPDF instance at runtime but has no TS declarations
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- jspdf-autotable runtime extension
   const finalY: number = (doc as any).lastAutoTable?.finalY ?? 200;
   const fy = finalY + 14;
 
