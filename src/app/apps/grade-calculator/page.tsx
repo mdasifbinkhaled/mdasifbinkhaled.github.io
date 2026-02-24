@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { siteConfig } from '@/shared/config/site';
 
 export const metadata: Metadata = {
-  title: `Grade Calculator | Student Apps | ${siteConfig.author}`,
+  title: `Grade Calculator | Apps | ${siteConfig.author}`,
   description:
     'Calculate your current course standing and dynamically project the required assignment scores for your desired final grade.',
   alternates: {

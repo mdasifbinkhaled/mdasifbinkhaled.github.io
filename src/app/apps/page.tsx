@@ -3,7 +3,7 @@ import { ToolsHero, ToolCard } from '@/features/apps';
 import { siteConfig } from '@/shared/config/site';
 
 export const metadata: Metadata = {
-  title: `Student Apps | ${siteConfig.author}`,
+  title: `Apps | ${siteConfig.author}`,
   description:
     'A suite of interactive academic utilities including grade calculators, seat planners, and study aids.',
   alternates: {
@@ -34,11 +34,11 @@ export default function AppsPage() {
             status="planned"
           />
           <ToolCard
-            title="Seat Plan Generator"
-            description="Upload student matrices to generate optimized, randomized seating arrangements for exams."
+            title="Seat Planner"
+            description="Generate exam seating arrangements with room assignments, master lists, and printable signature sheets."
             icon="Building2"
-            href="/apps/seat-plan"
-            status="planned"
+            href="/apps/seat-planner"
+            status="active"
           />
         </div>
       </section>

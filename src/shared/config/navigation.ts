@@ -43,7 +43,7 @@ export const mainNavItems: NavItem[] = [
   },
   {
     href: '/apps',
-    label: 'Student Apps',
+    label: 'Apps',
     icon: 'Wrench',
     sectionId: 'apps',
   },
