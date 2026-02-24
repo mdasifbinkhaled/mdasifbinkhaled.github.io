@@ -5,7 +5,6 @@ import { PublicationCard } from '@/shared/components/common/publication-card';
 import { ExperienceCompact } from '@/shared/components/common/experience-compact';
 import { HeroSection, NewsSection } from '@/features/home';
 import { CourseCard } from '@/features/teaching/course-card';
-import { SearchInput } from '@/features/academic/components/search-input';
 import type {
   PublicationItem,
   ExperienceItem,
@@ -400,58 +399,6 @@ describe('Performance', () => {
     expect(end - start - baseline).toBeLessThan(150);
 
     nowSpy.mockRestore();
-  });
-});
-
-describe('SearchInput', () => {
-  it('renders with placeholder and handles input', () => {
-    const onChange = vi.fn();
-    const onClear = vi.fn();
-
-    renderWithTheme(
-      <SearchInput
-        value=""
-        onChange={onChange}
-        onClear={onClear}
-        placeholder="Find papers..."
-      />
-    );
-
-    const input = screen.getByPlaceholderText('Find papers...');
-    expect(input).toBeInTheDocument();
-
-    fireEvent.change(input, { target: { value: 'test' } });
-    expect(onChange).toHaveBeenCalledWith('test');
-  });
-
-  it('shows clear button only when value exists and triggers onClear', () => {
-    const onChange = vi.fn();
-    const onClear = vi.fn();
-
-    const { rerender } = renderWithTheme(
-      <SearchInput value="" onChange={onChange} onClear={onClear} />
-    );
-
-    expect(
-      screen.queryByRole('button', { name: /clear/i })
-    ).not.toBeInTheDocument();
-
-    // Rerender with value
-    rerender(
-      <AppProviders>
-        <SearchInput
-          value="search query"
-          onChange={onChange}
-          onClear={onClear}
-        />
-      </AppProviders>
-    );
-
-    const clearButton = screen.getByRole('button', { name: /clear/i });
-    expect(clearButton).toBeInTheDocument();
-
-    fireEvent.click(clearButton);
-    expect(onClear).toHaveBeenCalled();
   });
 });
 

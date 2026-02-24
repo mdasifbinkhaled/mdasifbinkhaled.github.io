@@ -113,9 +113,67 @@ npm run build
 
 ## Deployment
 
-- **Platform**: GitHub Pages
-- **Trigger**: Push to `main` branch
-- **Workflow**: `.github/workflows/nextjs.yml`
-- **Custom domain**: mdasifbinkhaled.github.io
-- **CDN**: GitHub Pages CDN
-- **SSL**: Automatic via GitHub Pages
+| Property          | Value                                     |
+| ----------------- | ----------------------------------------- |
+| **Platform**      | GitHub Pages                              |
+| **URL**           | https://mdasifbinkhaled.github.io         |
+| **Repository**    | mdasifbinkhaled/mdasifbinkhaled.github.io |
+| **Deploy method** | GitHub Actions → Static Export → Pages    |
+| **SSL**           | Automatic (GitHub managed)                |
+| **CDN**           | GitHub Pages CDN (Fastly)                 |
+
+## CI Workflows
+
+### `nextjs.yml` — Production Deploy
+
+- Triggers: Push to `main`
+- Builds and deploys to GitHub Pages
+
+### `ci.yml` — Pull Request Checks
+
+- Triggers: Pull requests to `main`
+- Runs: lint, typecheck, test, build
+- All must pass to merge
+
+### `lhci.yml` — Lighthouse CI
+
+- Triggers: Pull requests to `main`
+- Runs: Lighthouse audits against static build
+- Enforces performance and accessibility budgets
+
+### `security.yml` — Security Audit
+
+- Triggers: Weekly schedule + on push
+- Runs: `npm audit`, reports vulnerabilities
+
+## SEO Assets
+
+| Asset         | Location                   | Status                      |
+| ------------- | -------------------------- | --------------------------- |
+| `robots.txt`  | `/robots.txt` (generated)  | ✅                          |
+| `sitemap.xml` | `/sitemap.xml` (generated) | ✅ (20+ URLs)               |
+| `humans.txt`  | `/humans.txt` (static)     | ✅                          |
+| JSON-LD       | Embedded in `<head>`       | ✅ Person + Website schemas |
+| OpenGraph     | `<meta>` tags in layout    | ✅                          |
+| Twitter Cards | `<meta>` tags in layout    | ✅                          |
+
+## PWA
+
+| Asset                        | Status                          |
+| ---------------------------- | ------------------------------- |
+| `site.webmanifest`           | ✅ Present                      |
+| App icons (192x192, 512x512) | ✅ Present                      |
+| Service Worker               | ✅ `public/sw.js`               |
+| Offline support              | ✅ Cache-first for static pages |
+
+## Analytics
+
+- **Google Analytics**: GA4 via `gtag.js`
+- **Implementation**: `src/shared/lib/analytics.ts`
+- **Events tracked**: viewCV, downloadCV, viewPublication, downloadPublication
+- **Privacy**: Telemetry disabled in build (`NEXT_TELEMETRY_DISABLED=1`)
+
+## Dependabot
+
+- Active for GitHub Actions versions and npm packages
+- Groups: linting, testing, UI, react

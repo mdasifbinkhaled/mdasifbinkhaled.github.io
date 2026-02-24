@@ -36,11 +36,11 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ```
 +---------------------------------------------+
-|  App Layer (1,385 LOC / 10%)                |  Page routes, layouts, error boundaries
+|  App Layer (1,498 LOC / 11%)                |  Page routes, layouts, error boundaries
 |  src/app/                                    |  15 routes, 20 pages
 +---------------------------------------------+
-|  Features Layer (4,778 LOC / 33%)           |  Domain modules
-|  src/features/{about,academic,apps,home,     |  Self-contained feature code
+|  Features Layer (4,234 LOC / 31%)           |  Domain modules
+|  src/features/{about,apps,home,              |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
 |  Shared Layer (7,865 LOC / 55%)             |  Cross-cutting infrastructure
@@ -65,17 +65,17 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value    |
 | ----------------- | -------- |
-| Source files      | 195      |
-| Lines of code     | 14,388   |
-| Components (.tsx) | 130      |
-| Client components | 49 (38%) |
-| Server components | 81 (62%) |
-| Custom hooks      | 4        |
+| Source files      | 186      |
+| Lines of code     | 13,844   |
+| Components (.tsx) | 125      |
+| Client components | 48 (38%) |
+| Server components | 77 (62%) |
+| Custom hooks      | 3        |
 | Data files        | 30       |
 | Config files      | 10       |
-| Barrel exports    | 15       |
-| Test files        | 23       |
-| Test count        | 153      |
+| Barrel exports    | 14       |
+| Test files        | 22       |
+| Test count        | 149      |
 | Pages generated   | 20       |
 | Themes            | 6        |
 | Git commits       | 438      |
@@ -95,9 +95,9 @@ An academic portfolio showcasing research, publications, teaching activities, an
 ### LOC Distribution
 
 ```
-shared/    7,865 (55%)  ##################################
-features/  4,778 (33%)  ####################
-app/       1,385 (10%)  ######
+shared/    7,865 (57%)  ##################################
+features/  4,234 (31%)  ##################
+app/       1,498 (11%)  ######
 styles/      247  (2%)  ##
 ```
 
@@ -109,7 +109,6 @@ styles/      247  (2%)  ##
 | `about/`    | 10    | Hero, awards, certifications, skills, philosophy |
 | `research/` | 8     | Research areas, projects, open source, vision    |
 | `home/`     | 6     | Hero, news, research highlights, connect         |
-| `academic/` | 8     | Cross-cutting search with filters                |
 | `apps/`     | 4     | Student tools (grade calculator, tool cards)     |
 
 ## Pages & Routes
@@ -139,7 +138,7 @@ styles/      247  (2%)  ##
 | TypeScript | PASS   | 0 errors (strict mode)                                                    |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                      |
 | Prettier   | PASS   | All formatted                                                             |
-| Tests      | PASS   | 153/153 pass (23 files)                                                   |
+| Tests      | PASS   | 149/149 pass (21 files)                                                   |
 | Build      | PASS   | 20 pages exported                                                         |
 | Audit      | NOTE   | 20 vulns (1 moderate, 19 high — all mitigated: dev-only or static export) |
 
@@ -150,7 +149,7 @@ styles/      247  (2%)  ##
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (153 tests, CI-enforced)
+- Strong test foundation (149 tests, CI-enforced)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`
 - Service worker for offline caching

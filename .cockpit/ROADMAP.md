@@ -1,7 +1,7 @@
 # ROADMAP.md — Improvement Roadmap
 
 > **Created**: 2026-02-19 | **Updated**: 2026-02-24
-> **Current Version**: 1.2.0 | **Quality**: All gates green (153/153 tests, 0 TS/ESLint errors, 20/20 pages)
+> **Current Version**: 1.3.0 | **Quality**: All gates green (149/149 tests, 0 TS/ESLint errors, 20/20 pages)
 > **Open Findings**: 0 (228 total, 225 resolved, 3 false positives)
 
 ## Phase 6: Code Quality & Cleanup

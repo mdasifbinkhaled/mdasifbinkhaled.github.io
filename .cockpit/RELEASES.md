@@ -1,10 +1,16 @@
 # RELEASES.md — Version History
 
-## Current: v1.2.0 (package.json)
+## Current: v1.3.0 (package.json)
 
-Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial release.
+Bumped from 1.2.0 to 1.3.0 — dead code removal, cockpit consolidation, icon fixes, stable tag.
 
 ## Git Tags
+
+### `v1.3.0-stable`
+
+- Final cleanup: dead academic feature removed, missing icons generated
+- Cockpit consolidated (PUBLICATION.md merged, SKILL.md removed)
+- Local garbage purged, all quality gates passing
 
 ### `v1.1.1-stable`
 
@@ -23,9 +29,17 @@ Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial rel
 - Pre-modernization checkpoint
 - Marked before major stack upgrade
 
-## Unreleased (Current HEAD: `8d4953d`)
+## Unreleased (Current HEAD)
 
-### Structural Cleanup — Phase 11 (2026-02-24)
+### Final Cleanup — Phase 12 (2025-02-24)
+
+- **Dead code**: Removed `features/academic/` (9 files, 544 LOC) — zero external imports
+- **Missing icons**: Generated `favicon-16x16.png` (16×16) and `apple-touch-icon.png` (180×180)
+- **Cockpit**: Merged PUBLICATION.md into PACKAGING.md, removed SKILL.md (533 lines)
+- **Local cleanup**: Purged coverage/, playwright-report/, test-results/, .husky/\_/, 18× tsbuildinfo
+- Quality gates: 0 TS errors, 0 lint errors, all tests pass, 20 pages exported
+
+### Structural Cleanup — Phase 11 (2025-02-24)
 
 - **F-218 (MEDIUM)**: Reorganized 14 flat test files into structured directories mirroring src/
 - **F-219 (MEDIUM)**: Fixed 12 broken relative `../src/` imports → `@/` path alias
@@ -105,7 +119,7 @@ Bumped from 1.0.0 to 1.2.0 to reflect accumulated improvements since initial rel
 
 - TypeScript: 0 errors
 - ESLint: 0 errors, 0 warnings
-- Tests: 153/153 passing (23 files)
+- Tests: 149/149 passing (21 files)
 - Build: 20 pages exported successfully
 
 ## Recommended Next Release

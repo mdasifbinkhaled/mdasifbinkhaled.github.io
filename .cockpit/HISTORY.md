@@ -141,7 +141,7 @@
 - **7 findings** (F-218 through F-224), all resolved
 - **Test reorganization**: 14 flat test files reorganized into structured directories mirroring src/
   - tests/shared/{components/{common,layout,navigation,ui},config,hooks,lib}/
-  - tests/features/{academic,apps,teaching}/
+  - tests/features/{apps,teaching}/
 - **Import cleanup**: 12 broken relative `../src/` imports replaced with `@/` path alias across 6 files
 - **Icon consolidation**: Dual icon registries merged — nav-icon-map.ts now re-exports from icons.tsx
 - **Barrel exports**: Added feature-level index.ts for home/, about/, apps/ modules; updated all page consumers
@@ -150,6 +150,16 @@
 - **Cockpit sync**: All 7 .cockpit/ documentation files updated to match codebase reality
 - Quality gates: 0 TS errors, 0 lint errors, 153/153 tests (23 files), 20 pages exported
 
+### Phase 12 — Final Cleanup & Stable Tag
+
+- **Dead code removal**: Removed `src/features/academic/` (9 files, 544 LOC) — never imported by any page
+- **Missing icons fixed**: Generated `favicon-16x16.png` and `apple-touch-icon.png` (referenced in layout.tsx but missing)
+- **Cockpit consolidation**: Merged `PUBLICATION.md` into `PACKAGING.md`, deleted `SKILL.md` (533 lines of generic methodology)
+- **Local artifacts purged**: coverage/, playwright-report/, test-results/, .husky/\_/, 18× .tsbuildinfo files
+- **All cockpit docs updated**: Metrics, file counts, LOC distribution corrected across INDEX, PMD, STRUCTURE
+- Quality gates: 0 TS errors, 0 lint errors, all tests pass, 20 pages exported
+- Tagged `v1.3.0-stable`
+
 ## Tags
 
 | Tag                   | Description                            |
@@ -157,6 +167,7 @@
 | `checkpoint-pre-sota` | Pre-modernization checkpoint           |
 | `v1.1.0-stable`       | First stable release with modern stack |
 | `v1.1.1-stable`       | Patch release                          |
+| `v1.3.0-stable`       | Final cleanup, dead code removal       |
 
 ## Branch Strategy
 

@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-02-24 | 195 source files | 14,388 LOC
+> Last Updated: 2025-02-24 | 186 source files | 13,844 LOC
 
 ## Root Configuration
 
@@ -95,7 +95,7 @@ src/app/
             └── error.tsx
 ```
 
-### Features Layer — `src/features/` (4,778 LOC)
+### Features Layer — `src/features/` (4,234 LOC)
 
 Domain-specific feature modules. Each is self-contained.
 
@@ -112,19 +112,6 @@ src/features/
 │   ├── skills-section.tsx
 │   ├── beyond-academia.tsx
 │   └── index.ts
-│
-├── academic/               — Cross-cutting academic search (8 files)
-│   ├── academic-search.tsx
-│   ├── types.ts
-│   ├── components/
-│   │   ├── filter-bar.tsx
-│   │   ├── search-input.tsx
-│   │   ├── search-result-card.tsx
-│   │   └── search-results.tsx
-│   ├── hooks/
-│   │   └── use-search-filter.ts
-│   └── utils/
-│       └── get-type-icon.ts
 │
 ├── apps/                   — Student apps feature (4 files)
 │   └── components/
@@ -278,7 +265,7 @@ src/styles/
 └── tokens.css              — Design tokens: colors, spacing, typography for 6 themes
 ```
 
-## Tests — `tests/` (23 files, 153 tests)
+## Tests — `tests/` (21 files, 149 tests)
 
 Organized to mirror `src/` directory structure.
 
@@ -293,8 +280,6 @@ tests/
 │
 ├── features/
 │   ├── pages-smoke.test.tsx    — Page-level smoke tests
-│   ├── academic/
-│   │   └── get-type-icon.test.ts
 │   ├── apps/
 │   │   └── grade-calculator.test.tsx — Grade calculator component tests
 │   └── teaching/
@@ -340,10 +325,8 @@ tests/
 ├── STRUCTURE.md            — This file
 ├── HISTORY.md              — Development timeline
 ├── GOVERNANCE.md           — Standards and conventions
-├── PACKAGING.md            — Dependencies and build pipeline
+├── PACKAGING.md            — Dependencies, build, deployment, CI, SEO, PWA
 ├── RELEASES.md             — Version changelog
-├── PUBLICATION.md          — Deployment details
-├── SKILL.md               — Forensic code audit skill definition (240+ checks)
 └── adr/
     ├── TEMPLATE.md         — ADR template + inline ADRs 001-004
     └── ADR-005-student-tools.md — Student apps feature design
