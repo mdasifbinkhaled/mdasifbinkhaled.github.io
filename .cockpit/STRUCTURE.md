@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2025-02-24 | 186 source files | 13,844 LOC
+> Last Updated: 2026-02-25 | 201 source files | 13,951 LOC
 
 ## Root Configuration
 

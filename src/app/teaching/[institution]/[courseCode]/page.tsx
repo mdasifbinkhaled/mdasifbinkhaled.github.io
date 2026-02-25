@@ -69,6 +69,11 @@ export async function generateMetadata({
       course.institution,
       ...(course.technologies || []),
     ],
+    openGraph: {
+      title: `${course.code}: ${course.title}`,
+      description: `Course details for ${course.code}: ${course.title} at ${institutionName}. ${course.description}`,
+      type: 'article',
+    },
   };
 }
 

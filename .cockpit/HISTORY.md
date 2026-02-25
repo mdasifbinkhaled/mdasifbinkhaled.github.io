@@ -160,6 +160,16 @@
 - Quality gates: 0 TS errors, 0 lint errors, all tests pass, 20 pages exported
 - Tagged `v1.3.0-stable`
 
+### Roadmap Phase 8 — Modern Web & SEO Enhancements (2026-02-25)
+
+- **View Transitions**: Enabled experimental `viewTransition: true` in `next.config.ts` for native cross-fade DOM routing.
+- **Container Queries**: Integrated `@tailwindcss/container-queries`. `PublicationCard` and `CourseCard` now resize intrinsically (`@sm:`, `@container`) regardless of browser viewport width.
+- **Content Visibility**: Applied `content-visibility: auto` to publication lists to defer off-screen rendering and heavily stabilize TTI.
+- **SEO & Semantics**:
+  - Injected dynamic route `openGraph` overrides into Course pages, App tools, and Publication views for exact rich social-sharing snippets.
+  - Upgraded component semantics from loose `<div>` wrappers to precise `<article>`, `<time>`, and `<section>` tags.
+- Quality Gates: Codebase structurally clean (13,951 LOC). 149/149 test positives. Zero static export warnings.
+
 ## Tags
 
 | Tag                   | Description                            |

@@ -147,7 +147,7 @@ export const CourseCard = memo(function CourseCard({
   return (
     <Card
       className={cn(
-        'transition-all duration-200 flex flex-col group h-full',
+        '@container transition-all duration-200 flex flex-col group h-full',
         hasDetailPage
           ? 'border-2 border-primary/30 hover:border-primary hover:shadow-lg hover:-translate-y-1'
           : 'bg-muted/5 hover:bg-muted/10'
@@ -242,7 +242,7 @@ export const CourseCard = memo(function CourseCard({
           <Button
             variant="ghost"
             size="sm"
-            className="flex-1 sm:flex-none"
+            className="flex-1 @sm:flex-none"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls={`course-${course.id}-details`}
@@ -265,7 +265,7 @@ export const CourseCard = memo(function CourseCard({
               variant="default"
               size="sm"
               asChild
-              className="flex-1 sm:flex-none"
+              className="flex-1 @sm:flex-none"
             >
               <Link href={coursePath}>
                 <ExternalLink className="w-4 h-4 mr-1" />

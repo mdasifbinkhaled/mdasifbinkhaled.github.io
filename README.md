@@ -29,7 +29,7 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 | **Language**   | TypeScript 5.9 (Strict Mode)           |
 | **Styling**    | Tailwind CSS 3.4                       |
 | **Validation** | Zod 4 (Runtime Schema Validation)      |
-| **Testing**    | Vitest (129+ tests)                    |
+| **Testing**    | Vitest (149+ tests)                    |
 | **Linting**    | ESLint 9 + Prettier                    |
 | **CI/CD**      | GitHub Actions (3 workflows)           |
 | **Security**   | CodeQL, npm audit                      |

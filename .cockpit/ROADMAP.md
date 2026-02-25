@@ -30,14 +30,14 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 
 ## Phase 8: Modern Web & Performance
 
-| #   | Item                                                     | Category    | Complexity   | Impact     | Status  |
-| --- | -------------------------------------------------------- | ----------- | ------------ | ---------- | ------- |
-| 8.1 | **Wire up View Transitions** (flag enabled but not used) | Modern      | MODERATE     | HIGH       | Planned |
-| 8.2 | **Service worker** for offline + PWA installability      | PWA         | MODERATE     | HIGH       | Done    |
-| 8.3 | **Container queries** for course/publication cards       | Modern      | MODERATE     | MEDIUM     | Planned |
-| 8.4 | **Lighthouse CI** in GitHub Actions                      | Performance | MODERATE     | MEDIUM     | Done    |
-| 8.5 | **~~Code split Framer Motion~~** — Removed entirely      | Performance | ~~MODERATE~~ | ~~MEDIUM~~ | Done    |
-| 8.6 | **CSS `content-visibility: auto`** on long pages         | Performance | EASY         | LOW        | Planned |
+| #   | Item                                                     | Category    | Complexity   | Impact     | Status |
+| --- | -------------------------------------------------------- | ----------- | ------------ | ---------- | ------ |
+| 8.1 | **Wire up View Transitions** (flag enabled but not used) | Modern      | MODERATE     | HIGH       | Done   |
+| 8.2 | **Service worker** for offline + PWA installability      | PWA         | MODERATE     | HIGH       | Done   |
+| 8.3 | **Container queries** for course/publication cards       | Modern      | MODERATE     | MEDIUM     | Done   |
+| 8.4 | **Lighthouse CI** in GitHub Actions                      | Performance | MODERATE     | MEDIUM     | Done   |
+| 8.5 | **~~Code split Framer Motion~~** — Removed entirely      | Performance | ~~MODERATE~~ | ~~MEDIUM~~ | Done   |
+| 8.6 | **CSS `content-visibility: auto`** on long pages         | Performance | EASY         | LOW        | Done   |
 
 ## Phase 9: Testing & Confidence
 
@@ -79,7 +79,7 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 | Phase 5 (Modernization)     | 10     | MODERATE      | Completed     |
 | Phase 6 (Code Quality)      | 4      | MODERATE-HARD | Completed     |
 | Phase 7 (Student Apps)      | 6      | MODERATE      | 2-3 remaining |
-| Phase 8 (Modern Web)        | 6      | MODERATE      | 3/6 done      |
+| Phase 8 (Modern Web)        | 6      | MODERATE      | 6/6 done      |
 | Phase 9 (Testing)           | 6      | MODERATE      | 2/6 done      |
 | Phase 10 (Content)          | 5      | MIXED         | 3-5           |
 | Phase 11 (Monitoring)       | 4      | EASY-MODERATE | 1-2           |

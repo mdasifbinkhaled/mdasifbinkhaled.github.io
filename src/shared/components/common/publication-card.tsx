@@ -85,7 +85,7 @@ export const PublicationCard = memo(function PublicationCard({
   return (
     <Card
       className={cn(
-        'flex flex-col justify-between shadow-lg hover:shadow-xl transition-all duration-300',
+        '@container flex flex-col justify-between shadow-lg hover:shadow-xl transition-all duration-300',
         'transform hover:-translate-y-1 group'
       )}
     >

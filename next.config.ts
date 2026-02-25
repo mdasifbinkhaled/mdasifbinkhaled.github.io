@@ -11,6 +11,9 @@ const config: NextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    viewTransition: true,
+  },
 
   turbopack: {
     root: '.',

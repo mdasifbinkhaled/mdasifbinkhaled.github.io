@@ -2,9 +2,9 @@
 
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
-> **URL**: https://mdasifbinkhaled.github.io
-> **Last Updated**: 2026-02-24
-> **Commit**: 8d4953d
+> **URL**: <https://mdasifbinkhaled.github.io>
+> **Last Updated**: 2026-02-25
+> **Commit**: b612559
 
 ## Mission
 
@@ -65,8 +65,8 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value    |
 | ----------------- | -------- |
-| Source files      | 186      |
-| Lines of code     | 13,844   |
+| Source files      | 201      |
+| Lines of code     | 13,951   |
 | Components (.tsx) | 125      |
 | Client components | 48 (38%) |
 | Server components | 77 (62%) |

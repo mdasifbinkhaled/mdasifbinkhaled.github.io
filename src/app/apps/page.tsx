@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/apps',
   },
+  openGraph: {
+    title: `Apps | ${siteConfig.author}`,
+    description:
+      'A suite of interactive academic utilities including grade calculators, seat planners, and study aids.',
+  },
 };
 
 export default function AppsPage() {

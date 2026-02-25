@@ -16,13 +16,20 @@ export function NewsFeed({ items, className }: NewsFeedProps) {
   return (
     <div className={cn('space-y-4', className)}>
       {items.map((item) => (
-        <div
+        <article
           key={item.id}
           className="flex gap-4 text-sm p-4 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
         >
-          <span className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10 h-fit">
+          <time
+            dateTime={
+              !isNaN(Date.parse(item.date))
+                ? new Date(item.date).toISOString()
+                : undefined
+            }
+            className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10 h-fit"
+          >
             {item.date}
-          </span>
+          </time>
           <div className="flex-1">
             <span className="text-foreground">{item.text}</span>
             {item.highlight && (
@@ -34,7 +41,7 @@ export function NewsFeed({ items, className }: NewsFeedProps) {
               <span className="text-foreground">{item.description}</span>
             )}
           </div>
-        </div>
+        </article>
       ))}
     </div>
   );

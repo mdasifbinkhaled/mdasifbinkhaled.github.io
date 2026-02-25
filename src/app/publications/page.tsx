@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     citation_journal_title: 'Academic Portfolio',
     citation_pdf_url: `${siteConfig.url}/cv/CV_Md_Asif_Bin_Khaled.pdf`,
   },
+  openGraph: {
+    title: 'Publications & Research',
+    description: `Explore Md Asif Bin Khaled's scholarly articles, conference papers, and ongoing research.`,
+  },
 };
 
 export default function PublicationsPage() {
