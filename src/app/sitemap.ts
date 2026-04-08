@@ -6,7 +6,7 @@ import { getDetailedCourses } from '@/shared/lib/data/courses';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
-  const currentDate = '2026-02-20T00:00:00.000Z';
+  const currentDate = new Date().toISOString();
 
   // Static pages
   const staticRoutes: MetadataRoute.Sitemap = [

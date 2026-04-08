@@ -21,7 +21,7 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:  ✅ 0 errors  (strict mode, zero `any`)
 ESLint:      ✅ 0 errors, 0 warnings  (eslint-config-next@16, native flat config)
-Tests:       ✅ 204/204 pass  (32 files, vitest, 50%+ coverage)
+Tests:       ✅ 229/229 pass  (34 files, vitest, 50%+ coverage)
 E2E:         ✅ 9/9 pass  (Playwright, axe-core WCAG AA contrast)
 Build:       ✅ 27 pages exported  (static, 0 warnings)
 Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast removed)

@@ -2,7 +2,7 @@
 
 > **Last Updated**: 2026-04-08
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.5.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 3.4
+> **Version**: 1.5.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 4.1.18
 
 ## Quick Navigation
 
@@ -23,7 +23,7 @@
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Tests:      204/204 PASS (32 files, 50%+ coverage)
+    Tests:      229/229 PASS (34 files, 50%+ coverage)
     Build:      27 pages exported (0 warnings)
     Format:     All files formatted
     Commit:     (pending — 0 open findings)
@@ -48,7 +48,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 10 (Content): IN PROGRESS** — Blog (MDX) and Talks pages live. Mentorship section infrastructure in place (empty state). Research timeline and Bengali intro deferred.
 **Phase 11 (Monitoring): IN PROGRESS** — Sentry error tracking and Google Analytics wired. Uptime monitoring pending.
 
-- 204/204 tests passing (32 files).
+- 229/229 tests passing (34 files).
 - 27 pages exported.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).
@@ -65,8 +65,8 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 | Custom hooks      | 3 (+1 feature-specific) |
 | Data files        | 32                      |
 | Config files      | 6                       |
-| Barrel exports    | 8                       |
-| Test files        | 32                      |
+| Barrel exports    | 10                      |
+| Test files        | 34                      |
 | Themes            | 6                       |
 | ADRs              | 2 (ADR-005 + template)  |
 
