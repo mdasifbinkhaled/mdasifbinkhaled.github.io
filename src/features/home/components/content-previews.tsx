@@ -92,7 +92,7 @@ export function FeaturedGrant() {
   if (!grant) return null;
 
   return (
-    <section className="w-full py-12 md:py-16 bg-gradient-to-br from-primary/5 to-accent/5">
+    <section className="w-full py-12 md:py-16 bg-linear-to-br from-primary/5 to-accent/5">
       <div className="container-responsive">
         <h2 className="text-3xl font-bold text-center mb-12 text-primary">
           Featured Research Grant

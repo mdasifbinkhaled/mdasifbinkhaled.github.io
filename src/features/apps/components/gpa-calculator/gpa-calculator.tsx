@@ -92,7 +92,7 @@ export function GpaCalculator() {
     <div className="grid gap-6 md:grid-cols-[2fr_1fr] print:block">
       {/* ── Editor Column ── */}
       <div className="space-y-6">
-        <Card className="shadow-sm">
+        <Card className="shadow-xs">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -144,7 +144,7 @@ export function GpaCalculator() {
                 />
                 <select
                   aria-label="Grade"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-medium ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-medium ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   value={course.grade}
                   onChange={(e) =>
                     handleCourseChange(course.id, 'grade', e.target.value)
@@ -177,7 +177,7 @@ export function GpaCalculator() {
         </Card>
 
         {/* ── Cumulative Configuration ── */}
-        <Card className="shadow-sm">
+        <Card className="shadow-xs">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg flex items-center gap-2">
               <Settings2 className="h-5 w-5 text-muted-foreground" />

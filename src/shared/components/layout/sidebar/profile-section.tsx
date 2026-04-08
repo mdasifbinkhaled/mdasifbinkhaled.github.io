@@ -17,7 +17,7 @@ export function ProfileSection({ isCollapsed }: ProfileSectionProps) {
   return (
     <div
       className={cn(
-        'flex flex-col items-center text-center transition-all duration-200 bg-gradient-to-b from-sidebar-accent/20 to-transparent',
+        'flex flex-col items-center text-center transition-all duration-200 bg-linear-to-b from-sidebar-accent/20 to-transparent',
         isCollapsed ? 'p-2 pb-4' : 'p-6 pb-6'
       )}
     >

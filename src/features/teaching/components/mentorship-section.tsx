@@ -29,7 +29,7 @@ export function MentorshipSection() {
         {mentorshipData.map((student, idx) => (
           <Card
             key={idx}
-            className="hover:shadow-md hover:-translate-y-1 transition-all duration-300 border-border/50 hover:border-primary/50 group bg-card/60 backdrop-blur-sm relative overflow-hidden"
+            className="hover:shadow-md hover:-translate-y-1 transition-all duration-300 border-border/50 hover:border-primary/50 group bg-card/60 backdrop-blur-xs relative overflow-hidden"
           >
             <div
               className={`absolute top-0 right-0 w-2 h-full ${student.status === 'Current' ? 'bg-primary' : 'bg-muted-foreground/30'}`}

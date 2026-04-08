@@ -46,7 +46,7 @@ export function NavigationSection({
                 'transition-all duration-300 group',
                 isCollapsed ? 'w-full justify-center' : 'w-full justify-start',
                 active
-                  ? 'bg-sidebar-accent text-sidebar-accent-foreground font-semibold shadow-sm'
+                  ? 'bg-sidebar-accent text-sidebar-accent-foreground font-semibold shadow-xs'
                   : 'text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground hover:translate-x-1'
               )}
               title={isCollapsed ? item.label : undefined}
@@ -58,7 +58,7 @@ export function NavigationSection({
               >
                 <IconComponent
                   className={cn(
-                    'flex-shrink-0 transition-transform duration-200',
+                    'shrink-0 transition-transform duration-200',
                     active ? 'text-primary' : 'group-hover:scale-110',
                     isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
                   )}

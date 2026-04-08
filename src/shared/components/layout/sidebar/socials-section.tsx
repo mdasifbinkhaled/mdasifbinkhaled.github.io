@@ -22,7 +22,7 @@ export function SocialsSection({
   return (
     <div
       className={cn(
-        'flex-shrink-0 bg-sidebar border-t border-sidebar-border/40 shadow-lg',
+        'shrink-0 bg-sidebar border-t border-sidebar-border/40 shadow-lg',
         isCollapsed ? 'p-2' : 'px-4 py-4'
       )}
     >
@@ -43,7 +43,7 @@ export function SocialsSection({
           variant="ghost"
           size="icon"
           asChild
-          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
+          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 shrink-0"
           title={isCollapsed ? 'GitHub Profile' : undefined}
         >
           <a
@@ -60,7 +60,7 @@ export function SocialsSection({
           variant="ghost"
           size="icon"
           asChild
-          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
+          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 shrink-0"
           title={isCollapsed ? 'LinkedIn Profile' : undefined}
         >
           <a
@@ -77,7 +77,7 @@ export function SocialsSection({
           variant="ghost"
           size="icon"
           asChild
-          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
+          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 shrink-0"
           title={isCollapsed ? 'Google Scholar Profile' : undefined}
         >
           <a
@@ -94,7 +94,7 @@ export function SocialsSection({
           variant="ghost"
           size="icon"
           asChild
-          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
+          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 shrink-0"
           title={isCollapsed ? 'ResearchGate Profile' : undefined}
         >
           <a
@@ -111,7 +111,7 @@ export function SocialsSection({
           variant="ghost"
           size="icon"
           asChild
-          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
+          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 shrink-0"
           title={isCollapsed ? 'Academia.edu Profile' : undefined}
         >
           <a
@@ -128,7 +128,7 @@ export function SocialsSection({
           variant="ghost"
           size="icon"
           asChild
-          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 flex-shrink-0"
+          className="text-sidebar-foreground hover:bg-sidebar-accent/50 transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:bg-sidebar-accent/50 group h-8 w-8 shrink-0"
           title={isCollapsed ? 'ORCID Profile' : undefined}
         >
           <a

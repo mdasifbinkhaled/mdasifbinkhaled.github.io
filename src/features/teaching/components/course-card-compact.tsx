@@ -17,7 +17,7 @@ export function CourseCardCompact({ course }: CourseCardCompactProps) {
   const coursePath = getCoursePath(course);
 
   const content = (
-    <Card className="h-full border-border/40 hover:border-primary/50 transition-all hover:shadow-sm bg-card/50 backdrop-blur-sm">
+    <Card className="h-full border-border/40 hover:border-primary/50 transition-all hover:shadow-xs bg-card/50 backdrop-blur-xs">
       <div className="p-4 flex items-center justify-between gap-4">
         {/* Main Info */}
         <div className="flex-1 min-w-0">
@@ -51,7 +51,7 @@ export function CourseCardCompact({ course }: CourseCardCompactProps) {
 
         {/* Action / Visual Cue */}
         {hasDetailPage && (
-          <div className="flex-shrink-0 text-muted-foreground/30 group-hover:text-primary transition-colors">
+          <div className="shrink-0 text-muted-foreground/30 group-hover:text-primary transition-colors">
             <ChevronRight className="w-5 h-5" />
           </div>
         )}

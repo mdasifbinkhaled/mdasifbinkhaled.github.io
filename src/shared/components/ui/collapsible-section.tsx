@@ -27,8 +27,8 @@ export function CollapsibleSection({
     <div className={cn('mb-8', className)}>
       <Card
         className={cn(
-          'border-primary/20 overflow-hidden shadow-sm transition-all duration-300',
-          isOpen ? 'shadow-md' : 'shadow-sm'
+          'border-primary/20 overflow-hidden shadow-xs transition-all duration-300',
+          isOpen ? 'shadow-md' : 'shadow-xs'
         )}
       >
         <button

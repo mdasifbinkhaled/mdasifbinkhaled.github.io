@@ -193,7 +193,7 @@ export function SeatPlanResults({
                                 onChange={(e) =>
                                   onReassign(s.id, e.target.value)
                                 }
-                                className="text-xs bg-transparent border rounded px-1.5 py-0.5 print:border-0 print:appearance-none"
+                                className="text-xs bg-transparent border rounded-sm px-1.5 py-0.5 print:border-0 print:appearance-none"
                                 aria-label={`Room assignment for ${s.name}`}
                               >
                                 {result.allocations.map((a) => (
@@ -311,7 +311,7 @@ function RoomDistributionChart({
           {sections.map((sec) => (
             <div key={sec} className="flex items-center gap-1.5 text-xs">
               <div
-                className={`w-3 h-3 rounded-sm ${SECTION_COLORS[(sec - 1) % SECTION_COLORS.length]}`}
+                className={`w-3 h-3 rounded-xs ${SECTION_COLORS[(sec - 1) % SECTION_COLORS.length]}`}
               />
               Section {sec}
             </div>

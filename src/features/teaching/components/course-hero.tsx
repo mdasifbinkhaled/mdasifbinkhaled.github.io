@@ -29,7 +29,7 @@ export function CourseHero({ course }: { course: CourseData }) {
         {/* Header Content */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start mb-8">
           {/* Icon */}
-          <div className="bg-primary/5 p-6 rounded-2xl shrink-0 border border-primary/10 shadow-sm">
+          <div className="bg-primary/5 p-6 rounded-2xl shrink-0 border border-primary/10 shadow-xs">
             {course.iconName ? (
               <Icon name={course.iconName} className="w-12 h-12 text-primary" />
             ) : (
@@ -91,7 +91,7 @@ export function CourseHero({ course }: { course: CourseData }) {
 
         {/* Quick Access Box - Styled for Consistency */}
         {(primaryLinks.length > 0 || contentLinks.length > 0) && (
-          <div className="mt-6 rounded-xl border border-border/60 bg-muted/10 p-6 shadow-sm relative z-20">
+          <div className="mt-6 rounded-xl border border-border/60 bg-muted/10 p-6 shadow-xs relative z-20">
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
               <ExternalLink className="w-4 h-4" />
               Quick Access
@@ -105,7 +105,7 @@ export function CourseHero({ course }: { course: CourseData }) {
                     key={idx}
                     variant={isHighlight ? 'default' : 'secondary'}
                     className={cn(
-                      'shadow-sm hover:shadow-md transition-all rounded-lg h-10 px-5 cursor-pointer relative z-30',
+                      'shadow-xs hover:shadow-md transition-all rounded-lg h-10 px-5 cursor-pointer relative z-30',
                       !isHighlight &&
                         'bg-secondary/50 hover:bg-secondary/80 text-secondary-foreground border border-border/50'
                     )}
@@ -133,7 +133,7 @@ export function CourseHero({ course }: { course: CourseData }) {
 
         {/* Consultation Hours - Only for ongoing courses */}
         {course.status === 'ongoing' && (
-          <div className="mt-6 rounded-xl border border-border/60 bg-muted/10 p-6 shadow-sm relative z-20">
+          <div className="mt-6 rounded-xl border border-border/60 bg-muted/10 p-6 shadow-xs relative z-20">
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
               <GraduationCap className="w-4 h-4" />
               Consultation Hours

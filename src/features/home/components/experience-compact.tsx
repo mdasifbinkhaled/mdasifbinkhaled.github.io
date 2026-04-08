@@ -66,7 +66,7 @@ export function ExperienceCompact({ experiences }: ExperienceCompactProps) {
                     .slice(0, DISPLAY_LIMITS.EXPERIENCE_DESCRIPTION)
                     .map((desc: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                        <span className="w-1 h-1 bg-primary rounded-full mt-2 shrink-0" />
                         <span className="line-clamp-2">{desc}</span>
                       </li>
                     ))}

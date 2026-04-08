@@ -16,7 +16,7 @@ export function ActionsSection({
   hideNav = false,
 }: ActionsSectionProps) {
   return (
-    <div className={cn('flex-grow', isCollapsed ? 'p-2' : 'px-6 py-4')}>
+    <div className={cn('grow', isCollapsed ? 'p-2' : 'px-6 py-4')}>
       {!isCollapsed && (
         <h4 className="text-xs uppercase font-semibold text-muted-foreground mb-3 tracking-wider sidebar-section-title">
           Contact & Actions
@@ -60,7 +60,7 @@ export function ActionsSection({
             <a href={`mailto:${siteConfig.email}`} onClick={onLinkClick}>
               <Mail
                 className={cn(
-                  'flex-shrink-0 transition-transform duration-200',
+                  'shrink-0 transition-transform duration-200',
                   isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
                 )}
               />
@@ -88,7 +88,7 @@ export function ActionsSection({
             >
               <Smartphone
                 className={cn(
-                  'flex-shrink-0 transition-transform duration-200',
+                  'shrink-0 transition-transform duration-200',
                   isCollapsed ? 'h-4 w-4' : 'mr-3 h-4 w-4'
                 )}
               />

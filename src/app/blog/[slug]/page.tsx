@@ -106,14 +106,14 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
     ),
     code: (props: React.HTMLAttributes<HTMLElement>) => (
       <code
-        className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold"
+        className="relative rounded-sm bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold"
         {...props}
       />
     ),
     pre: (
       props: React.HTMLAttributes<HTMLPreElement> // Note: For complete markdown parsing, hook rehype/remark plugins to MDXRemote
     ) => (
-      <div className="my-6 overflow-hidden rounded-xl bg-zinc-950 dark:bg-zinc-900 border border-border shadow-sm">
+      <div className="my-6 overflow-hidden rounded-xl bg-zinc-950 dark:bg-zinc-900 border border-border shadow-xs">
         <pre
           className="overflow-x-auto p-4 text-sm leading-snug no-scrollbar text-zinc-50"
           {...props}

@@ -10,7 +10,7 @@ import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 export function ResearchVision() {
   return (
     <section className="max-w-4xl mx-auto">
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+      <Card className="border-primary/20 bg-linear-to-br from-primary/5 to-transparent">
         <CardHeader>
           <div className="flex items-center gap-2 mb-2">
             <Target className="h-5 w-5 text-primary" />
@@ -22,7 +22,7 @@ export function ResearchVision() {
             {researchIdentity.philosophy.vision}
           </p>
           <div className="flex items-start gap-4 p-4 bg-background/50 rounded-lg border border-border">
-            <AlertCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+            <AlertCircle className="h-5 w-5 text-primary mt-0.5 shrink-0" />
             <div>
               <p className="font-medium mb-2">Why It Matters</p>
               <p className="text-sm text-muted-foreground">

@@ -21,7 +21,7 @@ interface CoursePageLayoutProps {
 // -----------------------------------------------------------------------------
 function CourseSectionDivider() {
   return (
-    <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+    <div className="h-px bg-linear-to-r from-transparent via-border to-transparent" />
   );
 }
 

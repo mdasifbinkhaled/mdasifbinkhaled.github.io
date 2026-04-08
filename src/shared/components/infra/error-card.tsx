@@ -57,7 +57,7 @@ export function ErrorCard({
         </CardHeader>
         <CardContent className="space-y-4">
           {process.env.NODE_ENV === 'development' && error && (
-            <details className="text-xs bg-muted p-3 rounded">
+            <details className="text-xs bg-muted p-3 rounded-sm">
               <summary className="cursor-pointer font-medium mb-1">
                 Error Details
               </summary>

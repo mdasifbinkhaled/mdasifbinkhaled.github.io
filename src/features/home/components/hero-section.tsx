@@ -55,7 +55,7 @@ export function HeroSection() {
   return (
     <section className="w-full relative overflow-hidden">
       {/* Ambient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10" />
+      <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-background to-secondary/10" />
       <div className="absolute top-0 right-0 w-[30vw] h-[30vw] bg-primary/8 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
       <div className="absolute bottom-0 left-0 w-[25vw] h-[25vw] bg-secondary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
       <div className="absolute top-1/2 left-1/2 w-[20vw] h-[20vw] bg-primary/5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
@@ -66,11 +66,11 @@ export function HeroSection() {
           <div className="space-y-6 mb-8">
             {/* Name with Accent */}
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 text-sm text-primary font-medium bg-primary/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-primary/20 w-fit">
+              <div className="inline-flex items-center gap-2 text-sm text-primary font-medium bg-primary/10 backdrop-blur-xs px-4 py-1.5 rounded-full border border-primary/20 w-fit">
                 <Sparkles className="w-4 h-4" />
                 <span>Welcome to my academic portfolio</span>
               </div>
-              <h1 className="text-fluid-heading font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent pb-1">
+              <h1 className="text-fluid-heading font-bold tracking-tight bg-linear-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent pb-1">
                 {siteConfig.author}
               </h1>
             </div>
@@ -96,7 +96,7 @@ export function HeroSection() {
             {/* Philosophy & Status Badges */}
             <div className="flex flex-wrap gap-3 pt-2">
               {/* Philosophy Badge */}
-              <div className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/20 shadow-sm">
+              <div className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-xs px-4 py-2 rounded-full border border-primary/20 shadow-xs">
                 <Lightbulb className="w-4 h-4 text-primary" />
                 <span className="text-sm text-foreground/80 italic">
                   "{researchIdentity.philosophy.statement}"

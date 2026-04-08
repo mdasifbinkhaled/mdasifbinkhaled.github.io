@@ -129,7 +129,7 @@ export function ExamCountdown() {
           return (
             <Card
               key={exam.id}
-              className={`relative overflow-hidden transition-all ${isPassed ? 'opacity-60 border-muted' : 'border-primary/20 shadow-sm'}`}
+              className={`relative overflow-hidden transition-all ${isPassed ? 'opacity-60 border-muted' : 'border-primary/20 shadow-xs'}`}
             >
               {!isPassed && (
                 <div className="absolute top-0 right-0 w-1 h-full bg-primary" />

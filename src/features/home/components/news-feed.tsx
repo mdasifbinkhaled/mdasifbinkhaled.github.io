@@ -18,7 +18,7 @@ export function NewsFeed({ items, className }: NewsFeedProps) {
       {items.map((item) => (
         <article
           key={item.id}
-          className="flex gap-4 text-sm p-4 rounded-lg bg-card/50 backdrop-blur border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
+          className="flex gap-4 text-sm p-4 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 hover:shadow-md"
         >
           <time
             dateTime={
@@ -26,7 +26,7 @@ export function NewsFeed({ items, className }: NewsFeedProps) {
                 ? new Date(item.date).toISOString()
                 : undefined
             }
-            className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded bg-primary/10 h-fit"
+            className="font-semibold text-primary/80 whitespace-nowrap px-2 py-1 rounded-sm bg-primary/10 h-fit"
           >
             {item.date}
           </time>

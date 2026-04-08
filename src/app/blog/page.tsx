@@ -65,7 +65,7 @@ export default async function BlogPage() {
                   {post.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex-grow">
+              <CardContent className="grow">
                 <CardDescription className="text-sm line-clamp-3 leading-relaxed">
                   {post.description}
                 </CardDescription>

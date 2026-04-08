@@ -36,7 +36,7 @@ import type { NavItem } from '@/shared/types';
 // Shared item class for consistent styling
 // ---------------------------------------------------------------------------
 const itemClass =
-  'relative flex cursor-pointer select-none items-center rounded-md px-2 py-2.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 gap-2';
+  'relative flex cursor-pointer select-none items-center rounded-md px-2 py-2.5 text-sm outline-hidden aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 gap-2';
 
 // ---------------------------------------------------------------------------
 // Component
@@ -109,13 +109,13 @@ export function CommandMenu() {
       <button
         onClick={() => setOpen(true)}
         className={cn(
-          'relative inline-flex h-9 w-full items-center justify-start gap-2 rounded-md border border-input bg-background/50 px-3 py-2 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:pr-12 md:w-56 lg:w-64'
+          'relative inline-flex h-9 w-full items-center justify-start gap-2 rounded-md border border-input bg-background/50 px-3 py-2 text-sm font-medium text-muted-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring sm:pr-12 md:w-56 lg:w-64'
         )}
       >
         <Search className="h-4 w-4 shrink-0 opacity-60" />
         <span className="hidden lg:inline-flex">Search portfolio...</span>
         <span className="inline-flex lg:hidden">Search...</span>
-        <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+        <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded-sm border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
           <span className="text-xs">⌘</span>K
         </kbd>
       </button>
@@ -139,7 +139,7 @@ export function CommandMenu() {
               <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
               <Command.Input
                 placeholder="Search pages, courses, actions…"
-                className="flex h-12 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-12 w-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
               />
             </div>
 
@@ -265,15 +265,15 @@ export function CommandMenu() {
             {/* Footer hint */}
             <div className="border-t px-3 py-2 text-[11px] text-muted-foreground/60 flex items-center justify-between">
               <span>
-                <kbd className="rounded border bg-muted px-1 py-0.5 font-mono text-[10px]">
+                <kbd className="rounded-sm border bg-muted px-1 py-0.5 font-mono text-[10px]">
                   ↑↓
                 </kbd>{' '}
                 Navigate{' '}
-                <kbd className="ml-1 rounded border bg-muted px-1 py-0.5 font-mono text-[10px]">
+                <kbd className="ml-1 rounded-sm border bg-muted px-1 py-0.5 font-mono text-[10px]">
                   ↵
                 </kbd>{' '}
                 Select{' '}
-                <kbd className="ml-1 rounded border bg-muted px-1 py-0.5 font-mono text-[10px]">
+                <kbd className="ml-1 rounded-sm border bg-muted px-1 py-0.5 font-mono text-[10px]">
                   Esc
                 </kbd>{' '}
                 Close

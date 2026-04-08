@@ -43,7 +43,7 @@ export default function TalksPage() {
               <div className="w-2.5 h-2.5 rounded-full bg-primary/20 group-hover:bg-primary transition-colors duration-300" />
             </div>
 
-            <Card className="hover:shadow-md transition-all duration-300 border-border/50 hover:border-primary/50 group-hover:-translate-y-1 bg-card/60 backdrop-blur-sm">
+            <Card className="hover:shadow-md transition-all duration-300 border-border/50 hover:border-primary/50 group-hover:-translate-y-1 bg-card/60 backdrop-blur-xs">
               <CardHeader className="pb-3 space-y-3">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <Badge

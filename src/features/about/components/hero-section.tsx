@@ -34,7 +34,7 @@ export function HeroSection() {
         </Button>
       </div>
 
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
         About {siteConfig.author}
       </h1>
 

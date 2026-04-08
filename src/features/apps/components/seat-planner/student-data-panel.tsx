@@ -74,7 +74,7 @@ export function StudentDataPanel({
 
         {/* paste area */}
         <textarea
-          className="w-full h-32 p-3 text-sm font-mono border rounded-md bg-muted/30 focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y"
+          className="w-full h-32 p-3 text-sm font-mono border rounded-md bg-muted/30 focus:outline-hidden focus:ring-2 focus:ring-primary/50 resize-y"
           placeholder={`Student ID\tStudent Name\tSection\n2312209\tShah Newaz Shawrob\t6\n2131244\tFaiyaz Rahim\t1`}
           value={rawInput}
           onChange={(e) => onParseInput(e.target.value)}

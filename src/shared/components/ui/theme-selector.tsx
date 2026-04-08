@@ -31,27 +31,27 @@ const themeUIMap: Record<
 > = {
   light: {
     icon: Sun,
-    previewClass: 'bg-gradient-to-br from-slate-50 to-blue-50',
+    previewClass: 'bg-linear-to-br from-slate-50 to-blue-50',
   },
   dark: {
     icon: Moon,
-    previewClass: 'bg-gradient-to-br from-slate-900 to-slate-800',
+    previewClass: 'bg-linear-to-br from-slate-900 to-slate-800',
   },
   ocean: {
     icon: Waves,
-    previewClass: 'bg-gradient-to-br from-cyan-50 to-blue-100',
+    previewClass: 'bg-linear-to-br from-cyan-50 to-blue-100',
   },
   forest: {
     icon: Trees,
-    previewClass: 'bg-gradient-to-br from-emerald-50 to-green-100',
+    previewClass: 'bg-linear-to-br from-emerald-50 to-green-100',
   },
   lavender: {
     icon: Flower,
-    previewClass: 'bg-gradient-to-br from-purple-100 to-pink-50',
+    previewClass: 'bg-linear-to-br from-purple-100 to-pink-50',
   },
   slate: {
     icon: Briefcase,
-    previewClass: 'bg-gradient-to-br from-gray-100 to-slate-200',
+    previewClass: 'bg-linear-to-br from-gray-100 to-slate-200',
   },
 };
 
@@ -111,7 +111,7 @@ function ThemeCategoryList({
                       className="flex items-center gap-2 px-2 py-1.5 rounded-md cursor-pointer"
                     >
                       <div
-                        className={`w-5 h-5 rounded ${uiConfig.previewClass} flex items-center justify-center border border-border/50`}
+                        className={`w-5 h-5 rounded-sm ${uiConfig.previewClass} flex items-center justify-center border border-border/50`}
                       >
                         <Icon className="h-3 w-3 text-foreground/70" />
                       </div>
@@ -251,7 +251,7 @@ export function ThemeSelector({
           <Button
             variant="default"
             size="icon"
-            className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 bg-primary/90 backdrop-blur-sm border-2 border-primary/20 floating-theme-button"
+            className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 bg-primary/90 backdrop-blur-xs border-2 border-primary/20 floating-theme-button"
           >
             <CurrentIcon className="h-6 w-6" />
             <span className="sr-only">Change theme</span>

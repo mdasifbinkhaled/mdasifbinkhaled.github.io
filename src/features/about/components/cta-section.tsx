@@ -7,7 +7,7 @@ import { siteConfig } from '@/shared/config/site';
 export function CtaSection() {
   return (
     <section>
-      <Card className="border-primary/30 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent">
+      <Card className="border-primary/30 bg-linear-to-br from-primary/10 via-primary/5 to-transparent">
         <CardContent className="pt-8 pb-8 text-center">
           <h3 className="text-2xl font-bold mb-3 text-primary">
             Let&apos;s Connect

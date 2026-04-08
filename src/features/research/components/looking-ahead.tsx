@@ -9,7 +9,7 @@ import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 export function LookingAhead() {
   return (
     <section className="max-w-4xl mx-auto">
-      <Card className="bg-gradient-to-br from-primary/5 to-transparent border-primary/20">
+      <Card className="bg-linear-to-br from-primary/5 to-transparent border-primary/20">
         <CardHeader>
           <CardTitle className="text-2xl">Looking Ahead</CardTitle>
         </CardHeader>

@@ -80,7 +80,7 @@ export default function TeachingPage() {
                 return (
                   <div
                     key={pillar.id}
-                    className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1"
+                    className="group relative overflow-hidden rounded-xl border border-border/50 bg-linear-to-b from-card to-card/50 p-8 transition-all hover:shadow-lg hover:-translate-y-1"
                   >
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                       {IconComponent && (

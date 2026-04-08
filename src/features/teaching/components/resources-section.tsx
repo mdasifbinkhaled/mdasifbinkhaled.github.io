@@ -51,10 +51,10 @@ export function ResourcesSection({ course }: { course: CourseData }) {
             return (
               <Card
                 key={idx}
-                className="border-border/40 shadow-sm hover:shadow-md hover:border-primary/20 transition-all group"
+                className="border-border/40 shadow-xs hover:shadow-md hover:border-primary/20 transition-all group"
               >
                 <div className="p-4 border-b bg-muted/10 flex items-center gap-3">
-                  <div className="p-2 bg-background rounded-lg border shadow-sm">
+                  <div className="p-2 bg-background rounded-lg border shadow-xs">
                     <SectionIcon className="w-5 h-5 text-foreground" />
                   </div>
                   <h4 className="font-semibold">{section.title}</h4>
@@ -119,9 +119,9 @@ export function ResourcesSection({ course }: { course: CourseData }) {
 
         {/* 2. Video Resources (Full Width) */}
         {videoSection && (
-          <Card className="border-border/40 shadow-sm overflow-hidden">
+          <Card className="border-border/40 shadow-xs overflow-hidden">
             <div className="p-6 border-b bg-muted/10 flex items-center gap-4">
-              <div className="p-2 bg-destructive/10 rounded-lg border shadow-sm text-destructive">
+              <div className="p-2 bg-destructive/10 rounded-lg border shadow-xs text-destructive">
                 <Video className="w-5 h-5" />
               </div>
               <h4 className="font-semibold text-lg">{videoSection.title}</h4>

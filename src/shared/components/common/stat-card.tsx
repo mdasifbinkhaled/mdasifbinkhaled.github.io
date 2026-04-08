@@ -100,7 +100,7 @@ export function StatCard({
   // Glass variant (with optional spotlight effect)
   if (isGlass) {
     const glassClasses = cn(
-      'flex flex-col p-5 bg-background/60 border-border/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-sm',
+      'flex flex-col p-5 bg-background/60 border-border/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg backdrop-blur-xs',
       className
     );
 
@@ -141,7 +141,7 @@ export function StatCard({
   return (
     <Card
       className={cn(
-        'backdrop-blur border shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105 group',
+        'backdrop-blur-sm border shadow-xs hover:shadow-lg transition-all duration-300 hover:scale-105 group',
         'bg-card/50 hover:bg-card/80 border-border/50 hover:border-primary/20',
         className
       )}

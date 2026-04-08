@@ -82,7 +82,7 @@ function DesktopView({
   semesterLabel?: string;
 }) {
   return (
-    <div className="hidden lg:block rounded-lg border border-border shadow-sm overflow-hidden bg-background">
+    <div className="hidden lg:block rounded-lg border border-border shadow-xs overflow-hidden bg-background">
       <div className="w-full overflow-x-auto">
         <Table className="w-full border-collapse">
           <caption className="sr-only">
@@ -176,7 +176,7 @@ function MobileView({ schedule }: { schedule: ClassScheduleItem[] }) {
       {schedule.map((item) => (
         <Card
           key={item.section}
-          className="overflow-hidden border-border/60 shadow-sm"
+          className="overflow-hidden border-border/60 shadow-xs"
         >
           <div className="flex flex-col divide-y divide-border/50">
             <div className="px-4 py-2 bg-muted/20 flex items-center justify-between">
@@ -199,7 +199,7 @@ function MobileView({ schedule }: { schedule: ClassScheduleItem[] }) {
                   <div className="text-[10px] text-muted-foreground font-mono">
                     {item.theory.days} • {item.theory.time}
                   </div>
-                  <div className="text-[10px] font-medium bg-muted/30 w-fit px-1.5 rounded">
+                  <div className="text-[10px] font-medium bg-muted/30 w-fit px-1.5 rounded-sm">
                     {item.theory.room}
                   </div>
                 </div>
@@ -215,7 +215,7 @@ function MobileView({ schedule }: { schedule: ClassScheduleItem[] }) {
                   <div className="text-[10px] text-muted-foreground font-mono">
                     {item.lab.days} • {item.lab.time}
                   </div>
-                  <div className="text-[10px] font-medium bg-muted/30 w-fit px-1.5 rounded">
+                  <div className="text-[10px] font-medium bg-muted/30 w-fit px-1.5 rounded-sm">
                     {item.lab.room}
                   </div>
                 </div>

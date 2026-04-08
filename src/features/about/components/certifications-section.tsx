@@ -21,7 +21,7 @@ export function CertificationsSection() {
             className="shadow-md hover:shadow-lg transition-all duration-300"
           >
             <CardHeader className="flex flex-row items-start gap-3">
-              <Award className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+              <Award className="h-6 w-6 text-primary shrink-0 mt-1" />
               <div>
                 <CardTitle className="text-lg">{cert.title}</CardTitle>
                 <CardDescription>{cert.institution}</CardDescription>

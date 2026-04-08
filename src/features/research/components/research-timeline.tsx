@@ -20,7 +20,7 @@ export function ResearchTimeline() {
             <div className="w-2.5 h-2.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors duration-300" />
           </div>
 
-          <Card className="transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md border border-border/50 bg-card/50 backdrop-blur-sm">
+          <Card className="transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md border border-border/50 bg-card/50 backdrop-blur-xs">
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                 <div className="space-y-3 flex-1">

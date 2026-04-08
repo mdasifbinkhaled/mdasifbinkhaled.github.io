@@ -69,7 +69,7 @@ export default function AppSidebarLayout({
         <aside
           id="desktop-sidebar"
           className={cn(
-            'hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-sidebar shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
+            'hidden lg:flex flex-col shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-sidebar shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
 
             collapsed ? 'w-[60px]' : 'w-80'
           )}
@@ -115,7 +115,7 @@ export default function AppSidebarLayout({
           <header
             role="banner"
             className={cn(
-              'fixed top-0 z-navbar bg-background/95 backdrop-blur-md border-b shadow-sm transition-all duration-300',
+              'fixed top-0 z-navbar bg-background/95 backdrop-blur-md border-b shadow-xs transition-all duration-300',
 
               'left-0 w-full',
 
@@ -133,7 +133,7 @@ export default function AppSidebarLayout({
 
           {/* Spacer to account for fixed navbar height */}
           <div
-            className="flex-shrink-0"
+            className="shrink-0"
             style={{ height: LAYOUT.NAVBAR_HEIGHT }}
             aria-hidden="true"
           />
@@ -145,7 +145,7 @@ export default function AppSidebarLayout({
             <div className="container mx-auto py-6">{children}</div>
           </main>
 
-          <footer className="shrink-0 py-8 px-6 border-t bg-background/50 backdrop-blur">
+          <footer className="shrink-0 py-8 px-6 border-t bg-background/50 backdrop-blur-sm">
             <div className="container mx-auto max-w-5xl flex flex-col md:flex-row justify-between items-center gap-6">
               <div className="text-center md:text-left">
                 <p className="text-sm font-medium text-foreground">

@@ -28,7 +28,7 @@ export function AssignmentsSection({ course }: AssignmentsSectionProps) {
         {course.assignments.map((assignment, idx) => (
           <Card
             key={idx}
-            className="border-border/40 shadow-sm hover:shadow-md transition-all group overflow-hidden"
+            className="border-border/40 shadow-xs hover:shadow-md transition-all group overflow-hidden"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 gap-4">
               <div className="flex items-start gap-4">

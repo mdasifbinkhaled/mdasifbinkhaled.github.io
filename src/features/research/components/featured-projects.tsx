@@ -27,7 +27,7 @@ export function FeaturedProjects() {
             key={project.id}
             className="overflow-hidden hover:shadow-xl transition-all duration-300"
           >
-            <div className="bg-gradient-to-r from-primary/10 to-transparent p-6 border-b border-border">
+            <div className="bg-linear-to-r from-primary/10 to-transparent p-6 border-b border-border">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-4 mb-2">
@@ -45,7 +45,7 @@ export function FeaturedProjects() {
 
               {project.placeholder && (
                 <div className="flex items-start gap-2 p-4 bg-muted/50 rounded-lg border border-border">
-                  <AlertCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <AlertCircle className="h-5 w-5 text-primary mt-0.5 shrink-0" />
                   <div className="text-sm">
                     <p className="font-medium mb-2">
                       Detailed Information Coming Soon

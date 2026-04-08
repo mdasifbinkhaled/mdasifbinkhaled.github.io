@@ -160,9 +160,9 @@ describe('Navbar', () => {
     const menuButton = screen.getByRole('button', {
       name: /open navigation menu/i,
     });
-    expect(menuButton).toHaveClass('focus-visible:outline-none');
+    expect(menuButton).toHaveClass('focus-visible:outline-hidden');
 
     const homeLink = screen.getByRole('link', { name: /go to homepage/i });
-    expect(homeLink).toHaveClass('focus-visible:outline-none');
+    expect(homeLink).toHaveClass('focus-visible:outline-hidden');
   });
 });

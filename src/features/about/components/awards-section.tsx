@@ -20,7 +20,7 @@ export function AwardsSection() {
             className="shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
           >
             <CardHeader className="flex flex-row items-start gap-3">
-              <award.icon className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+              <award.icon className="h-6 w-6 text-primary shrink-0 mt-1" />
               <div>
                 <CardTitle className="text-base">{award.title}</CardTitle>
                 <CardDescription className="text-sm">

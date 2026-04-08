@@ -14,7 +14,7 @@ import {
 export function BeyondAcademia() {
   return (
     <section id="beyond-academia">
-      <Card className="border-primary/20 bg-gradient-to-br from-accent/5 to-transparent">
+      <Card className="border-primary/20 bg-linear-to-br from-accent/5 to-transparent">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-2xl">
             <Radio className="w-6 h-6 text-primary" />
@@ -32,7 +32,7 @@ export function BeyondAcademia() {
                 key={interest.id}
                 className="flex items-start gap-4 p-4 rounded-lg bg-background/50"
               >
-                <interest.icon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <interest.icon className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                 <div>
                   <p className="font-medium text-foreground">
                     {interest.title}
@@ -55,7 +55,7 @@ export function BeyondAcademia() {
                     key={service.id}
                     className="flex items-start gap-3 p-3 rounded-lg bg-background/50"
                   >
-                    <service.icon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                    <service.icon className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                     <div>
                       <p className="font-medium text-foreground">
                         {service.title}

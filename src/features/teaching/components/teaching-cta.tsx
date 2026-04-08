@@ -11,7 +11,7 @@ import { MessageSquare, ArrowRight } from 'lucide-react';
 export function TeachingCTA() {
   return (
     <section className="w-full" aria-labelledby="teaching-cta-heading">
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 hover:shadow-lg transition-all duration-300">
+      <Card className="border-primary/20 bg-linear-to-br from-primary/5 to-primary/10 hover:shadow-lg transition-all duration-300">
         <CardHeader>
           <div className="flex items-center gap-4 justify-center">
             <MessageSquare className="w-6 h-6 text-primary" />

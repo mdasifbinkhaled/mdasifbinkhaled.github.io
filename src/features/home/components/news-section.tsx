@@ -9,7 +9,7 @@ export function NewsSection() {
   const newsItems = getNewsItems();
 
   return (
-    <article className="w-full py-8 md:py-10 bg-gradient-to-br from-secondary/30 via-secondary/20 to-transparent">
+    <article className="w-full py-8 md:py-10 bg-linear-to-br from-secondary/30 via-secondary/20 to-transparent">
       <div className="container-responsive">
         <section className="max-w-7xl mx-auto">
           <h2 className="text-2xl font-bold mb-6 text-primary flex items-center gap-2">
