@@ -1,4 +1,4 @@
-import { PublicationStructuredDataScript } from '@/shared/components/common/structured-data';
+import { PublicationStructuredDataScript } from '@/shared/components/infra/structured-data';
 
 export default function PublicationsLayout({
   children,

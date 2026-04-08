@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getLevelStyle, LEVEL_STYLES } from '@/features/teaching/styles';
+import { getLevelStyle, LEVEL_STYLES } from '@/features/teaching';
 
 describe('LEVEL_STYLES', () => {
   it('defines styles for undergraduate using semantic tokens', () => {

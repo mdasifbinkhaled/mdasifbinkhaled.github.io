@@ -1,5 +1,5 @@
 'use client';
 
-import { createErrorBoundary } from '@/shared/components/common/error-fallback';
+import { createErrorBoundary } from '@/shared/components/infra/error-fallback';
 
 export default createErrorBoundary('GPA Calculator page');

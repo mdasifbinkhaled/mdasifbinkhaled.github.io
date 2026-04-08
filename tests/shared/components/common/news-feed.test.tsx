@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { NewsFeed } from '@/shared/components/common/news-feed';
+import { NewsFeed } from '@/features/home';
 
 const mockItems = [
   {

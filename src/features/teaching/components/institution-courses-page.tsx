@@ -1,5 +1,5 @@
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { CourseCardCompact } from '@/features/teaching/course-card-compact';
+import { CourseCardCompact } from './course-card-compact';
 import { StatCard } from '@/shared/components/common/stat-card';
 import { Building2, Calendar, Users } from 'lucide-react';
 import type { CourseData } from '@/shared/types';

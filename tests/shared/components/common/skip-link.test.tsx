@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { SkipLink } from '@/shared/components/common/skip-link';
+import { SkipLink } from '@/shared/components/infra/skip-link';
 
 describe('SkipLink', () => {
   it('renders skip link with correct attributes', () => {

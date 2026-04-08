@@ -2,7 +2,12 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import TeachingTabsClient from '@/features/teaching/components/teaching-tabs.client';
+import {
+  TeachingTabsClient,
+  TeachingHeroStats,
+  TeachingCTA,
+} from '@/features/teaching';
+import { MentorshipSection } from '@/features/teaching/components/mentorship-section';
 import {
   coursesTaughtIUB,
   coursesTaughtBRACU,
@@ -10,9 +15,6 @@ import {
 import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 import { teachingPillars } from '@/shared/lib/data/teaching-pillars';
 import { navIconMap } from '@/shared/lib/nav-icon-map';
-import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
-import { MentorshipSection } from '@/features/teaching/components/mentorship-section';
-import { TeachingCTA } from '@/features/teaching/teaching-cta';
 
 export const metadata: Metadata = {
   title: 'Teaching',

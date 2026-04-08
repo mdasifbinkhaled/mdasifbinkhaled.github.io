@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { ErrorCard } from '@/shared/components/common/error-card';
+import { ErrorCard } from '@/shared/components/infra/error-card';
 
 vi.mock('next/link', () => ({
   default: ({

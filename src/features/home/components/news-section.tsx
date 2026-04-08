@@ -1,4 +1,4 @@
-import { NewsFeed } from '@/shared/components/common/news-feed';
+import { NewsFeed } from './news-feed';
 import { getNewsItems } from '@/shared/lib/data/news';
 
 /**

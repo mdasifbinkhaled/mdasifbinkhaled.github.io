@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { GraduationCap, Building2, Presentation } from 'lucide-react';
-import { ErrorBoundary } from '@/shared/components/common/error-boundary';
+import { ErrorBoundary } from '@/shared/components/infra/error-boundary';
 import { Badge } from '@/shared/components/ui/badge';
 import {
   Tabs,
@@ -17,9 +17,9 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/shared/components/ui/tabs';
-import { CourseCard } from '@/features/teaching/course-card';
+import { CourseCard } from './course-card';
 import type { CourseData } from '@/shared/types';
-import { HashScroll } from '@/shared/components/common/hash-scroll';
+import { HashScroll } from '@/shared/components/infra/hash-scroll';
 import { Icon } from '@/shared/components/common/icons';
 import {
   teachingSupportRoles,

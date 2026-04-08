@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { samplePublications } from '@/shared/lib/data/publications';
 import { siteConfig } from '@/shared/config/site';
-import { PublicationList } from '@/shared/components/common/publication-list';
+import { PublicationList } from '@/features/publications';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { ErrorBoundary } from '@/shared/components/common/error-boundary';
+import { ErrorBoundary } from '@/shared/components/infra/error-boundary';
 import { AcademicProfiles } from '@/shared/components/common/academic-profiles';
 
 export const metadata: Metadata = {

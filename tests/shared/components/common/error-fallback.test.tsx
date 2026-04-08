@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import {
   ErrorFallback,
   createErrorBoundary,
-} from '@/shared/components/common/error-fallback';
+} from '@/shared/components/infra/error-fallback';
 
 vi.mock('next/link', () => ({
   default: ({

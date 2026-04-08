@@ -139,8 +139,7 @@ describe('Research feature components', () => {
 
 describe('Publications feature components', () => {
   it('renders PublicationList with publications data', async () => {
-    const { PublicationList } =
-      await import('@/shared/components/common/publication-list');
+    const { PublicationList } = await import('@/features/publications');
     const { samplePublications } =
       await import('@/shared/lib/data/publications');
     renderWithProviders(

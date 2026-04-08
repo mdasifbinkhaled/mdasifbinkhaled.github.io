@@ -5,6 +5,8 @@
 
 export { HeroSection } from './hero-section';
 export { NewsSection } from './news-section';
+export { NewsFeed } from './news-feed';
+export { ExperienceCompact } from './experience-compact';
 export { ResearchHighlights } from './research-highlights';
 export {
   PublicationsPreview,

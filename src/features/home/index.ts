@@ -12,4 +12,6 @@ export {
   ExperiencePreview,
   FeaturedGrant,
   ConnectSection,
+  NewsFeed,
+  ExperienceCompact,
 } from './components';

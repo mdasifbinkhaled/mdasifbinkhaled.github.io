@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
-import { PublicationCard } from '@/shared/components/common/publication-card';
-import { ExperienceCompact } from '@/shared/components/common/experience-compact';
+import { PublicationCard } from '@/features/publications';
+import { ExperienceCompact } from '@/features/home';
 import { HeroSection, NewsSection } from '@/features/home';
-import { CourseCard } from '@/features/teaching/course-card';
+import { CourseCard } from '@/features/teaching';
 import type {
   PublicationItem,
   ExperienceItem,

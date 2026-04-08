@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { allCourses, institutionNames } from '@/shared/lib/data/courses';
-import { CoursePageLayout } from '@/features/teaching/course-page-layout';
+import { CoursePageLayout } from '@/features/teaching';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { CourseStructuredDataScript } from '@/shared/components/common/structured-data';
+import { CourseStructuredDataScript } from '@/shared/components/infra/structured-data';
 
 interface CoursePageProps {
   params: Promise<{

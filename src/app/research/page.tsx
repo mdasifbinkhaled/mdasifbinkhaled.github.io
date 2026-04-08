@@ -4,14 +4,16 @@ import { siteConfig } from '@/shared/config/site';
 import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 import { assetPaths } from '@/shared/config/assets';
 
-import { ResearchHero } from '@/features/research/components/research-hero';
-import { ResearchVision } from '@/features/research/components/research-vision';
-import { PrimaryAreas } from '@/features/research/components/primary-areas';
-import { CurrentFocus } from '@/features/research/components/current-focus';
-import { FeaturedProjects } from '@/features/research/components/featured-projects';
-import { OpenSource } from '@/features/research/components/open-source';
-import { LookingAhead } from '@/features/research/components/looking-ahead';
-import { ResearchCTA } from '@/features/research/components/research-cta';
+import {
+  ResearchHero,
+  ResearchVision,
+  PrimaryAreas,
+  CurrentFocus,
+  FeaturedProjects,
+  OpenSource,
+  LookingAhead,
+  ResearchCTA,
+} from '@/features/research';
 
 export const metadata: Metadata = {
   title: 'Research',

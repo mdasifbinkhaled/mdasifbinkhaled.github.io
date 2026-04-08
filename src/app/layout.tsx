@@ -3,16 +3,16 @@ import type { Metadata } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { AppProviders } from '@/shared/providers/app-providers';
 import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
-import { SkipLink } from '@/shared/components/common/skip-link';
+import { SkipLink } from '@/shared/components/infra/skip-link';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
 import {
   generatePersonStructuredData,
   sanitizeJsonLd,
 } from '@/shared/lib/structured-data';
-import { RouteAnnouncer } from '@/shared/components/common/route-announcer';
-import { WebVitalsReporter } from '@/shared/components/common/web-vitals-reporter';
-import { SentryInit } from '@/shared/components/common/sentry-init';
+import { RouteAnnouncer } from '@/shared/components/infra/route-announcer';
+import { WebVitalsReporter } from '@/shared/components/infra/web-vitals-reporter';
+import { SentryInit } from '@/shared/components/infra/sentry-init';
 import '@/app/globals.css';
 import '@/styles/tokens.css';
 
@@ -69,7 +69,6 @@ export default function RootLayout({
       </head>
       <body
         className={`${inter.variable} font-sans antialiased bg-background text-foreground`}
-        suppressHydrationWarning
       >
         {/* JSON-LD Structured Data — sanitized to prevent XSS */}
         <script

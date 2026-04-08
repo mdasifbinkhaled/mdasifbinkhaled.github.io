@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render } from '@testing-library/react';
-import { SentryInit } from '@/shared/components/common/sentry-init';
+import { SentryInit } from '@/shared/components/infra/sentry-init';
 
 describe('SentryInit', () => {
   beforeEach(() => {

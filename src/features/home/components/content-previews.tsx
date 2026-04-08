@@ -8,8 +8,8 @@ import {
 } from '@/shared/components/ui/card';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { PublicationList } from '@/shared/components/common/publication-list';
-import { ExperienceCompact } from '@/shared/components/common/experience-compact';
+import { PublicationList } from '@/features/publications';
+import { ExperienceCompact } from './experience-compact';
 import { samplePublications } from '@/shared/lib/data/publications';
 import { professionalExperiences } from '@/shared/lib/data/experience';
 import { DISPLAY_LIMITS } from '@/shared/config';
