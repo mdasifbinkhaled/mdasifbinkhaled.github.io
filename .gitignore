@@ -45,7 +45,6 @@ next-env.d.ts
 *.swo
 
 # System Files
-.DS_Store
 Thumbs.db
 
 # Project Reports (Generated - Optional to ignore or keep)

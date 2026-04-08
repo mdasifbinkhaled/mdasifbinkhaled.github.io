@@ -36,7 +36,7 @@ export default function AppsPage() {
             description="Compute your semester GPA and cumulative CGPA across multiple credit-weighted courses."
             icon="Brain"
             href="/apps/gpa-calculator"
-            status="planned"
+            status="active"
           />
           <ToolCard
             title="Seat Planner"
@@ -45,25 +45,19 @@ export default function AppsPage() {
             href="/apps/seat-planner"
             status="active"
           />
-        </div>
-      </section>
-
-      <section className="space-y-6 pt-8 border-t">
-        <h2 className="text-2xl font-bold tracking-tight">Coming Soon</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <ToolCard
             title="Exam Countdown"
             description="Keep track of upcoming midterms and finals with real-time countdown timers."
             icon="Timer"
-            href="#"
-            status="planned"
+            href="/apps/exam-countdown"
+            status="active"
           />
           <ToolCard
-            title="Office Hours Booking"
-            description="Reserve 1-on-1 counseling slots and view availability schedules dynamically."
+            title="Office Hours"
+            description="View office hours schedule and availability for 1-on-1 counseling sessions."
             icon="CalendarDays"
-            href="#"
-            status="planned"
+            href="/apps/office-hours"
+            status="active"
           />
         </div>
       </section>

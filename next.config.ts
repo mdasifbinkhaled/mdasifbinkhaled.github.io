@@ -15,10 +15,6 @@ const config: NextConfig = {
     viewTransition: true,
   },
 
-  turbopack: {
-    root: '.',
-  },
-
   typedRoutes: true,
 };
 export default analyzer(config);

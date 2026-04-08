@@ -1,10 +1,10 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-02-25 | 201 source files | 13,951 LOC
+> Last Updated: 2026-06-05 | 219 source files | 17,186 LOC
 
 ## Root Configuration
 
-```
+```text
 ├── package.json            — Project manifest, scripts, dependencies
 ├── next.config.ts          — Next.js 16 config (static export, typed routes)
 ├── tsconfig.json           — TypeScript strict config, path aliases
@@ -20,7 +20,7 @@
 
 ## Public Assets
 
-```
+```text
 public/
 ├── _headers                — Security headers (HSTS, CSP) for CDN hosting
 ├── humans.txt              — Humans.txt standard
@@ -30,13 +30,13 @@ public/
 └── images/                 — Static images (profile photo, OG image, favicons)
 ```
 
-## Source Tree — `src/` (14,495 LOC)
+## Source Tree — `src/` (17,186 LOC)
 
-### App Layer — `src/app/` (1,385 LOC)
+### App Layer — `src/app/` (1,987 LOC)
 
 Page routes using Next.js App Router. Each route has its own error boundary.
 
-```
+```text
 src/app/
 ├── layout.tsx              — Root layout: fonts, metadata, JSON-LD, CSP, providers
 ├── page.tsx                — Homepage
@@ -53,8 +53,26 @@ src/app/
 ├── apps/
 │   ├── page.tsx            — Student apps hub (tool cards grid)
 │   ├── error.tsx           — Error boundary (factory pattern)
-│   └── grade-calculator/
-│       ├── page.tsx        — Grade calculator tool page
+│   ├── exam-countdown/
+│   │   ├── page.tsx        — Exam countdown timers
+│   │   └── error.tsx       — Error boundary (factory pattern)
+│   ├── gpa-calculator/
+│   │   ├── page.tsx        — GPA calculator tool page
+│   │   └── error.tsx       — Error boundary (factory pattern)
+│   ├── grade-calculator/
+│   │   ├── page.tsx        — Grade calculator tool page
+│   │   └── error.tsx       — Error boundary (factory pattern)
+│   ├── office-hours/
+│   │   ├── page.tsx        — Office hours schedule
+│   │   └── error.tsx       — Error boundary (factory pattern)
+│   └── seat-planner/
+│       ├── page.tsx        — Seat plan generator page
+│       └── error.tsx       — Error boundary (factory pattern)
+├── blog/
+│   ├── page.tsx            — Blog listing page
+│   ├── error.tsx           — Error boundary (factory pattern)
+│   └── [slug]/
+│       ├── page.tsx        — Blog post page (MDX + Shiki)
 │       └── error.tsx       — Error boundary (factory pattern)
 ├── contact/
 │   ├── page.tsx            — Contact page with social links
@@ -79,10 +97,12 @@ src/app/
 ├── service-awards/
 │   ├── page.tsx            — Redirects → /about#honors-awards
 │   └── error.tsx
+├── talks/
+│   ├── page.tsx            — Conference talks & presentations
+│   └── error.tsx
 └── teaching/
     ├── page.tsx            — Teaching hub (institution tabs)
     ├── error.tsx
-    ├── teaching-tabs.client.tsx — Tab switching client component
     ├── iub/
     │   ├── page.tsx        — IUB institution page
     │   └── error.tsx
@@ -95,13 +115,15 @@ src/app/
             └── error.tsx
 ```
 
-### Features Layer — `src/features/` (4,234 LOC)
+### Features Layer — `src/features/` (7,091 LOC)
 
 Domain-specific feature modules. Each is self-contained.
 
-```
+```text
 src/features/
-├── about/components/       — About page sections (10 files)
+├── about/                  — About page feature (11 files)
+│   ├── index.ts            — Feature barrel export
+│   └── components/         — About page sections (10 files)
 │   ├── hero-section.tsx
 │   ├── awards-section.tsx
 │   ├── certifications-section.tsx
@@ -113,14 +135,31 @@ src/features/
 │   ├── beyond-academia.tsx
 │   └── index.ts
 │
-├── apps/                   — Student apps feature (4 files)
+├── apps/                   — Student apps feature (18 files)
+│   ├── index.ts            — Feature barrel export
 │   └── components/
-│       ├── grade-calculator.tsx — Weighted grade calculator (363 LOC)
+│       ├── grade-calculator.tsx — Weighted grade calculator (365 LOC)
 │       ├── tool-card.tsx       — Reusable tool card component
 │       ├── tools-hero.tsx      — Apps page hero section
-│       └── index.ts
+│       ├── index.ts
+│       └── seat-planner/       — Seat plan generator (13 files, 1,989 LOC)
+│           ├── allocation.ts       — Seat allocation algorithm (198 LOC)
+│           ├── csv-export.ts       — CSV seat plan export (51 LOC)
+│           ├── csv-parser.ts       — CSV student list parser (138 LOC)
+│           ├── exam-details-form.tsx — Exam details form component (100 LOC)
+│           ├── pdf-export.ts       — PDF seat plan export via jsPDF (225 LOC)
+│           ├── room-configuration.tsx — Room config UI (224 LOC)
+│           ├── seat-plan-results.tsx — Results display (439 LOC, largest file)
+│           ├── seat-planner.tsx    — Main orchestrator (85 LOC)
+│           ├── shared-ui.tsx       — Shared UI primitives (32 LOC)
+│           ├── student-data-panel.tsx — Student data input panel (153 LOC)
+│           ├── types.ts            — Type definitions (77 LOC)
+│           ├── use-seat-planner.ts — State management hook (266 LOC)
+│           └── index.ts
 │
-├── home/components/        — Homepage sections (6 files)
+├── home/                   — Homepage feature (7 files)
+│   ├── index.ts            — Feature barrel export
+│   └── components/         — Homepage sections (6 files)
 │   ├── hero-section.tsx
 │   ├── connect-section.tsx
 │   ├── content-previews.tsx
@@ -128,7 +167,9 @@ src/features/
 │   ├── research-highlights.tsx
 │   └── index.ts
 │
-├── research/components/    — Research page sections (8 files)
+├── research/               — Research page feature (9 files)
+│   ├── index.ts            — Feature barrel export
+│   └── components/         — Research page sections (8 files)
 │   ├── current-focus.tsx
 │   ├── featured-projects.tsx
 │   ├── looking-ahead.tsx
@@ -138,7 +179,8 @@ src/features/
 │   ├── research-hero.tsx
 │   └── research-vision.tsx
 │
-└── teaching/               — Teaching feature (18 files, largest module)
+└── teaching/               — Teaching feature (20 files, largest module by count)
+    ├── index.ts
     ├── course-card.tsx
     ├── course-card-compact.tsx
     ├── course-page-layout.tsx
@@ -157,14 +199,15 @@ src/features/
         ├── schedule-section.tsx
         ├── schedule-table.tsx
         ├── syllabus-section.tsx
-        └── syllabus-table.tsx
+        ├── syllabus-table.tsx
+        └── teaching-tabs.client.tsx
 ```
 
-### Shared Layer — `src/shared/` (7,865 LOC, 55% of codebase)
+### Shared Layer — `src/shared/` (8,108 LOC, 47% of codebase)
 
 Cross-cutting infrastructure: components, config, data, hooks, lib, types.
 
-```
+```text
 src/shared/
 ├── components/
 │   ├── common/             — Domain-aware shared components (19 files)
@@ -198,38 +241,35 @@ src/shared/
 │   ├── navigation/         — Nav components (2 files)
 │   │   ├── breadcrumbs.tsx
 │   │   └── navbar.tsx
-│   └── ui/                 — Primitive UI (shadcn/ui based, 21 files)
+│   └── ui/                 — Primitive UI (shadcn/ui based, 19 files)
 │       ├── accordion.tsx, alert.tsx, badge.tsx, button.tsx
 │       ├── card.tsx, collapsible-section.tsx, command-menu.tsx
 │       ├── dialog.tsx, dropdown-menu.tsx
 │       ├── input.tsx, progress.tsx, select.tsx, separator.tsx
 │       ├── sheet.tsx, skeleton.tsx, spotlight-card.tsx
 │       ├── table.tsx, tabs.tsx, theme-selector.tsx
-│       └── toast.tsx, toaster.tsx
 │
-├── config/                 — Static configuration (7 files)
+├── config/                 — Static configuration (6 files + barrel)
 │   ├── assets.ts
 │   ├── constants.ts
 │   ├── navigation.ts
-│   ├── researcher-profile.ts
 │   ├── site.ts
 │   ├── themes.ts
 │   └── index.ts
 │
-├── hooks/                  — Custom React hooks (5 files)
+├── hooks/                  — Custom React hooks (3 files + barrel)
 │   ├── use-debounce.ts
 │   ├── use-hover-delay.ts  — Hover-triggered menu open/close with configurable delay
 │   ├── use-is-client.ts    — SSR hydration detection via useSyncExternalStore
-│   ├── use-toast.ts
 │   └── index.ts
 │
-├── lib/                    — Core utilities (34 files)
+├── lib/                    — Core utilities (35 files)
 │   ├── analytics.ts        — Google Analytics helpers
 │   ├── course-utils.ts     — Course data helpers
 │   ├── nav-icon-map.ts     — Shared navigation icon mapping
 │   ├── structured-data.ts  — Schema.org JSON-LD generators
 │   ├── utils.ts            — cn() utility
-│   └── data/               — Domain data layer (28 files, TypeScript objects)
+│   └── data/               — Domain data layer (30 files, TypeScript objects)
 │       ├── about.ts
 │       ├── activities.ts
 │       ├── courses.ts      — Course registry + helpers
@@ -241,16 +281,19 @@ src/shared/
 │       │   ├── iub-cse317.ts, iub-cse331.ts
 │       ├── education.ts
 │       ├── experience.ts
+│       ├── grading.ts
 │       ├── metrics.ts
 │       ├── news.ts
 │       ├── personal.ts
 │       ├── publications.ts
 │       ├── research-interests.ts
 │       ├── research.ts
+│       ├── researcher-profile.ts
+│       ├── teaching-pillars.ts
 │       └── teaching-stats.ts
 │
 ├── providers/
-│   └── app-providers.tsx   — ThemeProvider + Toaster wrapper
+│   └── app-providers.tsx   — ThemeProvider wrapper
 │
 └── types/                  — Plain TypeScript interfaces (3 files)
     ├── index.ts            — Domain types (CourseData, Publication, etc.)
@@ -260,16 +303,16 @@ src/shared/
 
 ### Styles — `src/styles/` (247 LOC)
 
-```
+```text
 src/styles/
 └── tokens.css              — Design tokens: colors, spacing, typography for 6 themes
 ```
 
-## Tests — `tests/` (21 files, 149 tests)
+## Tests — `tests/` (22 files, 149 tests)
 
 Organized to mirror `src/` directory structure.
 
-```
+```text
 tests/
 ├── setup.ts                    — Vitest setup (jest-dom matchers, lucide mocks)
 ├── tsconfig.json               — Test-specific TypeScript config
@@ -316,7 +359,7 @@ tests/
 
 ## Cockpit — `.cockpit/` (Project Intelligence)
 
-```
+```text
 .cockpit/
 ├── INDEX.md                — Navigation hub + health dashboard
 ├── PMD.md                  — Project Master Document (architecture, metrics)

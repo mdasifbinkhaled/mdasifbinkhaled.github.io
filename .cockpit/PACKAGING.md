@@ -5,14 +5,24 @@
 | Package                    | Version | Purpose                                         |
 | -------------------------- | ------- | ----------------------------------------------- |
 | `next`                     | 16.1.4  | Framework (App Router, static export)           |
-| `react`                    | 19.2.3  | UI library                                      |
-| `react-dom`                | 19.2.3  | React DOM bindings                              |
-| `lucide-react`             | 0.544.0 | Icons                                           |
+| `react`                    | 19.2.4  | UI library                                      |
+| `react-dom`                | 19.2.4  | React DOM bindings                              |
+| `lucide-react`             | 0.563.0 | Icons                                           |
 | `next-themes`              | 0.4.6   | Theme management (dark/light/system + 6 themes) |
 | `tailwind-merge`           | 3.3.1   | Tailwind class conflict resolution              |
 | `clsx`                     | 2.1.1   | Conditional class joining                       |
 | `class-variance-authority` | 0.7.1   | Component variant API                           |
 | `cmdk`                     | 1.1.1   | Command palette                                 |
+| `html2canvas`              | 1.4.1   | HTML-to-canvas rendering (seat planner export)  |
+| `jspdf`                    | 4.2.0   | PDF document generation (seat planner export)   |
+| `jspdf-autotable`          | 5.0.7   | PDF table generation (seat planner export)      |
+| `@next/third-parties`      | latest  | Google Analytics GA4 integration                |
+| `@sentry/browser`          | latest  | Client-side error tracking                      |
+| `gray-matter`              | latest  | Frontmatter parsing for MDX blog posts          |
+| `next-mdx-remote`          | latest  | Remote MDX rendering (RSC-compatible)           |
+| `rehype-pretty-code`       | latest  | Syntax highlighting for code blocks (Shiki)     |
+| `remark-gfm`               | latest  | GitHub Flavored Markdown support                |
+| `shiki`                    | latest  | Syntax highlighter engine                       |
 | `@radix-ui/*`              | various | Headless UI primitives (9 packages)             |
 
 ### Radix UI Packages
@@ -23,9 +33,9 @@
 - `react-progress` ^1.1.7
 - `react-select` ^2.2.6
 - `react-separator` ^1.1.7
-- `react-slot` ^1.2.3
+- `react-slot` ^1.2.4
 - `react-tabs` ^1.1.13
-- `react-visually-hidden` ^1.0.3
+- `react-visually-hidden` ^1.2.4
 
 ## Dev Dependencies
 
@@ -68,12 +78,12 @@
 
 ## Build Pipeline
 
-```
+```text
 npm run build
   ├── cross-env NEXT_TELEMETRY_DISABLED=1 next build
   │   ├── TypeScript compilation
   │   ├── ESLint checking
-  │   ├── Static page generation (20 pages)
+  │   ├── Static page generation (27 pages)
   │   ├── SSG for dynamic routes (generateStaticParams)
   │   └── Output to out/ directory
   └── postbuild: creates out/.nojekyll for GitHub Pages
@@ -82,7 +92,7 @@ npm run build
 ### Build Output
 
 - **Format**: Static HTML export (`output: 'export'`)
-- **Pages**: 20 static pages
+- **Pages**: 27 static pages
 - **Directory**: `out/`
 - `.nojekyll` file prevents GitHub Pages Jekyll processing
 
@@ -106,21 +116,26 @@ npm run build
 
 ## Known Vulnerabilities
 
-| Package        | Severity | Impact                                      | Mitigation                                        |
-| -------------- | -------- | ------------------------------------------- | ------------------------------------------------- |
-| `ajv` < 8.18.0 | Moderate | ReDoS with `$data`                          | Dev-only (ESLint chain), no runtime impact        |
-| `next` 16.1.4  | High     | Server-side DoS (Image Optimizer, RSC, PPR) | **Fully mitigated** — static export has no server |
+| Package             | Severity | Impact                                      | Mitigation                                        |
+| ------------------- | -------- | ------------------------------------------- | ------------------------------------------------- |
+| `dompurify` <=3.3.1 | Moderate | mutation-XSS via Re-Contextualization       | No third-party inputs passed; static context      |
+| `jspdf` <=4.2.0     | Critical | PDF Object Injection via FreeText color     | Low risk; parameters controlled purely locally    |
+| `next` 16.1.4       | High     | Server-side DoS (Image Optimizer, RSC, PPR) | **Fully mitigated** — static export has no server |
+| `rollup` 4.x        | High     | Arbitrary file write via path traversal     | Dev-only (build tooling), no runtime impact       |
+| `vite` 6.x          | High     | Path traversal via URL encoding             | Dev-only (test tooling), no runtime impact        |
+
+**Summary**: 5 vulnerabilities (1 moderate, 3 high, 1 critical). All are mitigated: either dev-only dependencies or neutralized by the static export architecture (no server runtime).
 
 ## Deployment
 
-| Property          | Value                                     |
-| ----------------- | ----------------------------------------- |
-| **Platform**      | GitHub Pages                              |
-| **URL**           | https://mdasifbinkhaled.github.io         |
-| **Repository**    | mdasifbinkhaled/mdasifbinkhaled.github.io |
-| **Deploy method** | GitHub Actions → Static Export → Pages    |
-| **SSL**           | Automatic (GitHub managed)                |
-| **CDN**           | GitHub Pages CDN (Fastly)                 |
+| Property          | Value                                                                  |
+| ----------------- | ---------------------------------------------------------------------- |
+| **Platform**      | GitHub Pages                                                           |
+| **URL**           | [https://mdasifbinkhaled.github.io](https://mdasifbinkhaled.github.io) |
+| **Repository**    | mdasifbinkhaled/mdasifbinkhaled.github.io                              |
+| **Deploy method** | GitHub Actions → Static Export → Pages                                 |
+| **SSL**           | Automatic (GitHub managed)                                             |
+| **CDN**           | GitHub Pages CDN (Fastly)                                              |
 
 ## CI Workflows
 
@@ -129,9 +144,9 @@ npm run build
 - Triggers: Push to `main`
 - Builds and deploys to GitHub Pages
 
-### `ci.yml` — Pull Request Checks
+### `ci.yml` — Pull Request Checks & Push
 
-- Triggers: Pull requests to `main`
+- Triggers: Pull requests and pushes to `main`
 - Runs: lint, typecheck, test, build
 - All must pass to merge
 
@@ -168,8 +183,8 @@ npm run build
 
 ## Analytics
 
-- **Google Analytics**: GA4 via `gtag.js`
-- **Implementation**: `src/shared/lib/analytics.ts`
+- **Google Analytics**: GA4 via `@next/third-parties/google`
+- **Implementation**: `GoogleAnalytics` component in root layout + `src/shared/lib/analytics.ts`
 - **Events tracked**: viewCV, downloadCV, viewPublication, downloadPublication
 - **Privacy**: Telemetry disabled in build (`NEXT_TELEMETRY_DISABLED=1`)
 

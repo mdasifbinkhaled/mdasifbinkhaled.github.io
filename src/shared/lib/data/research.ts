@@ -116,6 +116,32 @@ export const researchData = {
       featured: true,
     },
   ],
+  timeline: [
+    {
+      year: '2024 - Present',
+      title: "VC's Research Fund",
+      description:
+        'Awarded grant for "Unveiling the Linguistic Diversity of Bangla" (No. VCRF-SETS:24-013).',
+      icon: 'Award',
+      type: 'grant',
+    },
+    {
+      year: '2023 - Present',
+      title: 'Multimodal Healthcare Diagnostics',
+      description:
+        'Initiated research combining diverse data modalities for complete clinical analysis.',
+      icon: 'Layers',
+      type: 'project',
+    },
+    {
+      year: '2022',
+      title: 'Stroke Analysis using Explainable AI',
+      description:
+        'Commenced predictive analytics research on transparent, interpretable machine learning models for early stroke detection.',
+      icon: 'Brain',
+      type: 'project',
+    },
+  ],
   libraries: [
     {
       name: 'SortyPy',

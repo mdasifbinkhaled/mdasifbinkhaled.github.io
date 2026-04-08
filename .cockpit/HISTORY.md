@@ -1,6 +1,6 @@
 # HISTORY.md — Development Timeline
 
-> 438 commits | 3 tags | Single branch (main) | Deployed to GitHub Pages
+> 443 commits | 4 tags | Single branch (main) | Deployed to GitHub Pages
 
 ## Timeline
 
@@ -169,6 +169,81 @@
   - Injected dynamic route `openGraph` overrides into Course pages, App tools, and Publication views for exact rich social-sharing snippets.
   - Upgraded component semantics from loose `<div>` wrappers to precise `<article>`, `<time>`, and `<section>` tags.
 - Quality Gates: Codebase structurally clean (13,951 LOC). 149/149 test positives. Zero static export warnings.
+
+### Seat Planner — Feature Build & Decomposition (2026-02 – 2026-04)
+
+- **Commit**: `b612559` `refactor(apps): decompose seat-planner god component & fix critical bugs`
+- **Feature**: Full seat plan generator at `/apps/seat-planner/`
+  - Upload student CSV, configure rooms, generate seat allocation
+  - Export to CSV and PDF (via jsPDF + jspdf-autotable + html2canvas)
+  - 13 files, 1,989 LOC — well-decomposed architecture:
+    - `allocation.ts` — seat allocation algorithm
+    - `csv-parser.ts` / `csv-export.ts` — student data I/O
+    - `pdf-export.ts` — PDF seat plan generation
+    - `room-configuration.tsx` — room setup UI
+    - `seat-plan-results.tsx` — results display (439 LOC, largest file)
+    - `use-seat-planner.ts` — state management hook (266 LOC)
+    - Plus: exam-details-form, student-data-panel, shared-ui, types, index
+  - Error boundary at `/apps/seat-planner/error.tsx`
+- **Dependencies added**: `html2canvas` ^1.4.1, `jspdf` ^4.2.0, `jspdf-autotable` ^5.0.7
+- Codebase grew from 13,951 → ~15,900 LOC; features/ layer from 31% → 39%
+- Quality gates: 0 TS errors, 0 lint errors, 149/149 tests, 20 pages exported
+
+### Phase 8 (continued) — Modern Web & SEO Enhancements (2026-04-04)
+
+- **Commit**: `38b2586` `feat: implementation of Phase 8 Modern Web optimizations and SEO enhancements`
+- **Container Queries**: Extended to news-feed, course-card components
+- **SEO Enhancements**: Dynamic OpenGraph metadata for course pages, apps, publications
+- **Semantic HTML**: Upgraded component wrappers to `<article>`, `<time>`, `<section>` tags
+- **Content Visibility**: Applied to publication lists for deferred off-screen rendering
+- **Tailwind Container Queries**: `@container` responsive breakpoints added
+- Quality Gates: 15,909 LOC. 149/149 tests. Zero static export warnings.
+
+### Cockpit Synchronization (2026-04-04)
+
+- Full cockpit sync: all 9 documentation files updated to match codebase reality
+- 28 drift items resolved across INDEX, PMD, STRUCTURE, ROADMAP, PACKAGING, HISTORY, RELEASES
+- Version bumped to 1.4.0 (Seat Planner = significant feature addition)
+- Quality Gates: All green — 0 TS errors, 0 lint errors, 149/149 tests, 20 pages
+
+### Content, Monitoring & Forensic Remediation (2026-06-05)
+
+- **Blog system**: MDX-powered blog at `/blog` with Shiki syntax highlighting, frontmatter parsing, GFM
+  - Dependencies: `next-mdx-remote`, `gray-matter`, `rehype-pretty-code`, `remark-gfm`, `shiki`
+  - Dynamic `[slug]` route with `generateStaticParams`, error boundaries
+- **Talks page**: Conference talks & presentations at `/talks`
+- **3 new student apps**: Exam Countdown, GPA Calculator, Office Hours (all with error boundaries)
+- **Sentry integration**: Client-side error tracking via `@sentry/browser`, CSP updated for Sentry domains
+- **Google Analytics**: Migrated to `@next/third-parties/google` component
+- **Forensic audit & remediation**:
+  - Apps page "Coming Soon" mismatch fixed (active tools moved to Available section)
+  - 6 missing error boundaries added (blog, blog/[slug], talks, 3 new apps)
+  - README false claims corrected (Zod 4, test count, workflow count)
+  - CI stale branch triggers removed (develop, feature/\*\*)
+  - .env.example: dead `NEXT_PUBLIC_STATIC_EXPORT` removed, `NEXT_PUBLIC_SENTRY_DSN` added
+  - Dependency patches: react 19.2.4, lucide-react 0.563.0, radix-ui packages updated
+- **Full cockpit sync**: All documentation aligned to 219-file / 17,186-LOC / 27-page reality
+- Quality Gates: 0 TS errors, 0 lint errors, 162/162 tests (24 files), 27 pages exported
+
+### Stabilization & Quality Push (2026-04-08)
+
+- **Coverage push**: 47% → 50.07% — 40 new tests across 7 new test files
+  - error-card, error-fallback, error-boundary, teaching-cta, teaching-hero-stats, course-card-compact, mdx utilities
+  - Total: 202/202 tests passing (31 files)
+- **Blog fix**: Removed stale `hello-world.mdx` placeholder, created proper `welcome.mdx` first post
+  - Fixed `generateStaticParams` to use async `getAllPosts()` (Turbopack-compatible)
+  - Removed raw `fs`/`path` imports from page component
+- **Content cleanup**:
+  - Talks data: replaced `'#'` placeholder links with proper values
+  - Mentorship section: replaced sample students with empty-state template
+  - Research timeline: deferred (import removed from research/page.tsx, component retained)
+- **CI/CD improvements**:
+  - ci.yml: added `format:check` step, fixed coverage JSON path, added Playwright E2E step
+  - security.yml: improved audit exception logic (was masking real criticals)
+  - package.json: added `test:e2e` script
+- **Hygiene**: removed duplicate `.DS_Store` in .gitignore, removed stale `content/blog/.gitkeep`
+- **Cockpit sync**: all documentation updated to match 202-test / 27-page / 50%+ coverage reality
+- Quality Gates: 0 TS errors, 0 lint errors, 202/202 tests (31 files), 27 pages exported, 50%+ coverage
 
 ## Tags
 

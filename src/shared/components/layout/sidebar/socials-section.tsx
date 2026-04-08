@@ -27,7 +27,7 @@ export function SocialsSection({
       )}
     >
       {!isCollapsed && (
-        <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/60 mb-3 tracking-wider text-center sidebar-section-title">
+        <h4 className="text-xs uppercase font-semibold text-muted-foreground mb-3 tracking-wider text-center sidebar-section-title">
           Follow Me
         </h4>
       )}

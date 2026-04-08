@@ -3,6 +3,7 @@
 [![Deploy](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/nextjs.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/nextjs.yml)
 [![CI](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/ci.yml)
 [![Security](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/security.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/security.yml)
+[![LHCI](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/lhci.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/lhci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript**, and **Tailwind CSS**. Designed to showcase research, publications, teaching, and professional experience with high visual fidelity.
@@ -20,21 +21,22 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 - **💼 Experience Timeline** — Academic and professional experience showcase
 - **🔬 Research Areas** — Highlight research interests and ongoing projects
 - **📄 CV Download** — Integrated PDF viewer and download
+- **📝 Blog** — MDX-powered blog with syntax highlighting
+- **🎤 Talks** — Conference talks and presentations showcase
 
 ### Technical Highlights
 
-| Category       | Technology                             |
-| -------------- | -------------------------------------- |
-| **Framework**  | Next.js 16 (App Router, Static Export) |
-| **Language**   | TypeScript 5.9 (Strict Mode)           |
-| **Styling**    | Tailwind CSS 3.4                       |
-| **Validation** | Zod 4 (Runtime Schema Validation)      |
-| **Testing**    | Vitest (149+ tests)                    |
-| **Linting**    | ESLint 9 + Prettier                    |
-| **CI/CD**      | GitHub Actions (3 workflows)           |
-| **Security**   | CodeQL, npm audit                      |
-| **A11y**       | WCAG 2.1 AA Compliant                  |
-| **Themes**     | 6 color themes (light/dark support)    |
+| Category      | Technology                                          |
+| ------------- | --------------------------------------------------- |
+| **Framework** | Next.js 16 (App Router, Static Export)              |
+| **Language**  | TypeScript 5.9 (Strict Mode)                        |
+| **Styling**   | Tailwind CSS 3.4                                    |
+| **Testing**   | Vitest (204+ tests, 50%+ coverage)                  |
+| **Linting**   | ESLint 9 + Prettier                                 |
+| **CI/CD**     | GitHub Actions (4 workflows)                        |
+| **Security**  | CodeQL, npm audit                                   |
+| **A11y**      | WCAG 2.1 AA (CI-enforced via Playwright + axe-core) |
+| **Themes**    | 6 color themes (light/dark support)                 |
 
 ---
 
@@ -107,6 +109,7 @@ Available environment variables:
 | ------------------------------- | ------------------------------- | -------- |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 ID           | No       |
 | `NEXT_PUBLIC_ENABLE_ANALYTICS`  | Enable analytics (`true/false`) | No       |
+| `NEXT_PUBLIC_SENTRY_DSN`        | Sentry DSN for error tracking   | No       |
 
 ---
 
@@ -118,6 +121,7 @@ Available environment variables:
 | `npm run build`      | Create optimized static export                     |
 | `npm run test`       | Run tests in watch mode                            |
 | `npm run test:run`   | Run tests once (for CI)                            |
+| `npm run test:e2e`   | Run Playwright E2E tests (requires build first)    |
 | `npm run lint`       | Lint and auto-fix code                             |
 | `npm run lint:check` | Lint without fixing (for CI)                       |
 | `npm run format`     | Format code with Prettier                          |
@@ -134,20 +138,23 @@ Available environment variables:
 │   ├── app/              # Next.js App Router (pages, layouts, metadata)
 │   ├── features/         # Feature modules
 │   │   ├── about/        # About page components
+│   │   ├── apps/         # Student tools (grade calc, seat planner, etc.)
 │   │   ├── home/         # Homepage components
-│   │   ├── publications/ # Publications system
+│   │   ├── research/     # Research page components
 │   │   └── teaching/     # Teaching portfolio & course pages
 │   ├── shared/           # Shared infrastructure
 │   │   ├── components/   # UI, layout, navigation, common
 │   │   ├── config/       # Site configuration (SSoT)
 │   │   ├── hooks/        # Custom React hooks
 │   │   ├── lib/          # Data, SEO, validation utilities
+│   │   ├── providers/    # App-level providers (themes)
 │   │   └── types/        # TypeScript type definitions
 │   └── styles/           # Global CSS and design tokens
-├── tests/                # Vitest test suite
+├── content/              # MDX blog posts
+├── tests/                # Vitest + Playwright test suites
 ├── public/               # Static assets (images, CV, favicon)
 ├── .cockpit/             # Project Master Document (PMD)
-└── .github/workflows/    # CI/CD pipelines
+└── .github/workflows/    # CI/CD pipelines (ci, deploy, security, lhci)
 ```
 
 ---

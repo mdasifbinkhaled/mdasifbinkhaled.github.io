@@ -14,7 +14,7 @@ test.describe('Fundamental Route Hydration & Accessibility', () => {
     // Command Palette Quick Invoke (Control+K/Cmd+K)
     await page.keyboard.press('ControlOrMeta+k');
     await expect(
-      page.getByPlaceholder('Type a command or search...')
+      page.getByPlaceholder('Search pages, courses, actions…')
     ).toBeVisible();
     await page.keyboard.press('Escape');
   });

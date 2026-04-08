@@ -53,6 +53,18 @@ export const mainNavItems: NavItem[] = [
     icon: 'Presentation',
     sectionId: 'teaching',
   },
+  {
+    href: '/blog',
+    label: 'Blog',
+    icon: 'TerminalSquare',
+    sectionId: 'blog',
+  },
+  {
+    href: '/talks',
+    label: 'Talks',
+    icon: 'Presentation',
+    sectionId: 'talks',
+  },
   { href: '/contact', label: 'Contact', icon: 'Send', sectionId: 'contact' },
 ];
 

@@ -63,8 +63,8 @@ export function Navbar({
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                   'hover:bg-accent/50',
                   active
-                    ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
-                    : 'text-foreground/80 hover:text-foreground'
+                    ? 'text-primary font-semibold border-b-2 border-primary'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {it.label}
@@ -130,8 +130,8 @@ function TeachingDropdown({
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
           'hover:bg-accent/50',
           active
-            ? 'text-primary font-semibold bg-accent/30 border-b-2 border-primary'
-            : 'text-foreground/80 hover:text-foreground'
+            ? 'text-primary font-semibold border-b-2 border-primary'
+            : 'text-muted-foreground hover:text-foreground'
         )}
       >
         {label}

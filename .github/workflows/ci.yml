@@ -2,12 +2,11 @@ name: CI
 
 on:
   pull_request:
-    branches: ['main', 'develop']
+    branches: ['main']
   push:
-    branches: ['develop', 'feature/**']
+    branches: ['main']
 
 jobs:
-  # Quality assurance job
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -36,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit
 
+      - name: Check formatting
+        run: npm run format:check
+
       - name: Lint code
         run: npm run lint:check
 
@@ -44,15 +46,6 @@ jobs:
 
       - name: Run tests with coverage
         run: npm run test:coverage
-
-      - name: Check coverage thresholds
-        run: |
-          echo "## 📊 Test Coverage Summary" >> $GITHUB_STEP_SUMMARY
-          if [ -f "coverage/coverage-summary.json" ]; then
-            echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
-            cat coverage/coverage-summary.json >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          fi
 
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
@@ -65,13 +58,32 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Check bundle size
+      - name: Verify static export
         run: |
-          echo "## Build Results 📊" >> $GITHUB_STEP_SUMMARY
-          echo "Build completed successfully! ✅" >> $GITHUB_STEP_SUMMARY
-          if [ -f "out/index.html" ]; then
-            echo "Static export generated successfully ✅" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Static export failed" >> $GITHUB_STEP_SUMMARY
+          if [ ! -f "out/index.html" ]; then
+            echo "❌ Static export failed — out/index.html missing" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
+          PAGE_COUNT=$(find out -name 'index.html' | wc -l)
+          echo "## Build Results 📊" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Static export: $PAGE_COUNT pages generated" >> $GITHUB_STEP_SUMMARY
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1.10.0
+        with:
+          args: '--offline --no-progress "out/**/*.html"'
+          fail: true

@@ -11,6 +11,7 @@ import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
 import { teachingPillars } from '@/shared/lib/data/teaching-pillars';
 import { navIconMap } from '@/shared/lib/nav-icon-map';
 import { TeachingHeroStats } from '@/features/teaching/teaching-hero-stats';
+import { MentorshipSection } from '@/features/teaching/components/mentorship-section';
 import { TeachingCTA } from '@/features/teaching/teaching-cta';
 
 export const metadata: Metadata = {
@@ -126,6 +127,11 @@ export default function TeachingPage() {
               coursesTaughtBRACU={coursesTaughtBRACU}
             />
           </Suspense>
+        </section>
+
+        {/* Mentorship Section */}
+        <section aria-labelledby="mentorship" className="py-8">
+          <MentorshipSection />
         </section>
 
         {/* Call to Action */}

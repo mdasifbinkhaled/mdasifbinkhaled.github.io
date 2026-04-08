@@ -65,7 +65,7 @@ export function TimeDisplay({
         className="flex justify-center w-full py-2 hover:bg-sidebar-accent/50 rounded-md transition-colors cursor-help"
         title={`My Time (${siteConfig.locationLabel}): ${myTime}\nYour Time: ${yourTime}`}
       >
-        <Clock className="w-4 h-4 text-sidebar-foreground/60" />
+        <Clock className="w-4 h-4 text-muted-foreground" />
       </div>
     );
   }

@@ -18,7 +18,7 @@ export function ActionsSection({
   return (
     <div className={cn('flex-grow', isCollapsed ? 'p-2' : 'px-6 py-4')}>
       {!isCollapsed && (
-        <h4 className="text-xs uppercase font-semibold text-sidebar-foreground/60 mb-3 tracking-wider sidebar-section-title">
+        <h4 className="text-xs uppercase font-semibold text-muted-foreground mb-3 tracking-wider sidebar-section-title">
           Contact & Actions
         </h4>
       )}

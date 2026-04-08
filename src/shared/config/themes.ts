@@ -37,7 +37,7 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
     preview: {
       background: 'hsl(210, 100%, 98%)',
       foreground: 'hsl(210, 22%, 22%)',
-      primary: 'hsl(199, 89%, 48%)',
+      primary: 'hsl(199, 89%, 33%)',
     },
   },
   forest: {
@@ -48,7 +48,7 @@ export const themeConfigs: Record<ThemeName, ThemeConfig> = {
     preview: {
       background: 'hsl(120, 40%, 98%)',
       foreground: 'hsl(140, 30%, 20%)',
-      primary: 'hsl(142, 76%, 36%)',
+      primary: 'hsl(142, 76%, 28%)',
     },
   },
 

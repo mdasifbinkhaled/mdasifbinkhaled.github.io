@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
-import Script from 'next/script';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { AppProviders } from '@/shared/providers/app-providers';
 import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
 import { SkipLink } from '@/shared/components/common/skip-link';
@@ -12,6 +12,7 @@ import {
 } from '@/shared/lib/structured-data';
 import { RouteAnnouncer } from '@/shared/components/common/route-announcer';
 import { WebVitalsReporter } from '@/shared/components/common/web-vitals-reporter';
+import { SentryInit } from '@/shared/components/common/sentry-init';
 import '@/app/globals.css';
 import '@/styles/tokens.css';
 
@@ -22,7 +23,6 @@ const inter = Inter({
   display: 'swap',
 });
 
-// Analytics configuration
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const ANALYTICS_ENABLED = process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true';
 
@@ -64,7 +64,7 @@ export default function RootLayout({
       <head>
         <meta
           http-equiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-src 'self' https://www.youtube.com;"
+          content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://*.ingest.sentry.io; frame-src 'self' https://www.youtube.com;"
         />
       </head>
       <body
@@ -77,26 +77,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: sanitizeJsonLd(jsonLd) }}
         />
 
-        {/* Google Analytics 4 - Only loads if configured */}
+        {/* Google Analytics 4 via Next.js standard third-party wrapper */}
         {ANALYTICS_ENABLED && GA_MEASUREMENT_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_MEASUREMENT_ID}', {
-                  page_path: window.location.pathname,
-                });
-              `}
-            </Script>
-          </>
+          <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
         )}
         <WebVitalsReporter />
+        <SentryInit />
 
         <SkipLink />
         <RouteAnnouncer />

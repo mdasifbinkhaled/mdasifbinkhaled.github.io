@@ -1,8 +1,8 @@
 # RELEASES.md — Version History
 
-## Current: v1.3.0 (package.json)
+## Current: v1.4.0 (package.json)
 
-Bumped from 1.2.0 to 1.3.0 — dead code removal, cockpit consolidation, icon fixes, stable tag.
+Bumped from 1.3.0 to 1.4.0 — Seat Plan Generator feature, Phase 8 Modern Web enhancements, cockpit sync.
 
 ## Git Tags
 
@@ -30,6 +30,40 @@ Bumped from 1.2.0 to 1.3.0 — dead code removal, cockpit consolidation, icon fi
 - Marked before major stack upgrade
 
 ## Unreleased (Current HEAD)
+
+### Blog, Talks, Sentry & Cockpit Sync (2026-06-05)
+
+- **Blog system**: MDX-powered blog at `/blog` with syntax highlighting (Shiki), frontmatter (gray-matter), and GFM support
+  - New dependencies: `next-mdx-remote`, `gray-matter`, `rehype-pretty-code`, `remark-gfm`, `shiki`
+  - Dynamic `[slug]` route with `generateStaticParams`
+  - Error boundaries for both `/blog` and `/blog/[slug]`
+- **Talks page**: Conference talks & presentations at `/talks` with error boundary
+- **Sentry**: Client-side error tracking via `@sentry/browser` in root layout
+  - CSP `connect-src` updated to include `https://*.ingest.sentry.io`
+- **Google Analytics**: Migrated to `@next/third-parties/google` (`GoogleAnalytics` component)
+- **3 new student apps**: Exam Countdown, GPA Calculator, Office Hours — with error boundaries
+- **Apps page fix**: Moved Exam Countdown and Office Hours from "Coming Soon" to "Available Tools"
+- **6 error boundaries added**: blog/, blog/[slug]/, talks/, apps/exam-countdown/, apps/gpa-calculator/, apps/office-hours/
+- **Dependency updates**: react 19.2.3→19.2.4, lucide-react 0.544.0→0.563.0, @radix-ui/react-slot→1.2.4, @radix-ui/react-visually-hidden→1.2.4
+- **README fixes**: Removed stale Zod 4 claim, updated test count (149→162), workflow count (3→4), added LHCI badge, Sentry env var, Blog/Talks features
+- **CI fix**: Removed stale `develop` and `feature/**` branch triggers from ci.yml
+- **.env.example**: Removed dead `NEXT_PUBLIC_STATIC_EXPORT`, added `NEXT_PUBLIC_SENTRY_DSN`
+- **Cockpit sync**: All documentation files updated to match 219-file / 17,186-LOC / 27-page reality
+- Codebase: 219 files, 17,186 LOC, 28 runtime deps, 27 dev deps
+- Quality gates: 0 TS errors, 0 lint errors, 162/162 tests (24 files), 27 pages exported
+
+### Seat Planner & Phase 8 Modern Web (2026-04-04)
+
+- **Seat Plan Generator**: Full feature at `/apps/seat-planner/` — upload student CSV, configure rooms, generate seat allocations with CSV/PDF export
+  - 13 files, 1,989 LOC — decomposed god component into clean architecture
+  - New dependencies: `html2canvas` ^1.4.1, `jspdf` ^4.2.0, `jspdf-autotable` ^5.0.7
+  - Error boundary via factory pattern
+  - State management via custom `useSeatPlanner` hook
+- **Phase 8 Modern Web**: Container queries extended to news-feed and course-card, dynamic OpenGraph metadata for courses/apps/publications, semantic HTML upgrades (`<article>`, `<time>`, `<section>`)
+- **Cockpit sync**: All 9 documentation files updated — 28 drift items resolved
+- **Version bump**: 1.3.0 → 1.4.0
+- Codebase: 201 files, 15,909 LOC (up from 13,951)
+- Quality gates: 0 TS errors, 0 lint errors, 149/149 tests (21 files), 20 pages exported
 
 ### Final Cleanup — Phase 12 (2025-02-24)
 
@@ -124,4 +158,4 @@ Bumped from 1.2.0 to 1.3.0 — dead code removal, cockpit consolidation, icon fi
 
 ## Recommended Next Release
 
-Tag as `v1.2.0-stable` after committing cockpit audit fixes and `.cockpit/` structure.
+Tag as `v1.4.0-stable` after verifying all cockpit documentation is synced and quality gates pass.

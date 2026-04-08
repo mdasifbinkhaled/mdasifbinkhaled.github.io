@@ -22,6 +22,7 @@ import {
   Timer,
   CalendarDays,
   Target,
+  TerminalSquare,
   type LucideProps,
 } from 'lucide-react';
 
@@ -51,6 +52,7 @@ export const iconComponents = {
   Timer,
   CalendarDays,
   Target,
+  TerminalSquare,
 };
 
 interface IconComponentProps extends LucideProps {

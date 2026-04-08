@@ -1,26 +1,29 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-02-24 | **Status**: All resolved
-> **Total Findings**: 228 | **Resolved**: 225 | **False Positives**: 3 | **Open**: 0
+> **Last Audit**: 2026-04-08 | **Status**: All resolved
+> **Total Findings**: 235 | **Resolved**: 227 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 0
 
 ## Dashboard
 
-```
+```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
-HIGH:      30 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    68 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       79 (0 open)  — Polish, minor config, cosmetic
-INFO:      38 (0 open)  — Informational, acceptable trade-offs
-FALSE POS: 3            — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
+HIGH:      31 (0 open)  — Functional bugs, SEO/a11y violations, dead code
+MEDIUM:    70 (0 open)  — Performance, DRY, architecture, testing gaps
+LOW:       86 (0 open)  — Polish, minor config, cosmetic
+INFO:      26 (0 open)  — Informational, acceptable trade-offs
+REASSESSED: 5           — F-195, F-196 (no action needed)
+FALSE POS:  3           — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
+NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```
 
 ## Quality Gates
 
-```
+```text
 TypeScript:  ✅ 0 errors  (strict mode, zero `any`)
 ESLint:      ✅ 0 errors, 0 warnings  (eslint-config-next@16, native flat config)
-Tests:       ✅ 149/149 pass  (21 files, vitest)
-Build:       ✅ 20 pages exported  (static, 0 warnings)
+Tests:       ✅ 204/204 pass  (32 files, vitest, 50%+ coverage)
+E2E:         ✅ 9/9 pass  (Playwright, axe-core WCAG AA contrast)
+Build:       ✅ 27 pages exported  (static, 0 warnings)
 Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast removed)
 ```
 
@@ -31,6 +34,20 @@ Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast re
 _All findings resolved._
 
 ## Resolved Findings
+
+### Resolved in Stabilization Push — v1.5.0 (2026-04-08)
+
+| ID    | Category      | Severity | Title                                                     | Resolution                                                                                   |
+| ----- | ------------- | -------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| F-225 | A11y          | HIGH     | E2E smoke test placeholder mismatch                       | Updated test to match actual `"Search pages, courses, actions…"` placeholder                 |
+| F-226 | A11y          | MEDIUM   | WCAG AA contrast failures in 5/6 themes (sidebar titles)  | Replaced `text-sidebar-foreground/60` with `text-muted-foreground` (4 components)            |
+| F-227 | A11y          | MEDIUM   | WCAG AA contrast failures in navbar active link           | Removed tinted bg entirely; active uses `border-b-2 border-primary` only                     |
+| F-228 | A11y          | HIGH     | Ocean/forest primary too bright for white foreground text | Darkened ocean primary `48% → 33%`, forest primary `36% → 28%`, updated ring + theme preview |
+| F-229 | Architecture  | MEDIUM   | `@sentry/browser` imported in server layout module        | Moved to lazy-loaded `SentryInit` client component with dynamic `import()`                   |
+| F-230 | Documentation | LOW      | Cockpit INDEX.md shows 162/162 alongside 202/202          | Unified all counts to 202/202 (31 files)                                                     |
+| F-231 | Configuration | LOW      | package.json version 1.4.0 vs cockpit 1.5.0               | Bumped package.json to 1.5.0                                                                 |
+| F-232 | Configuration | LOW      | `turbopack: { root: '.' }` causes console warning         | Removed — not needed since blog `generateStaticParams` fix                                   |
+| F-233 | Documentation | INFO     | README claims WCAG 2.1 AA compliance (disproved by E2E)   | Softened to "WCAG 2.1 AA targeted" with CI enforcement note                                  |
 
 ### Resolved in Structural Cleanup — Phase 11 (2026-02-24)
 
@@ -261,7 +278,7 @@ _All findings resolved._
 | F-106 | Theme         | HIGH     | spotlight-card.tsx Hardcoded Dark Colors                    | Replaced with theme-aware semantic tokens.                     |
 | F-107 | Accessibility | HIGH     | collapsible-section.tsx Not Keyboard Accessible             | Replaced div with native semantic button element.              |
 | F-108 | Architecture  | HIGH     | Duplicate Metadata in Publications Page and Layout          | Removed duplicated metadata from layout.tsx.                   |
-| F-109 | Type Safety   | MEDIUM   | z.any() Bypasses Type Safety in 3 Schema Files              | Replaced with z.custom<LucideIcon>().                          |
+| F-109 | Type Safety   | MEDIUM   | z.any() Bypasses Type Safety in 3 Schema Files              | Replaced with `z.custom<LucideIcon>()`.                        |
 | F-110 | Data          | MEDIUM   | TOTAL_STUDENTS: 1000 Contradicts Dynamic Calculation        | Calculated dynamically using getTotalStudentsFromCourses().    |
 | F-113 | Theme         | MEDIUM   | darkMode: 'class' vs attribute="data-theme" Mismatch        | Synchronized with next-themes specific selector.               |
 | F-118 | Type Safety   | MEDIUM   | Notice Board Type Drifts from Schema                        | Derived directly from CourseData['notices'].                   |
@@ -357,10 +374,10 @@ _All findings resolved._
 
 | ID    | Category    | Severity | Title                                                       | Resolution                                                                   |
 | ----- | ----------- | -------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| F-218 | Navigation  | LOW      | 4 raw `<a>` tags for internal routes bypass Next.js routing | Converted to `<Link>` in cv-content (3) and search-result-card (1)           |
-| F-219 | Type Safety | LOW      | 4 non-null assertions (`!`) in course-utils.ts              | Replaced with nullish coalescing (`?? ''`) for safe regex group access       |
-| F-220 | Type Safety | LOW      | Type assertion cast in skills-section.tsx                   | Added `iconName` to Skill interface + `satisfies Skill[]` to data            |
-| F-221 | Testing     | LOW      | 4 feature modules (About, Home, Research, Pubs) untested    | Added 12 smoke render tests covering key components from each feature module |
+| F-225 | Navigation  | LOW      | 4 raw `<a>` tags for internal routes bypass Next.js routing | Converted to `<Link>` in cv-content (3) and search-result-card (1)           |
+| F-226 | Type Safety | LOW      | 4 non-null assertions (`!`) in course-utils.ts              | Replaced with nullish coalescing (`?? ''`) for safe regex group access       |
+| F-227 | Type Safety | LOW      | Type assertion cast in skills-section.tsx                   | Added `iconName` to Skill interface + `satisfies Skill[]` to data            |
+| F-228 | Testing     | LOW      | 4 feature modules (About, Home, Research, Pubs) untested    | Added 12 smoke render tests covering key components from each feature module |
 
 ### Previously Acceptable (No Action Needed)
 

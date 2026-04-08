@@ -1,8 +1,8 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-02-24
-> **Current Version**: 1.3.0 | **Quality**: All gates green (149/149 tests, 0 TS/ESLint errors, 20/20 pages)
-> **Open Findings**: 0 (228 total, 225 resolved, 3 false positives)
+> **Created**: 2026-02-19 | **Updated**: 2026-04-08
+> **Current Version**: 1.5.0 | **Quality**: All gates green (204/204 tests, 0 TS/ESLint errors, 27/27 pages)
+> **Open Findings**: 0 (235 total, 227 resolved, 3 false positives, 5 reassessed)
 
 ## Phase 6: Code Quality & Cleanup
 
@@ -22,10 +22,10 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 | #   | Tool                                                           | Complexity | Priority | Status      |
 | --- | -------------------------------------------------------------- | ---------- | -------- | ----------- |
 | 7.1 | **Grade Calculator** — per-course weighted grade projection    | MODERATE   | HIGH     | Done        |
-| 7.2 | **Seat Plan Generator** — upload student list, generate layout | MODERATE   | HIGH     | Planned     |
-| 7.3 | **GPA Calculator** — multi-course semester GPA computation     | EASY       | MEDIUM   | Planned     |
-| 7.4 | **Office Hours** — structured schedule with booking CTA        | EASY       | MEDIUM   | Planned     |
-| 7.5 | **Exam Countdown** — per-course countdown timers               | EASY       | LOW      | Planned     |
+| 7.2 | **Seat Plan Generator** — upload student list, generate layout | MODERATE   | HIGH     | Done        |
+| 7.3 | **GPA Calculator** — multi-course semester GPA computation     | EASY       | MEDIUM   | Done        |
+| 7.4 | **Office Hours** — structured schedule with booking CTA        | EASY       | MEDIUM   | Done        |
+| 7.5 | **Exam Countdown** — per-course countdown timers               | EASY       | LOW      | Done        |
 | 7.6 | **PDF Study Aid** — upload PDF, produce AI summary (WebLLM)    | HARD       | LOW      | Exploration |
 
 ## Phase 8: Modern Web & Performance
@@ -41,46 +41,46 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 
 ## Phase 9: Testing & Confidence
 
-| #   | Item                                              | Category | Complexity | Impact | Status  |
-| --- | ------------------------------------------------- | -------- | ---------- | ------ | ------- |
-| 9.1 | **Playwright E2E tests** for critical flows       | Testing  | MODERATE   | HIGH   | Done    |
-| 9.2 | **axe-core integration** in component tests       | A11y     | EASY       | HIGH   | Done    |
-| 9.3 | **Component render tests** for feature modules    | Testing  | MODERATE   | HIGH   | Planned |
-| 9.4 | **Color contrast CI check** across 6 themes       | A11y     | MODERATE   | HIGH   | Planned |
-| 9.5 | **Coverage target → 50%**                         | Testing  | MODERATE   | MEDIUM | Planned |
-| 9.6 | **Link checker** in CI (`lychee` or `linkinator`) | Quality  | EASY       | LOW    | Planned |
+| #   | Item                                              | Category | Complexity | Impact | Status |
+| --- | ------------------------------------------------- | -------- | ---------- | ------ | ------ |
+| 9.1 | **Playwright E2E tests** for critical flows       | Testing  | MODERATE   | HIGH   | Done   |
+| 9.2 | **axe-core integration** in component tests       | A11y     | EASY       | HIGH   | Done   |
+| 9.3 | **Component render tests** for feature modules    | Testing  | MODERATE   | HIGH   | Done   |
+| 9.4 | **Color contrast CI check** across 6 themes       | A11y     | MODERATE   | HIGH   | Done   |
+| 9.5 | **Coverage target → 50%**                         | Testing  | MODERATE   | MEDIUM | Done   |
+| 9.6 | **Link checker** in CI (`lychee` or `linkinator`) | Quality  | EASY       | LOW    | Done   |
 
 ## Phase 10: Content & Engagement
 
-| #    | Item                                                         | Category | Complexity | Impact |
-| ---- | ------------------------------------------------------------ | -------- | ---------- | ------ |
-| 10.1 | **Blog section** with MDX (course tutorials, research notes) | Content  | HARD       | HIGH   |
-| 10.2 | **Research timeline visualization**                          | Content  | MODERATE   | MEDIUM |
-| 10.3 | **Talks / Presentations page**                               | Content  | EASY       | MEDIUM |
-| 10.4 | **Student supervision / mentorship page**                    | Content  | EASY       | MEDIUM |
-| 10.5 | **Bengali introduction** (About page bilingual section)      | i18n     | MODERATE   | MEDIUM |
+| #    | Item                                                         | Category | Complexity | Impact | Status   |
+| ---- | ------------------------------------------------------------ | -------- | ---------- | ------ | -------- |
+| 10.1 | **Blog section** with MDX (course tutorials, research notes) | Content  | HARD       | HIGH   | Done     |
+| 10.2 | **Research timeline visualization**                          | Content  | MODERATE   | MEDIUM | Deferred |
+| 10.3 | **Talks / Presentations page**                               | Content  | EASY       | MEDIUM | Done     |
+| 10.4 | **Student supervision / mentorship page**                    | Content  | EASY       | MEDIUM | Done     |
+| 10.5 | **Bengali introduction** (About page bilingual section)      | i18n     | MODERATE   | MEDIUM | Deferred |
 
 ## Phase 11: Monitoring & Production Readiness
 
-| #    | Item                                                        | Category   | Complexity | Impact |
-| ---- | ----------------------------------------------------------- | ---------- | ---------- | ------ |
-| 11.1 | **Sentry error tracking** (free tier)                       | Monitoring | MODERATE   | HIGH   |
-| 11.2 | **Page view tracking** on SPA navigation                    | Analytics  | EASY       | MEDIUM |
-| 11.3 | **Search/filter analytics** (publications, command palette) | Analytics  | EASY       | MEDIUM |
-| 11.4 | **Uptime monitoring** (UptimeRobot or similar)              | Monitoring | EASY       | LOW    |
+| #    | Item                                                        | Category   | Complexity | Impact | Status |
+| ---- | ----------------------------------------------------------- | ---------- | ---------- | ------ | ------ |
+| 11.1 | **Sentry error tracking** (free tier)                       | Monitoring | MODERATE   | HIGH   | Done   |
+| 11.2 | **Page view tracking** on SPA navigation                    | Analytics  | EASY       | MEDIUM | Done   |
+| 11.3 | **Search/filter analytics** (publications, command palette) | Analytics  | EASY       | MEDIUM |        |
+| 11.4 | **Uptime monitoring** (UptimeRobot or similar)              | Monitoring | EASY       | LOW    |        |
 
 ---
 
 ## Summary
 
-| Phase                       | Items  | Complexity    | Est. Sessions |
-| --------------------------- | ------ | ------------- | ------------- |
-| Phase 4A/B/C (CRITICAL/DRY) | 18     | EASY-MODERATE | Completed     |
-| Phase 5 (Modernization)     | 10     | MODERATE      | Completed     |
-| Phase 6 (Code Quality)      | 4      | MODERATE-HARD | Completed     |
-| Phase 7 (Student Apps)      | 6      | MODERATE      | 2-3 remaining |
-| Phase 8 (Modern Web)        | 6      | MODERATE      | 6/6 done      |
-| Phase 9 (Testing)           | 6      | MODERATE      | 2/6 done      |
-| Phase 10 (Content)          | 5      | MIXED         | 3-5           |
-| Phase 11 (Monitoring)       | 4      | EASY-MODERATE | 1-2           |
-| **Total**                   | **59** |               | **15-24**     |
+| Phase                       | Items  | Complexity    | Est. Sessions           |
+| --------------------------- | ------ | ------------- | ----------------------- |
+| Phase 4A/B/C (CRITICAL/DRY) | 18     | EASY-MODERATE | Completed               |
+| Phase 5 (Modernization)     | 10     | MODERATE      | Completed               |
+| Phase 6 (Code Quality)      | 4      | MODERATE-HARD | Completed               |
+| Phase 7 (Student Apps)      | 6      | MODERATE      | 5/6 done, 1 exploration |
+| Phase 8 (Modern Web)        | 6      | MODERATE      | 6/6 done                |
+| Phase 9 (Testing)           | 6      | MODERATE      | 6/6 done                |
+| Phase 10 (Content)          | 5      | MIXED         | 3/5 done, 2 deferred    |
+| Phase 11 (Monitoring)       | 4      | EASY-MODERATE | 2/4 done                |
+| **Total**                   | **59** |               | **12-20**               |

@@ -32,36 +32,35 @@ jobs:
         run: |
           echo "## 🔒 Dependency Audit Results" >> $GITHUB_STEP_SUMMARY
 
-          # NOTE: This project uses 'output: export' (static site generation).
-          # Next.js server-side vulnerabilities (RCE, Server Actions, Server Components)
-          # do NOT apply to static exports as no server-side code runs in production.
-          # See: https://nextjs.org/docs/app/building-your-application/deploying/static-exports
+          # Static-export project: server-side & build-only vulns do not apply.
+          # Excepted packages:
+          #   next      — server-side vulns irrelevant for output:'export'
+          #   rollup    — build-time only, not in production bundle
+          #   vite      — build-time only, not in production bundle
+          #   jspdf     — v4.2.0 is latest; vuln is unpatched upstream (client-only use)
+          #   dompurify — transitive dep of jspdf; same situation
+          EXCEPTED="^next$|^rollup$|^vite$|^jspdf$|^dompurify$"
 
-          # Run audit but allow failure - we'll check the specific vulnerabilities
           AUDIT_OUTPUT=$(npm audit --json 2>/dev/null || true)
-
-          # Check if there are any critical vulnerabilities
           CRITICAL_COUNT=$(echo "$AUDIT_OUTPUT" | jq -r '.metadata.vulnerabilities.critical // 0')
 
           if [ "$CRITICAL_COUNT" -eq 0 ]; then
             echo "✅ No critical vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
           else
-            # Check if the only critical vulnerability is next.js (which doesn't apply to static exports)
-            NEXT_VULN=$(echo "$AUDIT_OUTPUT" | jq -r '.vulnerabilities.next // empty')
-            
-            if [ -n "$NEXT_VULN" ]; then
-              echo "⚠️ Next.js vulnerability detected (does NOT apply to static exports)" >> $GITHUB_STEP_SUMMARY
+            # Count non-excepted critical vulnerabilities
+            NON_EXCEPTED=$(echo "$AUDIT_OUTPUT" | jq -r \
+              --arg pat "$EXCEPTED" \
+              '[.vulnerabilities | to_entries[] | select(.value.severity == "critical") | .key | select(test($pat) | not)] | length')
+
+            CRITICAL_PKGS=$(echo "$AUDIT_OUTPUT" | jq -r \
+              '[.vulnerabilities | to_entries[] | select(.value.severity == "critical") | .key] | join(", ")')
+
+            if [ "${NON_EXCEPTED:-0}" -eq 0 ]; then
+              echo "⚠️ $CRITICAL_COUNT critical vuln(s) in excepted packages: $CRITICAL_PKGS" >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
-              echo "This project uses \`output: 'export'\` for static site generation." >> $GITHUB_STEP_SUMMARY
-              echo "Server-side vulnerabilities (RCE, Server Actions, Server Components) do not affect static builds." >> $GITHUB_STEP_SUMMARY
-              echo "" >> $GITHUB_STEP_SUMMARY
-              echo "### Advisory Details" >> $GITHUB_STEP_SUMMARY
-              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              npm audit 2>&1 | head -20 >> $GITHUB_STEP_SUMMARY || true
-              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              # Don't fail the build for static-export-safe vulnerabilities
+              echo "This project uses \`output: 'export'\` (static site). See workflow comments for rationale." >> $GITHUB_STEP_SUMMARY
             else
-              echo "❌ Critical vulnerabilities detected!" >> $GITHUB_STEP_SUMMARY
+              echo "❌ $NON_EXCEPTED non-excepted critical vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
               echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
               npm audit --audit-level=critical >> $GITHUB_STEP_SUMMARY 2>&1 || true
               echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
@@ -69,10 +68,11 @@ jobs:
             fi
           fi
 
-          # Display moderate vulnerabilities as info (non-blocking)
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Moderate Vulnerabilities (Informational)" >> $GITHUB_STEP_SUMMARY
-          npm audit --audit-level=moderate >> $GITHUB_STEP_SUMMARY 2>&1 || echo "None found" >> $GITHUB_STEP_SUMMARY
+          echo "### Full Audit Summary" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          npm audit 2>&1 | tail -20 >> $GITHUB_STEP_SUMMARY || true
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
   codeql-analysis:
     name: CodeQL Analysis

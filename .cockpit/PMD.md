@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
-> **Last Updated**: 2026-02-25
-> **Commit**: b612559
+> **Last Updated**: 2026-04-04
+> **Commit**: 38b2586
 
 ## Mission
 
@@ -12,42 +12,47 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ## Tech Stack
 
-| Layer         | Technology                           | Version |
-| ------------- | ------------------------------------ | ------- |
-| Framework     | Next.js (App Router)                 | 16.1.4  |
-| UI Library    | React                                | 19.2.3  |
-| Language      | TypeScript (strict)                  | 5.6     |
-| Styling       | Tailwind CSS + CSS custom properties | 3.4.13  |
-| Animation     | Vanilla JS (no library)              | ---     |
-| Icons         | Lucide React                         | 0.544.0 |
-| Themes        | next-themes + 6 color themes         | 0.4.6   |
-| UI Primitives | Radix UI (9 packages)                | various |
-| Testing       | Vitest + Testing Library + jsdom     | 3.2.4   |
-| E2E Testing   | Playwright + axe-core                | 1.58.0  |
-| Linting       | ESLint 9 (flat config)               | 9.39.2  |
-| Formatting    | Prettier                             | 3.6.2   |
-| Git Hooks     | Husky + lint-staged + commitlint     | 9.1.7   |
-| Deployment    | GitHub Pages (static export)         | ---     |
-| CI/CD         | GitHub Actions (4 workflows)         | ---     |
+| Layer         | Technology                            | Version |
+| ------------- | ------------------------------------- | ------- |
+| Framework     | Next.js (App Router)                  | 16.1.4  |
+| UI Library    | React                                 | 19.2.4  |
+| Language      | TypeScript (strict)                   | 5.6     |
+| Styling       | Tailwind CSS + CSS custom properties  | 3.4.13  |
+| Animation     | Vanilla JS (no library)               | ---     |
+| Icons         | Lucide React                          | 0.563.0 |
+| Themes        | next-themes + 6 color themes          | 0.4.6   |
+| UI Primitives | Radix UI (9 packages)                 | various |
+| PDF Export    | jsPDF + jspdf-autotable + html2canvas | various |
+| Blog          | next-mdx-remote + Shiki + gray-matter | various |
+| Analytics     | @next/third-parties (Google GA4)      | latest  |
+| Error Track   | @sentry/browser (client-side)         | latest  |
+| Testing       | Vitest + Testing Library + jsdom      | 3.2.4   |
+| E2E Testing   | Playwright + axe-core                 | 1.58.0  |
+| Linting       | ESLint 9 (flat config)                | 9.39.2  |
+| Formatting    | Prettier                              | 3.6.2   |
+| Git Hooks     | Husky + lint-staged + commitlint      | 9.1.7   |
+| Deployment    | GitHub Pages (static export)          | ---     |
+| CI/CD         | GitHub Actions (4 workflows)          | ---     |
 
 ## Architecture
 
 ### 4-Layer Design
 
-```
+```text
 +---------------------------------------------+
-|  App Layer (1,498 LOC / 11%)                |  Page routes, layouts, error boundaries
-|  src/app/                                    |  15 routes, 20 pages
+|  App Layer (1,987 LOC / 12%)                |  Page routes, layouts, error boundaries
+
+|  src/app/                                    |  22 routes, 27 pages
 +---------------------------------------------+
-|  Features Layer (4,234 LOC / 31%)           |  Domain modules
+|  Features Layer (7,091 LOC / 41%)           |  Domain modules
 |  src/features/{about,apps,home,              |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
-|  Shared Layer (7,865 LOC / 55%)             |  Cross-cutting infrastructure
+|  Shared Layer (8,108 LOC / 47%)             |  Cross-cutting infrastructure
 |  src/shared/{components,config,hooks,        |  UI primitives, config, data,
 |              lib,providers,types}            |  analytics, types
 +---------------------------------------------+
-|  Data Layer (bottom of shared/)             |  30 data files (TypeScript objects)
+|  Data Layer (bottom of shared/)             |  32 data files (TypeScript objects)
 |  src/shared/lib/data/                        |  Type-checked via satisfies assertions
 +---------------------------------------------+
 ```
@@ -63,53 +68,56 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ## Metrics
 
-| Metric            | Value    |
-| ----------------- | -------- |
-| Source files      | 201      |
-| Lines of code     | 13,951   |
-| Components (.tsx) | 125      |
-| Client components | 48 (38%) |
-| Server components | 77 (62%) |
-| Custom hooks      | 3        |
-| Data files        | 30       |
-| Config files      | 10       |
-| Barrel exports    | 14       |
-| Test files        | 22       |
-| Test count        | 149      |
-| Pages generated   | 20       |
-| Themes            | 6        |
-| Git commits       | 438      |
+| Metric            | Value                   |
+| ----------------- | ----------------------- |
+| Source files      | 219                     |
+| Lines of code     | 17,186                  |
+| Components (.tsx) | 150                     |
+| Client components | 62 (41%)                |
+| Server components | 88 (59%)                |
+| Custom hooks      | 3 (+1 feature-specific) |
+| Data files        | 32                      |
+| Config files      | 6                       |
+| Barrel exports    | 8                       |
+| Test files        | 24                      |
+| Test count        | 162                     |
+| Pages generated   | 27                      |
+| Themes            | 6                       |
+| Git commits       | 443+                    |
 
 ### Largest Files
 
-| File                                 | LOC | Purpose                   |
-| ------------------------------------ | --- | ------------------------- |
-| `features/apps/grade-calculator.tsx` | 363 | Weighted grade calculator |
-| `ui/theme-selector.tsx`              | 340 | Theme picker (6 themes)   |
-| `shared/types/index.ts`              | 254 | Domain type definitions   |
-| `teaching/course-card.tsx`           | 280 | Course card component     |
-| `navigation/navbar.tsx`              | 279 | Top navigation bar        |
-| `teaching/schedule-table.tsx`        | 256 | Course schedule table     |
-| `lib/structured-data.ts`             | 199 | Schema.org JSON-LD        |
+| File                                      | LOC | Purpose                   |
+| ----------------------------------------- | --- | ------------------------- |
+| `apps/seat-planner/seat-plan-results.tsx` | 439 | Seat plan results display |
+| `features/apps/grade-calculator.tsx`      | 365 | Weighted grade calculator |
+| `ui/theme-selector.tsx`                   | 321 | Theme picker (6 themes)   |
+| `shared/lib/data/about.ts`                | 297 | About page data           |
+| `teaching/course-card.tsx`                | 280 | Course card component     |
+| `apps/seat-planner/use-seat-planner.ts`   | 266 | Seat planner state hook   |
+| `ui/command-menu.tsx`                     | 259 | Command palette (⌘K)      |
+| `teaching/schedule-table.tsx`             | 256 | Course schedule table     |
+| `shared/types/index.ts`                   | 255 | Domain type definitions   |
 
 ### LOC Distribution
 
-```
-shared/    7,865 (57%)  ##################################
-features/  4,234 (31%)  ##################
-app/       1,498 (11%)  ######
-styles/      247  (2%)  ##
+```text
+shared/    8,108 (47%)  ██████████████████████████████
+
+features/  7,091 (41%)  ██████████████████████████
+app/       1,987 (12%)  ████████
+styles/      247  (1%)  █
 ```
 
 ## Feature Modules
 
 | Module      | Files | Purpose                                          |
 | ----------- | ----- | ------------------------------------------------ |
-| `teaching/` | 18    | Course cards, detail pages, schedules, syllabi   |
-| `about/`    | 10    | Hero, awards, certifications, skills, philosophy |
-| `research/` | 8     | Research areas, projects, open source, vision    |
-| `home/`     | 6     | Hero, news, research highlights, connect         |
-| `apps/`     | 4     | Student tools (grade calculator, tool cards)     |
+| `teaching/` | 20    | Course cards, detail pages, schedules, syllabi   |
+| `apps/`     | 18    | Student tools (grade calculator, seat planner)   |
+| `about/`    | 11    | Hero, awards, certifications, skills, philosophy |
+| `research/` | 9     | Research areas, projects, open source, vision    |
+| `home/`     | 7     | Hero, news, research highlights, connect         |
 
 ## Pages & Routes
 
@@ -118,29 +126,36 @@ styles/      247  (2%)  ##
 | `/`                       | Static   | Homepage                             |
 | `/about`                  | Static   | About with sections (anchored)       |
 | `/apps`                   | Static   | Student apps hub                     |
+| `/apps/exam-countdown`    | Static   | Exam countdown timers                |
+| `/apps/gpa-calculator`    | Static   | GPA calculator                       |
 | `/apps/grade-calculator`  | Static   | Weighted grade calculator            |
+| `/apps/office-hours`      | Static   | Office hours schedule                |
+| `/apps/seat-planner`      | Static   | Seat plan generator with CSV/PDF     |
+| `/blog`                   | Static   | Blog listing (MDX)                   |
+| `/blog/[slug]`            | SSG      | Blog post (MDX + Shiki)              |
+| `/contact`                | Static   | Contact & social links               |
+| `/cv`                     | Static   | PDF CV viewer                        |
+| `/experience`             | Redirect | -> /about#experience                 |
 | `/publications`           | Static   | Publications with search/filter      |
 | `/research`               | Static   | Research interests, libraries, goals |
+| `/service`                | Redirect | -> /about#honors-awards              |
+| `/service-awards`         | Redirect | -> /about#honors-awards              |
+| `/talks`                  | Static   | Conference talks & presentations     |
 | `/teaching`               | Static   | Teaching hub with institution tabs   |
 | `/teaching/iub`           | Static   | IUB courses listing                  |
 | `/teaching/bracu`         | Static   | BRACU courses listing                |
 | `/teaching/[inst]/[code]` | SSG      | Dynamic course detail pages          |
-| `/cv`                     | Static   | PDF CV viewer                        |
-| `/contact`                | Static   | Contact & social links               |
-| `/experience`             | Redirect | -> /about#experience                 |
-| `/service`                | Redirect | -> /about#honors-awards              |
-| `/service-awards`         | Redirect | -> /about#honors-awards              |
 
 ## Quality Status
 
-| Check      | Status | Details                                                                   |
-| ---------- | ------ | ------------------------------------------------------------------------- |
-| TypeScript | PASS   | 0 errors (strict mode)                                                    |
-| ESLint     | PASS   | 0 errors, 0 warnings                                                      |
-| Prettier   | PASS   | All formatted                                                             |
-| Tests      | PASS   | 149/149 pass (21 files)                                                   |
-| Build      | PASS   | 20 pages exported                                                         |
-| Audit      | NOTE   | 20 vulns (1 moderate, 19 high — all mitigated: dev-only or static export) |
+| Check      | Status | Details                                                                             |
+| ---------- | ------ | ----------------------------------------------------------------------------------- |
+| TypeScript | PASS   | 0 errors (strict mode)                                                              |
+| ESLint     | PASS   | 0 errors, 0 warnings                                                                |
+| Prettier   | PASS   | All formatted                                                                       |
+| Tests      | PASS   | 162/162 pass (24 files)                                                             |
+| Build      | PASS   | 27 pages exported                                                                   |
+| Audit      | NOTE   | 5 vulns (1 moderate, 3 high, 1 critical — all mitigated: dev-only or static export) |
 
 ## Architecture Observations
 
@@ -149,12 +164,13 @@ styles/      247  (2%)  ##
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (149 tests, CI-enforced)
+- Strong test foundation (162 tests, CI-enforced)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`
 - Service worker for offline caching
 - Playwright E2E + axe-core accessibility testing
 - Route announcer for screen reader navigation
+- Well-decomposed Seat Planner (13 files, clean separation of concerns)
 
 ### All 228 Findings Resolved
 
@@ -181,15 +197,16 @@ See [adr/](adr/) for the full record and template.
 
 ### Notes
 
-- **shared/ layer is 55% of codebase** --- acceptable for an infrastructure-heavy portfolio site
-- **49 client components** --- justified (error boundaries, interactive UI); includes redirect error.tsx for consistency
-- **4 custom hooks** --- `useDebounce`, `useIsClient`, `useHoverDelay`, `useToast`
-- **15 barrel files** --- all actively imported; organized per feature module and shared layers
+- **shared/ layer is 47% of codebase** --- acceptable for an infrastructure-heavy portfolio site
+- **62 client components (.tsx)** --- justified (error boundaries, interactive UI, seat planner, blog); plus client-side analytics and hooks
+- **3 shared hooks** (`useDebounce`, `useIsClient`, `useHoverDelay`) + 1 feature-specific (`useSeatPlanner`)
+- **8 barrel files** --- all actively imported; organized per feature module and shared layers
 - **6 themes** --- light, dark, ocean, forest, lavender, slate
 - **54 LOC analytics** --- lean, only 4 wired events (viewCV, downloadCV, viewPublication, downloadPublication)
 - **Zero animation libraries** --- framer-motion removed; spotlight effect now vanilla JS (15 LOC)
 - **All hardcoded colors migrated** --- only documented exceptions remain (global-error.tsx, brand colors)
 - **4 GitHub workflows**: ci.yml (lint/test/build), lhci.yml (Lighthouse CI), nextjs.yml (deploy), security.yml (audit)
 - **Tests reorganized** --- mirroring src/ directory structure under tests/shared/ and tests/features/
+- **Seat Planner** --- decomposed into 13 files (1,989 LOC): allocation, CSV parsing/export, PDF export, room config, results display, state management
 
 See [ISSUES.md](ISSUES.md) for full finding tracker.

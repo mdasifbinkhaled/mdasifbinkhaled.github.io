@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import { sendGAEvent } from '@next/third-parties/google';
 
 import {
   Dialog,
@@ -66,8 +67,14 @@ export function CommandMenu() {
   }, []);
 
   const runCommand = React.useCallback(
-    (command: () => unknown) => {
+    (command: () => unknown, label: string) => {
       setOpen(false);
+
+      // Dispatch telemetry event to track which features are searched/used
+      sendGAEvent('event', 'command_palette_select', {
+        value: label,
+      });
+
       command();
     },
     [setOpen]
@@ -81,7 +88,9 @@ export function CommandMenu() {
         <Command.Item
           key={`${navItem.href}-${navItem.sectionId}`}
           value={`${navItem.label} ${navItem.sectionId}`}
-          onSelect={() => runCommand(() => router.push(navItem.href as string))}
+          onSelect={() =>
+            runCommand(() => router.push(navItem.href as string), navItem.label)
+          }
           className={itemClass}
         >
           {Icon ? (
@@ -159,7 +168,9 @@ export function CommandMenu() {
               <Command.Group heading="Quick Actions">
                 <Command.Item
                   value="Contact email send message"
-                  onSelect={() => runCommand(() => router.push('/contact'))}
+                  onSelect={() =>
+                    runCommand(() => router.push('/contact'), 'Contact')
+                  }
                   className={itemClass}
                 >
                   <Send className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -167,7 +178,9 @@ export function CommandMenu() {
                 </Command.Item>
                 <Command.Item
                   value="Download CV resume curriculum vitae"
-                  onSelect={() => runCommand(() => router.push('/cv'))}
+                  onSelect={() =>
+                    runCommand(() => router.push('/cv'), 'Download CV')
+                  }
                   className={itemClass}
                 >
                   <Download className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -176,7 +189,10 @@ export function CommandMenu() {
                 <Command.Item
                   value="Publications papers research conference journal"
                   onSelect={() =>
-                    runCommand(() => router.push('/publications'))
+                    runCommand(
+                      () => router.push('/publications'),
+                      'Publications'
+                    )
                   }
                   className={itemClass}
                 >
@@ -185,7 +201,9 @@ export function CommandMenu() {
                 </Command.Item>
                 <Command.Item
                   value="Experience jobs work career professional"
-                  onSelect={() => runCommand(() => router.push('/experience'))}
+                  onSelect={() =>
+                    runCommand(() => router.push('/experience'), 'Experience')
+                  }
                   className={itemClass}
                 >
                   <ExternalLink className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -194,7 +212,10 @@ export function CommandMenu() {
                 <Command.Item
                   value="Grade calculator GPA student app"
                   onSelect={() =>
-                    runCommand(() => router.push('/apps/grade-calculator'))
+                    runCommand(
+                      () => router.push('/apps/grade-calculator'),
+                      'Grade Calculator'
+                    )
                   }
                   className={itemClass}
                 >
@@ -204,7 +225,10 @@ export function CommandMenu() {
                 <Command.Item
                   value="Service awards achievements honors recognition"
                   onSelect={() =>
-                    runCommand(() => router.push('/service-awards'))
+                    runCommand(
+                      () => router.push('/service-awards'),
+                      'Service & Awards'
+                    )
                   }
                   className={itemClass}
                 >
@@ -217,7 +241,9 @@ export function CommandMenu() {
               <Command.Group heading="Theme">
                 <Command.Item
                   value="Light theme mode"
-                  onSelect={() => runCommand(() => setTheme('light'))}
+                  onSelect={() =>
+                    runCommand(() => setTheme('light'), 'Theme: Light')
+                  }
                   className={itemClass}
                 >
                   <Sun className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -225,7 +251,9 @@ export function CommandMenu() {
                 </Command.Item>
                 <Command.Item
                   value="Dark theme mode"
-                  onSelect={() => runCommand(() => setTheme('dark'))}
+                  onSelect={() =>
+                    runCommand(() => setTheme('dark'), 'Theme: Dark')
+                  }
                   className={itemClass}
                 >
                   <Moon className="h-4 w-4 shrink-0 text-muted-foreground" />
