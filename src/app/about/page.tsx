@@ -37,6 +37,8 @@ export default function AboutPage() {
         <HeroSection />
         <QuickFacts />
         <HighlightsSection />
+
+        <h2 className="sr-only">Research & Academic Profile</h2>
         <ResearchPhilosophy />
 
         <div className="space-y-16">

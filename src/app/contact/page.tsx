@@ -35,6 +35,7 @@ export default function ContactPage() {
         </header>
 
         <section id="contact-info">
+          <h2 className="sr-only">Contact Details</h2>
           <Card className="max-w-2xl mx-auto shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl text-center">

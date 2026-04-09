@@ -24,7 +24,7 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
 
         {downloadLink && (
           <Button variant="outline" size="sm" asChild>
-            <a href={downloadLink} download aria-label="Download CV">
+            <a href={downloadLink} download aria-label="Download PDF – CV">
               <Download className="h-4 w-4 mr-2" />
               Download PDF
             </a>

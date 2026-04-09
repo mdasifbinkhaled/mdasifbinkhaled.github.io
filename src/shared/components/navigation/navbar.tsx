@@ -34,7 +34,7 @@ export function Navbar({
       <div className="flex items-center gap-2 shrink-0">
         <Link
           href="/"
-          aria-label="Go to homepage"
+          aria-label="MABK – Go to homepage"
           className="flex items-center gap-2 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:opacity-80 transition-opacity"
         >
           <GraduationCap

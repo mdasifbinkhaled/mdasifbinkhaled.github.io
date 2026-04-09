@@ -55,3 +55,4 @@ Thumbs.db
 .turbo
 .eslintcache
 .mypy_cache
+.lighthouseci/

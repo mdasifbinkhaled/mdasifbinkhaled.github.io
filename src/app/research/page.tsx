@@ -34,6 +34,8 @@ export default function ResearchPage() {
       <div className="max-w-7xl mx-auto space-y-20">
         <Breadcrumbs />
         <ResearchHero />
+
+        <h2 className="sr-only">Vision & Direction</h2>
         <ResearchVision />
         <PrimaryAreas />
         <CurrentFocus />
