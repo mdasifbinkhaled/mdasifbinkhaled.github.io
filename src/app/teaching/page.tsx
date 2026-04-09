@@ -132,7 +132,7 @@ export default function TeachingPage() {
         </section>
 
         {/* Mentorship Section */}
-        <section aria-labelledby="mentorship" className="py-8">
+        <section role="region" aria-labelledby="mentorship" className="py-8">
           <MentorshipSection />
         </section>
 

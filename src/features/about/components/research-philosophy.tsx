@@ -39,7 +39,7 @@ export function ResearchPhilosophy() {
               {researchIdentity.primaryAreas.map((area) => (
                 <div
                   key={area.id}
-                  className="p-4 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
+                  className="p-4 rounded-lg bg-secondary/20 hover:bg-secondary/40 transition-colors"
                 >
                   <div className="font-medium text-sm">{area.name}</div>
                   <div className="text-xs text-muted-foreground mt-1">

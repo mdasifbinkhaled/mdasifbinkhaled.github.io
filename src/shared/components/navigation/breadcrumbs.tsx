@@ -25,11 +25,14 @@ export function Breadcrumbs() {
     >
       <Link
         href="/"
+        aria-label="Home"
         className="flex items-center gap-1 hover:text-primary transition-colors"
       >
         {(() => {
           const HomeIcon = navIconMap['Home'];
-          return HomeIcon ? <HomeIcon className="w-4 h-4" /> : null;
+          return HomeIcon ? (
+            <HomeIcon className="w-4 h-4" aria-hidden="true" />
+          ) : null;
         })()}
         <span className="hidden sm:inline">Home</span>
       </Link>

@@ -2,21 +2,25 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 test.describe('Fundamental Route Hydration & Accessibility', () => {
-  test('has standard layout rendering context on Home', async ({ page }) => {
+  test('has standard layout rendering context on Home', async ({
+    page,
+  }, testInfo) => {
     await page.goto('/');
     // Check root semantic header hydration
     await expect(page.locator('h1').first()).toBeVisible();
 
     // Check profile navigation
-    const nav = page.locator('nav').first();
+    const nav = page.locator('nav:visible').first();
     await expect(nav).toBeVisible();
 
-    // Command Palette Quick Invoke (Control+K/Cmd+K)
-    await page.keyboard.press('ControlOrMeta+k');
-    await expect(
-      page.getByPlaceholder('Search pages, courses, actions…')
-    ).toBeVisible();
-    await page.keyboard.press('Escape');
+    // Command Palette Quick Invoke — skip on mobile (no keyboard shortcut)
+    if (testInfo.project.name !== 'mobile-safari') {
+      await page.keyboard.press('ControlOrMeta+k');
+      await expect(
+        page.getByPlaceholder('Search pages, courses, actions…')
+      ).toBeVisible();
+      await page.keyboard.press('Escape');
+    }
   });
 
   test('maintains WCAG 2.x AA accessibility bounds upon mount', async ({
