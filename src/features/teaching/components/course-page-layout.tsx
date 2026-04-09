@@ -3,14 +3,14 @@ import type { CourseData } from '@/shared/types';
 import { Card, CardContent } from '@/shared/components/ui/card';
 
 // Modular Components
-import { CourseHero } from '@/features/teaching/components/course-hero';
-import { NoticeBoard } from '@/features/teaching/components/notice-board';
+import { CourseHero } from './course-hero';
+import { NoticeBoard } from './notice-board';
 import { CollapsibleSection } from '@/shared/components/ui/collapsible-section';
-import { OverviewSection } from '@/features/teaching/components/overview-section';
-import { ScheduleSection } from '@/features/teaching/components/schedule-section';
-import { SyllabusSection } from '@/features/teaching/components/syllabus-section';
-import { ResourcesSection } from '@/features/teaching/components/resources-section';
-import { AssignmentsSection } from '@/features/teaching/components/assignments-section';
+import { OverviewSection } from './overview-section';
+import { ScheduleSection } from './schedule-section';
+import { SyllabusSection } from './syllabus-section';
+import { ResourcesSection } from './resources-section';
+import { AssignmentsSection } from './assignments-section';
 
 interface CoursePageLayoutProps {
   course: CourseData;

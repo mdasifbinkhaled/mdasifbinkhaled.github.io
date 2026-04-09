@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { coursesTaughtBRACU } from '@/shared/lib/data/courses';
 import { siteConfig } from '@/shared/config/site';
-import { InstitutionCoursesPage } from '@/features/teaching/components/institution-courses-page';
+import { InstitutionCoursesPage } from '@/features/teaching';
 
 export const metadata: Metadata = {
   title: 'BRACU Courses - Teaching Portfolio',

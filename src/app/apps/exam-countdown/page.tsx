@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ExamCountdown } from '@/features/apps/components/exam-countdown/exam-countdown';
+import { ExamCountdown } from '@/features/apps';
 import { siteConfig } from '@/shared/config/site';
 
 export const metadata: Metadata = {

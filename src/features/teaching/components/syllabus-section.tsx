@@ -1,6 +1,6 @@
 import { Layers, Target } from 'lucide-react';
 import { CollapsibleSection } from '@/shared/components/ui/collapsible-section';
-import { SyllabusTable } from '@/features/teaching/components/syllabus-table';
+import { SyllabusTable } from './syllabus-table';
 import { Progress } from '@/shared/components/ui/progress';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import type { CourseData } from '@/shared/types';

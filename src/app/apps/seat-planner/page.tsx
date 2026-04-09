@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { SeatPlanner } from '@/features/apps/components/seat-planner';
+import { SeatPlanner } from '@/features/apps';
 import { Button } from '@/shared/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';

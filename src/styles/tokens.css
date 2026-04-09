@@ -46,10 +46,6 @@
 
   /* Border Radius */
   --radius: 0.5rem;
-
-  /* Layout */
-  --sidebar-width: 280px;
-  --navbar-height: 64px;
 }
 
 /* Dark Theme */
@@ -211,17 +207,6 @@
 
   /* Academic Colors - Slate Theme */
   --academic-highlight: 215 100% 95%;
-}
-
-/* Mobile-first responsive utilities */
-@media (max-width: 768px) {
-  .sidebar-base {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 50;
-  }
 }
 
 /* High contrast mode support */

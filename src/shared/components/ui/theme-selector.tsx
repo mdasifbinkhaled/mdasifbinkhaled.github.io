@@ -23,7 +23,7 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { themeConfigs } from '@/shared/config/themes';
-import { useIsClient } from '@/shared/hooks/use-is-client';
+import { useIsClient } from '@/shared/hooks';
 
 const themeUIMap: Record<
   string,

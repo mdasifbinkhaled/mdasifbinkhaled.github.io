@@ -19,3 +19,6 @@ export { TeachingCTA } from './teaching-cta';
 
 // Styles
 export { getLevelStyle, LEVEL_STYLES } from './styles';
+
+// Sections
+export { MentorshipSection } from './mentorship-section';

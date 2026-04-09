@@ -43,7 +43,8 @@ describe('NewsFeed', () => {
   it('renders date as time element with ISO dateTime for valid dates', () => {
     render(<NewsFeed items={mockItems} />);
     const timeElements = screen.getAllByText('2024-03-15');
-    expect(timeElements[0].closest('time')).toHaveAttribute('dateTime');
+    expect(timeElements[0]).toBeDefined();
+    expect(timeElements[0]?.closest('time')).toHaveAttribute('dateTime');
   });
 
   it('handles non-parseable dates gracefully', () => {

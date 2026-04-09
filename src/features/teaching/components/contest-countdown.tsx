@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { Timer, ExternalLink, Trophy } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
-import { useIsClient } from '@/shared/hooks/use-is-client';
+import { useIsClient } from '@/shared/hooks';
 
 interface ContestCountdownProps {
   contest: {

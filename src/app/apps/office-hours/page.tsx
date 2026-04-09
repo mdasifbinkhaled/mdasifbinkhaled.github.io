@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { OfficeHoursBooker } from '@/features/apps/components/office-hours/office-hours-booker';
+import { OfficeHoursBooker } from '@/features/apps';
 import { siteConfig } from '@/shared/config/site';
 
 export const metadata: Metadata = {

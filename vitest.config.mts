@@ -34,7 +34,6 @@ export default defineConfig({
         'src/app/**/page.tsx',
         'src/app/robots.ts',
         'src/app/sitemap.ts',
-        'src/app/manifest.ts',
         'src/shared/types/**',
         'src/shared/config/**',
         'vitest.d.ts',

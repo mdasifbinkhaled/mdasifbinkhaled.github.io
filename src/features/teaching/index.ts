@@ -15,4 +15,5 @@ export {
   TeachingCTA,
   getLevelStyle,
   LEVEL_STYLES,
+  MentorshipSection,
 } from './components';

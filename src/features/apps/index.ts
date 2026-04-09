@@ -9,4 +9,7 @@ export {
   SeatPlanner,
   ToolCard,
   ToolsHero,
+  GpaCalculator,
+  OfficeHoursBooker,
+  ExamCountdown,
 } from './components';

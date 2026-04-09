@@ -1,7 +1,7 @@
 import { Calendar } from 'lucide-react';
 import { CollapsibleSection } from '@/shared/components/ui/collapsible-section';
-import { ScheduleTable } from '@/features/teaching/components/schedule-table';
-import { ExamSchedule } from '@/features/teaching/components/exam-schedule';
+import { ScheduleTable } from './schedule-table';
+import { ExamSchedule } from './exam-schedule';
 import type { CourseData } from '@/shared/types';
 import { cn } from '@/shared/lib/utils';
 

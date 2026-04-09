@@ -14,6 +14,9 @@ const config: NextConfig = {
   experimental: {
     viewTransition: true,
   },
+  turbopack: {
+    root: process.cwd(),
+  },
 
   typedRoutes: true,
 };

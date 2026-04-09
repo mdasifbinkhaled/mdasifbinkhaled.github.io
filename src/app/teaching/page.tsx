@@ -6,8 +6,8 @@ import {
   TeachingTabsClient,
   TeachingHeroStats,
   TeachingCTA,
+  MentorshipSection,
 } from '@/features/teaching';
-import { MentorshipSection } from '@/features/teaching/components/mentorship-section';
 import {
   coursesTaughtIUB,
   coursesTaughtBRACU,

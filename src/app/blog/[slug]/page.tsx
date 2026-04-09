@@ -2,8 +2,6 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-// import rehypePrettyCode from 'rehype-pretty-code';
-// import remarkGfm from 'remark-gfm';
 import { CalendarDays, ArrowLeft, Tag } from 'lucide-react';
 import { getPostBySlug, getAllPosts } from '@/shared/lib/mdx';
 import { siteConfig } from '@/shared/config/site';

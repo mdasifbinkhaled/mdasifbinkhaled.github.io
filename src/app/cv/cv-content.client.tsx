@@ -25,7 +25,7 @@ import {
 import { Skeleton } from '@/shared/components/ui/skeleton';
 import { academicEvents } from '@/shared/lib/analytics';
 import { PDFViewerWrapper } from '@/shared/components/common/pdf-viewer-wrapper';
-import { useIsClient } from '@/shared/hooks/use-is-client';
+import { useIsClient } from '@/shared/hooks';
 
 export default function CVContent() {
   const isClient = useIsClient();

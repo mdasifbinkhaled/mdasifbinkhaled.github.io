@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Clock, Globe } from 'lucide-react';
-import { useIsClient } from '@/shared/hooks/use-is-client';
+import { useIsClient } from '@/shared/hooks';
 import { siteConfig } from '@/shared/config';
 
 interface TimeDisplayProps {

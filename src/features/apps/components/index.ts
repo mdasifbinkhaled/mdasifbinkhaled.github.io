@@ -2,3 +2,6 @@ export { GradeCalculator } from './grade-calculator';
 export { SeatPlanner } from './seat-planner';
 export { ToolCard } from './tool-card';
 export { ToolsHero } from './tools-hero';
+export { GpaCalculator } from './gpa-calculator/gpa-calculator';
+export { OfficeHoursBooker } from './office-hours/office-hours-booker';
+export { ExamCountdown } from './exam-countdown/exam-countdown';

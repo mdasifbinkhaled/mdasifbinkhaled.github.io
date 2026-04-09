@@ -2,7 +2,7 @@ import { BookOpen, ExternalLink, GraduationCap } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 import { Button } from '@/shared/components/ui/button';
 import { Icon } from '@/shared/components/common/icons';
-import { ContestCountdown } from '@/features/teaching/components/contest-countdown';
+import { ContestCountdown } from './contest-countdown';
 import type { CourseData } from '@/shared/types';
 
 import { cn } from '@/shared/lib/utils';

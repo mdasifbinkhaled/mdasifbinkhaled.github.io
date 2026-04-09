@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { GpaCalculator } from '@/features/apps/components/gpa-calculator/gpa-calculator';
+import { GpaCalculator } from '@/features/apps';
 import { siteConfig } from '@/shared/config/site';
 
 export const metadata: Metadata = {

@@ -17,15 +17,6 @@ export const DISPLAY_LIMITS = {
 
   /** Maximum recent items to show on homepage */
   HOMEPAGE_RECENT: 3,
-
-  /** Maximum years to display in academic search year filter */
-  ACADEMIC_SEARCH_YEARS: 8,
-
-  /** Maximum tags to display in academic search results */
-  ACADEMIC_SEARCH_TAGS: 3,
-
-  /** Maximum quick theme options in theme selector dropdown */
-  THEME_SELECTOR_QUICK: 3,
 } as const;
 
 /**
