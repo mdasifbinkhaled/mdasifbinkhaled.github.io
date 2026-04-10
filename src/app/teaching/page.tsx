@@ -33,6 +33,9 @@ export default function TeachingPage() {
       <div className="max-w-7xl mx-auto space-y-16">
         <Breadcrumbs />
 
+        {/* Page Title — visually hidden but provides h1 for a11y/SEO */}
+        <h1 className="sr-only">Teaching</h1>
+
         {/* Hero Stats Section */}
         <section aria-labelledby="teaching-stats">
           <h2 id="teaching-stats" className="sr-only">

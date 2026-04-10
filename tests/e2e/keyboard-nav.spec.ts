@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
  * Skipped on mobile projects where physical keyboard interaction is unavailable.
  */
 test.describe('Keyboard navigation', () => {
-  test.beforeEach(async ({}, testInfo) => {
+  test.beforeEach(async ({ page: _page }, testInfo) => {
     test.skip(
       testInfo.project.name === 'mobile-safari',
       'Keyboard nav is not applicable on mobile viewports'
@@ -22,13 +22,20 @@ test.describe('Keyboard navigation', () => {
     const focused = page.locator(':focus');
     const href = await focused.getAttribute('href');
 
-    // Skip link should point to #main-content or similar
-    if (href?.startsWith('#')) {
-      // Use Enter instead of click — skip link uses CSS translate trick
-      await page.keyboard.press('Enter');
-      const target = page.locator(href);
-      await expect(target).toBeVisible();
-    }
+    // Skip link must exist and point to an anchor
+    expect(
+      href,
+      'Skip link should have an anchor href starting with #'
+    ).toBeTruthy();
+    expect(
+      href!.startsWith('#'),
+      `Expected href to start with #, got "${href}"`
+    ).toBe(true);
+
+    // Use Enter to activate skip link
+    await page.keyboard.press('Enter');
+    const target = page.locator(href!);
+    await expect(target).toBeVisible();
   });
 
   test('tab navigates through main nav links', async ({ page }) => {
@@ -68,12 +75,13 @@ test.describe('Keyboard navigation', () => {
 
   test('Enter activates focused nav link', async ({ page }) => {
     await page.goto('/');
-    // Tab to "About" link in nav and activate it
-    const aboutLink = page.locator('nav a[href="/about"]').first();
-    if (await aboutLink.isVisible()) {
-      await aboutLink.focus();
-      await page.keyboard.press('Enter');
-      await expect(page).toHaveURL(/\/about/);
-    }
+    // Find an About link in any navigation element (handles trailing slash from static export)
+    const aboutLink = page
+      .locator('a[href="/about"], a[href="/about/"]')
+      .first();
+    await expect(aboutLink).toBeVisible();
+    await aboutLink.focus();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/about/);
   });
 });

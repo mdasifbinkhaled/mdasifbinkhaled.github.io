@@ -26,17 +26,17 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 
 ### Technical Highlights
 
-| Category      | Technology                                          |
-| ------------- | --------------------------------------------------- |
-| **Framework** | Next.js 16 (App Router, Static Export)              |
-| **Language**  | TypeScript 5.6 (Strict Mode)                        |
-| **Styling**   | Tailwind CSS 4.1 (CSS-first config)                 |
-| **Testing**   | Vitest (357+ tests, 65%+ coverage) + Playwright E2E |
-| **Linting**   | ESLint 9 + Prettier                                 |
-| **CI/CD**     | GitHub Actions (4 workflows)                        |
-| **Security**  | CodeQL, npm audit, CSP hardened                     |
-| **A11y**      | WCAG 2.1 AA (CI-enforced via Playwright + axe-core) |
-| **Themes**    | 6 color themes with WCAG AA contrast compliance     |
+| Category      | Technology                                                |
+| ------------- | --------------------------------------------------------- |
+| **Framework** | Next.js 16 (App Router, Static Export)                    |
+| **Language**  | TypeScript 5.6 (Strict Mode)                              |
+| **Styling**   | Tailwind CSS 4.1 (CSS-first config)                       |
+| **Testing**   | Vitest + Playwright E2E (CI-enforced coverage thresholds) |
+| **Linting**   | ESLint 9 + Prettier                                       |
+| **CI/CD**     | GitHub Actions (4 workflows)                              |
+| **Security**  | CodeQL, npm audit, CSP hardened                           |
+| **A11y**      | WCAG 2.1 AA (CI-enforced via Playwright + axe-core)       |
+| **Themes**    | 6 color themes with WCAG AA contrast compliance           |
 
 ---
 
@@ -215,7 +215,7 @@ The `out/` folder can be deployed to any static hosting service.
 4. Ensure `npm run validate` passes
 5. Submit a pull request
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+See [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) for detailed guidelines.
 
 ---
 

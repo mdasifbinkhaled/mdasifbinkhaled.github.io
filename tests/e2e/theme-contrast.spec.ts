@@ -11,9 +11,15 @@ test.describe('Color Contrast & Accessibility across Themes', () => {
         localStorage.setItem('theme', t);
       }, theme);
 
-      await page.goto('/', { waitUntil: 'networkidle' });
-      // Wait for ThemeProvider hydration + CSS variable computation
-      await page.waitForTimeout(1000);
+      await page.goto('/', { waitUntil: 'load' });
+      // Wait for theme to be applied via data-theme attribute
+      await page.waitForFunction(
+        (t) =>
+          document.documentElement.getAttribute('data-theme') === t ||
+          (t === 'light' &&
+            !document.documentElement.getAttribute('data-theme')),
+        theme
+      );
 
       const accessibilityScanResults = await new AxeBuilder({ page })
         .withTags(['wcag2aa', 'wcag21aa'])

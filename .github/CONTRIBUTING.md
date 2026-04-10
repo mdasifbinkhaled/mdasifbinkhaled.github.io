@@ -35,9 +35,9 @@ Before submitting changes, ensure your code meets our quality standards:
 npm run validate
 
 # Or run individually:
-npm run lint         # ESLint
+npm run lint:check   # ESLint without auto-fixing
 npm run test:run     # Tests
-npm run pre-commit   # TypeScript type checking
+npm run typecheck    # TypeScript type checking
 ```
 
 ### Testing
@@ -164,7 +164,7 @@ Feature requests are welcome! Please open an issue describing:
 ## 🧪 Testing Guidelines
 
 - Write tests for new features and bug fixes
-- Maintain minimum 80% code coverage
+- Maintain coverage above enforced thresholds (lines: 60%, branches: 70%)
 - Test accessibility features
 - Test responsive behavior
 - Use descriptive test names

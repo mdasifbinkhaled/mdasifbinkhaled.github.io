@@ -6,6 +6,9 @@ import { test, expect } from '@playwright/test';
  *   1. Return HTTP 200
  *   2. Have a visible <h1>
  *   3. Not emit uncaught JS errors
+ *
+ * Redirect-only pages (/experience, /service, /service-awards) are excluded
+ * since they immediately redirect to /about#section and don't render content.
  */
 
 const ALL_ROUTES = [
@@ -17,18 +20,15 @@ const ALL_ROUTES = [
   '/apps/grade-calculator',
   '/apps/office-hours',
   '/apps/seat-planner',
+  '/blog',
   '/contact',
   '/cv',
-  '/experience',
   '/publications',
   '/research',
-  '/service',
-  '/service-awards',
+  '/talks',
   '/teaching',
   '/teaching/bracu',
-  '/teaching/bracu/cse420',
   '/teaching/iub',
-  '/teaching/iub/cse211spr26',
 ];
 
 test.describe('All-pages smoke', () => {
@@ -42,8 +42,8 @@ test.describe('All-pages smoke', () => {
       });
       expect(response?.status()).toBe(200);
 
-      // Every page should have at least one heading
-      const heading = page.locator('h1, h2').first();
+      // Every page must have an h1 for accessibility and SEO
+      const heading = page.locator('h1').first();
       await expect(heading).toBeVisible({ timeout: 5000 });
 
       // No uncaught JS errors

@@ -2,12 +2,12 @@
 
 ## Overview
 
-| Layer              | Tool                           | Count                  | Coverage                            |
-| ------------------ | ------------------------------ | ---------------------- | ----------------------------------- |
-| Unit & Integration | Vitest + React Testing Library | 357 tests, 40 files    | 65% lines, 81% branches             |
-| E2E Cross-Browser  | Playwright                     | 125 tests (3 browsers) | 20 routes                           |
-| Accessibility      | axe-core + Playwright          | 10 pages WCAG 2.x AA   | All 3 browsers                      |
-| Performance        | Lighthouse CI                  | 8 pages                | Perf ≥90, A11y ≥95, BP ≥95, SEO ≥95 |
+| Layer              | Tool                           | Description                         |
+| ------------------ | ------------------------------ | ----------------------------------- |
+| Unit & Integration | Vitest + React Testing Library | Component and utility tests         |
+| E2E Cross-Browser  | Playwright                     | 3 browsers, smoke + a11y + keyboard |
+| Accessibility      | axe-core + Playwright          | WCAG 2.x AA audit on all main pages |
+| Performance        | Lighthouse CI                  | 13 pages, 3 runs each               |
 
 ## Running Tests
 
@@ -34,6 +34,9 @@ Tests live in `tests/` mirroring the `src/` structure:
 tests/
 ├── features/         # Feature component tests
 │   ├── apps/         # App tools (GPA calculator, exam countdown, etc.)
+│   ├── home/         # Homepage component tests
+│   ├── publications/ # Publication list tests
+│   ├── research/     # Research component tests
 │   └── teaching/     # Teaching components
 ├── shared/
 │   ├── components/   # UI component tests
@@ -71,25 +74,23 @@ Enforced in `vitest.config.mts`:
 
 ### Test Suites
 
-| File                      | Tests | Description                                                 |
-| ------------------------- | ----- | ----------------------------------------------------------- |
-| `all-pages-smoke.spec.ts` | 20    | HTTP 200, heading visible, no JS errors per route           |
-| `a11y-audit.spec.ts`      | 10    | WCAG 2.x AA axe-core audit per page                         |
-| `keyboard-nav.spec.ts`    | 4     | Skip-to-content, tab nav, command palette, Enter activation |
-| `theme-contrast.spec.ts`  | 6     | Color contrast across all 6 themes                          |
-| `smoke.spec.ts`           | 3     | Layout hydration, WCAG baseline, cross-tier navigation      |
+| File                      | Description                                                 |
+| ------------------------- | ----------------------------------------------------------- |
+| `all-pages-smoke.spec.ts` | HTTP 200, h1 visible, no JS errors per route                |
+| `a11y-audit.spec.ts`      | WCAG 2.x AA axe-core audit per page                         |
+| `keyboard-nav.spec.ts`    | Skip-to-content, tab nav, command palette, Enter activation |
+| `theme-contrast.spec.ts`  | Color contrast across all 6 themes                          |
 
 ### Notes
 
 - Keyboard navigation tests are skipped on mobile-safari (no physical keyboard)
-- Command palette test is skipped on mobile-safari
-- Theme tests use `localStorage` injection for reliable theme switching
+- Theme tests verify `data-theme` attribute before running axe contrast checks
 
 ## Lighthouse CI
 
 Config: `.github/lighthouserc.js`
 
-Runs against 8 pages with assertions:
+Runs against 13 pages (3 runs each) with assertions:
 
 - Performance ≥ 0.9
 - Accessibility ≥ 0.95
