@@ -46,7 +46,8 @@
     "audit:ci": "npm audit --audit-level=high",
     "pre-commit": "lint-staged",
     "prepare": "husky",
-    "validate": "npm run lint:check && npm run format:check && npm run test:run && npm run typecheck"
+    "validate": "npm run lint:check && npm run format:check && npm run test:run && npm run typecheck",
+    "validate:full": "npm run validate && npm run build && npx playwright test --project=chromium"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.2",

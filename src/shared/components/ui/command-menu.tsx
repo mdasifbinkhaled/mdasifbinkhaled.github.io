@@ -13,6 +13,10 @@ import {
   Download,
   GraduationCap,
   Laptop,
+  Waves,
+  Trees,
+  Flower,
+  Briefcase,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
@@ -258,6 +262,46 @@ export function CommandMenu() {
                 >
                   <Moon className="h-4 w-4 shrink-0 text-muted-foreground" />
                   <span>Dark Mode</span>
+                </Command.Item>
+                <Command.Item
+                  value="Ocean theme blue"
+                  onSelect={() =>
+                    runCommand(() => setTheme('ocean'), 'Theme: Ocean')
+                  }
+                  className={itemClass}
+                >
+                  <Waves className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <span>Ocean Theme</span>
+                </Command.Item>
+                <Command.Item
+                  value="Forest theme green nature"
+                  onSelect={() =>
+                    runCommand(() => setTheme('forest'), 'Theme: Forest')
+                  }
+                  className={itemClass}
+                >
+                  <Trees className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <span>Forest Theme</span>
+                </Command.Item>
+                <Command.Item
+                  value="Lavender theme purple"
+                  onSelect={() =>
+                    runCommand(() => setTheme('lavender'), 'Theme: Lavender')
+                  }
+                  className={itemClass}
+                >
+                  <Flower className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <span>Lavender Theme</span>
+                </Command.Item>
+                <Command.Item
+                  value="Slate theme professional gray"
+                  onSelect={() =>
+                    runCommand(() => setTheme('slate'), 'Theme: Slate')
+                  }
+                  className={itemClass}
+                >
+                  <Briefcase className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <span>Slate Theme</span>
                 </Command.Item>
               </Command.Group>
             </Command.List>

@@ -19,10 +19,7 @@
 | `@next/third-parties`      | latest  | Google Analytics GA4 integration                |
 | `@sentry/browser`          | latest  | Client-side error tracking                      |
 | `gray-matter`              | latest  | Frontmatter parsing for MDX blog posts          |
-| `next-mdx-remote`          | latest  | Remote MDX rendering (RSC-compatible)           |
-| `rehype-pretty-code`       | latest  | Syntax highlighting for code blocks (Shiki)     |
-| `remark-gfm`               | latest  | GitHub Flavored Markdown support                |
-| `shiki`                    | latest  | Syntax highlighter engine                       |
+| `next-mdx-remote`          | ^6.0.0  | Remote MDX rendering (RSC-compatible, archived) |
 | `@radix-ui/*`              | various | Headless UI primitives (9 packages)             |
 
 ### Radix UI Packages
@@ -52,7 +49,7 @@
 | `@testing-library/user-event`     | ^14.6.1  | User interaction simulation  |
 | `jsdom`                           | ^25.x    | DOM environment for tests    |
 | `@vitejs/plugin-react`            | ^4.7.0   | Vite React plugin            |
-| `tailwindcss`                     | ^3.4.13  | CSS framework                |
+| `tailwindcss`                     | ^4.1.18  | CSS framework                |
 | `tailwindcss-animate`             | ^1.0.7   | Animation utilities          |
 | `autoprefixer`                    | ^10.4.20 | CSS vendor prefixing         |
 | `postcss`                         | ^8.4.41  | CSS processing               |
@@ -112,6 +109,7 @@ npm run build
 | `format:check`     | `prettier --check`               | Format check              |
 | `typecheck`        | `tsc --noEmit`                   | Type checking             |
 | `validate`         | lint + format + test + typecheck | Full validation           |
+| `validate:full`    | validate + build + Playwright    | Full validation + E2E     |
 | `prepare`          | `husky`                          | Setup git hooks           |
 
 ## Known Vulnerabilities
@@ -124,7 +122,7 @@ npm run build
 | `rollup` 4.x        | High     | Arbitrary file write via path traversal     | Dev-only (build tooling), no runtime impact       |
 | `vite` 6.x          | High     | Path traversal via URL encoding             | Dev-only (test tooling), no runtime impact        |
 
-**Summary**: 5 vulnerabilities (1 moderate, 3 high, 1 critical). All are mitigated: either dev-only dependencies or neutralized by the static export architecture (no server runtime).
+**Summary**: 8 vulnerabilities (1 moderate, 6 high, 1 critical). All are mitigated: either dev-only dependencies or neutralized by the static export architecture (no server runtime). Reviewed 2026-04-11; re-check by 2026-07-11.
 
 ## Deployment
 

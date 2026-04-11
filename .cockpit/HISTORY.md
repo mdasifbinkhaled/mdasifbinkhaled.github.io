@@ -208,8 +208,8 @@
 
 ### Content, Monitoring & Forensic Remediation (2026-06-05)
 
-- **Blog system**: MDX-powered blog at `/blog` with Shiki syntax highlighting, frontmatter parsing, GFM
-  - Dependencies: `next-mdx-remote`, `gray-matter`, `rehype-pretty-code`, `remark-gfm`, `shiki`
+- **Blog system**: MDX-powered blog at `/blog` with frontmatter parsing
+  - Dependencies: `next-mdx-remote`, `gray-matter` (no Shiki/rehype-pretty-code/remark-gfm installed)
   - Dynamic `[slug]` route with `generateStaticParams`, error boundaries
 - **Talks page**: Conference talks & presentations at `/talks`
 - **3 new student apps**: Exam Countdown, GPA Calculator, Office Hours (all with error boundaries)
@@ -244,6 +244,25 @@
 - **Hygiene**: removed duplicate `.DS_Store` in .gitignore, removed stale `content/blog/.gitkeep`
 - **Cockpit sync**: all documentation updated to match 202-test / 27-page / 50%+ coverage reality
 - Quality Gates: 0 TS errors, 0 lint errors, 202/202 tests (31 files), 27 pages exported, 50%+ coverage
+
+### External Audit Remediation (2026-04-11)
+
+- **External audit**: 16 findings (AUD-001 through AUD-016) cross-verified against codebase
+  - 13 confirmed, 2 partially incorrect (jspdf 4.2.1 does NOT exist — 4.2.0 is latest), 1 not reproducible (/cv axe passes locally)
+- **10 code fixes applied**:
+  - 3 redirect pages converted from `redirect()` to `<meta httpEquiv="refresh">` + visible fallback link (static-export-safe)
+  - Footer duplicate "Home" link removed from footer nav
+  - `hash-scroll.tsx`: magic `80px` → `LAYOUT.NAVBAR_HEIGHT` constant
+  - `mentorship-section.tsx`: self-wraps in `<section>` only when data exists (no orphaned empty region)
+  - Command palette: 4 missing theme items added (Ocean, Forest, Lavender, Slate)
+  - `humans.txt`: date updated, WCAG claim softened to "targeted (axe-core audited)"
+  - CSV parser: naive `split(delimiter)` → RFC 4180 `splitFields()` with quoted-field support
+  - `security.yml`: time-bound review date added to jspdf exception
+- **New script**: `validate:full` — validate + build + Playwright E2E
+- **3 new tests**: quoted-field CSV parsing (12 total in seat-planner.test.ts)
+- **14 new findings** (F-236 through F-249), all resolved
+- **Documentation cleanup**: removed false MDX claims, fixed Tailwind version, synced all cockpit metrics
+- Quality Gates: 0 TS errors, 0 lint errors, 363/363 tests (40 files), 27 pages exported
 
 ## Tags
 

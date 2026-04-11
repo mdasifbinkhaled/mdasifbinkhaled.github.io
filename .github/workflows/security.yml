@@ -33,7 +33,7 @@ jobs:
           echo "## 🔒 Dependency Audit Results" >> $GITHUB_STEP_SUMMARY
 
           # Static-export project: server-side & build-only vulns do not apply.
-          # Excepted packages:
+          # Excepted packages (reviewed 2026-04-11, re-check by 2026-07-11):
           #   next      — server-side vulns irrelevant for output:'export'
           #   rollup    — build-time only, not in production bundle
           #   vite      — build-time only, not in production bundle

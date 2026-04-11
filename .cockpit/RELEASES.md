@@ -1,8 +1,8 @@
 # RELEASES.md — Version History
 
-## Current: v1.4.0 (package.json)
+## Current: v1.5.0 (package.json)
 
-Bumped from 1.3.0 to 1.4.0 — Seat Plan Generator feature, Phase 8 Modern Web enhancements, cockpit sync.
+Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry lazy-load, cockpit sync.
 
 ## Git Tags
 
@@ -33,8 +33,9 @@ Bumped from 1.3.0 to 1.4.0 — Seat Plan Generator feature, Phase 8 Modern Web e
 
 ### Blog, Talks, Sentry & Cockpit Sync (2026-06-05)
 
-- **Blog system**: MDX-powered blog at `/blog` with syntax highlighting (Shiki), frontmatter (gray-matter), and GFM support
-  - New dependencies: `next-mdx-remote`, `gray-matter`, `rehype-pretty-code`, `remark-gfm`, `shiki`
+- **Blog system**: MDX-powered blog at `/blog` with frontmatter (gray-matter) support
+  - New dependencies: `next-mdx-remote`, `gray-matter`
+  - Note: `next-mdx-remote` is archived upstream; no Shiki/rehype-pretty-code/remark-gfm installed
   - Dynamic `[slug]` route with `generateStaticParams`
   - Error boundaries for both `/blog` and `/blog/[slug]`
 - **Talks page**: Conference talks & presentations at `/talks` with error boundary

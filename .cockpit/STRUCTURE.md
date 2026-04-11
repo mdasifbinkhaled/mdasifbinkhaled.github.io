@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-04-09 | 219 source files | 17,186 LOC
+> Last Updated: 2026-04-11 | 223 source files | 17,186 LOC
 
 ## Root Configuration
 
@@ -72,7 +72,7 @@ src/app/
 │   ├── page.tsx            — Blog listing page
 │   ├── error.tsx           — Error boundary (factory pattern)
 │   └── [slug]/
-│       ├── page.tsx        — Blog post page (MDX + Shiki)
+│       ├── page.tsx        — Blog post page (MDX)
 │       └── error.tsx       — Error boundary (factory pattern)
 ├── contact/
 │   ├── page.tsx            — Contact page with social links
@@ -321,7 +321,7 @@ src/styles/
 └── tokens.css              — Design tokens: colors, spacing, typography for 6 themes
 ```
 
-## Tests — `tests/` (229 tests, 34 files)
+## Tests — `tests/` (363 tests, 40 files)
 
 Organized to mirror `src/` directory structure.
 

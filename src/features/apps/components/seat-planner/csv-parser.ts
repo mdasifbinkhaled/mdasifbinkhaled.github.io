@@ -10,7 +10,63 @@ export interface ParseResult {
 }
 
 /**
+ * Split a single line into fields respecting RFC 4180 double‑quoted fields.
+ * Handles: delimiters inside quotes, escaped quotes (""), and mixed fields.
+ */
+function splitFields(line: string, delimiter: string): string[] {
+  const fields: string[] = [];
+  let i = 0;
+  const len = line.length;
+
+  while (i <= len) {
+    if (i === len) {
+      fields.push('');
+      break;
+    }
+
+    if (line[i] === '"') {
+      // Quoted field — collect until closing quote
+      let value = '';
+      i++; // skip opening quote
+      while (i < len) {
+        if (line[i] === '"') {
+          if (i + 1 < len && line[i + 1] === '"') {
+            // Escaped quote ""
+            value += '"';
+            i += 2;
+          } else {
+            // Closing quote
+            i++; // skip closing quote
+            break;
+          }
+        } else {
+          value += line[i];
+          i++;
+        }
+      }
+      fields.push(value.trim());
+      // Skip delimiter after closing quote
+      if (i < len && line[i] === delimiter) i++;
+    } else {
+      // Unquoted field — read until next delimiter
+      const next = line.indexOf(delimiter, i);
+      if (next === -1) {
+        fields.push(line.slice(i).trim());
+        break;
+      } else {
+        fields.push(line.slice(i, next).trim());
+        i = next + 1;
+      }
+    }
+  }
+
+  return fields;
+}
+
+/**
  * Parse tab‑ or comma‑separated student data.
+ *
+ * Supports RFC 4180 quoted fields (commas/tabs inside double quotes).
  *
  * Supported column Orders (auto‑detected via headers or column count):
  *   3 cols → ID, Name, Section
@@ -35,9 +91,9 @@ export function parseStudentData(text: string): ParseResult {
   const delimiter = firstLine.includes('\t') ? '\t' : ',';
 
   // ── detect header row ───────────────────────
-  const firstCols = firstLine
-    .split(delimiter)
-    .map((s) => s.trim().toLowerCase());
+  const firstCols = splitFields(firstLine, delimiter).map((s) =>
+    s.toLowerCase()
+  );
 
   const HEADER_TOKENS = [
     'id',
@@ -93,7 +149,7 @@ export function parseStudentData(text: string): ParseResult {
   for (let i = startIdx; i < lines.length; i++) {
     const line = lines[i];
     if (!line) continue;
-    const cols = line.split(delimiter).map((s) => s.trim());
+    const cols = splitFields(line, delimiter);
     const row = i + 1;
 
     if (cols.length <= maxCol) {

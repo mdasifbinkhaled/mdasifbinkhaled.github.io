@@ -1,16 +1,16 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-04-08 | **Status**: All resolved
-> **Total Findings**: 235 | **Resolved**: 227 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 0
+> **Last Audit**: 2026-04-11 | **Status**: All resolved
+> **Total Findings**: 249 | **Resolved**: 241 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 0
 
 ## Dashboard
 
 ```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      31 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    70 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       86 (0 open)  — Polish, minor config, cosmetic
-INFO:      26 (0 open)  — Informational, acceptable trade-offs
+MEDIUM:    73 (0 open)  — Performance, DRY, architecture, testing gaps
+LOW:       91 (0 open)  — Polish, minor config, cosmetic
+INFO:      32 (0 open)  — Informational, acceptable trade-offs
 REASSESSED: 5           — F-195, F-196 (no action needed)
 FALSE POS:  3           — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
 NOTE: 10 findings span LOW+INFO; totals include reclassified items.
@@ -21,7 +21,7 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:  ✅ 0 errors  (strict mode, zero `any`)
 ESLint:      ✅ 0 errors, 0 warnings  (eslint-config-next@16, native flat config)
-Tests:       ✅ 229/229 pass  (34 files, vitest, 50%+ coverage)
+Tests:       ✅ 363/363 pass  (40 files, vitest, 50%+ coverage)
 E2E:         ✅ 9/9 pass  (Playwright, axe-core WCAG AA contrast)
 Build:       ✅ 27 pages exported  (static, 0 warnings)
 Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast removed)
@@ -34,6 +34,25 @@ Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast re
 _All findings resolved._
 
 ## Resolved Findings
+
+### Resolved in External Audit Remediation (2026-04-11)
+
+| ID    | Category      | Severity | Title                                                      | Resolution                                                                                  |
+| ----- | ------------- | -------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| F-236 | A11y          | MEDIUM   | Redirect pages are blank shells in static export           | Converted 3 pages from `redirect()` to `<meta httpEquiv="refresh">` + visible fallback link |
+| F-237 | A11y          | LOW      | Footer nav contains duplicate "Home" link                  | Removed hardcoded Home `<Link>` from footer (already in `mainNavItems`)                     |
+| F-238 | Consistency   | LOW      | `hash-scroll.tsx` uses magic number 80 instead of constant | Replaced with `LAYOUT.NAVBAR_HEIGHT` import (value: 73)                                     |
+| F-239 | A11y          | LOW      | Mentorship section renders empty `<section>` when no data  | Moved `<section>` wrapper inside component; returns `null` when empty                       |
+| F-240 | Consistency   | LOW      | Command palette only offers Light/Dark (missing 4 themes)  | Added Ocean, Forest, Lavender, Slate theme items to command menu                            |
+| F-241 | Documentation | LOW      | `humans.txt` stale date and overclaims WCAG compliance     | Updated date to 2026/04/11; softened to "WCAG 2.1 AA targeted (axe-core audited)"           |
+| F-242 | Testing       | MEDIUM   | No `validate:full` script covering build + E2E             | Added `validate:full` script: validate + build + Playwright E2E                             |
+| F-243 | Robustness    | MEDIUM   | CSV parser breaks on quoted fields with commas             | Added RFC 4180 `splitFields()` with quoted-field and escaped-quote support + 3 new tests    |
+| F-244 | Security      | INFO     | `security.yml` jspdf exception has no review date          | Added "reviewed 2026-04-11, re-check by 2026-07-11" to exception comment                    |
+| F-245 | Documentation | INFO     | PACKAGING.md lists rehype-pretty-code, remark-gfm, shiki   | Removed — none are installed in package.json                                                |
+| F-246 | Documentation | INFO     | PMD.md shows Tailwind 3.4.13 (actual: 4.1.18)              | Corrected version across PMD.md and PACKAGING.md                                            |
+| F-247 | Documentation | INFO     | Cockpit metrics stale (tests 229→363, files 219→223, etc.) | Full sync of INDEX.md, PMD.md, PACKAGING.md, RELEASES.md, HISTORY.md                        |
+| F-248 | Documentation | INFO     | RELEASES.md shows v1.4.0 as current (actual: v1.5.0)       | Corrected to v1.5.0, removed false Shiki claims from blog release notes                     |
+| F-249 | Documentation | INFO     | PMD.md Blog line claims "Shiki" (not installed)            | Corrected to "next-mdx-remote + gray-matter"                                                |
 
 ### Resolved in Stabilization Push — v1.5.0 (2026-04-08)
 

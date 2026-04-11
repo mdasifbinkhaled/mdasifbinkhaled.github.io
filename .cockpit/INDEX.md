@@ -1,6 +1,6 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-04-08
+> **Last Updated**: 2026-04-11
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
 > **Version**: 1.5.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 4.1.18
 
@@ -10,7 +10,7 @@
 | ------------------------------ | ---------------------------------------------------------- |
 | [INDEX.md](INDEX.md)           | This file — navigation hub                                 |
 | [PMD.md](PMD.md)               | Project Master Document — architecture, metrics, decisions |
-| [ISSUES.md](ISSUES.md)         | Active findings tracker (235 findings, 0 open)             |
+| [ISSUES.md](ISSUES.md)         | Active findings tracker (249 findings, 0 open)             |
 | [ROADMAP.md](ROADMAP.md)       | Improvement roadmap — Phases 7-11 (26 items)               |
 | [STRUCTURE.md](STRUCTURE.md)   | Annotated file tree with LOC and responsibilities          |
 | [HISTORY.md](HISTORY.md)       | Development timeline and milestones                        |
@@ -23,19 +23,19 @@
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Tests:      229/229 PASS (34 files, 50%+ coverage)
+    Tests:      363/363 PASS (40 files, 50%+ coverage)
     Build:      27 pages exported (0 warnings)
     Format:     All files formatted
     Commit:     (pending — 0 open findings)
 
 ## Findings Summary
 
-    Total:    235 findings (227 resolved, 0 open, 3 false positives, 5 reassessed)
+    Total:    249 findings (241 resolved, 0 open, 3 false positives, 5 reassessed)
     CRITICAL:   4 (0 open)
     HIGH:      31 (0 open)
-    MEDIUM:    70 (0 open)
-    LOW:       86 (0 open)
-    INFO:      26 (0 open)
+    MEDIUM:    73 (0 open)
+    LOW:       91 (0 open)
+    INFO:      32 (0 open)
 
 ## Phase Status
 
@@ -48,7 +48,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 10 (Content): IN PROGRESS** — Blog (MDX) and Talks pages live. Mentorship section infrastructure in place (empty state). Research timeline and Bengali intro deferred.
 **Phase 11 (Monitoring): IN PROGRESS** — Sentry error tracking and Google Analytics wired. Uptime monitoring pending.
 
-- 229/229 tests passing (34 files).
+- 363/363 tests passing (40 files).
 - 27 pages exported.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).
@@ -56,19 +56,19 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 
 ## Project Vitals
 
-| Metric            | Value                   |
-| ----------------- | ----------------------- |
-| Source files      | 219                     |
-| Lines of code     | 17,186                  |
-| Client components | 62 of 150 (.tsx)        |
-| Server components | 88 of 150 (.tsx)        |
-| Custom hooks      | 3 (+1 feature-specific) |
-| Data files        | 32                      |
-| Config files      | 6                       |
-| Barrel exports    | 10                      |
-| Test files        | 34                      |
-| Themes            | 6                       |
-| ADRs              | 2 (ADR-005 + template)  |
+| Metric            | Value                  |
+| ----------------- | ---------------------- |
+| Source files      | 223                    |
+| Lines of code     | 17,186                 |
+| Client components | 59 of 148 (.tsx)       |
+| Server components | 89 of 148 (.tsx)       |
+| Custom hooks      | 4                      |
+| Data files        | 32                     |
+| Config files      | 6                      |
+| Barrel exports    | 19                     |
+| Test files        | 44                     |
+| Themes            | 6                      |
+| ADRs              | 2 (ADR-005 + template) |
 
 ## Architecture Layers (LOC Distribution)
 

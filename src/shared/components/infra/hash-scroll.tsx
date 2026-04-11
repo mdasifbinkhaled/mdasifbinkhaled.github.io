@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { LAYOUT } from '@/shared/config/constants';
 
 interface HashScrollProps {
   behavior?: ScrollBehavior;
@@ -14,8 +15,7 @@ export function HashScroll({ behavior = 'smooth' }: HashScrollProps) {
       const id = hash.slice(1);
       const el = document.getElementById(id);
       if (el) {
-        // Account for sticky navbar height (approximately 5rem = 80px)
-        const navbarHeight = 80;
+        const navbarHeight = LAYOUT.NAVBAR_HEIGHT;
         const elementPosition = el.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.scrollY - navbarHeight;
 

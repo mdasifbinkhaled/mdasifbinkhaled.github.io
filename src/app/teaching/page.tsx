@@ -134,10 +134,8 @@ export default function TeachingPage() {
           </Suspense>
         </section>
 
-        {/* Mentorship Section */}
-        <section role="region" aria-labelledby="mentorship" className="py-8">
-          <MentorshipSection />
-        </section>
+        {/* Mentorship Section — only rendered when data exists */}
+        <MentorshipSection />
 
         {/* Call to Action */}
         <section aria-labelledby="collaborate" className="py-8">

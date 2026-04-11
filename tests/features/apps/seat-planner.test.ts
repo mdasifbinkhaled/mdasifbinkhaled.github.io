@@ -42,6 +42,39 @@ describe('Seat Planner Logic', () => {
       expect(students).toHaveLength(0);
       expect(errors[0]!).toContain('at least 3 columns');
     });
+
+    it('parses quoted fields containing commas', () => {
+      const data = 'ID,Name,Section\n101,"Khan, Mohammad",1\n102,"Lee, Jr.",2';
+      const { students, errors } = parseStudentData(data);
+      expect(errors).toHaveLength(0);
+      expect(students).toHaveLength(2);
+      expect(students[0]).toEqual({
+        id: '101',
+        name: 'Khan, Mohammad',
+        section: 1,
+      });
+      expect(students[1]).toEqual({
+        id: '102',
+        name: 'Lee, Jr.',
+        section: 2,
+      });
+    });
+
+    it('parses escaped double quotes inside quoted fields', () => {
+      const data = '101,"He said ""hello""",1';
+      const { students, errors } = parseStudentData(data);
+      expect(errors).toHaveLength(0);
+      expect(students[0]?.name).toBe('He said "hello"');
+    });
+
+    it('handles mixed quoted and unquoted fields', () => {
+      const data = 'ID,Name,Section\n101,Simple,1\n102,"Comma, Name",2';
+      const { students, errors } = parseStudentData(data);
+      expect(errors).toHaveLength(0);
+      expect(students).toHaveLength(2);
+      expect(students[0]?.name).toBe('Simple');
+      expect(students[1]?.name).toBe('Comma, Name');
+    });
   });
 
   describe('Allocation', () => {

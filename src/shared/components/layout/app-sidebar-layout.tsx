@@ -160,9 +160,6 @@ export default function AppSidebarLayout({
               </div>
 
               <nav className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
-                <Link href="/" className="hover:text-primary transition-colors">
-                  Home
-                </Link>
                 {mainNavItems.map((item) => (
                   <Link
                     key={item.href}

@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
-> **Last Updated**: 2026-04-04
-> **Commit**: 38b2586
+> **Last Updated**: 2026-04-11
+> **Commit**: 28c221f (+ pending audit fixes)
 
 ## Mission
 
@@ -17,13 +17,13 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Framework     | Next.js (App Router)                  | 16.1.4  |
 | UI Library    | React                                 | 19.2.4  |
 | Language      | TypeScript (strict)                   | 5.6     |
-| Styling       | Tailwind CSS + CSS custom properties  | 3.4.13  |
+| Styling       | Tailwind CSS + CSS custom properties  | 4.1.18  |
 | Animation     | Vanilla JS (no library)               | ---     |
 | Icons         | Lucide React                          | 0.563.0 |
 | Themes        | next-themes + 6 color themes          | 0.4.6   |
 | UI Primitives | Radix UI (9 packages)                 | various |
 | PDF Export    | jsPDF + jspdf-autotable + html2canvas | various |
-| Blog          | next-mdx-remote + Shiki + gray-matter | various |
+| Blog          | next-mdx-remote + gray-matter         | various |
 | Analytics     | @next/third-parties (Google GA4)      | latest  |
 | Error Track   | @sentry/browser (client-side)         | latest  |
 | Testing       | Vitest + Testing Library + jsdom      | 3.2.4   |
@@ -68,22 +68,22 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ## Metrics
 
-| Metric            | Value                   |
-| ----------------- | ----------------------- |
-| Source files      | 219                     |
-| Lines of code     | 17,186                  |
-| Components (.tsx) | 150                     |
-| Client components | 62 (41%)                |
-| Server components | 88 (59%)                |
-| Custom hooks      | 3 (+1 feature-specific) |
-| Data files        | 32                      |
-| Config files      | 6                       |
-| Barrel exports    | 8                       |
-| Test files        | 24                      |
-| Test count        | 162                     |
-| Pages generated   | 27                      |
-| Themes            | 6                       |
-| Git commits       | 443+                    |
+| Metric            | Value    |
+| ----------------- | -------- |
+| Source files      | 223      |
+| Lines of code     | 17,186   |
+| Components (.tsx) | 148      |
+| Client components | 59 (40%) |
+| Server components | 89 (60%) |
+| Custom hooks      | 4        |
+| Data files        | 32       |
+| Config files      | 6        |
+| Barrel exports    | 19       |
+| Test files        | 44       |
+| Test count        | 363      |
+| Pages generated   | 27       |
+| Themes            | 6        |
+| Git commits       | 443+     |
 
 ### Largest Files
 
@@ -132,7 +132,7 @@ styles/      247  (1%)  █
 | `/apps/office-hours`      | Static   | Office hours schedule                |
 | `/apps/seat-planner`      | Static   | Seat plan generator with CSV/PDF     |
 | `/blog`                   | Static   | Blog listing (MDX)                   |
-| `/blog/[slug]`            | SSG      | Blog post (MDX + Shiki)              |
+| `/blog/[slug]`            | SSG      | Blog post (MDX)                      |
 | `/contact`                | Static   | Contact & social links               |
 | `/cv`                     | Static   | PDF CV viewer                        |
 | `/experience`             | Redirect | -> /about#experience                 |
@@ -153,9 +153,9 @@ styles/      247  (1%)  █
 | TypeScript | PASS   | 0 errors (strict mode)                                                              |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                                |
 | Prettier   | PASS   | All formatted                                                                       |
-| Tests      | PASS   | 162/162 pass (24 files)                                                             |
+| Tests      | PASS   | 363/363 pass (40 files)                                                             |
 | Build      | PASS   | 27 pages exported                                                                   |
-| Audit      | NOTE   | 5 vulns (1 moderate, 3 high, 1 critical — all mitigated: dev-only or static export) |
+| Audit      | NOTE   | 8 vulns (1 moderate, 6 high, 1 critical — all mitigated: dev-only or static export) |
 
 ## Architecture Observations
 
