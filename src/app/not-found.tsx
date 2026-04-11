@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import { Button } from '@/shared/components/ui/button';
+import { TrailingSlashRedirect } from '@/shared/components/common/trailing-slash-redirect';
 import { GraduationCap, Home } from 'lucide-react';
 
 export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
+      <TrailingSlashRedirect />
+
       <div className="mb-8 text-primary">
         <GraduationCap className="h-24 w-24 mx-auto" />
       </div>

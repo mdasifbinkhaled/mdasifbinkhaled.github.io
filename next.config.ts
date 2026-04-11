@@ -7,7 +7,6 @@ const analyzer = withBundleAnalyzer({
 
 const config: NextConfig = {
   output: 'export',
-  trailingSlash: true,
   images: {
     unoptimized: true,
   },
