@@ -36,6 +36,7 @@ describe('Navbar', () => {
     render(
       <Navbar
         onMobileMenuOpen={mockOnMobileMenuOpen}
+        isMobileMenuOpen={false}
         showMobileMenuButton={true}
       />
     );
@@ -44,7 +45,22 @@ describe('Navbar', () => {
       name: /open navigation menu/i,
     });
     expect(menuButton).toBeInTheDocument();
+    expect(menuButton).toHaveAttribute('aria-expanded', 'false');
     expect(screen.getByTestId('menu-icon')).toBeInTheDocument();
+  });
+
+  it('reflects the mobile menu open state via aria-expanded', () => {
+    render(
+      <Navbar
+        onMobileMenuOpen={mockOnMobileMenuOpen}
+        isMobileMenuOpen={true}
+        showMobileMenuButton={true}
+      />
+    );
+
+    expect(
+      screen.getByRole('button', { name: /open navigation menu/i })
+    ).toHaveAttribute('aria-expanded', 'true');
   });
 
   it('hides mobile menu button when showMobileMenuButton is false', () => {
@@ -121,6 +137,19 @@ describe('Navbar', () => {
     render(<Navbar />);
 
     expect(screen.getByTestId('theme-selector')).toBeInTheDocument();
+  });
+
+  it('exposes keyboard-accessible disclosure state for the teaching submenu', () => {
+    render(<Navbar />);
+
+    const teachingLink = screen.getByRole('link', { name: /^teaching$/i });
+    expect(teachingLink).toHaveAttribute('aria-expanded', 'false');
+
+    fireEvent.focus(teachingLink);
+
+    expect(teachingLink).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('link', { name: /^iub$/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /^bracu$/i })).toBeInTheDocument();
   });
 
   it('has proper semantic structure', () => {

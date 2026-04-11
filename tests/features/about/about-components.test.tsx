@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { QuickFacts } from '@/features/about/components/quick-facts';
 import { CtaSection } from '@/features/about/components/cta-section';
+import { HeroSection } from '@/features/about/components/hero-section';
+import { siteConfig } from '@/shared/config/site';
 
 vi.mock('next/link', () => ({
   default: ({
@@ -51,6 +53,21 @@ describe('CtaSection', () => {
       screen.getByRole('link', { name: /google scholar/i })
     ).toHaveAttribute('target', '_blank');
     expect(screen.getByRole('link', { name: /orcid/i })).toHaveAttribute(
+      'target',
+      '_blank'
+    );
+  });
+});
+
+describe('HeroSection', () => {
+  it('renders the CV download action as a normal external link', () => {
+    render(<HeroSection />);
+
+    expect(screen.getByRole('link', { name: /download cv/i })).toHaveAttribute(
+      'href',
+      siteConfig.links.cv
+    );
+    expect(screen.getByRole('link', { name: /download cv/i })).toHaveAttribute(
       'target',
       '_blank'
     );

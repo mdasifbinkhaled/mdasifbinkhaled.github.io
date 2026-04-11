@@ -21,55 +21,62 @@ export function Breadcrumbs() {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex items-center space-x-2 text-sm mb-6 px-4 py-2 bg-muted/50 rounded-lg"
+      className="text-sm mb-6 px-4 py-2 bg-muted/50 rounded-lg"
     >
-      <Link
-        href="/"
-        aria-label="Home"
-        className="flex items-center gap-1 hover:text-primary transition-colors"
-      >
-        {(() => {
-          const HomeIcon = navIconMap['Home'];
-          return HomeIcon ? (
-            <HomeIcon className="w-4 h-4" aria-hidden="true" />
-          ) : null;
-        })()}
-        <span className="hidden sm:inline">Home</span>
-      </Link>
+      <ol className="flex flex-wrap items-center gap-2 list-none p-0 m-0">
+        <li>
+          <Link
+            href="/"
+            aria-label="Home"
+            className="flex items-center gap-1 hover:text-primary transition-colors"
+          >
+            {(() => {
+              const HomeIcon = navIconMap['Home'];
+              return HomeIcon ? (
+                <HomeIcon className="w-4 h-4" aria-hidden="true" />
+              ) : null;
+            })()}
+            <span className="hidden sm:inline">Home</span>
+          </Link>
+        </li>
 
-      {segments.map((segment, index) => {
-        const href = '/' + segments.slice(0, index + 1).join('/');
-        const isLast = index === segments.length - 1;
+        {segments.map((segment, index) => {
+          const href = '/' + segments.slice(0, index + 1).join('/');
+          const isLast = index === segments.length - 1;
 
-        // Smart title formatting using shared utility
-        const title = formatBreadcrumbTitle(segment);
+          // Smart title formatting using shared utility
+          const title = formatBreadcrumbTitle(segment);
 
-        const iconName = segmentIconMap[segment];
-        const Icon = iconName ? navIconMap[iconName] : undefined;
+          const iconName = segmentIconMap[segment];
+          const Icon = iconName ? navIconMap[iconName] : undefined;
 
-        return (
-          <div key={segment} className="flex items-center space-x-2">
-            <ChevronRight className="w-4 h-4 text-muted-foreground" />
-            {isLast ? (
-              <div
-                className="flex items-center gap-1 text-foreground font-medium"
-                aria-current="page"
-              >
-                {Icon && <Icon className="w-4 h-4" />}
-                <span>{title}</span>
-              </div>
-            ) : (
-              <Link
-                href={href}
-                className="flex items-center gap-1 hover:text-primary transition-colors"
-              >
-                {Icon && <Icon className="w-4 h-4" />}
-                <span>{title}</span>
-              </Link>
-            )}
-          </div>
-        );
-      })}
+          return (
+            <li key={href} className="flex items-center gap-2">
+              <ChevronRight
+                className="w-4 h-4 text-muted-foreground"
+                aria-hidden="true"
+              />
+              {isLast ? (
+                <span
+                  className="flex items-center gap-1 text-foreground font-medium"
+                  aria-current="page"
+                >
+                  {Icon && <Icon className="w-4 h-4" aria-hidden="true" />}
+                  <span>{title}</span>
+                </span>
+              ) : (
+                <Link
+                  href={href}
+                  className="flex items-center gap-1 hover:text-primary transition-colors"
+                >
+                  {Icon && <Icon className="w-4 h-4" aria-hidden="true" />}
+                  <span>{title}</span>
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ol>
     </nav>
   );
 }

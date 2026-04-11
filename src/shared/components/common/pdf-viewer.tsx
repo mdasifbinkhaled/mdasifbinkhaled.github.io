@@ -39,6 +39,7 @@ export function PDFViewer({ file, downloadLink, className }: PDFViewerProps) {
           className="w-full h-[80vh] min-h-[600px] border-0"
           title="CV Document"
           loading="lazy"
+          sandbox="allow-downloads allow-same-origin"
         />
       </div>
 

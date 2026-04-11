@@ -125,7 +125,10 @@ export default function AppSidebarLayout({
             )}
           >
             <div className="container mx-auto px-6 py-4">
-              <Navbar onMobileMenuOpen={() => setMobileOpen(true)} />
+              <Navbar
+                onMobileMenuOpen={() => setMobileOpen(true)}
+                isMobileMenuOpen={mobileOpen}
+              />
             </div>
           </header>
 

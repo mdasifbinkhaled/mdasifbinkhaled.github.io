@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { useId, type FocusEvent } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/shared/lib/utils';
 import { GraduationCap, Menu } from 'lucide-react';
@@ -16,11 +17,13 @@ import { useHoverDelay } from '@/shared/hooks';
 interface NavbarProps {
   onMobileMenuOpen?: () => void;
   showMobileMenuButton?: boolean;
+  isMobileMenuOpen?: boolean;
 }
 
 export function Navbar({
   onMobileMenuOpen,
   showMobileMenuButton = true,
+  isMobileMenuOpen = false,
 }: NavbarProps) {
   const path = normalize(usePathname() ?? '/');
 
@@ -90,10 +93,9 @@ export function Navbar({
             onClick={onMobileMenuOpen}
             aria-label="Open navigation menu"
             aria-controls="mobile-nav"
-            aria-expanded="false"
+            aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
           >
             <Menu data-testid="menu-icon" className="h-4 w-4" />
-            <span className="sr-only">Menu</span>
           </button>
         )}
 
@@ -114,17 +116,23 @@ function TeachingDropdown({
   label: string;
   active: boolean;
 }) {
-  const { isOpen, handleMouseEnter, handleMouseLeave } = useHoverDelay();
+  const panelId = useId();
+  const { isOpen, handleMouseEnter, handleMouseLeave, openNow, closeNow } =
+    useHoverDelay();
 
   return (
     <div
       className="relative"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onFocusCapture={openNow}
+      onBlurCapture={(event) => handleBlurOutside(event, closeNow)}
     >
       <Link
         href={href}
         aria-current={active ? 'page' : undefined}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         className={cn(
           'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
           'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
@@ -139,6 +147,8 @@ function TeachingDropdown({
 
       {/* Dropdown Panel: simple vertical with flyouts */}
       <div
+        id={panelId}
+        aria-label={`${label} navigation links`}
         className={cn(
           'absolute left-1/2 -translate-x-1/2 mt-2 z-40 w-56 bg-background border rounded-lg shadow-lg py-2 transition-all duration-200',
           isOpen
@@ -151,15 +161,18 @@ function TeachingDropdown({
             label="IUB"
             href="/teaching?tab=iub#courses-taught"
             navItems={iubCourseNavItems}
+            parentOpen={isOpen}
           />
           <InstitutionFlyout
             label="BRACU"
             href="/teaching?tab=bracu#courses-taught"
             navItems={bracuCourseNavItems}
+            parentOpen={isOpen}
           />
           <Link
             className="block px-3 py-2 hover:bg-accent/50"
             href="/teaching?tab=support#courses-taught"
+            tabIndex={isOpen ? 0 : -1}
           >
             TA/ST/SoD
           </Link>
@@ -174,24 +187,38 @@ function InstitutionFlyout({
   label,
   href,
   navItems,
+  parentOpen,
 }: {
   label: string;
   href: string;
   navItems: NavItem[];
+  parentOpen: boolean;
 }) {
-  const { isOpen, handleMouseEnter, handleMouseLeave } = useHoverDelay();
+  const panelId = useId();
+  const { isOpen, handleMouseEnter, handleMouseLeave, openNow, closeNow } =
+    useHoverDelay();
 
   return (
     <div
       className="relative"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onFocusCapture={openNow}
+      onBlurCapture={(event) => handleBlurOutside(event, closeNow)}
     >
-      <Link className="block px-3 py-2 hover:bg-accent/50" href={href}>
+      <Link
+        className="block px-3 py-2 hover:bg-accent/50"
+        href={href}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        tabIndex={parentOpen ? 0 : -1}
+      >
         {label}
       </Link>
       {/* Flyout */}
       <div
+        id={panelId}
+        aria-label={`${label} course links`}
         className={cn(
           'absolute top-0 left-full ml-2 w-72 max-h-80 overflow-auto bg-background border rounded-lg shadow-lg py-2 transition-all duration-200 z-50',
           isOpen
@@ -204,6 +231,7 @@ function InstitutionFlyout({
             key={`${item.href}-${item.sectionId}`}
             className="block px-3 py-2 hover:bg-accent/50 text-sm"
             href={item.href}
+            tabIndex={parentOpen && isOpen ? 0 : -1}
           >
             {item.label}
           </Link>
@@ -215,6 +243,20 @@ function InstitutionFlyout({
 
 const normalize = (p: string) =>
   p.endsWith('/') && p !== '/' ? p.slice(0, -1) : p;
+
+const handleBlurOutside = (
+  event: FocusEvent<HTMLElement>,
+  closeNow: () => void
+) => {
+  const nextTarget = event.relatedTarget;
+  if (
+    !(nextTarget instanceof Node) ||
+    !event.currentTarget.contains(nextTarget)
+  ) {
+    closeNow();
+  }
+};
+
 const isActive = (path: string, href: string) => {
   const a = normalize(path);
   const b = normalize(href);

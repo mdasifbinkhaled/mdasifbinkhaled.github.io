@@ -68,11 +68,11 @@ jobs:
           echo "## Build Results 📊" >> $GITHUB_STEP_SUMMARY
           echo "✅ Static export: $PAGE_COUNT pages generated" >> $GITHUB_STEP_SUMMARY
 
-      - name: Install Playwright browsers
+      - name: Install Playwright browser for CI gate
         run: npx playwright install --with-deps chromium
 
-      - name: Run E2E tests
-        run: npx playwright test
+      - name: Run E2E tests (Chromium)
+        run: npx playwright test --project=chromium
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4

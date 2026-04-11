@@ -63,14 +63,14 @@ export function HeroSection() {
           size="lg"
           className="shadow-md hover:shadow-lg transition-shadow"
         >
-          <Link
+          <a
             href={siteConfig.links.cv}
             target="_blank"
             rel="noopener noreferrer"
           >
             <Download className="w-4 h-4 mr-2" />
             Download CV
-          </Link>
+          </a>
         </Button>
         <Button
           asChild

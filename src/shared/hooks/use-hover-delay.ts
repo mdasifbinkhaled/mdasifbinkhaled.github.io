@@ -11,19 +11,33 @@ export function useHoverDelay(delay = 200) {
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleMouseEnter = useCallback(() => {
+  const clearPendingClose = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    setIsOpen(true);
   }, []);
 
+  const openNow = useCallback(() => {
+    clearPendingClose();
+    setIsOpen(true);
+  }, [clearPendingClose]);
+
+  const closeNow = useCallback(() => {
+    clearPendingClose();
+    setIsOpen(false);
+  }, [clearPendingClose]);
+
+  const handleMouseEnter = useCallback(() => {
+    openNow();
+  }, [openNow]);
+
   const handleMouseLeave = useCallback(() => {
+    clearPendingClose();
     timeoutRef.current = setTimeout(() => {
       setIsOpen(false);
     }, delay);
-  }, [delay]);
+  }, [clearPendingClose, delay]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -34,5 +48,11 @@ export function useHoverDelay(delay = 200) {
     };
   }, []);
 
-  return { isOpen, handleMouseEnter, handleMouseLeave } as const;
+  return {
+    isOpen,
+    handleMouseEnter,
+    handleMouseLeave,
+    openNow,
+    closeNow,
+  } as const;
 }
