@@ -1,6 +1,6 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-04-11
+> **Last Updated**: 2026-04-12
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
 > **Version**: 1.5.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 4.1.18
 
@@ -10,7 +10,7 @@
 | ------------------------------ | ---------------------------------------------------------- |
 | [INDEX.md](INDEX.md)           | This file — navigation hub                                 |
 | [PMD.md](PMD.md)               | Project Master Document — architecture, metrics, decisions |
-| [ISSUES.md](ISSUES.md)         | Active findings tracker (249 findings, 0 open)             |
+| [ISSUES.md](ISSUES.md)         | Active findings tracker (259 findings, 0 open)             |
 | [ROADMAP.md](ROADMAP.md)       | Improvement roadmap — Phases 7-11 (26 items)               |
 | [STRUCTURE.md](STRUCTURE.md)   | Annotated file tree with LOC and responsibilities          |
 | [HISTORY.md](HISTORY.md)       | Development timeline and milestones                        |

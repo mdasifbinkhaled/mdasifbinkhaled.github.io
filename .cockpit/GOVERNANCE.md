@@ -19,7 +19,8 @@
 
 ### CSS / Styling
 
-- **Tailwind CSS 3.4** with `darkMode: ['selector', '[data-theme="dark"]']`
+- **Tailwind CSS 4.x** — CSS-first config via `@tailwindcss/postcss` + `@theme` block in `globals.css`
+- **Dark mode**: `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));`
 - **CSS custom properties** for all colors — use `bg-background`, `text-foreground`, etc.
 - **Never use hardcoded colors** (e.g., `bg-gray-50`, `text-gray-700`) — always use theme tokens
 - **`cn()` utility** from `tailwind-merge` + `clsx` for conditional classes

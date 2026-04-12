@@ -1,15 +1,15 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-04-11 | **Status**: All resolved
-> **Total Findings**: 249 | **Resolved**: 241 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 0
+> **Last Audit**: 2026-04-12 | **Status**: All resolved
+> **Total Findings**: 259 | **Resolved**: 251 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 0
 
 ## Dashboard
 
 ```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      31 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    73 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       91 (0 open)  — Polish, minor config, cosmetic
+MEDIUM:    77 (0 open)  — Performance, DRY, architecture, testing gaps
+LOW:       97 (0 open)  — Polish, minor config, cosmetic
 INFO:      32 (0 open)  — Informational, acceptable trade-offs
 REASSESSED: 5           — F-195, F-196 (no action needed)
 FALSE POS:  3           — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
@@ -21,7 +21,7 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:  ✅ 0 errors  (strict mode, zero `any`)
 ESLint:      ✅ 0 errors, 0 warnings  (eslint-config-next@16, native flat config)
-Tests:       ✅ 363/363 pass  (40 files, vitest, 50%+ coverage)
+Tests:       ✅ 368/368 pass  (41 files, vitest, 50%+ coverage)
 E2E:         ✅ 9/9 pass  (Playwright, axe-core WCAG AA contrast)
 Build:       ✅ 27 pages exported  (static, 0 warnings)
 Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast removed)
@@ -34,6 +34,21 @@ Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast re
 _All findings resolved._
 
 ## Resolved Findings
+
+### Resolved in Forensic Autopsy Remediation (2026-04-12)
+
+| ID    | Category      | Severity | Title                                                  | Resolution                                                                                      |
+| ----- | ------------- | -------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| F-250 | Documentation | LOW      | GOVERNANCE.md claims Tailwind CSS 3.4 (actual: 4.x)    | Updated to "Tailwind CSS 4.x" with CSS-first config description and `@custom-variant` syntax    |
+| F-251 | Cleanup       | LOW      | Unused `React` namespace import in back-to-top.tsx     | Changed `import React, { useSyncExternalStore }` to `import { useSyncExternalStore }`           |
+| F-252 | Theming       | MEDIUM   | global-error.tsx uses hardcoded Tailwind colors        | Replaced with inline `<style>` using `prefers-color-scheme` media query (providers unavailable) |
+| F-253 | Type Safety   | MEDIUM   | `as any` cast in pdf-export.ts for jspdf-autotable     | Created `jspdf-autotable.d.ts` type augmentation for `jsPDF.lastAutoTable`                      |
+| F-254 | Cleanup       | LOW      | Mentorship data has open TODO comment                  | Replaced TODO with intentional-empty documentation (pending student consent)                    |
+| F-255 | Security      | MEDIUM   | CSP `img-src https:` wildcard allows any HTTPS origin  | Restricted to specific CDNs: `scholar.googleusercontent.com`, `avatars.githubusercontent.com`   |
+| F-256 | Security      | MEDIUM   | CSP `unsafe-inline` undocumented                       | Added inline comment explaining Next.js hydration + GA + Tailwind requirements                  |
+| F-257 | CI/CD         | LOW      | Lighthouse CI audits redirect stub pages               | Removed `/experience/`, `/service/`, `/service-awards/` from lighthouserc.js URL list           |
+| F-258 | Testing       | LOW      | cv-content.client.tsx has 0% test coverage (201 lines) | Added 5 tests: render, download link, analytics, tab switching, navigation links                |
+| F-259 | Testing       | LOW      | Coverage thresholds only 5% above measured values      | Bumped thresholds: stmts/lines 60→63, funcs 50→53, branches 70→75                               |
 
 ### Resolved in External Audit Remediation (2026-04-11)
 

@@ -10,7 +10,9 @@ export interface Student {
   status: 'Current' | 'Alumni';
 }
 
-// TODO: Populate with real student data. Required fields per entry:
+// Mentorship data is intentionally empty until student consent is obtained.
+// The component guards against an empty array (renders nothing).
+// Fields reference:
 //   name:    Full name (string)
 //   role:    'Thesis Student' | 'Undergraduate Researcher' | 'Teaching Assistant' | 'Student Mentee'
 //   period:  e.g. '2024 - Present' or 'Summer 2024'

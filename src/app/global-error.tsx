@@ -10,34 +10,69 @@ interface GlobalErrorProps {
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   return (
     <html>
+      <head>
+        {/* global-error replaces the entire <html>, so theme tokens and
+            Tailwind utilities are unavailable. Inline styles with
+            prefers-color-scheme keep it accessible in both modes. */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root { color-scheme: light dark; }
+              body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+              .ge-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; background: #fff; color: #111; }
+              .ge-icon-ring { width: 4rem; height: 4rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin: 0 auto; background: #fef2f2; }
+              .ge-title { font-size: 1.5rem; font-weight: 700; margin: 0; }
+              .ge-body { color: #555; margin: 0; }
+              .ge-debug { padding: 1rem; border-radius: 0.5rem; text-align: left; font-family: monospace; font-size: 0.875rem; background: #f3f4f6; color: #374151; }
+              .ge-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #2563eb; color: #fff; border: none; border-radius: 0.5rem; font-weight: 500; font-size: 1rem; cursor: pointer; transition: background 0.15s; }
+              .ge-btn:hover { background: #1d4ed8; }
+              @media (prefers-color-scheme: dark) {
+                .ge-wrap { background: #111; color: #f3f4f6; }
+                .ge-icon-ring { background: rgba(127,29,29,0.2); }
+                .ge-body { color: #9ca3af; }
+                .ge-debug { background: #1f2937; color: #d1d5db; }
+              }
+            `,
+          }}
+        />
+      </head>
       <body>
-        <div className="min-h-screen flex items-center justify-center p-4 bg-white dark:bg-gray-900">
-          <div className="text-center space-y-6 max-w-md">
-            <div className="mx-auto w-16 h-16 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center">
-              <AlertTriangle className="w-8 h-8 text-red-600 dark:text-red-400" />
+        <div className="ge-wrap">
+          <div
+            style={{
+              textAlign: 'center',
+              maxWidth: '28rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.5rem',
+            }}
+          >
+            <div className="ge-icon-ring">
+              <AlertTriangle
+                style={{ width: '2rem', height: '2rem', color: '#dc2626' }}
+              />
             </div>
-            <div className="space-y-2">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                Critical Error
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.5rem',
+              }}
+            >
+              <h1 className="ge-title">Critical Error</h1>
+              <p className="ge-body">
                 A critical error occurred. Please refresh the page to continue.
               </p>
             </div>
             {process.env.NODE_ENV === 'development' && (
-              <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-left">
-                <p className="text-sm text-gray-700 dark:text-gray-300 font-mono">
-                  {error.message}
-                </p>
-              </div>
+              <div className="ge-debug">{error.message}</div>
             )}
-            <button
-              onClick={reset}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
-            >
-              <RefreshCw className="w-4 h-4" />
-              Try again
-            </button>
+            <div>
+              <button onClick={reset} className="ge-btn">
+                <RefreshCw style={{ width: '1rem', height: '1rem' }} />
+                Try again
+              </button>
+            </div>
           </div>
         </div>
       </body>

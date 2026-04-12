@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
-> **Last Updated**: 2026-04-11
-> **Commit**: 28c221f (+ pending audit fixes)
+> **Last Updated**: 2026-04-12
+> **Commit**: HEAD (forensic audit remediation)
 
 ## Mission
 
@@ -80,10 +80,10 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Config files      | 6        |
 | Barrel exports    | 19       |
 | Test files        | 44       |
-| Test count        | 363      |
+| Test count        | 368      |
 | Pages generated   | 27       |
 | Themes            | 6        |
-| Git commits       | 443+     |
+| Git commits       | 460+     |
 
 ### Largest Files
 
@@ -153,7 +153,7 @@ styles/      247  (1%)  █
 | TypeScript | PASS   | 0 errors (strict mode)                                                              |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                                |
 | Prettier   | PASS   | All formatted                                                                       |
-| Tests      | PASS   | 363/363 pass (40 files)                                                             |
+| Tests      | PASS   | 368/368 pass (41 files)                                                             |
 | Build      | PASS   | 27 pages exported                                                                   |
 | Audit      | NOTE   | 8 vulns (1 moderate, 6 high, 1 critical — all mitigated: dev-only or static export) |
 

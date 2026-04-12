@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { SCROLL } from '@/shared/config';

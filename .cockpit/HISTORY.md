@@ -1,6 +1,6 @@
 # HISTORY.md — Development Timeline
 
-> 443 commits | 4 tags | Single branch (main) | Deployed to GitHub Pages
+> 460 commits | 4 tags | Single branch (main) | Deployed to GitHub Pages
 
 ## Timeline
 
@@ -263,6 +263,23 @@
 - **14 new findings** (F-236 through F-249), all resolved
 - **Documentation cleanup**: removed false MDX claims, fixed Tailwind version, synced all cockpit metrics
 - Quality Gates: 0 TS errors, 0 lint errors, 363/363 tests (40 files), 27 pages exported
+
+### Forensic Autopsy Remediation (2026-04-12)
+
+- **Forensic codebase autopsy**: 6-phase deep audit covering architecture, code quality, security, performance, testing, and documentation
+- **20 findings** (AUD-001 through AUD-020) identified, mapped to 10 fixes (F-250 through F-259)
+- **Source code fixes**:
+  - `global-error.tsx`: replaced hardcoded Tailwind colors with inline styles + `prefers-color-scheme` (renders outside providers)
+  - `back-to-top.tsx`: removed unused `React` namespace import
+  - `pdf-export.ts`: eliminated `as any` cast via `jspdf-autotable.d.ts` type augmentation
+  - `mentorship.ts`: replaced open TODO with intentional-empty documentation
+  - `layout.tsx`: tightened CSP `img-src` from wildcard `https:` to specific CDN origins, added CSP rationale comment
+  - `lighthouserc.js`: removed 3 redirect stub URLs from Lighthouse CI audit list
+- **Testing**: 5 new tests for `cv-content.client.tsx` (render, download link, analytics, tab switching, nav links)
+- **Coverage thresholds bumped**: statements/lines 60→63, functions 50→53, branches 70→75
+- **Documentation**: GOVERNANCE.md Tailwind 3.4→4.x, PMD.md/INDEX.md/ISSUES.md/HISTORY.md synced
+- **npm audit fix**: dev dependency vulnerabilities resolved
+- Quality Gates: 0 TS errors, 0 lint errors, 368/368 tests (41 files), 27 pages exported
 
 ## Tags
 
