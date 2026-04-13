@@ -36,6 +36,9 @@ pnpm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Playwright MCP
+.playwright-mcp/
+
 # Editor
 .vscode/*
 !.vscode/extensions.json

@@ -46,6 +46,7 @@
     "audit:ci": "npm audit --audit-level=high",
     "pre-commit": "lint-staged",
     "prepare": "husky",
+    "clean": "rm -rf .next out coverage playwright-report test-results tsconfig*.tsbuildinfo .lighthouseci",
     "validate": "npm run lint:check && npm run format:check && npm run test:run && npm run typecheck",
     "validate:full": "npm run validate && npm run build && npx playwright test --project=chromium"
   },
