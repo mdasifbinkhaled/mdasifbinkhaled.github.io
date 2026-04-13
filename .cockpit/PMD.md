@@ -4,7 +4,7 @@
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
 > **Last Updated**: 2026-04-12
-> **Commit**: HEAD (forensic audit remediation)
+> **Commit**: HEAD (ground-up audit remediation)
 
 ## Mission
 
@@ -16,7 +16,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | ------------- | ------------------------------------- | ------- |
 | Framework     | Next.js (App Router)                  | 16.1.4  |
 | UI Library    | React                                 | 19.2.4  |
-| Language      | TypeScript (strict)                   | 5.6     |
+| Language      | TypeScript (strict)                   | 5.9     |
 | Styling       | Tailwind CSS + CSS custom properties  | 4.1.18  |
 | Animation     | Vanilla JS (no library)               | ---     |
 | Icons         | Lucide React                          | 0.563.0 |
@@ -29,7 +29,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Testing       | Vitest + Testing Library + jsdom      | 3.2.4   |
 | E2E Testing   | Playwright + axe-core                 | 1.58.0  |
 | Linting       | ESLint 9 (flat config)                | 9.39.2  |
-| Formatting    | Prettier                              | 3.6.2   |
+| Formatting    | Prettier                              | 3.8.2   |
 | Git Hooks     | Husky + lint-staged + commitlint      | 9.1.7   |
 | Deployment    | GitHub Pages (static export)          | ---     |
 | CI/CD         | GitHub Actions (4 workflows)          | ---     |
@@ -68,22 +68,22 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ## Metrics
 
-| Metric            | Value    |
-| ----------------- | -------- |
-| Source files      | 223      |
-| Lines of code     | 17,186   |
-| Components (.tsx) | 148      |
-| Client components | 59 (40%) |
-| Server components | 89 (60%) |
-| Custom hooks      | 4        |
-| Data files        | 32       |
-| Config files      | 6        |
-| Barrel exports    | 19       |
-| Test files        | 44       |
-| Test count        | 368      |
-| Pages generated   | 27       |
-| Themes            | 6        |
-| Git commits       | 460+     |
+| Metric            | Value                 |
+| ----------------- | --------------------- |
+| Source files      | 223                   |
+| Lines of code     | 17,186                |
+| Components (.tsx) | 148                   |
+| Client components | 59 (40%)              |
+| Server components | 89 (60%)              |
+| Custom hooks      | 4                     |
+| Data files        | 32                    |
+| Config files      | 6                     |
+| Barrel exports    | 19                    |
+| Test files        | 44                    |
+| Test count        | 368 (unit) + 49 (E2E) |
+| Pages generated   | 25 HTML / 27 routes   |
+| Themes            | 6                     |
+| Git commits       | 460+                  |
 
 ### Largest Files
 
@@ -148,14 +148,14 @@ styles/      247  (1%)  █
 
 ## Quality Status
 
-| Check      | Status | Details                                                                             |
-| ---------- | ------ | ----------------------------------------------------------------------------------- |
-| TypeScript | PASS   | 0 errors (strict mode)                                                              |
-| ESLint     | PASS   | 0 errors, 0 warnings                                                                |
-| Prettier   | PASS   | All formatted                                                                       |
-| Tests      | PASS   | 368/368 pass (41 files)                                                             |
-| Build      | PASS   | 27 pages exported                                                                   |
-| Audit      | NOTE   | 8 vulns (1 moderate, 6 high, 1 critical — all mitigated: dev-only or static export) |
+| Check      | Status | Details                                                                                                                              |
+| ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| TypeScript | PASS   | 0 errors (strict mode)                                                                                                               |
+| ESLint     | PASS   | 0 errors, 0 warnings                                                                                                                 |
+| Prettier   | PASS   | All formatted                                                                                                                        |
+| Tests      | PASS   | 368/368 unit (41 files) + 49/49 E2E (4 test files)                                                                                   |
+| Build      | PASS   | 25 HTML pages / 27 routes exported                                                                                                   |
+| Audit      | NOTE   | 3 production advisories (jspdf critical, next high, dompurify moderate) — all at latest, no fix available; 5 dev-only (rollup, vite) |
 
 ## Architecture Observations
 
@@ -164,11 +164,11 @@ styles/      247  (1%)  █
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (162 tests, CI-enforced)
+- Strong test foundation (368 unit + 49 E2E tests, CI-enforced)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`
-- Service worker for offline caching
-- Playwright E2E + axe-core accessibility testing
+- Service worker registered via `sw-register.tsx` (Workbox-generated `out/sw.js`)
+- Playwright E2E + axe-core accessibility testing (18-route a11y suite)
 - Route announcer for screen reader navigation
 - Well-decomposed Seat Planner (13 files, clean separation of concerns)
 

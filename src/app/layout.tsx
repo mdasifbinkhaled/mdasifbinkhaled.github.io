@@ -13,6 +13,7 @@ import {
 import { RouteAnnouncer } from '@/shared/components/infra/route-announcer';
 import { WebVitalsReporter } from '@/shared/components/infra/web-vitals-reporter';
 import { SentryInit } from '@/shared/components/infra/sentry-init';
+import { ServiceWorkerRegister } from '@/shared/components/infra/sw-register';
 import '@/app/globals.css';
 import '@/styles/tokens.css';
 
@@ -91,6 +92,7 @@ export default function RootLayout({
         )}
         <WebVitalsReporter />
         <SentryInit />
+        <ServiceWorkerRegister />
 
         <SkipLink />
         <RouteAnnouncer />

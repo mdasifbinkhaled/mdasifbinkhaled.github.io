@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { CONTENT_ROUTES, REDIRECT_ROUTES } from './fixtures/routes';
 
 /**
  * Smoke tests for every built page.
@@ -6,33 +7,10 @@ import { test, expect } from '@playwright/test';
  *   1. Return HTTP 200
  *   2. Have a visible <h1>
  *   3. Not emit uncaught JS errors
- *
- * Redirect-only pages (/experience, /service, /service-awards) are excluded
- * since they immediately redirect to /about#section and don't render content.
  */
 
-const ALL_ROUTES = [
-  '/',
-  '/about',
-  '/apps',
-  '/apps/exam-countdown',
-  '/apps/gpa-calculator',
-  '/apps/grade-calculator',
-  '/apps/office-hours',
-  '/apps/seat-planner',
-  '/blog',
-  '/contact',
-  '/cv',
-  '/publications',
-  '/research',
-  '/talks',
-  '/teaching',
-  '/teaching/bracu',
-  '/teaching/iub',
-];
-
 test.describe('All-pages smoke', () => {
-  for (const route of ALL_ROUTES) {
+  for (const route of CONTENT_ROUTES) {
     test(`${route} loads without errors`, async ({ page }) => {
       const errors: string[] = [];
       page.on('pageerror', (err) => errors.push(err.message));
@@ -48,6 +26,18 @@ test.describe('All-pages smoke', () => {
 
       // No uncaught JS errors
       expect(errors).toEqual([]);
+    });
+  }
+});
+
+test.describe('Redirect pages', () => {
+  for (const { from, to } of REDIRECT_ROUTES) {
+    test(`${from} redirects to ${to}`, async ({ page }) => {
+      // These pages use <meta http-equiv="refresh"> for static-export redirect.
+      // Wait for the navigation triggered by the meta refresh to complete.
+      await page.goto(from, { waitUntil: 'domcontentloaded' });
+      await page.waitForURL(`**${to}*`, { timeout: 10_000 });
+      expect(page.url()).toContain(to);
     });
   }
 });

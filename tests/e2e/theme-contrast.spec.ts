@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-
-const THEMES = ['light', 'dark', 'ocean', 'forest', 'lavender', 'slate'];
+import { THEMES } from './fixtures/routes';
 
 test.describe('Color Contrast & Accessibility across Themes', () => {
   for (const theme of THEMES) {

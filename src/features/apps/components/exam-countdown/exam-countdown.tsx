@@ -112,7 +112,7 @@ export function ExamCountdown() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {sortedExams.map((exam) => {
+        {sortedExams.map((exam, i) => {
           const target = new Date(exam.date).getTime();
           const diff = target - now;
           const isPassed = diff < 0;
@@ -139,6 +139,7 @@ export function ExamCountdown() {
                   <Input
                     value={exam.course}
                     placeholder="Course Code"
+                    aria-label={`Course code for exam ${i + 1}`}
                     onChange={(e) =>
                       handleChange(exam.id, 'course', e.target.value)
                     }
@@ -147,6 +148,7 @@ export function ExamCountdown() {
                   <Button
                     variant="ghost"
                     size="icon"
+                    aria-label={`Remove ${exam.course || 'exam'}`}
                     onClick={() => handleRemove(exam.id)}
                     className="h-8 w-8 text-muted-foreground hover:text-destructive"
                   >
@@ -156,6 +158,7 @@ export function ExamCountdown() {
                 <Input
                   value={exam.title}
                   placeholder="Exam Title"
+                  aria-label={`Exam title for ${exam.course || `exam ${i + 1}`}`}
                   onChange={(e) =>
                     handleChange(exam.id, 'title', e.target.value)
                   }
@@ -218,6 +221,7 @@ export function ExamCountdown() {
                   </label>
                   <Input
                     type="datetime-local"
+                    aria-label={`Target date and time for ${exam.course || `exam ${i + 1}`}`}
                     value={exam.date.slice(0, 16)} // format: YYYY-MM-DDThh:mm
                     onChange={(e) =>
                       handleChange(

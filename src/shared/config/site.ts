@@ -102,5 +102,5 @@ export const siteConfig: SiteConfig = {
   institutionShort: 'IUB',
   department: 'Computer Science & Engineering',
   school: 'School of Engineering, Technology & Sciences (SETS)',
-  lastUpdated: 'February 2026',
+  lastUpdated: 'April 2026',
 };

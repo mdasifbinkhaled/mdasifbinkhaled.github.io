@@ -31,7 +31,24 @@ Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry l
 
 ## Unreleased (Current HEAD)
 
-### Blog, Talks, Sentry & Cockpit Sync (2026-06-05)
+### Ground-Up Audit & A11y Remediation (2026-04-12)
+
+- **Service worker registration**: Created `sw-register.tsx` component, imported in root layout — Workbox-generated `out/sw.js` now actually registered
+- **A11y audit expansion**: Playwright axe-core suite expanded from 10 to 18 routes, uncovering 7 new violations:
+  - `/apps/exam-countdown`: Added aria-labels to 3 inputs and delete button
+  - `/apps/gpa-calculator`: Added aria-labels to course name and credits inputs
+  - `/apps/seat-planner`: Added aria-labels to 2 SelectTrigger elements
+  - `/apps/office-hours`: Fixed color contrast on In-Person/Online badges (`bg-primary/10` → `bg-primary/5`, `text-emerald-600` → `text-emerald-700`)
+  - `/blog/welcome`: Fixed tag Badge contrast (`bg-primary/10` → `bg-primary/5`)
+  - `/teaching/bracu`, `/teaching/iub`: Fixed course-card (`text-primary/80` → `text-primary`) and stat-card (`text-muted-foreground/80` → `text-muted-foreground`) contrast
+- **E2E redirect tests fixed**: Switched from immediate URL check to `page.waitForURL()` for `<meta http-equiv="refresh">` redirect pages
+- **Error boundaries**: Re-added `error.tsx` to `/experience`, `/service`, `/service-awards` redirect pages
+- **Metadata fix**: `siteConfig.lastUpdated` updated to April 2026
+- **Prettier updated**: 3.8.1 → 3.8.2
+- **Cockpit sync**: All 9 documentation files synchronized with verified reality
+- Quality gates: 0 TS errors, 0 lint errors, 368/368 unit tests (41 files), 49/49 E2E tests (4 files), 25 HTML pages / 27 routes exported
+
+### Blog, Talks, Sentry & Cockpit Sync (2026-04-08)
 
 - **Blog system**: MDX-powered blog at `/blog` with frontmatter (gray-matter) support
   - New dependencies: `next-mdx-remote`, `gray-matter`

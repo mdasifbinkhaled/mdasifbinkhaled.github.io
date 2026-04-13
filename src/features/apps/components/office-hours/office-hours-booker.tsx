@@ -73,7 +73,7 @@ export function OfficeHoursBooker() {
                     {slot.day}
                   </CardTitle>
                   <span
-                    className={`text-xs font-semibold px-2 py-1 rounded-full ${slot.type === 'In-Person' ? 'bg-primary/10 text-primary' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'}`}
+                    className={`text-xs font-semibold px-2 py-1 rounded-full ${slot.type === 'In-Person' ? 'bg-primary/5 text-primary font-bold' : 'bg-emerald-500/5 text-emerald-700 dark:text-emerald-400 font-bold'}`}
                   >
                     {slot.type}
                   </span>

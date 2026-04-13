@@ -2,7 +2,7 @@
 
 > **Last Updated**: 2026-04-12
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.5.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.6 · Tailwind 4.1.18
+> **Version**: 1.5.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.9 · Tailwind 4.1.18
 
 ## Quick Navigation
 
@@ -10,7 +10,7 @@
 | ------------------------------ | ---------------------------------------------------------- |
 | [INDEX.md](INDEX.md)           | This file — navigation hub                                 |
 | [PMD.md](PMD.md)               | Project Master Document — architecture, metrics, decisions |
-| [ISSUES.md](ISSUES.md)         | Active findings tracker (259 findings, 0 open)             |
+| [ISSUES.md](ISSUES.md)         | Active findings tracker (275 findings, 5 open)             |
 | [ROADMAP.md](ROADMAP.md)       | Improvement roadmap — Phases 7-11 (26 items)               |
 | [STRUCTURE.md](STRUCTURE.md)   | Annotated file tree with LOC and responsibilities          |
 | [HISTORY.md](HISTORY.md)       | Development timeline and milestones                        |
@@ -23,18 +23,19 @@
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Tests:      363/363 PASS (40 files, 50%+ coverage)
-    Build:      27 pages exported (0 warnings)
+    Unit:       368/368 PASS (41 files, 50%+ coverage)
+    E2E:        49 tests × 3 browsers = 147 runs (143 passed, 4 skipped — /cv a11y flaky F-260)
+    Build:      25 HTML pages / 27 routes exported (0 warnings)
     Format:     All files formatted
-    Commit:     (pending — 0 open findings)
+    Commit:     (pending — 2 open findings)
 
 ## Findings Summary
 
-    Total:    249 findings (241 resolved, 0 open, 3 false positives, 5 reassessed)
+    Total:    275 findings (265 resolved, 2 open, 3 false positives, 5 reassessed)
     CRITICAL:   4 (0 open)
-    HIGH:      31 (0 open)
-    MEDIUM:    73 (0 open)
-    LOW:       91 (0 open)
+    HIGH:      32 (1 open)
+    MEDIUM:    85 (1 open)
+    LOW:      104 (0 open)
     INFO:      32 (0 open)
 
 ## Phase Status
@@ -48,8 +49,8 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 10 (Content): IN PROGRESS** — Blog (MDX) and Talks pages live. Mentorship section infrastructure in place (empty state). Research timeline and Bengali intro deferred.
 **Phase 11 (Monitoring): IN PROGRESS** — Sentry error tracking and Google Analytics wired. Uptime monitoring pending.
 
-- 363/363 tests passing (40 files).
-- 27 pages exported.
+- 368/368 unit tests passing (41 files) + 49 E2E tests passing.
+- 25 HTML pages / 27 routes exported.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).
 - Google Analytics via `@next/third-parties`.
@@ -66,7 +67,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 | Data files        | 32                     |
 | Config files      | 6                      |
 | Barrel exports    | 19                     |
-| Test files        | 44                     |
+| Test files        | 45 (41 unit + 4 E2E)   |
 | Themes            | 6                      |
 | ADRs              | 2 (ADR-005 + template) |
 

@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
               <Badge
                 key={tag}
                 variant="secondary"
-                className="bg-primary/10 text-primary border-transparent hover:bg-primary/20"
+                className="bg-primary/5 text-primary border-transparent hover:bg-primary/15"
               >
                 <Tag className="mr-1 h-3 w-3" />
                 {tag}

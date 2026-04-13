@@ -121,6 +121,7 @@ export function GpaCalculator() {
               >
                 <Input
                   placeholder={`Course ${i + 1} (optional)`}
+                  aria-label={`Course ${i + 1} name`}
                   value={course.name}
                   onChange={(e) =>
                     handleCourseChange(course.id, 'name', e.target.value)
@@ -132,6 +133,7 @@ export function GpaCalculator() {
                   min="0"
                   max="6"
                   step="0.5"
+                  aria-label={`Course ${i + 1} credits`}
                   value={course.credits}
                   onChange={(e) =>
                     handleCourseChange(

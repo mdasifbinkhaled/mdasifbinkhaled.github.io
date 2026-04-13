@@ -167,7 +167,7 @@ export function StatCard({
         </div>
 
         {description && (
-          <div className="text-xs text-muted-foreground/80 mt-2">
+          <div className="text-xs text-muted-foreground mt-2">
             {description}
           </div>
         )}

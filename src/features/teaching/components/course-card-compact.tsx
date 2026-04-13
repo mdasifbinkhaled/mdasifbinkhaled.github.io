@@ -22,7 +22,7 @@ export function CourseCardCompact({ course }: CourseCardCompactProps) {
         {/* Main Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-mono text-xs font-medium text-primary/80">
+            <span className="font-mono text-xs font-medium text-primary">
               {course.code}
             </span>
             <Badge

@@ -142,7 +142,7 @@ export function RoomConfiguration({
                 onResetResult();
               }}
             >
-              <SelectTrigger>
+              <SelectTrigger aria-label="Allocation Mode">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -177,7 +177,7 @@ export function RoomConfiguration({
                 onResetResult();
               }}
             >
-              <SelectTrigger>
+              <SelectTrigger aria-label="Sort Order">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

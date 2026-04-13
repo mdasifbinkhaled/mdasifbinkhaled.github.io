@@ -32,7 +32,7 @@
 ### Phase 4 — Stack Modernization
 
 - **`166b4a3`** `chore(release): stable state push` — Next.js 16, React 19
-- Modern stack: Next 16, React 19, TypeScript 5.6, Zod 4
+- Modern stack: Next 16, React 19, TypeScript 5.9, Zod 4
 - Conventional commits adopted
 - `checkpoint-pre-sota` tag set
 
@@ -170,6 +170,20 @@
   - Upgraded component semantics from loose `<div>` wrappers to precise `<article>`, `<time>`, and `<section>` tags.
 - Quality Gates: Codebase structurally clean (13,951 LOC). 149/149 test positives. Zero static export warnings.
 
+### Ground-Up Audit & A11y Remediation (2026-04-12)
+
+- **Forensic verification**: Validated all prior session changes (9 modified + 5 new files)
+- **Service worker registration**: Created `sw-register.tsx` — Workbox `out/sw.js` now registered in root layout
+- **E2E test expansion**: A11y suite expanded from 10 to 18 routes; smoke tests from 11 to 21; total E2E: 37 → 49
+- **7 real a11y violations discovered and fixed**:
+  - Missing aria-labels: exam-countdown (4), gpa-calculator (2), seat-planner (2)
+  - Insufficient color contrast: office-hours badges, blog tag badge, teaching course-cards and stat-cards
+- **E2E redirect flakiness fixed**: `page.waitForURL()` pattern for `<meta http-equiv="refresh">` redirects
+- **Error boundaries**: Re-added to 3 redirect pages (`/experience`, `/service`, `/service-awards`)
+- **Metadata**: `siteConfig.lastUpdated` corrected
+- **Cockpit sync**: All 9 documentation files synchronized — 40+ stale claims corrected
+- Quality gates: 0 TS errors, 0 lint errors, 368/368 unit (41 files), 49/49 E2E (4 files), 25 HTML pages / 27 routes
+
 ### Seat Planner — Feature Build & Decomposition (2026-02 – 2026-04)
 
 - **Commit**: `b612559` `refactor(apps): decompose seat-planner god component & fix critical bugs`
@@ -206,7 +220,7 @@
 - Version bumped to 1.4.0 (Seat Planner = significant feature addition)
 - Quality Gates: All green — 0 TS errors, 0 lint errors, 149/149 tests, 20 pages
 
-### Content, Monitoring & Forensic Remediation (2026-06-05)
+### Content, Monitoring & Forensic Remediation (2026-04-08)
 
 - **Blog system**: MDX-powered blog at `/blog` with frontmatter parsing
   - Dependencies: `next-mdx-remote`, `gray-matter` (no Shiki/rehype-pretty-code/remark-gfm installed)

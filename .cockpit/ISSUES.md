@@ -1,15 +1,15 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-04-12 | **Status**: All resolved
-> **Total Findings**: 259 | **Resolved**: 251 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 0
+> **Last Audit**: 2026-04-12 | **Status**: Ground-up audit completed
+> **Total Findings**: 275 | **Resolved**: 265 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
 
 ## Dashboard
 
 ```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
-HIGH:      31 (0 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    77 (0 open)  — Performance, DRY, architecture, testing gaps
-LOW:       97 (0 open)  — Polish, minor config, cosmetic
+HIGH:      32 (1 open)  — Functional bugs, SEO/a11y violations, dead code
+MEDIUM:    85 (1 open)  — Performance, DRY, architecture, testing gaps
+LOW:      104 (0 open)  — Polish, minor config, cosmetic
 INFO:      32 (0 open)  — Informational, acceptable trade-offs
 REASSESSED: 5           — F-195, F-196 (no action needed)
 FALSE POS:  3           — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
@@ -19,21 +19,42 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ## Quality Gates
 
 ```text
-TypeScript:  ✅ 0 errors  (strict mode, zero `any`)
-ESLint:      ✅ 0 errors, 0 warnings  (eslint-config-next@16, native flat config)
-Tests:       ✅ 368/368 pass  (41 files, vitest, 50%+ coverage)
-E2E:         ✅ 9/9 pass  (Playwright, axe-core WCAG AA contrast)
-Build:       ✅ 27 pages exported  (static, 0 warnings)
-Bundle:      ✅ No heavy deps  (framer-motion removed, @radix-ui/react-toast removed)
+TypeScript:   ✅ 0 errors  (strict mode)
+ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
+Unit tests:   ✅ 368/368 pass  (41 files, coverage thresholds enforced in vitest.config.mts)
+E2E:          ✅ 49/49 pass  (4 test files — smoke, a11y audit, theme contrast)
+Build:        ✅ 25 HTML pages / 27 routes exported  (static export, Workbox emits `out/sw.js`)
+Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `dompurify`) — all at latest, no fix available
 ```
 
 ---
 
 ## Open Findings
 
-_All findings resolved._
+Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 2026-04-12 ground-up audit.
+
+- **F-260 | Testing | MEDIUM** — `/cv` accessibility audit is nondeterministic locally.
+  Observed: Chromium a11y suite times out on `/cv` during default parallel execution. Isolated route and `--workers=1` both pass. Likely PDF iframe pressure.
+- **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
+  `npm audit --omit=dev` reports open advisories for `jspdf@4.2.0`, `next@16.1.4`, and transitive `dompurify@3.3.1`. All at latest versions — no upstream fix available. Static export reduces exposure.
 
 ## Resolved Findings
+
+### Resolved in Ground-Up Audit & A11y Remediation (2026-04-12)
+
+| ID    | Category      | Severity | Title                                                          | Resolution                                                                                       |
+| ----- | ------------- | -------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| F-265 | A11y          | MEDIUM   | Exam countdown icon buttons lack accessible names              | Added `aria-label` to course code Input, exam title Input, datetime Input, and delete Button     |
+| F-266 | A11y          | MEDIUM   | GPA calculator form inputs lack labels                         | Added `aria-label` to course name and credits inputs                                             |
+| F-267 | A11y          | LOW      | Seat planner select triggers lack accessible names             | Added `aria-label="Allocation Mode"` and `"Sort Order"` to SelectTrigger elements                |
+| F-268 | A11y          | MEDIUM   | Office hours badges fail WCAG contrast (text-primary on bg/10) | Changed `bg-primary/10` → `bg-primary/5`, `text-emerald-600` → `text-emerald-700` + `font-bold`  |
+| F-269 | A11y          | LOW      | Blog tag badge fails WCAG contrast                             | Changed `bg-primary/10` → `bg-primary/5` on tag Badge                                            |
+| F-270 | A11y          | MEDIUM   | Teaching course cards fail WCAG contrast (text-primary/80)     | Removed `/80` opacity from `text-primary` in course-card-compact.tsx                             |
+| F-271 | A11y          | MEDIUM   | Stat card descriptions fail WCAG contrast (text-muted/80)      | Removed `/80` opacity from `text-muted-foreground` in stat-card.tsx                              |
+| F-272 | Testing       | LOW      | E2E redirect tests flaky with meta-refresh redirects           | Replaced immediate URL check with `page.waitForURL()` pattern                                    |
+| F-273 | PWA           | MEDIUM   | SW generated but never registered (F-261 resolution)           | Created `sw-register.tsx`, imported in root `layout.tsx`                                         |
+| F-274 | Metadata      | LOW      | siteConfig.lastUpdated stale (F-263 resolution)                | Updated to April 2026                                                                            |
+| F-275 | Documentation | LOW      | 40+ stale claims across 9 cockpit docs (F-262 resolution)      | Full sync: TypeScript 5.6→5.9, Prettier 3.6.2→3.8.2, test counts, page counts, vuln descriptions |
 
 ### Resolved in Forensic Autopsy Remediation (2026-04-12)
 

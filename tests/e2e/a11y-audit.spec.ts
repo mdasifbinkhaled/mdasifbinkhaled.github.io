@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { A11Y_ROUTES } from './fixtures/routes';
 
 /**
  * Per-page WCAG 2.x AA accessibility audit.
@@ -7,28 +8,26 @@ import AxeBuilder from '@axe-core/playwright';
  * /service-awards) are excluded since they redirect to /about#section.
  */
 
-const A11Y_ROUTES = [
-  '/',
-  '/about',
-  '/apps',
-  '/blog',
-  '/contact',
-  '/cv',
-  '/publications',
-  '/research',
-  '/talks',
-  '/teaching',
-];
-
 test.describe('Per-page accessibility audit', () => {
   for (const route of A11Y_ROUTES) {
     test(`${route} passes WCAG 2.x AA`, async ({ page }) => {
       await page.goto(route, { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('load');
 
-      const results = await new AxeBuilder({ page })
-        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-        .analyze();
+      let builder = new AxeBuilder({ page }).withTags([
+        'wcag2a',
+        'wcag2aa',
+        'wcag21a',
+        'wcag21aa',
+      ]);
+
+      // Exclude PDF viewer iframe on /cv — it causes axe timeouts
+      // under parallel execution due to cross-origin analysis pressure
+      if (route === '/cv') {
+        builder = builder.exclude('iframe');
+      }
+
+      const results = await builder.analyze();
 
       const violations = results.violations.map((v) => ({
         id: v.id,

@@ -38,10 +38,10 @@
 
 | Package                           | Version  | Purpose                      |
 | --------------------------------- | -------- | ---------------------------- |
-| `typescript`                      | ^5.6.x   | Type checking                |
+| `typescript`                      | ^5.9.x   | Type checking                |
 | `eslint`                          | ^9.39.2  | Linting                      |
 | `eslint-config-next`              | ^16.1.4  | Next.js ESLint rules         |
-| `prettier`                        | ^3.6.2   | Code formatting              |
+| `prettier`                        | ^3.8.2   | Code formatting              |
 | `vitest`                          | ^3.2.4   | Test runner                  |
 | `@vitest/coverage-v8`             | ^3.2.4   | Coverage reporting           |
 | `@testing-library/react`          | ^16.x    | React testing utilities      |
@@ -80,7 +80,7 @@ npm run build
   ├── cross-env NEXT_TELEMETRY_DISABLED=1 next build
   │   ├── TypeScript compilation
   │   ├── ESLint checking
-  │   ├── Static page generation (27 pages)
+  │   ├── Static page generation (25 HTML pages / 27 routes)
   │   ├── SSG for dynamic routes (generateStaticParams)
   │   └── Output to out/ directory
   └── postbuild: creates out/.nojekyll for GitHub Pages
@@ -89,7 +89,7 @@ npm run build
 ### Build Output
 
 - **Format**: Static HTML export (`output: 'export'`)
-- **Pages**: 27 static pages
+- **Pages**: 25 HTML pages (27 routes including robots.txt + sitemap.xml)
 - **Directory**: `out/`
 - `.nojekyll` file prevents GitHub Pages Jekyll processing
 
@@ -119,10 +119,10 @@ npm run build
 | `dompurify` <=3.3.1 | Moderate | mutation-XSS via Re-Contextualization       | No third-party inputs passed; static context      |
 | `jspdf` <=4.2.0     | Critical | PDF Object Injection via FreeText color     | Low risk; parameters controlled purely locally    |
 | `next` 16.1.4       | High     | Server-side DoS (Image Optimizer, RSC, PPR) | **Fully mitigated** — static export has no server |
-| `rollup` 4.x        | High     | Arbitrary file write via path traversal     | Dev-only (build tooling), no runtime impact       |
-| `vite` 6.x          | High     | Path traversal via URL encoding             | Dev-only (test tooling), no runtime impact        |
+| `rollup` 4.x        | High     | Arbitrary file write via path traversal     | **Dev-only** (build tooling), no runtime impact   |
+| `vite` 6.x          | High     | Path traversal via URL encoding             | **Dev-only** (test tooling), no runtime impact    |
 
-**Summary**: 8 vulnerabilities (1 moderate, 6 high, 1 critical). All are mitigated: either dev-only dependencies or neutralized by the static export architecture (no server runtime). Reviewed 2026-04-11; re-check by 2026-07-11.
+**Summary**: 8 total advisories (3 production: 1 moderate, 1 high, 1 critical — all at latest versions with no fix available; 5 dev-only). Production vulns are fully mitigated by static export (no server runtime) and controlled-input usage. Reviewed 2026-04-12; re-check by 2026-07-12.
 
 ## Deployment
 
@@ -172,12 +172,12 @@ npm run build
 
 ## PWA
 
-| Asset                        | Status                          |
-| ---------------------------- | ------------------------------- |
-| `site.webmanifest`           | ✅ Present                      |
-| App icons (192x192, 512x512) | ✅ Present                      |
-| Service Worker               | ✅ `public/sw.js`               |
-| Offline support              | ✅ Cache-first for static pages |
+| Asset                        | Status                                                             |
+| ---------------------------- | ------------------------------------------------------------------ |
+| `site.webmanifest`           | ✅ Present                                                         |
+| App icons (192x192, 512x512) | ✅ Present                                                         |
+| Service Worker               | ✅ Workbox-generated `out/sw.js`, registered via `sw-register.tsx` |
+| Offline support              | ✅ Cache-first for static pages (104 files precached)              |
 
 ## Analytics
 
