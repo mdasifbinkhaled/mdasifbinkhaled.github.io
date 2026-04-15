@@ -42,17 +42,23 @@ export const mainNavItems: NavItem[] = [
     sectionId: 'publications',
   },
   {
-    href: '/apps',
-    label: 'Apps',
-    icon: 'Wrench',
-    sectionId: 'apps',
-  },
-  {
     href: '/teaching',
     label: 'Teaching',
     icon: 'Presentation',
     sectionId: 'teaching',
   },
+  {
+    href: '/apps',
+    label: 'Apps',
+    icon: 'Wrench',
+    sectionId: 'apps',
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Secondary navigation — demoted from primary nav, accessible via footer
+// ---------------------------------------------------------------------------
+export const secondaryNavItems: NavItem[] = [
   {
     href: '/blog',
     label: 'Blog',
@@ -67,6 +73,9 @@ export const mainNavItems: NavItem[] = [
   },
   { href: '/contact', label: 'Contact', icon: 'Send', sectionId: 'contact' },
 ];
+
+// All page nav items (breadcrumbs, icon lookup, footer)
+export const allNavItems: NavItem[] = [...mainNavItems, ...secondaryNavItems];
 
 // ---------------------------------------------------------------------------
 // Teaching sub-navigation
@@ -111,6 +120,8 @@ export const bracuCourseNavItems: NavItem[] = [
 // ---------------------------------------------------------------------------
 export const navItems = {
   main: mainNavItems,
+  secondary: secondaryNavItems,
+  all: allNavItems,
   teaching: teachingNavItems,
   iub: iubCourseNavItems,
   bracu: bracuCourseNavItems,

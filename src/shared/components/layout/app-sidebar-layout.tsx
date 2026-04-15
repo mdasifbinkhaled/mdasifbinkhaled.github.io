@@ -26,7 +26,7 @@ import { Navbar } from '@/shared/components/navigation/navbar';
 
 import { siteConfig } from '@/shared/config/site';
 
-import { mainNavItems } from '@/shared/config/navigation';
+import { allNavItems } from '@/shared/config/navigation';
 
 import { LAYOUT } from '@/shared/config/constants';
 
@@ -160,7 +160,7 @@ export default function AppSidebarLayout({
               </div>
 
               <nav className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
-                {mainNavItems.map((item) => (
+                {allNavItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}

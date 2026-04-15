@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { siteConfig } from '@/shared/config/site';
-import { mainNavItems } from '@/shared/config/navigation';
+import { mainNavItems, allNavItems } from '@/shared/config/navigation';
 import { themeConfigs, getThemeConfig } from '@/shared/config/themes';
 import { academicEvents } from '@/shared/lib/analytics';
 
@@ -18,10 +18,11 @@ describe('Site configuration smoke tests', () => {
 });
 
 describe('Navigation configuration', () => {
-  it('mainNavItems contains Home and Contact', () => {
+  it('mainNavItems contains Home, allNavItems contains Contact', () => {
     const labels = mainNavItems.map((i) => i.label);
     expect(labels).toContain('Home');
-    expect(labels).toContain('Contact');
+    const allLabels = allNavItems.map((i) => i.label);
+    expect(allLabels).toContain('Contact');
   });
 
   it('all nav items have href starting with /', () => {

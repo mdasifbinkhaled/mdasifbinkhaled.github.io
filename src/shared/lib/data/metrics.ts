@@ -12,7 +12,7 @@ export const METRICS = {
   YEARS_TEACHING: new Date().getFullYear() - 2015,
 
   // Research
-  CITATION_COUNT: 39, // Source: Google Scholar
-  H_INDEX: 3,
+  CITATION_COUNT: 42, // Source: Google Scholar, updated 2026-04-15
+  H_INDEX: 4,
   I10_INDEX: 2,
 } as const;

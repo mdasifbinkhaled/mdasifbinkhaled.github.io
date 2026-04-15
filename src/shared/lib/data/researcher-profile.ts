@@ -27,7 +27,7 @@ export const academicProfiles = {
     citations: METRICS.CITATION_COUNT,
     hIndex: METRICS.H_INDEX,
     i10Index: METRICS.I10_INDEX,
-    lastUpdated: '2025-10-26',
+    lastUpdated: '2026-04-15',
   },
 } as const;
 

@@ -4,12 +4,12 @@ import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { formatBreadcrumbTitle } from '@/shared/lib/course-utils';
-import { mainNavItems } from '@/shared/config/navigation';
+import { allNavItems } from '@/shared/config/navigation';
 import { navIconMap } from '@/shared/lib/nav-icon-map';
 
 /** Build a lookup from URL segment → icon name using navigation config */
 const segmentIconMap: Record<string, string> = {};
-for (const item of mainNavItems) {
+for (const item of allNavItems) {
   const segment = item.href.replace(/^\//, '') || 'home';
   if (item.icon) segmentIconMap[segment] = item.icon;
 }
