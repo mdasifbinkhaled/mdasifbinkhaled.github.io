@@ -44,6 +44,14 @@ beforeAll(() => {
     writable: true,
   });
 
+  // Mock URL.createObjectURL / revokeObjectURL (not available in jsdom)
+  if (!URL.createObjectURL) {
+    URL.createObjectURL = vi.fn(() => 'blob:mock-url');
+  }
+  if (!URL.revokeObjectURL) {
+    URL.revokeObjectURL = vi.fn();
+  }
+
   // Mock ResizeObserver
   (global as unknown as { ResizeObserver: unknown }).ResizeObserver =
     class ResizeObserver {

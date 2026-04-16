@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   Card,
   CardHeader,
@@ -18,18 +18,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select';
-import { Plus, Trash2, Calculator as CalculatorIcon } from 'lucide-react';
+import { Plus, Trash2, Calculator as CalculatorIcon, Copy } from 'lucide-react';
 import type { GradeComponent } from '@/shared/types/tools';
 import { STANDARD_GRADING_SCALE } from '@/shared/lib/data/grading';
+import { usePersistedState } from '@/shared/hooks';
+import { toast } from 'sonner';
+
+const DEFAULT_COMPONENTS: GradeComponent[] = [
+  { id: '1', name: 'Midterm', weight: 30, score: 0, maxScore: 100 },
+  { id: '2', name: 'Final', weight: 40, score: 0, maxScore: 100 },
+  { id: '3', name: 'Assignments', weight: 30, score: 0, maxScore: 100 },
+];
 
 export function GradeCalculator() {
-  const [components, setComponents] = useState<GradeComponent[]>([
-    { id: '1', name: 'Midterm', weight: 30, score: 0, maxScore: 100 },
-    { id: '2', name: 'Final', weight: 40, score: 0, maxScore: 100 },
-    { id: '3', name: 'Assignments', weight: 30, score: 0, maxScore: 100 },
-  ]);
+  const [components, setComponents, { ready: cReady }] = usePersistedState<
+    GradeComponent[]
+  >('abk_grade_calculator', DEFAULT_COMPONENTS);
 
-  const [targetGrade, setTargetGrade] = useState<string>('A');
+  const [targetGrade, setTargetGrade, { ready: tReady }] =
+    usePersistedState<string>('abk_grade_target', 'A');
 
   const { totalWeight, currentPercentage, currentPoints, totalPossiblePoints } =
     useMemo(() => {
@@ -87,7 +94,15 @@ export function GradeCalculator() {
         if (c.id !== id) return c;
         if (field === 'name') return { ...c, [field]: value };
         const num = value === '' ? 0 : Number(value);
-        return { ...c, [field]: isNaN(num) ? c[field] : num };
+        if (isNaN(num)) return c;
+        // Clamp to sensible bounds
+        const clamped =
+          field === 'weight'
+            ? Math.min(100, Math.max(0, num))
+            : field === 'maxScore'
+              ? Math.max(0, num)
+              : Math.max(0, num); // score
+        return { ...c, [field]: clamped };
       })
     );
   };
@@ -121,6 +136,26 @@ export function GradeCalculator() {
         ?.label || 'F'
     );
   }, [currentPercentage]);
+
+  const handleCopyResult = () => {
+    const lines = components.map(
+      (c) => `${c.name}: ${c.score}/${c.maxScore} (weight ${c.weight}%)`
+    );
+    const text = [
+      'Grade Calculator Results',
+      '─'.repeat(30),
+      ...lines,
+      '',
+      `Current Grade: ${currentGradeMatch} (${currentPercentage.toFixed(1)}%)`,
+      `Total Weight: ${totalWeight}%`,
+    ].join('\n');
+    navigator.clipboard.writeText(text).then(
+      () => toast.success('Results copied to clipboard'),
+      () => toast.error('Failed to copy')
+    );
+  };
+
+  if (!cReady || !tReady) return null;
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
@@ -182,6 +217,8 @@ export function GradeCalculator() {
                   </span>
                   <Input
                     type="number"
+                    min="0"
+                    max="100"
                     aria-label={`Weight percentage for ${component.name || component.id}`}
                     value={isNaN(component.weight) ? '' : component.weight}
                     onChange={(e) =>
@@ -196,6 +233,7 @@ export function GradeCalculator() {
                   <Input
                     aria-label={`Score for ${component.name || component.id}`}
                     type="number"
+                    min="0"
                     value={isNaN(component.score) ? '' : component.score}
                     onChange={(e) =>
                       handleChange(component.id, 'score', e.target.value)
@@ -208,6 +246,7 @@ export function GradeCalculator() {
                   </span>
                   <Input
                     type="number"
+                    min="0"
                     aria-label={`Max score for ${component.name || component.id}`}
                     value={isNaN(component.maxScore) ? '' : component.maxScore}
                     onChange={(e) =>
@@ -281,6 +320,59 @@ export function GradeCalculator() {
                 </span>
               </div>
             </div>
+
+            {/* Grade Scale Bar */}
+            <div className="space-y-2">
+              <span className="text-xs font-medium text-muted-foreground">
+                Grade Scale
+              </span>
+              <div className="relative w-full h-6 rounded-full overflow-hidden bg-muted flex">
+                {[...STANDARD_GRADING_SCALE].reverse().map((scale, i, arr) => {
+                  const nextMin = arr[i + 1]?.minPercentage ?? 100;
+                  const width = nextMin - scale.minPercentage;
+                  return (
+                    <div
+                      key={scale.label}
+                      className="h-full flex items-center justify-center text-[9px] font-bold border-r border-background/40 last:border-0"
+                      style={{
+                        width: `${width}%`,
+                        backgroundColor:
+                          scale.label === currentGradeMatch
+                            ? 'var(--color-primary)'
+                            : undefined,
+                        color:
+                          scale.label === currentGradeMatch
+                            ? 'var(--color-primary-foreground)'
+                            : undefined,
+                        opacity: scale.label === currentGradeMatch ? 1 : 0.5,
+                      }}
+                    >
+                      {width >= 6 ? scale.label : ''}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="relative h-0" style={{ marginTop: '-2px' }}>
+                <div
+                  className="absolute -translate-x-1/2 text-primary"
+                  style={{
+                    left: `${Math.min(100, Math.max(0, currentPercentage))}%`,
+                  }}
+                >
+                  ▲
+                </div>
+              </div>
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full mt-2"
+              onClick={handleCopyResult}
+            >
+              <Copy className="h-4 w-4 mr-2" />
+              Copy Results
+            </Button>
           </CardContent>
         </Card>
 

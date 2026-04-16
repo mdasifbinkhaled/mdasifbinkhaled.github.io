@@ -1,6 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GradeCalculator } from '@/features/apps';
+
+beforeEach(() => {
+  localStorage.clear();
+});
 
 describe('GradeCalculator Component', () => {
   it('renders the default layout components correctly', () => {

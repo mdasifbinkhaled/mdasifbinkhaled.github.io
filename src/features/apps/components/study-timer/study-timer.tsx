@@ -88,6 +88,40 @@ export function StudyTimer() {
   const [todayLog, setTodayLog] = useState<SessionLog[]>([]);
   const [mounted, setMounted] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  /** Play a short beep using the Web Audio API */
+  const playAlarm = useCallback(() => {
+    try {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioContext();
+      }
+      const ctx = audioCtxRef.current;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.5, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.8);
+      // Second beep after a short gap
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.type = 'sine';
+      osc2.frequency.value = 880;
+      gain2.gain.setValueAtTime(0.5, ctx.currentTime + 1);
+      gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.8);
+      osc2.start(ctx.currentTime + 1);
+      osc2.stop(ctx.currentTime + 1.8);
+    } catch {
+      // Web Audio not available
+    }
+  }, []);
 
   // Load from localStorage
   useEffect(() => {
@@ -158,6 +192,7 @@ export function StudyTimer() {
   useEffect(() => {
     if (secondsLeft === 0 && mounted) {
       setIsRunning(false);
+      playAlarm();
 
       const duration = getSessionDuration(sessionType, settings);
       const log: SessionLog = {

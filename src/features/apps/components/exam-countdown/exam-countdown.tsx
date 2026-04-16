@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Timer, Plus, Trash2, CalendarDays } from 'lucide-react';
+import { Timer, Plus, Trash2, CalendarDays, Download } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
+import { toast } from 'sonner';
 
 interface ExamEvent {
   id: string;
@@ -92,6 +93,50 @@ export function ExamCountdown() {
     []
   );
 
+  const handleExportICS = useCallback(() => {
+    const upcoming = exams.filter(
+      (e) => new Date(e.date).getTime() > Date.now()
+    );
+    if (upcoming.length === 0) {
+      toast.error('No upcoming exams to export');
+      return;
+    }
+    const formatICS = (d: Date) =>
+      d
+        .toISOString()
+        .replace(/[-:]/g, '')
+        .replace(/\.\d{3}/, '');
+    const events = upcoming
+      .map((e) => {
+        const start = new Date(e.date);
+        const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+        return [
+          'BEGIN:VEVENT',
+          `DTSTART:${formatICS(start)}`,
+          `DTEND:${formatICS(end)}`,
+          `SUMMARY:${e.course} - ${e.title}`,
+          `DESCRIPTION:${e.course} ${e.title}`,
+          'END:VEVENT',
+        ].join('\r\n');
+      })
+      .join('\r\n');
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//ABK//ExamCountdown//EN',
+      events,
+      'END:VCALENDAR',
+    ].join('\r\n');
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'exam-schedule.ics';
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success(`Exported ${upcoming.length} exam(s) to .ics`);
+  }, [exams]);
+
   if (!mounted) return null;
 
   // Sort exams by chronological proximity
@@ -106,9 +151,16 @@ export function ExamCountdown() {
           <Timer className="h-5 w-5 text-primary" />
           Active Timers
         </h2>
-        <Button onClick={handleAdd} size="sm" variant="outline">
-          <Plus className="mr-2 h-4 w-4" /> Add Exam
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={handleAdd} size="sm" variant="outline">
+            <Plus className="mr-2 h-4 w-4" /> Add Exam
+          </Button>
+          {exams.length > 0 && (
+            <Button onClick={handleExportICS} size="sm" variant="outline">
+              <Download className="mr-2 h-4 w-4" /> Export .ics
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -126,13 +178,44 @@ export function ExamCountdown() {
           );
           const secs = Math.floor((Math.abs(diff) % (1000 * 60)) / 1000);
 
+          // Urgency color based on days remaining
+          const urgencyClass = isPassed
+            ? 'opacity-60 border-muted'
+            : days <= 1
+              ? 'border-red-500/50 shadow-red-500/10 shadow-md'
+              : days <= 3
+                ? 'border-orange-500/40 shadow-orange-500/10 shadow-sm'
+                : days <= 7
+                  ? 'border-amber-500/30 shadow-xs'
+                  : 'border-primary/20 shadow-xs';
+
+          const accentColor = isPassed
+            ? 'bg-muted'
+            : days <= 1
+              ? 'bg-red-500'
+              : days <= 3
+                ? 'bg-orange-500'
+                : days <= 7
+                  ? 'bg-amber-500'
+                  : 'bg-primary';
+
+          const countdownColor = isPassed
+            ? 'text-muted-foreground'
+            : days <= 1
+              ? 'text-red-600 dark:text-red-400'
+              : days <= 3
+                ? 'text-orange-600 dark:text-orange-400'
+                : 'text-foreground';
+
           return (
             <Card
               key={exam.id}
-              className={`relative overflow-hidden transition-all ${isPassed ? 'opacity-60 border-muted' : 'border-primary/20 shadow-xs'}`}
+              className={`relative overflow-hidden transition-all ${urgencyClass}`}
             >
               {!isPassed && (
-                <div className="absolute top-0 right-0 w-1 h-full bg-primary" />
+                <div
+                  className={`absolute top-0 right-0 w-1 h-full ${accentColor}`}
+                />
               )}
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
@@ -174,7 +257,7 @@ export function ExamCountdown() {
                   <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center w-full">
                     <div className="flex flex-col">
                       <span
-                        className={`text-2xl sm:text-3xl font-bold tabular-nums ${isPassed ? 'text-muted-foreground' : 'text-foreground'}`}
+                        className={`text-2xl sm:text-3xl font-bold tabular-nums ${countdownColor}`}
                       >
                         {days}
                       </span>
@@ -184,7 +267,7 @@ export function ExamCountdown() {
                     </div>
                     <div className="flex flex-col">
                       <span
-                        className={`text-2xl sm:text-3xl font-bold tabular-nums ${isPassed ? 'text-muted-foreground' : 'text-foreground'}`}
+                        className={`text-2xl sm:text-3xl font-bold tabular-nums ${countdownColor}`}
                       >
                         {hours.toString().padStart(2, '0')}
                       </span>
@@ -194,7 +277,7 @@ export function ExamCountdown() {
                     </div>
                     <div className="flex flex-col">
                       <span
-                        className={`text-2xl sm:text-3xl font-bold tabular-nums ${isPassed ? 'text-muted-foreground' : 'text-foreground'}`}
+                        className={`text-2xl sm:text-3xl font-bold tabular-nums ${countdownColor}`}
                       >
                         {mins.toString().padStart(2, '0')}
                       </span>
@@ -204,7 +287,7 @@ export function ExamCountdown() {
                     </div>
                     <div className="flex flex-col">
                       <span
-                        className={`text-2xl sm:text-3xl font-bold tabular-nums ${isPassed ? 'text-muted-foreground' : 'text-primary'}`}
+                        className={`text-2xl sm:text-3xl font-bold tabular-nums ${isPassed ? 'text-muted-foreground' : days <= 1 ? 'text-red-500' : 'text-primary'}`}
                       >
                         {secs.toString().padStart(2, '0')}
                       </span>

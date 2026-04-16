@@ -20,15 +20,18 @@ import {
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { Badge } from '@/shared/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu';
 import type { PlannerCourse } from './types';
 import { PRESETS } from './presets';
 import { topoLevels, getUnlocked } from './topo-sort';
+import { toast } from 'sonner';
 
 const STORAGE_KEY = 'abk_course_planner';
-
-function generateId(): string {
-  return Math.random().toString(36).substring(2, 9);
-}
 
 export function CoursePlanner() {
   const [courses, setCourses] = useState<PlannerCourse[]>([]);
@@ -101,7 +104,7 @@ export function CoursePlanner() {
       .filter((id): id is string => !!id);
 
     const course: PlannerCourse = {
-      id: generateId(),
+      id: crypto.randomUUID(),
       code: newCode.trim().toUpperCase(),
       title: newTitle.trim(),
       credits: parseInt(newCredits, 10) || 3,
@@ -125,6 +128,22 @@ export function CoursePlanner() {
   const resetProgress = useCallback(() => {
     setCourses((prev) => prev.map((c) => ({ ...c, completed: false })));
   }, []);
+
+  const handleExportJSON = useCallback(() => {
+    if (courses.length === 0) {
+      toast.error('No courses to export');
+      return;
+    }
+    const data = JSON.stringify(courses, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'course-plan.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('Course plan exported');
+  }, [courses]);
 
   const totalCredits = courses.reduce((s, c) => s + c.credits, 0);
   const completedCredits = courses
@@ -153,39 +172,22 @@ export function CoursePlanner() {
 
       {/* Actions */}
       <div className="flex flex-wrap gap-2">
-        <div className="relative">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              const el = document.getElementById('preset-dropdown');
-              el?.classList.toggle('hidden');
-            }}
-          >
-            <Download className="h-4 w-4 mr-1" />
-            Load Preset
-            <ChevronDown className="h-3 w-3 ml-1" />
-          </Button>
-          <div
-            id="preset-dropdown"
-            className="hidden absolute top-full left-0 mt-1 bg-popover border rounded-md shadow-md z-10 min-w-[180px]"
-          >
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-1" />
+              Load Preset
+              <ChevronDown className="h-3 w-3 ml-1" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
             {PRESETS.map((p, i) => (
-              <button
-                key={i}
-                onClick={() => {
-                  loadPreset(i);
-                  document
-                    .getElementById('preset-dropdown')
-                    ?.classList.add('hidden');
-                }}
-                className="block w-full text-left px-3 py-2 text-sm hover:bg-accent"
-              >
+              <DropdownMenuItem key={i} onClick={() => loadPreset(i)}>
                 {p.name}
-              </button>
+              </DropdownMenuItem>
             ))}
-          </div>
-        </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Button
           variant="outline"
           size="sm"
@@ -198,6 +200,12 @@ export function CoursePlanner() {
           <RotateCcw className="h-4 w-4 mr-1" />
           Reset Progress
         </Button>
+        {courses.length > 0 && (
+          <Button variant="outline" size="sm" onClick={handleExportJSON}>
+            <Download className="h-4 w-4 mr-1" />
+            Export JSON
+          </Button>
+        )}
       </div>
 
       {/* Add Course Form */}

@@ -2,6 +2,7 @@
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { getThemeNames, DEFAULT_THEME } from '@/shared/config/themes';
+import { Toaster } from '@/shared/components/ui/toaster';
 
 /**
  * Application Providers
@@ -19,6 +20,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
       themes={availableThemes}
     >
       {children}
+      <Toaster />
     </ThemeProvider>
   );
 }

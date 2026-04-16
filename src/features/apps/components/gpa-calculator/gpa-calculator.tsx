@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
-import { Plus, Trash2, Calculator, Settings2 } from 'lucide-react';
+import { useMemo, useCallback } from 'react';
+import { Plus, Trash2, Calculator, Settings2, Copy } from 'lucide-react';
 import { STANDARD_GRADING_SCALE } from '@/shared/lib/data/grading';
 import {
   Card,
@@ -12,6 +12,15 @@ import {
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/components/ui/select';
+import { usePersistedState } from '@/shared/hooks';
+import { toast } from 'sonner';
 
 interface CourseEntry {
   id: string;
@@ -20,34 +29,53 @@ interface CourseEntry {
   grade: string;
 }
 
-export function GpaCalculator() {
-  const [courses, setCourses] = useState<CourseEntry[]>([
-    { id: crypto.randomUUID(), name: '', credits: 3, grade: 'A' },
-    { id: crypto.randomUUID(), name: '', credits: 3, grade: 'B+' },
-    { id: crypto.randomUUID(), name: '', credits: 3, grade: 'A-' },
-  ]);
+const DEFAULT_COURSES: CourseEntry[] = [
+  { id: '1', name: '', credits: 3, grade: 'A' },
+  { id: '2', name: '', credits: 3, grade: 'B+' },
+  { id: '3', name: '', credits: 3, grade: 'A-' },
+];
 
-  const [prevCredits, setPrevCredits] = useState<number | ''>('');
-  const [prevCgpa, setPrevCgpa] = useState<number | ''>('');
+export function GpaCalculator() {
+  const [courses, setCourses, { ready: coursesReady }] = usePersistedState<
+    CourseEntry[]
+  >('abk_gpa_courses', DEFAULT_COURSES);
+
+  const [prevCredits, setPrevCredits, { ready: pcReady }] = usePersistedState<
+    number | ''
+  >('abk_gpa_prev_credits', '');
+  const [prevCgpa, setPrevCgpa, { ready: pgReady }] = usePersistedState<
+    number | ''
+  >('abk_gpa_prev_cgpa', '');
 
   const handleAddCourse = useCallback(() => {
     setCourses((prev) => [
       ...prev,
       { id: crypto.randomUUID(), name: '', credits: 3, grade: 'A' },
     ]);
-  }, []);
+  }, [setCourses]);
 
-  const handleRemoveCourse = useCallback((id: string) => {
-    setCourses((prev) => prev.filter((c) => c.id !== id));
-  }, []);
+  const handleRemoveCourse = useCallback(
+    (id: string) => {
+      setCourses((prev) => prev.filter((c) => c.id !== id));
+    },
+    [setCourses]
+  );
 
   const handleCourseChange = useCallback(
     (id: string, field: keyof CourseEntry, value: string | number) => {
       setCourses((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, [field]: value } : c))
+        prev.map((c) => {
+          if (c.id !== id) return c;
+          if (field === 'credits') {
+            const num =
+              typeof value === 'number' ? value : parseFloat(value) || 0;
+            return { ...c, credits: Math.min(6, Math.max(0, num)) };
+          }
+          return { ...c, [field]: value };
+        })
       );
     },
-    []
+    [setCourses]
   );
 
   const { termGpa, termCredits, cgpa, totalCredits } = useMemo(() => {
@@ -87,6 +115,36 @@ export function GpaCalculator() {
       totalCredits: finalTotalCredits,
     };
   }, [courses, prevCredits, prevCgpa]);
+
+  const handleCopyResult = useCallback(() => {
+    const lines = courses
+      .filter((c) => c.credits > 0)
+      .map((c) => `${c.name || 'Course'}: ${c.grade} (${c.credits} cr)`);
+    const text = [
+      'GPA Calculator Results',
+      '─'.repeat(30),
+      ...lines,
+      '',
+      `Term GPA: ${termGpa.toFixed(2)} (${termCredits} credits)`,
+      ...(typeof prevCredits === 'number' && typeof prevCgpa === 'number'
+        ? [`Projected CGPA: ${cgpa.toFixed(2)} (${totalCredits} total credits)`]
+        : []),
+    ].join('\n');
+    navigator.clipboard.writeText(text).then(
+      () => toast.success('Results copied to clipboard'),
+      () => toast.error('Failed to copy')
+    );
+  }, [
+    courses,
+    termGpa,
+    termCredits,
+    cgpa,
+    totalCredits,
+    prevCredits,
+    prevCgpa,
+  ]);
+
+  if (!coursesReady || !pcReady || !pgReady) return null;
 
   return (
     <div className="grid gap-6 md:grid-cols-[2fr_1fr] print:block">
@@ -144,20 +202,26 @@ export function GpaCalculator() {
                   }
                   className="bg-background font-mono"
                 />
-                <select
-                  aria-label="Grade"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-medium ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                <Select
                   value={course.grade}
-                  onChange={(e) =>
-                    handleCourseChange(course.id, 'grade', e.target.value)
+                  onValueChange={(v) =>
+                    handleCourseChange(course.id, 'grade', v)
                   }
                 >
-                  {STANDARD_GRADING_SCALE.map((g) => (
-                    <option key={g.label} value={g.label}>
-                      {g.label} ({g.gpa.toFixed(1)})
-                    </option>
-                  ))}
-                </select>
+                  <SelectTrigger
+                    aria-label="Grade"
+                    className="bg-background font-medium"
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STANDARD_GRADING_SCALE.map((g) => (
+                      <SelectItem key={g.label} value={g.label}>
+                        {g.label} ({g.gpa.toFixed(1)})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -219,11 +283,14 @@ export function GpaCalculator() {
                   max="4.0"
                   step="0.01"
                   value={prevCgpa}
-                  onChange={(e) =>
-                    setPrevCgpa(
-                      e.target.value ? parseFloat(e.target.value) : ''
-                    )
-                  }
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      setPrevCgpa('');
+                    } else {
+                      const v = parseFloat(e.target.value);
+                      setPrevCgpa(Math.min(4.0, Math.max(0, v)));
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -273,10 +340,11 @@ export function GpaCalculator() {
 
             <Button
               className="w-full mt-4"
-              onClick={() => window.print()}
+              onClick={handleCopyResult}
               variant="secondary"
             >
-              Print Report
+              <Copy className="h-4 w-4 mr-2" />
+              Copy Results
             </Button>
           </CardContent>
         </Card>

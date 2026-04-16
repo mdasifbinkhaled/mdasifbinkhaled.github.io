@@ -26,10 +26,7 @@ describe('ExamCountdown', () => {
   it('removes an exam card', () => {
     render(<ExamCountdown />);
     expect(screen.getAllByDisplayValue(/CSE/)).toHaveLength(2);
-    // Delete buttons are all buttons except the one containing "Add"
-    const deleteButtons = screen
-      .getAllByRole('button')
-      .filter((btn) => !btn.textContent?.includes('Add'));
+    const deleteButtons = screen.getAllByRole('button', { name: /Remove/ });
     fireEvent.click(deleteButtons[0]);
     expect(screen.queryByDisplayValue('CSE 420')).not.toBeInTheDocument();
   });
@@ -37,14 +34,10 @@ describe('ExamCountdown', () => {
   it('shows empty state when all exams removed', () => {
     render(<ExamCountdown />);
     // Remove first exam
-    let deleteButtons = screen
-      .getAllByRole('button')
-      .filter((btn) => !btn.textContent?.includes('Add'));
+    let deleteButtons = screen.getAllByRole('button', { name: /Remove/ });
     fireEvent.click(deleteButtons[0]);
     // Remove second exam
-    deleteButtons = screen
-      .getAllByRole('button')
-      .filter((btn) => !btn.textContent?.includes('Add'));
+    deleteButtons = screen.getAllByRole('button', { name: /Remove/ });
     fireEvent.click(deleteButtons[0]);
     expect(screen.getByText(/No Exams Tracked/i)).toBeInTheDocument();
   });
