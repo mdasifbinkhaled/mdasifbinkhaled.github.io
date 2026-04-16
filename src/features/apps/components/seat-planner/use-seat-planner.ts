@@ -5,6 +5,7 @@
 // ────────────────────────────────────────────────
 
 import { useState, useMemo, useCallback, useRef } from 'react';
+import { toast } from 'sonner';
 import { parseStudentData } from './csv-parser';
 import { allocate } from './allocation';
 import {
@@ -97,6 +98,7 @@ export function useSeatPlanner() {
       if (!file) return;
       const reader = new FileReader();
       reader.onload = (ev) => handleParseInput(ev.target?.result as string);
+      reader.onerror = () => toast.error('Failed to read the uploaded file.');
       reader.readAsText(file);
       e.target.value = '';
     },
@@ -178,6 +180,8 @@ export function useSeatPlanner() {
             result.allocations,
             examDetails
           );
+      } catch {
+        toast.error('PDF export failed. Please try again.');
       } finally {
         setIsExporting(false);
       }
@@ -204,6 +208,8 @@ export function useSeatPlanner() {
       a.download = `${(examDetails.courseCodes || 'seat-plan').replace(/\//g, '-')}_Seat_Plan.png`;
       a.href = canvas.toDataURL('image/png');
       a.click();
+    } catch {
+      toast.error('PNG export failed. Please try again.');
     } finally {
       setIsExporting(false);
     }

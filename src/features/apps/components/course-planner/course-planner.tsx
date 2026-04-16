@@ -11,6 +11,7 @@ import {
   ChevronDown,
   Download,
 } from 'lucide-react';
+import { downloadFile } from '@/shared/lib/download-file';
 import {
   Card,
   CardHeader,
@@ -135,13 +136,7 @@ export function CoursePlanner() {
       return;
     }
     const data = JSON.stringify(courses, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'course-plan.json';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadFile(data, 'course-plan.json', 'application/json');
     toast.success('Course plan exported');
   }, [courses]);
 

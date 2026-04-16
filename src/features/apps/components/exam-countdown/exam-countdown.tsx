@@ -6,6 +6,7 @@ import { Card, CardHeader, CardContent } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { toast } from 'sonner';
+import { downloadFile } from '@/shared/lib/download-file';
 
 interface ExamEvent {
   id: string;
@@ -127,13 +128,7 @@ export function ExamCountdown() {
       events,
       'END:VCALENDAR',
     ].join('\r\n');
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'exam-schedule.ics';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadFile(ics, 'exam-schedule.ics', 'text/calendar;charset=utf-8');
     toast.success(`Exported ${upcoming.length} exam(s) to .ics`);
   }, [exams]);
 

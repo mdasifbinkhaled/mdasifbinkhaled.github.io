@@ -196,7 +196,9 @@ function renderRoomPage(
   });
 
   // footer — attendance & invigilator lines
-  const finalY: number = doc.lastAutoTable?.finalY ?? 200;
+  const finalY: number =
+    (doc as unknown as Record<string, { finalY?: number }>).lastAutoTable
+      ?.finalY ?? 200;
   const fy = finalY + 14;
 
   doc.setFont('helvetica', 'normal');

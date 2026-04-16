@@ -3,6 +3,7 @@
 // ────────────────────────────────────────────────
 
 import type { Student, ExamDetails } from './types';
+import { downloadFile as download } from '@/shared/lib/download-file';
 
 // ── CSV value escaping ──────────────────────────
 
@@ -32,16 +33,6 @@ export function exportMasterListCSV(
 }
 
 // ── helpers ─────────────────────────────────────
-
-function download(content: string, name: string, mime: string): void {
-  const blob = new Blob([content], { type: mime });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = name;
-  a.click();
-  URL.revokeObjectURL(url);
-}
 
 function csvFilename(d: ExamDetails, suffix: string): string {
   const base = (d.courseCodes || 'seat-plan')

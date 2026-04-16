@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   Timer,
   Play,
@@ -85,7 +85,7 @@ export function StudyTimer() {
   );
   const [isRunning, setIsRunning] = useState(false);
   const [focusCount, setFocusCount] = useState(0);
-  const [todayLog, setTodayLog] = useState<SessionLog[]>([]);
+  const [allLog, setAllLog] = useState<SessionLog[]>([]);
   const [mounted, setMounted] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -142,12 +142,7 @@ export function StudyTimer() {
       const savedLog = localStorage.getItem(STORAGE_KEY_LOG);
       if (savedLog) {
         const parsed = JSON.parse(savedLog) as SessionLog[];
-        // Filter to today only
-        const today = new Date().toDateString();
-
-        setTodayLog(
-          parsed.filter((l) => new Date(l.completedAt).toDateString() === today)
-        );
+        setAllLog(parsed);
       }
     } catch {
       // ignore
@@ -165,10 +160,10 @@ export function StudyTimer() {
 
   // Persist log
   useEffect(() => {
-    if (mounted && todayLog.length > 0) {
-      localStorage.setItem(STORAGE_KEY_LOG, JSON.stringify(todayLog));
+    if (mounted && allLog.length > 0) {
+      localStorage.setItem(STORAGE_KEY_LOG, JSON.stringify(allLog));
     }
-  }, [todayLog, mounted]);
+  }, [allLog, mounted]);
 
   // Timer tick
   useEffect(() => {
@@ -200,7 +195,7 @@ export function StudyTimer() {
         duration,
         completedAt: new Date().toISOString(),
       };
-      setTodayLog((prev) => [...prev, log]);
+      setAllLog((prev) => [...prev, log]);
 
       // Auto-advance
       if (sessionType === 'focus') {
@@ -268,6 +263,14 @@ export function StudyTimer() {
     [sessionType]
   );
 
+  // Today's sessions derived from full log
+  const todayStr = new Date().toDateString();
+  const todayLog = useMemo(
+    () =>
+      allLog.filter((l) => new Date(l.completedAt).toDateString() === todayStr),
+    [allLog, todayStr]
+  );
+
   // Today's stats
   const todayFocusSessions = todayLog.filter((l) => l.type === 'focus').length;
   const todayFocusMinutes = Math.round(
@@ -275,6 +278,32 @@ export function StudyTimer() {
       .filter((l) => l.type === 'focus')
       .reduce((sum, l) => sum + l.duration, 0) / 60
   );
+
+  // Weekly heatmap: last 7 weeks (49 days)
+  const heatmapData = useMemo(() => {
+    const DAYS = 49;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    // Build a map: dateString → focus minutes
+    const dayMap = new Map<string, number>();
+    for (const entry of allLog) {
+      if (entry.type !== 'focus') continue;
+      const d = new Date(entry.completedAt);
+      d.setHours(0, 0, 0, 0);
+      const key = d.toDateString();
+      dayMap.set(key, (dayMap.get(key) ?? 0) + entry.duration);
+    }
+    // Generate array of DAYS cells ending today
+    const cells: { date: Date; minutes: number }[] = [];
+    for (let i = DAYS - 1; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const mins = Math.round((dayMap.get(d.toDateString()) ?? 0) / 60);
+      cells.push({ date: d, minutes: mins });
+    }
+    const maxMinutes = Math.max(...cells.map((c) => c.minutes), 1);
+    return { cells, maxMinutes };
+  }, [allLog]);
 
   const totalDuration = getSessionDuration(sessionType, settings);
   const progress =
@@ -457,6 +486,46 @@ export function StudyTimer() {
                   ))}
               </div>
             )}
+          </CardContent>
+        </Card>
+
+        {/* Weekly Activity Heatmap */}
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg">Weekly Activity</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-7 gap-1 text-[10px] text-muted-foreground mb-1">
+              {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+                <span key={i} className="text-center">
+                  {d}
+                </span>
+              ))}
+            </div>
+            <div className="grid grid-cols-7 gap-1">
+              {heatmapData.cells.map((cell, i) => {
+                const intensity =
+                  cell.minutes > 0
+                    ? Math.max(0.15, cell.minutes / heatmapData.maxMinutes)
+                    : 0;
+                return (
+                  <div
+                    key={i}
+                    title={`${cell.date.toLocaleDateString()}: ${cell.minutes}min`}
+                    className="aspect-square rounded-sm"
+                    style={{
+                      backgroundColor:
+                        intensity > 0
+                          ? `hsl(var(--primary) / ${intensity})`
+                          : 'hsl(var(--muted))',
+                    }}
+                  />
+                );
+              })}
+            </div>
+            <p className="text-[10px] text-muted-foreground mt-2 text-right">
+              Last 7 weeks
+            </p>
           </CardContent>
         </Card>
 
