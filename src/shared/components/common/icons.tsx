@@ -23,6 +23,8 @@ import {
   CalendarDays,
   Target,
   TerminalSquare,
+  Clock,
+  GitBranch,
   type LucideProps,
 } from 'lucide-react';
 
@@ -53,6 +55,8 @@ export const iconComponents = {
   CalendarDays,
   Target,
   TerminalSquare,
+  Clock,
+  GitBranch,
 };
 
 interface IconComponentProps extends LucideProps {

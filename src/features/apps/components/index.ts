@@ -5,3 +5,5 @@ export { ToolsHero } from './tools-hero';
 export { GpaCalculator } from './gpa-calculator/gpa-calculator';
 export { OfficeHoursBooker } from './office-hours/office-hours-booker';
 export { ExamCountdown } from './exam-countdown/exam-countdown';
+export { StudyTimer } from './study-timer/study-timer';
+export { CoursePlanner } from './course-planner/course-planner';

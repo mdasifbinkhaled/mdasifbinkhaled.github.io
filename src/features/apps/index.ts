@@ -12,4 +12,6 @@ export {
   GpaCalculator,
   OfficeHoursBooker,
   ExamCountdown,
+  StudyTimer,
+  CoursePlanner,
 } from './components';

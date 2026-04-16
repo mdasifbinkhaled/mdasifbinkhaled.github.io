@@ -59,6 +59,20 @@ export default function AppsPage() {
             href="/apps/office-hours"
             status="active"
           />
+          <ToolCard
+            title="Study Timer"
+            description="Pomodoro-style focus timer with configurable work/break intervals, session tracking, and daily stats."
+            icon="Clock"
+            href="/apps/study-timer"
+            status="active"
+          />
+          <ToolCard
+            title="Course Planner"
+            description="Visualize prerequisite chains in topological order, track completed courses, and plan your next semester."
+            icon="GitBranch"
+            href="/apps/course-planner"
+            status="active"
+          />
         </div>
       </section>
     </div>
