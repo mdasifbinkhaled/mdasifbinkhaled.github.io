@@ -4,6 +4,7 @@
     "types": ["vitest/globals", "@testing-library/jest-dom"],
     // Tests assert on known fixture shapes; relaxing noUncheckedIndexedAccess
     // avoids forcing non-null assertions on every `queryAll()[n]` and similar.
+    // Rationale: see .cockpit/adr/ADR-006-tests-tsconfig-strictness.md.
     "noUncheckedIndexedAccess": false
   },
   "include": [

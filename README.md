@@ -29,13 +29,13 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 | Category      | Technology                                                |
 | ------------- | --------------------------------------------------------- |
 | **Framework** | Next.js 16 (App Router, Static Export)                    |
-| **Language**  | TypeScript 5.6 (Strict Mode)                              |
+| **Language**  | TypeScript 5.9 (Strict Mode)                              |
 | **Styling**   | Tailwind CSS 4.1 (CSS-first config)                       |
 | **Testing**   | Vitest + Playwright E2E (CI-enforced coverage thresholds) |
 | **Linting**   | ESLint 9 + Prettier                                       |
 | **CI/CD**     | GitHub Actions (4 workflows)                              |
 | **Security**  | CodeQL, npm audit, CSP hardened                           |
-| **A11y**      | WCAG 2.1 AA (CI-enforced via Playwright + axe-core)       |
+| **A11y**      | WCAG 2.1 AA targeted (axe-core enforced per page in CI)   |
 | **Themes**    | 6 color themes with WCAG AA contrast compliance           |
 
 ---

@@ -321,6 +321,18 @@
 - **Documentation**: README prerequisite bumped to Node.js 22 (matches `engines` and CI); `.github/SECURITY.md` documents the GitHub-Pages CSP-via-`<meta>` limitations (e.g. `frame-ancestors` not enforceable).
 - Quality gates green: `npm run typecheck` (src + tests), lint, format, vitest coverage, production build, Playwright E2E.
 
+### Phase — Cockpit Hygiene & Advisory Pass (2026-04-17)
+
+- Post-AUD-016 advisory audit produced a set of cleanup items scoped to "Trust & Hygiene":
+- **Cockpit resync**: INDEX, ROADMAP, ISSUES brought in line with the real v1.5.0 state — coverage 65.52 %, commit `f399fca` landed, open-finding count reduced from "5" (stale) to "2" (F-260, F-264), ROADMAP date corrected from future-stamped 2026-05-02 to 2026-04-17.
+- **Roadmap dispositions**: Phase 7.6 (PDF Study Aid / WebLLM), 10.2 (Research timeline), 10.5 (Bengali intro), 11.3 (Search/filter analytics) marked **Deferred** with explicit triggers; 11.4 (Uptime monitoring) marked **Done** — UptimeRobot monitor is configured externally per the in-repo guide.
+- **F-260 hardening**: `/cv` axe audit now also calls `test.slow()` (3× timeout) in addition to the existing `iframe` exclusion; CI already runs `workers: 1`, so CI remains deterministic. Re-review scheduled 2026-07-17.
+- **F-264 cadence**: quarterly re-review recorded in `ISSUES.md` with explicit next-date (2026-07-17) and escalation rule.
+- **ADR-006**: captured the deliberate divergence between root and `tests/tsconfig.json` (`noUncheckedIndexedAccess` off in tests only) so the decision doesn't regress silently.
+- **README**: softened WCAG claim from "WCAG 2.1 AA (CI-enforced)" to "WCAG 2.1 AA targeted (axe-core enforced per page in CI)" — matches humans.txt and evidence.
+- **package.json**: `engines.npm` pinned to `>=10.0.0 <12` to align with `packageManager: npm@11.4.2`.
+- Quality gates green (re-verified): typecheck, lint, 368/368 unit, 49/49 E2E, build, coverage 65.52 %.
+
 ## Tags
 
 | Tag                   | Description                            |

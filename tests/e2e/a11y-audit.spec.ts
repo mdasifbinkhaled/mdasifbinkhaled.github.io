@@ -11,6 +11,14 @@ import { A11Y_ROUTES } from './fixtures/routes';
 test.describe('Per-page accessibility audit', () => {
   for (const route of A11Y_ROUTES) {
     test(`${route} passes WCAG 2.x AA`, async ({ page }) => {
+      // F-260: /cv embeds a PDF iframe that puts axe under cross-origin
+      // pressure, occasionally exceeding the default 30s budget under local
+      // parallel execution. CI runs workers:1 so this is local-only, but we
+      // harden the test with test.slow() (tripled timeout) as insurance.
+      if (route === '/cv') {
+        test.slow();
+      }
+
       await page.goto(route, { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('load');
 
@@ -22,7 +30,7 @@ test.describe('Per-page accessibility audit', () => {
       ]);
 
       // Exclude PDF viewer iframe on /cv — it causes axe timeouts
-      // under parallel execution due to cross-origin analysis pressure
+      // under parallel execution due to cross-origin analysis pressure.
       if (route === '/cv') {
         builder = builder.exclude('iframe');
       }

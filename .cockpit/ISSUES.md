@@ -1,6 +1,6 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-04-12 | **Status**: Ground-up audit completed
+> **Last Audit**: 2026-04-17 | **Status**: Post-AUD-016 cockpit hygiene pass
 > **Total Findings**: 275 | **Resolved**: 265 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
 
 ## Dashboard
@@ -19,12 +19,12 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ## Quality Gates
 
 ```text
-TypeScript:   ✅ 0 errors  (strict mode)
+TypeScript:   ✅ 0 errors  (strict mode — root + tests projects, see ADR-006)
 ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
-Unit tests:   ✅ 368/368 pass  (41 files, coverage thresholds enforced in vitest.config.mts)
-E2E:          ✅ 49/49 pass  (4 test files — smoke, a11y audit, theme contrast)
-Build:        ✅ 25 HTML pages / 27 routes exported  (static export, Workbox emits `out/sw.js`)
-Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `dompurify`) — all at latest, no fix available
+Unit tests:   ✅ 368/368 pass  (41 files, coverage 65.52% lines / 82.40% branches, floor 63/75/53/63 in vitest.config.mts)
+E2E:          ✅ 49/49 pass  (4 spec files — a11y-audit, all-pages-smoke, keyboard-nav, theme-contrast)
+Build:        ✅ 25 HTML pages / 27 routes exported  (static export, Workbox precaches 109 files ≈ 5.3 MB)
+Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `dompurify`) — all at latest, no upstream fix; quarterly re-review (see F-264)
 ```
 
 ---
@@ -34,9 +34,16 @@ Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `domp
 Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 2026-04-12 ground-up audit.
 
 - **F-260 | Testing | MEDIUM** — `/cv` accessibility audit is nondeterministic locally.
-  Observed: Chromium a11y suite times out on `/cv` during default parallel execution. Isolated route and `--workers=1` both pass. Likely PDF iframe pressure.
+  Observed: Chromium a11y suite times out on `/cv` during default parallel execution. Isolated route and `--workers=1` both pass. Root cause: PDF iframe pressure under axe cross-origin analysis.
+  **Disposition (2026-04-17)**: (a) axe builder already excludes the `iframe` for `/cv`; (b) `test.slow()` applied to the `/cv` case to triple the per-test timeout; (c) CI enforces `workers: 1` (see [playwright.config.ts](../playwright.config.ts)) so CI is deterministic. Local `npm run test:e2e` now passes reliably with the hardened test; if it regresses, re-run with `PWTEST_WORKERS=1`.
+  **Next action**: monitor for one more cycle; if still flaky by 2026-07-17, split a11y into a dedicated Playwright project configured for `fullyParallel: false`.
 - **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
-  `npm audit --omit=dev` reports open advisories for `jspdf@4.2.0`, `next@16.1.4`, and transitive `dompurify@3.3.1`. All at latest versions — no upstream fix available. Static export reduces exposure.
+  `npm audit --omit=dev` reports open advisories for `jspdf@4.2.0`, `next@16.1.4`, and transitive `dompurify@3.3.1`. All at latest upstream versions — no fix currently published. Static export + Workbox precache reduce the exploitable surface.
+  **Disposition (2026-04-17)**: Put on a **quarterly review cadence** tied to the `security.yml` exception block (F-244 policy). **Next review: 2026-07-17.** Re-check by running `npm audit --omit=dev` and inspecting upstream GHSA entries for:
+  - `jspdf` — embeds older `dompurify`; fix requires upstream jspdf release.
+  - `next` — 16.x patch train; upgrade within the minor when a security patch lands.
+  - `dompurify` — transitive, tracked only through jspdf.
+    **Escalation**: if any advisory reaches CRITICAL severity or an exploit PoC is published, bump to IMMEDIATE and evaluate a `pdf-lib` spike (candidate migration).
 
 ## Resolved Findings
 
