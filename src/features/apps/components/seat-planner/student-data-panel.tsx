@@ -62,7 +62,7 @@ export function StudentDataPanel({
           <input
             ref={fileInputRef}
             type="file"
-            accept=".csv,.txt,.tsv"
+            accept=".csv,text/csv"
             className="hidden"
             onChange={onFileUpload}
             aria-label="Upload student data CSV"

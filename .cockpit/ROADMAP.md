@@ -1,8 +1,8 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-04-12
-> **Current Version**: 1.5.0 | **Quality**: All gates green (368/368 unit + 49/49 E2E, 0 TS/ESLint errors, 25 HTML pages / 27 routes)
-> **Open Findings**: 2 (275 total, 265 resolved, 3 false positives, 5 reassessed)
+> **Created**: 2026-02-19 | **Updated**: 2026-05-02
+> **Current Version**: 1.5.0 | **Quality**: All gates green (coverage ≥ 63 % thresholds, 49/49 E2E, 0 TS/ESLint errors)
+> **Open Findings**: 0 (AUD-001..AUD-016 from forensic audit resolved this cycle)
 
 ## Phase 6: Code Quality & Cleanup
 

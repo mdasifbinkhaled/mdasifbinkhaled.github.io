@@ -7,6 +7,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { toast } from 'sonner';
 import { downloadFile } from '@/shared/lib/download-file';
+import { usePersistedState } from '@/shared/hooks';
 
 interface ExamEvent {
   id: string;
@@ -34,26 +35,14 @@ const DEFAULT_EXAMS: ExamEvent[] = [
   }, // +45 days
 ];
 
-export function ExamCountdown() {
-  const [exams, setExams] = useState<ExamEvent[]>([]);
-  const [mounted, setMounted] = useState(false);
-  const [now, setNow] = useState(new Date().getTime());
+const STORAGE_KEY = 'abk_exam_countdown';
 
-  // Load from local storage
-  useEffect(() => {
-    const saved = localStorage.getItem('abk_exam_countdown');
-    if (saved) {
-      try {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setExams(JSON.parse(saved));
-      } catch {
-        setExams(DEFAULT_EXAMS);
-      }
-    } else {
-      setExams(DEFAULT_EXAMS);
-    }
-    setMounted(true);
-  }, []);
+export function ExamCountdown() {
+  const [exams, setExams, { ready: mounted }] = usePersistedState<ExamEvent[]>(
+    STORAGE_KEY,
+    DEFAULT_EXAMS
+  );
+  const [now, setNow] = useState(new Date().getTime());
 
   // Timer tick
   useEffect(() => {
@@ -61,13 +50,6 @@ export function ExamCountdown() {
     const interval = setInterval(() => setNow(new Date().getTime()), 1000);
     return () => clearInterval(interval);
   }, [mounted]);
-
-  // Persist to local storage
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('abk_exam_countdown', JSON.stringify(exams));
-    }
-  }, [exams, mounted]);
 
   const handleAdd = useCallback(() => {
     setExams((prev) => [
@@ -79,11 +61,14 @@ export function ExamCountdown() {
         date: new Date().toISOString().slice(0, 16),
       },
     ]);
-  }, []);
+  }, [setExams]);
 
-  const handleRemove = useCallback((id: string) => {
-    setExams((prev) => prev.filter((e) => e.id !== id));
-  }, []);
+  const handleRemove = useCallback(
+    (id: string) => {
+      setExams((prev) => prev.filter((e) => e.id !== id));
+    },
+    [setExams]
+  );
 
   const handleChange = useCallback(
     (id: string, field: keyof ExamEvent, value: string) => {
@@ -91,7 +76,7 @@ export function ExamCountdown() {
         prev.map((e) => (e.id === id ? { ...e, [field]: value } : e))
       );
     },
-    []
+    [setExams]
   );
 
   const handleExportICS = useCallback(() => {

@@ -96,10 +96,26 @@ export function useSeatPlanner() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
+      const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
+      const isCsv =
+        file.type === 'text/csv' ||
+        file.type === 'application/vnd.ms-excel' ||
+        file.type === '' || // some browsers report empty type for .csv
+        /\.csv$/i.test(file.name);
+      if (!isCsv) {
+        toast.error('Unsupported file type. Please upload a .csv file.');
+        e.target.value = '';
+        return;
+      }
+      if (file.size > MAX_BYTES) {
+        toast.error('File is too large. Maximum size is 10 MB.');
+        e.target.value = '';
+        return;
+      }
       const reader = new FileReader();
       reader.onload = (ev) => handleParseInput(ev.target?.result as string);
       reader.onerror = () => toast.error('Failed to read the uploaded file.');
-      reader.readAsText(file);
+      reader.readAsText(file, 'utf-8');
       e.target.value = '';
     },
     [handleParseInput]

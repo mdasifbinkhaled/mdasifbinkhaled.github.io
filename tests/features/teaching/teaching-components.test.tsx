@@ -35,6 +35,11 @@ const detailedCourse: CourseData = {
   institution: 'IUB',
   tier: 'detailed',
   status: 'completed',
+  outcomes: [
+    'Understand CS fundamentals',
+    'Write basic programs',
+    'Apply problem-solving techniques',
+  ],
 };
 
 const basicCourse: CourseData = {
@@ -47,8 +52,9 @@ const basicCourse: CourseData = {
   year: 2024,
   credits: 3,
   institution: 'IUB',
-  tier: 'basic',
+  tier: 'summary',
   status: 'completed',
+  outcomes: ['Master linear and non-linear data structures'],
 };
 
 // ─── TeachingHeroStats ───────────────────────────────────────────────────────

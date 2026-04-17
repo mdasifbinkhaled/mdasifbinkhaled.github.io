@@ -17,14 +17,10 @@ async function build() {
           expiration: { maxEntries: 50, maxAgeSeconds: 86400 },
         },
       },
-      {
-        urlPattern: /\.(?:css|js)$/,
-        handler: 'StaleWhileRevalidate',
-        options: {
-          cacheName: 'static-resources',
-          expiration: { maxEntries: 60, maxAgeSeconds: 604800 },
-        },
-      },
+      // NOTE: JS/CSS are emitted with content-hashed filenames by Next.js and
+      // are already in the precache manifest above. A runtime rule for them
+      // would only add risk (serving a stale hashed bundle if one slipped
+      // past precache) with no benefit, so it is intentionally omitted.
       {
         urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|ico)$/,
         handler: 'CacheFirst',

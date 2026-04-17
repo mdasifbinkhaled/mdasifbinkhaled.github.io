@@ -1,8 +1,15 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "@testing-library/jest-dom"]
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    // Tests assert on known fixture shapes; relaxing noUncheckedIndexedAccess
+    // avoids forcing non-null assertions on every `queryAll()[n]` and similar.
+    "noUncheckedIndexedAccess": false
   },
-  "include": ["./**/*", "./vitest.d.ts"],
+  "include": [
+    "./**/*",
+    "./vitest.d.ts",
+    "../src/shared/types/jspdf-autotable.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

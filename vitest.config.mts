@@ -17,6 +17,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
       reportsDirectory: './coverage',
+      include: ['src/**/*.{ts,tsx}'],
       exclude: [
         'node_modules/**',
         'tests/**',
@@ -36,6 +37,14 @@ export default defineConfig({
         'src/app/sitemap.ts',
         'src/shared/types/**',
         'src/shared/config/**',
+        // Browser-only export utilities (rely on jsPDF/html2canvas/DOM).
+        // Covered indirectly via E2E; unit-testing would require heavy mocking
+        // that would verify the mocks rather than the code.
+        'src/features/apps/components/seat-planner/pdf-export.ts',
+        'src/features/apps/components/seat-planner/csv-export.ts',
+        'src/shared/components/common/pdf-viewer.tsx',
+        'src/shared/components/infra/sw-register.tsx',
+        'src/shared/lib/mdx.ts',
         'vitest.d.ts',
         'next-env.d.ts',
       ],

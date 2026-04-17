@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import {
   Plus,
   Trash2,
@@ -27,6 +27,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu';
+import { usePersistedState } from '@/shared/hooks';
 import type { PlannerCourse } from './types';
 import { PRESETS } from './presets';
 import { topoLevels, getUnlocked } from './topo-sort';
@@ -35,35 +36,14 @@ import { toast } from 'sonner';
 const STORAGE_KEY = 'abk_course_planner';
 
 export function CoursePlanner() {
-  const [courses, setCourses] = useState<PlannerCourse[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [courses, setCourses, { ready: mounted }] = usePersistedState<
+    PlannerCourse[]
+  >(STORAGE_KEY, []);
   const [showAdd, setShowAdd] = useState(false);
   const [newCode, setNewCode] = useState('');
   const [newTitle, setNewTitle] = useState('');
   const [newCredits, setNewCredits] = useState('3');
   const [newPrereqs, setNewPrereqs] = useState('');
-
-  // Load state
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setCourses(JSON.parse(saved) as PlannerCourse[]);
-      }
-    } catch {
-      // ignore
-    }
-
-    setMounted(true);
-  }, []);
-
-  // Persist
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(courses));
-    }
-  }, [courses, mounted]);
 
   const levels = useMemo(() => topoLevels(courses), [courses]);
   const unlocked = useMemo(() => getUnlocked(courses), [courses]);
@@ -76,22 +56,28 @@ export function CoursePlanner() {
     [courses]
   );
 
-  const toggleComplete = useCallback((id: string) => {
-    setCourses((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, completed: !c.completed } : c))
-    );
-  }, []);
+  const toggleComplete = useCallback(
+    (id: string) => {
+      setCourses((prev) =>
+        prev.map((c) => (c.id === id ? { ...c, completed: !c.completed } : c))
+      );
+    },
+    [setCourses]
+  );
 
-  const removeCourse = useCallback((id: string) => {
-    setCourses((prev) => {
-      const remaining = prev.filter((c) => c.id !== id);
-      // Also remove this ID from any prerequisites
-      return remaining.map((c) => ({
-        ...c,
-        prerequisites: c.prerequisites.filter((pid) => pid !== id),
-      }));
-    });
-  }, []);
+  const removeCourse = useCallback(
+    (id: string) => {
+      setCourses((prev) => {
+        const remaining = prev.filter((c) => c.id !== id);
+        // Also remove this ID from any prerequisites
+        return remaining.map((c) => ({
+          ...c,
+          prerequisites: c.prerequisites.filter((pid) => pid !== id),
+        }));
+      });
+    },
+    [setCourses]
+  );
 
   const addCourse = useCallback(() => {
     if (!newCode.trim() || !newTitle.trim()) return;
@@ -118,17 +104,20 @@ export function CoursePlanner() {
     setNewCredits('3');
     setNewPrereqs('');
     setShowAdd(false);
-  }, [newCode, newTitle, newCredits, newPrereqs, courses]);
+  }, [newCode, newTitle, newCredits, newPrereqs, courses, setCourses]);
 
-  const loadPreset = useCallback((index: number) => {
-    const preset = PRESETS[index];
-    if (!preset) return;
-    setCourses(preset.courses.map((c) => ({ ...c, completed: false })));
-  }, []);
+  const loadPreset = useCallback(
+    (index: number) => {
+      const preset = PRESETS[index];
+      if (!preset) return;
+      setCourses(preset.courses.map((c) => ({ ...c, completed: false })));
+    },
+    [setCourses]
+  );
 
   const resetProgress = useCallback(() => {
     setCourses((prev) => prev.map((c) => ({ ...c, completed: false })));
-  }, []);
+  }, [setCourses]);
 
   const handleExportJSON = useCallback(() => {
     if (courses.length === 0) {

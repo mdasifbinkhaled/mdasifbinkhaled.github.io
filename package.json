@@ -41,7 +41,7 @@
     "lint:check": "eslint src",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml}\"",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tests/tsconfig.json",
     "analyze": "cross-env ANALYZE=true next build",
     "audit:ci": "npm audit --audit-level=high",
     "pre-commit": "lint-staged",

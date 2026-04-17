@@ -46,12 +46,34 @@ This project follows these security practices:
 
 This website implements the following security measures:
 
-- Content Security Policy (CSP)
+- Content Security Policy (CSP) — see limitation note below
 - HTTPS-only deployment via GitHub Pages
 - Automated dependency vulnerability scanning
 - Regular security audits via GitHub Actions
 - Strict TypeScript type checking
 - Input sanitization and validation
+
+### CSP delivery limitation (GitHub Pages)
+
+The site is hosted on GitHub Pages, which does not allow custom HTTP response
+headers. The CSP is therefore delivered via a `<meta http-equiv>` tag in the
+document `<head>`. This has the following consequences, documented here for
+reviewers:
+
+- **`frame-ancestors` is not enforceable via `<meta>`** — the directive is
+  ignored by browsers when set this way. Clickjacking protection relies on
+  GitHub Pages' default `X-Frame-Options: deny` header instead.
+- **`report-uri` / `report-to` have reduced utility** — violation reports
+  cannot be posted without a controllable endpoint, so the CSP is enforced
+  without a reporter.
+- **Headers that protect the HTML shell itself** (e.g. `X-Content-Type-Options`,
+  `Referrer-Policy`) are applied by GitHub Pages and cannot be further tightened
+  from the repo. The `public/_headers` file is kept for migration readiness but
+  is not read by GitHub Pages.
+
+If the site moves to a host that supports custom headers (Cloudflare Pages,
+Netlify, a reverse proxy, etc.), the CSP should be lifted out of the `<meta>`
+tag and served via HTTP response header to close these gaps.
 
 ## Known Development Dependency Vulnerabilities
 

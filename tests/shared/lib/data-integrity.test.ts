@@ -63,7 +63,8 @@ describe('Data Integrity Checks', () => {
       expect(professionalService.length).toBeGreaterThan(0);
       professionalService.forEach((svc) => {
         expect(svc.id).toMatch(/^svc-/);
-        expect(svc.role || svc.title).toBeTruthy(); // svc uses title in interface but acts as role
+        // `title` acts as the role label in the ServiceItem interface.
+        expect(svc.title).toBeTruthy();
         expect(svc.organization).toBeTruthy();
       });
     });

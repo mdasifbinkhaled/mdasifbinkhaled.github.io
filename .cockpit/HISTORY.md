@@ -295,6 +295,32 @@
 - **npm audit fix**: dev dependency vulnerabilities resolved
 - Quality Gates: 0 TS errors, 0 lint errors, 368/368 tests (41 files), 27 pages exported
 
+### Phase — Student Apps Expansion (Mid 2026)
+
+- **`5d96302`** `feat(apps): add Study Timer and Course Planner tools` — new Pomodoro/focus tracker with daily summary; course planner with topological prerequisite sort and unlocked-set computation
+- **`990a5e4`** `feat: add persistence, validation, visualization & export across all apps`
+  - `usePersistedState` SSR-safe hook rolled out to GPA and Grade calculators
+  - Toast-based validation + export (CSV/JSON/ICS) across student tools
+  - Small data-visualization touches in apps
+- **`6f1bf43`** `feat(apps): shared download util, weekly heatmap, error handling`
+  - Extracted `downloadFile()` utility (client-only, `document`-guarded) to replace per-app Blob/anchor duplication
+  - Study Timer: 49-day weekly-activity heatmap with immutable date arithmetic and column headers dynamically aligned to grid weekdays
+  - Seat Planner: toast-based error handling for PDF/PNG export failures, CSV-only file input with 10 MB cap and explicit UTF-8 decoding
+  - `FileReader.onerror` now surfaces a toast instead of silently failing
+
+### Phase — Forensic Audit Remediation (AUD-001 through AUD-016)
+
+- Post-audit sweep resolving the entire Sprint Action Plan in one pass
+- **Coverage gate restored**: `vitest.config.mts` gains `include: ['src/**/*']`; browser-only export utilities (jsPDF/html2canvas/`pdf-viewer`/`sw-register`/MDX loader) excluded with documented rationale. Coverage went 62.68 % → 65.52 %, clearing the 63 % threshold.
+- **Test typecheck**: fixed fixtures in `teaching-components.test.tsx` and `components.test.tsx` (valid `CourseLevel` / `CourseTier`, required `outcomes` array, `id` on mocks). Cleaned `data-integrity.test.ts` to stop referencing the non-existent `svc.role`. Relaxed `noUncheckedIndexedAccess` only in `tests/tsconfig.json`. `typecheck` npm script now runs both projects; `lint-staged` typechecks tests via `tsc-files`.
+- **Typing**: replaced the `as unknown as Record<…>` cast in `pdf-export.ts` with a proper `declare module 'jspdf'` augmentation in `src/shared/types/jspdf-autotable.d.ts`.
+- **Persistence**: Course Planner, Exam Countdown, and Study Timer migrated from hand-rolled `localStorage` + `mounted` flags to the shared `usePersistedState` hook.
+- **Seat Planner hardening**: file input restricted to `accept=".csv,text/csv"`, 10 MB upload cap, unsupported-type toast, explicit `readAsText(file, 'utf-8')`.
+- **Download helper**: `downloadFile()` now returns early when `document` is undefined (SSR-safe).
+- **Service worker**: removed redundant runtime-cache rule for `*.js` / `*.css`; Next.js hashed assets are already precached, so the rule added risk without benefit.
+- **Documentation**: README prerequisite bumped to Node.js 22 (matches `engines` and CI); `.github/SECURITY.md` documents the GitHub-Pages CSP-via-`<meta>` limitations (e.g. `frame-ancestors` not enforceable).
+- Quality gates green: `npm run typecheck` (src + tests), lint, format, vitest coverage, production build, Playwright E2E.
+
 ## Tags
 
 | Tag                   | Description                            |

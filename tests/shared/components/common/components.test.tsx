@@ -404,15 +404,17 @@ describe('Performance', () => {
 
 describe('CourseCard', () => {
   const mockCourse: CourseData = {
+    id: 'test-cse-123',
     code: 'CSE 123',
     title: 'Test Course 101',
     institution: 'IUB',
     semester: 'Fall',
     year: 2026,
     credits: 3,
-    level: 'Undergraduate',
+    level: 'undergraduate',
     tier: 'standard',
     description: 'This is a test course description.',
+    outcomes: ['Learn the basics'],
   };
 
   it('renders essential course information', () => {

@@ -19,6 +19,7 @@ import {
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
+import { usePersistedState } from '@/shared/hooks';
 
 type SessionType = 'focus' | 'short-break' | 'long-break';
 
@@ -77,7 +78,8 @@ function formatTime(totalSeconds: number): string {
 }
 
 export function StudyTimer() {
-  const [settings, setSettings] = useState<TimerSettings>(DEFAULT_SETTINGS);
+  const [settings, setSettings, { ready: settingsReady }] =
+    usePersistedState<TimerSettings>(STORAGE_KEY_SETTINGS, DEFAULT_SETTINGS);
   const [showSettings, setShowSettings] = useState(false);
   const [sessionType, setSessionType] = useState<SessionType>('focus');
   const [secondsLeft, setSecondsLeft] = useState(
@@ -85,8 +87,10 @@ export function StudyTimer() {
   );
   const [isRunning, setIsRunning] = useState(false);
   const [focusCount, setFocusCount] = useState(0);
-  const [allLog, setAllLog] = useState<SessionLog[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [allLog, setAllLog, { ready: logReady }] = usePersistedState<
+    SessionLog[]
+  >(STORAGE_KEY_LOG, []);
+  const mounted = settingsReady && logReady;
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
@@ -123,47 +127,15 @@ export function StudyTimer() {
     }
   }, []);
 
-  // Load from localStorage
+  // When settings hydrate from storage, sync the displayed countdown for the
+  // current session type (unless the timer is already running).
   useEffect(() => {
-    try {
-      const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
-      if (savedSettings) {
-        const parsed = JSON.parse(savedSettings) as TimerSettings;
-
-        setSettings(parsed);
-
-        setSecondsLeft(parsed.focusMinutes * 60);
-      }
-    } catch {
-      // ignore
-    }
-
-    try {
-      const savedLog = localStorage.getItem(STORAGE_KEY_LOG);
-      if (savedLog) {
-        const parsed = JSON.parse(savedLog) as SessionLog[];
-        setAllLog(parsed);
-      }
-    } catch {
-      // ignore
-    }
-
-    setMounted(true);
-  }, []);
-
-  // Persist settings
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(settings));
-    }
-  }, [settings, mounted]);
-
-  // Persist log
-  useEffect(() => {
-    if (mounted && allLog.length > 0) {
-      localStorage.setItem(STORAGE_KEY_LOG, JSON.stringify(allLog));
-    }
-  }, [allLog, mounted]);
+    if (!settingsReady) return;
+    setSecondsLeft((prev) =>
+      isRunning ? prev : getSessionDuration(sessionType, settings)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settingsReady]);
 
   // Timer tick
   useEffect(() => {
@@ -260,7 +232,7 @@ export function StudyTimer() {
         return updated;
       });
     },
-    [sessionType]
+    [sessionType, setSettings]
   );
 
   // Today's sessions derived from full log
@@ -282,27 +254,42 @@ export function StudyTimer() {
   // Weekly heatmap: last 7 weeks (49 days)
   const heatmapData = useMemo(() => {
     const DAYS = 49;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    // Build a map: dateString → focus minutes
+    const DAY_MS = 86_400_000;
+    const now = new Date();
+    const todayStart = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    ).getTime();
+    // Build a map: dateString → focus seconds
     const dayMap = new Map<string, number>();
     for (const entry of allLog) {
       if (entry.type !== 'focus') continue;
       const d = new Date(entry.completedAt);
-      d.setHours(0, 0, 0, 0);
-      const key = d.toDateString();
+      const key = new Date(
+        d.getFullYear(),
+        d.getMonth(),
+        d.getDate()
+      ).toDateString();
       dayMap.set(key, (dayMap.get(key) ?? 0) + entry.duration);
     }
-    // Generate array of DAYS cells ending today
+    // Generate array of DAYS cells ending today (immutable Date arithmetic)
     const cells: { date: Date; minutes: number }[] = [];
     for (let i = DAYS - 1; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(d.getDate() - i);
+      const d = new Date(todayStart - i * DAY_MS);
       const mins = Math.round((dayMap.get(d.toDateString()) ?? 0) / 60);
       cells.push({ date: d, minutes: mins });
     }
     const maxMinutes = Math.max(...cells.map((c) => c.minutes), 1);
-    return { cells, maxMinutes };
+    // Weekday labels aligned to grid columns: each column's weekday equals
+    // (firstCell.getDay() + colIndex) % 7. Grid rows fill left→right.
+    const weekdayShort = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    const firstDay = cells[0]?.date.getDay() ?? 0;
+    const columnLabels = Array.from(
+      { length: 7 },
+      (_, col) => weekdayShort[(firstDay + col) % 7] ?? ''
+    );
+    return { cells, maxMinutes, columnLabels };
   }, [allLog]);
 
   const totalDuration = getSessionDuration(sessionType, settings);
@@ -496,7 +483,7 @@ export function StudyTimer() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-7 gap-1 text-[10px] text-muted-foreground mb-1">
-              {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+              {heatmapData.columnLabels.map((d, i) => (
                 <span key={i} className="text-center">
                   {d}
                 </span>

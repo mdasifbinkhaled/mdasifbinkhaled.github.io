@@ -46,14 +46,14 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 
 Ensure you have the following installed:
 
-- **Node.js** v20.0.0 or higher ([Download](https://nodejs.org/))
+- **Node.js** v22.0.0 or higher ([Download](https://nodejs.org/)) — matches `engines.node` in `package.json` and the CI runner
 - **npm** v10.0.0 or higher (comes with Node.js)
 - **Git** ([Download](https://git-scm.com/))
 
 Verify your installation:
 
 ```bash
-node --version   # Should output v20.x.x or higher
+node --version   # Should output v22.x.x or higher
 npm --version    # Should output 10.x.x or higher
 git --version    # Should output git version 2.x.x
 ```
