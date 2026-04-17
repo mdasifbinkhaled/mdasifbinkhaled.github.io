@@ -9,6 +9,9 @@ import { A11Y_ROUTES } from './fixtures/routes';
  */
 
 test.describe('Per-page accessibility audit', () => {
+  // F-260: Prevent axe cross-origin iframe pressure timeouts during local parallel runs
+  test.describe.configure({ mode: 'serial' });
+
   for (const route of A11Y_ROUTES) {
     test(`${route} passes WCAG 2.x AA`, async ({ page }) => {
       // F-260: /cv embeds a PDF iframe that puts axe under cross-origin

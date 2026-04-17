@@ -1,14 +1,14 @@
 # ISSUES.md — Finding Tracker
 
 > **Last Audit**: 2026-04-17 | **Status**: Post-AUD-016 cockpit hygiene pass
-> **Total Findings**: 275 | **Resolved**: 265 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
+> **Total Findings**: 275 | **Resolved**: 266 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 1
 
 ## Dashboard
 
 ```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      32 (1 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    85 (1 open)  — Performance, DRY, architecture, testing gaps
+MEDIUM:    85 (0 open)  — Performance, DRY, architecture, testing gaps
 LOW:      104 (0 open)  — Polish, minor config, cosmetic
 INFO:      32 (0 open)  — Informational, acceptable trade-offs
 REASSESSED: 5           — F-195, F-196 (no action needed)
@@ -33,10 +33,6 @@ Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `domp
 
 Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 2026-04-12 ground-up audit.
 
-- **F-260 | Testing | MEDIUM** — `/cv` accessibility audit is nondeterministic locally.
-  Observed: Chromium a11y suite times out on `/cv` during default parallel execution. Isolated route and `--workers=1` both pass. Root cause: PDF iframe pressure under axe cross-origin analysis.
-  **Disposition (2026-04-17)**: (a) axe builder already excludes the `iframe` for `/cv`; (b) `test.slow()` applied to the `/cv` case to triple the per-test timeout; (c) CI enforces `workers: 1` (see [playwright.config.ts](../playwright.config.ts)) so CI is deterministic. Local `npm run test:e2e` now passes reliably with the hardened test; if it regresses, re-run with `PWTEST_WORKERS=1`.
-  **Next action**: monitor for one more cycle; if still flaky by 2026-07-17, split a11y into a dedicated Playwright project configured for `fullyParallel: false`.
 - **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
   `npm audit --omit=dev` reports open advisories for `jspdf@4.2.0`, `next@16.1.4`, and transitive `dompurify@3.3.1`. All at latest upstream versions — no fix currently published. Static export + Workbox precache reduce the exploitable surface.
   **Disposition (2026-04-17)**: Put on a **quarterly review cadence** tied to the `security.yml` exception block (F-244 policy). **Next review: 2026-07-17.** Re-check by running `npm audit --omit=dev` and inspecting upstream GHSA entries for:
@@ -47,10 +43,11 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
 
 ## Resolved Findings
 
-### Resolved in Ground-Up Audit & A11y Remediation (2026-04-12)
+### Resolved in Ground-Up Audit & A11y Remediation (2026-04-12 to 2026-04-17)
 
 | ID    | Category      | Severity | Title                                                          | Resolution                                                                                       |
 | ----- | ------------- | -------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| F-260 | Testing       | MEDIUM   | `/cv` accessibility audit is nondeterministic locally          | Added `test.describe.configure({ mode: 'serial' })` to `a11y-audit.spec.ts` to prevent timeout   |
 | F-265 | A11y          | MEDIUM   | Exam countdown icon buttons lack accessible names              | Added `aria-label` to course code Input, exam title Input, datetime Input, and delete Button     |
 | F-266 | A11y          | MEDIUM   | GPA calculator form inputs lack labels                         | Added `aria-label` to course name and credits inputs                                             |
 | F-267 | A11y          | LOW      | Seat planner select triggers lack accessible names             | Added `aria-label="Allocation Mode"` and `"Sort Order"` to SelectTrigger elements                |

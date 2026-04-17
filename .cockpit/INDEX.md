@@ -58,6 +58,17 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 - Sentry client-side error tracking (lazy-loaded client component).
 - Google Analytics via `@next/third-parties`.
 
+## Deferred Triggers Watchlist
+
+The following roadmap items are deferred pending external data triggers. These should be reviewed **quarterly** alongside the F-264 security dependency audit (Next review: **2026-07-17**).
+
+| Item     | Feature           | Trigger Condition                                                  | Data Source                       |
+| :------- | :---------------- | :----------------------------------------------------------------- | :-------------------------------- |
+| **7.6**  | PDF Study Aid     | WebGPU in ≥ 90% sessions OR capable small on-device model released | GA4 client capabilities / AI news |
+| **10.2** | Research Timeline | Second peer-reviewed publication accepted in same research area    | Owner's academic pipeline         |
+| **10.5** | Bengali Intro     | `bn-BD` visitors exceed 10% for two consecutive months             | GA4 `language` dimension          |
+| **11.3** | Search Analytics  | Total site traffic exceeds 500 sessions/month                      | GA4 total sessions                |
+
 ## Project Vitals
 
 | Metric            | Value                |
