@@ -30,7 +30,7 @@
                 /cv a11y hardened with test.slow + iframe exclude (F-260 watched)
     Build:      25 HTML pages / 27 routes exported + 109 files precached (Workbox)
     Format:     All files formatted
-    Commit:     f399fca (AUD-001..AUD-016) + hygiene resync (this commit)
+    Commit:     d8e2c96 (advisory closeout: coverage ratchet + drop tsc-files)
 
 ## Findings Summary
 
@@ -46,7 +46,7 @@
 See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 
 **Phase 6 (Code Quality): COMPLETED**
-**Phase 7 (Student Apps): COMPLETED** — 5 tools live (Grade Calculator, Seat Planner, GPA Calculator, Office Hours, Exam Countdown). Item 7.6 (PDF Study Aid via WebLLM) deferred until a WebGPU adoption trigger.
+**Phase 7 (Student Apps): COMPLETED** — 7 tools live (Grade Calculator, GPA Calculator, Seat Planner, Office Hours, Exam Countdown, Study Timer, Course Planner). Item 7.6 (PDF Study Aid via WebLLM) deferred until a WebGPU adoption trigger.
 **Phase 8 (Modern Web): COMPLETED** — View transitions, container queries, content-visibility, SEO enhancements.
 **Phase 9 (Testing): COMPLETED** — Playwright E2E + axe-core + smoke render tests + 64% coverage floor wired in CI.
 **Phase 10 (Content): IN PROGRESS** — Blog (MDX) and Talks pages live. Mentorship section infrastructure in place (empty state). 10.2 (Research timeline) and 10.5 (Bengali intro) deferred with explicit triggers.
@@ -60,19 +60,19 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 
 ## Project Vitals
 
-| Metric            | Value                  |
-| ----------------- | ---------------------- |
-| Source files      | 223                    |
-| Lines of code     | 17,186                 |
-| Client components | 59 of 148 (.tsx)       |
-| Server components | 89 of 148 (.tsx)       |
-| Custom hooks      | 4                      |
-| Data files        | 32                     |
-| Config files      | 6                      |
-| Barrel exports    | 19                     |
-| Test files        | 45 (41 unit + 4 E2E)   |
-| Themes            | 6                      |
-| ADRs              | 2 (ADR-005 + template) |
+| Metric            | Value                |
+| ----------------- | -------------------- |
+| Source files      | 223                  |
+| Lines of code     | 17,186               |
+| Client components | 59 of 148 (.tsx)     |
+| Server components | 89 of 148 (.tsx)     |
+| Custom hooks      | 4                    |
+| Data files        | 32                   |
+| Config files      | 6                    |
+| Barrel exports    | 19                   |
+| Test files        | 45 (41 unit + 4 E2E) |
+| Themes            | 6                    |
+| ADRs              | 2 (ADR-005, ADR-006) |
 
 ## Architecture Layers (LOC Distribution)
 

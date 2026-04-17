@@ -1,8 +1,19 @@
 # ADR-005: Student-Facing Tools Tab
 
 **Date**: 2026-02-19
-**Status**: Proposed
+**Status**: Accepted (implemented as `/apps/`, see Implementation Notes)
 **Deciders**: Md Asif Bin Khaled
+
+## Implementation Notes (2026-04-17)
+
+This ADR captures the original proposal as-written on 2026-02-19. During implementation the route prefix was renamed from `/tools` to `/apps` (shorter, better matches the "academic apps" framing in the nav) and the tool set grew beyond the original four. The **final shipped structure** is:
+
+- Route prefix: `src/app/apps/` (not `/tools/`)
+- Nav label: `Apps` (uses `LayoutGrid` icon, not `Wrench`)
+- Feature module: `src/features/apps/` (not `src/features/tools/`)
+- Shipped tools (7): Grade Calculator, GPA Calculator, Seat Planner, Office Hours, Exam Countdown, Course Planner, Study Timer
+
+All other architectural decisions below (static export, client-only, schema-first, no-data-leaves-browser, bundle budget) were followed. The divergence is cosmetic (naming) and scope-positive (more tools). Treat the design goals as authoritative and the specific folder names as historical.
 
 ## Context
 

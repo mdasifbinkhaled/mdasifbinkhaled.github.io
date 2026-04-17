@@ -4,8 +4,8 @@ Thank you for your interest in contributing! This document provides guidelines a
 
 ## 📋 Prerequisites
 
-- **Node.js** v20 or newer
-- **npm** v10 or newer
+- **Node.js** v22 or newer
+- **npm** v10 or newer (tested through v11)
 - **Git** for version control
 - A **GitHub account**
 

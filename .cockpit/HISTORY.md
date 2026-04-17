@@ -341,6 +341,16 @@
 - Closes advisory-audit "Later Improvements" items #8 and #10. Item #9 (pdf-lib migration) remains deliberately deferred under F-264 with its `CRITICAL-or-public-PoC` escalation trigger.
 - Quality gates re-verified: lint/format/unit/typecheck clean, 368/368 unit, coverage 65.52/82.40/55.14/65.52 ≥ 64/81/54/64 floor.
 
+### Phase — Docs Truth-Sync (2026-04-17)
+
+- Cross-referenced every cockpit MD, root MD, and `.github/*.md` against reality and fixed the drifts an audit surfaced:
+  - `TESTING.md` coverage-threshold table corrected from stale 60/50/70/60 to current **64/54/81/64**.
+  - `.github/CONTRIBUTING.md` Node prerequisite bumped from v20 → **v22** to match `package.json` `engines.node` and `README.md`.
+  - `.cockpit/adr/ADR-005-student-tools.md` re-stamped from `Proposed` to `Accepted (implemented as /apps/)` with an Implementation Notes block recording that the shipped prefix is `/apps/` (not `/tools/`), the nav icon is `LayoutGrid` (not `Wrench`), and the shipped tool count is 7 (not the original 4).
+  - `.cockpit/INDEX.md` Phase 7 line corrected from "5 tools live" to **"7 tools live"** (adds Course Planner, Study Timer); `ADRs` vitals row corrected from "ADR-005 + template" to "ADR-005, ADR-006"; Health-Dashboard `Commit:` row re-pointed from the historical `f399fca` to the current `d8e2c96` HEAD.
+- No code changes, no dependency changes; documentation only.
+- Quality gates untouched (typecheck, lint, 368/368 unit, coverage 65.52 %, build, 49/49 E2E chromium).
+
 ## Tags
 
 | Tag                   | Description                            |
