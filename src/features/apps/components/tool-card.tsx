@@ -1,23 +1,15 @@
 import { Icon } from '@/shared/components/common/icons';
-import type { IconName } from '@/shared/components/common/icons';
+import type { AppDefinition } from '@/shared/types';
 import Link from 'next/link';
 
 interface ToolCardProps {
-  title: string;
-  description: string;
-  icon: IconName;
-  href: string;
-  status?: 'active' | 'beta' | 'planned';
+  app: AppDefinition;
 }
 
-export function ToolCard({
-  title,
-  description,
-  icon,
-  href,
-  status = 'active',
-}: ToolCardProps) {
+export function ToolCard({ app }: ToolCardProps) {
+  const { slug, title, description, icon, status } = app;
   const isPlanned = status === 'planned';
+  const href = `/apps/${slug}`;
 
   return (
     <div
@@ -60,7 +52,10 @@ export function ToolCard({
       </div>
 
       {!isPlanned ? (
-        <Link href={href} className="absolute inset-0 z-10">
+        <Link
+          href={href}
+          className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
           <span className="sr-only">Go to {title}</span>
         </Link>
       ) : null}

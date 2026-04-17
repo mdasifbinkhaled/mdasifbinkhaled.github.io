@@ -3,6 +3,8 @@
 
 import type { IconName } from '@/shared/components/common/icons';
 
+export type { AppStatus, AppCategory, AppDefinition } from './apps';
+
 export type PublicationType =
   | 'Conference'
   | 'Journal'

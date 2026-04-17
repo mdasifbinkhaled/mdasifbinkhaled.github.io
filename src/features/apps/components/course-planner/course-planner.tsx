@@ -148,7 +148,7 @@ export function CoursePlanner() {
         </Badge>
         <Badge
           variant="outline"
-          className="text-sm px-3 py-1 border-emerald-500/50 text-emerald-600 dark:text-emerald-400"
+          className="text-sm px-3 py-1 border-emerald-500/50 text-emerald-700 font-bold dark:text-emerald-400"
         >
           {unlocked.length} available now
         </Badge>
@@ -303,7 +303,7 @@ export function CoursePlanner() {
                           >
                             {isCompleted ? (
                               <>
-                                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 mr-1" />
+                                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400 mr-1" />
                                 Done
                               </>
                             ) : isUnlocked ? (

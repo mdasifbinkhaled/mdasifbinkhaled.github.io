@@ -50,7 +50,7 @@ export const mainNavItems: NavItem[] = [
   {
     href: '/apps',
     label: 'Apps',
-    icon: 'Wrench',
+    icon: 'LayoutGrid',
     sectionId: 'apps',
   },
 ];

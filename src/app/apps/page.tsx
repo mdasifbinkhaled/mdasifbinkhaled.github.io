@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ToolsHero, ToolCard } from '@/features/apps';
 import { siteConfig } from '@/shared/config/site';
+import { getAppsByCategory } from '@/shared/config/apps';
 
 export const metadata: Metadata = {
   title: `Apps | ${siteConfig.author}`,
@@ -17,64 +18,22 @@ export const metadata: Metadata = {
 };
 
 export default function AppsPage() {
+  const groups = getAppsByCategory();
+
   return (
     <div className="container-responsive flex flex-col gap-8 pb-16 pt-8">
       <ToolsHero />
 
-      <section className="space-y-6">
-        <h2 className="text-2xl font-bold tracking-tight">Available Tools</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <ToolCard
-            title="Grade Calculator"
-            description="Calculate your current class standing and dynamically project the required scores needed to achieve your target final grade."
-            icon="Calculator"
-            href="/apps/grade-calculator"
-            status="active"
-          />
-          <ToolCard
-            title="GPA Calculator"
-            description="Compute your semester GPA and cumulative CGPA across multiple credit-weighted courses."
-            icon="Brain"
-            href="/apps/gpa-calculator"
-            status="active"
-          />
-          <ToolCard
-            title="Seat Planner"
-            description="Generate exam seating arrangements with room assignments, master lists, and printable signature sheets."
-            icon="Building2"
-            href="/apps/seat-planner"
-            status="active"
-          />
-          <ToolCard
-            title="Exam Countdown"
-            description="Keep track of upcoming midterms and finals with real-time countdown timers."
-            icon="Timer"
-            href="/apps/exam-countdown"
-            status="active"
-          />
-          <ToolCard
-            title="Office Hours"
-            description="View office hours schedule and availability for 1-on-1 counseling sessions."
-            icon="CalendarDays"
-            href="/apps/office-hours"
-            status="active"
-          />
-          <ToolCard
-            title="Study Timer"
-            description="Pomodoro-style focus timer with configurable work/break intervals, session tracking, and daily stats."
-            icon="Clock"
-            href="/apps/study-timer"
-            status="active"
-          />
-          <ToolCard
-            title="Course Planner"
-            description="Visualize prerequisite chains in topological order, track completed courses, and plan your next semester."
-            icon="GitBranch"
-            href="/apps/course-planner"
-            status="active"
-          />
-        </div>
-      </section>
+      {groups.map((group) => (
+        <section key={group.category} className="space-y-6">
+          <h2 className="text-2xl font-bold tracking-tight">{group.label}</h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {group.items.map((app) => (
+              <ToolCard key={app.slug} app={app} />
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   );
 }
