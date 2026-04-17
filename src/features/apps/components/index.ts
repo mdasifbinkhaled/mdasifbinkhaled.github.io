@@ -7,3 +7,4 @@ export { OfficeHoursBooker } from './office-hours/office-hours-booker';
 export { ExamCountdown } from './exam-countdown/exam-countdown';
 export { StudyTimer } from './study-timer/study-timer';
 export { CoursePlanner } from './course-planner/course-planner';
+export { AppsHub } from './apps-hub';

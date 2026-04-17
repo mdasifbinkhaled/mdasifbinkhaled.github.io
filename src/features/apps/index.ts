@@ -14,4 +14,5 @@ export {
   ExamCountdown,
   StudyTimer,
   CoursePlanner,
+  AppsHub,
 } from './components';

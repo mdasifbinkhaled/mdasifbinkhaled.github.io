@@ -26,6 +26,7 @@ import {
   TerminalSquare,
   Clock,
   GitBranch,
+  Search,
   type LucideProps,
 } from 'lucide-react';
 
@@ -59,6 +60,7 @@ export const iconComponents = {
   TerminalSquare,
   Clock,
   GitBranch,
+  Search,
 };
 
 interface IconComponentProps extends LucideProps {
