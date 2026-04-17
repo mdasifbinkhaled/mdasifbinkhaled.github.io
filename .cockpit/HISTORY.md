@@ -333,6 +333,14 @@
 - **package.json**: `engines.npm` pinned to `>=10.0.0 <12` to align with `packageManager: npm@11.4.2`.
 - Quality gates green (re-verified): typecheck, lint, 368/368 unit, 49/49 E2E, build, coverage 65.52 %.
 
+### Phase — Advisory Closeout: Coverage Ratchet + lint-staged Simplification (2026-04-17)
+
+- **Coverage thresholds raised** in `vitest.config.mts` from 63/75/53/63 (lines/branches/functions/statements) to **64/81/54/64** — locks in the measured 65.52/82.40/55.14/65.52 floor while leaving ~1 – 1.5 pt headroom against transient noise; any future regression below the new floor now fails CI instead of silently decaying.
+- **`tsc-files` dropped** from the `src/**/*.{ts,tsx}` lint-staged hook (and uninstalled as a dependency). The tool was flaky with path-aliased projects, and CI + `npm run validate:full` already run `tsc --noEmit` against both root and `tests/tsconfig.json` projects — so zero loss of coverage, one fewer moving part. `PACKAGING.md` updated.
+- Cockpit docs (INDEX Health Dashboard, ISSUES Quality Gates, ROADMAP header) re-pointed at the 64/81/54/64 floor.
+- Closes advisory-audit "Later Improvements" items #8 and #10. Item #9 (pdf-lib migration) remains deliberately deferred under F-264 with its `CRITICAL-or-public-PoC` escalation trigger.
+- Quality gates re-verified: lint/format/unit/typecheck clean, 368/368 unit, coverage 65.52/82.40/55.14/65.52 ≥ 64/81/54/64 floor.
+
 ## Tags
 
 | Tag                   | Description                            |

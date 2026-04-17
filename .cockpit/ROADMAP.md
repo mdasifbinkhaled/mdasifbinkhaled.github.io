@@ -1,7 +1,7 @@
 # ROADMAP.md — Improvement Roadmap
 
 > **Created**: 2026-02-19 | **Updated**: 2026-04-17
-> **Current Version**: 1.5.0 | **Quality**: All gates green (coverage 65.52% lines / 82.40% branches vs. 63/75/53/63 floor, 49/49 E2E chromium, 0 TS/ESLint errors)
+> **Current Version**: 1.5.0 | **Quality**: All gates green (coverage 65.52% lines / 82.40% branches vs. 64/81/54/64 floor, 49/49 E2E chromium, 0 TS/ESLint errors)
 > **Open Findings**: 2 — F-260 `/cv` a11y hardened (watched), F-264 supply-chain advisories (quarterly review)
 
 ## Phase 6: Code Quality & Cleanup

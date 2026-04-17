@@ -36,30 +36,29 @@
 
 ## Dev Dependencies
 
-| Package                           | Version  | Purpose                      |
-| --------------------------------- | -------- | ---------------------------- |
-| `typescript`                      | ^5.9.x   | Type checking                |
-| `eslint`                          | ^9.39.2  | Linting                      |
-| `eslint-config-next`              | ^16.1.4  | Next.js ESLint rules         |
-| `prettier`                        | ^3.8.2   | Code formatting              |
-| `vitest`                          | ^3.2.4   | Test runner                  |
-| `@vitest/coverage-v8`             | ^3.2.4   | Coverage reporting           |
-| `@testing-library/react`          | ^16.x    | React testing utilities      |
-| `@testing-library/jest-dom`       | ^6.x     | DOM matchers                 |
-| `@testing-library/user-event`     | ^14.6.1  | User interaction simulation  |
-| `jsdom`                           | ^25.x    | DOM environment for tests    |
-| `@vitejs/plugin-react`            | ^4.7.0   | Vite React plugin            |
-| `tailwindcss`                     | ^4.1.18  | CSS framework                |
-| `tailwindcss-animate`             | ^1.0.7   | Animation utilities          |
-| `autoprefixer`                    | ^10.4.20 | CSS vendor prefixing         |
-| `postcss`                         | ^8.4.41  | CSS processing               |
-| `husky`                           | ^9.1.7   | Git hooks                    |
-| `lint-staged`                     | ^15.5.2  | Pre-commit linting           |
-| `commitlint`                      | ^20.1.0  | Commit message enforcement   |
-| `@commitlint/config-conventional` | ^20.0.0  | Conventional commit rules    |
-| `cross-env`                       | ^7.0.3   | Cross-platform env vars      |
-| `tsc-files`                       | ^1.1.4   | Type-check staged files only |
-| `@playwright/test`                | ^1.58.0  | E2E testing + accessibility  |
+| Package                           | Version  | Purpose                     |
+| --------------------------------- | -------- | --------------------------- |
+| `typescript`                      | ^5.9.x   | Type checking               |
+| `eslint`                          | ^9.39.2  | Linting                     |
+| `eslint-config-next`              | ^16.1.4  | Next.js ESLint rules        |
+| `prettier`                        | ^3.8.2   | Code formatting             |
+| `vitest`                          | ^3.2.4   | Test runner                 |
+| `@vitest/coverage-v8`             | ^3.2.4   | Coverage reporting          |
+| `@testing-library/react`          | ^16.x    | React testing utilities     |
+| `@testing-library/jest-dom`       | ^6.x     | DOM matchers                |
+| `@testing-library/user-event`     | ^14.6.1  | User interaction simulation |
+| `jsdom`                           | ^25.x    | DOM environment for tests   |
+| `@vitejs/plugin-react`            | ^4.7.0   | Vite React plugin           |
+| `tailwindcss`                     | ^4.1.18  | CSS framework               |
+| `tailwindcss-animate`             | ^1.0.7   | Animation utilities         |
+| `autoprefixer`                    | ^10.4.20 | CSS vendor prefixing        |
+| `postcss`                         | ^8.4.41  | CSS processing              |
+| `husky`                           | ^9.1.7   | Git hooks                   |
+| `lint-staged`                     | ^15.5.2  | Pre-commit linting          |
+| `commitlint`                      | ^20.1.0  | Commit message enforcement  |
+| `@commitlint/config-conventional` | ^20.0.0  | Conventional commit rules   |
+| `cross-env`                       | ^7.0.3   | Cross-platform env vars     |
+| `@playwright/test`                | ^1.58.0  | E2E testing + accessibility |
 
 ## Overrides
 

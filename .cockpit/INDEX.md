@@ -25,7 +25,7 @@
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
     Unit:       368/368 PASS (41 files, 65.52% lines / 82.40% branches / 55.14% funcs)
-    Coverage:   Thresholds 63% lines · 75% branches · 53% funcs · 63% stmts (enforced in vitest.config.mts)
+    Coverage:   Thresholds 64% lines · 81% branches · 54% funcs · 64% stmts (enforced in vitest.config.mts)
     E2E:        49/49 PASS (chromium primary; firefox + mobile-safari best-effort)
                 /cv a11y hardened with test.slow + iframe exclude (F-260 watched)
     Build:      25 HTML pages / 27 routes exported + 109 files precached (Workbox)
@@ -48,7 +48,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 6 (Code Quality): COMPLETED**
 **Phase 7 (Student Apps): COMPLETED** — 5 tools live (Grade Calculator, Seat Planner, GPA Calculator, Office Hours, Exam Countdown). Item 7.6 (PDF Study Aid via WebLLM) deferred until a WebGPU adoption trigger.
 **Phase 8 (Modern Web): COMPLETED** — View transitions, container queries, content-visibility, SEO enhancements.
-**Phase 9 (Testing): COMPLETED** — Playwright E2E + axe-core + smoke render tests + 63% coverage floor wired in CI.
+**Phase 9 (Testing): COMPLETED** — Playwright E2E + axe-core + smoke render tests + 64% coverage floor wired in CI.
 **Phase 10 (Content): IN PROGRESS** — Blog (MDX) and Talks pages live. Mentorship section infrastructure in place (empty state). 10.2 (Research timeline) and 10.5 (Bengali intro) deferred with explicit triggers.
 **Phase 11 (Monitoring): IN PROGRESS** — Sentry error tracking and Google Analytics wired. 11.3 (Search/filter analytics) deferred until GA traffic baseline > 500 sessions/mo. 11.4 (Uptime monitoring) — configuration guide in [uptime-robot.md](uptime-robot.md); external UptimeRobot monitor activated.
 

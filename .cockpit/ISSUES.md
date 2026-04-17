@@ -21,7 +21,7 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:   ✅ 0 errors  (strict mode — root + tests projects, see ADR-006)
 ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
-Unit tests:   ✅ 368/368 pass  (41 files, coverage 65.52% lines / 82.40% branches, floor 63/75/53/63 in vitest.config.mts)
+Unit tests:   ✅ 368/368 pass  (41 files, coverage 65.52% lines / 82.40% branches, floor 64/81/54/64 in vitest.config.mts)
 E2E:          ✅ 49/49 pass  (4 spec files — a11y-audit, all-pages-smoke, keyboard-nav, theme-contrast)
 Build:        ✅ 25 HTML pages / 27 routes exported  (static export, Workbox precaches 109 files ≈ 5.3 MB)
 Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `dompurify`) — all at latest, no upstream fix; quarterly re-review (see F-264)
