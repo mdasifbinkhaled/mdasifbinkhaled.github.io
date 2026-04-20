@@ -63,7 +63,7 @@ export function AppsHub() {
             className="pl-9 bg-background border-input rounded-2xl h-10 transition-colors focus-visible:ring-primary/50"
           />
         </div>
-        <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
+        <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0">
           {categories.map((cat) => (
             <Button
               key={cat}
@@ -114,9 +114,7 @@ export function AppsHub() {
               </h2>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.items.map((app) => (
-                  <div key={app.slug}>
-                    <ToolCard app={app} />
-                  </div>
+                  <ToolCard key={app.slug} app={app} />
                 ))}
               </div>
             </section>

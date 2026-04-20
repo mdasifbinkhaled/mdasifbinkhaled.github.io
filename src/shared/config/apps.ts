@@ -1,4 +1,6 @@
+import type { Metadata } from 'next';
 import type { AppCategory, AppDefinition } from '@/shared/types';
+import { siteConfig } from './site';
 
 // ---------------------------------------------------------------------------
 // Single source of truth for every app listed on the /apps hub page.
@@ -100,4 +102,35 @@ export function getAppsByCategory(): {
       items: apps.filter((a) => a.category === cat),
     }))
     .filter((g) => g.items.length > 0);
+}
+
+/** Look up an app definition by slug. Throws if the slug is unknown. */
+export function getAppBySlug(slug: string): AppDefinition {
+  const app = apps.find((a) => a.slug === slug);
+  if (!app) {
+    throw new Error(
+      `[apps config] Unknown app slug: "${slug}". Add it to src/shared/config/apps.ts.`
+    );
+  }
+  return app;
+}
+
+/**
+ * Build a consistent Next.js Metadata object for an individual tool page,
+ * derived from the single source of truth in `apps`.
+ */
+export function buildAppMetadata(slug: string): Metadata {
+  const app = getAppBySlug(slug);
+  const title = `${app.title} | Apps | ${siteConfig.author}`;
+  const canonical = `/apps/${app.slug}`;
+  return {
+    title,
+    description: app.description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description: app.description,
+      url: canonical,
+    },
+  };
 }

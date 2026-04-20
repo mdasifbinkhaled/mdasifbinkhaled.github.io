@@ -15,4 +15,5 @@ export {
   StudyTimer,
   CoursePlanner,
   AppsHub,
+  AppPageHeader,
 } from './components';

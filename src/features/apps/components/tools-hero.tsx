@@ -5,7 +5,14 @@ export function ToolsHero() {
 
   return (
     <div className="relative overflow-hidden bg-primary/5 py-16 sm:py-24 rounded-3xl border mb-12">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,var(--color-primary)/0.06,transparent_60%)]" />
+      <div
+        className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
+        aria-hidden
+      />
+      <div
+        className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-primary/5 blur-3xl"
+        aria-hidden
+      />
       <div className="relative px-6 lg:px-8 max-w-3xl mx-auto text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">
           Apps &amp; Utilities

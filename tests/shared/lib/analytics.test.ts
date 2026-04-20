@@ -22,7 +22,7 @@ describe('analytics', () => {
 
   it('trackEvent is a no-op in development mode', async () => {
     process.env.NEXT_PUBLIC_ENABLE_ANALYTICS = 'true';
-    process.env.NODE_ENV = 'development';
+    (process.env as Record<string, string>).NODE_ENV = 'development';
     const { trackEvent } = await import('@/shared/lib/analytics');
     trackEvent('test_event');
   });
