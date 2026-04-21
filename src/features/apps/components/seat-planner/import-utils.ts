@@ -1,3 +1,4 @@
+import { parseText as parseTabularText } from '@/shared/lib/parsers/tabular';
 import type { ImportedRow } from '@/shared/lib/parsers/types';
 import type { Room, Student } from './types';
 
@@ -7,6 +8,7 @@ const SECTION_SOURCE_PATTERNS = [
 ] as const;
 
 const STUDENT_CORE_KEYS = new Set(['id', 'name', 'section']);
+const ROOM_STRUCTURED_DELIMITER = /[,	;|]/;
 
 export function inferSectionFromSource(source: string): string | undefined {
   const stem = source.replace(/\.[^.]+$/, '');
@@ -42,6 +44,39 @@ export function parseRoomCapacity(value: unknown): number | null {
   if (!Number.isFinite(capacity) || capacity <= 0) return null;
 
   return Math.floor(capacity);
+}
+
+function splitRoomImportLine(line: string): [string, string] | null {
+  const trimmed = line.trim();
+  if (!trimmed) return null;
+
+  if (ROOM_STRUCTURED_DELIMITER.test(trimmed)) {
+    const structuredMatch = trimmed.match(/^(.+?)\s*[,\t;|]\s*(.+)$/);
+    if (!structuredMatch) return null;
+
+    const left = structuredMatch[1]?.trim() ?? '';
+    const right = structuredMatch[2]?.trim() ?? '';
+    return left && right ? [left, right] : null;
+  }
+
+  const whitespaceMatch = trimmed.match(/^(.+?)\s+(\S+)$/);
+  if (!whitespaceMatch) return null;
+
+  const left = whitespaceMatch[1]?.trim() ?? '';
+  const right = whitespaceMatch[2]?.trim() ?? '';
+  return left && right ? [left, right] : null;
+}
+
+export function parseRoomImportText(text: string, source = 'Pasted text') {
+  const normalized = text
+    .split(/\r?\n/)
+    .map((line) => {
+      const split = splitRoomImportLine(line);
+      return split ? `${split[0]}\t${split[1]}` : line;
+    })
+    .join('\n');
+
+  return parseTabularText(normalized, source);
 }
 
 export function validateRoomDraft(

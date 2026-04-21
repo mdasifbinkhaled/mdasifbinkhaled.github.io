@@ -5,8 +5,8 @@ import type {
   Student,
 } from './types';
 
-export const MASTER_ROWS_PER_PRINT_PAGE = 26;
-export const ROOM_ROWS_PER_PRINT_PAGE = 20;
+export const MASTER_ROWS_PER_PRINT_PAGE = 22;
+export const ROOM_ROWS_PER_PRINT_PAGE = 16;
 
 export interface SectionSummaryItem {
   section: number;

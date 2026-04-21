@@ -34,7 +34,11 @@ import type {
   ImportCommitMeta,
   SchemaField,
 } from '@/shared/lib/parsers/types';
-import { parseRoomCapacity, validateRoomDraft } from './import-utils';
+import {
+  parseRoomCapacity,
+  parseRoomImportText,
+  validateRoomDraft,
+} from './import-utils';
 import type { Room, AllocationMode, SortOrder } from './types';
 
 type RoomKey = 'name' | 'capacity';
@@ -44,13 +48,13 @@ const ROOM_FIELDS: readonly SchemaField<RoomKey>[] = [
     key: 'name',
     label: 'Room name',
     required: true,
-    aliases: ['name', 'room', 'room name', 'venue'],
+    aliases: ['name', 'room', 'room name', 'venue', 'column 1'],
   },
   {
     key: 'capacity',
     label: 'Capacity',
     required: true,
-    aliases: ['capacity', 'seats', 'size'],
+    aliases: ['capacity', 'seats', 'size', 'column 2'],
     parse: (raw) => {
       const n = Number(raw);
       if (!Number.isFinite(n) || n <= 0)
@@ -340,8 +344,9 @@ export function RoomConfiguration({
         fields={ROOM_FIELDS}
         title="Import rooms"
         description="Paste rows from a spreadsheet or upload a CSV / TSV / XLSX file."
-        pastePlaceholder={'Room\tCapacity\nBC6007-S\t40\nBC6008-S\t60'}
-        helpText="Each row needs a room name and a positive capacity. Room names are normalized and merged case-insensitively when they refer to the same room."
+        parsePastedText={parseRoomImportText}
+        pastePlaceholder={'Room Capacity\nBC6007-S 40\nBC6008-S, 60\nLab A\t32'}
+        helpText="Headers are optional. The importer accepts room and capacity columns separated by spaces, commas, tabs, semicolons, or pipes, and defaults headerless two-column data to Room name + Capacity. Room names are normalized and merged case-insensitively when they refer to the same room."
         onCommit={(rows, meta) => onImportRooms(rows, meta)}
       />
     </Card>

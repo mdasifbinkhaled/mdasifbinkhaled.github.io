@@ -76,15 +76,15 @@ describe('Seat planner export utils', () => {
       totalPages: 5,
       startIndex: 0,
     });
-    expect(pages[0]?.rows).toHaveLength(26);
+    expect(pages[0]?.rows).toHaveLength(22);
 
     expect(pages[1]).toMatchObject({
       kind: 'master',
       pageNumber: 2,
       totalPages: 5,
-      startIndex: 26,
+      startIndex: 22,
     });
-    expect(pages[1]?.rows).toHaveLength(1);
+    expect(pages[1]?.rows).toHaveLength(5);
 
     expect(pages[2]).toMatchObject({
       kind: 'room',
@@ -95,7 +95,7 @@ describe('Seat planner export utils', () => {
       roomPageTotal: 2,
       facultySummary: 'Sec 1: Dr Rahman • Sec 2: Prof Karim',
     });
-    expect(pages[2]?.rows).toHaveLength(20);
+    expect(pages[2]?.rows).toHaveLength(16);
 
     if (pages[2]?.kind !== 'room') {
       throw new Error('Expected first room page');
@@ -110,11 +110,11 @@ describe('Seat planner export utils', () => {
       kind: 'room',
       pageNumber: 4,
       totalPages: 5,
-      startIndex: 20,
+      startIndex: 16,
       roomPageNumber: 2,
       roomPageTotal: 2,
     });
-    expect(pages[3]?.rows).toHaveLength(1);
+    expect(pages[3]?.rows).toHaveLength(5);
 
     expect(pages[4]).toMatchObject({
       kind: 'room',

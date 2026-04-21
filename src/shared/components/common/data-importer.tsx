@@ -86,6 +86,8 @@ export interface DataImporterProps<TKey extends string> {
   helpText?: string;
   /** Allow optional passthrough columns beyond the fixed schema. */
   allowExtraColumns?: boolean;
+  /** Optional pasted-text parser override for domain-specific import formats. */
+  parsePastedText?: (text: string, source: string) => TabularData;
   /** Called with the mapped/validated rows + chosen merge strategy. */
   onCommit: (rows: ImportedRow<TKey>[], meta: ImportCommitMeta) => void;
 }
@@ -144,6 +146,7 @@ export function DataImporter<TKey extends string>({
   accept = DEFAULT_ACCEPT,
   helpText,
   allowExtraColumns = false,
+  parsePastedText,
   onCommit,
 }: DataImporterProps<TKey>) {
   // ── tab state ─────────────────────────────────────────────────────
@@ -181,7 +184,7 @@ export function DataImporter<TKey extends string>({
       setTabular(null);
       return;
     }
-    const data = parseText(pasted, 'Pasted text');
+    const data = (parsePastedText ?? parseText)(pasted, 'Pasted text');
     setTabular(data);
     setMapping(inferMapping(data.headers, fields));
     setFileDefaults(buildInitialFileDefaults(data, fields));
