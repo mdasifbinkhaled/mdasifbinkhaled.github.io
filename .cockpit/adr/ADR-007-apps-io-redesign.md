@@ -1,6 +1,6 @@
 # ADR-007: Apps Hub I/O Redesign — Shared Primitives + Spreadsheet Imports
 
-**Date**: 2025-04-21
+**Date**: 2026-04-21
 **Status**: Accepted
 **Deciders**: mdasifbinkhaled
 
@@ -117,7 +117,8 @@ print | ics`; missing handlers are omitted. Separators are only rendered
 ### 5. Shared ICS writer
 
 `src/shared/lib/ics/write.ts` — minimal RFC 5545 writer used by Exam
-Countdown today and Course Planner in Phase 3. Handles UID / DTSTAMP /
+Countdown today and available to other tools when calendar export is
+needed. Handles UID / DTSTAMP /
 DTSTART / DTEND / SUMMARY / DESCRIPTION / LOCATION with §3.3.11 TEXT
 escaping. CRLF line endings per spec.
 
@@ -178,11 +179,11 @@ calendar format use `.ics` (shared writer); no tool needs to emit `.xlsx`.
 
 ## Rollout (Phases 1–3)
 
-| Phase | Scope                                                                  |
-| ----- | ---------------------------------------------------------------------- |
-| 1     | Primitives + Seat Planner refactor (this commit)                       |
-| 2     | Apply primitives to Grade / GPA / Exam / Course / Study                |
-| 3     | Add importers: GPA transcript paste, Course CSV/JSON, Exam `.ics` read |
+| Phase | Scope                                                               |
+| ----- | ------------------------------------------------------------------- |
+| 1     | Primitives + Seat Planner refactor (this commit)                    |
+| 2     | Apply primitives to Grade / GPA / Exam / Course / Study             |
+| 3     | Add importers: GPA transcript paste, Course CSV/XLSX, Exam CSV/XLSX |
 
 Each phase runs its own typecheck, tests, build, and e2e before pushing.
 
@@ -205,4 +206,7 @@ Each phase runs its own typecheck, tests, build, and e2e before pushing.
 - `tests/features/apps/seat-planner.test.ts` — 5 allocation tests (CSV
   tests moved to shared parsers tests).
 
-**Total:** 408/408 green after Phase 1.
+**Total:** 408/408 green after the full Phase 1-3 rollout.
+
+Playwright validation after rollout: 155 passed, 4 skipped, 0 failed
+across chromium, firefox, and mobile-safari.

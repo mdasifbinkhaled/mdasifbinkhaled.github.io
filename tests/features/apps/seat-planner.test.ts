@@ -57,4 +57,3 @@ describe('Seat Planner Allocation', () => {
     expect(res.allocations[0]?.students.length).toBe(2);
   });
 });
-import { describe, it, expect } from 'vitest';

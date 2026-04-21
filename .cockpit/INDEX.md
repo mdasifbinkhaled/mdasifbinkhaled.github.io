@@ -2,7 +2,7 @@
 
 > **Last Updated**: 2026-04-21
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.5.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.9 · Tailwind 4.1.18
+> **Version**: 1.5.0 | **Stack**: Next.js 16.2.3 · React 19 · TypeScript 5.9 · Tailwind 4.1.18
 
 ## Quick Navigation
 
@@ -26,10 +26,10 @@
     Lint:       PASS (0 errors, 0 warnings)
     Unit:       408/408 PASS (46 files)
     Coverage:   Thresholds 64% lines · 81% branches · 54% funcs · 64% stmts (enforced in vitest.config.mts)
-    E2E:        49/49 PASS (chromium primary; firefox + mobile-safari best-effort)
-    Build:      25 HTML pages / 27 routes exported + 111 files precached (Workbox, 5477 KB)
+    E2E:        155 passed, 4 skipped, 0 failed (chromium + firefox + mobile-safari)
+    Build:      27 HTML pages generated + 111 files precached (Workbox, 5484 KB)
     Format:     All files formatted
-    Phase:      Phase 12 (Apps I/O redesign) — Phase 1/3 complete
+    Phase:      Phase 12 (Apps I/O redesign) — complete (4/4 items done)
 
 ## Findings Summary
 
@@ -50,9 +50,10 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 9 (Testing): COMPLETED** — Playwright E2E + axe-core + smoke render tests + 64% coverage floor wired in CI.
 **Phase 10 (Content): IN PROGRESS** — Blog (MDX) and Talks pages live. Mentorship section infrastructure in place (empty state). 10.2 (Research timeline) and 10.5 (Bengali intro) deferred with explicit triggers.
 **Phase 11 (Monitoring): IN PROGRESS** — Sentry error tracking and Google Analytics wired. 11.3 (Search/filter analytics) deferred until GA traffic baseline > 500 sessions/mo. 11.4 (Uptime monitoring) — configuration guide in [uptime-robot.md](uptime-robot.md); external UptimeRobot monitor activated.
+**Phase 12 (Apps Hub I/O): COMPLETED** — shared import, storage, export, stats, and settings primitives rolled out; Seat Planner refactor complete; GPA transcript, Course CSV/XLSX, and Exam CSV/XLSX imports live.
 
-- 368/368 unit tests passing (41 files) + 49 E2E tests passing.
-- 25 HTML pages / 27 routes exported.
+- 408/408 unit tests passing (46 files) + 155 E2E tests passing with 4 skips and 0 failures.
+- 27 HTML pages generated and precached for static deployment.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).
 - Google Analytics via `@next/third-parties`.
@@ -70,19 +71,19 @@ The following roadmap items are deferred pending external data triggers. These s
 
 ## Project Vitals
 
-| Metric            | Value                |
-| ----------------- | -------------------- |
-| Source files      | 223                  |
-| Lines of code     | 17,186               |
-| Client components | 59 of 148 (.tsx)     |
-| Server components | 89 of 148 (.tsx)     |
-| Custom hooks      | 4                    |
-| Data files        | 32                   |
-| Config files      | 6                    |
-| Barrel exports    | 19                   |
-| Test files        | 45 (41 unit + 4 E2E) |
-| Themes            | 6                    |
-| ADRs              | 2 (ADR-005, ADR-006) |
+| Metric            | Value                         |
+| ----------------- | ----------------------------- |
+| Source files      | 223                           |
+| Lines of code     | 17,186                        |
+| Client components | 59 of 148 (.tsx)              |
+| Server components | 89 of 148 (.tsx)              |
+| Custom hooks      | 4                             |
+| Data files        | 32                            |
+| Config files      | 6                             |
+| Barrel exports    | 19                            |
+| Test files        | 50 (46 unit + 4 E2E)          |
+| Themes            | 6                             |
+| ADRs              | 3 (ADR-005, ADR-006, ADR-007) |
 
 ## Architecture Layers (LOC Distribution)
 
