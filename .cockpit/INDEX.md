@@ -1,6 +1,6 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-04-17
+> **Last Updated**: 2026-04-21
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
 > **Version**: 1.5.0 | **Stack**: Next.js 16.1.4 · React 19 · TypeScript 5.9 · Tailwind 4.1.18
 
@@ -10,27 +10,26 @@
 | ---------------------------------- | ---------------------------------------------------------- |
 | [INDEX.md](INDEX.md)               | This file — navigation hub                                 |
 | [PMD.md](PMD.md)                   | Project Master Document — architecture, metrics, decisions |
-| [ISSUES.md](ISSUES.md)             | Active findings tracker (275 findings, 2 open)             |
-| [ROADMAP.md](ROADMAP.md)           | Improvement roadmap — Phases 7-11 (26 items)               |
+| [ISSUES.md](ISSUES.md)             | Active findings tracker                                    |
+| [ROADMAP.md](ROADMAP.md)           | Improvement roadmap — Phases 7-12                          |
 | [STRUCTURE.md](STRUCTURE.md)       | Annotated file tree with LOC and responsibilities          |
 | [HISTORY.md](HISTORY.md)           | Development timeline and milestones                        |
 | [GOVERNANCE.md](GOVERNANCE.md)     | Code standards, review process, conventions                |
 | [PACKAGING.md](PACKAGING.md)       | Dependencies, build, deployment, CI, SEO, PWA, analytics   |
 | [RELEASES.md](RELEASES.md)         | Version history and changelog                              |
-| [adr/](adr/)                       | Architecture Decision Records (ADR-005, ADR-006)           |
+| [adr/](adr/)                       | ADR-005, ADR-006, ADR-007 (apps I/O redesign)              |
 | [uptime-robot.md](uptime-robot.md) | UptimeRobot monitor configuration                          |
 
 ## Health Dashboard
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Unit:       368/368 PASS (41 files, 65.52% lines / 82.40% branches / 55.14% funcs)
+    Unit:       408/408 PASS (46 files)
     Coverage:   Thresholds 64% lines · 81% branches · 54% funcs · 64% stmts (enforced in vitest.config.mts)
     E2E:        49/49 PASS (chromium primary; firefox + mobile-safari best-effort)
-                /cv a11y hardened with test.slow + iframe exclude (F-260 watched)
-    Build:      25 HTML pages / 27 routes exported + 109 files precached (Workbox)
+    Build:      25 HTML pages / 27 routes exported + 111 files precached (Workbox, 5477 KB)
     Format:     All files formatted
-    Commit:     d8e2c96 (advisory closeout: coverage ratchet + drop tsc-files)
+    Phase:      Phase 12 (Apps I/O redesign) — Phase 1/3 complete
 
 ## Findings Summary
 

@@ -7,6 +7,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { toast } from 'sonner';
 import { downloadFile } from '@/shared/lib/download-file';
+import { writeIcs } from '@/shared/lib/ics';
 import { usePersistedState } from '@/shared/hooks';
 
 interface ExamEvent {
@@ -87,32 +88,15 @@ export function ExamCountdown() {
       toast.error('No upcoming exams to export');
       return;
     }
-    const formatICS = (d: Date) =>
-      d
-        .toISOString()
-        .replace(/[-:]/g, '')
-        .replace(/\.\d{3}/, '');
-    const events = upcoming
-      .map((e) => {
-        const start = new Date(e.date);
-        const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
-        return [
-          'BEGIN:VEVENT',
-          `DTSTART:${formatICS(start)}`,
-          `DTEND:${formatICS(end)}`,
-          `SUMMARY:${e.course} - ${e.title}`,
-          `DESCRIPTION:${e.course} ${e.title}`,
-          'END:VEVENT',
-        ].join('\r\n');
-      })
-      .join('\r\n');
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//ABK//ExamCountdown//EN',
-      events,
-      'END:VCALENDAR',
-    ].join('\r\n');
+    const ics = writeIcs(
+      upcoming.map((e) => ({
+        start: new Date(e.date),
+        summary: `${e.course} - ${e.title}`,
+        description: `${e.course} ${e.title}`,
+        uid: `exam-${e.id}@apps-hub.local`,
+      })),
+      { prodId: '-//ABK//ExamCountdown//EN' }
+    );
     downloadFile(ics, 'exam-schedule.ics', 'text/calendar;charset=utf-8');
     toast.success(`Exported ${upcoming.length} exam(s) to .ics`);
   }, [exams]);

@@ -1,12 +1,16 @@
 'use client';
 
 // ────────────────────────────────────────────────
-// Seat Planner — state management hook
+// Seat Planner — state management hook (v2)
 // ────────────────────────────────────────────────
 
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { parseStudentData } from './csv-parser';
+import {
+  purgeToolData,
+  snapshotToolData,
+  useToolStorage,
+} from '@/shared/lib/storage';
 import { allocate } from './allocation';
 import {
   DEFAULT_EXAM_DETAILS,
@@ -17,19 +21,25 @@ import {
   type SortOrder,
   type AllocationResult,
 } from './types';
+import type { ImportCommitMeta } from '@/shared/lib/parsers/types';
+
+export const SEAT_TOOL_SLUG = 'seat-planner';
 
 export function useSeatPlanner() {
-  /* ── state ─────────────────────────────────── */
-  const [examDetails, setExamDetails] =
-    useState<ExamDetails>(DEFAULT_EXAM_DETAILS);
-  const [rawInput, setRawInput] = useState('');
-  const [students, setStudents] = useState<Student[]>([]);
-  const [parseErrors, setParseErrors] = useState<string[]>([]);
+  const [examDetails, setExamDetails] = useToolStorage<ExamDetails>(
+    SEAT_TOOL_SLUG,
+    'exam_details',
+    DEFAULT_EXAM_DETAILS
+  );
+  const [students, setStudents] = useToolStorage<Student[]>(
+    SEAT_TOOL_SLUG,
+    'students',
+    []
+  );
+  const [rooms, setRooms] = useToolStorage<Room[]>(SEAT_TOOL_SLUG, 'rooms', []);
 
-  const [rooms, setRooms] = useState<Room[]>([]);
   const [newRoomName, setNewRoomName] = useState('');
   const [newRoomCapacity, setNewRoomCapacity] = useState('40');
-
   const [allocationMode, setAllocationMode] =
     useState<AllocationMode>('cohort');
   const [sortOrder, setSortOrder] = useState<SortOrder>('section-name');
@@ -38,10 +48,7 @@ export function useSeatPlanner() {
   const [selectedRoomIdx, setSelectedRoomIdx] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const printRef = useRef<HTMLDivElement>(null);
-
-  /* ── derived ───────────────────────────────── */
 
   const sections = useMemo(() => {
     const s = new Set(students.map((st) => st.section));
@@ -77,54 +84,70 @@ export function useSeatPlanner() {
 
   const canGenerate = students.length > 0 && rooms.length > 0;
 
-  /* ── handlers ──────────────────────────────── */
-
-  const handleParseInput = useCallback((text: string) => {
-    setRawInput(text);
-    if (!text.trim()) {
-      setStudents([]);
-      setParseErrors([]);
-      return;
-    }
-    const { students: parsed, errors } = parseStudentData(text);
-    setStudents(parsed);
-    setParseErrors(errors);
-    setResult(null);
-  }, []);
-
-  const handleFileUpload = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
-      const isCsv =
-        file.type === 'text/csv' ||
-        file.type === 'application/vnd.ms-excel' ||
-        file.type === '' || // some browsers report empty type for .csv
-        /\.csv$/i.test(file.name);
-      if (!isCsv) {
-        toast.error('Unsupported file type. Please upload a .csv file.');
-        e.target.value = '';
-        return;
-      }
-      if (file.size > MAX_BYTES) {
-        toast.error('File is too large. Maximum size is 10 MB.');
-        e.target.value = '';
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (ev) => handleParseInput(ev.target?.result as string);
-      reader.onerror = () => toast.error('Failed to read the uploaded file.');
-      reader.readAsText(file, 'utf-8');
-      e.target.value = '';
+  const mergeBy = useCallback(
+    <T>(
+      existing: T[],
+      incoming: T[],
+      keyFn: (v: T) => string,
+      strategy: ImportCommitMeta['mergeStrategy']
+    ): T[] => {
+      if (strategy === 'replace') return incoming;
+      if (strategy === 'append') return [...existing, ...incoming];
+      const byKey = new Map<string, T>();
+      for (const v of existing) byKey.set(keyFn(v), v);
+      for (const v of incoming) byKey.set(keyFn(v), v);
+      return [...byKey.values()];
     },
-    [handleParseInput]
+    []
   );
 
-  const handleRemoveStudent = useCallback((id: string) => {
-    setStudents((prev) => prev.filter((s) => s.id !== id));
-    setResult(null);
-  }, []);
+  const handleImportStudents = useCallback(
+    (
+      rows: Record<'id' | 'name' | 'section', unknown>[],
+      meta: ImportCommitMeta
+    ) => {
+      const incoming: Student[] = rows.map((r) => ({
+        id: String(r.id).trim(),
+        name: String(r.name).trim(),
+        section: Number(r.section) || 1,
+      }));
+      setStudents((prev) =>
+        mergeBy(prev, incoming, (s) => s.id, meta.mergeStrategy)
+      );
+      setResult(null);
+      toast.success(
+        `Imported ${incoming.length} student${incoming.length === 1 ? '' : 's'}` +
+          (meta.rowsSkipped > 0 ? ` (${meta.rowsSkipped} skipped)` : '')
+      );
+    },
+    [setStudents, mergeBy]
+  );
+
+  const handleImportRooms = useCallback(
+    (rows: Record<'name' | 'capacity', unknown>[], meta: ImportCommitMeta) => {
+      const incoming: Room[] = rows.map((r) => ({
+        uid: crypto.randomUUID(),
+        name: String(r.name).trim(),
+        capacity: Math.max(1, Math.floor(Number(r.capacity) || 0)),
+      }));
+      setRooms((prev) =>
+        mergeBy(prev, incoming, (r) => r.name, meta.mergeStrategy)
+      );
+      setResult(null);
+      toast.success(
+        `Imported ${incoming.length} room${incoming.length === 1 ? '' : 's'}`
+      );
+    },
+    [setRooms, mergeBy]
+  );
+
+  const handleRemoveStudent = useCallback(
+    (id: string) => {
+      setStudents((prev) => prev.filter((s) => s.id !== id));
+      setResult(null);
+    },
+    [setStudents]
+  );
 
   const handleAddRoom = useCallback(() => {
     const name = newRoomName.trim();
@@ -137,12 +160,15 @@ export function useSeatPlanner() {
     setNewRoomName('');
     setNewRoomCapacity('40');
     setResult(null);
-  }, [newRoomName, newRoomCapacity]);
+  }, [newRoomName, newRoomCapacity, setRooms]);
 
-  const handleRemoveRoom = useCallback((uid: string) => {
-    setRooms((prev) => prev.filter((r) => r.uid !== uid));
-    setResult(null);
-  }, []);
+  const handleRemoveRoom = useCallback(
+    (uid: string) => {
+      setRooms((prev) => prev.filter((r) => r.uid !== uid));
+      setResult(null);
+    },
+    [setRooms]
+  );
 
   const handleGenerate = useCallback(() => {
     if (!canGenerate) return;
@@ -231,22 +257,40 @@ export function useSeatPlanner() {
     }
   }, [examDetails.courseCodes]);
 
-  /** Field updater factory for ExamDetails inputs */
+  const handleExportBackup = useCallback(() => {
+    const snap = snapshotToolData(SEAT_TOOL_SLUG);
+    const blob = new Blob([JSON.stringify(snap, null, 2)], {
+      type: 'application/json',
+    });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `seat-planner-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast.success('Backup saved.');
+  }, []);
+
+  const handleResetAll = useCallback(() => {
+    purgeToolData(SEAT_TOOL_SLUG);
+    setStudents([]);
+    setRooms([]);
+    setExamDetails(DEFAULT_EXAM_DETAILS);
+    setResult(null);
+    toast.success('Seat Planner reset.');
+  }, [setStudents, setRooms, setExamDetails]);
+
   const field = useCallback(
     (key: keyof ExamDetails) => ({
       value: examDetails[key],
       onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
         setExamDetails((prev) => ({ ...prev, [key]: e.target.value })),
     }),
-    [examDetails]
+    [examDetails, setExamDetails]
   );
 
   return {
-    // state
     examDetails,
-    rawInput,
     students,
-    parseErrors,
     rooms,
     newRoomName,
     newRoomCapacity,
@@ -255,19 +299,15 @@ export function useSeatPlanner() {
     result,
     selectedRoomIdx,
     isExporting,
-    // refs
-    fileInputRef,
     printRef,
-    // derived
     sections,
     totalCapacity,
     allStudentsSorted,
     stats,
     canGenerate,
-    // handlers
     field,
-    handleParseInput,
-    handleFileUpload,
+    handleImportStudents,
+    handleImportRooms,
     handleRemoveStudent,
     handleAddRoom,
     handleRemoveRoom,
@@ -276,6 +316,8 @@ export function useSeatPlanner() {
     handleExportPDF,
     handleExportCSV,
     handleExportPNG,
+    handleExportBackup,
+    handleResetAll,
     setNewRoomName,
     setNewRoomCapacity,
     setAllocationMode,

@@ -2,6 +2,7 @@
 // Seat Planner — Room Configuration card
 // ────────────────────────────────────────────────
 
+import { useState } from 'react';
 import {
   Plus,
   Trash2,
@@ -9,6 +10,7 @@ import {
   Shuffle,
   Layers,
   AlertCircle,
+  FileUp,
 } from 'lucide-react';
 import {
   Card,
@@ -25,7 +27,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select';
+import { DataImporter } from '@/shared/components/common/data-importer';
+import type { SchemaField, ImportCommitMeta } from '@/shared/lib/parsers/types';
 import type { Room, AllocationMode, SortOrder } from './types';
+
+type RoomKey = 'name' | 'capacity';
+
+const ROOM_FIELDS: readonly SchemaField<RoomKey>[] = [
+  {
+    key: 'name',
+    label: 'Room name',
+    required: true,
+    aliases: ['name', 'room', 'room name', 'venue'],
+  },
+  {
+    key: 'capacity',
+    label: 'Capacity',
+    required: true,
+    aliases: ['capacity', 'seats', 'size'],
+    parse: (raw) => {
+      const n = Number(raw);
+      if (!Number.isFinite(n) || n <= 0)
+        throw new Error(`invalid capacity "${raw}"`);
+      return Math.floor(n);
+    },
+  },
+];
 
 interface RoomConfigurationProps {
   rooms: Room[];
@@ -44,6 +71,10 @@ interface RoomConfigurationProps {
   onSortOrderChange: (v: SortOrder) => void;
   onGenerate: () => void;
   onResetResult: () => void;
+  onImportRooms: (
+    rows: Record<RoomKey, unknown>[],
+    meta: ImportCommitMeta
+  ) => void;
 }
 
 export function RoomConfiguration({
@@ -63,7 +94,9 @@ export function RoomConfiguration({
   onSortOrderChange,
   onGenerate,
   onResetResult,
+  onImportRooms,
 }: RoomConfigurationProps) {
+  const [importOpen, setImportOpen] = useState(false);
   return (
     <Card className="print:hidden">
       <CardHeader>
@@ -79,13 +112,13 @@ export function RoomConfiguration({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* add room */}
-        <div className="flex gap-2">
+        {/* add room + bulk import */}
+        <div className="flex flex-wrap gap-2">
           <Input
             placeholder="Room name (e.g. BC6007-S)"
             value={newRoomName}
             onChange={(e) => onRoomNameChange(e.target.value)}
-            className="flex-1"
+            className="min-w-[12rem] flex-1"
             onKeyDown={(e) => e.key === 'Enter' && onAddRoom()}
             aria-label="Room name"
           />
@@ -100,8 +133,16 @@ export function RoomConfiguration({
             aria-label="Room capacity"
           />
           <Button onClick={onAddRoom} size="sm">
-            <Plus className="h-4 w-4 mr-1" />
-            Add
+            <Plus className="h-4 w-4" aria-hidden />
+            <span className="ml-1">Add</span>
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setImportOpen(true)}
+          >
+            <FileUp className="h-4 w-4" aria-hidden />
+            <span className="ml-1.5">Bulk import</span>
           </Button>
         </div>
 
@@ -219,6 +260,17 @@ export function RoomConfiguration({
             </div>
           )}
       </CardContent>
+
+      <DataImporter<RoomKey>
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        fields={ROOM_FIELDS}
+        title="Import rooms"
+        description="Paste rows from a spreadsheet or upload a CSV / TSV / XLSX file."
+        pastePlaceholder={'Room\tCapacity\nBC6007-S\t40\nBC6008-S\t60'}
+        helpText="Each row needs a room name and a positive capacity."
+        onCommit={(rows, meta) => onImportRooms(rows, meta)}
+      />
     </Card>
   );
 }
