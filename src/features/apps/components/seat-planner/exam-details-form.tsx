@@ -3,7 +3,7 @@
 // ────────────────────────────────────────────────
 
 import { useId } from 'react';
-import { FileText } from 'lucide-react';
+import { FileText, Users } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -11,16 +11,26 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
-import type { ExamDetails } from './types';
+import type { ExamDetails, SectionFacultyMap } from './types';
 
 interface ExamDetailsFormProps {
   field: (key: keyof ExamDetails) => {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   };
+  sections: number[];
+  sectionCounts: Record<number, number>;
+  sectionFaculty: SectionFacultyMap;
+  onSectionFacultyChange: (section: number, value: string) => void;
 }
 
-export function ExamDetailsForm({ field }: ExamDetailsFormProps) {
+export function ExamDetailsForm({
+  field,
+  sections,
+  sectionCounts,
+  sectionFaculty,
+  onSectionFacultyChange,
+}: ExamDetailsFormProps) {
   return (
     <Card className="print:hidden">
       <CardHeader>
@@ -64,6 +74,58 @@ export function ExamDetailsForm({ field }: ExamDetailsFormProps) {
             placeholder="e.g. Independent University, Bangladesh"
             {...field('university')}
           />
+        </div>
+
+        <div className="mt-6 border-t pt-4">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h3 className="flex items-center gap-2 text-sm font-semibold">
+                <Users className="h-4 w-4 text-muted-foreground" />
+                Section Faculty / Invigilator
+              </h3>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Optional. These names are included in room sheets and PDF
+                exports when space permits.
+              </p>
+            </div>
+            {sections.length > 0 ? (
+              <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+                {sections.length} active section
+                {sections.length === 1 ? '' : 's'}
+              </span>
+            ) : null}
+          </div>
+
+          {sections.length > 0 ? (
+            <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {sections.map((section) => (
+                <div
+                  key={section}
+                  className="rounded-xl border bg-muted/15 p-3"
+                >
+                  <div className="mb-2">
+                    <p className="text-sm font-medium">Section {section}</p>
+                    <p className="text-[11px] text-muted-foreground">
+                      {sectionCounts[section] ?? 0} student
+                      {(sectionCounts[section] ?? 0) === 1 ? '' : 's'}
+                    </p>
+                  </div>
+                  <Input
+                    value={sectionFaculty[section] ?? ''}
+                    onChange={(e) =>
+                      onSectionFacultyChange(section, e.target.value)
+                    }
+                    placeholder="Faculty / invigilator name"
+                    aria-label={`Faculty name for section ${section}`}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-4 rounded-xl border border-dashed px-3 py-3 text-xs text-muted-foreground">
+              Import students first to add section-specific faculty names.
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

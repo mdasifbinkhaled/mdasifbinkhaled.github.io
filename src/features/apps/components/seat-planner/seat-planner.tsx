@@ -17,6 +17,13 @@
 //  All processing is 100% client-side.
 
 import { useCallback, useMemo } from 'react';
+import {
+  BarChart3,
+  Building2,
+  CheckCircle2,
+  TriangleAlert,
+  Users,
+} from 'lucide-react';
 import { useSeatPlanner } from './use-seat-planner';
 import { ExamDetailsForm } from './exam-details-form';
 import { StudentDataPanel } from './student-data-panel';
@@ -26,7 +33,6 @@ import {
   StatsPanel,
   type StatItem,
 } from '@/shared/components/common/stats-panel';
-import { ExportBar } from '@/shared/components/common/export-bar';
 import { ToolSettings } from '@/shared/components/common/tool-settings';
 
 export function SeatPlanner() {
@@ -38,12 +44,14 @@ export function SeatPlanner() {
       {
         label: 'Students',
         value: sp.students.length.toLocaleString(),
+        icon: <Users className="h-3.5 w-3.5" />,
         hint: `${sp.sections.length} section${sp.sections.length === 1 ? '' : 's'}`,
       },
       {
-        label: 'Rooms',
-        value: sp.rooms.length.toLocaleString(),
-        hint: `${sp.totalCapacity.toLocaleString()} seats`,
+        label: 'Capacity',
+        value: sp.totalCapacity.toLocaleString(),
+        icon: <Building2 className="h-3.5 w-3.5" />,
+        hint: `${sp.rooms.length} room${sp.rooms.length === 1 ? '' : 's'}`,
       },
     ];
     if (sp.stats) {
@@ -51,6 +59,7 @@ export function SeatPlanner() {
         {
           label: 'Assigned',
           value: sp.stats.assigned.toLocaleString(),
+          icon: <CheckCircle2 className="h-3.5 w-3.5" />,
           tone: sp.stats.unassigned > 0 ? 'warning' : 'success',
           hint:
             sp.stats.unassigned > 0
@@ -60,6 +69,7 @@ export function SeatPlanner() {
         {
           label: 'Utilisation',
           value: `${sp.stats.utilisation}%`,
+          icon: <BarChart3 className="h-3.5 w-3.5" />,
           hint: `${sp.stats.roomsUsed} room${sp.stats.roomsUsed === 1 ? '' : 's'} used`,
           tone:
             sp.stats.utilisation >= 90
@@ -67,6 +77,16 @@ export function SeatPlanner() {
               : sp.stats.utilisation >= 70
                 ? 'default'
                 : 'warning',
+        },
+        {
+          label: 'Buffer',
+          value: Math.max(sp.totalCapacity - sp.stats.assigned, 0),
+          icon: <TriangleAlert className="h-3.5 w-3.5" />,
+          hint:
+            sp.totalCapacity >= sp.stats.assigned
+              ? 'Remaining seats'
+              : 'Capacity exceeded',
+          tone: sp.totalCapacity >= sp.stats.assigned ? 'default' : 'danger',
         }
       );
     }
@@ -79,66 +99,63 @@ export function SeatPlanner() {
     sp.stats,
   ]);
 
-  // ExportBar only activates once there's a result to export.
-  const exportHandlers = sp.result
-    ? {
-        csv: () => void sp.handleExportCSV(),
-        pdf: () => void sp.handleExportPDF('combined'),
-        png: () => void sp.handleExportPNG(),
-        print: handlePrint,
-      }
-    : {};
-
   return (
-    <div className="grid gap-6 print:space-y-2 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div className="grid gap-8 print:space-y-2 lg:grid-cols-[minmax(0,1fr)_21rem]">
       {/* ── main column ───────────────────────────────────────── */}
       <div className="space-y-6">
-        {/* top-strip stats for mobile */}
-        <div className="lg:hidden">
-          <StatsPanel items={statItems} orientation="horizontal" />
-        </div>
+        <div className="space-y-6 print:hidden">
+          {/* top-strip stats for mobile */}
+          <div className="lg:hidden">
+            <StatsPanel items={statItems} orientation="horizontal" />
+          </div>
 
-        {/* tool controls header */}
-        <div className="flex flex-wrap items-center justify-end gap-2 print:hidden">
-          <ExportBar handlers={exportHandlers} disabled={!sp.result} />
-          <ToolSettings
-            toolName="Seat Planner"
-            onExportBackup={sp.handleExportBackup}
-            onReset={sp.handleResetAll}
+          {/* tool controls header */}
+          <div className="flex flex-wrap items-center justify-end gap-2 print:hidden">
+            <ToolSettings
+              toolName="Seat Planner"
+              onExportBackup={sp.handleExportBackup}
+              onReset={sp.handleResetAll}
+            />
+          </div>
+
+          {/* 1 · Exam Details */}
+          <ExamDetailsForm
+            field={sp.field}
+            sections={sp.sections}
+            sectionCounts={sp.sectionCounts}
+            sectionFaculty={sp.sectionFaculty}
+            onSectionFacultyChange={sp.setSectionFacultyName}
+          />
+
+          {/* 2 · Student Data */}
+          <StudentDataPanel
+            students={sp.students}
+            sections={sp.sections}
+            onImport={sp.handleImportStudents}
+            onRemoveStudent={sp.handleRemoveStudent}
+          />
+
+          {/* 3 · Room Configuration */}
+          <RoomConfiguration
+            rooms={sp.rooms}
+            newRoomName={sp.newRoomName}
+            newRoomCapacity={sp.newRoomCapacity}
+            allocationMode={sp.allocationMode}
+            sortOrder={sp.sortOrder}
+            totalCapacity={sp.totalCapacity}
+            studentCount={sp.students.length}
+            canGenerate={sp.canGenerate}
+            onAddRoom={sp.handleAddRoom}
+            onRemoveRoom={sp.handleRemoveRoom}
+            onRoomNameChange={sp.setNewRoomName}
+            onRoomCapacityChange={sp.setNewRoomCapacity}
+            onAllocationModeChange={sp.setAllocationMode}
+            onSortOrderChange={sp.setSortOrder}
+            onGenerate={sp.handleGenerate}
+            onResetResult={() => sp.setResult(null)}
+            onImportRooms={sp.handleImportRooms}
           />
         </div>
-
-        {/* 1 · Exam Details */}
-        <ExamDetailsForm field={sp.field} />
-
-        {/* 2 · Student Data */}
-        <StudentDataPanel
-          students={sp.students}
-          sections={sp.sections}
-          onImport={sp.handleImportStudents}
-          onRemoveStudent={sp.handleRemoveStudent}
-        />
-
-        {/* 3 · Room Configuration */}
-        <RoomConfiguration
-          rooms={sp.rooms}
-          newRoomName={sp.newRoomName}
-          newRoomCapacity={sp.newRoomCapacity}
-          allocationMode={sp.allocationMode}
-          sortOrder={sp.sortOrder}
-          totalCapacity={sp.totalCapacity}
-          studentCount={sp.students.length}
-          canGenerate={sp.canGenerate}
-          onAddRoom={sp.handleAddRoom}
-          onRemoveRoom={sp.handleRemoveRoom}
-          onRoomNameChange={sp.setNewRoomName}
-          onRoomCapacityChange={sp.setNewRoomCapacity}
-          onAllocationModeChange={sp.setAllocationMode}
-          onSortOrderChange={sp.setSortOrder}
-          onGenerate={sp.handleGenerate}
-          onResetResult={() => sp.setResult(null)}
-          onImportRooms={sp.handleImportRooms}
-        />
 
         {/* 4 · Results */}
         {sp.result && sp.stats && (
@@ -146,6 +163,7 @@ export function SeatPlanner() {
             result={sp.result}
             stats={sp.stats}
             sections={sp.sections}
+            sectionFaculty={sp.sectionFaculty}
             allStudentsSorted={sp.allStudentsSorted}
             examDetails={sp.examDetails}
             selectedRoomIdx={sp.selectedRoomIdx}

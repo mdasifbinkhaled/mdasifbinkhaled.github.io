@@ -4,6 +4,7 @@
 
 import type { Student, ExamDetails } from './types';
 import { downloadFile as download } from '@/shared/lib/download-file';
+import { buildSeatPlanExportFilename } from './export-utils';
 
 // ── CSV value escaping ──────────────────────────
 
@@ -26,17 +27,8 @@ export function exportMasterListCSV(
   );
 
   download(
-    [header, ...rows].join('\n'),
-    csvFilename(details, 'Master_List'),
+    `\uFEFF${[header, ...rows].join('\n')}`,
+    buildSeatPlanExportFilename(details, 'master-list', 'csv'),
     'text/csv'
   );
-}
-
-// ── helpers ─────────────────────────────────────
-
-function csvFilename(d: ExamDetails, suffix: string): string {
-  const base = (d.courseCodes || 'seat-plan')
-    .replace(/\//g, '-')
-    .replace(/\s+/g, '_');
-  return `${base}_${suffix}.csv`;
 }

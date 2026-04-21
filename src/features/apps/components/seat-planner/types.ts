@@ -32,6 +32,8 @@ export interface ExamDetails {
   university: string;
 }
 
+export type SectionFacultyMap = Partial<Record<number, string>>;
+
 export type AllocationMode = 'cohort' | 'mixed';
 
 export type SortOrder =

@@ -1,18 +1,16 @@
-// ────────────────────────────────────────────────
-// Seat Planner — Results display (stats + tabs)
-// ────────────────────────────────────────────────
-
+import { useMemo } from 'react';
 import {
-  Download,
-  Printer,
-  Image as ImageIcon,
-  Users,
-  Building2,
-  BarChart3,
-  Layers,
   AlertCircle,
-  FileText,
+  BarChart3,
+  Building2,
+  CheckCircle2,
+  Download,
   FileSpreadsheet,
+  FileText,
+  Image as ImageIcon,
+  Layers,
+  Printer,
+  Users,
 } from 'lucide-react';
 import {
   Card,
@@ -21,6 +19,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
+import { Progress } from '@/shared/components/ui/progress';
 import {
   Select,
   SelectContent,
@@ -34,17 +33,23 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/shared/components/ui/tabs';
-
-import { Th, DottedField } from './shared-ui';
+import {
+  buildRoomFacultySummary,
+  buildSeatPlanDocumentTitle,
+  buildSeatPlanMetaLine,
+  buildSeatPlanPrintPages,
+  getSectionSummaries,
+} from './export-utils';
+import { SeatPlanPrintDocument } from './seat-plan-print-document';
+import { DottedField, Th } from './shared-ui';
 import {
   SECTION_COLORS,
-  type Student,
-  type RoomAllocation,
   type AllocationResult,
   type ExamDetails,
+  type RoomAllocation,
+  type SectionFacultyMap,
+  type Student,
 } from './types';
-
-// ── exported props ──────────────────────────────
 
 interface SeatPlanResultsProps {
   result: AllocationResult;
@@ -57,6 +62,7 @@ interface SeatPlanResultsProps {
     sections: number;
   };
   sections: number[];
+  sectionFaculty: SectionFacultyMap;
   allStudentsSorted: Student[];
   examDetails: ExamDetails;
   selectedRoomIdx: number;
@@ -74,6 +80,7 @@ export function SeatPlanResults({
   result,
   stats,
   sections,
+  sectionFaculty,
   allStudentsSorted,
   examDetails,
   selectedRoomIdx,
@@ -86,281 +93,499 @@ export function SeatPlanResults({
   onExportPNG,
   onPrint,
 }: SeatPlanResultsProps) {
+  const totalCapacity = useMemo(
+    () =>
+      result.allocations.reduce((sum, alloc) => sum + alloc.room.capacity, 0),
+    [result.allocations]
+  );
+  const sectionSummary = useMemo(
+    () => getSectionSummaries(allStudentsSorted, sectionFaculty),
+    [allStudentsSorted, sectionFaculty]
+  );
+  const printablePages = useMemo(
+    () =>
+      buildSeatPlanPrintPages(
+        allStudentsSorted,
+        result.allocations,
+        sectionFaculty
+      ),
+    [allStudentsSorted, result.allocations, sectionFaculty]
+  );
+
+  const documentTitle = buildSeatPlanDocumentTitle(examDetails);
+  const metaLine = buildSeatPlanMetaLine(examDetails);
+  const organisationLine = [examDetails.department, examDetails.university]
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .join(' • ');
+
+  const overviewItems = [
+    {
+      label: 'Students',
+      value: stats.total.toLocaleString(),
+      hint: `${sections.length} section${sections.length === 1 ? '' : 's'}`,
+      icon: Users,
+    },
+    {
+      label: 'Assigned',
+      value: stats.assigned.toLocaleString(),
+      hint:
+        stats.unassigned > 0
+          ? `${stats.unassigned} unassigned`
+          : 'All students seated',
+      icon: CheckCircle2,
+    },
+    {
+      label: 'Rooms used',
+      value: stats.roomsUsed.toLocaleString(),
+      hint: `${totalCapacity.toLocaleString()} active seats`,
+      icon: Building2,
+    },
+    {
+      label: 'Utilisation',
+      value: `${stats.utilisation}%`,
+      hint: `${stats.assigned}/${totalCapacity || stats.assigned} seats filled`,
+      icon: BarChart3,
+    },
+    {
+      label: 'A4 pages',
+      value: printablePages.length.toLocaleString(),
+      hint: 'Print and PDF share the same pagination rules',
+      icon: FileText,
+    },
+  ];
+
   return (
     <>
-      {/* stats dashboard */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 print:hidden">
-        {(
-          [
-            ['Students', stats.total, Users],
-            ['Rooms Used', stats.roomsUsed, Building2],
-            ['Utilisation', `${stats.utilisation}%`, BarChart3],
-            ['Sections', stats.sections, Layers],
-          ] as const
-        ).map(([label, value, Icon]) => (
-          <Card key={label} className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <Icon className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{value}</p>
-                <p className="text-xs text-muted-foreground">{label}</p>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-
-      {/* unassigned warning */}
-      {result.unassigned.length > 0 && (
-        <div
-          className="flex items-center gap-2 text-sm text-destructive bg-destructive/10 rounded-md px-4 py-3 print:hidden"
-          role="alert"
-        >
-          <AlertCircle className="h-4 w-4 shrink-0" />
-          <span className="font-medium">
-            {result.unassigned.length} student
-            {result.unassigned.length !== 1 ? 's' : ''}
-          </span>{' '}
-          could not be assigned — insufficient room capacity.
-        </div>
-      )}
-
-      {/* room distribution chart */}
-      <RoomDistributionChart
-        allocations={result.allocations}
-        sections={sections}
-      />
-
-      {/* master list + room sheets */}
-      <Card>
-        <CardContent className="pt-6">
-          <Tabs defaultValue="master">
-            <TabsList className="print:hidden">
-              <TabsTrigger value="master">Master List</TabsTrigger>
-              <TabsTrigger value="rooms">Room Sheets</TabsTrigger>
-            </TabsList>
-
-            {/* ── master list tab ──────────── */}
-            <TabsContent value="master">
-              <div ref={printRef}>
-                {/* print‑only header */}
-                <div className="hidden print:block text-center mb-4">
-                  <h2 className="text-lg font-bold">
-                    {examDetails.courseCodes}
-                    {examDetails.courseTitle && ` — ${examDetails.courseTitle}`}
-                  </h2>
-                  <p>
-                    {examDetails.examType} — {examDetails.semester}{' '}
-                    {examDetails.year}
-                  </p>
-                  {examDetails.department && <p>{examDetails.department}</p>}
-                  {examDetails.university && <p>{examDetails.university}</p>}
+      <div className="space-y-5 print:hidden">
+        <Card className="overflow-hidden">
+          <CardContent className="p-0">
+            <div className="grid gap-6 p-6 xl:grid-cols-[minmax(0,1fr)_26rem]">
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                  <span className="rounded-full bg-primary/10 px-2.5 py-1 text-primary">
+                    Seat plan ready
+                  </span>
+                  <span className="rounded-full bg-muted px-2.5 py-1">
+                    {printablePages.length} A4 page
+                    {printablePages.length === 1 ? '' : 's'}
+                  </span>
+                  <span className="rounded-full bg-muted px-2.5 py-1">
+                    Consistent export naming enabled
+                  </span>
                 </div>
 
-                <div className="border rounded-md overflow-hidden print:border-0">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead className="bg-primary/10 print:bg-gray-200">
-                        <tr>
-                          <Th className="w-12">SL</Th>
-                          <Th>Student ID</Th>
-                          <Th>Student Name</Th>
-                          <Th className="w-16 text-center">Section</Th>
-                          <Th className="w-36">Room</Th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y">
-                        {allStudentsSorted.map((s, i) => (
-                          <tr
-                            key={s.id}
-                            className="hover:bg-muted/30 print:hover:bg-transparent"
-                          >
-                            <td className="px-3 py-1.5 text-muted-foreground">
-                              {i + 1}
-                            </td>
-                            <td className="px-3 py-1.5 font-mono text-xs">
-                              {s.id}
-                            </td>
-                            <td className="px-3 py-1.5">{s.name}</td>
-                            <td className="px-3 py-1.5 text-center">
-                              {s.section}
-                            </td>
-                            <td className="px-3 py-1.5">
-                              <select
-                                value={s.room ?? ''}
-                                onChange={(e) =>
-                                  onReassign(s.id, e.target.value)
-                                }
-                                className="text-xs bg-transparent border rounded-sm px-1.5 py-0.5 print:border-0 print:appearance-none"
-                                aria-label={`Room assignment for ${s.name}`}
-                              >
-                                {result.allocations.map((a) => (
-                                  <option key={a.room.uid} value={a.room.name}>
-                                    {a.room.name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
+                <div className="space-y-1">
+                  <h2 className="text-2xl font-semibold tracking-tight">
+                    {documentTitle}
+                  </h2>
+                  {metaLine || organisationLine ? (
+                    <p className="text-sm text-muted-foreground">
+                      {[metaLine, organisationLine].filter(Boolean).join(' • ')}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      Add course metadata above to enrich the A4 print view and
+                      exported PDF.
+                    </p>
+                  )}
+                </div>
+
+                <p className="max-w-2xl text-sm text-muted-foreground">
+                  Review the live assignments below, then export the combined
+                  document, a focused master list, or room sheets with optional
+                  faculty labels per section.
+                </p>
+              </div>
+
+              <ResultActions
+                isExporting={isExporting}
+                onExportPDF={onExportPDF}
+                onExportCSV={onExportCSV}
+                onExportPNG={onExportPNG}
+                onPrint={onPrint}
+              />
+            </div>
+
+            <div className="grid gap-3 border-t bg-muted/20 p-6 sm:grid-cols-2 xl:grid-cols-5">
+              {overviewItems.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <div
+                    key={item.label}
+                    className="rounded-xl border bg-background/90 p-4 shadow-sm"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                          {item.label}
+                        </p>
+                        <p className="mt-2 text-2xl font-semibold leading-none">
+                          {item.value}
+                        </p>
+                      </div>
+                      <div className="rounded-full bg-muted p-2 text-muted-foreground">
+                        <Icon className="h-4 w-4" />
+                      </div>
+                    </div>
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      {item.hint}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+
+        {result.unassigned.length > 0 ? (
+          <div
+            className="flex items-center gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+            role="alert"
+          >
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            <span>
+              {result.unassigned.length} student
+              {result.unassigned.length === 1 ? '' : 's'} could not be assigned
+              because room capacity is insufficient.
+            </span>
+          </div>
+        ) : null}
+
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+          <RoomUtilisationPanel
+            allocations={result.allocations}
+            sectionFaculty={sectionFaculty}
+          />
+          <SectionOverviewCard sections={sectionSummary} />
+        </div>
+
+        <Card className="overflow-hidden">
+          <CardContent className="pt-6">
+            <Tabs defaultValue="master" className="space-y-4">
+              <TabsList>
+                <TabsTrigger value="master">Master List</TabsTrigger>
+                <TabsTrigger value="rooms">Room Sheets</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="master" className="space-y-4">
+                <div
+                  ref={printRef}
+                  data-seat-plan-snapshot="true"
+                  className="space-y-4 rounded-xl border bg-muted/10 p-4"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-base font-semibold">
+                        Master seating list
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Reassign rooms inline when needed. The printable output
+                        uses fixed room labels instead of these controls.
+                      </p>
+                    </div>
+                    <span className="rounded-full bg-background px-3 py-1 text-xs text-muted-foreground">
+                      {allStudentsSorted.length} total assignment
+                      {allStudentsSorted.length === 1 ? '' : 's'}
+                    </span>
+                  </div>
+
+                  <div className="overflow-hidden rounded-xl border bg-background">
+                    <div className="max-h-[30rem] overflow-auto">
+                      <table className="w-full min-w-[42rem] text-sm">
+                        <thead className="sticky top-0 bg-background/95 backdrop-blur">
+                          <tr>
+                            <Th className="w-12">SL</Th>
+                            <Th className="w-28">Student ID</Th>
+                            <Th>Student Name</Th>
+                            <Th className="w-16 text-center">Section</Th>
+                            <Th className="w-40">Room</Th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="divide-y">
+                          {allStudentsSorted.map((student, index) => (
+                            <tr key={student.id} className="hover:bg-muted/30">
+                              <td className="px-3 py-2 text-muted-foreground">
+                                {index + 1}
+                              </td>
+                              <td className="px-3 py-2 font-mono text-xs">
+                                {student.id}
+                              </td>
+                              <td className="px-3 py-2">{student.name}</td>
+                              <td className="px-3 py-2 text-center">
+                                {student.section}
+                              </td>
+                              <td className="px-3 py-2">
+                                <select
+                                  value={student.room ?? ''}
+                                  onChange={(e) =>
+                                    onReassign(student.id, e.target.value)
+                                  }
+                                  className="min-w-[9rem] rounded-md border bg-background px-2 py-1 text-xs focus:border-ring focus:outline-none"
+                                  aria-label={`Room assignment for ${student.name}`}
+                                >
+                                  {result.allocations.map((allocation) => (
+                                    <option
+                                      key={allocation.room.uid}
+                                      value={allocation.room.name}
+                                    >
+                                      {allocation.room.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </TabsContent>
+              </TabsContent>
 
-            {/* ── room sheets tab ─────────── */}
-            <TabsContent value="rooms">
-              {/* room selector */}
-              <div className="mb-4 print:hidden">
-                <Select
-                  value={String(selectedRoomIdx)}
-                  onValueChange={(v) => onSelectRoom(Number(v))}
-                >
-                  <SelectTrigger className="w-72">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {result.allocations.map((a, idx) => (
-                      <SelectItem key={a.room.uid} value={String(idx)}>
-                        {a.room.name} ({a.students.length} students)
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <TabsContent value="rooms" className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-muted/10 p-4">
+                  <div>
+                    <h3 className="text-base font-semibold">Room sheets</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Each room sheet includes attendance fields and optional
+                      section faculty labels.
+                    </p>
+                  </div>
 
-              {result.allocations[selectedRoomIdx] && (
-                <RoomSheet alloc={result.allocations[selectedRoomIdx]} />
-              )}
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+                  <Select
+                    value={String(selectedRoomIdx)}
+                    onValueChange={(value) => onSelectRoom(Number(value))}
+                  >
+                    <SelectTrigger className="w-full sm:w-72">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {result.allocations.map((allocation, index) => (
+                        <SelectItem
+                          key={allocation.room.uid}
+                          value={String(index)}
+                        >
+                          {allocation.room.name} ({allocation.students.length}{' '}
+                          student{allocation.students.length === 1 ? '' : 's'})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-      {/* export toolbar */}
-      <ExportToolbar
-        isExporting={isExporting}
-        onExportPDF={onExportPDF}
-        onExportCSV={onExportCSV}
-        onExportPNG={onExportPNG}
-        onPrint={onPrint}
+                {result.allocations[selectedRoomIdx] ? (
+                  <RoomSheet
+                    alloc={result.allocations[selectedRoomIdx]}
+                    sectionFaculty={sectionFaculty}
+                  />
+                ) : null}
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+      </div>
+
+      <SeatPlanPrintDocument
+        students={allStudentsSorted}
+        allocations={result.allocations}
+        examDetails={examDetails}
+        sectionFaculty={sectionFaculty}
       />
     </>
   );
 }
 
-// ── Room Distribution Chart ─────────────────────
-
-function RoomDistributionChart({
+function RoomUtilisationPanel({
   allocations,
-  sections,
+  sectionFaculty,
 }: {
   allocations: RoomAllocation[];
-  sections: number[];
+  sectionFaculty: SectionFacultyMap;
 }) {
   return (
-    <Card className="print:hidden">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
           <BarChart3 className="h-5 w-5" />
-          Room Distribution
+          Room Utilisation
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
-        {allocations.map((alloc) => {
-          const pct = Math.round(
-            (alloc.students.length / alloc.room.capacity) * 100
+      <CardContent className="space-y-4">
+        {allocations.map((allocation) => {
+          const occupancy = allocation.room.capacity
+            ? Math.round(
+                (allocation.students.length / allocation.room.capacity) * 100
+              )
+            : 0;
+          const sectionSummary = getSectionSummaries(
+            allocation.students,
+            sectionFaculty
           );
-          const secCounts: Record<number, number> = {};
-          for (const s of alloc.students) {
-            secCounts[s.section] = (secCounts[s.section] ?? 0) + 1;
-          }
 
           return (
-            <div key={alloc.room.uid} className="space-y-1">
-              <div className="flex justify-between text-sm">
-                <span className="font-medium">{alloc.room.name}</span>
-                <span className="text-muted-foreground">
-                  {alloc.students.length}/{alloc.room.capacity} ({pct}%)
+            <div
+              key={allocation.room.uid}
+              className="rounded-xl border bg-muted/10 p-4"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-semibold">
+                    {allocation.room.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {allocation.students.length}/{allocation.room.capacity}{' '}
+                    seats occupied
+                  </p>
+                </div>
+                <span className="rounded-full bg-background px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                  {occupancy}% full
                 </span>
               </div>
-              <div className="h-6 bg-muted rounded-full overflow-hidden flex">
-                {Object.entries(secCounts)
-                  .sort(([a], [b]) => Number(a) - Number(b))
-                  .map(([sec, count]) => (
-                    <div
-                      key={sec}
-                      className={`${SECTION_COLORS[(Number(sec) - 1) % SECTION_COLORS.length]} h-full transition-all`}
-                      style={{
-                        width: `${(count / alloc.room.capacity) * 100}%`,
-                      }}
-                      title={`Section ${sec}: ${count} students`}
+
+              <Progress value={occupancy} className="mt-3 h-2.5" />
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                {sectionSummary.map((item) => (
+                  <span
+                    key={`${allocation.room.uid}-${item.section}`}
+                    className="inline-flex items-center gap-2 rounded-full border bg-background px-2.5 py-1 text-xs text-muted-foreground"
+                  >
+                    <span
+                      className={`h-2.5 w-2.5 rounded-full ${SECTION_COLORS[(item.section - 1) % SECTION_COLORS.length]}`}
                     />
-                  ))}
+                    <span>
+                      Sec {item.section} · {item.count}
+                      {item.faculty ? ` · ${item.faculty}` : ''}
+                    </span>
+                  </span>
+                ))}
               </div>
             </div>
           );
         })}
-
-        {/* legend */}
-        <div className="flex flex-wrap gap-3 pt-2 border-t">
-          {sections.map((sec) => (
-            <div key={sec} className="flex items-center gap-1.5 text-xs">
-              <div
-                className={`w-3 h-3 rounded-xs ${SECTION_COLORS[(sec - 1) % SECTION_COLORS.length]}`}
-              />
-              Section {sec}
-            </div>
-          ))}
-        </div>
       </CardContent>
     </Card>
   );
 }
 
-// ── Room Sheet ──────────────────────────────────
-
-function RoomSheet({ alloc }: { alloc: RoomAllocation }) {
+function SectionOverviewCard({
+  sections,
+}: {
+  sections: ReturnType<typeof getSectionSummaries>;
+}) {
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Room: {alloc.room.name}</h3>
-        <span className="text-sm text-muted-foreground">
-          {alloc.students.length} / {alloc.room.capacity} seats
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <Layers className="h-5 w-5" />
+          Section Overview
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {sections.map((section) => (
+          <div
+            key={section.section}
+            className="rounded-xl border bg-muted/10 p-4"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <span
+                  className={`h-3 w-3 rounded-full ${SECTION_COLORS[(section.section - 1) % SECTION_COLORS.length]}`}
+                />
+                <span className="font-medium">Section {section.section}</span>
+              </div>
+              <span className="text-sm text-muted-foreground">
+                {section.count} student{section.count === 1 ? '' : 's'}
+              </span>
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">
+              {section.faculty
+                ? `Faculty: ${section.faculty}`
+                : 'Faculty name not set.'}
+            </p>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
+
+function RoomSheet({
+  alloc,
+  sectionFaculty,
+}: {
+  alloc: RoomAllocation;
+  sectionFaculty: SectionFacultyMap;
+}) {
+  const sectionSummary = getSectionSummaries(alloc.students, sectionFaculty);
+  const facultySummary = buildRoomFacultySummary(alloc, sectionFaculty, 120);
+
+  return (
+    <div className="space-y-4 rounded-xl border bg-muted/10 p-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h3 className="text-lg font-semibold">Room {alloc.room.name}</h3>
+          <p className="text-sm text-muted-foreground">
+            {alloc.students.length} assigned · {alloc.room.capacity} capacity
+          </p>
+        </div>
+        <span className="rounded-full bg-background px-3 py-1 text-xs text-muted-foreground">
+          {Math.round((alloc.students.length / alloc.room.capacity) * 100)}%
+          utilised
         </span>
       </div>
 
-      <div className="border rounded-md overflow-hidden">
+      <div className="flex flex-wrap gap-2">
+        {sectionSummary.map((item) => (
+          <span
+            key={`${alloc.room.uid}-section-${item.section}`}
+            className="inline-flex items-center gap-2 rounded-full border bg-background px-2.5 py-1 text-xs text-muted-foreground"
+          >
+            <span
+              className={`h-2.5 w-2.5 rounded-full ${SECTION_COLORS[(item.section - 1) % SECTION_COLORS.length]}`}
+            />
+            <span>
+              Sec {item.section} · {item.count}
+              {item.faculty ? ` · ${item.faculty}` : ''}
+            </span>
+          </span>
+        ))}
+      </div>
+
+      {facultySummary ? (
+        <div className="rounded-lg border bg-background px-3 py-2 text-xs text-muted-foreground">
+          Faculty: {facultySummary}
+        </div>
+      ) : null}
+
+      <div className="overflow-hidden rounded-xl border bg-background">
         <table className="w-full text-sm">
-          <thead className="bg-primary/10">
+          <thead className="bg-background/95">
             <tr>
               <Th className="w-12">SL</Th>
-              <Th>Student ID</Th>
+              <Th className="w-28">Student ID</Th>
               <Th>Student Name</Th>
               <Th className="w-16 text-center">Section</Th>
               <Th className="w-40">Signature</Th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {alloc.students.map((s, i) => (
-              <tr key={s.id} className="hover:bg-muted/30">
-                <td className="px-3 py-1.5 text-muted-foreground">{i + 1}</td>
-                <td className="px-3 py-1.5 font-mono text-xs">{s.id}</td>
-                <td className="px-3 py-1.5">{s.name}</td>
-                <td className="px-3 py-1.5 text-center">{s.section}</td>
-                <td className="px-3 py-1.5" />
+            {alloc.students.map((student, index) => (
+              <tr key={student.id} className="hover:bg-muted/30">
+                <td className="px-3 py-2 text-muted-foreground">{index + 1}</td>
+                <td className="px-3 py-2 font-mono text-xs">{student.id}</td>
+                <td className="px-3 py-2">{student.name}</td>
+                <td className="px-3 py-2 text-center">{student.section}</td>
+                <td className="px-3 py-2" />
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* attendance footer */}
-      <div className="grid grid-cols-2 gap-4 text-sm pt-2 border-t">
+      <div className="grid grid-cols-2 gap-4 border-t pt-3 text-sm">
         <DottedField label="Total Present" />
         <DottedField label="Total Absent" />
         <DottedField label="Invigilator Name" />
@@ -370,9 +595,7 @@ function RoomSheet({ alloc }: { alloc: RoomAllocation }) {
   );
 }
 
-// ── Export Toolbar ───────────────────────────────
-
-function ExportToolbar({
+function ResultActions({
   isExporting,
   onExportPDF,
   onExportCSV,
@@ -386,54 +609,39 @@ function ExportToolbar({
   onPrint: () => void;
 }) {
   return (
-    <Card className="print:hidden">
-      <CardContent className="pt-6">
-        <div className="flex flex-wrap gap-3">
-          <Button
-            onClick={() => onExportPDF('combined')}
-            disabled={isExporting}
-          >
-            <FileText className="h-4 w-4 mr-2" />
-            Export PDF (All)
-          </Button>
-          <Button
-            onClick={() => onExportPDF('master')}
-            disabled={isExporting}
-            variant="outline"
-          >
-            <Download className="h-4 w-4 mr-2" />
-            Master List PDF
-          </Button>
-          <Button
-            onClick={() => onExportPDF('rooms')}
-            disabled={isExporting}
-            variant="outline"
-          >
-            <Download className="h-4 w-4 mr-2" />
-            Room Sheets PDF
-          </Button>
-          <Button
-            onClick={onExportPNG}
-            disabled={isExporting}
-            variant="outline"
-          >
-            <ImageIcon className="h-4 w-4 mr-2" />
-            Export PNG
-          </Button>
-          <Button
-            onClick={onExportCSV}
-            disabled={isExporting}
-            variant="outline"
-          >
-            <FileSpreadsheet className="h-4 w-4 mr-2" />
-            Excel (CSV)
-          </Button>
-          <Button onClick={onPrint} variant="outline">
-            <Printer className="h-4 w-4 mr-2" />
-            Print
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="grid gap-2 sm:grid-cols-2">
+      <Button onClick={() => onExportPDF('combined')} disabled={isExporting}>
+        <FileText className="mr-2 h-4 w-4" />
+        Combined PDF
+      </Button>
+      <Button onClick={onPrint} variant="outline">
+        <Printer className="mr-2 h-4 w-4" />
+        Print A4
+      </Button>
+      <Button
+        onClick={() => onExportPDF('master')}
+        disabled={isExporting}
+        variant="outline"
+      >
+        <Download className="mr-2 h-4 w-4" />
+        Master PDF
+      </Button>
+      <Button
+        onClick={() => onExportPDF('rooms')}
+        disabled={isExporting}
+        variant="outline"
+      >
+        <Download className="mr-2 h-4 w-4" />
+        Room Sheets PDF
+      </Button>
+      <Button onClick={onExportCSV} disabled={isExporting} variant="outline">
+        <FileSpreadsheet className="mr-2 h-4 w-4" />
+        CSV
+      </Button>
+      <Button onClick={onExportPNG} disabled={isExporting} variant="outline">
+        <ImageIcon className="mr-2 h-4 w-4" />
+        PNG Snapshot
+      </Button>
+    </div>
   );
 }

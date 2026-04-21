@@ -1,223 +1,296 @@
-// ────────────────────────────────────────────────
-// Seat Planner — PDF generation (jsPDF + autoTable)
-// ────────────────────────────────────────────────
-// This module is dynamically imported so jsPDF & autoTable are
-// only downloaded when the user actually clicks an export button.
-
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import type { Student, ExamDetails, RoomAllocation } from './types';
+import {
+  buildSectionCountLine,
+  buildSeatPlanDocumentTitle,
+  buildSeatPlanExportFilename,
+  buildSeatPlanMetaLine,
+  buildSeatPlanPrintPages,
+} from './export-utils';
+import type {
+  ExamDetails,
+  RoomAllocation,
+  SectionFacultyMap,
+  Student,
+} from './types';
 
-// ── shared PDF header ───────────────────────────
+const PAGE_MARGIN = {
+  top: 14,
+  right: 13,
+  bottom: 14,
+  left: 13,
+} as const;
 
-const HEADER_FILL: [number, number, number] = [41, 98, 150]; // steel‑blue
-
-function addHeader(doc: jsPDF, d: ExamDetails, startY = 12): number {
-  const cx = doc.internal.pageSize.getWidth() / 2;
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(13);
-  doc.text(
-    d.courseCodes + (d.courseTitle ? ` — ${d.courseTitle}` : ''),
-    cx,
-    startY,
-    { align: 'center' }
-  );
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  let y = startY + 7;
-
-  if (d.examType || d.semester || d.year) {
-    doc.text(
-      [d.examType, [d.semester, d.year].filter(Boolean).join(' ')]
-        .filter(Boolean)
-        .join(' — '),
-      cx,
-      y,
-      { align: 'center' }
-    );
-    y += 6;
-  }
-  if (d.department) {
-    doc.text(d.department, cx, y, { align: 'center' });
-    y += 6;
-  }
-  if (d.university) {
-    doc.text(d.university, cx, y, { align: 'center' });
-    y += 6;
-  }
-
-  return y + 4;
-}
-
-// column style constants
-const COL_SL = { cellWidth: 12, halign: 'center' as const };
-const COL_ID = { cellWidth: 28 };
-const COL_NAME = { cellWidth: 'auto' as const };
-const COL_SEC = { cellWidth: 18, halign: 'center' as const };
-
-// ── master list ─────────────────────────────────
+const HEADER_FILL: [number, number, number] = [41, 98, 150];
+const TEXT_STRONG: [number, number, number] = [15, 23, 42];
+const TEXT_MUTED: [number, number, number] = [100, 116, 139];
+const BORDER: [number, number, number] = [226, 232, 240];
+const ROW_ALT: [number, number, number] = [248, 250, 252];
 
 export function generateMasterListPDF(
   students: Student[],
-  details: ExamDetails
+  details: ExamDetails,
+  sectionFaculty: SectionFacultyMap = {}
 ): void {
-  const doc = new jsPDF();
-  const tableY = addHeader(doc, details);
-
-  autoTable(doc, {
-    startY: tableY,
-    head: [['SL', 'Student ID', 'Student Name', 'Section', 'Room Number']],
-    body: students.map((s, i) => [
-      i + 1,
-      s.id,
-      s.name,
-      s.section,
-      s.room ?? 'Unassigned',
-    ]),
-    headStyles: {
-      fillColor: HEADER_FILL,
-      textColor: 255,
-      fontStyle: 'bold',
-      halign: 'center',
-    },
-    columnStyles: {
-      0: COL_SL,
-      1: COL_ID,
-      2: COL_NAME,
-      3: COL_SEC,
-      4: { cellWidth: 32 },
-    },
-    alternateRowStyles: { fillColor: [245, 247, 250] },
-    styles: { cellPadding: 2, fontSize: 9 },
-  });
-
-  doc.save(filename(details, 'Master_List'));
+  const pages = buildSeatPlanPrintPages(students, [], sectionFaculty);
+  renderPdfDocument(pages, details, 'master-list');
 }
-
-// ── room sheets ─────────────────────────────────
 
 export function generateRoomSheetsPDF(
   allocations: RoomAllocation[],
-  details: ExamDetails
+  details: ExamDetails,
+  sectionFaculty: SectionFacultyMap = {}
 ): void {
-  const doc = new jsPDF();
-
-  allocations.forEach((alloc, idx) => {
-    if (idx > 0) doc.addPage();
-    renderRoomPage(doc, alloc, details);
-  });
-
-  doc.save(filename(details, 'Room_Sheets'));
+  const pages = buildSeatPlanPrintPages([], allocations, sectionFaculty);
+  renderPdfDocument(pages, details, 'room-sheets');
 }
-
-// ── combined (master + rooms) ───────────────────
 
 export function generateCombinedPDF(
   students: Student[],
   allocations: RoomAllocation[],
-  details: ExamDetails
+  details: ExamDetails,
+  sectionFaculty: SectionFacultyMap = {}
 ): void {
-  const doc = new jsPDF();
-  const tableY = addHeader(doc, details);
+  const pages = buildSeatPlanPrintPages(students, allocations, sectionFaculty);
+  renderPdfDocument(pages, details, 'combined');
+}
 
-  autoTable(doc, {
-    startY: tableY,
-    head: [['SL', 'Student ID', 'Student Name', 'Section', 'Room Number']],
-    body: students.map((s, i) => [
-      i + 1,
-      s.id,
-      s.name,
-      s.section,
-      s.room ?? 'Unassigned',
-    ]),
-    headStyles: {
-      fillColor: HEADER_FILL,
-      textColor: 255,
-      fontStyle: 'bold',
-      halign: 'center',
-    },
-    columnStyles: {
-      0: COL_SL,
-      1: COL_ID,
-      2: COL_NAME,
-      3: COL_SEC,
-      4: { cellWidth: 32 },
-    },
-    alternateRowStyles: { fillColor: [245, 247, 250] },
-    styles: { cellPadding: 2, fontSize: 9 },
+function renderPdfDocument(
+  pages: ReturnType<typeof buildSeatPlanPrintPages>,
+  details: ExamDetails,
+  variant: 'combined' | 'master-list' | 'room-sheets'
+): void {
+  if (pages.length === 0) return;
+
+  const doc = new jsPDF({ format: 'a4', unit: 'mm', orientation: 'portrait' });
+  doc.setDocumentProperties({
+    title: buildSeatPlanDocumentTitle(details),
+    subject: `Seat planner ${variant}`,
+    author: 'MABK Seat Planner',
+    keywords: 'seat plan, exam seating, room sheet, printable',
+    creator: 'MABK Seat Planner',
+  });
+  doc.setCreationDate(new Date());
+
+  pages.forEach((page, index) => {
+    if (index > 0) doc.addPage('a4', 'portrait');
+    drawPdfPage(doc, page, details);
   });
 
-  for (const alloc of allocations) {
-    doc.addPage();
-    renderRoomPage(doc, alloc, details);
+  doc.save(buildSeatPlanExportFilename(details, variant, 'pdf'));
+}
+
+function drawPdfPage(
+  doc: jsPDF,
+  page: ReturnType<typeof buildSeatPlanPrintPages>[number],
+  details: ExamDetails
+): void {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const metaLine = buildSeatPlanMetaLine(details);
+  const organisationLine = [details.department, details.university]
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .join(' • ');
+
+  let cursorY = PAGE_MARGIN.top;
+
+  doc.setTextColor(...TEXT_STRONG);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(14);
+  doc.text(buildSeatPlanDocumentTitle(details), pageWidth / 2, cursorY, {
+    align: 'center',
+  });
+  cursorY += 6;
+
+  doc.setTextColor(...TEXT_MUTED);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9.5);
+
+  if (metaLine) {
+    doc.text(metaLine, pageWidth / 2, cursorY, { align: 'center' });
+    cursorY += 4.5;
   }
 
-  doc.save(filename(details, 'Seat_Plan'));
-}
+  if (organisationLine) {
+    doc.text(organisationLine, pageWidth / 2, cursorY, { align: 'center' });
+    cursorY += 4.5;
+  }
 
-// ── internals ───────────────────────────────────
+  doc.setDrawColor(...HEADER_FILL);
+  doc.setLineWidth(0.4);
+  doc.line(
+    PAGE_MARGIN.left,
+    cursorY + 2,
+    pageWidth - PAGE_MARGIN.right,
+    cursorY + 2
+  );
+  cursorY += 7;
 
-function renderRoomPage(
-  doc: jsPDF,
-  alloc: RoomAllocation,
-  details: ExamDetails
-): void {
-  const pw = doc.internal.pageSize.getWidth();
-  const tableY = addHeader(doc, details);
-
-  // room label (right‑aligned)
+  doc.setTextColor(...TEXT_STRONG);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
-  doc.text(`Room    ${alloc.room.name}`, pw - 15, tableY - 2, {
-    align: 'right',
-  });
+  doc.text(
+    page.kind === 'master' ? 'Master list' : 'Room sheet',
+    PAGE_MARGIN.left,
+    cursorY
+  );
+  doc.text(
+    page.kind === 'master'
+      ? `Rows ${page.startIndex + 1}–${page.startIndex + page.rows.length}`
+      : `Room ${page.allocation.room.name}`,
+    pageWidth - PAGE_MARGIN.right,
+    cursorY,
+    { align: 'right' }
+  );
+  cursorY += 4.5;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8.5);
+  doc.setTextColor(...TEXT_MUTED);
+
+  if (page.kind === 'room') {
+    doc.text(
+      `${page.allocation.students.length}/${page.allocation.room.capacity} seats • ${buildSectionCountLine(page.allocation.students)}`,
+      PAGE_MARGIN.left,
+      cursorY
+    );
+    cursorY += 4;
+
+    if (page.facultySummary) {
+      doc.text(`Faculty: ${page.facultySummary}`, PAGE_MARGIN.left, cursorY);
+      cursorY += 4;
+    }
+  }
 
   autoTable(doc, {
-    startY: tableY + 4,
-    head: [['SL', 'Student ID', 'Student Name', 'Section', 'Signature']],
-    body: alloc.students.map((s, i) => [i + 1, s.id, s.name, s.section, '']),
+    startY: cursorY + 1,
+    theme: 'grid',
+    margin: {
+      left: PAGE_MARGIN.left,
+      right: PAGE_MARGIN.right,
+    },
+    head:
+      page.kind === 'master'
+        ? [['SL', 'Student ID', 'Student Name', 'Section', 'Room']]
+        : [['SL', 'Student ID', 'Student Name', 'Section', 'Signature']],
+    body:
+      page.kind === 'master'
+        ? page.rows.map((student, index) => [
+            page.startIndex + index + 1,
+            student.id,
+            student.name,
+            student.section,
+            student.room ?? 'Unassigned',
+          ])
+        : page.rows.map((student, index) => [
+            page.startIndex + index + 1,
+            student.id,
+            student.name,
+            student.section,
+            '',
+          ]),
     headStyles: {
       fillColor: HEADER_FILL,
       textColor: 255,
       fontStyle: 'bold',
       halign: 'center',
     },
-    columnStyles: {
-      0: COL_SL,
-      1: COL_ID,
-      2: COL_NAME,
-      3: COL_SEC,
-      4: { cellWidth: 45 },
+    alternateRowStyles: { fillColor: ROW_ALT },
+    styles: {
+      cellPadding: 1.9,
+      fontSize: 8.5,
+      textColor: TEXT_STRONG,
+      lineColor: BORDER,
+      lineWidth: 0.1,
+      overflow: 'linebreak',
+      valign: 'middle',
     },
-    alternateRowStyles: { fillColor: [245, 247, 250] },
-    styles: { cellPadding: 2, fontSize: 9 },
+    columnStyles:
+      page.kind === 'master'
+        ? {
+            0: { cellWidth: 12, halign: 'center' as const },
+            1: { cellWidth: 28 },
+            2: { cellWidth: 'auto' as const },
+            3: { cellWidth: 18, halign: 'center' as const },
+            4: { cellWidth: 28 },
+          }
+        : {
+            0: { cellWidth: 12, halign: 'center' as const },
+            1: { cellWidth: 28 },
+            2: { cellWidth: 'auto' as const },
+            3: { cellWidth: 18, halign: 'center' as const },
+            4: { cellWidth: 42 },
+          },
   });
 
-  // footer — attendance & invigilator lines
-  const finalY: number = doc.lastAutoTable?.finalY ?? 200;
-  const fy = finalY + 14;
+  if (page.kind === 'room') {
+    drawAttendanceFooter(doc, pageHeight, pageWidth);
+  }
 
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-
-  doc.text('Total Present', 20, fy);
-  doc.line(58, fy, 90, fy);
-
-  doc.text('Total Absent', pw / 2 + 15, fy);
-  doc.line(pw / 2 + 50, fy, pw / 2 + 82, fy);
-
-  doc.text('Invigilator Name', 20, fy + 12);
-  doc.line(62, fy + 12, 95, fy + 12);
-
-  doc.text('Invigilator Signature', pw / 2 + 15, fy + 12);
-  doc.line(pw / 2 + 58, fy + 12, pw - 15, fy + 12);
+  drawPageFooter(doc, page, pageWidth, pageHeight);
 }
 
-function filename(d: ExamDetails, suffix: string): string {
-  const base = (d.courseCodes || 'seat-plan')
-    .replace(/\//g, '-')
-    .replace(/\s+/g, '_');
-  return `${base}_${suffix}.pdf`;
+function drawAttendanceFooter(
+  doc: jsPDF,
+  pageHeight: number,
+  pageWidth: number
+): void {
+  const labelY = pageHeight - PAGE_MARGIN.bottom - 16;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...TEXT_STRONG);
+
+  doc.text('Total Present', PAGE_MARGIN.left, labelY);
+  doc.line(39, labelY, 72, labelY);
+
+  doc.text('Total Absent', pageWidth / 2 + 5, labelY);
+  doc.line(pageWidth / 2 + 27, labelY, pageWidth - PAGE_MARGIN.right, labelY);
+
+  doc.text('Invigilator Name', PAGE_MARGIN.left, labelY + 9);
+  doc.line(42, labelY + 9, 78, labelY + 9);
+
+  doc.text('Invigilator Signature', pageWidth / 2 + 5, labelY + 9);
+  doc.line(
+    pageWidth / 2 + 38,
+    labelY + 9,
+    pageWidth - PAGE_MARGIN.right,
+    labelY + 9
+  );
+}
+
+function drawPageFooter(
+  doc: jsPDF,
+  page: ReturnType<typeof buildSeatPlanPrintPages>[number],
+  pageWidth: number,
+  pageHeight: number
+): void {
+  const footerY = pageHeight - PAGE_MARGIN.bottom + 3;
+
+  doc.setDrawColor(...BORDER);
+  doc.setLineWidth(0.2);
+  doc.line(
+    PAGE_MARGIN.left,
+    footerY - 5,
+    pageWidth - PAGE_MARGIN.right,
+    footerY - 5
+  );
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...TEXT_MUTED);
+  doc.text(
+    page.kind === 'master'
+      ? 'Master list'
+      : `Room sheet · ${page.allocation.room.name}`,
+    PAGE_MARGIN.left,
+    footerY
+  );
+  doc.text(
+    `Page ${page.pageNumber} of ${page.totalPages}`,
+    pageWidth - PAGE_MARGIN.right,
+    footerY,
+    { align: 'right' }
+  );
 }
