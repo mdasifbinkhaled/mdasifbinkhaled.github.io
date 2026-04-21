@@ -76,6 +76,15 @@ export const apps: readonly AppDefinition[] = [
     status: 'active',
     category: 'productivity',
   },
+  {
+    slug: 'pdf-study-aid',
+    title: 'PDF Study Aid',
+    description:
+      'Upload a PDF and generate local study notes, glossary terms, and practice questions entirely in your browser.',
+    icon: 'BookOpen',
+    status: 'active',
+    category: 'productivity',
+  },
 ] as const;
 
 // ---------------------------------------------------------------------------

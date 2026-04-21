@@ -1,4 +1,5 @@
 export { HeroSection } from './hero-section';
+export { BilingualIntroduction } from './bilingual-introduction';
 export { QuickFacts } from './quick-facts';
 export { HighlightsSection } from './highlights-section';
 export { ResearchPhilosophy } from './research-philosophy';

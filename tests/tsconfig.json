@@ -10,7 +10,8 @@
   "include": [
     "./**/*",
     "./vitest.d.ts",
-    "../src/shared/types/jspdf-autotable.d.ts"
+    "../src/shared/types/jspdf-autotable.d.ts",
+    "../src/shared/types/pdfjs-dist.d.ts"
   ],
   "exclude": ["node_modules"]
 }

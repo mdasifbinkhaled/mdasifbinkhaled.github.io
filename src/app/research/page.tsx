@@ -9,6 +9,7 @@ import {
   ResearchVision,
   PrimaryAreas,
   CurrentFocus,
+  ResearchTimeline,
   FeaturedProjects,
   OpenSource,
   LookingAhead,
@@ -39,6 +40,7 @@ export default function ResearchPage() {
         <ResearchVision />
         <PrimaryAreas />
         <CurrentFocus />
+        <ResearchTimeline />
         <FeaturedProjects />
         <OpenSource />
         <LookingAhead />

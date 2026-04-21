@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import { BilingualIntroduction } from '@/features/about/components/bilingual-introduction';
 import { QuickFacts } from '@/features/about/components/quick-facts';
 import { CtaSection } from '@/features/about/components/cta-section';
 import { HeroSection } from '@/features/about/components/hero-section';
@@ -71,5 +72,13 @@ describe('HeroSection', () => {
       'target',
       '_blank'
     );
+  });
+});
+
+describe('BilingualIntroduction', () => {
+  it('renders both English and Bengali intro sections', () => {
+    render(<BilingualIntroduction />);
+    expect(screen.getByText('English introduction')).toBeInTheDocument();
+    expect(screen.getByText('বাংলা পরিচিতি')).toBeInTheDocument();
   });
 });

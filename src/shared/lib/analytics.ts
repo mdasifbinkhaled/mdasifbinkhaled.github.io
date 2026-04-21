@@ -43,6 +43,35 @@ export const academicEvents = {
   },
 };
 
+export const portfolioEvents = {
+  publicationsFilter: (options: {
+    queryLength: number;
+    yearFilter: string;
+    typeFilter: string;
+    resultCount: number;
+  }) => {
+    trackEvent('publications_filter_used', {
+      query_length: options.queryLength,
+      year_filter: options.yearFilter,
+      type_filter: options.typeFilter,
+      result_count: options.resultCount,
+    });
+  },
+
+  commandPaletteSearch: (queryLength: number) => {
+    trackEvent('command_palette_search', {
+      query_length: queryLength,
+    });
+  },
+
+  commandPaletteSelect: (label: string, queryLength = 0) => {
+    trackEvent('command_palette_select', {
+      value: label,
+      query_length: queryLength,
+    });
+  },
+};
+
 declare global {
   interface Window {
     gtag: (

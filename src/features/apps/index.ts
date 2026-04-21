@@ -13,6 +13,7 @@ export {
   OfficeHoursBooker,
   ExamCountdown,
   StudyTimer,
+  PdfStudyAid,
   CoursePlanner,
   AppsHub,
   AppPageHeader,

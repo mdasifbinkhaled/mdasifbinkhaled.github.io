@@ -6,6 +6,7 @@
  */
 export {
   HeroSection,
+  BilingualIntroduction,
   QuickFacts,
   HighlightsSection,
   ResearchPhilosophy,

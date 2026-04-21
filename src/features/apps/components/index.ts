@@ -6,6 +6,7 @@ export { GpaCalculator } from './gpa-calculator/gpa-calculator';
 export { OfficeHoursBooker } from './office-hours/office-hours-booker';
 export { ExamCountdown } from './exam-countdown/exam-countdown';
 export { StudyTimer } from './study-timer/study-timer';
+export { PdfStudyAid } from './pdf-study-aid/pdf-study-aid';
 export { CoursePlanner } from './course-planner/course-planner';
 export { AppsHub } from './apps-hub';
 export { AppPageHeader } from './app-page-header';

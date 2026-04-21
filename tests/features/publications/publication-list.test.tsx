@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { PublicationList } from '@/features/publications/components/publication-list';
+import { portfolioEvents } from '@/shared/lib/analytics';
 import type { PublicationItem } from '@/shared/types';
 
 vi.mock('next/link', () => ({
@@ -22,6 +23,11 @@ vi.mock('@/shared/lib/analytics', () => ({
   academicEvents: {
     viewPublication: vi.fn(),
     downloadPublication: vi.fn(),
+  },
+  portfolioEvents: {
+    publicationsFilter: vi.fn(),
+    commandPaletteSearch: vi.fn(),
+    commandPaletteSelect: vi.fn(),
   },
 }));
 
@@ -92,6 +98,21 @@ describe('PublicationList', () => {
       expect(
         screen.getByText('Explainable AI in Healthcare')
       ).toBeInTheDocument();
+    });
+
+    await vi.waitFor(() => {
+      expect(portfolioEvents.publicationsFilter).toHaveBeenCalled();
+    });
+  });
+
+  it('tracks filter state when a year filter is changed', async () => {
+    render(<PublicationList initialPublications={mockPublications} />);
+
+    fireEvent.click(screen.getByLabelText('Year'));
+    fireEvent.click(screen.getByRole('option', { name: '2024' }));
+
+    await vi.waitFor(() => {
+      expect(portfolioEvents.publicationsFilter).toHaveBeenCalled();
     });
   });
 

@@ -20,11 +20,11 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { sendGAEvent } from '@next/third-parties/google';
 
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
 } from '@/shared/components/ui/dialog';
 import {
@@ -34,6 +34,9 @@ import {
 } from '@/shared/config/navigation';
 import { navIconMap } from '@/shared/lib/nav-icon-map';
 import { cn } from '@/shared/lib/utils';
+import { portfolioEvents } from '@/shared/lib/analytics';
+import { TIMING } from '@/shared/config/constants';
+import { useDebounce } from '@/shared/hooks';
 import type { NavItem } from '@/shared/types';
 
 // ---------------------------------------------------------------------------
@@ -48,7 +51,9 @@ const itemClass =
 export function CommandMenu() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
+  const [query, setQuery] = React.useState('');
   const { setTheme } = useTheme();
+  const debouncedQuery = useDebounce(query, TIMING.SEARCH_DEBOUNCE);
 
   // ⌘K / Ctrl+K / '/' keyboard shortcut
   React.useEffect(() => {
@@ -73,16 +78,19 @@ export function CommandMenu() {
   const runCommand = React.useCallback(
     (command: () => unknown, label: string) => {
       setOpen(false);
+      setQuery('');
 
-      // Dispatch telemetry event to track which features are searched/used
-      sendGAEvent('event', 'command_palette_select', {
-        value: label,
-      });
+      portfolioEvents.commandPaletteSelect(label, query.trim().length);
 
       command();
     },
-    [setOpen]
+    [query, setOpen]
   );
+
+  React.useEffect(() => {
+    if (!open || debouncedQuery.trim().length < 2) return;
+    portfolioEvents.commandPaletteSearch(debouncedQuery.trim().length);
+  }, [debouncedQuery, open]);
 
   // Render a group of NavItem entries
   const renderNavItems = (items: NavItem[]) =>
@@ -125,9 +133,18 @@ export function CommandMenu() {
       </button>
 
       {/* Command dialog */}
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={(nextOpen) => {
+          setOpen(nextOpen);
+          if (!nextOpen) setQuery('');
+        }}
+      >
         <DialogContent className="overflow-hidden p-0 shadow-2xl sm:max-w-lg">
           <DialogTitle className="sr-only">Search portfolio</DialogTitle>
+          <DialogDescription className="sr-only">
+            Search pages, courses, and quick actions across the portfolio.
+          </DialogDescription>
           <Command
             className={cn(
               '[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground/70',
@@ -143,6 +160,8 @@ export function CommandMenu() {
               <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
               <Command.Input
                 placeholder="Search pages, courses, actions…"
+                value={query}
+                onValueChange={setQuery}
                 className="flex h-12 w-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
               />
             </div>

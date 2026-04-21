@@ -1,7 +1,7 @@
 'use client';
 
 import type { PublicationItem, PublicationType } from '@/shared/types';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Card } from '@/shared/components/ui/card';
 import {
   Select,
@@ -15,6 +15,7 @@ import { Input } from '@/shared/components/ui/input';
 import { PublicationCard } from './publication-card';
 import { useDebounce } from '@/shared/hooks';
 import { TIMING } from '@/shared/config/constants';
+import { portfolioEvents } from '@/shared/lib/analytics';
 
 interface PublicationListProps {
   initialPublications: PublicationItem[];
@@ -35,6 +36,7 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
   const [typeFilter, setTypeFilter] = useState<PublicationType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const debouncedSearchTerm = useDebounce(searchTerm, TIMING.SEARCH_DEBOUNCE);
+  const hasTrackedFilters = useRef(false);
 
   const uniqueYears = (() => {
     const years = new Set(initialPublications.map((p) => p.year.toString()));
@@ -76,6 +78,33 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
       return yearMatch && typeMatch && searchMatch;
     });
   })();
+
+  useEffect(() => {
+    if (!hasTrackedFilters.current) {
+      hasTrackedFilters.current = true;
+      return;
+    }
+
+    if (
+      debouncedSearchTerm === '' &&
+      yearFilter === 'all' &&
+      typeFilter === 'all'
+    ) {
+      return;
+    }
+
+    portfolioEvents.publicationsFilter({
+      queryLength: debouncedSearchTerm.trim().length,
+      yearFilter,
+      typeFilter,
+      resultCount: filteredPublications.length,
+    });
+  }, [
+    debouncedSearchTerm,
+    filteredPublications.length,
+    typeFilter,
+    yearFilter,
+  ]);
 
   if (!initialPublications || initialPublications.length === 0) {
     return (
@@ -149,13 +178,7 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
       </Card>
 
       {filteredPublications.length > 0 ? (
-        <div
-          className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-8"
-          style={{
-            contentVisibility: 'auto',
-            containIntrinsicSize: 'auto 500px',
-          }}
-        >
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-8 [content-visibility:auto] [contain-intrinsic-size:auto_500px]">
           {filteredPublications.map((pub) => (
             <PublicationCard key={pub.id} publication={pub} />
           ))}

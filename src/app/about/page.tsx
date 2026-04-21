@@ -4,6 +4,7 @@ import { assetPaths } from '@/shared/config/assets';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import {
   HeroSection,
+  BilingualIntroduction,
   QuickFacts,
   HighlightsSection,
   ResearchPhilosophy,
@@ -35,6 +36,7 @@ export default function AboutPage() {
         <Breadcrumbs />
 
         <HeroSection />
+        <BilingualIntroduction />
         <QuickFacts />
         <HighlightsSection />
 

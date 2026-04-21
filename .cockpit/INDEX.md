@@ -24,12 +24,12 @@
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Unit:       408/408 PASS (46 files)
+    Unit:       418/418 PASS (48 files)
     Coverage:   Thresholds 64% lines · 81% branches · 54% funcs · 64% stmts (enforced in vitest.config.mts)
-    E2E:        155 passed, 4 skipped, 0 failed (chromium + firefox + mobile-safari)
-    Build:      27 HTML pages generated + 111 files precached (Workbox, 5484 KB)
+    E2E:        161 passed, 4 skipped, 0 failed (chromium + firefox + mobile-safari)
+    Build:      30 HTML pages generated + 118 files precached (Workbox, 7177.1 KB)
     Format:     All files formatted
-    Phase:      Phase 12 (Apps I/O redesign) — complete (4/4 items done)
+    Phase:      Roadmap Phases 7-12 — complete (all tracked items done)
 
 ## Findings Summary
 
@@ -45,49 +45,37 @@
 See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 
 **Phase 6 (Code Quality): COMPLETED**
-**Phase 7 (Student Apps): COMPLETED** — 7 tools live (Grade Calculator, GPA Calculator, Seat Planner, Office Hours, Exam Countdown, Study Timer, Course Planner). Item 7.6 (PDF Study Aid via WebLLM) deferred until a WebGPU adoption trigger.
+**Phase 7 (Student Apps): COMPLETED** — 8 tools live (Grade Calculator, GPA Calculator, Seat Planner, Office Hours, Exam Countdown, Study Timer, Course Planner, PDF Study Aid). The study aid ships as a deterministic browser-local PDF workflow; no WebLLM, WebGPU, or API key required.
 **Phase 8 (Modern Web): COMPLETED** — View transitions, container queries, content-visibility, SEO enhancements.
 **Phase 9 (Testing): COMPLETED** — Playwright E2E + axe-core + smoke render tests + 64% coverage floor wired in CI.
-**Phase 10 (Content): IN PROGRESS** — Blog (MDX) and Talks pages live. Mentorship section infrastructure in place (empty state). 10.2 (Research timeline) and 10.5 (Bengali intro) deferred with explicit triggers.
-**Phase 11 (Monitoring): IN PROGRESS** — Sentry error tracking and Google Analytics wired. 11.3 (Search/filter analytics) deferred until GA traffic baseline > 500 sessions/mo. 11.4 (Uptime monitoring) — configuration guide in [uptime-robot.md](uptime-robot.md); external UptimeRobot monitor activated.
+**Phase 10 (Content): COMPLETED** — Blog (MDX), Talks, mentorship, research timeline, and the bilingual About introduction are live.
+**Phase 11 (Monitoring): COMPLETED** — Sentry error tracking, Google Analytics page views, publications filter telemetry, command-palette telemetry, and UptimeRobot monitoring are all live.
 **Phase 12 (Apps Hub I/O): COMPLETED** — shared import, storage, export, stats, and settings primitives rolled out; Seat Planner refactor complete; GPA transcript, Course CSV/XLSX, and Exam CSV/XLSX imports live.
 
-- 408/408 unit tests passing (46 files) + 155 E2E tests passing with 4 skips and 0 failures.
-- 27 HTML pages generated and precached for static deployment.
+- 418/418 unit tests passing (48 files) + 161 E2E tests passing with 4 skips and 0 failures.
+- 30 HTML pages generated and precached for static deployment.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).
 - Google Analytics via `@next/third-parties`.
 
 ## Deferred Triggers Watchlist
 
-The following roadmap items are deferred pending external data triggers. These should be reviewed **quarterly** alongside the F-264 security dependency audit (Next review: **2026-07-17**).
-
-| Item     | Feature           | Trigger Condition                                                  | Data Source                       |
-| :------- | :---------------- | :----------------------------------------------------------------- | :-------------------------------- |
-| **7.6**  | PDF Study Aid     | WebGPU in ≥ 90% sessions OR capable small on-device model released | GA4 client capabilities / AI news |
-| **10.2** | Research Timeline | Second peer-reviewed publication accepted in same research area    | Owner's academic pipeline         |
-| **10.5** | Bengali Intro     | `bn-BD` visitors exceed 10% for two consecutive months             | GA4 `language` dimension          |
-| **11.3** | Search Analytics  | Total site traffic exceeds 500 sessions/month                      | GA4 total sessions                |
+All previously deferred roadmap items (`7.6`, `10.2`, `10.5`, `11.3`) shipped on 2026-04-21. Quarterly review remains relevant for the two open findings only: F-260 (`/cv` accessibility stability) and F-264 (dependency advisory cadence). Next review: **2026-07-17**.
 
 ## Project Vitals
 
 | Metric            | Value                         |
 | ----------------- | ----------------------------- |
-| Source files      | 223                           |
-| Lines of code     | 17,186                        |
-| Client components | 59 of 148 (.tsx)              |
-| Server components | 89 of 148 (.tsx)              |
-| Custom hooks      | 4                             |
-| Data files        | 32                            |
-| Config files      | 6                             |
-| Barrel exports    | 19                            |
-| Test files        | 50 (46 unit + 4 E2E)          |
-| Themes            | 6                             |
+| Source files      | 268                           |
+| Lines of code     | 22,736                        |
+| Client components | 74 of 169 (.tsx)              |
+| Server components | 95 of 169 (.tsx)              |
+| Test files        | 52 (48 unit + 4 E2E)          |
 | ADRs              | 3 (ADR-005, ADR-006, ADR-007) |
 
 ## Architecture Layers (LOC Distribution)
 
-    shared/    8,108 LOC (47%) — Infrastructure, data, UI primitives
-    features/  7,091 LOC (41%) — Feature modules (teaching, about, research, home, apps)
-    app/       1,987 LOC (12%) — Page routes and layouts
-    styles/      247 LOC  (1%) — Design tokens + globals
+    shared/    9,798 LOC (43%) — Infrastructure, data, UI primitives
+    features/ 10,452 LOC (46%) — Feature modules (teaching, about, research, home, apps)
+    app/       2,254 LOC (10%) — Page routes and layouts
+    styles/      232 LOC  (1%) — Design tokens + globals

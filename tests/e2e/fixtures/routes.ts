@@ -13,6 +13,7 @@ export const CONTENT_ROUTES = [
   '/apps/gpa-calculator',
   '/apps/grade-calculator',
   '/apps/office-hours',
+  '/apps/pdf-study-aid',
   '/apps/seat-planner',
   '/apps/study-timer',
   '/blog',

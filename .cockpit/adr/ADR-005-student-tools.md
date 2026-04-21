@@ -4,14 +4,15 @@
 **Status**: Accepted (implemented as `/apps/`, see Implementation Notes)
 **Deciders**: Md Asif Bin Khaled
 
-## Implementation Notes (2026-04-17)
+## Implementation Notes (2026-04-21)
 
 This ADR captures the original proposal as-written on 2026-02-19. During implementation the route prefix was renamed from `/tools` to `/apps` (shorter, better matches the "academic apps" framing in the nav) and the tool set grew beyond the original four. The **final shipped structure** is:
 
 - Route prefix: `src/app/apps/` (not `/tools/`)
 - Nav label: `Apps` (uses `LayoutGrid` icon, not `Wrench`)
 - Feature module: `src/features/apps/` (not `src/features/tools/`)
-- Shipped tools (7): Grade Calculator, GPA Calculator, Seat Planner, Office Hours, Exam Countdown, Course Planner, Study Timer
+- Shipped tools (8): Grade Calculator, GPA Calculator, Seat Planner, Office Hours, Exam Countdown, Course Planner, Study Timer, PDF Study Aid
+- PDF Study Aid implementation: local PDF text extraction via `pdfjs-dist` plus deterministic summary/glossary/question heuristics; no WebLLM, WebGPU, or external API dependency
 
 All other architectural decisions below (static export, client-only, schema-first, no-data-leaves-browser, bundle budget) were followed. The divergence is cosmetic (naming) and scope-positive (more tools). Treat the design goals as authoritative and the specific folder names as historical.
 
@@ -104,7 +105,7 @@ Add `Wrench` to `navIconMap` in `nav-icon-map.ts`.
 #### Future Tools (Priority: LOW)
 
 - **Exam Countdown**: Per-course countdown timers using `course.exams` data.
-- **PDF Study Aid**: Upload PDF, produce AI summary. Requires WebLLM (runs in browser) or external API key. Complex — deferred.
+- **PDF Study Aid**: Implemented on 2026-04-21 as a browser-local study guide workflow; the original WebLLM-only concept is retired.
 - **Assignment Tracker**: Checklist from `course.assignments` data.
 
 ### 5. Constraints

@@ -90,8 +90,8 @@ export function ToolSettings({
         data: snapshot,
       };
       downloadFile(
-        `${toolSlug}-backup-${new Date().toISOString().slice(0, 10)}.json`,
         JSON.stringify(payload, null, 2),
+        `${toolSlug}-backup-${new Date().toISOString().slice(0, 10)}.json`,
         'application/json'
       );
       toast.success('Backup saved');

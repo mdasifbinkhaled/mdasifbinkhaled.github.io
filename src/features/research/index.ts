@@ -9,6 +9,7 @@ export {
   ResearchVision,
   PrimaryAreas,
   CurrentFocus,
+  ResearchTimeline,
   FeaturedProjects,
   OpenSource,
   LookingAhead,

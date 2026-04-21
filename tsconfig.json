@@ -28,6 +28,7 @@
     "isolatedModules": true
   },
   "include": [
+    "**/*.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "vitest.d.ts",

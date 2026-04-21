@@ -351,6 +351,14 @@
 - No code changes, no dependency changes; documentation only.
 - Quality gates untouched (typecheck, lint, 368/368 unit, coverage 65.52 %, build, 49/49 E2E chromium).
 
+### Phase — Deferred Roadmap Closeout (2026-04-21)
+
+- **7.6 shipped**: added `/apps/pdf-study-aid` with browser-local PDF extraction via `pdfjs-dist`, deterministic note/glossary/practice-question generation, persisted snapshots, export actions, and tool settings support.
+- **10.2 shipped**: restored the research timeline as a first-class `/research` section tied back to publication anchors.
+- **10.5 shipped**: added a dedicated bilingual English/Bengali introduction block on `/about`, sourced from shared personal content data.
+- **11.3 shipped**: added shared `portfolioEvents` telemetry for publications filters and command-palette search/select flows; fixed the latent `ToolSettings` backup argument-order bug during the rollout.
+- **Validation reverified**: `npm run validate` green with 418/418 unit tests, `npm audit --omit=dev` clean, production build generated 30 static pages and 118 precached files, Playwright finished with 161 passed and 4 skipped.
+
 ## Tags
 
 | Tag                   | Description                            |

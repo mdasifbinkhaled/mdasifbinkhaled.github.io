@@ -5,6 +5,7 @@ import {
   ResearchVision,
   PrimaryAreas,
   CurrentFocus,
+  ResearchTimeline,
   FeaturedProjects,
   OpenSource,
   LookingAhead,
@@ -125,6 +126,21 @@ describe('CurrentFocus', () => {
       screen.getByText(
         /Methodological research with emphasis on explainability/i
       )
+    ).toBeInTheDocument();
+  });
+});
+
+describe('ResearchTimeline', () => {
+  it('renders the section heading', () => {
+    render(<ResearchTimeline />);
+    expect(screen.getByText('Research Timeline')).toBeInTheDocument();
+  });
+
+  it('renders timeline entries from data', () => {
+    render(<ResearchTimeline />);
+    expect(screen.getByText("VC's Research Fund")).toBeInTheDocument();
+    expect(
+      screen.getByText('Multimodal Healthcare Diagnostics')
     ).toBeInTheDocument();
   });
 });
