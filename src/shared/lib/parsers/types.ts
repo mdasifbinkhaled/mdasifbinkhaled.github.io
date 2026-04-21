@@ -12,6 +12,11 @@
 
 import type { Result } from '@/shared/lib/validation';
 
+export interface ParsedTabularFile {
+  source: string;
+  rowCount: number;
+}
+
 export interface TabularData {
   /** Headers detected or synthesized (e.g. ["Column 1", "Column 2"]). */
   headers: string[];
@@ -19,10 +24,27 @@ export interface TabularData {
   rows: string[][];
   /** Human-readable source label (filename or "Pasted text"). */
   source: string;
+  /** Source label for each row in `rows`, aligned by index. */
+  rowSources?: string[];
+  /** Parsed source files and their contributed row counts. */
+  files?: ParsedTabularFile[];
   /** Detected delimiter — informational only. */
   delimiter?: ',' | '\t' | ';' | '|';
   /** Parse warnings (non-fatal). */
   warnings: string[];
+}
+
+export interface PerFileValueConfig {
+  /** Optional helper copy shown above the per-file inputs. */
+  description?: string;
+  /** Placeholder used for the per-file input. */
+  placeholder?: string;
+  /** Optional input mode hint for mobile keyboards. */
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
+  /** Optional type override for the per-file input. */
+  type?: React.HTMLInputTypeAttribute;
+  /** Best-effort prefill from the source label (for example the filename). */
+  infer?: (source: string) => string | undefined;
 }
 
 /**
@@ -39,6 +61,8 @@ export interface SchemaField<TKey extends string = string> {
   required: boolean;
   /** Case-insensitive header substrings that map to this field. */
   aliases: string[];
+  /** Optional per-file fallback value support when a column is absent. */
+  perFileValue?: PerFileValueConfig;
   /**
    * Optional cell-level validator — return a normalized value, or throw
    * with a human-readable message to produce a row-level error.
@@ -51,22 +75,38 @@ export type ColumnMapping<TKey extends string = string> = Record<
   number | null
 >;
 
+export type ImportedRow<TKey extends string = string> = Record<TKey, unknown> &
+  Record<string, unknown>;
+
+export interface ExtraColumnSelection {
+  key: string;
+  columnIndex: number;
+  header: string;
+}
+
+export interface ApplySchemaOptions<TKey extends string = string> {
+  fileDefaults?: Partial<Record<TKey, Record<string, string>>>;
+  extraColumns?: ExtraColumnSelection[];
+}
+
 export interface ImportOptions<TKey extends string = string> {
   fields: readonly SchemaField<TKey>[];
   /** Called when user hits "Commit". */
-  onCommit: (rows: Record<TKey, unknown>[], meta: ImportCommitMeta) => void;
+  onCommit: (rows: ImportedRow<TKey>[], meta: ImportCommitMeta) => void;
 }
 
 export type MergeStrategy = 'replace' | 'merge' | 'append';
 
 export interface ImportCommitMeta {
   source: string;
+  sourceFiles?: string[];
   mergeStrategy: MergeStrategy;
   warnings: string[];
   rowsSkipped: number;
+  extraColumns?: string[];
 }
 
 /** The signature tools receive from their importer invocation. */
 export type ImportResult<TKey extends string = string> = Result<
-  Record<TKey, unknown>[]
+  ImportedRow<TKey>[]
 >;

@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { parseFilesMock } = vi.hoisted(() => ({
@@ -31,6 +32,20 @@ const fields: readonly SchemaField<ImportKey>[] = [
 ];
 
 describe('DataImporter', () => {
+  async function selectExtraColumnSource(label: string) {
+    const trigger = screen
+      .getByText('Select source column')
+      .closest('[role="combobox"]');
+
+    if (!(trigger instanceof HTMLElement)) {
+      throw new Error('Unable to locate the extra-column source selector.');
+    }
+
+    const user = userEvent.setup();
+    await user.click(trigger);
+    await user.click(screen.getByRole('option', { name: label }));
+  }
+
   beforeEach(() => {
     parseFilesMock.mockReset();
   });
@@ -134,5 +149,308 @@ describe('DataImporter', () => {
         screen.getByText(/parsed from group-a\.csv, group-b\.csv/i)
       ).toBeInTheDocument();
     });
+  });
+
+  it('commits inferred per-file values together with source metadata', async () => {
+    const user = userEvent.setup();
+    const onCommit = vi.fn();
+    const sectionFields: readonly SchemaField<'id' | 'section'>[] = [
+      {
+        key: 'id',
+        label: 'Student ID',
+        required: true,
+        aliases: ['id'],
+      },
+      {
+        key: 'section',
+        label: 'Section',
+        required: false,
+        aliases: ['section'],
+        perFileValue: {
+          type: 'number',
+          inputMode: 'numeric',
+          infer: (source) => (source.includes('sec-2') ? '2' : undefined),
+        },
+        parse: (raw) => Number(raw),
+      },
+    ];
+
+    parseFilesMock.mockResolvedValue({
+      headers: ['id'],
+      rows: [['23101001']],
+      source: 'sec-2.csv',
+      rowSources: ['sec-2.csv'],
+      files: [{ source: 'sec-2.csv', rowCount: 1 }],
+      warnings: ['Used inferred section'],
+    });
+
+    render(
+      <DataImporter<'id' | 'section'>
+        open={true}
+        onOpenChange={vi.fn()}
+        defaultTab="upload"
+        fields={sectionFields}
+        title="Import students"
+        description="Import some rows"
+        onCommit={onCommit}
+      />
+    );
+
+    const input = document.body.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
+    const file = new File(['id\n23101001'], 'sec-2.csv', {
+      type: 'text/csv',
+    });
+
+    fireEvent.change(input, {
+      target: { files: [file] },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Section for sec-2.csv')).toHaveValue(2);
+    });
+
+    await user.click(screen.getByRole('button', { name: /commit/i }));
+
+    expect(onCommit).toHaveBeenCalledWith(
+      [{ id: '23101001', section: 2 }],
+      expect.objectContaining({
+        source: 'sec-2.csv',
+        sourceFiles: ['sec-2.csv'],
+        warnings: ['Used inferred section'],
+        rowsSkipped: 0,
+        extraColumns: [],
+      })
+    );
+  });
+
+  it('adds passthrough columns to committed rows', async () => {
+    const user = userEvent.setup();
+    const onCommit = vi.fn();
+
+    render(
+      <DataImporter<ImportKey>
+        open={true}
+        onOpenChange={vi.fn()}
+        fields={fields}
+        title="Import data"
+        description="Import some rows"
+        allowExtraColumns
+        onCommit={onCommit}
+      />
+    );
+
+    fireEvent.change(
+      screen.getByPlaceholderText(/paste csv, tsv, or spreadsheet text here/i),
+      {
+        target: { value: 'Name,Program\nAlice,CSE' },
+      }
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Parse' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Alice')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: /add column/i }));
+
+    const extraFieldInput = screen.getByLabelText(
+      /additional column field name/i
+    );
+    await user.type(extraFieldInput, 'Program');
+    await selectExtraColumnSource('Program');
+    await user.click(screen.getByRole('button', { name: /commit/i }));
+
+    expect(onCommit).toHaveBeenCalledWith(
+      [{ name: 'Alice', Program: 'CSE' }],
+      expect.objectContaining({
+        extraColumns: ['Program'],
+        rowsSkipped: 0,
+      })
+    );
+  });
+
+  it('treats additional-column duplicates case-insensitively', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <DataImporter<ImportKey>
+        open={true}
+        onOpenChange={vi.fn()}
+        fields={fields}
+        title="Import data"
+        description="Import some rows"
+        allowExtraColumns
+        onCommit={vi.fn()}
+      />
+    );
+
+    fireEvent.change(
+      screen.getByPlaceholderText(/paste csv, tsv, or spreadsheet text here/i),
+      {
+        target: { value: 'Name,Program\nAlice,CSE' },
+      }
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Parse' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Alice')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: /add column/i }));
+    await user.type(
+      screen.getByLabelText(/additional column field name/i),
+      'Name'
+    );
+    await selectExtraColumnSource('Program');
+
+    expect(
+      screen.getAllByText(
+        /additional column "Name" duplicates an existing field/i
+      )
+    ).not.toHaveLength(0);
+    expect(screen.getByRole('button', { name: /commit/i })).toBeDisabled();
+  });
+
+  it('supports single-file upload copy and surfaces parse warnings', async () => {
+    parseFilesMock.mockResolvedValue({
+      headers: ['Name'],
+      rows: [['Alice']],
+      source: 'group-a.csv',
+      files: [{ source: 'group-a.csv', rowCount: 1 }],
+      rowSources: ['group-a.csv'],
+      warnings: ['Delimiter was inferred from file content.'],
+    });
+
+    render(
+      <DataImporter<ImportKey>
+        open={true}
+        onOpenChange={vi.fn()}
+        defaultTab="upload"
+        allowMultiple={false}
+        fields={fields}
+        title="Import data"
+        description="Import some rows"
+        onCommit={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText(/click to choose a file/i)).toBeInTheDocument();
+
+    const input = document.body.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
+    expect(input.multiple).toBe(false);
+
+    fireEvent.change(input, {
+      target: { files: [new File(['Name\nAlice'], 'group-a.csv')] },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText(/1 import note/i)).toBeInTheDocument();
+      expect(
+        screen.getAllByText(/delimiter was inferred from file content/i)
+      ).not.toHaveLength(0);
+    });
+  });
+
+  it('shows preview truncation and row diagnostics for invalid imports', async () => {
+    const strictFields: readonly SchemaField<'id' | 'name'>[] = [
+      {
+        key: 'id',
+        label: 'Student ID',
+        required: true,
+        aliases: ['id'],
+      },
+      {
+        key: 'name',
+        label: 'Name',
+        required: true,
+        aliases: ['name'],
+      },
+    ];
+
+    const rows = Array.from(
+      { length: 25 },
+      (_, index) => `Student ${index + 1}`
+    );
+
+    render(
+      <DataImporter<'id' | 'name'>
+        open={true}
+        onOpenChange={vi.fn()}
+        fields={strictFields}
+        title="Import data"
+        description="Import some rows"
+        onCommit={vi.fn()}
+      />
+    );
+
+    fireEvent.change(
+      screen.getByPlaceholderText(/paste csv, tsv, or spreadsheet text here/i),
+      {
+        target: { value: `Name\n${rows.join('\n')}` },
+      }
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Parse' }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/25 rows skipped/i)).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText(/showing the first 20 of 25 rows/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/showing the first 5 row errors/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/review the import before committing/i)
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /commit/i })).toBeDisabled();
+  });
+
+  it('removes extra-column drafts and restores the empty-state helper', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <DataImporter<ImportKey>
+        open={true}
+        onOpenChange={vi.fn()}
+        fields={fields}
+        title="Import data"
+        description="Import some rows"
+        allowExtraColumns
+        onCommit={vi.fn()}
+      />
+    );
+
+    fireEvent.change(
+      screen.getByPlaceholderText(/paste csv, tsv, or spreadsheet text here/i),
+      {
+        target: { value: 'Name,Program\nAlice,CSE' },
+      }
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Parse' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Alice')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: /add column/i }));
+    expect(
+      screen.queryByText(/optional passthrough columns are preserved/i)
+    ).not.toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole('button', { name: /remove additional column/i })
+    );
+
+    expect(
+      screen.getByText(
+        /optional passthrough columns are preserved on imported rows/i
+      )
+    ).toBeInTheDocument();
   });
 });

@@ -20,7 +20,14 @@
 // ─────────────────────────────────────────────────────────────────────
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AlertTriangle, CheckCircle2, FileUp, Loader2 } from 'lucide-react';
+import {
+  AlertTriangle,
+  CheckCircle2,
+  FileUp,
+  Loader2,
+  Plus,
+  X,
+} from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -30,6 +37,7 @@ import {
   DialogTitle,
 } from '@/shared/components/ui/dialog';
 import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
 import {
   Tabs,
   TabsContent,
@@ -48,8 +56,11 @@ import { parseFiles, parseText } from '@/shared/lib/parsers/tabular';
 import { applySchema, inferMapping } from '@/shared/lib/parsers/schema';
 import type {
   ColumnMapping,
+  ExtraColumnSelection,
+  ImportedRow,
   ImportCommitMeta,
   MergeStrategy,
+  ParsedTabularFile,
   SchemaField,
   TabularData,
 } from '@/shared/lib/parsers/types';
@@ -73,12 +84,53 @@ export interface DataImporterProps<TKey extends string> {
   accept?: string;
   /** Optional: help text rendered above the preview. */
   helpText?: string;
+  /** Allow optional passthrough columns beyond the fixed schema. */
+  allowExtraColumns?: boolean;
   /** Called with the mapped/validated rows + chosen merge strategy. */
-  onCommit: (rows: Record<TKey, unknown>[], meta: ImportCommitMeta) => void;
+  onCommit: (rows: ImportedRow<TKey>[], meta: ImportCommitMeta) => void;
 }
 
 const DEFAULT_ACCEPT = '.csv,.tsv,.txt,.xlsx,.xls';
 const PREVIEW_ROWS = 20;
+
+interface ExtraColumnDraft {
+  id: string;
+  key: string;
+  columnIndex: number | null;
+}
+
+function createDraftId() {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID();
+  }
+  return `extra-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function getParsedFiles(data: TabularData | null): ParsedTabularFile[] {
+  if (!data) return [];
+  if (data.files && data.files.length > 0) return data.files;
+  if (!data.source) return [];
+  return [{ source: data.source, rowCount: data.rows.length }];
+}
+
+function buildInitialFileDefaults<TKey extends string>(
+  data: TabularData,
+  fields: readonly SchemaField<TKey>[]
+): Partial<Record<TKey, Record<string, string>>> {
+  const defaults = {} as Partial<Record<TKey, Record<string, string>>>;
+
+  for (const field of fields) {
+    if (!field.perFileValue) continue;
+    defaults[field.key] = Object.fromEntries(
+      getParsedFiles(data).map((file) => [
+        file.source,
+        field.perFileValue?.infer?.(file.source)?.trim() ?? '',
+      ])
+    ) as Record<string, string>;
+  }
+
+  return defaults;
+}
 
 export function DataImporter<TKey extends string>({
   open,
@@ -91,6 +143,7 @@ export function DataImporter<TKey extends string>({
   pastePlaceholder,
   accept = DEFAULT_ACCEPT,
   helpText,
+  allowExtraColumns = false,
   onCommit,
 }: DataImporterProps<TKey>) {
   // ── tab state ─────────────────────────────────────────────────────
@@ -103,6 +156,10 @@ export function DataImporter<TKey extends string>({
   const [mapping, setMapping] = useState<ColumnMapping<TKey>>(
     {} as ColumnMapping<TKey>
   );
+  const [fileDefaults, setFileDefaults] = useState<
+    Partial<Record<TKey, Record<string, string>>>
+  >({});
+  const [extraColumns, setExtraColumns] = useState<ExtraColumnDraft[]>([]);
   const [mergeStrategy, setMergeStrategy] = useState<MergeStrategy>('merge');
 
   // reset state whenever the dialog closes
@@ -112,6 +169,8 @@ export function DataImporter<TKey extends string>({
       setPasted('');
       setTabular(null);
       setMapping({} as ColumnMapping<TKey>);
+      setFileDefaults({});
+      setExtraColumns([]);
       setMergeStrategy('merge');
     }
   }, [defaultTab, open]);
@@ -125,6 +184,8 @@ export function DataImporter<TKey extends string>({
     const data = parseText(pasted, 'Pasted text');
     setTabular(data);
     setMapping(inferMapping(data.headers, fields));
+    setFileDefaults(buildInitialFileDefaults(data, fields));
+    setExtraColumns([]);
   };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -137,6 +198,8 @@ export function DataImporter<TKey extends string>({
       const data = await parseFiles(files);
       setTabular(data);
       setMapping(inferMapping(data.headers, fields));
+      setFileDefaults(buildInitialFileDefaults(data, fields));
+      setExtraColumns([]);
     } finally {
       setLoading(false);
       // Allow re-selecting the same file name.
@@ -144,23 +207,60 @@ export function DataImporter<TKey extends string>({
     }
   };
 
+  const parsedFiles = useMemo(() => getParsedFiles(tabular), [tabular]);
+
+  const extraColumnState = useMemo(() => {
+    const reserved = new Set(
+      fields.map((field) => String(field.key).trim().toLocaleLowerCase())
+    );
+    const issues: string[] = [];
+    const valid: ExtraColumnSelection[] = [];
+    const seen = new Set(reserved);
+
+    for (const extraColumn of extraColumns) {
+      const key = extraColumn.key.trim();
+      const normalizedKey = key.toLocaleLowerCase();
+      const blank = !key && extraColumn.columnIndex === null;
+
+      if (blank) continue;
+      if (!key) {
+        issues.push('Each additional column needs a field name.');
+        continue;
+      }
+      if (extraColumn.columnIndex === null || extraColumn.columnIndex < 0) {
+        issues.push(`Choose a source column for "${key}".`);
+        continue;
+      }
+      if (seen.has(normalizedKey)) {
+        issues.push(`Additional column "${key}" duplicates an existing field.`);
+        continue;
+      }
+
+      seen.add(normalizedKey);
+      valid.push({
+        key,
+        columnIndex: extraColumn.columnIndex,
+        header: tabular?.headers[extraColumn.columnIndex] ?? key,
+      });
+    }
+
+    return { issues, valid };
+  }, [extraColumns, fields, tabular?.headers]);
+
   // ── derived: validation snapshot for preview ──────────────────────
   const validation = useMemo(() => {
     if (!tabular) return null;
-    return applySchema(tabular, fields, mapping);
-  }, [tabular, fields, mapping]);
+    return applySchema(tabular, fields, mapping, {
+      fileDefaults,
+      extraColumns: extraColumnState.valid,
+    });
+  }, [tabular, fields, mapping, fileDefaults, extraColumnState.valid]);
 
   const commitDisabled =
-    !validation || !validation.ok || validation.data.length === 0;
-
-  const parsedFiles = useMemo(
-    () =>
-      tabular?.source
-        .split(',')
-        .map((part) => part.trim())
-        .filter(Boolean) ?? [],
-    [tabular?.source]
-  );
+    !validation ||
+    !validation.ok ||
+    validation.data.length === 0 ||
+    extraColumnState.issues.length > 0;
 
   const parseWarnings = tabular?.warnings ?? [];
   const statusItems = [
@@ -188,9 +288,11 @@ export function DataImporter<TKey extends string>({
     if (!validation || !validation.ok) return;
     onCommit(validation.data, {
       source: tabular?.source ?? '',
+      sourceFiles: parsedFiles.map((file) => file.source),
       mergeStrategy,
       warnings: validation.warnings.map((w) => w.message),
       rowsSkipped: validation.errors.length,
+      extraColumns: extraColumnState.valid.map((column) => column.key),
     });
     onOpenChange(false);
   };
@@ -220,6 +322,21 @@ export function DataImporter<TKey extends string>({
     label: string;
     hint: string;
   }[];
+
+  const previewColumns = [
+    ...fields.map((field) => ({
+      kind: 'schema' as const,
+      key: String(field.key),
+      label: field.label,
+      field,
+    })),
+    ...extraColumnState.valid.map((extraColumn) => ({
+      kind: 'extra' as const,
+      key: extraColumn.key,
+      label: extraColumn.key,
+      extraColumn,
+    })),
+  ];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -393,6 +510,233 @@ export function DataImporter<TKey extends string>({
                       </div>
                     </fieldset>
 
+                    {parsedFiles.length > 0 &&
+                    fields.some((field) => field.perFileValue) ? (
+                      <fieldset className="rounded-xl border bg-muted/15 p-4">
+                        <legend className="px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                          Per-file values
+                        </legend>
+                        <div className="mt-2 space-y-4">
+                          {fields
+                            .filter((field) => field.perFileValue)
+                            .map((field) => {
+                              const selectedColumn = mapping[field.key];
+                              const selectedHeader =
+                                selectedColumn === null ||
+                                selectedColumn === undefined
+                                  ? null
+                                  : (tabular?.headers[selectedColumn] ?? null);
+
+                              return (
+                                <div
+                                  key={`${String(field.key)}-file-defaults`}
+                                  className="rounded-lg border bg-background/80 p-3"
+                                >
+                                  <div className="mb-3 space-y-1">
+                                    <p className="text-xs font-semibold">
+                                      {field.label}
+                                    </p>
+                                    <p className="text-[11px] text-muted-foreground">
+                                      {field.perFileValue?.description ??
+                                        (selectedHeader
+                                          ? `${field.label} is mapped to “${selectedHeader}”. File values are used when that cell is blank.`
+                                          : `No source column selected. Set a value for each file to populate ${field.label.toLowerCase()}.`)}
+                                    </p>
+                                  </div>
+
+                                  <div className="space-y-2">
+                                    {parsedFiles.map((file) => {
+                                      const inferred =
+                                        field.perFileValue
+                                          ?.infer?.(file.source)
+                                          ?.trim() ?? '';
+                                      const value =
+                                        fileDefaults[field.key]?.[
+                                          file.source
+                                        ] ?? '';
+                                      const isAutofill =
+                                        !!inferred && value === inferred;
+
+                                      return (
+                                        <div
+                                          key={`${String(field.key)}-${file.source}`}
+                                          className="grid gap-2 rounded-lg border border-border/70 bg-muted/10 p-2 sm:grid-cols-[minmax(0,1fr)_10rem] sm:items-center"
+                                        >
+                                          <div className="min-w-0">
+                                            <div className="flex flex-wrap items-center gap-2">
+                                              <p className="truncate text-xs font-medium">
+                                                {file.source}
+                                              </p>
+                                              <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
+                                                {file.rowCount} row
+                                                {file.rowCount === 1 ? '' : 's'}
+                                              </span>
+                                              {isAutofill ? (
+                                                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">
+                                                  Auto-detected
+                                                </span>
+                                              ) : null}
+                                            </div>
+                                          </div>
+                                          <Input
+                                            type={field.perFileValue?.type}
+                                            inputMode={
+                                              field.perFileValue?.inputMode
+                                            }
+                                            placeholder={
+                                              field.perFileValue?.placeholder ??
+                                              `Set ${field.label.toLowerCase()}`
+                                            }
+                                            value={value}
+                                            onChange={(event) =>
+                                              setFileDefaults((current) => ({
+                                                ...current,
+                                                [field.key]: {
+                                                  ...(current[field.key] ?? {}),
+                                                  [file.source]:
+                                                    event.target.value,
+                                                },
+                                              }))
+                                            }
+                                            className="h-9"
+                                            aria-label={`${field.label} for ${file.source}`}
+                                          />
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </fieldset>
+                    ) : null}
+
+                    {allowExtraColumns ? (
+                      <fieldset className="rounded-xl border bg-muted/15 p-4">
+                        <legend className="px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                          Additional columns
+                        </legend>
+                        <div className="mt-2 flex items-center justify-between gap-3">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              setExtraColumns((current) => [
+                                ...current,
+                                {
+                                  id: createDraftId(),
+                                  key: '',
+                                  columnIndex: null,
+                                },
+                              ])
+                            }
+                          >
+                            <Plus className="h-3.5 w-3.5" aria-hidden />
+                            <span className="ml-1">Add column</span>
+                          </Button>
+                        </div>
+
+                        <div className="mt-3 space-y-2">
+                          {extraColumns.length === 0 ? (
+                            <p className="rounded-lg border border-dashed bg-background/70 px-3 py-2 text-[11px] text-muted-foreground">
+                              Optional passthrough columns are preserved on
+                              imported rows and included in CSV export.
+                            </p>
+                          ) : null}
+
+                          {extraColumns.map((extraColumn) => (
+                            <div
+                              key={extraColumn.id}
+                              className="grid gap-2 rounded-lg border bg-background/80 p-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]"
+                            >
+                              <Input
+                                value={extraColumn.key}
+                                onChange={(event) =>
+                                  setExtraColumns((current) =>
+                                    current.map((column) =>
+                                      column.id === extraColumn.id
+                                        ? {
+                                            ...column,
+                                            key: event.target.value,
+                                          }
+                                        : column
+                                    )
+                                  )
+                                }
+                                placeholder="Field name (e.g. Program)"
+                                aria-label="Additional column field name"
+                              />
+                              <Select
+                                value={
+                                  extraColumn.columnIndex === null
+                                    ? '__none'
+                                    : String(extraColumn.columnIndex)
+                                }
+                                onValueChange={(value) =>
+                                  setExtraColumns((current) =>
+                                    current.map((column) =>
+                                      column.id === extraColumn.id
+                                        ? {
+                                            ...column,
+                                            columnIndex:
+                                              value === '__none'
+                                                ? null
+                                                : Number(value),
+                                          }
+                                        : column
+                                    )
+                                  )
+                                }
+                              >
+                                <SelectTrigger className="h-10 w-full text-left text-xs font-medium">
+                                  <SelectValue placeholder="Select column" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="__none">
+                                    Select source column
+                                  </SelectItem>
+                                  {columnOptions.map((option) => (
+                                    <SelectItem
+                                      key={`${extraColumn.id}-${option.value}`}
+                                      value={option.value}
+                                    >
+                                      {option.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                className="h-10 w-10"
+                                onClick={() =>
+                                  setExtraColumns((current) =>
+                                    current.filter(
+                                      (column) => column.id !== extraColumn.id
+                                    )
+                                  )
+                                }
+                                aria-label={`Remove additional column ${extraColumn.key || extraColumn.id}`}
+                              >
+                                <X className="h-4 w-4" aria-hidden />
+                              </Button>
+                            </div>
+                          ))}
+
+                          {extraColumnState.issues.length > 0 ? (
+                            <div className="space-y-1 rounded-lg border border-red-200 bg-red-50/70 px-3 py-2 text-[11px] text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+                              {extraColumnState.issues.map((issue) => (
+                                <p key={issue}>{issue}</p>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      </fieldset>
+                    ) : null}
+
                     <section className="rounded-xl border bg-muted/15 p-4">
                       <div className="flex items-center justify-between gap-3">
                         <div>
@@ -449,9 +793,9 @@ export function DataImporter<TKey extends string>({
                             Source files
                           </p>
                           <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
-                            {parsedFiles.map((fileName) => (
-                              <li key={fileName} className="truncate">
-                                {fileName}
+                            {parsedFiles.map((file) => (
+                              <li key={file.source} className="truncate">
+                                {file.source}
                               </li>
                             ))}
                           </ul>
@@ -541,12 +885,12 @@ export function DataImporter<TKey extends string>({
                               <th className="px-2 py-2 text-left font-semibold text-muted-foreground">
                                 #
                               </th>
-                              {fields.map((f) => (
+                              {previewColumns.map((column) => (
                                 <th
-                                  key={f.key}
+                                  key={column.key}
                                   className="px-2 py-2 text-left font-semibold"
                                 >
-                                  {f.label}
+                                  {column.label}
                                 </th>
                               ))}
                             </tr>
@@ -570,16 +914,38 @@ export function DataImporter<TKey extends string>({
                                     <td className="px-2 py-1.5 text-muted-foreground">
                                       {idx + 1}
                                     </td>
-                                    {fields.map((f) => {
-                                      const ci = mapping[f.key];
+                                    {previewColumns.map((column) => {
+                                      const rowSource =
+                                        tabular.rowSources?.[idx] ??
+                                        parsedFiles[0]?.source ??
+                                        tabular.source;
                                       const val =
-                                        ci === null || ci === undefined
-                                          ? ''
-                                          : (row[ci] ?? '');
-                                      const missing = f.required && !val;
+                                        column.kind === 'schema'
+                                          ? (() => {
+                                              const ci =
+                                                mapping[column.field.key];
+                                              const raw =
+                                                ci === null || ci === undefined
+                                                  ? ''
+                                                  : (row[ci] ?? '');
+                                              return (
+                                                raw ||
+                                                fileDefaults[
+                                                  column.field.key
+                                                ]?.[rowSource] ||
+                                                ''
+                                              );
+                                            })()
+                                          : (row[
+                                              column.extraColumn.columnIndex
+                                            ] ?? '');
+                                      const missing =
+                                        column.kind === 'schema' &&
+                                        column.field.required &&
+                                        !val;
                                       return (
                                         <td
-                                          key={f.key}
+                                          key={column.key}
                                           className={cn(
                                             'px-2 py-1.5 align-top',
                                             missing &&
@@ -640,6 +1006,18 @@ export function DataImporter<TKey extends string>({
                                 aria-hidden
                               />
                               <span>{warning.message}</span>
+                            </div>
+                          ))}
+                          {extraColumnState.issues.map((issue, index) => (
+                            <div
+                              key={`${issue}-${index}`}
+                              className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50/70 px-3 py-2 text-red-800 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200"
+                            >
+                              <AlertTriangle
+                                className="mt-0.5 h-3.5 w-3.5 shrink-0"
+                                aria-hidden
+                              />
+                              <span>{issue}</span>
                             </div>
                           ))}
                           {validation?.errors

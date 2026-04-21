@@ -15,6 +15,58 @@ import type { TabularData } from './types';
 
 const SPREADSHEET_EXT = /\.(xlsx|xls)$/i;
 
+function normalizeHeader(value: string): string {
+  return value.trim().toLocaleLowerCase().replace(/\s+/g, ' ');
+}
+
+function relabelParsedSource(data: TabularData, source: string): TabularData {
+  return {
+    ...data,
+    source,
+    rowSources: data.rows.map(() => source),
+    files: [{ source, rowCount: data.rows.length }],
+  };
+}
+
+function createAlignedRows(
+  baseHeaders: string[],
+  incoming: TabularData
+): string[][] | null {
+  const normalizedBase = baseHeaders.map(normalizeHeader);
+  const normalizedIncoming = incoming.headers.map(normalizeHeader);
+
+  if (
+    normalizedIncoming.length !== normalizedBase.length ||
+    normalizedIncoming.every(
+      (header, index) => header === normalizedBase[index]
+    )
+  ) {
+    return incoming.rows;
+  }
+
+  if (
+    new Set(normalizedBase).size !== normalizedBase.length ||
+    new Set(normalizedIncoming).size !== normalizedIncoming.length
+  ) {
+    return null;
+  }
+
+  const incomingIndexByHeader = new Map(
+    normalizedIncoming.map((header, index) => [header, index])
+  );
+  const reorderIndices = normalizedBase.map((header) =>
+    incomingIndexByHeader.get(header)
+  );
+
+  if (reorderIndices.some((index) => index === undefined)) {
+    return null;
+  }
+
+  return incoming.rows.map((row) =>
+    reorderIndices.map((index) => row[index ?? 0] ?? '')
+  );
+}
+
 export function parseText(text: string, source = 'Pasted text'): TabularData {
   return parseTextImpl(text, source);
 }
@@ -35,23 +87,47 @@ export async function parseFile(file: File): Promise<TabularData> {
  */
 export async function parseFiles(files: File[]): Promise<TabularData> {
   if (files.length === 0) {
-    return { headers: [], rows: [], source: '', warnings: [] };
+    return {
+      headers: [],
+      rows: [],
+      source: '',
+      rowSources: [],
+      files: [],
+      warnings: [],
+    };
   }
   if (files.length === 1 && files[0]) {
     return parseFile(files[0]);
   }
 
+  const sourceCounts = new Map<string, number>();
   const parsed: TabularData[] = [];
-  for (const f of files) parsed.push(await parseFile(f));
+  for (const file of files) {
+    const count = (sourceCounts.get(file.name) ?? 0) + 1;
+    sourceCounts.set(file.name, count);
+    const source = count === 1 ? file.name : `${file.name} (${count})`;
+    parsed.push(relabelParsedSource(await parseFile(file), source));
+  }
 
   const base = parsed[0];
-  if (!base) return { headers: [], rows: [], source: '', warnings: [] };
+  if (!base) {
+    return {
+      headers: [],
+      rows: [],
+      source: '',
+      rowSources: [],
+      files: [],
+      warnings: [],
+    };
+  }
 
   const combinedWarnings: string[] = [...base.warnings];
   combinedWarnings.push(
     `Merging ${files.length} files (${files.map((f) => f.name).join(', ')}).`
   );
   const combinedRows: string[][] = [...base.rows];
+  const combinedRowSources: string[] = [...(base.rowSources ?? [])];
+  const combinedFiles = [...(base.files ?? [])];
 
   for (let i = 1; i < parsed.length; i++) {
     const p = parsed[i];
@@ -63,7 +139,33 @@ export async function parseFiles(files: File[]): Promise<TabularData> {
       );
       continue;
     }
-    combinedRows.push(...p.rows);
+
+    const alignedRows = createAlignedRows(base.headers, p);
+    if (!alignedRows) {
+      combinedWarnings.push(
+        `Skipped "${p.source}": headers do not match the first file.`
+      );
+      continue;
+    }
+
+    if (
+      p.headers.some(
+        (header, index) =>
+          normalizeHeader(header) !== normalizeHeader(base.headers[index] ?? '')
+      )
+    ) {
+      combinedWarnings.push(
+        `Reordered columns from "${p.source}" to match the first file.`
+      );
+    }
+
+    combinedRows.push(...alignedRows);
+    combinedRowSources.push(
+      ...(p.rowSources ?? alignedRows.map(() => p.source))
+    );
+    combinedFiles.push(
+      ...(p.files ?? [{ source: p.source, rowCount: alignedRows.length }])
+    );
     combinedWarnings.push(...p.warnings);
   }
 
@@ -71,6 +173,8 @@ export async function parseFiles(files: File[]): Promise<TabularData> {
     headers: base.headers,
     rows: combinedRows,
     source: files.map((f) => f.name).join(', '),
+    rowSources: combinedRowSources,
+    files: combinedFiles,
     delimiter: base.delimiter,
     warnings: combinedWarnings,
   };

@@ -20,6 +20,7 @@ import {
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
+import { cn } from '@/shared/lib/utils';
 import {
   Select,
   SelectContent,
@@ -28,7 +29,12 @@ import {
   SelectValue,
 } from '@/shared/components/ui/select';
 import { DataImporter } from '@/shared/components/common/data-importer';
-import type { SchemaField, ImportCommitMeta } from '@/shared/lib/parsers/types';
+import type {
+  ImportedRow,
+  ImportCommitMeta,
+  SchemaField,
+} from '@/shared/lib/parsers/types';
+import { parseRoomCapacity, validateRoomDraft } from './import-utils';
 import type { Room, AllocationMode, SortOrder } from './types';
 
 type RoomKey = 'name' | 'capacity';
@@ -71,10 +77,7 @@ interface RoomConfigurationProps {
   onSortOrderChange: (v: SortOrder) => void;
   onGenerate: () => void;
   onResetResult: () => void;
-  onImportRooms: (
-    rows: Record<RoomKey, unknown>[],
-    meta: ImportCommitMeta
-  ) => void;
+  onImportRooms: (rows: ImportedRow<RoomKey>[], meta: ImportCommitMeta) => void;
 }
 
 export function RoomConfiguration({
@@ -97,6 +100,12 @@ export function RoomConfiguration({
   onImportRooms,
 }: RoomConfigurationProps) {
   const [importOpen, setImportOpen] = useState(false);
+  const roomDraftError = validateRoomDraft(newRoomName, newRoomCapacity, rooms);
+  const draftCapacity = parseRoomCapacity(newRoomCapacity);
+  const averageCapacity =
+    rooms.length > 0 ? Math.round(totalCapacity / rooms.length) : 0;
+  const seatDelta = totalCapacity - studentCount;
+
   return (
     <Card className="print:hidden">
       <CardHeader>
@@ -121,6 +130,7 @@ export function RoomConfiguration({
             className="min-w-[12rem] flex-1"
             onKeyDown={(e) => e.key === 'Enter' && onAddRoom()}
             aria-label="Room name"
+            aria-invalid={roomDraftError ? true : undefined}
           />
           <Input
             type="number"
@@ -128,11 +138,18 @@ export function RoomConfiguration({
             value={newRoomCapacity}
             onChange={(e) => onRoomCapacityChange(e.target.value)}
             className="w-24"
+            inputMode="numeric"
             min={1}
+            step={1}
             onKeyDown={(e) => e.key === 'Enter' && onAddRoom()}
             aria-label="Room capacity"
+            aria-invalid={roomDraftError ? true : undefined}
           />
-          <Button onClick={onAddRoom} size="sm">
+          <Button
+            onClick={onAddRoom}
+            size="sm"
+            disabled={roomDraftError !== null}
+          >
             <Plus className="h-4 w-4" aria-hidden />
             <span className="ml-1">Add</span>
           </Button>
@@ -144,6 +161,23 @@ export function RoomConfiguration({
             <FileUp className="h-4 w-4" aria-hidden />
             <span className="ml-1.5">Bulk import</span>
           </Button>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <p
+            className={cn(
+              'text-muted-foreground',
+              roomDraftError && 'text-red-600 dark:text-red-400'
+            )}
+          >
+            {roomDraftError ??
+              'Press Enter to add a room. Names are matched case-insensitively to prevent duplicates.'}
+          </p>
+          {draftCapacity !== null ? (
+            <span className="rounded-full bg-muted px-2.5 py-1 text-muted-foreground">
+              New room adds {draftCapacity} seat{draftCapacity === 1 ? '' : 's'}
+            </span>
+          ) : null}
         </div>
 
         {/* room chips */}
@@ -166,6 +200,44 @@ export function RoomConfiguration({
                 </button>
               </div>
             ))}
+          </div>
+        )}
+
+        {(rooms.length > 0 || studentCount > 0) && (
+          <div className="grid gap-2 sm:grid-cols-3">
+            <div className="rounded-lg border bg-muted/15 px-3 py-2">
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                Rooms
+              </p>
+              <p className="mt-1 text-lg font-semibold tabular-nums">
+                {rooms.length}
+              </p>
+            </div>
+            <div className="rounded-lg border bg-muted/15 px-3 py-2">
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                Avg Capacity
+              </p>
+              <p className="mt-1 text-lg font-semibold tabular-nums">
+                {averageCapacity || 0}
+              </p>
+            </div>
+            <div className="rounded-lg border bg-muted/15 px-3 py-2">
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                Capacity Balance
+              </p>
+              <p
+                className={cn(
+                  'mt-1 text-lg font-semibold tabular-nums',
+                  seatDelta < 0 && 'text-amber-600 dark:text-amber-400'
+                )}
+              >
+                {studentCount > 0
+                  ? seatDelta >= 0
+                    ? `+${seatDelta}`
+                    : `${seatDelta}`
+                  : totalCapacity}
+              </p>
+            </div>
           </div>
         )}
 
@@ -269,7 +341,7 @@ export function RoomConfiguration({
         title="Import rooms"
         description="Paste rows from a spreadsheet or upload a CSV / TSV / XLSX file."
         pastePlaceholder={'Room\tCapacity\nBC6007-S\t40\nBC6008-S\t60'}
-        helpText="Each row needs a room name and a positive capacity."
+        helpText="Each row needs a room name and a positive capacity. Room names are normalized and merged case-insensitively when they refer to the same room."
         onCommit={(rows, meta) => onImportRooms(rows, meta)}
       />
     </Card>

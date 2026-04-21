@@ -9,6 +9,8 @@ export interface Student {
   name: string;
   /** Section number */
   section: number;
+  /** Optional passthrough metadata imported with the student row. */
+  extras?: Record<string, string>;
   /** Assigned room name (populated after allocation) */
   room?: string;
 }

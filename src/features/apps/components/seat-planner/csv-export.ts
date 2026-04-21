@@ -20,10 +20,26 @@ export function exportMasterListCSV(
   students: Student[],
   details: ExamDetails
 ): void {
-  const header = 'SL,Student ID,Student Name,Section,Room Number';
-  const rows = students.map(
-    (s, i) =>
-      `${i + 1},${csvCell(s.id)},${csvCell(s.name)},${s.section},${csvCell(s.room ?? 'Unassigned')}`
+  const extraKeys = Array.from(
+    new Set(students.flatMap((student) => Object.keys(student.extras ?? {})))
+  );
+  const header = [
+    'SL',
+    'Student ID',
+    'Student Name',
+    'Section',
+    'Room Number',
+    ...extraKeys,
+  ].join(',');
+  const rows = students.map((s, i) =>
+    [
+      i + 1,
+      csvCell(s.id),
+      csvCell(s.name),
+      s.section,
+      csvCell(s.room ?? 'Unassigned'),
+      ...extraKeys.map((key) => csvCell(s.extras?.[key] ?? '')),
+    ].join(',')
   );
 
   download(

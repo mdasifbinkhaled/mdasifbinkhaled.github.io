@@ -77,7 +77,15 @@ export function parseText(text: string, source: string): TabularData {
   }
 
   if (allRows.length === 0) {
-    return { headers: [], rows: [], source, delimiter, warnings };
+    return {
+      headers: [],
+      rows: [],
+      source,
+      rowSources: [],
+      files: [{ source, rowCount: 0 }],
+      delimiter,
+      warnings,
+    };
   }
 
   // Normalize row length to the widest row so every row has the same arity.
@@ -93,5 +101,13 @@ export function parseText(text: string, source: string): TabularData {
     : synthesizeHeaders(maxCols);
   const rows = hasHeader ? normalized.slice(1) : normalized;
 
-  return { headers, rows, source, delimiter, warnings };
+  return {
+    headers,
+    rows,
+    source,
+    rowSources: rows.map(() => source),
+    files: [{ source, rowCount: rows.length }],
+    delimiter,
+    warnings,
+  };
 }

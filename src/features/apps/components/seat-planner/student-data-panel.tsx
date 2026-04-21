@@ -14,8 +14,13 @@ import {
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { DataImporter } from '@/shared/components/common/data-importer';
-import type { SchemaField, ImportCommitMeta } from '@/shared/lib/parsers/types';
+import type {
+  ImportedRow,
+  ImportCommitMeta,
+  SchemaField,
+} from '@/shared/lib/parsers/types';
 import { Th } from './shared-ui';
+import { inferSectionFromSource } from './import-utils';
 import type { Student } from './types';
 
 type StudentKey = 'id' | 'name' | 'section';
@@ -38,6 +43,14 @@ const STUDENT_FIELDS: readonly SchemaField<StudentKey>[] = [
     label: 'Section',
     required: false,
     aliases: ['section', 'sec', 'group'],
+    perFileValue: {
+      description:
+        'Use file-level values when section is missing from the sheet. Seat Planner will prefill this from filenames like sec-2.csv or section_3.xlsx when it can.',
+      placeholder: 'e.g. 1',
+      inputMode: 'numeric',
+      type: 'number',
+      infer: inferSectionFromSource,
+    },
     parse: (raw) => {
       const n = Number(raw);
       if (!Number.isFinite(n) || n < 1) {
@@ -51,10 +64,7 @@ const STUDENT_FIELDS: readonly SchemaField<StudentKey>[] = [
 interface StudentDataPanelProps {
   students: Student[];
   sections: number[];
-  onImport: (
-    rows: Record<StudentKey, unknown>[],
-    meta: ImportCommitMeta
-  ) => void;
+  onImport: (rows: ImportedRow<StudentKey>[], meta: ImportCommitMeta) => void;
   onRemoveStudent: (id: string) => void;
 }
 
@@ -65,6 +75,9 @@ export function StudentDataPanel({
   onRemoveStudent,
 }: StudentDataPanelProps) {
   const [importOpen, setImportOpen] = useState(false);
+  const extraFieldCount = new Set(
+    students.flatMap((student) => Object.keys(student.extras ?? {}))
+  ).size;
 
   return (
     <Card className="print:hidden">
@@ -81,6 +94,8 @@ export function StudentDataPanel({
               {students.length} student{students.length === 1 ? '' : 's'}
               {sections.length > 0 &&
                 ` · ${sections.length} section${sections.length === 1 ? '' : 's'}`}
+              {extraFieldCount > 0 &&
+                ` · ${extraFieldCount} extra field${extraFieldCount === 1 ? '' : 's'}`}
             </span>
           )}
         </CardTitle>
@@ -99,7 +114,8 @@ export function StudentDataPanel({
           </Button>
           <p className="text-xs text-muted-foreground">
             Paste from a spreadsheet or upload CSV / TSV / XLSX. Columns: ID,
-            Name, Section.
+            Name, Section. Section can also come from each filename, and you can
+            keep additional passthrough columns when needed.
           </p>
         </div>
 
@@ -159,7 +175,8 @@ export function StudentDataPanel({
         pastePlaceholder={
           'ID\tName\tSection\n23101001\tAlice Rahman\t1\n23101002\tBob Khan\t2'
         }
-        helpText="Each row needs a Student ID and Name. Section is optional (defaults to 1)."
+        helpText="Each row needs a Student ID and Name. Section can come from a column, from a per-file value, or it defaults to 1. Additional passthrough columns are preserved and included in CSV export."
+        allowExtraColumns
         onCommit={(rows, meta) => onImport(rows, meta)}
       />
     </Card>

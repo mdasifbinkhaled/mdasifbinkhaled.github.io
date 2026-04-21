@@ -22,11 +22,18 @@ import {
   type AllocationResult,
   type SectionFacultyMap,
 } from './types';
-import type { ImportCommitMeta } from '@/shared/lib/parsers/types';
+import type { ImportedRow, ImportCommitMeta } from '@/shared/lib/parsers/types';
 import {
   buildSeatPlanBackupFilename,
   buildSeatPlanExportFilename,
 } from './export-utils';
+import {
+  getRoomNameKey,
+  normalizeImportedRoom,
+  normalizeImportedStudent,
+  parseRoomCapacity,
+  validateRoomDraft,
+} from './import-utils';
 
 export const SEAT_TOOL_SLUG = 'seat-planner';
 
@@ -123,42 +130,84 @@ export function useSeatPlanner() {
 
   const handleImportStudents = useCallback(
     (
-      rows: Record<'id' | 'name' | 'section', unknown>[],
+      rows: ImportedRow<'id' | 'name' | 'section'>[],
       meta: ImportCommitMeta
     ) => {
-      const incoming: Student[] = rows.map((r) => ({
-        id: String(r.id).trim(),
-        name: String(r.name).trim(),
-        section: Number(r.section) || 1,
-      }));
+      const incoming = rows.map((row) => normalizeImportedStudent(row));
+      const extraFieldCount = new Set(
+        incoming.flatMap((student) => Object.keys(student.extras ?? {}))
+      ).size;
+
       setStudents((prev) =>
         mergeBy(prev, incoming, (s) => s.id, meta.mergeStrategy)
       );
       setResult(null);
       toast.success(
         `Imported ${incoming.length} student${incoming.length === 1 ? '' : 's'}` +
-          (meta.rowsSkipped > 0 ? ` (${meta.rowsSkipped} skipped)` : '')
+          (meta.rowsSkipped > 0 ? ` (${meta.rowsSkipped} skipped)` : '') +
+          (extraFieldCount > 0
+            ? ` · ${extraFieldCount} extra field${extraFieldCount === 1 ? '' : 's'} kept`
+            : '')
       );
     },
     [setStudents, mergeBy]
   );
 
   const handleImportRooms = useCallback(
-    (rows: Record<'name' | 'capacity', unknown>[], meta: ImportCommitMeta) => {
-      const incoming: Room[] = rows.map((r) => ({
-        uid: crypto.randomUUID(),
-        name: String(r.name).trim(),
-        capacity: Math.max(1, Math.floor(Number(r.capacity) || 0)),
-      }));
-      setRooms((prev) =>
-        mergeBy(prev, incoming, (r) => r.name, meta.mergeStrategy)
-      );
+    (rows: ImportedRow<'name' | 'capacity'>[], meta: ImportCommitMeta) => {
+      const normalizedIncoming = rows
+        .map((row) => normalizeImportedRoom(row))
+        .filter(
+          (room): room is { name: string; capacity: number } => room !== null
+        );
+      const incomingByName = new Map<string, Room>();
+
+      for (const room of normalizedIncoming) {
+        incomingByName.set(getRoomNameKey(room.name), {
+          uid: crypto.randomUUID(),
+          ...room,
+        });
+      }
+
+      const incoming = [...incomingByName.values()];
+      const duplicateCount = normalizedIncoming.length - incoming.length;
+
+      setRooms((prev) => {
+        if (meta.mergeStrategy === 'replace') {
+          return incoming;
+        }
+
+        const byName = new Map(
+          prev.map((room) => [getRoomNameKey(room.name), room])
+        );
+
+        if (meta.mergeStrategy === 'merge') {
+          for (const room of incoming) {
+            byName.set(getRoomNameKey(room.name), room);
+          }
+          return [...byName.values()];
+        }
+
+        const appended = [...prev];
+        for (const room of incoming) {
+          const key = getRoomNameKey(room.name);
+          if (byName.has(key)) continue;
+          byName.set(key, room);
+          appended.push(room);
+        }
+        return appended;
+      });
+
       setResult(null);
       toast.success(
-        `Imported ${incoming.length} room${incoming.length === 1 ? '' : 's'}`
+        `Imported ${incoming.length} room${incoming.length === 1 ? '' : 's'}` +
+          (meta.rowsSkipped > 0 ? ` (${meta.rowsSkipped} skipped)` : '') +
+          (duplicateCount > 0
+            ? ` · ${duplicateCount} duplicate name${duplicateCount === 1 ? '' : 's'} merged`
+            : '')
       );
     },
-    [setRooms, mergeBy]
+    [setRooms]
   );
 
   const handleRemoveStudent = useCallback(
@@ -170,9 +219,16 @@ export function useSeatPlanner() {
   );
 
   const handleAddRoom = useCallback(() => {
-    const name = newRoomName.trim();
-    const cap = parseInt(newRoomCapacity, 10);
-    if (!name || isNaN(cap) || cap <= 0) return;
+    const draftError = validateRoomDraft(newRoomName, newRoomCapacity, rooms);
+    if (draftError) {
+      toast.error(draftError);
+      return;
+    }
+
+    const name = newRoomName.trim().replace(/\s+/g, ' ');
+    const cap = parseRoomCapacity(newRoomCapacity);
+    if (!name || cap === null) return;
+
     setRooms((prev) => [
       ...prev,
       { uid: crypto.randomUUID(), name, capacity: cap },
@@ -180,7 +236,7 @@ export function useSeatPlanner() {
     setNewRoomName('');
     setNewRoomCapacity('40');
     setResult(null);
-  }, [newRoomName, newRoomCapacity, setRooms]);
+  }, [newRoomName, newRoomCapacity, rooms, setRooms]);
 
   const handleRemoveRoom = useCallback(
     (uid: string) => {

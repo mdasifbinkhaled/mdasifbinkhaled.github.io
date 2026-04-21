@@ -30,6 +30,8 @@ export async function parseSpreadsheet(file: File): Promise<TabularData> {
       headers: [],
       rows: [],
       source: file.name,
+      rowSources: [],
+      files: [{ source: file.name, rowCount: 0 }],
       warnings: ['Spreadsheet contained no readable data.'],
     };
   }
@@ -56,5 +58,12 @@ export async function parseSpreadsheet(file: File): Promise<TabularData> {
     : Array.from({ length: maxCols }, (_, i) => `Column ${i + 1}`);
   const rows = hasHeader ? normalized.slice(1) : normalized;
 
-  return { headers, rows, source: file.name, warnings };
+  return {
+    headers,
+    rows,
+    source: file.name,
+    rowSources: rows.map(() => file.name),
+    files: [{ source: file.name, rowCount: rows.length }],
+    warnings,
+  };
 }

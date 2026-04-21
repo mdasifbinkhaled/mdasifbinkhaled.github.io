@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseText } from '@/shared/lib/parsers/tabular';
+import { parseFiles, parseText } from '@/shared/lib/parsers/tabular';
 import { applySchema, inferMapping } from '@/shared/lib/parsers/schema';
 import type { SchemaField } from '@/shared/lib/parsers/types';
 
@@ -100,6 +100,101 @@ describe('parseText (PapaParse adapter)', () => {
     const out = parseText('id,name\n1,"O""Brien"', 'escaped.csv');
     expect(out.rows[0]).toEqual(['1', 'O"Brien']);
   });
+
+  it('preserves row-level source metadata across multi-file parsing', async () => {
+    const fileA = new File(['id,name\n1,Alice'], 'sec-1.csv', {
+      type: 'text/csv',
+    });
+    const fileB = new File(['id,name\n2,Bob'], 'sec-2.csv', {
+      type: 'text/csv',
+    });
+    Object.defineProperty(fileA, 'text', {
+      value: async () => 'id,name\n1,Alice',
+    });
+    Object.defineProperty(fileB, 'text', {
+      value: async () => 'id,name\n2,Bob',
+    });
+
+    const out = await parseFiles([fileA, fileB]);
+
+    expect(out.files).toEqual([
+      { source: 'sec-1.csv', rowCount: 1 },
+      { source: 'sec-2.csv', rowCount: 1 },
+    ]);
+    expect(out.rowSources).toEqual(['sec-1.csv', 'sec-2.csv']);
+  });
+
+  it('reorders matching headers from later files to the first file order', async () => {
+    const fileA = new File(['id,name,section\n1,Alice,1'], 'sec-1.csv', {
+      type: 'text/csv',
+    });
+    const fileB = new File(['section,name,id\n2,Bob,2'], 'sec-2.csv', {
+      type: 'text/csv',
+    });
+    Object.defineProperty(fileA, 'text', {
+      value: async () => 'id,name,section\n1,Alice,1',
+    });
+    Object.defineProperty(fileB, 'text', {
+      value: async () => 'section,name,id\n2,Bob,2',
+    });
+
+    const out = await parseFiles([fileA, fileB]);
+
+    expect(out.headers).toEqual(['id', 'name', 'section']);
+    expect(out.rows).toEqual([
+      ['1', 'Alice', '1'],
+      ['2', 'Bob', '2'],
+    ]);
+    expect(out.warnings).toContain(
+      'Reordered columns from "sec-2.csv" to match the first file.'
+    );
+  });
+
+  it('disambiguates duplicate source filenames in multi-file parsing', async () => {
+    const fileA = new File(['id,name\n1,Alice'], 'students.csv', {
+      type: 'text/csv',
+    });
+    const fileB = new File(['id,name\n2,Bob'], 'students.csv', {
+      type: 'text/csv',
+    });
+    Object.defineProperty(fileA, 'text', {
+      value: async () => 'id,name\n1,Alice',
+    });
+    Object.defineProperty(fileB, 'text', {
+      value: async () => 'id,name\n2,Bob',
+    });
+
+    const out = await parseFiles([fileA, fileB]);
+
+    expect(out.files).toEqual([
+      { source: 'students.csv', rowCount: 1 },
+      { source: 'students.csv (2)', rowCount: 1 },
+    ]);
+    expect(out.rowSources).toEqual(['students.csv', 'students.csv (2)']);
+    expect(out.source).toBe('students.csv, students.csv');
+  });
+
+  it('skips later files whose headers differ despite matching column count', async () => {
+    const fileA = new File(['id,name\n1,Alice'], 'group-a.csv', {
+      type: 'text/csv',
+    });
+    const fileB = new File(['id,program\n2,CSE'], 'group-b.csv', {
+      type: 'text/csv',
+    });
+    Object.defineProperty(fileA, 'text', {
+      value: async () => 'id,name\n1,Alice',
+    });
+    Object.defineProperty(fileB, 'text', {
+      value: async () => 'id,program\n2,CSE',
+    });
+
+    const out = await parseFiles([fileA, fileB]);
+
+    expect(out.rows).toEqual([['1', 'Alice']]);
+    expect(out.warnings).toContain(
+      'Skipped "group-b.csv": headers do not match the first file.'
+    );
+  });
 });
 
 describe('inferMapping', () => {
@@ -183,6 +278,41 @@ describe('applySchema', () => {
       expect(res.data).toEqual([{ credits: 3 }, { credits: 4.5 }]);
       expect(res.errors).toHaveLength(1);
       expect(res.errors[0]?.message).toContain('invalid "foo"');
+    }
+  });
+
+  it('uses per-file defaults when a field has no mapped column', () => {
+    const data = parseText('id,name\n1,Alice\n2,Bob', 'sec-2.csv');
+    const mapping = inferMapping(data.headers, STUDENT_FIELDS);
+    const res = applySchema(data, STUDENT_FIELDS, mapping, {
+      fileDefaults: {
+        section: {
+          'sec-2.csv': '2',
+        },
+      },
+    });
+
+    expect(res.ok).toBe(true);
+    if (res.ok) {
+      expect(res.data).toEqual([
+        { id: '1', name: 'Alice', section: '2' },
+        { id: '2', name: 'Bob', section: '2' },
+      ]);
+    }
+  });
+
+  it('passes through configured additional columns', () => {
+    const data = parseText('id,name,label\n1,Alice,VIP', 'extra.csv');
+    const mapping = inferMapping(data.headers, STUDENT_FIELDS);
+    const res = applySchema(data, STUDENT_FIELDS, mapping, {
+      extraColumns: [{ key: 'Label', columnIndex: 2, header: 'label' }],
+    });
+
+    expect(res.ok).toBe(true);
+    if (res.ok) {
+      expect(res.data).toEqual([
+        { id: '1', name: 'Alice', section: '', Label: 'VIP' },
+      ]);
     }
   });
 });

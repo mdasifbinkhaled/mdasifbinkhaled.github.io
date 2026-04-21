@@ -10,30 +10,43 @@
 
 import type { Result } from '@/shared/lib/validation';
 import { ok } from '@/shared/lib/validation';
-import type { ColumnMapping, SchemaField, TabularData } from './types';
+import type {
+  ApplySchemaOptions,
+  ColumnMapping,
+  ImportedRow,
+  SchemaField,
+  TabularData,
+} from './types';
 
 export function applySchema<TKey extends string>(
   data: TabularData,
   fields: readonly SchemaField<TKey>[],
-  mapping: ColumnMapping<TKey>
-): Result<Record<TKey, unknown>[]> {
+  mapping: ColumnMapping<TKey>,
+  options: ApplySchemaOptions<TKey> = {}
+): Result<ImportedRow<TKey>[]> {
   const errors: { row: number; code: string; message: string }[] = [];
   const warnings = data.warnings.map((m) => ({
     code: 'parse.warning',
     message: m,
   }));
-  const out: Record<TKey, unknown>[] = [];
+  const out: ImportedRow<TKey>[] = [];
 
   data.rows.forEach((row, idx) => {
-    const record = {} as Record<TKey, unknown>;
+    const record: Record<string, unknown> = {};
     let hasError = false;
+    const rowSource =
+      data.rowSources?.[idx] ?? data.files?.[0]?.source ?? data.source;
 
     for (const field of fields) {
       const colIdx = mapping[field.key];
-      const raw =
+      const columnValue =
         colIdx === null || colIdx === undefined
           ? ''
           : (row[colIdx] ?? '').trim();
+      const fallbackValue = rowSource
+        ? (options.fileDefaults?.[field.key]?.[rowSource] ?? '').trim()
+        : '';
+      const raw = columnValue || fallbackValue;
 
       if (!raw) {
         if (field.required) {
@@ -66,7 +79,13 @@ export function applySchema<TKey extends string>(
       }
     }
 
-    if (!hasError) out.push(record);
+    if (!hasError) {
+      for (const extraColumn of options.extraColumns ?? []) {
+        record[extraColumn.key] = (row[extraColumn.columnIndex] ?? '').trim();
+      }
+    }
+
+    if (!hasError) out.push(record as ImportedRow<TKey>);
   });
 
   return ok(out, warnings, errors);
