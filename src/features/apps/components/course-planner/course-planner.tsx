@@ -286,6 +286,7 @@ export function CoursePlanner() {
       <DataImporter<CoursePlanKey>
         open={importOpen}
         onOpenChange={setImportOpen}
+        defaultTab="upload"
         fields={COURSE_FIELDS}
         title="Import courses"
         description="Paste or upload a CSV/XLSX. Prerequisites may be a comma- or semicolon-separated list of course codes."

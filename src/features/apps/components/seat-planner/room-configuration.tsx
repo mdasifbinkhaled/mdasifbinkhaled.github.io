@@ -264,6 +264,7 @@ export function RoomConfiguration({
       <DataImporter<RoomKey>
         open={importOpen}
         onOpenChange={setImportOpen}
+        defaultTab="upload"
         fields={ROOM_FIELDS}
         title="Import rooms"
         description="Paste rows from a spreadsheet or upload a CSV / TSV / XLSX file."

@@ -207,6 +207,7 @@ export function ExamCountdown() {
       <DataImporter<ExamKey>
         open={importOpen}
         onOpenChange={setImportOpen}
+        defaultTab="upload"
         fields={EXAM_FIELDS}
         title="Import exams"
         description="Paste or upload a CSV/XLSX. Columns: Course, Title, Date (ISO or any parseable date)."

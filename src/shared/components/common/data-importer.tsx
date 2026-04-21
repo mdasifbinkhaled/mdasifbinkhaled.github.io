@@ -8,8 +8,8 @@
 //      (CSV/TSV/XLSX file picker).
 //   2. Parses to a normalized `TabularData` using the shared parser
 //      pipeline.
-//   3. Lets the user override column-to-field mapping via chip dropdowns
-//      when auto-detection is wrong or ambiguous.
+//   3. Lets the user override column-to-field mapping via structured
+//      per-field selectors when auto-detection is wrong or ambiguous.
 //   4. Shows a preview of the first 20 rows with inline validation
 //      badges for missing/invalid fields.
 //   5. Asks for a merge strategy (Replace / Merge / Append — default
@@ -44,7 +44,7 @@ import {
   SelectValue,
 } from '@/shared/components/ui/select';
 import { cn } from '@/shared/lib/utils';
-import { parseFile, parseText } from '@/shared/lib/parsers/tabular';
+import { parseFiles, parseText } from '@/shared/lib/parsers/tabular';
 import { applySchema, inferMapping } from '@/shared/lib/parsers/schema';
 import type {
   ColumnMapping,
@@ -57,6 +57,10 @@ import type {
 export interface DataImporterProps<TKey extends string> {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Initial tab shown when the dialog opens. */
+  defaultTab?: 'paste' | 'upload';
+  /** Allow selecting and merging multiple files from the upload picker. */
+  allowMultiple?: boolean;
   /** Schema that the parsed rows must conform to. */
   fields: readonly SchemaField<TKey>[];
   /** Title of the dialog (e.g. "Import students"). */
@@ -79,6 +83,8 @@ const PREVIEW_ROWS = 20;
 export function DataImporter<TKey extends string>({
   open,
   onOpenChange,
+  defaultTab = 'paste',
+  allowMultiple = true,
   fields,
   title,
   description,
@@ -88,7 +94,7 @@ export function DataImporter<TKey extends string>({
   onCommit,
 }: DataImporterProps<TKey>) {
   // ── tab state ─────────────────────────────────────────────────────
-  const [tab, setTab] = useState<'paste' | 'upload'>('paste');
+  const [tab, setTab] = useState<'paste' | 'upload'>(defaultTab);
   const [pasted, setPasted] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -102,13 +108,13 @@ export function DataImporter<TKey extends string>({
   // reset state whenever the dialog closes
   useEffect(() => {
     if (!open) {
-      setTab('paste');
+      setTab(defaultTab);
       setPasted('');
       setTabular(null);
       setMapping({} as ColumnMapping<TKey>);
       setMergeStrategy('merge');
     }
-  }, [open]);
+  }, [defaultTab, open]);
 
   // ── actions ───────────────────────────────────────────────────────
   const handlePasteParse = () => {
@@ -123,11 +129,12 @@ export function DataImporter<TKey extends string>({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files ?? []);
+    if (files.length === 0) return;
+
     setLoading(true);
     try {
-      const data = await parseFile(file);
+      const data = await parseFiles(files);
       setTabular(data);
       setMapping(inferMapping(data.headers, fields));
     } finally {
@@ -216,16 +223,27 @@ export function DataImporter<TKey extends string>({
                 />
               )}
               <span className="text-sm font-medium">
-                {loading ? 'Parsing…' : 'Click to choose a file'}
+                {loading
+                  ? 'Parsing…'
+                  : allowMultiple
+                    ? 'Click to choose one or more files'
+                    : 'Click to choose a file'}
               </span>
               <span className="mt-1 text-xs text-muted-foreground">
                 Accepts {accept.replace(/\./g, '').replace(/,/g, ', ')}
+                {allowMultiple ? ' · multi-file upload enabled' : ''}
               </span>
+              {tabular?.source ? (
+                <span className="mt-2 max-w-full truncate text-[11px] text-muted-foreground">
+                  Parsed from {tabular.source}
+                </span>
+              ) : null}
               <input
                 id="data-importer-file"
                 ref={fileInputRef}
                 type="file"
                 accept={accept}
+                multiple={allowMultiple}
                 onChange={handleFileChange}
                 disabled={loading}
                 className="sr-only"
@@ -242,61 +260,74 @@ export function DataImporter<TKey extends string>({
 
         {tabular && tabular.headers.length > 0 ? (
           <div className="space-y-3">
-            {/* Column mapping chips */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                Columns
-              </span>
-              {fields.map((field) => {
-                const value = mapping[field.key];
-                return (
-                  <div
-                    key={field.key}
-                    className="flex items-center gap-1.5 rounded-full border bg-card px-2 py-1 text-xs"
-                  >
-                    <span
+            {/* Column mapping controls */}
+            <fieldset className="rounded-md border p-3">
+              <legend className="px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Column mapping
+              </legend>
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {fields.map((field) => {
+                  const value = mapping[field.key];
+                  const isUnmappedRequired =
+                    field.required && (value === null || value === undefined);
+
+                  return (
+                    <div
+                      key={field.key}
                       className={cn(
-                        'font-medium',
-                        field.required &&
-                          value === null &&
-                          'text-red-600 dark:text-red-400'
+                        'min-w-0 rounded-md border bg-card/60 p-3',
+                        isUnmappedRequired &&
+                          'border-red-300 bg-red-50/40 dark:border-red-900 dark:bg-red-950/20'
                       )}
                     >
-                      {field.label}
-                      {field.required ? (
-                        <span className="text-red-500">*</span>
-                      ) : null}
-                    </span>
-                    <span className="text-muted-foreground">→</span>
-                    <Select
-                      value={
-                        value === null || value === undefined
-                          ? '__none'
-                          : String(value)
-                      }
-                      onValueChange={(v) =>
-                        setMapping((m) => ({
-                          ...m,
-                          [field.key]: v === '__none' ? null : Number(v),
-                        }))
-                      }
-                    >
-                      <SelectTrigger className="h-6 border-0 bg-transparent p-0 text-xs font-semibold">
-                        <SelectValue placeholder="—" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="__none">(none)</SelectItem>
-                        {columnOptions.map((o) => (
-                          <SelectItem key={o.value} value={o.value}>
-                            {o.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                );
-              })}
-            </div>
+                      <div className="mb-2 min-w-0">
+                        <p
+                          className={cn(
+                            'truncate text-xs font-semibold',
+                            isUnmappedRequired &&
+                              'text-red-600 dark:text-red-400'
+                          )}
+                        >
+                          {field.label}
+                          {field.required ? (
+                            <span className="ml-0.5 text-red-500">*</span>
+                          ) : null}
+                        </p>
+                        <p className="text-[11px] text-muted-foreground">
+                          Select which uploaded column should populate this
+                          field.
+                        </p>
+                      </div>
+                      <Select
+                        value={
+                          value === null || value === undefined
+                            ? '__none'
+                            : String(value)
+                        }
+                        onValueChange={(v) =>
+                          setMapping((m) => ({
+                            ...m,
+                            [field.key]: v === '__none' ? null : Number(v),
+                          }))
+                        }
+                      >
+                        <SelectTrigger className="h-8 w-full text-left text-xs font-medium">
+                          <SelectValue placeholder="Select column" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="__none">(none)</SelectItem>
+                          {columnOptions.map((o) => (
+                            <SelectItem key={o.value} value={o.value}>
+                              {o.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  );
+                })}
+              </div>
+            </fieldset>
 
             {/* Preview table */}
             <div className="max-h-64 overflow-auto rounded-md border">

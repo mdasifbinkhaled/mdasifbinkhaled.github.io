@@ -152,6 +152,7 @@ export function StudentDataPanel({
       <DataImporter<StudentKey>
         open={importOpen}
         onOpenChange={setImportOpen}
+        defaultTab="upload"
         fields={STUDENT_FIELDS}
         title="Import students"
         description="Paste rows from Excel / Google Sheets, or upload a CSV / TSV / XLSX file."

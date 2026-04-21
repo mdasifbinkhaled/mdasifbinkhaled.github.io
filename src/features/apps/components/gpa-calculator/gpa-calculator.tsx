@@ -242,6 +242,7 @@ export function GpaCalculator() {
       <DataImporter<TranscriptKey>
         open={importOpen}
         onOpenChange={setImportOpen}
+        defaultTab="upload"
         fields={TRANSCRIPT_FIELDS}
         title="Import transcript"
         description="Paste your transcript rows or upload a CSV/XLSX. Columns: Course, Credits, Grade."
