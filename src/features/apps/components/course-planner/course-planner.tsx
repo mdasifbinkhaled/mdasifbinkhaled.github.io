@@ -10,6 +10,7 @@ import {
   Lock,
   ChevronDown,
   Download,
+  FileUp,
 } from 'lucide-react';
 import { downloadFile } from '@/shared/lib/download-file';
 import {
@@ -29,12 +30,50 @@ import {
 } from '@/shared/components/ui/dropdown-menu';
 import { useToolStorage } from '@/shared/lib/storage';
 import { ToolSettings } from '@/shared/components/common/tool-settings';
+import { DataImporter } from '@/shared/components/common/data-importer';
+import type { SchemaField, ImportCommitMeta } from '@/shared/lib/parsers/types';
 import type { PlannerCourse } from './types';
 import { PRESETS } from './presets';
 import { topoLevels, getUnlocked } from './topo-sort';
 import { toast } from 'sonner';
 
 const COURSE_TOOL_SLUG = 'course-planner';
+
+type CoursePlanKey = 'code' | 'title' | 'credits' | 'prerequisites';
+
+const COURSE_FIELDS: readonly SchemaField<CoursePlanKey>[] = [
+  {
+    key: 'code',
+    label: 'Course code',
+    required: true,
+    aliases: ['code', 'course', 'course code'],
+  },
+  {
+    key: 'title',
+    label: 'Title',
+    required: false,
+    aliases: ['title', 'name', 'course title', 'course name'],
+  },
+  {
+    key: 'credits',
+    label: 'Credits',
+    required: true,
+    aliases: ['credits', 'credit', 'cr'],
+    parse: (raw) => {
+      const n = Number(raw);
+      if (!Number.isFinite(n) || n <= 0 || n > 6) {
+        throw new Error(`invalid credits "${raw}"`);
+      }
+      return Math.floor(n);
+    },
+  },
+  {
+    key: 'prerequisites',
+    label: 'Prerequisites',
+    required: false,
+    aliases: ['prerequisites', 'prereqs', 'prereq', 'requires'],
+  },
+];
 
 export function CoursePlanner() {
   const [courses, setCourses, { ready: mounted }] = useToolStorage<
@@ -130,6 +169,49 @@ export function CoursePlanner() {
     toast.success('Course plan exported');
   }, [courses]);
 
+  const [importOpen, setImportOpen] = useState(false);
+
+  const handleImportCourses = useCallback(
+    (rows: Record<CoursePlanKey, unknown>[], meta: ImportCommitMeta) => {
+      const incoming: PlannerCourse[] = rows.map((r) => {
+        const raw = String(r.prerequisites ?? '').trim();
+        const prereqCodes = raw
+          .split(/[,;|]/)
+          .map((s) => s.trim().toUpperCase())
+          .filter(Boolean);
+        return {
+          id: crypto.randomUUID(),
+          code: String(r.code ?? '')
+            .trim()
+            .toUpperCase(),
+          title: String(r.title ?? '').trim(),
+          credits: Number(r.credits) || 3,
+          prerequisites: prereqCodes,
+          completed: false,
+        };
+      });
+      setCourses((prev) => {
+        // Resolve prerequisite codes against the union set (prev + incoming)
+        const pool =
+          meta.mergeStrategy === 'replace' ? incoming : [...prev, ...incoming];
+        const byCode = new Map(pool.map((c) => [c.code, c.id]));
+        const withResolved = incoming.map((c) => ({
+          ...c,
+          prerequisites: c.prerequisites
+            .map((code) => byCode.get(code))
+            .filter((x): x is string => Boolean(x)),
+        }));
+        if (meta.mergeStrategy === 'replace') return withResolved;
+        if (meta.mergeStrategy === 'append') return [...prev, ...withResolved];
+        const map = new Map(prev.map((c) => [c.code, c] as const));
+        for (const c of withResolved) map.set(c.code, c);
+        return Array.from(map.values());
+      });
+      toast.success(`Imported ${incoming.length} course(s)`);
+    },
+    [setCourses]
+  );
+
   const totalCredits = courses.reduce((s, c) => s + c.credits, 0);
   const completedCredits = courses
     .filter((c) => c.completed)
@@ -191,12 +273,27 @@ export function CoursePlanner() {
             Export JSON
           </Button>
         )}
+        <Button variant="outline" size="sm" onClick={() => setImportOpen(true)}>
+          <FileUp className="h-4 w-4 mr-1" />
+          Import
+        </Button>
         <ToolSettings
           toolName="Course Planner"
           toolSlug={COURSE_TOOL_SLUG}
           onReset={() => setCourses([])}
         />
       </div>
+      <DataImporter<CoursePlanKey>
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        fields={COURSE_FIELDS}
+        title="Import courses"
+        description="Paste or upload a CSV/XLSX. Prerequisites may be a comma- or semicolon-separated list of course codes."
+        pastePlaceholder={
+          'Code\tTitle\tCredits\tPrerequisites\nCSE 211\tData Structures\t3\tCSE 110'
+        }
+        onCommit={handleImportCourses}
+      />
 
       {/* Add Course Form */}
       {showAdd && (

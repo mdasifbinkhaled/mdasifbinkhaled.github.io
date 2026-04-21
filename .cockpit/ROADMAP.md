@@ -81,12 +81,12 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 
 Unify data ingress, storage, stats, exports, and settings across every tool under `/apps`. See [ADR-007](adr/ADR-007-apps-io-redesign.md) for the full decision record.
 
-| #    | Item                                                                                                                                                                  | Category     | Complexity | Impact | Status      |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------- | ------ | ----------- |
-| 12.1 | **Shared primitives** — `Result<T>`, namespaced storage, parsers (CSV/TSV/XLSX), `<DataImporter>`, `<StatsPanel>`, `<ExportBar>`, `<ToolSettings>`, shared ICS writer | Architecture | HARD       | HIGH   | Done        |
-| 12.2 | **Seat Planner** — refactor onto primitives (paste/upload students + rooms, merge/append/replace, back-up + reset)                                                    | Refactor     | MODERATE   | HIGH   | Done        |
-| 12.3 | **Grade / GPA / Exam / Course / Study** — apply primitives (storage migration, stats panel, export bar, tool settings)                                                | Refactor     | MODERATE   | HIGH   | In Progress |
-| 12.4 | **Importers** — GPA transcript paste, Course CSV/JSON, Exam `.ics` read                                                                                               | Feature      | MODERATE   | MEDIUM | Not Started |
+| #    | Item                                                                                                                                                                  | Category     | Complexity | Impact | Status |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------- | ------ | ------ |
+| 12.1 | **Shared primitives** — `Result<T>`, namespaced storage, parsers (CSV/TSV/XLSX), `<DataImporter>`, `<StatsPanel>`, `<ExportBar>`, `<ToolSettings>`, shared ICS writer | Architecture | HARD       | HIGH   | Done   |
+| 12.2 | **Seat Planner** — refactor onto primitives (paste/upload students + rooms, merge/append/replace, back-up + reset)                                                    | Refactor     | MODERATE   | HIGH   | Done   |
+| 12.3 | **Grade / GPA / Exam / Course / Study** — apply primitives (storage migration, stats panel, export bar, tool settings)                                                | Refactor     | MODERATE   | HIGH   | Done   |
+| 12.4 | **Importers** — GPA transcript paste, Course CSV/XLSX, Exam CSV/XLSX                                                                                                  | Feature      | MODERATE   | MEDIUM | Done   |
 
 > **12.x Security note**: Phase 12.1 swapped `xlsx@0.18.5` (2 unpatched HIGH CVEs) for `read-excel-file@^9.0.6` (Apache-2.0, read-only, ~35 KB lazy). `npm audit` is clean.
 
@@ -104,5 +104,5 @@ Unify data ingress, storage, stats, exports, and settings across every tool unde
 | Phase 9 (Testing)           | 6      | MODERATE      | 6/6 done                         |
 | Phase 10 (Content)          | 5      | MIXED         | 3/5 done, 2 deferred (10.2/10.5) |
 | Phase 11 (Monitoring)       | 4      | EASY-MODERATE | 3/4 done, 1 deferred (11.3)      |
-| Phase 12 (Apps Hub I/O)     | 4      | MODERATE-HARD | 2/4 done (12.1 + 12.2)           |
+| Phase 12 (Apps Hub I/O)     | 4      | MODERATE-HARD | 4/4 done                         |
 | **Total**                   | **63** |               | **12-20**                        |

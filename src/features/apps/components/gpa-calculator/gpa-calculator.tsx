@@ -1,7 +1,14 @@
 'use client';
 
-import { useMemo, useCallback } from 'react';
-import { Plus, Trash2, Calculator, Settings2, Copy } from 'lucide-react';
+import { useMemo, useCallback, useState } from 'react';
+import {
+  Plus,
+  Trash2,
+  Calculator,
+  Settings2,
+  Copy,
+  FileUp,
+} from 'lucide-react';
 import { STANDARD_GRADING_SCALE } from '@/shared/lib/data/grading';
 import {
   Card,
@@ -21,7 +28,45 @@ import {
 } from '@/shared/components/ui/select';
 import { useToolStorage } from '@/shared/lib/storage';
 import { ToolSettings } from '@/shared/components/common/tool-settings';
+import { DataImporter } from '@/shared/components/common/data-importer';
+import type { SchemaField, ImportCommitMeta } from '@/shared/lib/parsers/types';
 import { toast } from 'sonner';
+
+type TranscriptKey = 'name' | 'credits' | 'grade';
+
+const TRANSCRIPT_FIELDS: readonly SchemaField<TranscriptKey>[] = [
+  {
+    key: 'name',
+    label: 'Course',
+    required: true,
+    aliases: ['course', 'course name', 'course title', 'name', 'code'],
+  },
+  {
+    key: 'credits',
+    label: 'Credits',
+    required: true,
+    aliases: ['credits', 'credit', 'cr', 'cr.', 'units'],
+    parse: (raw) => {
+      const n = Number(raw);
+      if (!Number.isFinite(n) || n <= 0 || n > 6) {
+        throw new Error(`invalid credits "${raw}"`);
+      }
+      return n;
+    },
+  },
+  {
+    key: 'grade',
+    label: 'Grade',
+    required: true,
+    aliases: ['grade', 'letter', 'letter grade', 'mark'],
+    parse: (raw) => {
+      const s = String(raw).trim().toUpperCase();
+      const match = STANDARD_GRADING_SCALE.find((g) => g.label === s);
+      if (!match) throw new Error(`unknown grade "${raw}"`);
+      return match.label;
+    },
+  },
+];
 
 interface CourseEntry {
   id: string;
@@ -55,6 +100,33 @@ export function GpaCalculator() {
     setPrevCredits('');
     setPrevCgpa('');
   }, [setCourses, setPrevCredits, setPrevCgpa]);
+
+  const [importOpen, setImportOpen] = useState(false);
+
+  const handleImportTranscript = useCallback(
+    (rows: Record<TranscriptKey, unknown>[], meta: ImportCommitMeta) => {
+      const incoming: CourseEntry[] = rows.map((r) => ({
+        id: crypto.randomUUID(),
+        name: String(r.name ?? ''),
+        credits: Number(r.credits) || 0,
+        grade: String(r.grade ?? 'A'),
+      }));
+      setCourses((prev) => {
+        if (meta.mergeStrategy === 'replace') return incoming;
+        if (meta.mergeStrategy === 'append') return [...prev, ...incoming];
+        // merge on trimmed lowercase name
+        const map = new Map(
+          prev.map((c) => [c.name.trim().toLowerCase(), c] as const)
+        );
+        for (const c of incoming) {
+          map.set(c.name.trim().toLowerCase(), c);
+        }
+        return Array.from(map.values());
+      });
+      toast.success(`Imported ${incoming.length} course(s)`);
+    },
+    [setCourses]
+  );
 
   const handleAddCourse = useCallback(() => {
     setCourses((prev) => [
@@ -157,13 +229,27 @@ export function GpaCalculator() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-end print:hidden">
+      <div className="flex items-center justify-end gap-2 print:hidden">
+        <Button size="sm" variant="outline" onClick={() => setImportOpen(true)}>
+          <FileUp className="h-4 w-4 mr-1" /> Import transcript
+        </Button>
         <ToolSettings
           toolName="GPA Calculator"
           toolSlug={GPA_TOOL_SLUG}
           onReset={handleResetAll}
         />
       </div>
+      <DataImporter<TranscriptKey>
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        fields={TRANSCRIPT_FIELDS}
+        title="Import transcript"
+        description="Paste your transcript rows or upload a CSV/XLSX. Columns: Course, Credits, Grade."
+        pastePlaceholder={
+          'Course\tCredits\tGrade\nCSE 420\t3\tA\nMAT 216\t3\tB+'
+        }
+        onCommit={handleImportTranscript}
+      />
       <div className="grid gap-6 md:grid-cols-[2fr_1fr] print:block">
         {/* ── Editor Column ── */}
         <div className="space-y-6">

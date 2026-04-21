@@ -1,7 +1,14 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Timer, Plus, Trash2, CalendarDays, Download } from 'lucide-react';
+import {
+  Timer,
+  Plus,
+  Trash2,
+  CalendarDays,
+  Download,
+  FileUp,
+} from 'lucide-react';
 import { Card, CardHeader, CardContent } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
@@ -10,6 +17,8 @@ import { downloadFile } from '@/shared/lib/download-file';
 import { writeIcs } from '@/shared/lib/ics';
 import { useToolStorage } from '@/shared/lib/storage';
 import { ToolSettings } from '@/shared/components/common/tool-settings';
+import { DataImporter } from '@/shared/components/common/data-importer';
+import type { SchemaField, ImportCommitMeta } from '@/shared/lib/parsers/types';
 
 interface ExamEvent {
   id: string;
@@ -38,6 +47,36 @@ const DEFAULT_EXAMS: ExamEvent[] = [
 ];
 
 const EXAM_TOOL_SLUG = 'exam-countdown';
+
+type ExamKey = 'course' | 'title' | 'date';
+
+const EXAM_FIELDS: readonly SchemaField<ExamKey>[] = [
+  {
+    key: 'course',
+    label: 'Course',
+    required: true,
+    aliases: ['course', 'course code', 'code'],
+  },
+  {
+    key: 'title',
+    label: 'Title',
+    required: true,
+    aliases: ['title', 'exam', 'exam title', 'name'],
+  },
+  {
+    key: 'date',
+    label: 'Date',
+    required: true,
+    aliases: ['date', 'when', 'datetime', 'start', 'exam date'],
+    parse: (raw) => {
+      const d = new Date(String(raw));
+      if (Number.isNaN(d.getTime())) {
+        throw new Error(`invalid date "${raw}"`);
+      }
+      return d.toISOString();
+    },
+  },
+];
 
 export function ExamCountdown() {
   const [exams, setExams, { ready: mounted }] = useToolStorage<ExamEvent[]>(
@@ -103,6 +142,31 @@ export function ExamCountdown() {
     toast.success(`Exported ${upcoming.length} exam(s) to .ics`);
   }, [exams]);
 
+  const [importOpen, setImportOpen] = useState(false);
+
+  const handleImportExams = useCallback(
+    (rows: Record<ExamKey, unknown>[], meta: ImportCommitMeta) => {
+      const incoming: ExamEvent[] = rows.map((r) => ({
+        id: crypto.randomUUID(),
+        course: String(r.course ?? '').trim(),
+        title: String(r.title ?? '').trim(),
+        date: String(r.date ?? ''),
+      }));
+      setExams((prev) => {
+        if (meta.mergeStrategy === 'replace') return incoming;
+        if (meta.mergeStrategy === 'append') return [...prev, ...incoming];
+        // merge on (course + title + date) composite key
+        const keyOf = (e: ExamEvent) =>
+          `${e.course.toLowerCase()}|${e.title.toLowerCase()}|${e.date}`;
+        const map = new Map(prev.map((e) => [keyOf(e), e] as const));
+        for (const e of incoming) map.set(keyOf(e), e);
+        return Array.from(map.values());
+      });
+      toast.success(`Imported ${incoming.length} exam(s)`);
+    },
+    [setExams]
+  );
+
   if (!mounted) return null;
 
   // Sort exams by chronological proximity
@@ -121,6 +185,13 @@ export function ExamCountdown() {
           <Button onClick={handleAdd} size="sm" variant="outline">
             <Plus className="mr-2 h-4 w-4" /> Add Exam
           </Button>
+          <Button
+            onClick={() => setImportOpen(true)}
+            size="sm"
+            variant="outline"
+          >
+            <FileUp className="mr-2 h-4 w-4" /> Import
+          </Button>
           {exams.length > 0 && (
             <Button onClick={handleExportICS} size="sm" variant="outline">
               <Download className="mr-2 h-4 w-4" /> Export .ics
@@ -133,6 +204,17 @@ export function ExamCountdown() {
           />
         </div>
       </div>
+      <DataImporter<ExamKey>
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        fields={EXAM_FIELDS}
+        title="Import exams"
+        description="Paste or upload a CSV/XLSX. Columns: Course, Title, Date (ISO or any parseable date)."
+        pastePlaceholder={
+          'Course\tTitle\tDate\nCSE 420\tFinal\t2026-05-12T09:00'
+        }
+        onCommit={handleImportExams}
+      />
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {sortedExams.map((exam, i) => {
