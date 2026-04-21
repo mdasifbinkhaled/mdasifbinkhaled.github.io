@@ -421,27 +421,26 @@ export function useSeatPlanner() {
               text-align: left;
               vertical-align: top;
             }
-            [data-seat-plan-snapshot="true"] th:nth-child(1),
-            [data-seat-plan-snapshot="true"] td:nth-child(1) {
+            [data-seat-plan-snapshot="true"] [data-seat-plan-col="sl"] {
               width: 48px;
               color: #64748b;
             }
-            [data-seat-plan-snapshot="true"] th:nth-child(2),
-            [data-seat-plan-snapshot="true"] td:nth-child(2) {
+            [data-seat-plan-snapshot="true"] [data-seat-plan-col="id"] {
               width: 112px;
               font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
               font-size: 12px;
             }
-            [data-seat-plan-snapshot="true"] th:nth-child(4),
-            [data-seat-plan-snapshot="true"] td:nth-child(4) {
+            [data-seat-plan-snapshot="true"] [data-seat-plan-col="section"] {
               width: 64px;
               text-align: center;
             }
-            [data-seat-plan-snapshot="true"] th:nth-child(5),
-            [data-seat-plan-snapshot="true"] td:nth-child(5) {
+            [data-seat-plan-snapshot="true"] [data-seat-plan-col="extra"] {
+              min-width: 104px;
+            }
+            [data-seat-plan-snapshot="true"] [data-seat-plan-col="room"] {
               width: 160px;
             }
-            [data-seat-plan-snapshot="true"] td:last-child div {
+            [data-seat-plan-snapshot="true"] [data-seat-plan-select-cell] div {
               min-width: 9rem;
               border: 1px solid #d1d5db;
               border-radius: 6px;

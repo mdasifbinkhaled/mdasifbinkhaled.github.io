@@ -4,7 +4,10 @@
 
 import type { Student, ExamDetails } from './types';
 import { downloadFile as download } from '@/shared/lib/download-file';
-import { buildSeatPlanExportFilename } from './export-utils';
+import {
+  buildSeatPlanExportFilename,
+  getStudentExtraKeys,
+} from './export-utils';
 
 // ── CSV value escaping ──────────────────────────
 
@@ -20,9 +23,7 @@ export function exportMasterListCSV(
   students: Student[],
   details: ExamDetails
 ): void {
-  const extraKeys = Array.from(
-    new Set(students.flatMap((student) => Object.keys(student.extras ?? {})))
-  );
+  const extraKeys = getStudentExtraKeys(students);
   const header = [
     'SL',
     'Student ID',

@@ -34,7 +34,9 @@ import {
   TabsTrigger,
 } from '@/shared/components/ui/tabs';
 import {
+  buildSeatPlanTableColumns,
   buildRoomFacultySummary,
+  getSeatPlanTableValue,
   buildSeatPlanDocumentTitle,
   buildSeatPlanMetaLine,
   buildSeatPlanPrintPages,
@@ -110,6 +112,14 @@ export function SeatPlanResults({
         sectionFaculty
       ),
     [allStudentsSorted, result.allocations, sectionFaculty]
+  );
+  const masterColumns = useMemo(
+    () => buildSeatPlanTableColumns(allStudentsSorted, 'master'),
+    [allStudentsSorted]
+  );
+  const roomColumns = useMemo(
+    () => buildSeatPlanTableColumns(allStudentsSorted, 'room'),
+    [allStudentsSorted]
   );
 
   const documentTitle = buildSeatPlanDocumentTitle(examDetails);
@@ -296,45 +306,84 @@ export function SeatPlanResults({
                       <table className="w-full min-w-[42rem] text-sm">
                         <thead className="sticky top-0 bg-background/95 backdrop-blur">
                           <tr>
-                            <Th className="w-12">SL</Th>
-                            <Th className="w-28">Student ID</Th>
-                            <Th>Student Name</Th>
-                            <Th className="w-16 text-center">Section</Th>
-                            <Th className="w-40">Room</Th>
+                            {masterColumns.map((column) => (
+                              <Th
+                                key={column.key}
+                                data-seat-plan-col={
+                                  column.kind === 'extra'
+                                    ? 'extra'
+                                    : column.kind
+                                }
+                                className={
+                                  column.kind === 'sl'
+                                    ? 'w-12'
+                                    : column.kind === 'id'
+                                      ? 'w-28'
+                                      : column.kind === 'section'
+                                        ? 'w-16 text-center'
+                                        : column.kind === 'room'
+                                          ? 'w-40'
+                                          : column.kind === 'extra'
+                                            ? 'min-w-[8rem]'
+                                            : undefined
+                                }
+                              >
+                                {column.label}
+                              </Th>
+                            ))}
                           </tr>
                         </thead>
                         <tbody className="divide-y">
                           {allStudentsSorted.map((student, index) => (
                             <tr key={student.id} className="hover:bg-muted/30">
-                              <td className="px-3 py-2 text-muted-foreground">
-                                {index + 1}
-                              </td>
-                              <td className="px-3 py-2 font-mono text-xs">
-                                {student.id}
-                              </td>
-                              <td className="px-3 py-2">{student.name}</td>
-                              <td className="px-3 py-2 text-center">
-                                {student.section}
-                              </td>
-                              <td className="px-3 py-2">
-                                <select
-                                  value={student.room ?? ''}
-                                  onChange={(e) =>
-                                    onReassign(student.id, e.target.value)
+                              {masterColumns.map((column) => (
+                                <td
+                                  key={column.key}
+                                  data-seat-plan-col={
+                                    column.kind === 'extra'
+                                      ? 'extra'
+                                      : column.kind
                                   }
-                                  className="min-w-[9rem] rounded-md border bg-background px-2 py-1 text-xs focus:border-ring focus:outline-none"
-                                  aria-label={`Room assignment for ${student.name}`}
+                                  data-seat-plan-select-cell={
+                                    column.kind === 'room' ? 'true' : undefined
+                                  }
+                                  className={
+                                    column.kind === 'sl'
+                                      ? 'px-3 py-2 text-muted-foreground'
+                                      : column.kind === 'id'
+                                        ? 'px-3 py-2 font-mono text-xs'
+                                        : column.kind === 'section'
+                                          ? 'px-3 py-2 text-center'
+                                          : 'px-3 py-2'
+                                  }
                                 >
-                                  {result.allocations.map((allocation) => (
-                                    <option
-                                      key={allocation.room.uid}
-                                      value={allocation.room.name}
+                                  {column.kind === 'room' ? (
+                                    <select
+                                      value={student.room ?? ''}
+                                      onChange={(e) =>
+                                        onReassign(student.id, e.target.value)
+                                      }
+                                      className="min-w-[9rem] rounded-md border bg-background px-2 py-1 text-xs focus:border-ring focus:outline-none"
+                                      aria-label={`Room assignment for ${student.name}`}
                                     >
-                                      {allocation.room.name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
+                                      {result.allocations.map((allocation) => (
+                                        <option
+                                          key={allocation.room.uid}
+                                          value={allocation.room.name}
+                                        >
+                                          {allocation.room.name}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  ) : (
+                                    getSeatPlanTableValue(
+                                      student,
+                                      column,
+                                      index
+                                    )
+                                  )}
+                                </td>
+                              ))}
                             </tr>
                           ))}
                         </tbody>
@@ -378,6 +427,7 @@ export function SeatPlanResults({
                 {result.allocations[selectedRoomIdx] ? (
                   <RoomSheet
                     alloc={result.allocations[selectedRoomIdx]}
+                    columns={roomColumns}
                     sectionFaculty={sectionFaculty}
                   />
                 ) : null}
@@ -514,9 +564,11 @@ function SectionOverviewCard({
 
 function RoomSheet({
   alloc,
+  columns,
   sectionFaculty,
 }: {
   alloc: RoomAllocation;
+  columns: ReturnType<typeof buildSeatPlanTableColumns>;
   sectionFaculty: SectionFacultyMap;
 }) {
   const sectionSummary = getSectionSummaries(alloc.students, sectionFaculty);
@@ -561,24 +613,50 @@ function RoomSheet({
       ) : null}
 
       <div className="overflow-hidden rounded-xl border bg-background">
-        <table className="w-full text-sm">
+        <table className="min-w-max text-sm">
           <thead className="bg-background/95">
             <tr>
-              <Th className="w-12">SL</Th>
-              <Th className="w-28">Student ID</Th>
-              <Th>Student Name</Th>
-              <Th className="w-16 text-center">Section</Th>
-              <Th className="w-40">Signature</Th>
+              {columns.map((column) => (
+                <Th
+                  key={column.key}
+                  className={
+                    column.kind === 'sl'
+                      ? 'w-12'
+                      : column.kind === 'id'
+                        ? 'w-28'
+                        : column.kind === 'section'
+                          ? 'w-16 text-center'
+                          : column.kind === 'signature'
+                            ? 'w-40'
+                            : column.kind === 'extra'
+                              ? 'min-w-[8rem]'
+                              : undefined
+                  }
+                >
+                  {column.label}
+                </Th>
+              ))}
             </tr>
           </thead>
           <tbody className="divide-y">
             {alloc.students.map((student, index) => (
               <tr key={student.id} className="hover:bg-muted/30">
-                <td className="px-3 py-2 text-muted-foreground">{index + 1}</td>
-                <td className="px-3 py-2 font-mono text-xs">{student.id}</td>
-                <td className="px-3 py-2">{student.name}</td>
-                <td className="px-3 py-2 text-center">{student.section}</td>
-                <td className="px-3 py-2" />
+                {columns.map((column) => (
+                  <td
+                    key={column.key}
+                    className={
+                      column.kind === 'sl'
+                        ? 'px-3 py-2 text-muted-foreground'
+                        : column.kind === 'id'
+                          ? 'px-3 py-2 font-mono text-xs'
+                          : column.kind === 'section'
+                            ? 'px-3 py-2 text-center'
+                            : 'px-3 py-2'
+                    }
+                  >
+                    {getSeatPlanTableValue(student, column, index)}
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>

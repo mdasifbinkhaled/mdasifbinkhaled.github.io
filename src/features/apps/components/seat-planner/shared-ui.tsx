@@ -2,6 +2,7 @@
 // Seat Planner — shared tiny UI helpers
 // ────────────────────────────────────────────────
 
+import type { ReactNode, ThHTMLAttributes } from 'react';
 import { cn } from '@/shared/lib/utils';
 
 // ── table header cell ───────────────────────────
@@ -9,12 +10,15 @@ import { cn } from '@/shared/lib/utils';
 export function Th({
   children,
   className,
-}: {
-  children?: React.ReactNode;
-  className?: string;
+  ...props
+}: ThHTMLAttributes<HTMLTableCellElement> & {
+  children?: ReactNode;
 }) {
   return (
-    <th className={cn('px-3 py-2 text-left font-semibold text-xs', className)}>
+    <th
+      className={cn('px-3 py-2 text-left font-semibold text-xs', className)}
+      {...props}
+    >
       {children}
     </th>
   );

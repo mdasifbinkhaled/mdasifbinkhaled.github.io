@@ -4,7 +4,7 @@
 // Seat Planner — Student Data panel (v2)
 // ────────────────────────────────────────────────
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Upload, Trash2, Users, CheckCircle2 } from 'lucide-react';
 import {
   Card,
@@ -19,6 +19,10 @@ import type {
   ImportCommitMeta,
   SchemaField,
 } from '@/shared/lib/parsers/types';
+import {
+  buildSeatPlanTableColumns,
+  getSeatPlanTableValue,
+} from './export-utils';
 import { Th } from './shared-ui';
 import { inferSectionFromSource } from './import-utils';
 import type { Student } from './types';
@@ -75,9 +79,16 @@ export function StudentDataPanel({
   onRemoveStudent,
 }: StudentDataPanelProps) {
   const [importOpen, setImportOpen] = useState(false);
-  const extraFieldCount = new Set(
-    students.flatMap((student) => Object.keys(student.extras ?? {}))
-  ).size;
+  const tableColumns = useMemo(
+    () =>
+      buildSeatPlanTableColumns(students, 'master').filter(
+        (column) => column.kind !== 'room'
+      ),
+    [students]
+  );
+  const extraFieldCount = tableColumns.filter(
+    (column) => column.kind === 'extra'
+  ).length;
 
   return (
     <Card className="print:hidden">
@@ -121,27 +132,49 @@ export function StudentDataPanel({
 
         {students.length > 0 ? (
           <div className="max-h-[28rem] overflow-auto rounded-lg border">
-            <table className="w-full text-sm">
+            <table className="min-w-max text-sm">
               <thead className="sticky top-0 bg-muted/80 backdrop-blur">
                 <tr>
-                  <Th className="w-12 text-right">#</Th>
-                  <Th>ID</Th>
-                  <Th>Name</Th>
-                  <Th className="w-16 text-center">Sec</Th>
+                  {tableColumns.map((column) => (
+                    <Th
+                      key={column.key}
+                      className={
+                        column.kind === 'sl'
+                          ? 'w-12 text-right'
+                          : column.kind === 'id'
+                            ? 'w-28'
+                            : column.kind === 'section'
+                              ? 'w-16 text-center'
+                              : column.kind === 'extra'
+                                ? 'min-w-[8rem]'
+                                : undefined
+                      }
+                    >
+                      {column.kind === 'sl' ? '#' : column.label}
+                    </Th>
+                  ))}
                   <Th className="w-10" />
                 </tr>
               </thead>
               <tbody>
                 {students.map((s, i) => (
                   <tr key={s.id} className="border-t">
-                    <td className="py-1.5 pr-2 text-right font-mono text-xs text-muted-foreground">
-                      {i + 1}
-                    </td>
-                    <td className="py-1.5 pr-2 font-mono text-xs">{s.id}</td>
-                    <td className="py-1.5 pr-2">{s.name}</td>
-                    <td className="py-1.5 text-center tabular-nums">
-                      {s.section}
-                    </td>
+                    {tableColumns.map((column) => (
+                      <td
+                        key={column.key}
+                        className={
+                          column.kind === 'sl'
+                            ? 'py-1.5 pr-2 text-right font-mono text-xs text-muted-foreground'
+                            : column.kind === 'id'
+                              ? 'py-1.5 pr-2 font-mono text-xs'
+                              : column.kind === 'section'
+                                ? 'py-1.5 px-3 text-center tabular-nums'
+                                : 'py-1.5 pr-2'
+                        }
+                      >
+                        {getSeatPlanTableValue(s, column, i)}
+                      </td>
+                    ))}
                     <td className="py-1.5 pr-2 text-right">
                       <button
                         type="button"

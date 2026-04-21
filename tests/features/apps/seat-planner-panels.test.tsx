@@ -192,6 +192,10 @@ describe('Seat Planner Panels', () => {
     expect(screen.getByText(/2 students/i)).toBeInTheDocument();
     expect(screen.getByText(/2 sections/i)).toBeInTheDocument();
     expect(screen.getByText(/2 extra fields/i)).toBeInTheDocument();
+    expect(screen.getByText('Program')).toBeInTheDocument();
+    expect(screen.getByText('Shift')).toBeInTheDocument();
+    expect(screen.getByText('CSE')).toBeInTheDocument();
+    expect(screen.getByText('Morning')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /import more/i }));
     expect(screen.getByTestId('mock-data-importer')).toHaveTextContent(

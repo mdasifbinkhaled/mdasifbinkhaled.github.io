@@ -1,10 +1,12 @@
 import {
+  buildSeatPlanTableColumns,
   buildSeatPlanDocumentTitle,
+  getSeatPlanTableValue,
   buildSeatPlanMetaLine,
   buildSeatPlanPrintPages,
   buildSectionCountLine,
 } from './export-utils';
-import { DottedField, Th } from './shared-ui';
+import { Th } from './shared-ui';
 import type {
   ExamDetails,
   RoomAllocation,
@@ -31,10 +33,10 @@ export function SeatPlanPrintDocument({
 
   const title = buildSeatPlanDocumentTitle(examDetails);
   const metaLine = buildSeatPlanMetaLine(examDetails);
-  const organisationLine = [examDetails.department, examDetails.university]
-    .map((part) => part.trim())
-    .filter(Boolean)
-    .join(' • ');
+  const departmentLine = examDetails.department.trim();
+  const universityLine = examDetails.university.trim();
+  const masterColumns = buildSeatPlanTableColumns(students, 'master');
+  const roomColumns = buildSeatPlanTableColumns(students, 'room');
 
   return (
     <div className="seat-plan-print-root hidden print:block">
@@ -49,93 +51,110 @@ export function SeatPlanPrintDocument({
             key={`${page.kind}-${page.pageNumber}`}
             className="seat-plan-print-page flex min-h-full flex-col"
           >
-            <header className="mb-4 border-b pb-3">
-              <div className="flex items-start justify-between gap-4">
+            <header className="mb-4 border-b border-black pb-3 text-black">
+              <div className="space-y-1 text-center">
+                <h1 className="text-[16px] font-semibold leading-tight">
+                  {title}
+                </h1>
+                {metaLine ? <p className="text-[11px]">{metaLine}</p> : null}
+                {departmentLine ? (
+                  <p className="text-[11px]">{departmentLine}</p>
+                ) : null}
+                {universityLine ? (
+                  <p className="text-[11px]">{universityLine}</p>
+                ) : null}
+              </div>
+
+              <div className="mt-3 flex items-stretch justify-between gap-4 border-t border-black pt-2 text-[11px]">
                 <div className="space-y-1">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                    {pageLabel}
-                  </p>
-                  <h1 className="text-lg font-semibold leading-tight">
-                    {title}
-                  </h1>
-                  {metaLine ? (
-                    <p className="text-[11px] text-muted-foreground">
-                      {metaLine}
-                    </p>
-                  ) : null}
-                  {organisationLine ? (
-                    <p className="text-[11px] text-muted-foreground">
-                      {organisationLine}
-                    </p>
-                  ) : null}
                   {page.kind === 'room' ? (
                     <>
-                      <p className="text-[11px] text-muted-foreground">
-                        Room {page.allocation.room.name} ·{' '}
+                      <p>
                         {page.allocation.students.length}/
-                        {page.allocation.room.capacity} seats
+                        {page.allocation.room.capacity} seats occupied
                       </p>
-                      <p className="text-[11px] text-muted-foreground">
-                        {buildSectionCountLine(page.allocation.students)}
-                      </p>
+                      <p>{buildSectionCountLine(page.allocation.students)}</p>
                       {page.facultySummary ? (
-                        <p className="text-[11px] text-muted-foreground">
-                          Faculty: {page.facultySummary}
-                        </p>
+                        <p>Faculty: {page.facultySummary}</p>
                       ) : null}
                     </>
                   ) : (
-                    <p className="text-[11px] text-muted-foreground">
+                    <p>
                       Rows {page.startIndex + 1}–
                       {page.startIndex + page.rows.length}
                     </p>
                   )}
                 </div>
 
-                <div className="shrink-0 text-right text-[11px] text-muted-foreground">
-                  <p>
-                    Page {page.pageNumber} of {page.totalPages}
-                  </p>
-                  {page.kind === 'room' && page.roomPageTotal > 1 ? (
-                    <p>
-                      Room page {page.roomPageNumber} of {page.roomPageTotal}
-                    </p>
-                  ) : null}
+                <div className="min-w-[10rem] border border-black">
+                  <div className="flex h-full items-stretch">
+                    <div className="border-r border-black px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.15em]">
+                      {page.kind === 'master' ? 'Sheet' : 'Room'}
+                    </div>
+                    <div className="flex-1 px-3 py-1 text-right text-[12px] font-semibold">
+                      {page.kind === 'master'
+                        ? 'Master List'
+                        : page.allocation.room.name}
+                    </div>
+                  </div>
                 </div>
               </div>
             </header>
 
             <div className="overflow-hidden rounded-lg border">
               <table className="w-full border-collapse text-[11px] leading-snug">
-                <thead className="bg-muted/60">
+                <thead>
                   <tr>
-                    <Th className="w-10">SL</Th>
-                    <Th className="w-28">Student ID</Th>
-                    <Th>Student Name</Th>
-                    <Th className="w-16 text-center">Section</Th>
-                    <Th className={page.kind === 'master' ? 'w-28' : 'w-40'}>
-                      {page.kind === 'master' ? 'Room' : 'Signature'}
-                    </Th>
+                    {(page.kind === 'master' ? masterColumns : roomColumns).map(
+                      (column) => (
+                        <Th
+                          key={column.key}
+                          className={
+                            column.kind === 'sl'
+                              ? 'w-10 border border-black text-center'
+                              : column.kind === 'id'
+                                ? 'w-28 border border-black'
+                                : column.kind === 'section'
+                                  ? 'w-16 border border-black text-center'
+                                  : column.kind === 'room' ||
+                                      column.kind === 'signature'
+                                    ? 'w-28 border border-black'
+                                    : 'border border-black'
+                          }
+                        >
+                          {column.label}
+                        </Th>
+                      )
+                    )}
                   </tr>
                 </thead>
                 <tbody>
                   {page.rows.map((student, rowIndex) => (
                     <tr key={`${student.id}-${rowIndex}`} className="border-t">
-                      <td className="px-3 py-1.5 text-muted-foreground">
-                        {page.startIndex + rowIndex + 1}
-                      </td>
-                      <td className="px-3 py-1.5 font-mono text-[10px]">
-                        {student.id}
-                      </td>
-                      <td className="px-3 py-1.5">{student.name}</td>
-                      <td className="px-3 py-1.5 text-center">
-                        {student.section}
-                      </td>
-                      <td className="px-3 py-1.5">
-                        {page.kind === 'master'
-                          ? (student.room ?? 'Unassigned')
-                          : ''}
-                      </td>
+                      {(page.kind === 'master'
+                        ? masterColumns
+                        : roomColumns
+                      ).map((column) => (
+                        <td
+                          key={column.key}
+                          className={
+                            column.kind === 'sl'
+                              ? 'border border-black px-2 py-1.5 text-center text-muted-foreground'
+                              : column.kind === 'id'
+                                ? 'border border-black px-2 py-1.5 font-mono text-[10px]'
+                                : column.kind === 'section'
+                                  ? 'border border-black px-2 py-1.5 text-center'
+                                  : 'border border-black px-2 py-1.5'
+                          }
+                        >
+                          {getSeatPlanTableValue(
+                            student,
+                            column,
+                            rowIndex,
+                            page.startIndex
+                          )}
+                        </td>
+                      ))}
                     </tr>
                   ))}
                 </tbody>
@@ -143,15 +162,15 @@ export function SeatPlanPrintDocument({
             </div>
 
             {page.kind === 'room' ? (
-              <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-[11px]">
-                <DottedField label="Total Present" />
-                <DottedField label="Total Absent" />
-                <DottedField label="Invigilator Name" />
-                <DottedField label="Invigilator Signature" />
+              <div className="mt-4 grid grid-cols-2 gap-2 text-[11px]">
+                <PrintFieldBox label="Total Present" />
+                <PrintFieldBox label="Total Absent" />
+                <PrintFieldBox label="Invigilator Name" />
+                <PrintFieldBox label="Invigilator Signature" />
               </div>
             ) : null}
 
-            <footer className="mt-auto flex items-end justify-between border-t pt-3 text-[10px] text-muted-foreground">
+            <footer className="mt-auto flex items-end justify-between border-t border-black pt-3 text-[10px] text-black/70">
               <span>{pageLabel}</span>
               <span>
                 Page {page.pageNumber} of {page.totalPages}
@@ -160,6 +179,17 @@ export function SeatPlanPrintDocument({
           </article>
         );
       })}
+    </div>
+  );
+}
+
+function PrintFieldBox({ label }: { label: string }) {
+  return (
+    <div className="flex border border-black">
+      <div className="min-w-[7rem] border-r border-black px-2 py-2 font-medium">
+        {label}
+      </div>
+      <div className="h-9 flex-1" />
     </div>
   );
 }

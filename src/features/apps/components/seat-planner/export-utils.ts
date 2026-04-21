@@ -14,6 +14,16 @@ export interface SectionSummaryItem {
   faculty?: string;
 }
 
+export type SeatPlanTableVariant = 'master' | 'room';
+
+export interface SeatPlanTableColumn {
+  key: string;
+  label: string;
+  kind: 'sl' | 'id' | 'name' | 'section' | 'extra' | 'room' | 'signature';
+  align?: 'left' | 'center';
+  extraKey?: string;
+}
+
 export interface MasterPrintPage {
   kind: 'master';
   pageNumber: number;
@@ -46,6 +56,80 @@ export function slugifyFilenamePart(value: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/-{2,}/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+export function getStudentExtraKeys(students: readonly Student[]): string[] {
+  const keys: string[] = [];
+  const seen = new Set<string>();
+
+  for (const student of students) {
+    for (const rawKey of Object.keys(student.extras ?? {})) {
+      const key = rawKey.trim();
+      if (!key) continue;
+
+      const normalizedKey = key.toLocaleLowerCase();
+      if (seen.has(normalizedKey)) continue;
+
+      seen.add(normalizedKey);
+      keys.push(key);
+    }
+  }
+
+  return keys;
+}
+
+export function buildSeatPlanTableColumns(
+  students: readonly Student[],
+  variant: SeatPlanTableVariant
+): SeatPlanTableColumn[] {
+  const baseColumns: SeatPlanTableColumn[] = [
+    { key: 'sl', label: 'SL', kind: 'sl', align: 'center' },
+    { key: 'id', label: 'Student ID', kind: 'id' },
+    { key: 'name', label: 'Student Name', kind: 'name' },
+    { key: 'section', label: 'Section', kind: 'section', align: 'center' },
+  ];
+  const extraColumns = getStudentExtraKeys(students).map((key) => ({
+    key: `extra:${key}`,
+    label: key,
+    kind: 'extra' as const,
+    extraKey: key,
+  }));
+
+  return variant === 'master'
+    ? [
+        ...baseColumns,
+        ...extraColumns,
+        { key: 'room', label: 'Room', kind: 'room' },
+      ]
+    : [
+        ...baseColumns,
+        ...extraColumns,
+        { key: 'signature', label: 'Signature', kind: 'signature' },
+      ];
+}
+
+export function getSeatPlanTableValue(
+  student: Student,
+  column: SeatPlanTableColumn,
+  rowIndex: number,
+  startIndex = 0
+): number | string {
+  switch (column.kind) {
+    case 'sl':
+      return startIndex + rowIndex + 1;
+    case 'id':
+      return student.id;
+    case 'name':
+      return student.name;
+    case 'section':
+      return student.section;
+    case 'extra':
+      return student.extras?.[column.extraKey ?? ''] ?? '';
+    case 'room':
+      return student.room ?? 'Unassigned';
+    case 'signature':
+      return '';
+  }
 }
 
 export function buildSeatPlanDocumentTitle(details: ExamDetails): string {

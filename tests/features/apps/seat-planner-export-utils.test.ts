@@ -1,9 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
+  buildSeatPlanTableColumns,
   buildRoomFacultySummary,
   buildSeatPlanBackupFilename,
   buildSeatPlanExportFilename,
   buildSeatPlanPrintPages,
+  getSeatPlanTableValue,
+  getStudentExtraKeys,
 } from '@/features/apps/components/seat-planner/export-utils';
 import type {
   ExamDetails,
@@ -136,5 +139,64 @@ describe('Seat planner export utils', () => {
     expect(
       buildRoomFacultySummary(allocation, { 1: 'Rahman', 2: 'Karim' }, 22)
     ).toBe('S1: Rahman • S2: Karim');
+  });
+
+  it('builds dynamic table columns from preserved student extras', () => {
+    const students: Student[] = [
+      {
+        id: '1',
+        name: 'Alice',
+        section: 1,
+        room: 'BC5014-S',
+        extras: { Program: 'CSE', Shift: 'Morning' },
+      },
+      {
+        id: '2',
+        name: 'Bob',
+        section: 2,
+        room: 'BC5015-S',
+        extras: { Shift: 'Evening', Campus: 'Main' },
+      },
+    ];
+
+    expect(getStudentExtraKeys(students)).toEqual([
+      'Program',
+      'Shift',
+      'Campus',
+    ]);
+
+    expect(buildSeatPlanTableColumns(students, 'master')).toMatchObject([
+      { kind: 'sl', label: 'SL' },
+      { kind: 'id', label: 'Student ID' },
+      { kind: 'name', label: 'Student Name' },
+      { kind: 'section', label: 'Section' },
+      { kind: 'extra', label: 'Program', extraKey: 'Program' },
+      { kind: 'extra', label: 'Shift', extraKey: 'Shift' },
+      { kind: 'extra', label: 'Campus', extraKey: 'Campus' },
+      { kind: 'room', label: 'Room' },
+    ]);
+  });
+
+  it('reads table values for extra, room, and signature columns', () => {
+    const student: Student = {
+      id: '1',
+      name: 'Alice',
+      section: 1,
+      room: 'BC5014-S',
+      extras: { Program: 'CSE' },
+    };
+    const [, , , , programColumn, roomColumn] = buildSeatPlanTableColumns(
+      [student],
+      'master'
+    ).slice(0, 6);
+    const signatureColumn = buildSeatPlanTableColumns([student], 'room').at(-1);
+
+    expect(programColumn).toBeDefined();
+    expect(roomColumn).toBeDefined();
+    expect(signatureColumn).toBeDefined();
+
+    expect(getSeatPlanTableValue(student, programColumn!, 0)).toBe('CSE');
+    expect(getSeatPlanTableValue(student, roomColumn!, 0)).toBe('BC5014-S');
+    expect(getSeatPlanTableValue(student, signatureColumn!, 0)).toBe('');
   });
 });
