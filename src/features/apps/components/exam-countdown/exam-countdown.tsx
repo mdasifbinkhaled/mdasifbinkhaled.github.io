@@ -8,7 +8,8 @@ import { Input } from '@/shared/components/ui/input';
 import { toast } from 'sonner';
 import { downloadFile } from '@/shared/lib/download-file';
 import { writeIcs } from '@/shared/lib/ics';
-import { usePersistedState } from '@/shared/hooks';
+import { useToolStorage } from '@/shared/lib/storage';
+import { ToolSettings } from '@/shared/components/common/tool-settings';
 
 interface ExamEvent {
   id: string;
@@ -36,11 +37,12 @@ const DEFAULT_EXAMS: ExamEvent[] = [
   }, // +45 days
 ];
 
-const STORAGE_KEY = 'abk_exam_countdown';
+const EXAM_TOOL_SLUG = 'exam-countdown';
 
 export function ExamCountdown() {
-  const [exams, setExams, { ready: mounted }] = usePersistedState<ExamEvent[]>(
-    STORAGE_KEY,
+  const [exams, setExams, { ready: mounted }] = useToolStorage<ExamEvent[]>(
+    EXAM_TOOL_SLUG,
+    'events',
     DEFAULT_EXAMS
   );
   const [now, setNow] = useState(new Date().getTime());
@@ -124,6 +126,11 @@ export function ExamCountdown() {
               <Download className="mr-2 h-4 w-4" /> Export .ics
             </Button>
           )}
+          <ToolSettings
+            toolName="Exam Countdown"
+            toolSlug={EXAM_TOOL_SLUG}
+            onReset={() => setExams(DEFAULT_EXAMS)}
+          />
         </div>
       </div>
 

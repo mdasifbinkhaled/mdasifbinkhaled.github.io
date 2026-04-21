@@ -19,7 +19,8 @@ import {
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
-import { usePersistedState } from '@/shared/hooks';
+import { useToolStorage } from '@/shared/lib/storage';
+import { ToolSettings } from '@/shared/components/common/tool-settings';
 
 type SessionType = 'focus' | 'short-break' | 'long-break';
 
@@ -43,8 +44,7 @@ const DEFAULT_SETTINGS: TimerSettings = {
   sessionsBeforeLongBreak: 4,
 };
 
-const STORAGE_KEY_SETTINGS = 'abk_study_timer_settings';
-const STORAGE_KEY_LOG = 'abk_study_timer_log';
+const STUDY_TOOL_SLUG = 'study-timer';
 
 function getSessionLabel(type: SessionType): string {
   switch (type) {
@@ -79,7 +79,11 @@ function formatTime(totalSeconds: number): string {
 
 export function StudyTimer() {
   const [settings, setSettings, { ready: settingsReady }] =
-    usePersistedState<TimerSettings>(STORAGE_KEY_SETTINGS, DEFAULT_SETTINGS);
+    useToolStorage<TimerSettings>(
+      STUDY_TOOL_SLUG,
+      'settings',
+      DEFAULT_SETTINGS
+    );
   const [showSettings, setShowSettings] = useState(false);
   const [sessionType, setSessionType] = useState<SessionType>('focus');
   const [secondsLeft, setSecondsLeft] = useState(
@@ -87,9 +91,11 @@ export function StudyTimer() {
   );
   const [isRunning, setIsRunning] = useState(false);
   const [focusCount, setFocusCount] = useState(0);
-  const [allLog, setAllLog, { ready: logReady }] = usePersistedState<
-    SessionLog[]
-  >(STORAGE_KEY_LOG, []);
+  const [allLog, setAllLog, { ready: logReady }] = useToolStorage<SessionLog[]>(
+    STUDY_TOOL_SLUG,
+    'log',
+    []
+  );
   const mounted = settingsReady && logReady;
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -301,305 +307,325 @@ export function StudyTimer() {
   if (!mounted) return null;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
-      {/* Main Timer */}
-      <div className="space-y-6">
-        {/* Session Type Tabs */}
-        <div className="flex gap-2">
-          {(['focus', 'short-break', 'long-break'] as const).map((type) => (
-            <button
-              key={type}
-              onClick={() => switchSession(type)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                sessionType === type
-                  ? type === 'focus'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-emerald-500 text-white'
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
-              }`}
-            >
-              {type === 'focus' ? (
-                <BookOpen className="h-4 w-4" />
-              ) : (
-                <Coffee className="h-4 w-4" />
-              )}
-              {getSessionLabel(type)}
-            </button>
-          ))}
-        </div>
+    <div className="space-y-6">
+      <div className="flex items-center justify-end">
+        <ToolSettings
+          toolName="Study Timer"
+          toolSlug={STUDY_TOOL_SLUG}
+          onReset={() => {
+            setSettings(DEFAULT_SETTINGS);
+            setAllLog([]);
+            setFocusCount(0);
+            setSessionType('focus');
+            setIsRunning(false);
+          }}
+        />
+      </div>
+      <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
+        {/* Main Timer */}
+        <div className="space-y-6">
+          {/* Session Type Tabs */}
+          <div className="flex gap-2">
+            {(['focus', 'short-break', 'long-break'] as const).map((type) => (
+              <button
+                key={type}
+                onClick={() => switchSession(type)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  sessionType === type
+                    ? type === 'focus'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-emerald-500 text-white'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                {type === 'focus' ? (
+                  <BookOpen className="h-4 w-4" />
+                ) : (
+                  <Coffee className="h-4 w-4" />
+                )}
+                {getSessionLabel(type)}
+              </button>
+            ))}
+          </div>
 
-        {/* Timer Display */}
-        <Card
-          className={`overflow-hidden ${sessionType === 'focus' ? 'border-primary/20' : 'border-emerald-500/20'}`}
-        >
-          <CardContent className="py-12">
-            <div className="flex flex-col items-center gap-8">
-              {/* Progress Ring */}
-              <div className="relative w-64 h-64">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="text-muted/30"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeDasharray={`${2 * Math.PI * 45}`}
-                    strokeDashoffset={`${2 * Math.PI * 45 * (1 - progress / 100)}`}
-                    className={`transition-all duration-1000 ${sessionType === 'focus' ? 'text-primary' : 'text-emerald-500'}`}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-6xl font-bold tabular-nums tracking-tighter">
-                    {formatTime(secondsLeft)}
-                  </span>
-                  <span className="text-sm text-muted-foreground mt-2 font-medium uppercase tracking-widest">
-                    {getSessionLabel(sessionType)}
-                  </span>
+          {/* Timer Display */}
+          <Card
+            className={`overflow-hidden ${sessionType === 'focus' ? 'border-primary/20' : 'border-emerald-500/20'}`}
+          >
+            <CardContent className="py-12">
+              <div className="flex flex-col items-center gap-8">
+                {/* Progress Ring */}
+                <div className="relative w-64 h-64">
+                  <svg
+                    className="w-full h-full -rotate-90"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="text-muted/30"
+                    />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeDasharray={`${2 * Math.PI * 45}`}
+                      strokeDashoffset={`${2 * Math.PI * 45 * (1 - progress / 100)}`}
+                      className={`transition-all duration-1000 ${sessionType === 'focus' ? 'text-primary' : 'text-emerald-500'}`}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-6xl font-bold tabular-nums tracking-tighter">
+                      {formatTime(secondsLeft)}
+                    </span>
+                    <span className="text-sm text-muted-foreground mt-2 font-medium uppercase tracking-widest">
+                      {getSessionLabel(sessionType)}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Controls */}
+                <div className="flex items-center gap-3">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={handleReset}
+                    aria-label="Reset timer"
+                    className="h-12 w-12"
+                  >
+                    <RotateCcw className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    size="lg"
+                    onClick={() => setIsRunning(!isRunning)}
+                    aria-label={isRunning ? 'Pause timer' : 'Start timer'}
+                    className={`h-14 w-14 rounded-full ${
+                      sessionType !== 'focus'
+                        ? 'bg-emerald-500 hover:bg-emerald-600'
+                        : ''
+                    }`}
+                  >
+                    {isRunning ? (
+                      <Pause className="h-6 w-6" />
+                    ) : (
+                      <Play className="h-6 w-6 ml-0.5" />
+                    )}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={handleSkip}
+                    aria-label="Skip to next session"
+                    className="h-12 w-12"
+                  >
+                    <SkipForward className="h-5 w-5" />
+                  </Button>
+                </div>
+
+                {/* Focus counter */}
+                <div className="flex gap-2">
+                  {Array.from({ length: settings.sessionsBeforeLongBreak }).map(
+                    (_, i) => (
+                      <div
+                        key={i}
+                        className={`w-3 h-3 rounded-full transition-colors ${
+                          i < focusCount % settings.sessionsBeforeLongBreak
+                            ? 'bg-primary'
+                            : 'bg-muted'
+                        }`}
+                      />
+                    )
+                  )}
                 </div>
               </div>
-
-              {/* Controls */}
-              <div className="flex items-center gap-3">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleReset}
-                  aria-label="Reset timer"
-                  className="h-12 w-12"
-                >
-                  <RotateCcw className="h-5 w-5" />
-                </Button>
-                <Button
-                  size="lg"
-                  onClick={() => setIsRunning(!isRunning)}
-                  aria-label={isRunning ? 'Pause timer' : 'Start timer'}
-                  className={`h-14 w-14 rounded-full ${
-                    sessionType !== 'focus'
-                      ? 'bg-emerald-500 hover:bg-emerald-600'
-                      : ''
-                  }`}
-                >
-                  {isRunning ? (
-                    <Pause className="h-6 w-6" />
-                  ) : (
-                    <Play className="h-6 w-6 ml-0.5" />
-                  )}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleSkip}
-                  aria-label="Skip to next session"
-                  className="h-12 w-12"
-                >
-                  <SkipForward className="h-5 w-5" />
-                </Button>
-              </div>
-
-              {/* Focus counter */}
-              <div className="flex gap-2">
-                {Array.from({ length: settings.sessionsBeforeLongBreak }).map(
-                  (_, i) => (
-                    <div
-                      key={i}
-                      className={`w-3 h-3 rounded-full transition-colors ${
-                        i < focusCount % settings.sessionsBeforeLongBreak
-                          ? 'bg-primary'
-                          : 'bg-muted'
-                      }`}
-                    />
-                  )
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Sidebar */}
-      <div className="space-y-6">
-        {/* Today's Stats */}
-        <Card className="bg-primary/5 border-primary/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Timer className="h-5 w-5 text-primary" />
-              Today&apos;s Progress
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 pt-2">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-background rounded-lg border p-3 text-center">
-                <span className="block text-2xl font-bold tabular-nums">
-                  {todayFocusSessions}
-                </span>
-                <span className="text-xs text-muted-foreground">Sessions</span>
-              </div>
-              <div className="bg-background rounded-lg border p-3 text-center">
-                <span className="block text-2xl font-bold tabular-nums">
-                  {todayFocusMinutes}
-                </span>
-                <span className="text-xs text-muted-foreground">Minutes</span>
-              </div>
-            </div>
-            {todayLog.length > 0 && (
-              <div className="space-y-1 max-h-40 overflow-y-auto">
-                {todayLog
-                  .filter((l) => l.type === 'focus')
-                  .map((log, i) => (
-                    <div
-                      key={i}
-                      className="flex justify-between text-xs text-muted-foreground py-1 border-b border-border/50 last:border-0"
-                    >
-                      <span>Session {i + 1}</span>
-                      <span>
-                        {Math.round(log.duration / 60)}min &middot;{' '}
-                        {new Date(log.completedAt).toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </span>
-                    </div>
-                  ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Weekly Activity Heatmap */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Weekly Activity</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-7 gap-1 text-[10px] text-muted-foreground mb-1">
-              {heatmapData.columnLabels.map((d, i) => (
-                <span key={i} className="text-center">
-                  {d}
-                </span>
-              ))}
-            </div>
-            <div className="grid grid-cols-7 gap-1">
-              {heatmapData.cells.map((cell, i) => {
-                const intensity =
-                  cell.minutes > 0
-                    ? Math.max(0.15, cell.minutes / heatmapData.maxMinutes)
-                    : 0;
-                return (
-                  <div
-                    key={i}
-                    title={`${cell.date.toLocaleDateString()}: ${cell.minutes}min`}
-                    className="aspect-square rounded-sm"
-                    style={{
-                      backgroundColor:
-                        intensity > 0
-                          ? `hsl(var(--primary) / ${intensity})`
-                          : 'hsl(var(--muted))',
-                    }}
-                  />
-                );
-              })}
-            </div>
-            <p className="text-[10px] text-muted-foreground mt-2 text-right">
-              Last 7 weeks
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Settings */}
-        <Card>
-          <CardHeader className="pb-2">
-            <button
-              onClick={() => setShowSettings(!showSettings)}
-              className="flex items-center justify-between w-full"
-            >
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Settings2 className="h-5 w-5 text-muted-foreground" />
-                Settings
-              </CardTitle>
-              <span className="text-xs text-muted-foreground">
-                {showSettings ? 'Hide' : 'Show'}
-              </span>
-            </button>
-          </CardHeader>
-          {showSettings && (
-            <CardContent className="space-y-3 pt-2">
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-muted-foreground">
-                  Focus Duration (min)
-                </label>
-                <Input
-                  type="number"
-                  min="1"
-                  max="120"
-                  value={settings.focusMinutes}
-                  onChange={(e) =>
-                    handleSettingsChange('focusMinutes', e.target.value)
-                  }
-                  className="h-9"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-muted-foreground">
-                  Short Break (min)
-                </label>
-                <Input
-                  type="number"
-                  min="1"
-                  max="30"
-                  value={settings.shortBreakMinutes}
-                  onChange={(e) =>
-                    handleSettingsChange('shortBreakMinutes', e.target.value)
-                  }
-                  className="h-9"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-muted-foreground">
-                  Long Break (min)
-                </label>
-                <Input
-                  type="number"
-                  min="1"
-                  max="60"
-                  value={settings.longBreakMinutes}
-                  onChange={(e) =>
-                    handleSettingsChange('longBreakMinutes', e.target.value)
-                  }
-                  className="h-9"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-muted-foreground">
-                  Sessions Before Long Break
-                </label>
-                <Input
-                  type="number"
-                  min="1"
-                  max="10"
-                  value={settings.sessionsBeforeLongBreak}
-                  onChange={(e) =>
-                    handleSettingsChange(
-                      'sessionsBeforeLongBreak',
-                      e.target.value
-                    )
-                  }
-                  className="h-9"
-                />
-              </div>
             </CardContent>
-          )}
-        </Card>
+          </Card>
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Today's Stats */}
+          <Card className="bg-primary/5 border-primary/20">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Timer className="h-5 w-5 text-primary" />
+                Today&apos;s Progress
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 pt-2">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-background rounded-lg border p-3 text-center">
+                  <span className="block text-2xl font-bold tabular-nums">
+                    {todayFocusSessions}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    Sessions
+                  </span>
+                </div>
+                <div className="bg-background rounded-lg border p-3 text-center">
+                  <span className="block text-2xl font-bold tabular-nums">
+                    {todayFocusMinutes}
+                  </span>
+                  <span className="text-xs text-muted-foreground">Minutes</span>
+                </div>
+              </div>
+              {todayLog.length > 0 && (
+                <div className="space-y-1 max-h-40 overflow-y-auto">
+                  {todayLog
+                    .filter((l) => l.type === 'focus')
+                    .map((log, i) => (
+                      <div
+                        key={i}
+                        className="flex justify-between text-xs text-muted-foreground py-1 border-b border-border/50 last:border-0"
+                      >
+                        <span>Session {i + 1}</span>
+                        <span>
+                          {Math.round(log.duration / 60)}min &middot;{' '}
+                          {new Date(log.completedAt).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Weekly Activity Heatmap */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">Weekly Activity</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-7 gap-1 text-[10px] text-muted-foreground mb-1">
+                {heatmapData.columnLabels.map((d, i) => (
+                  <span key={i} className="text-center">
+                    {d}
+                  </span>
+                ))}
+              </div>
+              <div className="grid grid-cols-7 gap-1">
+                {heatmapData.cells.map((cell, i) => {
+                  const intensity =
+                    cell.minutes > 0
+                      ? Math.max(0.15, cell.minutes / heatmapData.maxMinutes)
+                      : 0;
+                  return (
+                    <div
+                      key={i}
+                      title={`${cell.date.toLocaleDateString()}: ${cell.minutes}min`}
+                      className="aspect-square rounded-sm"
+                      style={{
+                        backgroundColor:
+                          intensity > 0
+                            ? `hsl(var(--primary) / ${intensity})`
+                            : 'hsl(var(--muted))',
+                      }}
+                    />
+                  );
+                })}
+              </div>
+              <p className="text-[10px] text-muted-foreground mt-2 text-right">
+                Last 7 weeks
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Settings */}
+          <Card>
+            <CardHeader className="pb-2">
+              <button
+                onClick={() => setShowSettings(!showSettings)}
+                className="flex items-center justify-between w-full"
+              >
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Settings2 className="h-5 w-5 text-muted-foreground" />
+                  Settings
+                </CardTitle>
+                <span className="text-xs text-muted-foreground">
+                  {showSettings ? 'Hide' : 'Show'}
+                </span>
+              </button>
+            </CardHeader>
+            {showSettings && (
+              <CardContent className="space-y-3 pt-2">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-muted-foreground">
+                    Focus Duration (min)
+                  </label>
+                  <Input
+                    type="number"
+                    min="1"
+                    max="120"
+                    value={settings.focusMinutes}
+                    onChange={(e) =>
+                      handleSettingsChange('focusMinutes', e.target.value)
+                    }
+                    className="h-9"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-muted-foreground">
+                    Short Break (min)
+                  </label>
+                  <Input
+                    type="number"
+                    min="1"
+                    max="30"
+                    value={settings.shortBreakMinutes}
+                    onChange={(e) =>
+                      handleSettingsChange('shortBreakMinutes', e.target.value)
+                    }
+                    className="h-9"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-muted-foreground">
+                    Long Break (min)
+                  </label>
+                  <Input
+                    type="number"
+                    min="1"
+                    max="60"
+                    value={settings.longBreakMinutes}
+                    onChange={(e) =>
+                      handleSettingsChange('longBreakMinutes', e.target.value)
+                    }
+                    className="h-9"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-muted-foreground">
+                    Sessions Before Long Break
+                  </label>
+                  <Input
+                    type="number"
+                    min="1"
+                    max="10"
+                    value={settings.sessionsBeforeLongBreak}
+                    onChange={(e) =>
+                      handleSettingsChange(
+                        'sessionsBeforeLongBreak',
+                        e.target.value
+                      )
+                    }
+                    className="h-9"
+                  />
+                </div>
+              </CardContent>
+            )}
+          </Card>
+        </div>
       </div>
     </div>
   );

@@ -21,8 +21,11 @@ import {
 import { Plus, Trash2, Calculator as CalculatorIcon, Copy } from 'lucide-react';
 import type { GradeComponent } from '@/shared/types/tools';
 import { STANDARD_GRADING_SCALE } from '@/shared/lib/data/grading';
-import { usePersistedState } from '@/shared/hooks';
+import { useToolStorage } from '@/shared/lib/storage';
+import { ToolSettings } from '@/shared/components/common/tool-settings';
 import { toast } from 'sonner';
+
+const GRADE_TOOL_SLUG = 'grade-calculator';
 
 const DEFAULT_COMPONENTS: GradeComponent[] = [
   { id: '1', name: 'Midterm', weight: 30, score: 0, maxScore: 100 },
@@ -31,12 +34,17 @@ const DEFAULT_COMPONENTS: GradeComponent[] = [
 ];
 
 export function GradeCalculator() {
-  const [components, setComponents, { ready: cReady }] = usePersistedState<
+  const [components, setComponents, { ready: cReady }] = useToolStorage<
     GradeComponent[]
-  >('abk_grade_calculator', DEFAULT_COMPONENTS);
+  >(GRADE_TOOL_SLUG, 'components', DEFAULT_COMPONENTS);
 
   const [targetGrade, setTargetGrade, { ready: tReady }] =
-    usePersistedState<string>('abk_grade_target', 'A');
+    useToolStorage<string>(GRADE_TOOL_SLUG, 'target', 'A');
+
+  const handleResetAll = () => {
+    setComponents(DEFAULT_COMPONENTS);
+    setTargetGrade('A');
+  };
 
   const { totalWeight, currentPercentage, currentPoints, totalPossiblePoints } =
     useMemo(() => {
@@ -158,299 +166,315 @@ export function GradeCalculator() {
   if (!cReady || !tReady) return null;
 
   return (
-    <div className="grid gap-8 lg:grid-cols-3">
-      {/* Calculator Form */}
-      <div className="lg:col-span-2 space-y-6">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-2xl">Course Components</CardTitle>
-                <CardDescription>
-                  Enter the weights and scores for your syllabus items.
-                </CardDescription>
-              </div>
-              <div
-                className={`px-4 py-2 rounded-full text-sm font-bold ${
-                  totalWeight === 100
-                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30'
-                    : totalWeight > 100
-                      ? 'bg-red-100 text-red-700 dark:bg-red-900/30'
-                      : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30'
-                }`}
-              >
-                Total Weight: {totalWeight}%
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4 shadow-none">
-            {/* Table Header */}
-            <div className="hidden sm:grid grid-cols-[1fr_80px_80px_80px_40px] gap-4 mb-2 px-2 text-sm font-medium text-muted-foreground">
-              <div>Component Name</div>
-              <div>Weight %</div>
-              <div>Score</div>
-              <div>Max Score</div>
-              <div></div>
-            </div>
-
-            {components.map((component) => (
-              <div
-                key={component.id}
-                className="grid sm:grid-cols-[1fr_80px_80px_80px_40px] gap-4 items-center bg-muted/30 p-4 sm:p-2 rounded-xl sm:rounded-lg border sm:border-transparent"
-              >
-                <div className="space-y-2 sm:space-y-0">
-                  <span className="text-xs font-semibold text-muted-foreground uppercase sm:hidden block">
-                    Name
-                  </span>
-                  <Input
-                    value={component.name}
-                    onChange={(e) =>
-                      handleChange(component.id, 'name', e.target.value)
-                    }
-                    aria-label={`Component name for index ${component.id}`}
-                    placeholder="E.g., Midterm"
-                  />
-                </div>
-                <div className="space-y-2 sm:space-y-0">
-                  <span className="text-xs font-semibold text-muted-foreground uppercase sm:hidden block">
-                    Weight (%)
-                  </span>
-                  <Input
-                    type="number"
-                    min="0"
-                    max="100"
-                    aria-label={`Weight percentage for ${component.name || component.id}`}
-                    value={isNaN(component.weight) ? '' : component.weight}
-                    onChange={(e) =>
-                      handleChange(component.id, 'weight', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2 sm:space-y-0">
-                  <span className="text-xs font-semibold text-muted-foreground uppercase sm:hidden block">
-                    Score
-                  </span>
-                  <Input
-                    aria-label={`Score for ${component.name || component.id}`}
-                    type="number"
-                    min="0"
-                    value={isNaN(component.score) ? '' : component.score}
-                    onChange={(e) =>
-                      handleChange(component.id, 'score', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2 sm:space-y-0">
-                  <span className="text-xs font-semibold text-muted-foreground uppercase sm:hidden block">
-                    Max Score
-                  </span>
-                  <Input
-                    type="number"
-                    min="0"
-                    aria-label={`Max score for ${component.name || component.id}`}
-                    value={isNaN(component.maxScore) ? '' : component.maxScore}
-                    onChange={(e) =>
-                      handleChange(component.id, 'maxScore', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="pt-6 sm:pt-0 flex justify-end">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-destructive hover:bg-destructive/10"
-                    onClick={() => handleRemoveComponent(component.id)}
-                    disabled={components.length <= 1}
-                    aria-label={`Remove component ${component.name || component.id}`}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    <span className="sr-only">Remove Component</span>
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-          <CardFooter>
-            <Button
-              onClick={handleAddComponent}
-              variant="outline"
-              className="w-full border-dashed"
-            >
-              <Plus className="mr-2 h-4 w-4" /> Add Component
-            </Button>
-          </CardFooter>
-        </Card>
+    <div className="space-y-6">
+      <div className="flex items-center justify-end">
+        <ToolSettings
+          toolName="Grade Calculator"
+          toolSlug={GRADE_TOOL_SLUG}
+          onReset={handleResetAll}
+        />
       </div>
-
-      {/* Projection Panel */}
-      <div className="space-y-6">
-        <Card className="bg-primary/5 border-primary/20">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center">
-              <CalculatorIcon className="mr-2 h-5 w-5" />
-              Current Standing
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex flex-col items-center justify-center py-6 bg-background rounded-xl border">
-              <span className="text-5xl font-bold tabular-nums tracking-tighter text-primary">
-                {currentPercentage.toFixed(1)}%
-              </span>
-              <span className="text-muted-foreground mt-2 font-medium">
-                Current Calculated Grade:{' '}
-                <strong className="text-foreground">{currentGradeMatch}</strong>
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-background rounded-lg border p-4 text-center">
-                <span className="block text-2xl font-bold">
-                  {currentPoints.toFixed(1)}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  Points Earned
-                </span>
-              </div>
-              <div className="bg-background rounded-lg border p-4 text-center">
-                <span className="block text-2xl font-bold">
-                  {totalPossiblePoints.toFixed(1)}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  Points Counted
-                </span>
-              </div>
-            </div>
-
-            {/* Grade Scale Bar */}
-            <div className="space-y-2">
-              <span className="text-xs font-medium text-muted-foreground">
-                Grade Scale
-              </span>
-              <div className="relative w-full h-6 rounded-full overflow-hidden bg-muted flex">
-                {[...STANDARD_GRADING_SCALE].reverse().map((scale, i, arr) => {
-                  const nextMin = arr[i + 1]?.minPercentage ?? 100;
-                  const width = nextMin - scale.minPercentage;
-                  return (
-                    <div
-                      key={scale.label}
-                      className="h-full flex items-center justify-center text-[9px] font-bold border-r border-background/40 last:border-0"
-                      style={{
-                        width: `${width}%`,
-                        backgroundColor:
-                          scale.label === currentGradeMatch
-                            ? 'var(--color-primary)'
-                            : undefined,
-                        color:
-                          scale.label === currentGradeMatch
-                            ? 'var(--color-primary-foreground)'
-                            : undefined,
-                        opacity: scale.label === currentGradeMatch ? 1 : 0.5,
-                      }}
-                    >
-                      {width >= 6 ? scale.label : ''}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="relative h-0" style={{ marginTop: '-2px' }}>
+      <div className="grid gap-8 lg:grid-cols-3">
+        {/* Calculator Form */}
+        <div className="lg:col-span-2 space-y-6">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-2xl">Course Components</CardTitle>
+                  <CardDescription>
+                    Enter the weights and scores for your syllabus items.
+                  </CardDescription>
+                </div>
                 <div
-                  className="absolute -translate-x-1/2 text-primary"
-                  style={{
-                    left: `${Math.min(100, Math.max(0, currentPercentage))}%`,
-                  }}
+                  className={`px-4 py-2 rounded-full text-sm font-bold ${
+                    totalWeight === 100
+                      ? 'bg-green-100 text-green-700 dark:bg-green-900/30'
+                      : totalWeight > 100
+                        ? 'bg-red-100 text-red-700 dark:bg-red-900/30'
+                        : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30'
+                  }`}
                 >
-                  ▲
+                  Total Weight: {totalWeight}%
                 </div>
               </div>
-            </div>
+            </CardHeader>
+            <CardContent className="space-y-4 shadow-none">
+              {/* Table Header */}
+              <div className="hidden sm:grid grid-cols-[1fr_80px_80px_80px_40px] gap-4 mb-2 px-2 text-sm font-medium text-muted-foreground">
+                <div>Component Name</div>
+                <div>Weight %</div>
+                <div>Score</div>
+                <div>Max Score</div>
+                <div></div>
+              </div>
 
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full mt-2"
-              onClick={handleCopyResult}
-            >
-              <Copy className="h-4 w-4 mr-2" />
-              Copy Results
-            </Button>
-          </CardContent>
-        </Card>
+              {components.map((component) => (
+                <div
+                  key={component.id}
+                  className="grid sm:grid-cols-[1fr_80px_80px_80px_40px] gap-4 items-center bg-muted/30 p-4 sm:p-2 rounded-xl sm:rounded-lg border sm:border-transparent"
+                >
+                  <div className="space-y-2 sm:space-y-0">
+                    <span className="text-xs font-semibold text-muted-foreground uppercase sm:hidden block">
+                      Name
+                    </span>
+                    <Input
+                      value={component.name}
+                      onChange={(e) =>
+                        handleChange(component.id, 'name', e.target.value)
+                      }
+                      aria-label={`Component name for index ${component.id}`}
+                      placeholder="E.g., Midterm"
+                    />
+                  </div>
+                  <div className="space-y-2 sm:space-y-0">
+                    <span className="text-xs font-semibold text-muted-foreground uppercase sm:hidden block">
+                      Weight (%)
+                    </span>
+                    <Input
+                      type="number"
+                      min="0"
+                      max="100"
+                      aria-label={`Weight percentage for ${component.name || component.id}`}
+                      value={isNaN(component.weight) ? '' : component.weight}
+                      onChange={(e) =>
+                        handleChange(component.id, 'weight', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2 sm:space-y-0">
+                    <span className="text-xs font-semibold text-muted-foreground uppercase sm:hidden block">
+                      Score
+                    </span>
+                    <Input
+                      aria-label={`Score for ${component.name || component.id}`}
+                      type="number"
+                      min="0"
+                      value={isNaN(component.score) ? '' : component.score}
+                      onChange={(e) =>
+                        handleChange(component.id, 'score', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2 sm:space-y-0">
+                    <span className="text-xs font-semibold text-muted-foreground uppercase sm:hidden block">
+                      Max Score
+                    </span>
+                    <Input
+                      type="number"
+                      min="0"
+                      aria-label={`Max score for ${component.name || component.id}`}
+                      value={
+                        isNaN(component.maxScore) ? '' : component.maxScore
+                      }
+                      onChange={(e) =>
+                        handleChange(component.id, 'maxScore', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="pt-6 sm:pt-0 flex justify-end">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-destructive hover:bg-destructive/10"
+                      onClick={() => handleRemoveComponent(component.id)}
+                      disabled={components.length <= 1}
+                      aria-label={`Remove component ${component.name || component.id}`}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      <span className="sr-only">Remove Component</span>
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+            <CardFooter>
+              <Button
+                onClick={handleAddComponent}
+                variant="outline"
+                className="w-full border-dashed"
+              >
+                <Plus className="mr-2 h-4 w-4" /> Add Component
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
 
-        {/* Projection Machine */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Target Projection</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <label htmlFor="desired-grade" className="text-sm font-medium">
-                Desired Grade
-              </label>
-              <Select value={targetGrade} onValueChange={setTargetGrade}>
-                <SelectTrigger id="desired-grade">
-                  <SelectValue placeholder="Select target grade" />
-                </SelectTrigger>
-                <SelectContent>
-                  {STANDARD_GRADING_SCALE.map((scale) => (
-                    <SelectItem key={scale.label} value={scale.label}>
-                      {scale.label} ({scale.minPercentage}%)
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+        {/* Projection Panel */}
+        <div className="space-y-6">
+          <Card className="bg-primary/5 border-primary/20">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center">
+                <CalculatorIcon className="mr-2 h-5 w-5" />
+                Current Standing
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex flex-col items-center justify-center py-6 bg-background rounded-xl border">
+                <span className="text-5xl font-bold tabular-nums tracking-tighter text-primary">
+                  {currentPercentage.toFixed(1)}%
+                </span>
+                <span className="text-muted-foreground mt-2 font-medium">
+                  Current Calculated Grade:{' '}
+                  <strong className="text-foreground">
+                    {currentGradeMatch}
+                  </strong>
+                </span>
+              </div>
 
-            <div className="pt-4 border-t">
-              {targetRequirement.weightRemaining <= 0 ? (
-                <div className="bg-muted p-4 rounded-lg text-sm text-center">
-                  100% of the course weight has been evaluated.
-                  <br />
-                  Final grade: <strong>{currentGradeMatch}</strong>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-background rounded-lg border p-4 text-center">
+                  <span className="block text-2xl font-bold">
+                    {currentPoints.toFixed(1)}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    Points Earned
+                  </span>
                 </div>
-              ) : targetRequirement.requiredAverage !== null &&
-                targetRequirement.requiredAverage > 100 ? (
-                <div className="bg-destructive/10 text-destructive p-4 rounded-lg text-sm font-medium">
-                  Status: Impossible. You need an average of{' '}
-                  {targetRequirement.requiredAverage.toFixed(1)}% on your
-                  remaining assignments to hit this target.
+                <div className="bg-background rounded-lg border p-4 text-center">
+                  <span className="block text-2xl font-bold">
+                    {totalPossiblePoints.toFixed(1)}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    Points Counted
+                  </span>
                 </div>
-              ) : targetRequirement.requiredAverage !== null &&
-                targetRequirement.requiredAverage <= 0 ? (
-                <div className="bg-green-100 text-green-700 dark:bg-green-900/30 p-4 rounded-lg text-sm font-medium">
-                  Status: Secured! You have already acquired enough points for
-                  this target.
+              </div>
+
+              {/* Grade Scale Bar */}
+              <div className="space-y-2">
+                <span className="text-xs font-medium text-muted-foreground">
+                  Grade Scale
+                </span>
+                <div className="relative w-full h-6 rounded-full overflow-hidden bg-muted flex">
+                  {[...STANDARD_GRADING_SCALE]
+                    .reverse()
+                    .map((scale, i, arr) => {
+                      const nextMin = arr[i + 1]?.minPercentage ?? 100;
+                      const width = nextMin - scale.minPercentage;
+                      return (
+                        <div
+                          key={scale.label}
+                          className="h-full flex items-center justify-center text-[9px] font-bold border-r border-background/40 last:border-0"
+                          style={{
+                            width: `${width}%`,
+                            backgroundColor:
+                              scale.label === currentGradeMatch
+                                ? 'var(--color-primary)'
+                                : undefined,
+                            color:
+                              scale.label === currentGradeMatch
+                                ? 'var(--color-primary-foreground)'
+                                : undefined,
+                            opacity:
+                              scale.label === currentGradeMatch ? 1 : 0.5,
+                          }}
+                        >
+                          {width >= 6 ? scale.label : ''}
+                        </div>
+                      );
+                    })}
                 </div>
-              ) : (
-                <div className="bg-muted/50 p-4 rounded-lg space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      Points Still Needed:
-                    </span>
-                    <span className="font-medium">
-                      {targetRequirement.pointsRemaining.toFixed(1)}
-                    </span>
+                <div className="relative h-0" style={{ marginTop: '-2px' }}>
+                  <div
+                    className="absolute -translate-x-1/2 text-primary"
+                    style={{
+                      left: `${Math.min(100, Math.max(0, currentPercentage))}%`,
+                    }}
+                  >
+                    ▲
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      Weight Remaining:
-                    </span>
-                    <span className="font-medium">
-                      {targetRequirement.weightRemaining.toFixed(1)}%
-                    </span>
-                  </div>
-                  <div className="border-t pt-2 mt-2 flex justify-between items-center">
-                    <span className="font-semibold text-sm">
-                      Required Average:
-                    </span>
-                    <span className="text-xl font-bold tabular-nums tracking-tighter">
-                      {targetRequirement.requiredAverage?.toFixed(1)}%
-                    </span>
-                  </div>
                 </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full mt-2"
+                onClick={handleCopyResult}
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy Results
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Projection Machine */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Target Projection</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="desired-grade" className="text-sm font-medium">
+                  Desired Grade
+                </label>
+                <Select value={targetGrade} onValueChange={setTargetGrade}>
+                  <SelectTrigger id="desired-grade">
+                    <SelectValue placeholder="Select target grade" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STANDARD_GRADING_SCALE.map((scale) => (
+                      <SelectItem key={scale.label} value={scale.label}>
+                        {scale.label} ({scale.minPercentage}%)
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="pt-4 border-t">
+                {targetRequirement.weightRemaining <= 0 ? (
+                  <div className="bg-muted p-4 rounded-lg text-sm text-center">
+                    100% of the course weight has been evaluated.
+                    <br />
+                    Final grade: <strong>{currentGradeMatch}</strong>
+                  </div>
+                ) : targetRequirement.requiredAverage !== null &&
+                  targetRequirement.requiredAverage > 100 ? (
+                  <div className="bg-destructive/10 text-destructive p-4 rounded-lg text-sm font-medium">
+                    Status: Impossible. You need an average of{' '}
+                    {targetRequirement.requiredAverage.toFixed(1)}% on your
+                    remaining assignments to hit this target.
+                  </div>
+                ) : targetRequirement.requiredAverage !== null &&
+                  targetRequirement.requiredAverage <= 0 ? (
+                  <div className="bg-green-100 text-green-700 dark:bg-green-900/30 p-4 rounded-lg text-sm font-medium">
+                    Status: Secured! You have already acquired enough points for
+                    this target.
+                  </div>
+                ) : (
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        Points Still Needed:
+                      </span>
+                      <span className="font-medium">
+                        {targetRequirement.pointsRemaining.toFixed(1)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        Weight Remaining:
+                      </span>
+                      <span className="font-medium">
+                        {targetRequirement.weightRemaining.toFixed(1)}%
+                      </span>
+                    </div>
+                    <div className="border-t pt-2 mt-2 flex justify-between items-center">
+                      <span className="font-semibold text-sm">
+                        Required Average:
+                      </span>
+                      <span className="text-xl font-bold tabular-nums tracking-tighter">
+                        {targetRequirement.requiredAverage?.toFixed(1)}%
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

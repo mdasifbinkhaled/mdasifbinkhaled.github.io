@@ -27,18 +27,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu';
-import { usePersistedState } from '@/shared/hooks';
+import { useToolStorage } from '@/shared/lib/storage';
+import { ToolSettings } from '@/shared/components/common/tool-settings';
 import type { PlannerCourse } from './types';
 import { PRESETS } from './presets';
 import { topoLevels, getUnlocked } from './topo-sort';
 import { toast } from 'sonner';
 
-const STORAGE_KEY = 'abk_course_planner';
+const COURSE_TOOL_SLUG = 'course-planner';
 
 export function CoursePlanner() {
-  const [courses, setCourses, { ready: mounted }] = usePersistedState<
+  const [courses, setCourses, { ready: mounted }] = useToolStorage<
     PlannerCourse[]
-  >(STORAGE_KEY, []);
+  >(COURSE_TOOL_SLUG, 'courses', []);
   const [showAdd, setShowAdd] = useState(false);
   const [newCode, setNewCode] = useState('');
   const [newTitle, setNewTitle] = useState('');
@@ -190,6 +191,11 @@ export function CoursePlanner() {
             Export JSON
           </Button>
         )}
+        <ToolSettings
+          toolName="Course Planner"
+          toolSlug={COURSE_TOOL_SLUG}
+          onReset={() => setCourses([])}
+        />
       </div>
 
       {/* Add Course Form */}

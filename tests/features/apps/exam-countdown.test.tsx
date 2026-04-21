@@ -44,7 +44,7 @@ describe('ExamCountdown', () => {
 
   it('persists exams to localStorage', () => {
     render(<ExamCountdown />);
-    const saved = localStorage.getItem('abk_exam_countdown');
+    const saved = localStorage.getItem('abk:v1:exam-countdown:events');
     expect(saved).not.toBeNull();
     const parsed = JSON.parse(saved!);
     expect(parsed).toHaveLength(2);
@@ -59,7 +59,10 @@ describe('ExamCountdown', () => {
         date: new Date(Date.now() + 86400000).toISOString(),
       },
     ];
-    localStorage.setItem('abk_exam_countdown', JSON.stringify(customExams));
+    localStorage.setItem(
+      'abk:v1:exam-countdown:events',
+      JSON.stringify(customExams)
+    );
     render(<ExamCountdown />);
     expect(screen.getByDisplayValue('PHY 101')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Quiz 5')).toBeInTheDocument();
@@ -82,7 +85,10 @@ describe('ExamCountdown', () => {
         date: '2020-01-01T00:00:00',
       },
     ];
-    localStorage.setItem('abk_exam_countdown', JSON.stringify(pastExams));
+    localStorage.setItem(
+      'abk:v1:exam-countdown:events',
+      JSON.stringify(pastExams)
+    );
     render(<ExamCountdown />);
     expect(screen.getByText('Concluded')).toBeInTheDocument();
   });

@@ -19,16 +19,34 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/components/ui/dialog';
+import { snapshotToolData, purgeToolData } from '@/shared/lib/storage';
+import { downloadFile } from '@/shared/lib/download-file';
+import { toast } from 'sonner';
 
 export interface ToolSettingsProps {
-  /** Called when the user selects "Export backup". Must not be long-running. */
-  onExportBackup: () => void | Promise<void>;
-  /** Called after the user confirms the reset dialog. */
+  /**
+   * Called when the user selects "Export backup". Optional — when omitted
+   * together with `toolSlug`, a default implementation writes a JSON file
+   * containing `snapshotToolData(toolSlug)`.
+   */
+  onExportBackup?: () => void | Promise<void>;
+  /**
+   * Called after the user confirms the reset dialog. Receives a
+   * pre-purged state (i.e. `purgeToolData(toolSlug)` has already run when
+   * `toolSlug` is provided) so the caller only needs to reset its own
+   * React state back to defaults.
+   */
   onReset: () => void | Promise<void>;
   /** Label on the trigger button. Defaults to "Settings". */
   label?: string;
   /** Name of the tool, used in the reset confirmation copy. */
   toolName: string;
+  /**
+   * Namespaced tool slug (e.g. `'grade-calculator'`). When supplied, the
+   * default backup wires up `snapshotToolData` → JSON download, and the
+   * reset flow calls `purgeToolData` before `onReset`.
+   */
+  toolSlug?: string;
   className?: string;
 }
 
@@ -49,15 +67,45 @@ export function ToolSettings({
   onReset,
   label = 'Settings',
   toolName,
+  toolSlug,
   className,
 }: ToolSettingsProps) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [resetting, setResetting] = useState(false);
 
+  const handleBackup = async () => {
+    if (onExportBackup) {
+      await onExportBackup();
+      return;
+    }
+    if (!toolSlug) {
+      toast.error('Backup not configured');
+      return;
+    }
+    try {
+      const snapshot = snapshotToolData(toolSlug);
+      const payload = {
+        tool: toolSlug,
+        exportedAt: new Date().toISOString(),
+        data: snapshot,
+      };
+      downloadFile(
+        `${toolSlug}-backup-${new Date().toISOString().slice(0, 10)}.json`,
+        JSON.stringify(payload, null, 2),
+        'application/json'
+      );
+      toast.success('Backup saved');
+    } catch {
+      toast.error('Backup failed');
+    }
+  };
+
   const handleReset = async () => {
     setResetting(true);
     try {
+      if (toolSlug) purgeToolData(toolSlug);
       await onReset();
+      toast.success(`${toolName} reset`);
     } finally {
       setResetting(false);
       setConfirmOpen(false);
@@ -80,7 +128,7 @@ export function ToolSettings({
         <DropdownMenuContent align="end" className="min-w-[12rem]">
           <DropdownMenuLabel>{label}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onSelect={() => void onExportBackup()}>
+          <DropdownMenuItem onSelect={() => void handleBackup()}>
             <Archive className="mr-2 h-4 w-4" aria-hidden />
             Export backup
           </DropdownMenuItem>

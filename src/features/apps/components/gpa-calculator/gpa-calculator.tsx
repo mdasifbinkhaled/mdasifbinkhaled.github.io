@@ -19,7 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select';
-import { usePersistedState } from '@/shared/hooks';
+import { useToolStorage } from '@/shared/lib/storage';
+import { ToolSettings } from '@/shared/components/common/tool-settings';
 import { toast } from 'sonner';
 
 interface CourseEntry {
@@ -29,6 +30,8 @@ interface CourseEntry {
   grade: string;
 }
 
+const GPA_TOOL_SLUG = 'gpa-calculator';
+
 const DEFAULT_COURSES: CourseEntry[] = [
   { id: '1', name: '', credits: 3, grade: 'A' },
   { id: '2', name: '', credits: 3, grade: 'B+' },
@@ -36,16 +39,22 @@ const DEFAULT_COURSES: CourseEntry[] = [
 ];
 
 export function GpaCalculator() {
-  const [courses, setCourses, { ready: coursesReady }] = usePersistedState<
+  const [courses, setCourses, { ready: coursesReady }] = useToolStorage<
     CourseEntry[]
-  >('abk_gpa_courses', DEFAULT_COURSES);
+  >(GPA_TOOL_SLUG, 'courses', DEFAULT_COURSES);
 
-  const [prevCredits, setPrevCredits, { ready: pcReady }] = usePersistedState<
+  const [prevCredits, setPrevCredits, { ready: pcReady }] = useToolStorage<
     number | ''
-  >('abk_gpa_prev_credits', '');
-  const [prevCgpa, setPrevCgpa, { ready: pgReady }] = usePersistedState<
+  >(GPA_TOOL_SLUG, 'prev_credits', '');
+  const [prevCgpa, setPrevCgpa, { ready: pgReady }] = useToolStorage<
     number | ''
-  >('abk_gpa_prev_cgpa', '');
+  >(GPA_TOOL_SLUG, 'prev_cgpa', '');
+
+  const handleResetAll = useCallback(() => {
+    setCourses(DEFAULT_COURSES);
+    setPrevCredits('');
+    setPrevCgpa('');
+  }, [setCourses, setPrevCredits, setPrevCgpa]);
 
   const handleAddCourse = useCallback(() => {
     setCourses((prev) => [
@@ -147,207 +156,216 @@ export function GpaCalculator() {
   if (!coursesReady || !pcReady || !pgReady) return null;
 
   return (
-    <div className="grid gap-6 md:grid-cols-[2fr_1fr] print:block">
-      {/* ── Editor Column ── */}
-      <div className="space-y-6">
-        <Card className="shadow-xs">
-          <CardHeader className="pb-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl">Semester Courses</CardTitle>
-                <CardDescription>
-                  Enter course names, credits, and expected grades.
-                </CardDescription>
-              </div>
-              <Button variant="outline" size="sm" onClick={handleAddCourse}>
-                <Plus className="mr-2 h-4 w-4" /> Add Course
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="hidden sm:grid grid-cols-[1fr_80px_100px_40px] gap-4 px-2 text-sm font-medium text-muted-foreground">
-              <div>Course Name</div>
-              <div>Credits</div>
-              <div>Grade</div>
-              <div></div>
-            </div>
-
-            {courses.map((course, i) => (
-              <div
-                key={course.id}
-                className="grid sm:grid-cols-[1fr_80px_100px_40px] gap-3 sm:gap-4 items-center group bg-muted/30 sm:bg-transparent p-3 sm:p-0 rounded-md border sm:border-0 border-border/50"
-              >
-                <Input
-                  placeholder={`Course ${i + 1} (optional)`}
-                  aria-label={`Course ${i + 1} name`}
-                  value={course.name}
-                  onChange={(e) =>
-                    handleCourseChange(course.id, 'name', e.target.value)
-                  }
-                  className="bg-background"
-                />
-                <Input
-                  type="number"
-                  min="0"
-                  max="6"
-                  step="0.5"
-                  aria-label={`Course ${i + 1} credits`}
-                  value={course.credits}
-                  onChange={(e) =>
-                    handleCourseChange(
-                      course.id,
-                      'credits',
-                      parseFloat(e.target.value) || 0
-                    )
-                  }
-                  className="bg-background font-mono"
-                />
-                <Select
-                  value={course.grade}
-                  onValueChange={(v) =>
-                    handleCourseChange(course.id, 'grade', v)
-                  }
-                >
-                  <SelectTrigger
-                    aria-label="Grade"
-                    className="bg-background font-medium"
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {STANDARD_GRADING_SCALE.map((g) => (
-                      <SelectItem key={g.label} value={g.label}>
-                        {g.label} ({g.gpa.toFixed(1)})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-muted-foreground hover:text-destructive w-full sm:w-10 opacity-100 sm:opacity-50 sm:group-hover:opacity-100 transition-opacity"
-                  onClick={() => handleRemoveCourse(course.id)}
-                  aria-label="Remove Course"
-                >
-                  <Trash2 className="h-4 w-4" />
+    <div className="space-y-6">
+      <div className="flex items-center justify-end print:hidden">
+        <ToolSettings
+          toolName="GPA Calculator"
+          toolSlug={GPA_TOOL_SLUG}
+          onReset={handleResetAll}
+        />
+      </div>
+      <div className="grid gap-6 md:grid-cols-[2fr_1fr] print:block">
+        {/* ── Editor Column ── */}
+        <div className="space-y-6">
+          <Card className="shadow-xs">
+            <CardHeader className="pb-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-xl">Semester Courses</CardTitle>
+                  <CardDescription>
+                    Enter course names, credits, and expected grades.
+                  </CardDescription>
+                </div>
+                <Button variant="outline" size="sm" onClick={handleAddCourse}>
+                  <Plus className="mr-2 h-4 w-4" /> Add Course
                 </Button>
               </div>
-            ))}
-
-            {courses.length === 0 && (
-              <div className="text-center py-6 border-2 border-dashed rounded-md text-muted-foreground text-sm">
-                No courses added. Click 'Add Course' to begin.
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="hidden sm:grid grid-cols-[1fr_80px_100px_40px] gap-4 px-2 text-sm font-medium text-muted-foreground">
+                <div>Course Name</div>
+                <div>Credits</div>
+                <div>Grade</div>
+                <div></div>
               </div>
-            )}
-          </CardContent>
-        </Card>
 
-        {/* ── Cumulative Configuration ── */}
-        <Card className="shadow-xs">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Settings2 className="h-5 w-5 text-muted-foreground" />
-              Cumulative GPA (CGPA) Configuration
-            </CardTitle>
-            <CardDescription>
-              Optionally enter your previous academic standing to calculate
-              combined outcome.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium text-foreground">
-                  Previous Total Credits
-                </label>
-                <Input
-                  type="number"
-                  placeholder="e.g. 104"
-                  min="0"
-                  value={prevCredits}
-                  onChange={(e) =>
-                    setPrevCredits(
-                      e.target.value ? parseFloat(e.target.value) : ''
-                    )
-                  }
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium text-foreground">
-                  Previous CGPA
-                </label>
-                <Input
-                  type="number"
-                  placeholder="e.g. 3.45"
-                  min="0"
-                  max="4.0"
-                  step="0.01"
-                  value={prevCgpa}
-                  onChange={(e) => {
-                    if (!e.target.value) {
-                      setPrevCgpa('');
-                    } else {
-                      const v = parseFloat(e.target.value);
-                      setPrevCgpa(Math.min(4.0, Math.max(0, v)));
+              {courses.map((course, i) => (
+                <div
+                  key={course.id}
+                  className="grid sm:grid-cols-[1fr_80px_100px_40px] gap-3 sm:gap-4 items-center group bg-muted/30 sm:bg-transparent p-3 sm:p-0 rounded-md border sm:border-0 border-border/50"
+                >
+                  <Input
+                    placeholder={`Course ${i + 1} (optional)`}
+                    aria-label={`Course ${i + 1} name`}
+                    value={course.name}
+                    onChange={(e) =>
+                      handleCourseChange(course.id, 'name', e.target.value)
                     }
-                  }}
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                    className="bg-background"
+                  />
+                  <Input
+                    type="number"
+                    min="0"
+                    max="6"
+                    step="0.5"
+                    aria-label={`Course ${i + 1} credits`}
+                    value={course.credits}
+                    onChange={(e) =>
+                      handleCourseChange(
+                        course.id,
+                        'credits',
+                        parseFloat(e.target.value) || 0
+                      )
+                    }
+                    className="bg-background font-mono"
+                  />
+                  <Select
+                    value={course.grade}
+                    onValueChange={(v) =>
+                      handleCourseChange(course.id, 'grade', v)
+                    }
+                  >
+                    <SelectTrigger
+                      aria-label="Grade"
+                      className="bg-background font-medium"
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STANDARD_GRADING_SCALE.map((g) => (
+                        <SelectItem key={g.label} value={g.label}>
+                          {g.label} ({g.gpa.toFixed(1)})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-destructive w-full sm:w-10 opacity-100 sm:opacity-50 sm:group-hover:opacity-100 transition-opacity"
+                    onClick={() => handleRemoveCourse(course.id)}
+                    aria-label="Remove Course"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
 
-      {/* ── Results Column ── */}
-      <div className="space-y-6 md:sticky md:top-24 h-fit">
-        <Card className="border-primary/20 bg-primary/5 shadow-md">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Calculator className="h-5 w-5 text-primary" />
-              Results Overview
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6 pt-4">
-            <div className="space-y-1">
-              <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                Term GPA
-              </div>
-              <div className="text-4xl font-bold tabular-nums tracking-tight text-foreground">
-                {termGpa.toFixed(2)}
-              </div>
-              <div className="text-sm text-muted-foreground mt-1 text-balance">
-                Based on {termCredits} new credits this semester.
-              </div>
-            </div>
-
-            {typeof prevCredits === 'number' &&
-              typeof prevCgpa === 'number' && (
-                <>
-                  <div className="h-px w-full bg-border" />
-                  <div className="space-y-1">
-                    <div className="text-xs font-semibold text-primary uppercase tracking-wider">
-                      Projected CGPA
-                    </div>
-                    <div className="text-3xl font-extrabold tabular-nums tracking-tight text-primary">
-                      {cgpa.toFixed(2)}
-                    </div>
-                    <div className="text-sm text-primary/80 mt-1">
-                      Based on {totalCredits} total accumulated credits.
-                    </div>
-                  </div>
-                </>
+              {courses.length === 0 && (
+                <div className="text-center py-6 border-2 border-dashed rounded-md text-muted-foreground text-sm">
+                  No courses added. Click 'Add Course' to begin.
+                </div>
               )}
+            </CardContent>
+          </Card>
 
-            <Button
-              className="w-full mt-4"
-              onClick={handleCopyResult}
-              variant="secondary"
-            >
-              <Copy className="h-4 w-4 mr-2" />
-              Copy Results
-            </Button>
-          </CardContent>
-        </Card>
+          {/* ── Cumulative Configuration ── */}
+          <Card className="shadow-xs">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Settings2 className="h-5 w-5 text-muted-foreground" />
+                Cumulative GPA (CGPA) Configuration
+              </CardTitle>
+              <CardDescription>
+                Optionally enter your previous academic standing to calculate
+                combined outcome.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium text-foreground">
+                    Previous Total Credits
+                  </label>
+                  <Input
+                    type="number"
+                    placeholder="e.g. 104"
+                    min="0"
+                    value={prevCredits}
+                    onChange={(e) =>
+                      setPrevCredits(
+                        e.target.value ? parseFloat(e.target.value) : ''
+                      )
+                    }
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium text-foreground">
+                    Previous CGPA
+                  </label>
+                  <Input
+                    type="number"
+                    placeholder="e.g. 3.45"
+                    min="0"
+                    max="4.0"
+                    step="0.01"
+                    value={prevCgpa}
+                    onChange={(e) => {
+                      if (!e.target.value) {
+                        setPrevCgpa('');
+                      } else {
+                        const v = parseFloat(e.target.value);
+                        setPrevCgpa(Math.min(4.0, Math.max(0, v)));
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* ── Results Column ── */}
+        <div className="space-y-6 md:sticky md:top-24 h-fit">
+          <Card className="border-primary/20 bg-primary/5 shadow-md">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Calculator className="h-5 w-5 text-primary" />
+                Results Overview
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 pt-4">
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                  Term GPA
+                </div>
+                <div className="text-4xl font-bold tabular-nums tracking-tight text-foreground">
+                  {termGpa.toFixed(2)}
+                </div>
+                <div className="text-sm text-muted-foreground mt-1 text-balance">
+                  Based on {termCredits} new credits this semester.
+                </div>
+              </div>
+
+              {typeof prevCredits === 'number' &&
+                typeof prevCgpa === 'number' && (
+                  <>
+                    <div className="h-px w-full bg-border" />
+                    <div className="space-y-1">
+                      <div className="text-xs font-semibold text-primary uppercase tracking-wider">
+                        Projected CGPA
+                      </div>
+                      <div className="text-3xl font-extrabold tabular-nums tracking-tight text-primary">
+                        {cgpa.toFixed(2)}
+                      </div>
+                      <div className="text-sm text-primary/80 mt-1">
+                        Based on {totalCredits} total accumulated credits.
+                      </div>
+                    </div>
+                  </>
+                )}
+
+              <Button
+                className="w-full mt-4"
+                onClick={handleCopyResult}
+                variant="secondary"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy Results
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
