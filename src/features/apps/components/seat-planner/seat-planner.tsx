@@ -309,6 +309,7 @@ export function SeatPlanner() {
               Cancel
             </Button>
             <Button
+              className="bg-red-700 text-white hover:bg-red-800"
               variant="destructive"
               onClick={() => {
                 sp.handleResetAll();
@@ -450,7 +451,7 @@ function SeatPlannerActionCard({
           </a>
         </Button>
         <Button
-          className="justify-start"
+          className="justify-start bg-red-700 text-white hover:bg-red-800"
           variant="destructive"
           onClick={onReset}
         >
