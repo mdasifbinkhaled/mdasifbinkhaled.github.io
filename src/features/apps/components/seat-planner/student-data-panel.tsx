@@ -25,7 +25,7 @@ import {
 } from './export-utils';
 import { Th } from './shared-ui';
 import { inferSectionFromSource } from './import-utils';
-import type { Student } from './types';
+import type { AllocationMode, Student } from './types';
 
 type StudentKey = 'id' | 'name' | 'section';
 
@@ -68,6 +68,7 @@ const STUDENT_FIELDS: readonly SchemaField<StudentKey>[] = [
 interface StudentDataPanelProps {
   students: Student[];
   sections: number[];
+  allocationMode?: AllocationMode;
   onImport: (rows: ImportedRow<StudentKey>[], meta: ImportCommitMeta) => void;
   onRemoveStudent: (id: string) => void;
 }
@@ -75,6 +76,7 @@ interface StudentDataPanelProps {
 export function StudentDataPanel({
   students,
   sections,
+  allocationMode = 'cohort',
   onImport,
   onRemoveStudent,
 }: StudentDataPanelProps) {
@@ -89,6 +91,18 @@ export function StudentDataPanel({
   const extraFieldCount = tableColumns.filter(
     (column) => column.kind === 'extra'
   ).length;
+  const extraPerFileFields =
+    allocationMode === 'cohort'
+      ? [
+          {
+            key: 'faculty',
+            label: 'Faculty / Invigilator',
+            description:
+              'Optional. Applied to the matching section when this file represents one section in the cohort workflow.',
+            placeholder: 'e.g. Dr. Nusrat Karim',
+          },
+        ]
+      : [];
 
   return (
     <Card className="border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md print:hidden">
@@ -211,8 +225,13 @@ export function StudentDataPanel({
         pastePlaceholder={
           'ID\tName\tSection\n23101001\tAlice Rahman\t1\n23101002\tBob Khan\t2'
         }
-        helpText="Each row needs a Student ID and Name. Section can come from a column, from a per-file value inferred from flexible filenames, or it defaults to 1. Additional passthrough columns are preserved and included in CSV export."
+        helpText={
+          allocationMode === 'cohort'
+            ? 'Each row needs a Student ID and Name. Section can come from a column, from a per-file value inferred from flexible filenames, or it defaults to 1. When each file is a single section, you can also attach one faculty name per file for the section-cohort workflow. Additional passthrough columns are preserved and included in CSV export.'
+            : 'Each row needs a Student ID and Name. Section can come from a column, from a per-file value inferred from flexible filenames, or it defaults to 1. Additional passthrough columns are preserved and included in CSV export.'
+        }
         allowExtraColumns
+        extraPerFileFields={extraPerFileFields}
         onCommit={(rows, meta) => onImport(rows, meta)}
       />
     </Card>

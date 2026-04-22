@@ -55,6 +55,7 @@ import { cn } from '@/shared/lib/utils';
 import { parseFiles, parseText } from '@/shared/lib/parsers/tabular';
 import { applySchema, inferMapping } from '@/shared/lib/parsers/schema';
 import type {
+  AdditionalPerFileField,
   ColumnMapping,
   ExtraColumnSelection,
   ImportedRow,
@@ -86,6 +87,8 @@ export interface DataImporterProps<TKey extends string> {
   helpText?: string;
   /** Allow optional passthrough columns beyond the fixed schema. */
   allowExtraColumns?: boolean;
+  /** Optional extra metadata inputs collected once per imported file. */
+  extraPerFileFields?: readonly AdditionalPerFileField[];
   /** Optional pasted-text parser override for domain-specific import formats. */
   parsePastedText?: (text: string, source: string) => TabularData;
   /** Called with the mapped/validated rows + chosen merge strategy. */
@@ -115,23 +118,50 @@ function getParsedFiles(data: TabularData | null): ParsedTabularFile[] {
   return [{ source: data.source, rowCount: data.rows.length }];
 }
 
-function buildInitialFileDefaults<TKey extends string>(
+function buildInitialPerFileValues<TFieldKey extends string>(
   data: TabularData,
-  fields: readonly SchemaField<TKey>[]
-): Partial<Record<TKey, Record<string, string>>> {
-  const defaults = {} as Partial<Record<TKey, Record<string, string>>>;
+  fields: readonly {
+    key: TFieldKey;
+    infer?: (source: string) => string | undefined;
+  }[]
+): Partial<Record<TFieldKey, Record<string, string>>> {
+  const defaults = {} as Partial<Record<TFieldKey, Record<string, string>>>;
 
   for (const field of fields) {
-    if (!field.perFileValue) continue;
     defaults[field.key] = Object.fromEntries(
       getParsedFiles(data).map((file) => [
         file.source,
-        field.perFileValue?.infer?.(file.source)?.trim() ?? '',
+        field.infer?.(file.source)?.trim() ?? '',
       ])
     ) as Record<string, string>;
   }
 
   return defaults;
+}
+
+function buildInitialFileDefaults<TKey extends string>(
+  data: TabularData,
+  fields: readonly SchemaField<TKey>[]
+): Partial<Record<TKey, Record<string, string>>> {
+  return buildInitialPerFileValues(
+    data,
+    fields
+      .filter((field) => field.perFileValue)
+      .map((field) => ({
+        key: field.key,
+        infer: field.perFileValue?.infer,
+      }))
+  );
+}
+
+function buildInitialAdditionalFileDefaults(
+  data: TabularData,
+  fields: readonly AdditionalPerFileField[]
+): Record<string, Record<string, string>> {
+  return buildInitialPerFileValues(
+    data,
+    fields.map((field) => ({ key: field.key, infer: field.infer }))
+  ) as Record<string, Record<string, string>>;
 }
 
 export function DataImporter<TKey extends string>({
@@ -146,6 +176,7 @@ export function DataImporter<TKey extends string>({
   accept = DEFAULT_ACCEPT,
   helpText,
   allowExtraColumns = false,
+  extraPerFileFields = [],
   parsePastedText,
   onCommit,
 }: DataImporterProps<TKey>) {
@@ -162,6 +193,9 @@ export function DataImporter<TKey extends string>({
   const [fileDefaults, setFileDefaults] = useState<
     Partial<Record<TKey, Record<string, string>>>
   >({});
+  const [additionalFileDefaults, setAdditionalFileDefaults] = useState<
+    Record<string, Record<string, string>>
+  >({});
   const [extraColumns, setExtraColumns] = useState<ExtraColumnDraft[]>([]);
   const [mergeStrategy, setMergeStrategy] = useState<MergeStrategy>('merge');
 
@@ -173,6 +207,7 @@ export function DataImporter<TKey extends string>({
       setTabular(null);
       setMapping({} as ColumnMapping<TKey>);
       setFileDefaults({});
+      setAdditionalFileDefaults({});
       setExtraColumns([]);
       setMergeStrategy('merge');
     }
@@ -188,6 +223,9 @@ export function DataImporter<TKey extends string>({
     setTabular(data);
     setMapping(inferMapping(data.headers, fields));
     setFileDefaults(buildInitialFileDefaults(data, fields));
+    setAdditionalFileDefaults(
+      buildInitialAdditionalFileDefaults(data, extraPerFileFields)
+    );
     setExtraColumns([]);
   };
 
@@ -202,6 +240,9 @@ export function DataImporter<TKey extends string>({
       setTabular(data);
       setMapping(inferMapping(data.headers, fields));
       setFileDefaults(buildInitialFileDefaults(data, fields));
+      setAdditionalFileDefaults(
+        buildInitialAdditionalFileDefaults(data, extraPerFileFields)
+      );
       setExtraColumns([]);
     } finally {
       setLoading(false);
@@ -211,6 +252,60 @@ export function DataImporter<TKey extends string>({
   };
 
   const parsedFiles = useMemo(() => getParsedFiles(tabular), [tabular]);
+  const perFileFields = useMemo(
+    () => [
+      ...fields
+        .filter((field) => field.perFileValue)
+        .map((field) => ({
+          kind: 'schema' as const,
+          key: String(field.key),
+          fieldKey: field.key,
+          label: field.label,
+          config: field.perFileValue!,
+        })),
+      ...extraPerFileFields.map((field) => ({
+        kind: 'additional' as const,
+        key: field.key,
+        label: field.label,
+        config: field,
+      })),
+    ],
+    [extraPerFileFields, fields]
+  );
+
+  const commitPerFileValues = useMemo(() => {
+    if (parsedFiles.length === 0 || perFileFields.length === 0) {
+      return undefined;
+    }
+
+    const entries = perFileFields
+      .map((field) => {
+        const values = Object.fromEntries(
+          parsedFiles
+            .map((file) => {
+              const rawValue =
+                field.kind === 'schema'
+                  ? (fileDefaults[field.fieldKey]?.[file.source] ?? '')
+                  : (additionalFileDefaults[field.key]?.[file.source] ?? '');
+              const value = rawValue.trim();
+              return value ? ([file.source, value] as const) : null;
+            })
+            .filter(
+              (entry): entry is readonly [string, string] => entry !== null
+            )
+        );
+
+        return Object.keys(values).length > 0
+          ? ([field.key, values] as const)
+          : null;
+      })
+      .filter(
+        (entry): entry is readonly [string, Record<string, string>] =>
+          entry !== null
+      );
+
+    return entries.length > 0 ? Object.fromEntries(entries) : undefined;
+  }, [additionalFileDefaults, fileDefaults, parsedFiles, perFileFields]);
 
   const extraColumnState = useMemo(() => {
     const reserved = new Set(
@@ -296,6 +391,7 @@ export function DataImporter<TKey extends string>({
       warnings: validation.warnings.map((w) => w.message),
       rowsSkipped: validation.errors.length,
       extraColumns: extraColumnState.valid.map((column) => column.key),
+      perFileValues: commitPerFileValues,
     });
     onOpenChange(false);
   };
@@ -343,8 +439,8 @@ export function DataImporter<TKey extends string>({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(96vw,72rem)] max-w-5xl overflow-hidden p-0 sm:rounded-2xl">
-        <div className="flex max-h-[88vh] min-h-0 flex-col">
+      <DialogContent className="max-h-[92vh] w-[min(98vw,76rem)] max-w-6xl overflow-hidden p-0 sm:rounded-2xl">
+        <div className="flex max-h-[92vh] min-h-0 flex-col">
           <DialogHeader className="border-b px-6 py-5">
             <DialogTitle>{title}</DialogTitle>
             {description ? (
@@ -352,7 +448,7 @@ export function DataImporter<TKey extends string>({
             ) : null}
           </DialogHeader>
 
-          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
+          <div className="min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:px-6 lg:overflow-hidden">
             <div className="space-y-5">
               <Tabs
                 value={tab}
@@ -440,8 +536,8 @@ export function DataImporter<TKey extends string>({
               ) : null}
 
               {tabular && tabular.headers.length > 0 ? (
-                <div className="grid gap-5 lg:grid-cols-[20rem_minmax(0,1fr)] xl:grid-cols-[22rem_minmax(0,1fr)]">
-                  <div className="space-y-4">
+                <div className="grid gap-5 lg:min-h-0 lg:grid-cols-[20rem_minmax(0,1fr)] xl:grid-cols-[22rem_minmax(0,1fr)]">
+                  <div className="space-y-4 lg:min-h-0 lg:overflow-y-auto lg:pr-1">
                     <fieldset className="rounded-xl border bg-muted/15 p-4">
                       <legend className="px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                         Column mapping
@@ -513,104 +609,126 @@ export function DataImporter<TKey extends string>({
                       </div>
                     </fieldset>
 
-                    {parsedFiles.length > 0 &&
-                    fields.some((field) => field.perFileValue) ? (
+                    {parsedFiles.length > 0 && perFileFields.length > 0 ? (
                       <fieldset className="rounded-xl border bg-muted/15 p-4">
                         <legend className="px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                           Per-file values
                         </legend>
-                        <div className="mt-2 space-y-4">
-                          {fields
-                            .filter((field) => field.perFileValue)
-                            .map((field) => {
-                              const selectedColumn = mapping[field.key];
-                              const selectedHeader =
-                                selectedColumn === null ||
-                                selectedColumn === undefined
-                                  ? null
-                                  : (tabular?.headers[selectedColumn] ?? null);
-
-                              return (
-                                <div
-                                  key={`${String(field.key)}-file-defaults`}
-                                  className="rounded-lg border bg-background/80 p-3"
-                                >
-                                  <div className="mb-3 space-y-1">
-                                    <p className="text-xs font-semibold">
-                                      {field.label}
-                                    </p>
-                                    <p className="text-[11px] text-muted-foreground">
-                                      {field.perFileValue?.description ??
-                                        (selectedHeader
-                                          ? `${field.label} is mapped to “${selectedHeader}”. File values are used when that cell is blank.`
-                                          : `No source column selected. Set a value for each file to populate ${field.label.toLowerCase()}.`)}
-                                    </p>
-                                  </div>
-
-                                  <div className="space-y-2">
-                                    {parsedFiles.map((file) => {
-                                      const inferred =
-                                        field.perFileValue
-                                          ?.infer?.(file.source)
-                                          ?.trim() ?? '';
-                                      const value =
-                                        fileDefaults[field.key]?.[
+                        <div className="mt-2 rounded-lg border bg-background/70 p-3 text-[11px] text-muted-foreground">
+                          File-level defaults stay contained inside this panel.
+                          They work best when each uploaded file represents one
+                          section.
+                        </div>
+                        <div className="mt-3 max-h-[24rem] space-y-3 overflow-y-auto pr-1">
+                          {parsedFiles.map((file) => (
+                            <div
+                              key={file.source}
+                              className="rounded-lg border bg-background/80 p-3"
+                            >
+                              <div className="flex flex-wrap items-center gap-2">
+                                <p className="max-w-full truncate text-xs font-medium sm:max-w-[16rem]">
+                                  {file.source}
+                                </p>
+                                <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
+                                  {file.rowCount} row
+                                  {file.rowCount === 1 ? '' : 's'}
+                                </span>
+                              </div>
+                              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                                {perFileFields.map((field) => {
+                                  const value =
+                                    field.kind === 'schema'
+                                      ? (fileDefaults[field.fieldKey]?.[
                                           file.source
-                                        ] ?? '';
-                                      const isAutofill =
-                                        !!inferred && value === inferred;
+                                        ] ?? '')
+                                      : (additionalFileDefaults[field.key]?.[
+                                          file.source
+                                        ] ?? '');
+                                  const inferred =
+                                    field.config.infer?.(file.source)?.trim() ??
+                                    '';
+                                  const isAutofill =
+                                    !!inferred && value.trim() === inferred;
+                                  const selectedHeader =
+                                    field.kind === 'schema'
+                                      ? (() => {
+                                          const selectedColumn =
+                                            mapping[field.fieldKey];
+                                          return selectedColumn === null ||
+                                            selectedColumn === undefined
+                                            ? null
+                                            : (tabular?.headers[
+                                                selectedColumn
+                                              ] ?? null);
+                                        })()
+                                      : null;
+                                  const helperText =
+                                    field.kind === 'schema'
+                                      ? selectedHeader
+                                        ? `${field.label} uses “${selectedHeader}” when present and falls back to this file value when blank.`
+                                        : `No source column selected. Set ${field.label.toLowerCase()} once for this file.`
+                                      : field.config.description;
 
-                                      return (
-                                        <div
-                                          key={`${String(field.key)}-${file.source}`}
-                                          className="grid gap-2 rounded-lg border border-border/70 bg-muted/10 p-2 sm:grid-cols-[minmax(0,1fr)_10rem] sm:items-center"
-                                        >
-                                          <div className="min-w-0">
-                                            <div className="flex flex-wrap items-center gap-2">
-                                              <p className="truncate text-xs font-medium">
-                                                {file.source}
-                                              </p>
-                                              <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
-                                                {file.rowCount} row
-                                                {file.rowCount === 1 ? '' : 's'}
-                                              </span>
-                                              {isAutofill ? (
-                                                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">
-                                                  Auto-detected
-                                                </span>
-                                              ) : null}
-                                            </div>
-                                          </div>
-                                          <Input
-                                            type={field.perFileValue?.type}
-                                            inputMode={
-                                              field.perFileValue?.inputMode
-                                            }
-                                            placeholder={
-                                              field.perFileValue?.placeholder ??
-                                              `Set ${field.label.toLowerCase()}`
-                                            }
-                                            value={value}
-                                            onChange={(event) =>
-                                              setFileDefaults((current) => ({
-                                                ...current,
-                                                [field.key]: {
-                                                  ...(current[field.key] ?? {}),
-                                                  [file.source]:
-                                                    event.target.value,
-                                                },
-                                              }))
-                                            }
-                                            className="h-9"
-                                            aria-label={`${field.label} for ${file.source}`}
-                                          />
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              );
-                            })}
+                                  return (
+                                    <label
+                                      key={`${field.key}-${file.source}`}
+                                      className="space-y-1 rounded-lg border border-border/70 bg-muted/10 p-2"
+                                    >
+                                      <span className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+                                        <span>{field.label}</span>
+                                        {isAutofill ? (
+                                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">
+                                            Auto-detected
+                                          </span>
+                                        ) : null}
+                                      </span>
+                                      {helperText ? (
+                                        <span className="block text-[11px] text-muted-foreground">
+                                          {helperText}
+                                        </span>
+                                      ) : null}
+                                      <Input
+                                        type={field.config.type}
+                                        inputMode={field.config.inputMode}
+                                        placeholder={
+                                          field.config.placeholder ??
+                                          `Set ${field.label.toLowerCase()}`
+                                        }
+                                        value={value}
+                                        onChange={(event) => {
+                                          const nextValue = event.target.value;
+
+                                          if (field.kind === 'schema') {
+                                            setFileDefaults((current) => ({
+                                              ...current,
+                                              [field.fieldKey]: {
+                                                ...(current[field.fieldKey] ??
+                                                  {}),
+                                                [file.source]: nextValue,
+                                              },
+                                            }));
+                                            return;
+                                          }
+
+                                          setAdditionalFileDefaults(
+                                            (current) => ({
+                                              ...current,
+                                              [field.key]: {
+                                                ...(current[field.key] ?? {}),
+                                                [file.source]: nextValue,
+                                              },
+                                            })
+                                          );
+                                        }}
+                                        className="h-9"
+                                        aria-label={`${field.label} for ${file.source}`}
+                                      />
+                                    </label>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </fieldset>
                     ) : null}
@@ -842,7 +960,7 @@ export function DataImporter<TKey extends string>({
                     </fieldset>
                   </div>
 
-                  <div className="min-w-0 space-y-4">
+                  <div className="min-w-0 space-y-4 lg:min-h-0 lg:overflow-y-auto lg:pr-1">
                     <section className="rounded-xl border bg-muted/15">
                       <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
                         <div>
@@ -986,7 +1104,7 @@ export function DataImporter<TKey extends string>({
                             </p>
                           </div>
                         </div>
-                        <div className="mt-3 space-y-2 text-xs">
+                        <div className="mt-3 max-h-[20rem] space-y-2 overflow-y-auto pr-1 text-xs">
                           {parseWarnings.map((warning, index) => (
                             <div
                               key={`${warning}-${index}`}

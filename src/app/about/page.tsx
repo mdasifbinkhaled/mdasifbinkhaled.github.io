@@ -47,8 +47,8 @@ export default function AboutPage() {
           <h2 className="sr-only">Professional Details</h2>
           {/* Biography Section removed as redundant with Hero + QuickFacts */}
 
-          {/* 
-            Education & Experience moved to CV page as per new IA 
+          {/*
+            Education & Experience moved to CV page as per new IA
             However, keeping brief highlights or skills here is good.
           */}
 

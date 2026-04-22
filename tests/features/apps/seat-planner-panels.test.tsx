@@ -2,8 +2,25 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/shared/components/common/data-importer', () => ({
-  DataImporter: ({ open, title }: { open: boolean; title: string }) =>
-    open ? <div data-testid="mock-data-importer">{title}</div> : null,
+  DataImporter: ({
+    open,
+    title,
+    extraPerFileFields,
+  }: {
+    open: boolean;
+    title: string;
+    extraPerFileFields?: { label: string }[];
+  }) =>
+    open ? (
+      <div data-testid="mock-data-importer">
+        <span>{title}</span>
+        {extraPerFileFields?.length ? (
+          <span data-testid="mock-data-importer-extra-fields">
+            {extraPerFileFields.map((field) => field.label).join(', ')}
+          </span>
+        ) : null}
+      </div>
+    ) : null,
 }));
 
 import { RoomConfiguration } from '@/features/apps/components/seat-planner/room-configuration';
@@ -271,6 +288,7 @@ describe('Seat Planner Panels', () => {
           },
         ]}
         sections={[1, 2]}
+        allocationMode="cohort"
         onImport={vi.fn()}
         onRemoveStudent={onRemoveStudent}
       />
@@ -288,6 +306,9 @@ describe('Seat Planner Panels', () => {
     expect(screen.getByTestId('mock-data-importer')).toHaveTextContent(
       'Import students'
     );
+    expect(
+      screen.getByTestId('mock-data-importer-extra-fields')
+    ).toHaveTextContent('Faculty / Invigilator');
 
     fireEvent.click(
       screen.getByRole('button', { name: /remove alice rahman/i })
@@ -300,6 +321,7 @@ describe('Seat Planner Panels', () => {
       <StudentDataPanel
         students={[]}
         sections={[]}
+        allocationMode="cohort"
         onImport={vi.fn()}
         onRemoveStudent={vi.fn()}
       />
@@ -317,6 +339,26 @@ describe('Seat Planner Panels', () => {
     );
   });
 
+  it('omits per-file faculty import when allocation mode is mixed', () => {
+    render(
+      <StudentDataPanel
+        students={[]}
+        sections={[]}
+        allocationMode="mixed"
+        onImport={vi.fn()}
+        onRemoveStudent={vi.fn()}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /import students/i }));
+    expect(screen.getByTestId('mock-data-importer')).toHaveTextContent(
+      'Import students'
+    );
+    expect(
+      screen.queryByTestId('mock-data-importer-extra-fields')
+    ).not.toBeInTheDocument();
+  });
+
   it('shows singular student, section, and extra-field summaries', () => {
     render(
       <StudentDataPanel
@@ -329,6 +371,7 @@ describe('Seat Planner Panels', () => {
           },
         ]}
         sections={[1]}
+        allocationMode="cohort"
         onImport={vi.fn()}
         onRemoveStudent={vi.fn()}
       />
@@ -353,6 +396,7 @@ describe('Seat Planner Panels', () => {
           },
         ]}
         sections={[]}
+        allocationMode="cohort"
         onImport={vi.fn()}
         onRemoveStudent={vi.fn()}
       />

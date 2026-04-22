@@ -18,7 +18,10 @@ vi.mock('@/shared/lib/parsers/tabular', async () => {
 });
 
 import { DataImporter } from '@/shared/components/common/data-importer';
-import type { SchemaField } from '@/shared/lib/parsers/types';
+import type {
+  AdditionalPerFileField,
+  SchemaField,
+} from '@/shared/lib/parsers/types';
 
 type ImportKey = 'name';
 
@@ -221,6 +224,101 @@ describe('DataImporter', () => {
         warnings: ['Used inferred section'],
         rowsSkipped: 0,
         extraColumns: [],
+        perFileValues: {
+          section: {
+            'sec-2.csv': '2',
+          },
+        },
+      })
+    );
+  });
+
+  it('commits additional per-file metadata fields together with section defaults', async () => {
+    const user = userEvent.setup();
+    const onCommit = vi.fn();
+    const sectionFields: readonly SchemaField<'id' | 'section'>[] = [
+      {
+        key: 'id',
+        label: 'Student ID',
+        required: true,
+        aliases: ['id'],
+      },
+      {
+        key: 'section',
+        label: 'Section',
+        required: false,
+        aliases: ['section'],
+        perFileValue: {
+          type: 'number',
+          inputMode: 'numeric',
+          infer: (source) => (source.includes('sec-4') ? '4' : undefined),
+        },
+        parse: (raw) => Number(raw),
+      },
+    ];
+    const extraPerFileFields: readonly AdditionalPerFileField[] = [
+      {
+        key: 'faculty',
+        label: 'Faculty',
+        placeholder: 'Faculty name',
+      },
+    ];
+
+    parseFilesMock.mockResolvedValue({
+      headers: ['id'],
+      rows: [['23101004']],
+      source: 'sec-4.csv',
+      rowSources: ['sec-4.csv'],
+      files: [{ source: 'sec-4.csv', rowCount: 1 }],
+      warnings: [],
+    });
+
+    render(
+      <DataImporter<'id' | 'section'>
+        open={true}
+        onOpenChange={vi.fn()}
+        defaultTab="upload"
+        fields={sectionFields}
+        title="Import students"
+        description="Import some rows"
+        extraPerFileFields={extraPerFileFields}
+        onCommit={onCommit}
+      />
+    );
+
+    const input = document.body.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
+
+    fireEvent.change(input, {
+      target: { files: [new File(['id\n23101004'], 'sec-4.csv')] },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Section for sec-4.csv')).toHaveValue(4);
+      expect(
+        screen.getByLabelText('Faculty for sec-4.csv')
+      ).toBeInTheDocument();
+    });
+
+    await user.type(
+      screen.getByLabelText('Faculty for sec-4.csv'),
+      'Dr. Nusrat Karim'
+    );
+    await user.click(screen.getByRole('button', { name: /commit/i }));
+
+    expect(onCommit).toHaveBeenCalledWith(
+      [{ id: '23101004', section: 4 }],
+      expect.objectContaining({
+        rowsSkipped: 0,
+        perFileValues: {
+          section: {
+            'sec-4.csv': '4',
+          },
+          faculty: {
+            'sec-4.csv': 'Dr. Nusrat Karim',
+          },
+        },
       })
     );
   });

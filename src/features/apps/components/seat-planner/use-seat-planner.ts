@@ -137,20 +137,47 @@ export function useSeatPlanner() {
       const extraFieldCount = new Set(
         incoming.flatMap((student) => Object.keys(student.extras ?? {}))
       ).size;
+      const importedFacultyEntries = Object.entries(
+        meta.perFileValues?.faculty ?? {}
+      ).flatMap(([source, facultyName]) => {
+        const trimmedFaculty = facultyName.trim();
+        const sectionValue =
+          meta.perFileValues?.section?.[source]?.trim() ?? '';
+        const sectionNumber = Number(sectionValue);
+
+        if (
+          !trimmedFaculty ||
+          !Number.isInteger(sectionNumber) ||
+          sectionNumber < 1
+        ) {
+          return [];
+        }
+
+        return [[sectionNumber, trimmedFaculty] as const];
+      });
 
       setStudents((prev) =>
         mergeBy(prev, incoming, (s) => s.id, meta.mergeStrategy)
       );
+      if (importedFacultyEntries.length > 0) {
+        setSectionFaculty((prev) => ({
+          ...prev,
+          ...Object.fromEntries(importedFacultyEntries),
+        }));
+      }
       setResult(null);
       toast.success(
         `Imported ${incoming.length} student${incoming.length === 1 ? '' : 's'}` +
           (meta.rowsSkipped > 0 ? ` (${meta.rowsSkipped} skipped)` : '') +
           (extraFieldCount > 0
             ? ` · ${extraFieldCount} extra field${extraFieldCount === 1 ? '' : 's'} kept`
+            : '') +
+          (importedFacultyEntries.length > 0
+            ? ` · ${importedFacultyEntries.length} faculty label${importedFacultyEntries.length === 1 ? '' : 's'} applied`
             : '')
       );
     },
-    [setStudents, mergeBy]
+    [setSectionFaculty, setStudents, mergeBy]
   );
 
   const handleImportRooms = useCallback(

@@ -47,6 +47,23 @@ export interface PerFileValueConfig {
   infer?: (source: string) => string | undefined;
 }
 
+export interface AdditionalPerFileField {
+  /** Metadata key returned in the import commit payload. */
+  key: string;
+  /** Label shown in the importer UI. */
+  label: string;
+  /** Optional helper copy shown alongside the input. */
+  description?: string;
+  /** Placeholder used for the per-file input. */
+  placeholder?: string;
+  /** Optional input mode hint for mobile keyboards. */
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
+  /** Optional type override for the per-file input. */
+  type?: React.HTMLInputTypeAttribute;
+  /** Best-effort prefill from the source label. */
+  infer?: (source: string) => string | undefined;
+}
+
 /**
  * A field in the caller's schema. The importer looks for a header that
  * matches any of `aliases` (case-insensitive substring match). The user
@@ -104,6 +121,7 @@ export interface ImportCommitMeta {
   warnings: string[];
   rowsSkipped: number;
   extraColumns?: string[];
+  perFileValues?: Record<string, Record<string, string>>;
 }
 
 /** The signature tools receive from their importer invocation. */

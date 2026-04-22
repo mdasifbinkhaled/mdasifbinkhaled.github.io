@@ -333,4 +333,36 @@ describe('useSeatPlanner', () => {
     createObjectURLSpy.mockRestore();
     revokeObjectURLSpy.mockRestore();
   });
+
+  it('applies imported faculty labels when file-level section values are supplied', () => {
+    const { result } = renderHook(() => useSeatPlanner());
+
+    act(() => {
+      result.current.handleImportStudents(
+        [{ id: '23101001', name: 'Alice Rahman', section: 1 }],
+        {
+          source: 'sec-1.csv',
+          sourceFiles: ['sec-1.csv'],
+          mergeStrategy: 'replace',
+          warnings: [],
+          rowsSkipped: 0,
+          perFileValues: {
+            section: {
+              'sec-1.csv': '1',
+            },
+            faculty: {
+              'sec-1.csv': 'Dr. Nusrat Karim',
+            },
+          },
+        }
+      );
+    });
+
+    expect(result.current.sectionFaculty).toEqual({
+      1: 'Dr. Nusrat Karim',
+    });
+    expect(toastSuccessMock).toHaveBeenCalledWith(
+      expect.stringContaining('faculty label')
+    );
+  });
 });

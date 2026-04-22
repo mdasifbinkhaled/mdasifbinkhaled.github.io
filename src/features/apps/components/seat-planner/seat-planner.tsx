@@ -224,6 +224,7 @@ export function SeatPlanner() {
               <StudentDataPanel
                 students={sp.students}
                 sections={sp.sections}
+                allocationMode={sp.allocationMode}
                 onImport={sp.handleImportStudents}
                 onRemoveStudent={sp.handleRemoveStudent}
               />
