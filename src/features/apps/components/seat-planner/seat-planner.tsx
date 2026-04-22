@@ -277,8 +277,8 @@ export function SeatPlanner() {
         </div>
 
         {/* ── right rail (desktop only) ─────────────────────────── */}
-        <aside className="hidden xl:block print:hidden">
-          <div className="sticky top-24 space-y-4">
+        <aside className="hidden xl:flex print:hidden xl:self-stretch">
+          <div className="sticky top-24 flex h-full min-h-[calc(100vh-7rem)] w-full flex-col gap-4">
             <SeatPlannerWorkspaceCard
               items={statItems}
               namedFacultySections={namedFacultySections}
@@ -289,7 +289,7 @@ export function SeatPlanner() {
               onBackup={sp.handleExportBackup}
               onReset={() => setResetOpen(true)}
             />
-            <SeatPlannerWorkflowCard steps={workflowSteps} />
+            <SeatPlannerWorkflowCard className="flex-1" steps={workflowSteps} />
           </div>
         </aside>
       </div>
@@ -464,8 +464,10 @@ function SeatPlannerActionCard({
 }
 
 function SeatPlannerWorkflowCard({
+  className,
   steps,
 }: {
+  className?: string;
   steps: Array<{
     title: string;
     hint: string;
@@ -474,7 +476,12 @@ function SeatPlannerWorkflowCard({
   }>;
 }) {
   return (
-    <Card className="border-border/70 bg-card/90 shadow-sm">
+    <Card
+      className={cn(
+        'flex h-full flex-col border-border/70 bg-card/90 shadow-sm',
+        className
+      )}
+    >
       <CardHeader className="pb-4">
         <CardTitle className="text-base">Workflow Guide</CardTitle>
         <p className="text-sm text-muted-foreground">
@@ -482,11 +489,11 @@ function SeatPlannerWorkflowCard({
           keep long forms from feeling overwhelming.
         </p>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="grid flex-1 auto-rows-fr gap-3">
         {steps.map((step, index) => (
           <div
             key={step.title}
-            className="rounded-2xl border bg-muted/10 p-3 transition-colors hover:bg-muted/20"
+            className="h-full rounded-2xl border bg-muted/10 p-3 transition-colors hover:bg-muted/20"
           >
             <div className="flex items-start gap-3">
               <span

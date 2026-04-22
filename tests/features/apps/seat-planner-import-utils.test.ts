@@ -31,6 +31,10 @@ describe('seat-planner import utils', () => {
     expect(inferSectionFromSource('students-sec-2.csv')).toBe('2');
     expect(inferSectionFromSource('section_14.xlsx')).toBe('14');
     expect(inferSectionFromSource('group 3.tsv')).toBe('3');
+    expect(inferSectionFromSource('CSE111-sec03-final.xlsx')).toBe('3');
+    expect(inferSectionFromSource('8-section.tsv')).toBe('8');
+    expect(inferSectionFromSource('students-8.csv')).toBe('8');
+    expect(inferSectionFromSource('section-number-6.xlsx')).toBe('6');
     expect(inferSectionFromSource('students.csv')).toBeUndefined();
   });
 

@@ -3,8 +3,9 @@ import type { ImportedRow } from '@/shared/lib/parsers/types';
 import type { Room, Student } from './types';
 
 const SECTION_SOURCE_PATTERNS = [
-  /(?:^|[^a-z0-9])(section|sec|group)[\s._-]*(\d{1,3})(?=$|[^a-z0-9])/i,
-  /(?:^|[^a-z0-9])s[\s._-]*(\d{1,3})(?=$|[^a-z0-9])/i,
+  /(?:^|[^a-z0-9])(?:section|sections|sec|sect|group|grp|batch|shift|s)(?:[\s._-]*(?:no|number|#))?[\s._-]*0*(\d{1,3})(?=$|[^a-z0-9])/i,
+  /(?:^|[^a-z0-9])0*(\d{1,3})[\s._-]*(?:section|sections|sec|sect|group|grp|batch|shift)(?=$|[^a-z0-9])/i,
+  /(?:^|[\s._\-(])0*(\d{1,2})(?=$|[\s._\-)])/i,
 ] as const;
 
 const STUDENT_CORE_KEYS = new Set(['id', 'name', 'section']);
@@ -16,7 +17,7 @@ export function inferSectionFromSource(source: string): string | undefined {
   for (const pattern of SECTION_SOURCE_PATTERNS) {
     const match = stem.match(pattern);
     if (!match) continue;
-    const value = match[2] ?? match[1];
+    const value = match[1];
     if (!value) continue;
 
     const section = Number(value);

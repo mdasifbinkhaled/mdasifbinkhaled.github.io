@@ -49,7 +49,7 @@ const STUDENT_FIELDS: readonly SchemaField<StudentKey>[] = [
     aliases: ['section', 'sec', 'group'],
     perFileValue: {
       description:
-        'Use file-level values when section is missing from the sheet. Seat Planner will prefill this from filenames like sec-2.csv or section_3.xlsx when it can.',
+        'Use file-level values when section is missing from the sheet. Seat Planner will prefill this from filenames like sec-2.csv, section_3.xlsx, 8-section.tsv, or students-8.csv when it can.',
       placeholder: 'e.g. 1',
       inputMode: 'numeric',
       type: 'number',
@@ -211,7 +211,7 @@ export function StudentDataPanel({
         pastePlaceholder={
           'ID\tName\tSection\n23101001\tAlice Rahman\t1\n23101002\tBob Khan\t2'
         }
-        helpText="Each row needs a Student ID and Name. Section can come from a column, from a per-file value, or it defaults to 1. Additional passthrough columns are preserved and included in CSV export."
+        helpText="Each row needs a Student ID and Name. Section can come from a column, from a per-file value inferred from flexible filenames, or it defaults to 1. Additional passthrough columns are preserved and included in CSV export."
         allowExtraColumns
         onCommit={(rows, meta) => onImport(rows, meta)}
       />
