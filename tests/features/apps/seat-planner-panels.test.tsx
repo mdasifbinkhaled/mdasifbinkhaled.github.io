@@ -7,6 +7,7 @@ vi.mock('@/shared/components/common/data-importer', () => ({
 }));
 
 import { RoomConfiguration } from '@/features/apps/components/seat-planner/room-configuration';
+import { ExamDetailsForm } from '@/features/apps/components/seat-planner/exam-details-form';
 import { StudentDataPanel } from '@/features/apps/components/seat-planner/student-data-panel';
 
 describe('Seat Planner Panels', () => {
@@ -31,7 +32,6 @@ describe('Seat Planner Panels', () => {
         onAllocationModeChange={vi.fn()}
         onSortOrderChange={vi.fn()}
         onGenerate={vi.fn()}
-        onResetResult={vi.fn()}
         onImportRooms={vi.fn()}
       />
     );
@@ -79,7 +79,6 @@ describe('Seat Planner Panels', () => {
         onAllocationModeChange={vi.fn()}
         onSortOrderChange={vi.fn()}
         onGenerate={vi.fn()}
-        onResetResult={vi.fn()}
         onImportRooms={vi.fn()}
       />
     );
@@ -112,7 +111,6 @@ describe('Seat Planner Panels', () => {
         onAllocationModeChange={vi.fn()}
         onSortOrderChange={vi.fn()}
         onGenerate={vi.fn()}
-        onResetResult={vi.fn()}
         onImportRooms={vi.fn()}
       />
     );
@@ -149,7 +147,6 @@ describe('Seat Planner Panels', () => {
         onAllocationModeChange={vi.fn()}
         onSortOrderChange={vi.fn()}
         onGenerate={vi.fn()}
-        onResetResult={vi.fn()}
         onImportRooms={vi.fn()}
       />
     );
@@ -162,6 +159,96 @@ describe('Seat Planner Panels', () => {
       screen.getByRole('button', { name: /generate seat plan/i })
     ).toBeDisabled();
     expect(screen.queryByText(/will be unassigned/i)).not.toBeInTheDocument();
+  });
+
+  it('merges quick-pasted room lists without requiring headers', () => {
+    const onImportRooms = vi.fn();
+
+    render(
+      <RoomConfiguration
+        rooms={[]}
+        newRoomName=""
+        newRoomCapacity="40"
+        allocationMode="cohort"
+        sortOrder="section-name"
+        totalCapacity={0}
+        studentCount={0}
+        canGenerate={false}
+        onAddRoom={vi.fn()}
+        onRemoveRoom={vi.fn()}
+        onRoomNameChange={vi.fn()}
+        onRoomCapacityChange={vi.fn()}
+        onAllocationModeChange={vi.fn()}
+        onSortOrderChange={vi.fn()}
+        onGenerate={vi.fn()}
+        onImportRooms={onImportRooms}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /quick paste list/i }));
+    fireEvent.change(screen.getByLabelText(/quick paste room list/i), {
+      target: {
+        value: 'BC5012\t35\nBC5013\t35\nBC5014\t35',
+      },
+    });
+    fireEvent.click(
+      screen.getByRole('button', { name: /merge pasted rooms/i })
+    );
+
+    expect(onImportRooms).toHaveBeenCalledWith(
+      [
+        { name: 'BC5012', capacity: 35 },
+        { name: 'BC5013', capacity: 35 },
+        { name: 'BC5014', capacity: 35 },
+      ],
+      expect.objectContaining({
+        mergeStrategy: 'merge',
+        rowsSkipped: 0,
+      })
+    );
+  });
+
+  it('supports bulk faculty updates and apply-to-all actions', () => {
+    const onSectionFacultyReplace = vi.fn();
+
+    render(
+      <ExamDetailsForm
+        field={() => ({ value: '', onChange: vi.fn() })}
+        sections={[1, 2, 3]}
+        sectionCounts={{ 1: 14, 2: 14, 3: 14 }}
+        sectionFaculty={{ 1: 'Dr. Nusrat Karim' }}
+        onSectionFacultyChange={vi.fn()}
+        onSectionFacultyReplace={onSectionFacultyReplace}
+      />
+    );
+
+    fireEvent.change(
+      screen.getByLabelText(/apply one faculty name to all active sections/i),
+      { target: { value: 'Prof. Shared Name' } }
+    );
+    fireEvent.click(screen.getByRole('button', { name: /apply to all/i }));
+
+    expect(onSectionFacultyReplace).toHaveBeenCalledWith({
+      1: 'Prof. Shared Name',
+      2: 'Prof. Shared Name',
+      3: 'Prof. Shared Name',
+    });
+
+    fireEvent.change(screen.getByLabelText(/paste section mappings/i), {
+      target: {
+        value:
+          '1\tDr. Nusrat Karim\nSection 2: Md. Imran Hossain\n3, Prof. Tania Rahman',
+      },
+    });
+    fireEvent.click(
+      screen.getByRole('button', { name: /apply faculty list/i })
+    );
+
+    expect(onSectionFacultyReplace).toHaveBeenLastCalledWith({
+      1: 'Dr. Nusrat Karim',
+      2: 'Md. Imran Hossain',
+      3: 'Prof. Tania Rahman',
+    });
   });
 
   it('shows student counts, extra fields, and opens the importer', () => {

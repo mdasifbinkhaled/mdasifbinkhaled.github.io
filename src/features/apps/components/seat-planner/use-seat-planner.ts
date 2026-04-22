@@ -253,6 +253,36 @@ export function useSeatPlanner() {
     setSelectedRoomIdx(0);
   }, [students, rooms, allocationMode, sortOrder, canGenerate]);
 
+  const handleAllocationModeChange = useCallback(
+    (nextMode: AllocationMode) => {
+      setAllocationMode(nextMode);
+      setSelectedRoomIdx(0);
+      setResult((previous) => {
+        if (!previous || students.length === 0 || rooms.length === 0) {
+          return previous;
+        }
+
+        return allocate(students, rooms, nextMode, sortOrder);
+      });
+    },
+    [rooms, sortOrder, students]
+  );
+
+  const handleSortOrderChange = useCallback(
+    (nextSortOrder: SortOrder) => {
+      setSortOrder(nextSortOrder);
+      setSelectedRoomIdx(0);
+      setResult((previous) => {
+        if (!previous || students.length === 0 || rooms.length === 0) {
+          return previous;
+        }
+
+        return allocate(students, rooms, allocationMode, nextSortOrder);
+      });
+    },
+    [allocationMode, rooms, students]
+  );
+
   const handleReassign = useCallback(
     (studentId: string, targetRoom: string) => {
       if (!result) return;
@@ -326,154 +356,51 @@ export function useSeatPlanner() {
     const snapshotTarget =
       printRef.current ??
       document.querySelector<HTMLDivElement>(
-        '[data-seat-plan-snapshot="true"]'
+        '[data-seat-plan-png-export="true"]'
       );
 
     if (!snapshotTarget) {
-      toast.error(
-        'PNG export is unavailable until the master list is visible.'
-      );
+      toast.error('PNG export is unavailable right now. Please try again.');
       return;
     }
 
     setIsExporting(true);
     try {
-      const snapshotWidth = Math.max(
-        snapshotTarget.scrollWidth,
-        snapshotTarget.clientWidth,
-        672
+      const snapshotWidth = Math.max(snapshotTarget.scrollWidth, 960);
+      const snapshotHeight = Math.max(snapshotTarget.scrollHeight, 720);
+      const exportScale = Math.max(
+        2,
+        Math.min(window.devicePixelRatio || 1, 3)
       );
       const html2canvas = (await import('html2canvas')).default;
       const canvas = await html2canvas(snapshotTarget, {
         backgroundColor: '#ffffff',
-        scale: 1,
+        scale: exportScale,
         logging: false,
         useCORS: true,
-        onclone: (doc) => {
-          doc
-            .querySelectorAll('style, link[rel="stylesheet"]')
-            .forEach((node) => node.remove());
-
-          const clonedSnapshot = doc.querySelector<HTMLElement>(
-            '[data-seat-plan-snapshot="true"]'
-          );
-
-          if (!clonedSnapshot) {
-            return;
-          }
-
-          const style = doc.createElement('style');
-          style.textContent = `
-            body {
-              margin: 0;
-              background: #ffffff;
-            }
-            [data-seat-plan-snapshot="true"] {
-              box-sizing: border-box;
-              width: ${snapshotWidth}px;
-              background: #ffffff;
-              border: 1px solid #e2e8f0;
-              border-radius: 16px;
-              color: #0f172a;
-              font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-              padding: 16px;
-            }
-            [data-seat-plan-snapshot="true"] > div:first-child {
-              display: flex;
-              align-items: flex-start;
-              justify-content: space-between;
-              gap: 16px;
-              margin-bottom: 16px;
-            }
-            [data-seat-plan-snapshot="true"] h3 {
-              margin: 0 0 4px;
-              font-size: 16px;
-              font-weight: 600;
-            }
-            [data-seat-plan-snapshot="true"] p {
-              margin: 0;
-              color: #475569;
-              font-size: 13px;
-              line-height: 1.5;
-            }
-            [data-seat-plan-snapshot="true"] span {
-              display: inline-block;
-              white-space: nowrap;
-              border: 1px solid #e2e8f0;
-              border-radius: 9999px;
-              background: #ffffff;
-              color: #475569;
-              font-size: 12px;
-              padding: 4px 12px;
-            }
-            [data-seat-plan-snapshot="true"] table {
-              width: 100%;
-              border-collapse: collapse;
-              font-size: 13px;
-            }
-            [data-seat-plan-snapshot="true"] thead {
-              background: #f8fafc;
-            }
-            [data-seat-plan-snapshot="true"] th,
-            [data-seat-plan-snapshot="true"] td {
-              border-bottom: 1px solid #e2e8f0;
-              padding: 8px 12px;
-              text-align: left;
-              vertical-align: top;
-            }
-            [data-seat-plan-snapshot="true"] [data-seat-plan-col="sl"] {
-              width: 48px;
-              color: #64748b;
-            }
-            [data-seat-plan-snapshot="true"] [data-seat-plan-col="id"] {
-              width: 112px;
-              font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-              font-size: 12px;
-            }
-            [data-seat-plan-snapshot="true"] [data-seat-plan-col="section"] {
-              width: 64px;
-              text-align: center;
-            }
-            [data-seat-plan-snapshot="true"] [data-seat-plan-col="extra"] {
-              min-width: 104px;
-            }
-            [data-seat-plan-snapshot="true"] [data-seat-plan-col="room"] {
-              width: 160px;
-            }
-            [data-seat-plan-snapshot="true"] [data-seat-plan-select-cell] div {
-              min-width: 9rem;
-              border: 1px solid #d1d5db;
-              border-radius: 6px;
-              background: #ffffff;
-              color: #0f172a;
-              font-size: 12px;
-              line-height: 1.4;
-              padding: 4px 8px;
-            }
-          `;
-          doc.head.appendChild(style);
-
-          clonedSnapshot
-            .querySelectorAll<HTMLElement>('*')
-            .forEach((element) => {
-              element.removeAttribute('class');
-            });
-
-          clonedSnapshot.querySelectorAll('select').forEach((select) => {
-            const replacement = doc.createElement('div');
-            replacement.textContent = select.value;
-            select.replaceWith(replacement);
-          });
-        },
+        width: snapshotWidth,
+        height: snapshotHeight,
+        windowWidth: snapshotWidth,
+        windowHeight: snapshotHeight,
       });
+
+      const pngBlob = await new Promise<Blob | null>((resolve) => {
+        canvas.toBlob(resolve, 'image/png');
+      });
+
+      if (!pngBlob) {
+        throw new Error('PNG blob generation failed.');
+      }
+
       const a = document.createElement('a');
       a.download = buildSeatPlanExportFilename(
         examDetails,
         'png-snapshot',
         'png'
       );
-      a.href = canvas.toDataURL('image/png');
+      a.href = URL.createObjectURL(pngBlob);
       a.click();
+      URL.revokeObjectURL(a.href);
     } catch (error) {
       console.error('Seat planner PNG export failed.', error);
       toast.error('PNG export failed. Please try again.');
@@ -523,6 +450,27 @@ export function useSeatPlanner() {
     [setSectionFaculty]
   );
 
+  const replaceSectionFaculty = useCallback(
+    (nextValue: SectionFacultyMap) => {
+      const sanitizedEntries = Object.entries(nextValue).reduce<
+        Array<[number, string]>
+      >((entries, [sectionKey, value]) => {
+        const section = Number(sectionKey);
+        const trimmedValue = String(value ?? '').trim();
+
+        if (!Number.isFinite(section) || section < 1 || !trimmedValue) {
+          return entries;
+        }
+
+        entries.push([Math.floor(section), trimmedValue]);
+        return entries;
+      }, []);
+
+      setSectionFaculty(Object.fromEntries(sanitizedEntries));
+    },
+    [setSectionFaculty]
+  );
+
   const field = useCallback(
     (key: keyof ExamDetails) => ({
       value: examDetails[key],
@@ -565,10 +513,11 @@ export function useSeatPlanner() {
     handleExportBackup,
     handleResetAll,
     setSectionFacultyName,
+    replaceSectionFaculty,
     setNewRoomName,
     setNewRoomCapacity,
-    setAllocationMode,
-    setSortOrder,
+    setAllocationMode: handleAllocationModeChange,
+    setSortOrder: handleSortOrderChange,
     setSelectedRoomIdx,
     setResult,
   };

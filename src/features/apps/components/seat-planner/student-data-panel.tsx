@@ -91,7 +91,7 @@ export function StudentDataPanel({
   ).length;
 
   return (
-    <Card className="print:hidden">
+    <Card className="border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md print:hidden">
       <CardHeader>
         <CardTitle className="flex flex-wrap items-center gap-2 text-lg">
           <Users className="h-5 w-5" aria-hidden />
@@ -131,7 +131,7 @@ export function StudentDataPanel({
         </div>
 
         {students.length > 0 ? (
-          <div className="max-h-[28rem] overflow-auto rounded-lg border">
+          <div className="max-h-[28rem] overflow-auto rounded-xl border bg-background/80 shadow-xs">
             <table className="min-w-max text-sm">
               <thead className="sticky top-0 bg-muted/80 backdrop-blur">
                 <tr>
@@ -158,7 +158,10 @@ export function StudentDataPanel({
               </thead>
               <tbody>
                 {students.map((s, i) => (
-                  <tr key={s.id} className="border-t">
+                  <tr
+                    key={s.id}
+                    className="border-t transition-colors hover:bg-muted/25"
+                  >
                     {tableColumns.map((column) => (
                       <td
                         key={column.key}
@@ -191,7 +194,7 @@ export function StudentDataPanel({
             </table>
           </div>
         ) : (
-          <div className="rounded-lg border border-dashed p-6 text-center text-sm text-muted-foreground">
+          <div className="rounded-xl border border-dashed bg-muted/10 p-6 text-center text-sm text-muted-foreground">
             No students yet. Click{' '}
             <span className="font-medium">Import students</span> to begin.
           </div>

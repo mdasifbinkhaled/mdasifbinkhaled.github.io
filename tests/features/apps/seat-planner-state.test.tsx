@@ -10,6 +10,10 @@ const { exportMasterListCSVMock } = vi.hoisted(() => ({
   exportMasterListCSVMock: vi.fn(),
 }));
 
+const { html2canvasMock } = vi.hoisted(() => ({
+  html2canvasMock: vi.fn(),
+}));
+
 const {
   generateMasterListPDFMock,
   generateRoomSheetsPDFMock,
@@ -39,6 +43,10 @@ vi.mock('@/features/apps/components/seat-planner/pdf-export', () => ({
   generateCombinedPDF: generateCombinedPDFMock,
 }));
 
+vi.mock('html2canvas', () => ({
+  default: html2canvasMock,
+}));
+
 import {
   useSeatPlanner,
   SEAT_TOOL_SLUG,
@@ -52,6 +60,7 @@ describe('useSeatPlanner', () => {
     toastSuccessMock.mockReset();
     toastErrorMock.mockReset();
     exportMasterListCSVMock.mockReset();
+    html2canvasMock.mockReset();
     generateMasterListPDFMock.mockClear();
     generateRoomSheetsPDFMock.mockClear();
     generateCombinedPDFMock.mockClear();
@@ -121,6 +130,21 @@ describe('useSeatPlanner', () => {
     expect(result.current.stats?.assigned).toBe(2);
 
     act(() => {
+      result.current.setAllocationMode('mixed');
+    });
+
+    expect(result.current.rooms).toHaveLength(2);
+    expect(result.current.result).not.toBeNull();
+    expect(result.current.stats?.assigned).toBe(2);
+
+    act(() => {
+      result.current.setSortOrder('id');
+    });
+
+    expect(result.current.rooms).toHaveLength(2);
+    expect(result.current.result).not.toBeNull();
+
+    act(() => {
       result.current.handleReassign('23101001', 'BC6008-S');
     });
 
@@ -152,7 +176,7 @@ describe('useSeatPlanner', () => {
     });
 
     expect(toastErrorMock).toHaveBeenCalledWith(
-      'PNG export is unavailable until the master list is visible.'
+      'PNG export is unavailable right now. Please try again.'
     );
   });
 
@@ -230,6 +254,81 @@ describe('useSeatPlanner', () => {
     expect(result.current.result).toBeNull();
     expect(toastSuccessMock).toHaveBeenCalledWith('Seat Planner reset.');
 
+    clickSpy.mockRestore();
+    createObjectURLSpy.mockRestore();
+    revokeObjectURLSpy.mockRestore();
+  });
+
+  it('exports a high-resolution PNG from the dedicated export document', async () => {
+    const clickSpy = vi
+      .spyOn(HTMLAnchorElement.prototype, 'click')
+      .mockImplementation(() => {});
+    const createObjectURLSpy = vi
+      .spyOn(URL, 'createObjectURL')
+      .mockReturnValue('blob:seat-plan-png');
+    const revokeObjectURLSpy = vi
+      .spyOn(URL, 'revokeObjectURL')
+      .mockImplementation(() => {});
+
+    const exportTarget = document.createElement('div');
+    Object.defineProperty(exportTarget, 'scrollWidth', {
+      configurable: true,
+      value: 1280,
+    });
+    Object.defineProperty(exportTarget, 'scrollHeight', {
+      configurable: true,
+      value: 960,
+    });
+    document.body.appendChild(exportTarget);
+
+    html2canvasMock.mockResolvedValue({
+      toBlob: (callback: (blob: Blob | null) => void) => {
+        callback(new Blob(['png'], { type: 'image/png' }));
+      },
+    });
+
+    const { result } = renderHook(() => useSeatPlanner());
+
+    act(() => {
+      result.current.handleImportStudents(
+        [{ id: '23101001', name: 'Alice Rahman', section: 1 }],
+        {
+          source: 'students.csv',
+          mergeStrategy: 'replace',
+          warnings: [],
+          rowsSkipped: 0,
+        }
+      );
+      result.current.handleImportRooms([{ name: 'BC6007-S', capacity: 40 }], {
+        source: 'rooms.csv',
+        mergeStrategy: 'replace',
+        warnings: [],
+        rowsSkipped: 0,
+      });
+      result.current.handleGenerate();
+      result.current.printRef.current = exportTarget;
+    });
+
+    await act(async () => {
+      await result.current.handleExportPNG();
+    });
+
+    expect(html2canvasMock).toHaveBeenCalledWith(
+      exportTarget,
+      expect.objectContaining({
+        backgroundColor: '#ffffff',
+        width: 1280,
+        height: 960,
+        windowWidth: 1280,
+        windowHeight: 960,
+      })
+    );
+    expect(html2canvasMock.mock.calls[0]?.[1]?.scale).toBeGreaterThanOrEqual(2);
+    expect(createObjectURLSpy).toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+    expect(revokeObjectURLSpy).toHaveBeenCalledWith('blob:seat-plan-png');
+
+    exportTarget.remove();
     clickSpy.mockRestore();
     createObjectURLSpy.mockRestore();
     revokeObjectURLSpy.mockRestore();

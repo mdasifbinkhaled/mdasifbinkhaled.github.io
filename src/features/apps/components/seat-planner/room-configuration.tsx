@@ -29,11 +29,13 @@ import {
   SelectValue,
 } from '@/shared/components/ui/select';
 import { DataImporter } from '@/shared/components/common/data-importer';
+import { applySchema, inferMapping } from '@/shared/lib/parsers/schema';
 import type {
   ImportedRow,
   ImportCommitMeta,
   SchemaField,
 } from '@/shared/lib/parsers/types';
+import { toast } from 'sonner';
 import {
   parseRoomCapacity,
   parseRoomImportText,
@@ -80,7 +82,6 @@ interface RoomConfigurationProps {
   onAllocationModeChange: (v: AllocationMode) => void;
   onSortOrderChange: (v: SortOrder) => void;
   onGenerate: () => void;
-  onResetResult: () => void;
   onImportRooms: (rows: ImportedRow<RoomKey>[], meta: ImportCommitMeta) => void;
 }
 
@@ -100,18 +101,60 @@ export function RoomConfiguration({
   onAllocationModeChange,
   onSortOrderChange,
   onGenerate,
-  onResetResult,
   onImportRooms,
 }: RoomConfigurationProps) {
   const [importOpen, setImportOpen] = useState(false);
+  const [quickPasteOpen, setQuickPasteOpen] = useState(false);
+  const [quickPasteValue, setQuickPasteValue] = useState('');
   const roomDraftError = validateRoomDraft(newRoomName, newRoomCapacity, rooms);
   const draftCapacity = parseRoomCapacity(newRoomCapacity);
   const averageCapacity =
     rooms.length > 0 ? Math.round(totalCapacity / rooms.length) : 0;
   const seatDelta = totalCapacity - studentCount;
 
+  const handleQuickPasteImport = () => {
+    const normalized = quickPasteValue.trim();
+    if (!normalized) return;
+
+    const parsed = parseRoomImportText(normalized, 'Quick pasted rooms');
+    const mapping = inferMapping(parsed.headers, ROOM_FIELDS);
+    const result = applySchema(parsed, ROOM_FIELDS, mapping);
+
+    if (!result.ok || result.data.length === 0) {
+      toast.error(
+        result.errors[0]?.message ??
+          'Unable to read the pasted room list. Check the room and capacity values.'
+      );
+      return;
+    }
+
+    onImportRooms(result.data, {
+      source: parsed.source,
+      sourceFiles: [parsed.source],
+      mergeStrategy: 'merge',
+      warnings: [
+        ...parsed.warnings,
+        ...result.warnings.map((warning) => warning.message),
+      ],
+      rowsSkipped: result.errors.length,
+    });
+    setQuickPasteValue('');
+    setQuickPasteOpen(false);
+  };
+
+  const handleStructuredRoomPaste = (
+    event: React.ClipboardEvent<HTMLInputElement>
+  ) => {
+    const pastedText = event.clipboardData.getData('text');
+    if (!/[\r\n]/.test(pastedText)) return;
+
+    event.preventDefault();
+    setQuickPasteOpen(true);
+    setQuickPasteValue(pastedText);
+  };
+
   return (
-    <Card className="print:hidden">
+    <Card className="border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md print:hidden">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
           <Building2 className="h-5 w-5" />
@@ -133,6 +176,7 @@ export function RoomConfiguration({
             onChange={(e) => onRoomNameChange(e.target.value)}
             className="min-w-[12rem] flex-1"
             onKeyDown={(e) => e.key === 'Enter' && onAddRoom()}
+            onPaste={handleStructuredRoomPaste}
             aria-label="Room name"
             aria-invalid={roomDraftError ? true : undefined}
           />
@@ -181,6 +225,59 @@ export function RoomConfiguration({
             <span className="rounded-full bg-muted px-2.5 py-1 text-muted-foreground">
               New room adds {draftCapacity} seat{draftCapacity === 1 ? '' : 's'}
             </span>
+          ) : null}
+        </div>
+
+        <div className="rounded-2xl border border-dashed bg-muted/10 p-4">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold">Quick paste room list</p>
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                No headers required. Paste `BC5012 35`, `BC5012,35`, or a tab
+                separated list such as `BC5012\t35` and the importer will map
+                room names and capacities automatically.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setQuickPasteOpen((open) => !open)}
+            >
+              <FileUp className="h-4 w-4" />
+              {quickPasteOpen ? 'Hide quick paste' : 'Quick paste list'}
+            </Button>
+          </div>
+
+          {quickPasteOpen ? (
+            <div className="mt-3 space-y-3">
+              <textarea
+                value={quickPasteValue}
+                onChange={(event) => setQuickPasteValue(event.target.value)}
+                placeholder={'BC5012\t35\nBC5013\t35\nBC5014\t35\nBC7015\t35'}
+                className="min-h-28 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                aria-label="Quick paste room list"
+              />
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={handleQuickPasteImport}
+                  disabled={!quickPasteValue.trim()}
+                >
+                  <FileUp className="h-4 w-4" />
+                  Merge pasted rooms
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setImportOpen(true)}
+                >
+                  Open advanced importer
+                </Button>
+              </div>
+            </div>
           ) : null}
         </div>
 
@@ -254,10 +351,7 @@ export function RoomConfiguration({
             </label>
             <Select
               value={allocationMode}
-              onValueChange={(v) => {
-                onAllocationModeChange(v as AllocationMode);
-                onResetResult();
-              }}
+              onValueChange={(v) => onAllocationModeChange(v as AllocationMode)}
             >
               <SelectTrigger aria-label="Allocation Mode">
                 <SelectValue />
@@ -289,10 +383,7 @@ export function RoomConfiguration({
             </label>
             <Select
               value={sortOrder}
-              onValueChange={(v) => {
-                onSortOrderChange(v as SortOrder);
-                onResetResult();
-              }}
+              onValueChange={(v) => onSortOrderChange(v as SortOrder)}
             >
               <SelectTrigger aria-label="Sort Order">
                 <SelectValue />

@@ -102,59 +102,19 @@ function drawPdfPage(
 ): void {
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const metaLine = buildSeatPlanMetaLine(details);
-  const departmentLine = details.department.trim();
-  const universityLine = details.university.trim();
   const tableIsWide = columns.length > 6;
 
-  let cursorY = PAGE_MARGIN.top + 2;
+  let cursorY: number = PAGE_MARGIN.top;
 
-  doc.setTextColor(...INK);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12.5);
-  doc.text(buildSeatPlanDocumentTitle(details), pageWidth / 2, cursorY, {
-    align: 'center',
-  });
-  cursorY += 6;
-
-  doc.setTextColor(...INK);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-
-  if (metaLine) {
-    doc.text(metaLine, pageWidth / 2, cursorY, { align: 'center' });
-    cursorY += 4.5;
-  }
-
-  if (departmentLine) {
-    doc.text(departmentLine, pageWidth / 2, cursorY, { align: 'center' });
-    cursorY += 4.5;
-  }
-
-  if (universityLine) {
-    doc.text(universityLine, pageWidth / 2, cursorY, { align: 'center' });
-    cursorY += 4.5;
-  }
-
-  doc.setDrawColor(...GRID);
-  doc.setLineWidth(0.25);
-  doc.line(
-    PAGE_MARGIN.left,
-    cursorY + 1,
-    pageWidth - PAGE_MARGIN.right,
-    cursorY + 1
-  );
-  cursorY += 4;
-
-  cursorY += drawPdfSummaryBlock(doc, page, pageWidth, cursorY);
+  cursorY = drawPdfPageHeader(doc, page, details, pageWidth, cursorY);
 
   autoTable(doc, {
     startY: cursorY + 1,
-    theme: 'grid',
+    theme: 'plain',
     margin: {
       left: PAGE_MARGIN.left,
       right: PAGE_MARGIN.right,
-      bottom: PAGE_MARGIN.bottom + (page.kind === 'room' ? 24 : 8),
+      bottom: PAGE_MARGIN.bottom + (page.kind === 'room' ? 18 : 8),
     },
     head: [columns.map((column) => column.label)],
     body: page.rows.map((student, index) =>
@@ -165,21 +125,43 @@ function drawPdfPage(
     headStyles: {
       fillColor: [255, 255, 255],
       textColor: INK,
+      font: 'times',
       fontStyle: 'bold',
-      halign: 'center',
-      lineColor: GRID,
-      lineWidth: 0.18,
+      halign: 'left',
     },
     styles: {
-      cellPadding: tableIsWide ? 1.3 : 1.7,
-      fontSize: tableIsWide ? 7.2 : 8.3,
+      cellPadding: tableIsWide ? 1.45 : 1.8,
+      font: 'times',
+      fontSize: tableIsWide ? 7.4 : 8.5,
       textColor: INK,
-      lineColor: GRID_SOFT,
-      lineWidth: 0.14,
+      lineWidth: 0,
       overflow: 'linebreak',
       valign: 'middle',
     },
     columnStyles: buildPdfColumnStyles(columns, orientation),
+    didDrawCell: (hookData) => {
+      if (hookData.section !== 'head' && hookData.section !== 'body') {
+        return;
+      }
+
+      doc.setDrawColor(...(hookData.section === 'head' ? GRID : GRID_SOFT));
+      doc.setLineWidth(hookData.section === 'head' ? 0.22 : 0.1);
+      doc.line(
+        hookData.cell.x,
+        hookData.cell.y + hookData.cell.height,
+        hookData.cell.x + hookData.cell.width,
+        hookData.cell.y + hookData.cell.height
+      );
+
+      if (hookData.section === 'head') {
+        doc.line(
+          hookData.cell.x,
+          hookData.cell.y,
+          hookData.cell.x + hookData.cell.width,
+          hookData.cell.y
+        );
+      }
+    },
   });
 
   if (page.kind === 'room') {
@@ -189,77 +171,105 @@ function drawPdfPage(
   drawPageFooter(doc, page, pageWidth, pageHeight);
 }
 
-function drawPdfSummaryBlock(
+function drawPdfPageHeader(
   doc: jsPDF,
   page: SeatPlanPrintPage,
+  details: ExamDetails,
   pageWidth: number,
   cursorY: number
 ): number {
-  const boxWidth = page.kind === 'master' ? 45 : 48;
-  const textWidth =
-    pageWidth - PAGE_MARGIN.left - PAGE_MARGIN.right - boxWidth - 6;
-  const primaryText =
+  const metaLine = buildSeatPlanMetaLine(details);
+  const organisationLine = [
+    details.department.trim(),
+    details.university.trim(),
+  ]
+    .filter(Boolean)
+    .join(' | ');
+  const descriptor =
     page.kind === 'master'
-      ? `Rows ${page.startIndex + 1}–${page.startIndex + page.rows.length}`
-      : `${page.allocation.students.length}/${page.allocation.room.capacity} seats occupied`;
-  const secondaryText =
-    page.kind === 'room'
-      ? buildSectionCountLine(page.allocation.students)
-      : undefined;
-  const tertiaryText =
-    page.kind === 'room' ? (page.facultySummary ?? undefined) : undefined;
-  const primaryLines = doc.splitTextToSize(primaryText, textWidth) as string[];
-  const secondaryLines = secondaryText
-    ? (doc.splitTextToSize(secondaryText, textWidth) as string[]).slice(0, 2)
-    : [];
-  const tertiaryLines = tertiaryText
-    ? (
-        doc.splitTextToSize(`Faculty: ${tertiaryText}`, textWidth) as string[]
-      ).slice(0, 2)
-    : [];
-  const lineHeight = 3.7;
-  const textLineCount =
-    primaryLines.length + secondaryLines.length + tertiaryLines.length;
-  const blockHeight = Math.max(10, textLineCount * lineHeight + 2);
-  const boxX = pageWidth - PAGE_MARGIN.right - boxWidth;
-  const boxLabel = page.kind === 'master' ? 'SHEET' : 'ROOM';
-  const boxValue =
-    page.kind === 'master' ? 'MASTER LIST' : page.allocation.room.name;
+      ? 'Master List'
+      : `Room Sheet - ${page.allocation.room.name}`;
+  const detailLines = buildPdfContextLines(doc, page, pageWidth);
+  const rightEdge = pageWidth - PAGE_MARGIN.right;
 
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.2);
-  doc.setTextColor(...INK_MUTED);
-  let textY = cursorY + 3.6;
-  doc.text(primaryLines, PAGE_MARGIN.left, textY);
+  doc.setTextColor(...INK);
+  doc.setFont('times', 'bold');
+  doc.setFontSize(15);
+  doc.text(buildSeatPlanDocumentTitle(details), pageWidth / 2, cursorY + 6, {
+    align: 'center',
+  });
+  cursorY += 8;
 
-  if (secondaryLines.length > 0) {
-    textY += primaryLines.length * lineHeight;
-    doc.text(secondaryLines, PAGE_MARGIN.left, textY);
+  if (metaLine) {
+    doc.setFont('times', 'italic');
+    doc.setFontSize(10);
+    doc.text(metaLine, pageWidth / 2, cursorY, { align: 'center' });
+    cursorY += 4.2;
   }
 
-  if (tertiaryLines.length > 0) {
-    textY += secondaryLines.length * lineHeight;
-    doc.text(tertiaryLines, PAGE_MARGIN.left, textY);
+  if (organisationLine) {
+    doc.setFont('times', 'normal');
+    doc.setFontSize(9.1);
+    doc.setTextColor(...INK_MUTED);
+    doc.text(organisationLine, pageWidth / 2, cursorY, { align: 'center' });
+    cursorY += 4.2;
   }
 
   doc.setDrawColor(...GRID);
-  doc.setLineWidth(0.2);
-  doc.rect(boxX, cursorY, boxWidth, blockHeight);
-  doc.line(boxX + 12, cursorY, boxX + 12, cursorY + blockHeight);
+  doc.setLineWidth(0.28);
+  doc.line(PAGE_MARGIN.left, cursorY, rightEdge, cursorY);
+  doc.setLineWidth(0.08);
+  doc.line(PAGE_MARGIN.left, cursorY + 1.2, rightEdge, cursorY + 1.2);
+  cursorY += 6;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7);
-  doc.setTextColor(...INK_MUTED);
-  doc.text(boxLabel, boxX + 2, cursorY + 4);
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.2);
   doc.setTextColor(...INK);
-  doc.text(boxValue, boxX + boxWidth - 2, cursorY + blockHeight / 2 + 1.5, {
-    align: 'right',
-  });
+  doc.setFont('times', 'bold');
+  doc.setFontSize(10.6);
+  doc.text(descriptor, PAGE_MARGIN.left, cursorY);
+  doc.text(
+    `Page ${page.pageNumber} of ${page.totalPages}`,
+    rightEdge,
+    cursorY,
+    {
+      align: 'right',
+    }
+  );
+  cursorY += 4.8;
 
-  return blockHeight + 3;
+  doc.setFont('times', 'normal');
+  doc.setFontSize(8.7);
+  doc.setTextColor(...INK_MUTED);
+
+  for (const line of detailLines) {
+    doc.text(line, PAGE_MARGIN.left, cursorY);
+    cursorY += 3.8;
+  }
+
+  doc.setDrawColor(...GRID_SOFT);
+  doc.setLineWidth(0.18);
+  doc.line(PAGE_MARGIN.left, cursorY - 0.8, rightEdge, cursorY - 0.8);
+
+  return cursorY + 2;
+}
+
+function buildPdfContextLines(
+  doc: jsPDF,
+  page: SeatPlanPrintPage,
+  pageWidth: number
+): string[] {
+  const lines =
+    page.kind === 'master'
+      ? [`Rows ${page.startIndex + 1}-${page.startIndex + page.rows.length}`]
+      : [
+          `Occupancy ${page.allocation.students.length}/${page.allocation.room.capacity} seats`,
+          buildSectionCountLine(page.allocation.students),
+          ...(page.facultySummary ? [`Faculty: ${page.facultySummary}`] : []),
+        ];
+  const maxWidth = pageWidth - PAGE_MARGIN.left - PAGE_MARGIN.right;
+
+  return lines.flatMap((line) =>
+    (doc.splitTextToSize(line, maxWidth) as string[]).slice(0, 2)
+  );
 }
 
 function buildPdfColumnStyles(
@@ -274,15 +284,18 @@ function buildPdfColumnStyles(
       column.kind === 'sl'
         ? { cellWidth: 10, halign: 'center' as const }
         : column.kind === 'id'
-          ? { cellWidth: isLandscape ? 28 : 24 }
+          ? {
+              cellWidth: isLandscape ? 30 : 26,
+              font: 'courier' as const,
+            }
           : column.kind === 'section'
             ? { cellWidth: 14, halign: 'center' as const }
             : column.kind === 'extra'
-              ? { cellWidth: isLandscape ? 26 : 20 }
+              ? { cellWidth: isLandscape ? 28 : 22 }
               : column.kind === 'room'
-                ? { cellWidth: isLandscape ? 34 : 28 }
+                ? { cellWidth: isLandscape ? 36 : 30 }
                 : column.kind === 'signature'
-                  ? { cellWidth: isLandscape ? 42 : 34 }
+                  ? { cellWidth: isLandscape ? 44 : 36 }
                   : { cellWidth: 'auto' as const },
     ])
   );
@@ -293,14 +306,14 @@ function drawAttendanceFooter(
   pageHeight: number,
   pageWidth: number
 ): void {
-  const top = pageHeight - PAGE_MARGIN.bottom - 18;
+  const top = pageHeight - PAGE_MARGIN.bottom - 11;
   const totalWidth = pageWidth - PAGE_MARGIN.left - PAGE_MARGIN.right;
-  const fieldWidth = (totalWidth - 4) / 2;
+  const fieldWidth = (totalWidth - 10) / 2;
 
   drawAttendanceField(doc, PAGE_MARGIN.left, top, fieldWidth, 'Total Present');
   drawAttendanceField(
     doc,
-    PAGE_MARGIN.left + fieldWidth + 4,
+    PAGE_MARGIN.left + fieldWidth + 10,
     top,
     fieldWidth,
     'Total Absent'
@@ -308,14 +321,14 @@ function drawAttendanceFooter(
   drawAttendanceField(
     doc,
     PAGE_MARGIN.left,
-    top + 10,
+    top + 7.5,
     fieldWidth,
     'Invigilator Name'
   );
   drawAttendanceField(
     doc,
-    PAGE_MARGIN.left + fieldWidth + 4,
-    top + 10,
+    PAGE_MARGIN.left + fieldWidth + 10,
+    top + 7.5,
     fieldWidth,
     'Invigilator Signature'
   );
@@ -328,17 +341,16 @@ function drawAttendanceField(
   width: number,
   label: string
 ) {
-  const labelWidth = Math.min(32, width * 0.42);
+  const labelWidth = Math.min(width * 0.42, doc.getTextWidth(`${label}:`) + 4);
+
+  doc.setFont('times', 'normal');
+  doc.setFontSize(8.4);
+  doc.setTextColor(...INK);
+  doc.text(`${label}:`, x, y);
 
   doc.setDrawColor(...GRID);
   doc.setLineWidth(0.18);
-  doc.rect(x, y, width, 8);
-  doc.line(x + labelWidth, y, x + labelWidth, y + 8);
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.3);
-  doc.setTextColor(...INK);
-  doc.text(label, x + 2, y + 5);
+  doc.line(x + labelWidth, y + 0.3, x + width, y + 0.3);
 }
 
 function drawPageFooter(
@@ -358,7 +370,7 @@ function drawPageFooter(
     footerY - 5
   );
 
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('times', 'italic');
   doc.setFontSize(8);
   doc.setTextColor(...INK_MUTED);
   doc.text(
