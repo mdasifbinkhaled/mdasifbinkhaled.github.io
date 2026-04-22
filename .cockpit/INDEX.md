@@ -27,7 +27,7 @@
     Unit:       461/461 PASS (55 files)
     Coverage:   Thresholds 64% lines · 81% branches · 54% funcs · 64% stmts (enforced in vitest.config.mts)
     E2E:        161 passed, 4 skipped, 0 failed (chromium + firefox + mobile-safari)
-    Build:      30 HTML pages generated + 118 files precached (Workbox, 7267.2 KB)
+    Build:      30 HTML pages generated + 118 files precached (Workbox, 7270.4 KB)
     Format:     All files formatted
     Phase:      Roadmap Phases 7-12 — complete (all tracked items done)
 
