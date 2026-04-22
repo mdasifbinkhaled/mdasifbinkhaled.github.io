@@ -1,6 +1,6 @@
 # HISTORY.md — Development Timeline
 
-> 460 commits | 4 tags | Single branch (main) | Deployed to GitHub Pages
+> 490 commits | 4 tags | Single branch (main) | Deployed to GitHub Pages
 
 ## Timeline
 
@@ -358,6 +358,24 @@
 - **10.5 shipped**: added a dedicated bilingual English/Bengali introduction block on `/about`, sourced from shared personal content data.
 - **11.3 shipped**: added shared `portfolioEvents` telemetry for publications filters and command-palette search/select flows; fixed the latent `ToolSettings` backup argument-order bug during the rollout.
 - **Validation reverified**: `npm run validate` green with 418/418 unit tests, `npm audit --omit=dev` clean, production build generated 30 static pages and 118 precached files, Playwright finished with 161 passed and 4 skipped.
+
+### Phase — Seat Planner Workflow Redesign & Deployment Verification (2026-04-22)
+
+- **Commits**: `e43d3e8` `feat: redesign seat planner workflow`, `bae5ecb` `fix: raise seat planner reset contrast`
+- **Workflow redesign**:
+  - Reworked the Seat Planner shell into a wider primary workspace with a sticky right rail for stats, workflow guidance, backup, and reset reachability.
+  - Added bulk faculty assignment flows, section coverage cues, and a more legible results workspace.
+  - Relaxed room ingest so headerless paste and room/capacity label variants work with safer defaults.
+  - Prevented allocation mode and sort-order changes from wiping rooms and generated allocations; the planner now recomputes instead.
+- **Export polish**:
+  - Added a higher-resolution PNG export surface.
+  - Restyled PDF output into a more document-like, LaTeX-inspired layout.
+  - Tightened print-ready room sheets and export naming consistency.
+- **Verification & deploy**:
+  - Reproduced a CI-only WCAG AA `color-contrast` failure on the reset action and fixed it in `bae5ecb`.
+  - Local `validate:full` passed with 461/461 unit tests, a 30-page static build, 118 precached files, and 55/55 Chromium Playwright checks.
+  - The full Playwright matrix also passed at 161 passed / 4 skipped across chromium, firefox, and mobile-safari.
+  - Remote GitHub Actions cleared end to end on `main`: `CI`, `Security Scanning`, `Deploy Next.js site to Pages`, and `Lighthouse CI` all succeeded for `bae5ecb`.
 
 ## Tags
 

@@ -33,7 +33,7 @@ export const apps: readonly AppDefinition[] = [
     slug: 'seat-planner',
     title: 'Seat Planner',
     description:
-      'Generate exam seating arrangements with room assignments, master lists, and printable signature sheets.',
+      'Generate exam seating arrangements with flexible room imports, bulk faculty mapping, and polished PDF, PNG, and print exports.',
     icon: 'Building2',
     status: 'active',
     category: 'planning',

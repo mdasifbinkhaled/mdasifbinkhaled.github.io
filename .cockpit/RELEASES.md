@@ -31,6 +31,16 @@ Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry l
 
 ## Unreleased (Current HEAD)
 
+### Seat Planner Workflow Redesign & Remote Verification (2026-04-22)
+
+- **Commits**: `e43d3e8` and `bae5ecb`
+- **Workflow redesign**: Seat Planner now uses a fuller desktop workspace with a sticky right rail for stats, workflow guidance, backup, and reset actions.
+- **Input improvements**: bulk faculty assignment, section coverage cues, header-optional room paste, flexible room/capacity parsing, and safer defaults all ship in the live tool.
+- **Export improvements**: higher-resolution PNG capture, more document-like PDF output, and cleaner print-ready room sheets.
+- **State resilience**: changing allocation mode or sort order recomputes results instead of clearing room and allocation state.
+- **Accessibility follow-up**: `bae5ecb` raises reset-action contrast after GitHub CI caught a WCAG AA `color-contrast` regression on `/apps/seat-planner`.
+- **Verification**: local `validate:full` passed with 461/461 unit tests, 30 static pages, 118 precached files, and 55/55 Chromium Playwright checks; the full Playwright matrix also passed at 161 passed / 4 skipped. GitHub `CI`, `Security Scanning`, `Deploy Next.js site to Pages`, and `Lighthouse CI` all completed successfully for `bae5ecb`.
+
 ### Ground-Up Audit & A11y Remediation (2026-04-12)
 
 - **Service worker registration**: Created `sw-register.tsx` component, imported in root layout — Workbox-generated `out/sw.js` now actually registered
@@ -176,4 +186,4 @@ Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry l
 
 ## Recommended Next Release
 
-Tag as `v1.4.0-stable` after verifying all cockpit documentation is synced and quality gates pass.
+Tag as `v1.5.0-stable` if you want a release marker for the fully validated Seat Planner redesign, cockpit sync, and green Pages/Lighthouse deployment state.

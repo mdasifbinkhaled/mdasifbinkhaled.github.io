@@ -121,30 +121,30 @@ styles/      247  (1%)  █
 
 ## Pages & Routes
 
-| Route                     | Type     | Purpose                              |
-| ------------------------- | -------- | ------------------------------------ |
-| `/`                       | Static   | Homepage                             |
-| `/about`                  | Static   | About with sections (anchored)       |
-| `/apps`                   | Static   | Student apps hub                     |
-| `/apps/exam-countdown`    | Static   | Exam countdown timers                |
-| `/apps/gpa-calculator`    | Static   | GPA calculator                       |
-| `/apps/grade-calculator`  | Static   | Weighted grade calculator            |
-| `/apps/office-hours`      | Static   | Office hours schedule                |
-| `/apps/seat-planner`      | Static   | Seat plan generator with CSV/PDF     |
-| `/blog`                   | Static   | Blog listing (MDX)                   |
-| `/blog/[slug]`            | SSG      | Blog post (MDX)                      |
-| `/contact`                | Static   | Contact & social links               |
-| `/cv`                     | Static   | PDF CV viewer                        |
-| `/experience`             | Redirect | -> /about#experience                 |
-| `/publications`           | Static   | Publications with search/filter      |
-| `/research`               | Static   | Research interests, libraries, goals |
-| `/service`                | Redirect | -> /about#honors-awards              |
-| `/service-awards`         | Redirect | -> /about#honors-awards              |
-| `/talks`                  | Static   | Conference talks & presentations     |
-| `/teaching`               | Static   | Teaching hub with institution tabs   |
-| `/teaching/iub`           | Static   | IUB courses listing                  |
-| `/teaching/bracu`         | Static   | BRACU courses listing                |
-| `/teaching/[inst]/[code]` | SSG      | Dynamic course detail pages          |
+| Route                     | Type     | Purpose                                                             |
+| ------------------------- | -------- | ------------------------------------------------------------------- |
+| `/`                       | Static   | Homepage                                                            |
+| `/about`                  | Static   | About with sections (anchored)                                      |
+| `/apps`                   | Static   | Student apps hub                                                    |
+| `/apps/exam-countdown`    | Static   | Exam countdown timers                                               |
+| `/apps/gpa-calculator`    | Static   | GPA calculator                                                      |
+| `/apps/grade-calculator`  | Static   | Weighted grade calculator                                           |
+| `/apps/office-hours`      | Static   | Office hours schedule                                               |
+| `/apps/seat-planner`      | Static   | Seat plan generator with flexible imports and PDF/PNG/print exports |
+| `/blog`                   | Static   | Blog listing (MDX)                                                  |
+| `/blog/[slug]`            | SSG      | Blog post (MDX)                                                     |
+| `/contact`                | Static   | Contact & social links                                              |
+| `/cv`                     | Static   | PDF CV viewer                                                       |
+| `/experience`             | Redirect | -> /about#experience                                                |
+| `/publications`           | Static   | Publications with search/filter                                     |
+| `/research`               | Static   | Research interests, libraries, goals                                |
+| `/service`                | Redirect | -> /about#honors-awards                                             |
+| `/service-awards`         | Redirect | -> /about#honors-awards                                             |
+| `/talks`                  | Static   | Conference talks & presentations                                    |
+| `/teaching`               | Static   | Teaching hub with institution tabs                                  |
+| `/teaching/iub`           | Static   | IUB courses listing                                                 |
+| `/teaching/bracu`         | Static   | BRACU courses listing                                               |
+| `/teaching/[inst]/[code]` | SSG      | Dynamic course detail pages                                         |
 
 ## Quality Status
 
@@ -153,8 +153,8 @@ styles/      247  (1%)  █
 | TypeScript | PASS   | 0 errors (strict mode)                                                                                                               |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                                                                                 |
 | Prettier   | PASS   | All formatted                                                                                                                        |
-| Tests      | PASS   | 368/368 unit (41 files) + 49/49 E2E (4 test files)                                                                                   |
-| Build      | PASS   | 25 HTML pages / 27 routes exported                                                                                                   |
+| Tests      | PASS   | 461/461 unit (55 files) + 161 passed / 4 skipped cross-browser E2E                                                                   |
+| Build      | PASS   | 30 HTML pages generated + 118 Workbox precache entries                                                                               |
 | Audit      | NOTE   | 3 production advisories (jspdf critical, next high, dompurify moderate) — all at latest, no fix available; 5 dev-only (rollup, vite) |
 
 ## Architecture Observations
@@ -164,7 +164,7 @@ styles/      247  (1%)  █
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (368 unit + 49 E2E tests, CI-enforced)
+- Strong test foundation (461 unit tests + 161 passed cross-browser E2E checks, CI-enforced)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`
 - Service worker registered via `sw-register.tsx` (Workbox-generated `out/sw.js`)
@@ -172,18 +172,15 @@ styles/      247  (1%)  █
 - Route announcer for screen reader navigation
 - Well-decomposed Seat Planner (13 files, clean separation of concerns)
 
-### All 228 Findings Resolved
+### Findings Status
 
-All 228 findings from 15 audit sessions have been resolved (3 false positives). See [ISSUES.md](ISSUES.md) for the complete tracker.
+See [ISSUES.md](ISSUES.md) for the live tracker and [INDEX.md](INDEX.md) for the current totals.
 
-Key resolutions:
+Current posture:
 
-- **3 CRITICAL**: Division-by-zero, PII exposure, CV data drift --- all fixed
-- **30 HIGH**: XSS, CSP, route announcer, keyboard a11y, error boundaries --- all fixed
-- **67 MEDIUM**: Schema integrity, DRY violations, architecture, SEO, dead code --- all fixed
-- **55 LOW**: Dead code, stale docs, config cleanup, consistency --- all fixed
-- **57 INFO**: Cosmetic items, `'use client'` cleanup, framer-motion removal --- all addressed
-- **3 FALSE POSITIVES**: F-212 (CSS token dedup), F-214 (barrel tree-shaking), F-215 (typos)
+- No open CRITICAL findings remain.
+- Two watch items remain open: F-260 (`/cv` accessibility stability) and F-264 (dependency advisory cadence).
+- Historical audit work outside those watch items is resolved, reclassified, or documented as a false positive in the tracker.
 
 See [ROADMAP.md](ROADMAP.md) for the improvement plan (Phases 7-11).
 
@@ -207,6 +204,6 @@ See [adr/](adr/) for the full record and template.
 - **All hardcoded colors migrated** --- only documented exceptions remain (global-error.tsx, brand colors)
 - **4 GitHub workflows**: ci.yml (lint/test/build), lhci.yml (Lighthouse CI), nextjs.yml (deploy), security.yml (audit)
 - **Tests reorganized** --- mirroring src/ directory structure under tests/shared/ and tests/features/
-- **Seat Planner** --- decomposed into 13 files (1,989 LOC): allocation, CSV parsing/export, PDF export, room config, results display, state management
+- **Seat Planner** --- decomposed into 13 files (1,989 LOC): allocation, shared import flows, PDF/PNG/print export, room config, results display, state management
 
 See [ISSUES.md](ISSUES.md) for full finding tracker.
