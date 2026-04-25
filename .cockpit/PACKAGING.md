@@ -4,9 +4,9 @@
 
 | Package                    | Version | Purpose                                         |
 | -------------------------- | ------- | ----------------------------------------------- |
-| `next`                     | 16.1.4  | Framework (App Router, static export)           |
-| `react`                    | 19.2.4  | UI library                                      |
-| `react-dom`                | 19.2.4  | React DOM bindings                              |
+| `next`                     | 16.2.3  | Framework (App Router, static export)           |
+| `react`                    | 19.2.5  | UI library                                      |
+| `react-dom`                | 19.2.5  | React DOM bindings                              |
 | `lucide-react`             | 0.563.0 | Icons                                           |
 | `next-themes`              | 0.4.6   | Theme management (dark/light/system + 6 themes) |
 | `tailwind-merge`           | 3.3.1   | Tailwind class conflict resolution              |
@@ -79,7 +79,7 @@ npm run build
   ├── cross-env NEXT_TELEMETRY_DISABLED=1 next build
   │   ├── TypeScript compilation
   │   ├── ESLint checking
-  │   ├── Static page generation (25 HTML pages / 27 routes)
+  │   ├── Static page generation (30 HTML pages / 30 routes)
   │   ├── SSG for dynamic routes (generateStaticParams)
   │   └── Output to out/ directory
   └── postbuild: creates out/.nojekyll for GitHub Pages
@@ -88,28 +88,28 @@ npm run build
 ### Build Output
 
 - **Format**: Static HTML export (`output: 'export'`)
-- **Pages**: 25 HTML pages (27 routes including robots.txt + sitemap.xml)
+- **Pages**: 30 HTML pages / routes in the exported app tree
 - **Directory**: `out/`
 - `.nojekyll` file prevents GitHub Pages Jekyll processing
 
 ## Scripts Reference
 
-| Script             | Command                          | Purpose                   |
-| ------------------ | -------------------------------- | ------------------------- |
-| `dev`              | `next dev`                       | Development server        |
-| `build`            | `cross-env next build`           | Production build          |
-| `build:production` | `NODE_ENV=production build`      | Explicit production build |
-| `test`             | `vitest`                         | Test watch mode           |
-| `test:run`         | `vitest run`                     | Single test run           |
-| `test:coverage`    | `vitest run --coverage`          | Coverage report           |
-| `lint`             | `eslint src --fix`               | Lint + auto-fix           |
-| `lint:check`       | `eslint src`                     | Lint check only           |
-| `format`           | `prettier --write`               | Format all files          |
-| `format:check`     | `prettier --check`               | Format check              |
-| `typecheck`        | `tsc --noEmit`                   | Type checking             |
-| `validate`         | lint + format + test + typecheck | Full validation           |
-| `validate:full`    | validate + build + Playwright    | Full validation + E2E     |
-| `prepare`          | `husky`                          | Setup git hooks           |
+| Script             | Command                                               | Purpose                         |
+| ------------------ | ----------------------------------------------------- | ------------------------------- |
+| `dev`              | `next dev`                                            | Development server              |
+| `build`            | `cross-env next build`                                | Production build                |
+| `build:production` | `NODE_ENV=production build`                           | Explicit production build       |
+| `test`             | `vitest`                                              | Test watch mode                 |
+| `test:run`         | `vitest run`                                          | Single test run                 |
+| `test:coverage`    | `vitest run --coverage`                               | Coverage report                 |
+| `lint`             | `eslint src --fix`                                    | Lint + auto-fix                 |
+| `lint:check`       | `eslint src`                                          | Lint check only                 |
+| `format`           | `prettier --write`                                    | Format all files                |
+| `format:check`     | `prettier --check`                                    | Format check                    |
+| `typecheck`        | `tsc --noEmit && tsc --noEmit -p tests/tsconfig.json` | Type checking                   |
+| `validate`         | lint + format + test + typecheck                      | Full validation                 |
+| `validate:full`    | validate + build + Chromium Playwright                | Full validation + fast E2E gate |
+| `prepare`          | `husky`                                               | Setup git hooks                 |
 
 ## Known Vulnerabilities
 
@@ -117,7 +117,7 @@ npm run build
 | ------------------- | -------- | ------------------------------------------- | ------------------------------------------------- |
 | `dompurify` <=3.3.1 | Moderate | mutation-XSS via Re-Contextualization       | No third-party inputs passed; static context      |
 | `jspdf` <=4.2.0     | Critical | PDF Object Injection via FreeText color     | Low risk; parameters controlled purely locally    |
-| `next` 16.1.4       | High     | Server-side DoS (Image Optimizer, RSC, PPR) | **Fully mitigated** — static export has no server |
+| `next` 16.2.3       | High     | Server-side DoS (Image Optimizer, RSC, PPR) | **Fully mitigated** — static export has no server |
 | `rollup` 4.x        | High     | Arbitrary file write via path traversal     | **Dev-only** (build tooling), no runtime impact   |
 | `vite` 6.x          | High     | Path traversal via URL encoding             | **Dev-only** (test tooling), no runtime impact    |
 
@@ -144,8 +144,14 @@ npm run build
 ### `ci.yml` — Pull Request Checks & Push
 
 - Triggers: Pull requests and pushes to `main`
-- Runs: lint, typecheck, test, build
+- Runs: format, lint, typecheck, unit tests with coverage, build, Chromium Playwright
 - All must pass to merge
+
+### `cross-browser-e2e.yml` — Firefox & WebKit Matrix
+
+- Triggers: `CI` success on `main` + manual dispatch
+- Runs: static build + Playwright `firefox` and `mobile-safari`
+- Purpose: keep the documented browser matrix honest without slowing the PR gate
 
 ### `lhci.yml` — Lighthouse CI
 
@@ -176,7 +182,7 @@ npm run build
 | `site.webmanifest`           | ✅ Present                                                         |
 | App icons (192x192, 512x512) | ✅ Present                                                         |
 | Service Worker               | ✅ Workbox-generated `out/sw.js`, registered via `sw-register.tsx` |
-| Offline support              | ✅ Cache-first for static pages (104 files precached)              |
+| Offline support              | ✅ Cache-first for static pages (118 files precached)              |
 
 ## Analytics
 

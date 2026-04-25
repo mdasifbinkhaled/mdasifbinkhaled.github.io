@@ -1,7 +1,7 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-04-21
-> **Current Version**: 1.5.0 | **Quality**: All gates green (418/418 unit, 161 passed + 4 skipped E2E, static build 30/30, prod audit clean, 0 TS/ESLint errors)
+> **Created**: 2026-02-19 | **Updated**: 2026-04-25
+> **Current Version**: 1.5.0 | **Quality**: All gates green (473/473 unit, static build 30/30, Chromium gate in CI, cross-browser matrix automated post-CI, 0 TS/ESLint errors)
 > **Open Findings**: 2 — F-260 `/cv` a11y hardened (watched), F-264 supply-chain advisories (quarterly review)
 
 ## Phase 6: Code Quality & Cleanup

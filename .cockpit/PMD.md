@@ -3,7 +3,7 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
-> **Last Updated**: 2026-04-12
+> **Last Updated**: 2026-04-25
 > **Commit**: HEAD (ground-up audit remediation)
 
 ## Mission
@@ -14,8 +14,8 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Layer         | Technology                            | Version |
 | ------------- | ------------------------------------- | ------- |
-| Framework     | Next.js (App Router)                  | 16.1.4  |
-| UI Library    | React                                 | 19.2.4  |
+| Framework     | Next.js (App Router)                  | 16.2.3  |
+| UI Library    | React                                 | 19.2.5  |
 | Language      | TypeScript (strict)                   | 5.9     |
 | Styling       | Tailwind CSS + CSS custom properties  | 4.1.18  |
 | Animation     | Vanilla JS (no library)               | ---     |
@@ -32,7 +32,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Formatting    | Prettier                              | 3.8.2   |
 | Git Hooks     | Husky + lint-staged + commitlint      | 9.1.7   |
 | Deployment    | GitHub Pages (static export)          | ---     |
-| CI/CD         | GitHub Actions (4 workflows)          | ---     |
+| CI/CD         | GitHub Actions (5 workflows)          | ---     |
 
 ## Architecture
 
@@ -40,15 +40,15 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ```text
 +---------------------------------------------+
-|  App Layer (1,987 LOC / 12%)                |  Page routes, layouts, error boundaries
+|  App Layer (2,283 LOC / 9%)                 |  Page routes, layouts, error boundaries
 
 |  src/app/                                    |  22 routes, 27 pages
 +---------------------------------------------+
-|  Features Layer (7,091 LOC / 41%)           |  Domain modules
+|  Features Layer (13,150 LOC / 50%)          |  Domain modules
 |  src/features/{about,apps,home,              |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
-|  Shared Layer (8,108 LOC / 47%)             |  Cross-cutting infrastructure
+|  Shared Layer (10,732 LOC / 41%)            |  Cross-cutting infrastructure
 |  src/shared/{components,config,hooks,        |  UI primitives, config, data,
 |              lib,providers,types}            |  analytics, types
 +---------------------------------------------+
@@ -68,22 +68,20 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ## Metrics
 
-| Metric            | Value                 |
-| ----------------- | --------------------- |
-| Source files      | 223                   |
-| Lines of code     | 17,186                |
-| Components (.tsx) | 148                   |
-| Client components | 59 (40%)              |
-| Server components | 89 (60%)              |
-| Custom hooks      | 4                     |
-| Data files        | 32                    |
-| Config files      | 6                     |
-| Barrel exports    | 19                    |
-| Test files        | 44                    |
-| Test count        | 368 (unit) + 49 (E2E) |
-| Pages generated   | 25 HTML / 27 routes   |
-| Themes            | 6                     |
-| Git commits       | 460+                  |
+| Metric            | Value                    |
+| ----------------- | ------------------------ |
+| Source files      | 272                      |
+| Lines of code     | 26,397                   |
+| Components (.tsx) | 170                      |
+| Custom hooks      | 4                        |
+| Data files        | 32                       |
+| Config files      | 6                        |
+| Barrel exports    | 19                       |
+| Test files        | 61                       |
+| Test count        | 473 (unit) + 4 E2E specs |
+| Pages generated   | 30 HTML / 30 routes      |
+| Themes            | 6                        |
+| Git commits       | 460+                     |
 
 ### Largest Files
 
@@ -102,10 +100,10 @@ An academic portfolio showcasing research, publications, teaching activities, an
 ### LOC Distribution
 
 ```text
-shared/    8,108 (47%)  ██████████████████████████████
+shared/   10,732 (41%)  █████████████████████████
 
-features/  7,091 (41%)  ██████████████████████████
-app/       1,987 (12%)  ████████
+features/ 13,150 (50%)  █████████████████████████████
+app/       2,283  (9%)  █████
 styles/      247  (1%)  █
 ```
 
@@ -114,7 +112,7 @@ styles/      247  (1%)  █
 | Module      | Files | Purpose                                          |
 | ----------- | ----- | ------------------------------------------------ |
 | `teaching/` | 20    | Course cards, detail pages, schedules, syllabi   |
-| `apps/`     | 18    | Student tools (grade calculator, seat planner)   |
+| `apps/`     | 19    | Student tools (grade calculator, seat planner)   |
 | `about/`    | 11    | Hero, awards, certifications, skills, philosophy |
 | `research/` | 9     | Research areas, projects, open source, vision    |
 | `home/`     | 7     | Hero, news, research highlights, connect         |
@@ -129,8 +127,11 @@ styles/      247  (1%)  █
 | `/apps/exam-countdown`    | Static   | Exam countdown timers                                               |
 | `/apps/gpa-calculator`    | Static   | GPA calculator                                                      |
 | `/apps/grade-calculator`  | Static   | Weighted grade calculator                                           |
+| `/apps/course-planner`    | Static   | Browser-local course dependency planner                             |
 | `/apps/office-hours`      | Static   | Office hours schedule                                               |
+| `/apps/pdf-study-aid`     | Static   | Browser-local PDF study aid                                         |
 | `/apps/seat-planner`      | Static   | Seat plan generator with flexible imports and PDF/PNG/print exports |
+| `/apps/study-timer`       | Static   | Pomodoro-style study timer with persisted activity log              |
 | `/blog`                   | Static   | Blog listing (MDX)                                                  |
 | `/blog/[slug]`            | SSG      | Blog post (MDX)                                                     |
 | `/contact`                | Static   | Contact & social links                                              |
@@ -153,7 +154,7 @@ styles/      247  (1%)  █
 | TypeScript | PASS   | 0 errors (strict mode)                                                                                                               |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                                                                                 |
 | Prettier   | PASS   | All formatted                                                                                                                        |
-| Tests      | PASS   | 461/461 unit (55 files) + 161 passed / 4 skipped cross-browser E2E                                                                   |
+| Tests      | PASS   | 473/473 unit (57 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow                           |
 | Build      | PASS   | 30 HTML pages generated + 118 Workbox precache entries                                                                               |
 | Audit      | NOTE   | 3 production advisories (jspdf critical, next high, dompurify moderate) — all at latest, no fix available; 5 dev-only (rollup, vite) |
 
@@ -164,7 +165,7 @@ styles/      247  (1%)  █
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (461 unit tests + 161 passed cross-browser E2E checks, CI-enforced)
+- Strong test foundation (473 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`
 - Service worker registered via `sw-register.tsx` (Workbox-generated `out/sw.js`)
@@ -202,7 +203,7 @@ See [adr/](adr/) for the full record and template.
 - **54 LOC analytics** --- lean, only 4 wired events (viewCV, downloadCV, viewPublication, downloadPublication)
 - **Zero animation libraries** --- framer-motion removed; spotlight effect now vanilla JS (15 LOC)
 - **All hardcoded colors migrated** --- only documented exceptions remain (global-error.tsx, brand colors)
-- **4 GitHub workflows**: ci.yml (lint/test/build), lhci.yml (Lighthouse CI), nextjs.yml (deploy), security.yml (audit)
+- **5 GitHub workflows**: ci.yml (fast PR gate), cross-browser-e2e.yml (Firefox/WebKit), lhci.yml (Lighthouse CI), nextjs.yml (deploy), security.yml (audit)
 - **Tests reorganized** --- mirroring src/ directory structure under tests/shared/ and tests/features/
 - **Seat Planner** --- decomposed into 13 files (1,989 LOC): allocation, shared import flows, PDF/PNG/print export, room config, results display, state management
 

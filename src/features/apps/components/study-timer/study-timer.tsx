@@ -77,6 +77,14 @@ function formatTime(totalSeconds: number): string {
   return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
 
+function getHeatmapToneClass(intensity: number): string {
+  if (intensity <= 0) return 'bg-muted';
+  if (intensity < 0.25) return 'bg-primary/20';
+  if (intensity < 0.5) return 'bg-primary/35';
+  if (intensity < 0.75) return 'bg-primary/55';
+  return 'bg-primary/75';
+}
+
 export function StudyTimer() {
   const [settings, setSettings, { ready: settingsReady }] =
     useToolStorage<TimerSettings>(
@@ -298,6 +306,22 @@ export function StudyTimer() {
     return { cells, maxMinutes, columnLabels };
   }, [allLog]);
 
+  const heatmapSummary = useMemo(() => {
+    const totalMinutes = heatmapData.cells.reduce(
+      (sum, cell) => sum + cell.minutes,
+      0
+    );
+    const activeDays = heatmapData.cells.filter(
+      (cell) => cell.minutes > 0
+    ).length;
+
+    if (totalMinutes === 0) {
+      return 'No focus sessions recorded in the last 7 weeks.';
+    }
+
+    return `${totalMinutes} focus minutes recorded across ${activeDays} active days in the last 7 weeks.`;
+  }, [heatmapData]);
+
   const totalDuration = getSessionDuration(sessionType, settings);
   const progress =
     totalDuration > 0
@@ -329,7 +353,9 @@ export function StudyTimer() {
             {(['focus', 'short-break', 'long-break'] as const).map((type) => (
               <button
                 key={type}
+                type="button"
                 onClick={() => switchSession(type)}
+                aria-pressed={sessionType === type}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   sessionType === type
                     ? type === 'focus'
@@ -514,7 +540,11 @@ export function StudyTimer() {
                   </span>
                 ))}
               </div>
-              <div className="grid grid-cols-7 gap-1">
+              <div
+                role="img"
+                aria-label={`Weekly activity heatmap. ${heatmapSummary}`}
+                className="grid grid-cols-7 gap-1"
+              >
                 {heatmapData.cells.map((cell, i) => {
                   const intensity =
                     cell.minutes > 0
@@ -524,13 +554,10 @@ export function StudyTimer() {
                     <div
                       key={i}
                       title={`${cell.date.toLocaleDateString()}: ${cell.minutes}min`}
-                      className="aspect-square rounded-sm"
-                      style={{
-                        backgroundColor:
-                          intensity > 0
-                            ? `hsl(var(--primary) / ${intensity})`
-                            : 'hsl(var(--muted))',
-                      }}
+                      aria-hidden="true"
+                      className={`aspect-square rounded-sm ${getHeatmapToneClass(
+                        intensity
+                      )}`}
                     />
                   );
                 })}
@@ -545,7 +572,9 @@ export function StudyTimer() {
           <Card>
             <CardHeader className="pb-2">
               <button
+                type="button"
                 onClick={() => setShowSettings(!showSettings)}
+                aria-expanded={showSettings}
                 className="flex items-center justify-between w-full"
               >
                 <CardTitle className="text-lg flex items-center gap-2">

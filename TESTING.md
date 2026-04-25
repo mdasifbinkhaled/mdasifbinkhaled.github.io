@@ -2,12 +2,12 @@
 
 ## Overview
 
-| Layer              | Tool                           | Description                         |
-| ------------------ | ------------------------------ | ----------------------------------- |
-| Unit & Integration | Vitest + React Testing Library | Component and utility tests         |
-| E2E Cross-Browser  | Playwright                     | 3 browsers, smoke + a11y + keyboard |
-| Accessibility      | axe-core + Playwright          | WCAG 2.x AA audit on all main pages |
-| Performance        | Lighthouse CI                  | 13 pages, 3 runs each               |
+| Layer              | Tool                           | Description                              |
+| ------------------ | ------------------------------ | ---------------------------------------- |
+| Unit & Integration | Vitest + React Testing Library | Component and utility tests              |
+| E2E Cross-Browser  | Playwright                     | Chromium CI gate + Firefox/WebKit matrix |
+| Accessibility      | axe-core + Playwright          | WCAG 2.x AA audit on all main pages      |
+| Performance        | Lighthouse CI                  | 10 pages, 3 runs each                    |
 
 ## Running Tests
 
@@ -24,6 +24,9 @@ npm run test:e2e
 
 # Full validation (lint + format + tests + typecheck)
 npm run validate
+
+# Full local release gate (validate + build + Chromium E2E)
+npm run validate:full
 ```
 
 ## Unit Tests (Vitest)
@@ -85,12 +88,14 @@ Enforced in `vitest.config.mts`:
 
 - Keyboard navigation tests are skipped on mobile-safari (no physical keyboard)
 - Theme tests verify `data-theme` attribute before running axe contrast checks
+- `ci.yml` gates Chromium on every push and pull request
+- `cross-browser-e2e.yml` runs Firefox and mobile Safari after CI succeeds on `main` and via manual dispatch
 
 ## Lighthouse CI
 
 Config: `.github/lighthouserc.js`
 
-Runs against 13 pages (3 runs each) with assertions:
+Runs against 10 pages (3 runs each) with assertions:
 
 - Performance ≥ 0.9
 - Accessibility ≥ 0.95
@@ -111,5 +116,7 @@ The `ci.yml` workflow runs on every push/PR:
 3. Unit tests with coverage
 4. Build static export
 5. E2E tests (Chromium)
+
+The `cross-browser-e2e.yml` workflow runs Firefox and mobile Safari after `CI` succeeds on `main` and on manual dispatch.
 
 Lighthouse CI runs separately via `lhci.yml`.

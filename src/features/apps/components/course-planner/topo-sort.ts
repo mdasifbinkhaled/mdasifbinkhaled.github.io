@@ -11,17 +11,18 @@ export function topoLevels(courses: PlannerCourse[]): PlannerCourse[][] {
   function getDepth(id: string, visited: Set<string>): number {
     if (depth.has(id)) return depth.get(id)!;
     if (visited.has(id)) return 0; // cycle guard
-    visited.add(id);
+    const nextVisited = new Set(visited);
+    nextVisited.add(id);
     const course = idMap.get(id);
     if (!course || course.prerequisites.length === 0) {
       depth.set(id, 0);
       return 0;
     }
-    const maxPrereq = Math.max(
-      ...course.prerequisites
-        .filter((pid) => idMap.has(pid))
-        .map((pid) => getDepth(pid, visited))
-    );
+    const prerequisiteDepths = course.prerequisites
+      .filter((pid) => idMap.has(pid))
+      .map((pid) => getDepth(pid, nextVisited));
+    const maxPrereq =
+      prerequisiteDepths.length > 0 ? Math.max(...prerequisiteDepths) : 0;
     const d = maxPrereq + 1;
     depth.set(id, d);
     return d;

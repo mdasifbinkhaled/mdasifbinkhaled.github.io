@@ -31,10 +31,20 @@ import {
 import { useToolStorage } from '@/shared/lib/storage';
 import { ToolSettings } from '@/shared/components/common/tool-settings';
 import { DataImporter } from '@/shared/components/common/data-importer';
-import type { SchemaField, ImportCommitMeta } from '@/shared/lib/parsers/types';
+import type {
+  SchemaField,
+  ImportCommitMeta,
+  MergeStrategy,
+} from '@/shared/lib/parsers/types';
 import type { PlannerCourse } from './types';
 import { PRESETS } from './presets';
 import { topoLevels, getUnlocked } from './topo-sort';
+import {
+  buildCoursePlan,
+  normalizeCourseCode,
+  parsePrerequisiteCodes,
+  type PlannerCourseDraft,
+} from './course-plan-utils';
 import { toast } from 'sonner';
 
 const COURSE_TOOL_SLUG = 'course-planner';
@@ -119,32 +129,52 @@ export function CoursePlanner() {
     [setCourses]
   );
 
-  const addCourse = useCallback(() => {
-    if (!newCode.trim() || !newTitle.trim()) return;
-    const prereqIds = newPrereqs
-      .split(',')
-      .map((s) => s.trim().toLowerCase())
-      .filter(Boolean);
-    // Match prereq codes to existing IDs
-    const resolvedPrereqs = prereqIds
-      .map((code) => courses.find((c) => c.code.toLowerCase() === code)?.id)
-      .filter((id): id is string => !!id);
+  const commitCoursePlan = useCallback(
+    (drafts: PlannerCourseDraft[], mergeStrategy: MergeStrategy) => {
+      const result = buildCoursePlan(drafts, {
+        existingCourses: courses,
+        mergeStrategy,
+      });
 
-    const course: PlannerCourse = {
-      id: crypto.randomUUID(),
-      code: newCode.trim().toUpperCase(),
-      title: newTitle.trim(),
-      credits: parseInt(newCredits, 10) || 3,
-      prerequisites: resolvedPrereqs,
-      completed: false,
-    };
-    setCourses((prev) => [...prev, course]);
+      if (!result.ok) {
+        toast.error(
+          result.errors[0]?.message ?? 'Unable to update course plan.'
+        );
+        return false;
+      }
+
+      setCourses(result.data);
+      return true;
+    },
+    [courses, setCourses]
+  );
+
+  const addCourse = useCallback(() => {
+    if (!newCode.trim() || !newTitle.trim()) {
+      toast.error('Course code and title are required.');
+      return;
+    }
+
+    const didCommit = commitCoursePlan(
+      [
+        {
+          code: normalizeCourseCode(newCode),
+          title: newTitle.trim(),
+          credits: parseInt(newCredits, 10) || 3,
+          prerequisiteCodes: parsePrerequisiteCodes(newPrereqs),
+        },
+      ],
+      'append'
+    );
+
+    if (!didCommit) return;
+
     setNewCode('');
     setNewTitle('');
     setNewCredits('3');
     setNewPrereqs('');
     setShowAdd(false);
-  }, [newCode, newTitle, newCredits, newPrereqs, courses, setCourses]);
+  }, [newCode, newTitle, newCredits, newPrereqs, commitCoursePlan]);
 
   const loadPreset = useCallback(
     (index: number) => {
@@ -173,43 +203,23 @@ export function CoursePlanner() {
 
   const handleImportCourses = useCallback(
     (rows: Record<CoursePlanKey, unknown>[], meta: ImportCommitMeta) => {
-      const incoming: PlannerCourse[] = rows.map((r) => {
-        const raw = String(r.prerequisites ?? '').trim();
-        const prereqCodes = raw
-          .split(/[,;|]/)
-          .map((s) => s.trim().toUpperCase())
-          .filter(Boolean);
+      const incoming: PlannerCourseDraft[] = rows.map((r) => {
         return {
-          id: crypto.randomUUID(),
-          code: String(r.code ?? '')
-            .trim()
-            .toUpperCase(),
+          code: normalizeCourseCode(String(r.code ?? '')),
           title: String(r.title ?? '').trim(),
           credits: Number(r.credits) || 3,
-          prerequisites: prereqCodes,
-          completed: false,
+          prerequisiteCodes: parsePrerequisiteCodes(
+            String(r.prerequisites ?? '')
+          ),
         };
       });
-      setCourses((prev) => {
-        // Resolve prerequisite codes against the union set (prev + incoming)
-        const pool =
-          meta.mergeStrategy === 'replace' ? incoming : [...prev, ...incoming];
-        const byCode = new Map(pool.map((c) => [c.code, c.id]));
-        const withResolved = incoming.map((c) => ({
-          ...c,
-          prerequisites: c.prerequisites
-            .map((code) => byCode.get(code))
-            .filter((x): x is string => Boolean(x)),
-        }));
-        if (meta.mergeStrategy === 'replace') return withResolved;
-        if (meta.mergeStrategy === 'append') return [...prev, ...withResolved];
-        const map = new Map(prev.map((c) => [c.code, c] as const));
-        for (const c of withResolved) map.set(c.code, c);
-        return Array.from(map.values());
-      });
+
+      const didCommit = commitCoursePlan(incoming, meta.mergeStrategy);
+      if (!didCommit) return;
+
       toast.success(`Imported ${incoming.length} course(s)`);
     },
-    [setCourses]
+    [commitCoursePlan]
   );
 
   const totalCredits = courses.reduce((s, c) => s + c.credits, 0);

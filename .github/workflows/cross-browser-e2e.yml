@@ -1,0 +1,62 @@
+name: Cross-Browser E2E
+
+on:
+  workflow_run:
+    workflows: ['CI']
+    types: [completed]
+    branches: ['main']
+  workflow_dispatch:
+
+jobs:
+  e2e-matrix:
+    name: Playwright (${{ matrix.project }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ['firefox', 'mobile-safari']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Restore Next.js cache
+        uses: actions/cache@v5
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-e2e-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.config.{ts,js,mjs}', 'src/**/*.{ts,tsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-e2e-${{ hashFiles('**/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-e2e-
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Build application
+        run: npm run build
+
+      - name: Install Playwright browser
+        run: |
+          if [ "${{ matrix.project }}" = "firefox" ]; then
+            npx playwright install --with-deps firefox
+          else
+            npx playwright install --with-deps webkit
+          fi
+
+      - name: Run E2E tests
+        run: npx playwright test --project=${{ matrix.project }}
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: playwright-report-${{ matrix.project }}
+          path: playwright-report/
+          retention-days: 5

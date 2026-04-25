@@ -2,6 +2,7 @@
 
 [![Deploy](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/nextjs.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/nextjs.yml)
 [![CI](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/ci.yml)
+[![Cross-Browser E2E](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/cross-browser-e2e.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/cross-browser-e2e.yml)
 [![Security](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/security.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/security.yml)
 [![LHCI](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/lhci.yml/badge.svg)](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/actions/workflows/lhci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -26,17 +27,17 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 
 ### Technical Highlights
 
-| Category      | Technology                                                |
-| ------------- | --------------------------------------------------------- |
-| **Framework** | Next.js 16 (App Router, Static Export)                    |
-| **Language**  | TypeScript 5.9 (Strict Mode)                              |
-| **Styling**   | Tailwind CSS 4.1 (CSS-first config)                       |
-| **Testing**   | Vitest + Playwright E2E (CI-enforced coverage thresholds) |
-| **Linting**   | ESLint 9 + Prettier                                       |
-| **CI/CD**     | GitHub Actions (4 workflows)                              |
-| **Security**  | CodeQL, npm audit, CSP hardened                           |
-| **A11y**      | WCAG 2.1 AA targeted (axe-core enforced per page in CI)   |
-| **Themes**    | 6 color themes with WCAG AA contrast compliance           |
+| Category      | Technology                                                    |
+| ------------- | ------------------------------------------------------------- |
+| **Framework** | Next.js 16 (App Router, Static Export)                        |
+| **Language**  | TypeScript 5.9 (Strict Mode)                                  |
+| **Styling**   | Tailwind CSS 4.1 (CSS-first config)                           |
+| **Testing**   | Vitest + Playwright (Chromium CI gate + cross-browser matrix) |
+| **Linting**   | ESLint 9 + Prettier                                           |
+| **CI/CD**     | GitHub Actions (5 workflows)                                  |
+| **Security**  | CodeQL, npm audit, CSP hardened                               |
+| **A11y**      | WCAG 2.1 AA targeted (axe-core enforced per page in CI)       |
+| **Themes**    | 6 color themes with WCAG AA contrast compliance               |
 
 ---
 
@@ -115,18 +116,19 @@ Available environment variables:
 
 ## 📜 Scripts
 
-| Command              | Description                                        |
-| -------------------- | -------------------------------------------------- |
-| `npm run dev`        | Start development server (hot reload)              |
-| `npm run build`      | Create optimized static export                     |
-| `npm run test`       | Run tests in watch mode                            |
-| `npm run test:run`   | Run tests once (for CI)                            |
-| `npm run test:e2e`   | Run Playwright E2E tests (requires build first)    |
-| `npm run lint`       | Lint and auto-fix code                             |
-| `npm run lint:check` | Lint without fixing (for CI)                       |
-| `npm run format`     | Format code with Prettier                          |
-| `npm run typecheck`  | Type-check without emitting files                  |
-| `npm run validate`   | Full validation (lint + format + test + typecheck) |
+| Command                 | Description                                        |
+| ----------------------- | -------------------------------------------------- |
+| `npm run dev`           | Start development server (hot reload)              |
+| `npm run build`         | Create optimized static export                     |
+| `npm run test`          | Run tests in watch mode                            |
+| `npm run test:run`      | Run tests once (for CI)                            |
+| `npm run test:e2e`      | Run Playwright E2E tests (requires build first)    |
+| `npm run lint`          | Lint and auto-fix code                             |
+| `npm run lint:check`    | Lint without fixing (for CI)                       |
+| `npm run format`        | Format code with Prettier                          |
+| `npm run typecheck`     | Type-check without emitting files                  |
+| `npm run validate`      | Full validation (lint + format + test + typecheck) |
+| `npm run validate:full` | `validate` + build + Chromium Playwright gate      |
 
 ---
 
@@ -154,7 +156,7 @@ Available environment variables:
 ├── tests/                # Vitest + Playwright test suites
 ├── public/               # Static assets (images, CV, favicon)
 ├── .cockpit/             # Project Master Document (PMD)
-└── .github/workflows/    # CI/CD pipelines (ci, deploy, security, lhci)
+└── .github/workflows/    # CI/CD pipelines (ci, cross-browser, deploy, security, lhci)
 ```
 
 ---
@@ -192,10 +194,11 @@ Edit `src/shared/config/themes.ts` to modify existing themes or add new ones.
 
 Pushes to `main` automatically deploy via GitHub Actions:
 
-1. CI runs (lint, test, typecheck)
-2. Build creates static export
-3. Deploys to GitHub Pages
-4. Live at configured domain
+1. CI runs format, lint, typecheck, unit tests, build, and the Chromium E2E gate
+2. Cross-Browser E2E runs Firefox and WebKit after CI succeeds on `main`
+3. Build creates static export
+4. Deploys to GitHub Pages
+5. Live at configured domain
 
 ### Manual Deployment
 
