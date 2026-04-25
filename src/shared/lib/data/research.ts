@@ -147,13 +147,13 @@ export const researchData = {
       name: 'SortyPy',
       description: 'Python sorting algorithms library',
       status: 'In Development',
-      github: 'https://github.com/mdasifbinkhaled/SortyPy',
+      github: undefined,
     },
     {
       name: 'SearchyPy',
       description: 'Python search algorithms library',
       status: 'In Development',
-      github: 'https://github.com/mdasifbinkhaled/SearchyPy',
+      github: undefined,
     },
   ],
 } as const;

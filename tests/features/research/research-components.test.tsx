@@ -198,14 +198,16 @@ describe('OpenSource', () => {
     expect(screen.getByText('SearchyPy')).toBeInTheDocument();
   });
 
-  it('renders GitHub links with proper attributes', () => {
+  it('renders disabled placeholders when repositories are unavailable', () => {
     render(<OpenSource />);
-    const links = screen.getAllByText(/View on GitHub/i);
-    expect(links.length).toBe(2);
+    const placeholders = screen.getAllByRole('button', {
+      name: /Repository coming soon/i,
+    });
 
-    const parentLink = links[0]?.closest('a');
-    expect(parentLink).toHaveAttribute('target', '_blank');
-    expect(parentLink).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(placeholders).toHaveLength(2);
+    placeholders.forEach((placeholder) => {
+      expect(placeholder).toBeDisabled();
+    });
   });
 
   it('renders status badges', () => {

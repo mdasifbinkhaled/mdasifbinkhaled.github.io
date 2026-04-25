@@ -86,7 +86,6 @@ const rawPublications: PublicationItem[] = [
     pages: '487–500',
     year: 2023,
     type: 'Conference',
-    link: 'https://link.springer.com/chapter/10.1007/978-3-031-49811-8_39',
     doi: '10.1007/978-3-031-49811-8_39',
     abstract:
       'A machine learning approach for predicting Graft-versus-Host Disease outcomes before stem cell transplantation, improving patient risk assessment.',
@@ -110,7 +109,6 @@ const rawPublications: PublicationItem[] = [
     pages: '614–627',
     year: 2023,
     type: 'Conference',
-    link: 'https://link.springer.com/chapter/10.1007/978-3-031-49811-8_48',
     doi: '10.1007/978-3-031-49811-8_48',
     abstract:
       'This paper proposes an ensemble learning approach for feature selection to improve liver disease classification by reducing data dependencies.',

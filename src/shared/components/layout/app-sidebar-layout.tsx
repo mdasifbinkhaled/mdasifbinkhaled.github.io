@@ -39,6 +39,11 @@ export default function AppSidebarLayout({
 
   const [collapsed, setCollapsed] = useState(false);
 
+  const lastUpdatedLabel = new Intl.DateTimeFormat('en', {
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(siteConfig.lastUpdated));
+
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
       {/* Mobile sheet */}
@@ -173,7 +178,7 @@ export default function AppSidebarLayout({
 
               <div className="text-center md:text-right flex flex-col items-center md:items-end gap-3">
                 <p className="text-xs text-muted-foreground">
-                  Last updated: {siteConfig.lastUpdated}
+                  Last updated: {lastUpdatedLabel}
                 </p>
                 <BackToTop />
               </div>

@@ -4,12 +4,9 @@ export const weeklyModules = [
     title: 'Introduction to Algorithms',
     theory: {
       topic: 'Algorithm Analysis, Correctness, Insertion Sort',
-      slides: '#',
-      recording: '#',
     },
     lab: {
       topic: 'Lab 0: Review & Intro to Google Colaboratory',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -20,7 +17,6 @@ export const weeklyModules = [
     },
     lab: {
       topic: 'Lab 1: Asymptotic Analysis [Iterative & Recursive]',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -29,7 +25,6 @@ export const weeklyModules = [
     theory: { topic: 'Substitution Method, Recursion Trees, Master Theorem' },
     lab: {
       topic: 'Lab 2: Divide & Conquer',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -38,7 +33,6 @@ export const weeklyModules = [
     theory: { topic: 'Merge Sort, Quick Sort, Analysis' },
     lab: {
       topic: 'Project Discussion',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -47,7 +41,6 @@ export const weeklyModules = [
     theory: { topic: 'Binary Heaps, Heapsort, Priority Queue Operations' },
     lab: {
       topic: 'Heap Implementation',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -56,7 +49,6 @@ export const weeklyModules = [
     theory: { topic: 'Graph Representation, BFS, DFS' },
     lab: {
       topic: 'Graph Traversal Implementation',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -71,7 +63,6 @@ export const weeklyModules = [
     theory: { topic: 'Dijkstra, Bellman-Ford' },
     lab: {
       topic: 'SSSP Implementation',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -80,7 +71,6 @@ export const weeklyModules = [
     theory: { topic: 'Prim, Kruskal' },
     lab: {
       topic: 'MST Implementation',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -89,7 +79,6 @@ export const weeklyModules = [
     theory: { topic: 'DP Basics, Rod Cutting, Memoization' },
     lab: {
       topic: 'Basic DP Problems',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -98,7 +87,6 @@ export const weeklyModules = [
     theory: { topic: 'LCS, Knapsack, Matrix Chain Multiplication' },
     lab: {
       topic: 'Advanced DP Problems',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
   {
@@ -107,7 +95,6 @@ export const weeklyModules = [
     theory: { topic: 'Activity Selection, Huffman, P vs NP' },
     lab: {
       topic: 'Greedy Problems & Final Contest',
-      task: 'https://drive.google.com/drive/folders/placeholder',
     },
   },
 ];

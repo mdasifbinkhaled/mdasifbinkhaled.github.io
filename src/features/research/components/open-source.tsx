@@ -40,15 +40,21 @@ export function OpenSource() {
               <CardDescription>{library.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button variant="outline" size="sm" asChild>
-                <Link
-                  href={library.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View on GitHub <ExternalLink className="ml-2 h-3 w-3" />
-                </Link>
-              </Button>
+              {library.github ? (
+                <Button variant="outline" size="sm" asChild>
+                  <Link
+                    href={library.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View on GitHub <ExternalLink className="ml-2 h-3 w-3" />
+                  </Link>
+                </Button>
+              ) : (
+                <Button variant="outline" size="sm" disabled>
+                  Repository coming soon
+                </Button>
+              )}
             </CardContent>
           </Card>
         ))}
