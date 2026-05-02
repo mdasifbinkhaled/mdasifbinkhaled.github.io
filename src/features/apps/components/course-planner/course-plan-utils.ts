@@ -9,6 +9,7 @@ export interface PlannerCourseDraft {
   credits: number;
   prerequisiteCodes: string[];
   completed?: boolean;
+  group?: string;
 }
 
 const MISSING_PREREQ_PREFIX = '__missing_prereq__:';
@@ -59,6 +60,7 @@ function toExistingDrafts(courses: PlannerCourse[]): PlannerCourseDraft[] {
       )
     ),
     completed: course.completed,
+    group: course.group,
   }));
 }
 
@@ -72,6 +74,7 @@ function toDraft(course: PlannerCourseDraft): PlannerCourseDraft {
       new Set(course.prerequisiteCodes.map((item) => normalizeCourseCode(item)))
     ),
     completed: course.completed ?? false,
+    group: course.group,
   };
 }
 
@@ -280,6 +283,7 @@ export function buildCoursePlan(
         (prerequisiteCode) => idByCode.get(prerequisiteCode)!
       ),
       completed: course.completed ?? false,
+      group: course.group,
     }))
   );
 }

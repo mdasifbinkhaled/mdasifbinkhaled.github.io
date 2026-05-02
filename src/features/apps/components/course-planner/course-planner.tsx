@@ -95,7 +95,29 @@ export function CoursePlanner() {
   const [newCredits, setNewCredits] = useState('3');
   const [newPrereqs, setNewPrereqs] = useState('');
 
-  const levels = useMemo(() => topoLevels(courses), [courses]);
+  const groupedCourses = useMemo(() => {
+    if (courses.length === 0) return [];
+    const hasGroups = courses.some((c) => c.group);
+    if (!hasGroups) {
+      return topoLevels(courses).map((level, idx) => ({
+        label:
+          idx === 0
+            ? 'Level 0 — No Prerequisites'
+            : `Level ${idx} — Requires Level ${idx - 1}+`,
+        courses: level,
+      }));
+    }
+    const map = new Map<string, PlannerCourse[]>();
+    for (const c of courses) {
+      const key = c.group ?? 'Uncategorized';
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(c);
+    }
+    return Array.from(map.entries()).map(([label, groupCourses]) => ({
+      label,
+      courses: groupCourses,
+    }));
+  }, [courses]);
   const unlocked = useMemo(() => getUnlocked(courses), [courses]);
   const unlockedIds = useMemo(
     () => new Set(unlocked.map((c) => c.id)),
@@ -108,9 +130,34 @@ export function CoursePlanner() {
 
   const toggleComplete = useCallback(
     (id: string) => {
-      setCourses((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, completed: !c.completed } : c))
-      );
+      setCourses((prev) => {
+        const target = prev.find((c) => c.id === id);
+        if (!target) return prev;
+        const nowCompleted = !target.completed;
+        if (nowCompleted) {
+          // Simply mark this course as completed.
+          return prev.map((c) => (c.id === id ? { ...c, completed: true } : c));
+        }
+        // When un-completing, also cascade-uncomplete all transitive dependents
+        // so no course remains marked done while its prerequisite chain is broken.
+        const uncomplete = new Set<string>([id]);
+        let changed = true;
+        while (changed) {
+          changed = false;
+          for (const c of prev) {
+            if (
+              !uncomplete.has(c.id) &&
+              c.prerequisites.some((pid) => uncomplete.has(pid))
+            ) {
+              uncomplete.add(c.id);
+              changed = true;
+            }
+          }
+        }
+        return prev.map((c) =>
+          uncomplete.has(c.id) ? { ...c, completed: false } : c
+        );
+      });
     },
     [setCourses]
   );
@@ -301,7 +348,7 @@ export function CoursePlanner() {
         title="Import courses"
         description="Paste or upload a CSV/XLSX. Prerequisites may be a comma- or semicolon-separated list of course codes."
         pastePlaceholder={
-          'Code\tTitle\tCredits\tPrerequisites\nCSE 211\tData Structures\t3\tCSE 110'
+          'Code\tTitle\tCredits\tPrerequisites\nCSE 203\tData Structures\t4\tCSE 200'
         }
         onCommit={handleImportCourses}
       />
@@ -341,7 +388,7 @@ export function CoursePlanner() {
       )}
 
       {/* Topological Levels */}
-      {levels.length === 0 ? (
+      {groupedCourses.length === 0 ? (
         <Card className="bg-muted/30">
           <CardContent className="py-12 text-center text-muted-foreground">
             <p className="text-lg font-medium">No courses yet</p>
@@ -352,16 +399,13 @@ export function CoursePlanner() {
         </Card>
       ) : (
         <div className="space-y-6">
-          {levels.map((level, levelIdx) => (
-            <div key={levelIdx}>
+          {groupedCourses.map(({ label, courses: groupCourses }) => (
+            <div key={label}>
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Level {levelIdx}{' '}
-                {levelIdx === 0
-                  ? '— No Prerequisites'
-                  : `— Requires Level ${levelIdx - 1}+`}
+                {label}
               </h3>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {level.map((course) => {
+                {groupCourses.map((course) => {
                   const isCompleted = completedIds.has(course.id);
                   const isUnlocked = unlockedIds.has(course.id);
                   const isLocked = !isCompleted && !isUnlocked;

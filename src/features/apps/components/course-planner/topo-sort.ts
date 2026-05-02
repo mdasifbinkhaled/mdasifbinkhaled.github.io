@@ -30,14 +30,16 @@ export function topoLevels(courses: PlannerCourse[]): PlannerCourse[][] {
 
   for (const c of courses) getDepth(c.id, new Set());
 
-  const levels: PlannerCourse[][] = [];
+  const levelMap = new Map<number, PlannerCourse[]>();
   for (const c of courses) {
     const d = depth.get(c.id) ?? 0;
-    if (!levels[d]) levels[d] = [];
-    levels[d].push(c);
+    if (!levelMap.has(d)) levelMap.set(d, []);
+    levelMap.get(d)!.push(c);
   }
 
-  return levels;
+  // Sort by depth and return as a dense (non-sparse) array.
+  const sortedDepths = Array.from(levelMap.keys()).sort((a, b) => a - b);
+  return sortedDepths.map((d) => levelMap.get(d)!);
 }
 
 /**

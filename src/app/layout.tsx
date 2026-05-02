@@ -72,8 +72,8 @@ export default function RootLayout({
           These are acceptable trade-offs for a static portfolio site.
         */}
         <meta
-          http-equiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://scholar.googleusercontent.com https://avatars.githubusercontent.com; font-src 'self'; worker-src 'self'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://*.ingest.sentry.io; frame-src 'self' https://www.youtube.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+          httpEquiv="Content-Security-Policy"
+          content={`default-src 'self'; script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://scholar.googleusercontent.com https://avatars.githubusercontent.com; font-src 'self'; worker-src 'self'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://*.ingest.sentry.io; frame-src 'self' https://www.youtube.com; object-src 'none'; base-uri 'self'; form-action 'self';`}
         />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
       </head>
