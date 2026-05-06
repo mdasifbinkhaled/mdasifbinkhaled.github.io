@@ -173,4 +173,53 @@ describe('CoursePlanner', () => {
     });
     expect(updatedButtons[1]).toBeEnabled();
   });
+
+  it('cascade-uncompletes dependents when their prerequisite is removed', () => {
+    render(<CoursePlanner />);
+
+    // Add CSE 110 (no prereqs)
+    fireEvent.click(screen.getByRole('button', { name: /add course/i }));
+    fireEvent.change(
+      screen.getByPlaceholderText('Course code (e.g. CSE 211)'),
+      { target: { value: 'CSE 110' } }
+    );
+    fireEvent.change(screen.getByPlaceholderText('Title'), {
+      target: { value: 'Programming I' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: /^add$/i }));
+
+    // Add CSE 111 with CSE 110 as prereq
+    fireEvent.click(screen.getByRole('button', { name: /add course/i }));
+    fireEvent.change(
+      screen.getByPlaceholderText('Course code (e.g. CSE 211)'),
+      { target: { value: 'CSE 111' } }
+    );
+    fireEvent.change(screen.getByPlaceholderText('Title'), {
+      target: { value: 'Programming II' },
+    });
+    fireEvent.change(
+      screen.getByPlaceholderText('Prerequisites (codes, comma-sep)'),
+      { target: { value: 'CSE 110' } }
+    );
+    fireEvent.click(screen.getByRole('button', { name: /^add$/i }));
+
+    // Mark both as Done
+    fireEvent.click(screen.getByRole('button', { name: /^mark done$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^mark done$/i }));
+
+    // Both should now show as Done
+    expect(screen.getAllByRole('button', { name: /^done$/i })).toHaveLength(2);
+
+    // Remove CSE 110 — CSE 111 should cascade-uncomplete (no longer Done)
+    fireEvent.click(screen.getByRole('button', { name: /remove cse 110/i }));
+
+    // CSE 110 is gone; CSE 111 should now be unlocked (no prereqs left) and
+    // not in completed state — i.e. it shows "Mark Done", not "Done".
+    expect(screen.queryByText('CSE 110')).not.toBeInTheDocument();
+    expect(screen.getByText('CSE 111')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^mark done$/i })).toBeEnabled();
+    expect(
+      screen.queryByRole('button', { name: /^done$/i })
+    ).not.toBeInTheDocument();
+  });
 });

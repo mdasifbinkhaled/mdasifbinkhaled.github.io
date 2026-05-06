@@ -1207,4 +1207,6 @@ export const IUB_CSE_PRESET: CoursePlannerPreset = {
   ],
 };
 
-export const PRESETS: CoursePlannerPreset[] = [IUB_CSE_PRESET];
+export const PRESETS = [
+  IUB_CSE_PRESET,
+] as const satisfies readonly CoursePlannerPreset[];

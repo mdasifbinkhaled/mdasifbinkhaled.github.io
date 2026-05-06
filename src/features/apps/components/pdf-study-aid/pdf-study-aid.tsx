@@ -158,10 +158,14 @@ export function PdfStudyAid() {
                 type="button"
                 onClick={() => inputRef.current?.click()}
                 disabled={isProcessing}
+                aria-busy={isProcessing}
               >
                 <FileUp className="mr-2 h-4 w-4" />
                 {isProcessing ? 'Processing PDF…' : 'Upload PDF'}
               </Button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {isProcessing ? 'Processing PDF, please wait.' : ''}
+              </span>
               <input
                 ref={inputRef}
                 type="file"

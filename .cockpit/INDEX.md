@@ -1,6 +1,6 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-05-02 (Tanvir-merge sync; HEAD `f1c7dd9`)
+> **Last Updated**: 2026-05-09 (Audit remediation: course-planner cascade + a11y wins + coverage ratchet 70/81/60/70)
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
 > **Version**: 1.5.0 | **Stack**: Next.js 16.2.3 · React 19 · TypeScript 5.9 · Tailwind 4.1.18
 
@@ -24,8 +24,8 @@
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Unit:       473/473 PASS (57 files)
-    Coverage:   72.23% lines · 81.71% branches · 63.07% funcs · 72.23% stmts (thresholds 64/81/54/64)
+    Unit:       481/481 PASS (58 files)
+    Coverage:   73.76% lines · 81.79% branches · 62.87% funcs · 73.76% stmts (thresholds 70/81/60/70)
     E2E:        Chromium is the fast CI gate; Firefox + mobile-safari run in Cross-Browser E2E on main/manual
     Build:      30 HTML pages generated + 118 files precached (Workbox, 7664.5 KB)
     Format:     All files formatted
@@ -52,7 +52,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 11 (Monitoring): COMPLETED** — Sentry error tracking, Google Analytics page views, publications filter telemetry, command-palette telemetry, and UptimeRobot monitoring are all live.
 **Phase 12 (Apps Hub I/O): COMPLETED** — shared import, storage, export, stats, and settings primitives rolled out; Seat Planner now ships the redesigned workflow shell, resilient reallocation, flexible room ingest, bulk faculty tools, and PDF/PNG/print exports; GPA transcript, Course CSV/XLSX, and Exam CSV/XLSX imports live.
 
-- 473/473 unit tests passing (57 files), with Chromium gated in CI and Firefox/WebKit automated separately.
+- 481/481 unit tests passing (58 files), with Chromium gated in CI and Firefox/WebKit automated separately.
 - 30 HTML pages generated and precached for static deployment.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).

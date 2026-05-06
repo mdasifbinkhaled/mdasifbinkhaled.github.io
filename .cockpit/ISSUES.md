@@ -24,7 +24,7 @@ ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
 Unit tests:   ✅ 473/473 pass  (57 files, coverage 73.74% lines / 81.65% branches / 63.07% funcs / 73.74% stmts; floor 64/81/54/64 in vitest.config.mts)
 E2E:          ✅ Chromium gate in CI; Firefox + mobile-safari run in Cross-Browser E2E on main/manual
 Build:        ✅ 30 HTML pages exported  (static export, Workbox precaches 118 files ≈ 7664.5 KB)
-Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `dompurify`) — all at latest, no upstream fix; quarterly re-review (see F-264)
+Dependencies: ⚠️ 3 production advisories (`next`, `postcss`, `@next/third-parties`) — all moderate, no upstream fix; quarterly re-review (see F-264)
 ```
 
 ---
@@ -37,12 +37,12 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
   Hardened by `test.describe.configure({ mode: 'serial' })` in `tests/e2e/a11y-audit.spec.ts`. Stable in CI; kept open as a watchlist entry to catch regressions if the parallel `/cv` route ever flakes again.
 
 - **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
-  `npm audit --omit=dev` reports open advisories for `jspdf@4.2.0`, `next@16.1.4`, and transitive `dompurify@3.3.1`. All at latest upstream versions — no fix currently published. Static export + Workbox precache reduce the exploitable surface.
-  **Disposition (2026-04-17)**: Put on a **quarterly review cadence** tied to the `security.yml` exception block (F-244 policy). **Next review: 2026-07-17.** Re-check by running `npm audit --omit=dev` and inspecting upstream GHSA entries for:
-  - `jspdf` — embeds older `dompurify`; fix requires upstream jspdf release.
+  `npm audit --omit=dev` reports 3 **moderate** advisories: `next@16.x` (patch train), `postcss<8.5.10` (GHSA-qx2v-qp2m-jg93, CWE-79 line-return parsing), and `@next/third-parties` (carries the postcss chain). All transitive through next 16's bundled toolchain; `npm audit fix` reports `fixAvailable: false`. Static export + Workbox precache + strict CSP reduce the exploitable surface to near-zero (no postcss runtime in the static bundle; XSS vector requires server-side untrusted CSS input the static export does not have).
+  **Disposition (2026-04-22)**: **quarterly review cadence** tied to the `security.yml` exception block (F-244 policy). **Next review: 2026-07-22.** Re-check by running `npm audit --omit=dev --json` and inspecting upstream GHSA entries for:
   - `next` — 16.x patch train; upgrade within the minor when a security patch lands.
-  - `dompurify` — transitive, tracked only through jspdf.
-    **Escalation**: if any advisory reaches CRITICAL severity or an exploit PoC is published, bump to IMMEDIATE and evaluate a `pdf-lib` spike (candidate migration).
+  - `postcss` — wait for next.js 16.x to bump bundled postcss ≥ 8.5.10.
+  - `@next/third-parties` — transitive only via next; resolves automatically once next ships fixed postcss.
+    **Escalation**: if any advisory reaches HIGH/CRITICAL severity or a public PoC targeting static-export sites is published, bump to IMMEDIATE and evaluate a `pdf-lib` migration spike (the previous jspdf/dompurify advisory chain has now resolved upstream and dropped off the audit list).
 
 ## Resolved Findings
 

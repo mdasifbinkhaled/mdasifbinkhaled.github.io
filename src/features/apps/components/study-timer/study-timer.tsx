@@ -590,66 +590,71 @@ export function StudyTimer() {
               <CardContent className="space-y-3 pt-2">
                 <div className="space-y-1.5">
                   <label className="text-xs font-medium text-muted-foreground">
-                    Focus Duration (min)
+                    <span className="block mb-1.5">Focus Duration (min)</span>
+                    <Input
+                      type="number"
+                      min="1"
+                      max="120"
+                      value={settings.focusMinutes}
+                      onChange={(e) =>
+                        handleSettingsChange('focusMinutes', e.target.value)
+                      }
+                      className="h-9"
+                    />
                   </label>
-                  <Input
-                    type="number"
-                    min="1"
-                    max="120"
-                    value={settings.focusMinutes}
-                    onChange={(e) =>
-                      handleSettingsChange('focusMinutes', e.target.value)
-                    }
-                    className="h-9"
-                  />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs font-medium text-muted-foreground">
-                    Short Break (min)
+                    <span className="block mb-1.5">Short Break (min)</span>
+                    <Input
+                      type="number"
+                      min="1"
+                      max="30"
+                      value={settings.shortBreakMinutes}
+                      onChange={(e) =>
+                        handleSettingsChange(
+                          'shortBreakMinutes',
+                          e.target.value
+                        )
+                      }
+                      className="h-9"
+                    />
                   </label>
-                  <Input
-                    type="number"
-                    min="1"
-                    max="30"
-                    value={settings.shortBreakMinutes}
-                    onChange={(e) =>
-                      handleSettingsChange('shortBreakMinutes', e.target.value)
-                    }
-                    className="h-9"
-                  />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs font-medium text-muted-foreground">
-                    Long Break (min)
+                    <span className="block mb-1.5">Long Break (min)</span>
+                    <Input
+                      type="number"
+                      min="1"
+                      max="60"
+                      value={settings.longBreakMinutes}
+                      onChange={(e) =>
+                        handleSettingsChange('longBreakMinutes', e.target.value)
+                      }
+                      className="h-9"
+                    />
                   </label>
-                  <Input
-                    type="number"
-                    min="1"
-                    max="60"
-                    value={settings.longBreakMinutes}
-                    onChange={(e) =>
-                      handleSettingsChange('longBreakMinutes', e.target.value)
-                    }
-                    className="h-9"
-                  />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs font-medium text-muted-foreground">
-                    Sessions Before Long Break
+                    <span className="block mb-1.5">
+                      Sessions Before Long Break
+                    </span>
+                    <Input
+                      type="number"
+                      min="1"
+                      max="10"
+                      value={settings.sessionsBeforeLongBreak}
+                      onChange={(e) =>
+                        handleSettingsChange(
+                          'sessionsBeforeLongBreak',
+                          e.target.value
+                        )
+                      }
+                      className="h-9"
+                    />
                   </label>
-                  <Input
-                    type="number"
-                    min="1"
-                    max="10"
-                    value={settings.sessionsBeforeLongBreak}
-                    onChange={(e) =>
-                      handleSettingsChange(
-                        'sessionsBeforeLongBreak',
-                        e.target.value
-                      )
-                    }
-                    className="h-9"
-                  />
                 </div>
               </CardContent>
             )}

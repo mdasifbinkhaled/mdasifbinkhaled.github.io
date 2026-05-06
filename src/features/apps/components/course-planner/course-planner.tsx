@@ -127,6 +127,10 @@ export function CoursePlanner() {
     () => new Set(courses.filter((c) => c.completed).map((c) => c.id)),
     [courses]
   );
+  const codeById = useMemo(
+    () => new Map(courses.map((c) => [c.id, c.code])),
+    [courses]
+  );
 
   const toggleComplete = useCallback(
     (id: string) => {
@@ -165,12 +169,28 @@ export function CoursePlanner() {
   const removeCourse = useCallback(
     (id: string) => {
       setCourses((prev) => {
-        const remaining = prev.filter((c) => c.id !== id);
-        // Also remove this ID from any prerequisites
-        return remaining.map((c) => ({
-          ...c,
-          prerequisites: c.prerequisites.filter((pid) => pid !== id),
-        }));
+        // Cascade-uncomplete every transitive dependent of the removed course:
+        // their prerequisite chain is now broken, so they cannot remain "Done".
+        // Mirrors the invariant enforced by toggleComplete on un-completion.
+        const orphans = new Set<string>();
+        let changed = true;
+        while (changed) {
+          changed = false;
+          for (const c of prev) {
+            if (orphans.has(c.id) || c.id === id) continue;
+            if (c.prerequisites.some((pid) => pid === id || orphans.has(pid))) {
+              orphans.add(c.id);
+              changed = true;
+            }
+          }
+        }
+        return prev
+          .filter((c) => c.id !== id)
+          .map((c) => ({
+            ...c,
+            completed: orphans.has(c.id) ? false : c.completed,
+            prerequisites: c.prerequisites.filter((pid) => pid !== id),
+          }));
       });
     },
     [setCourses]
@@ -224,8 +244,8 @@ export function CoursePlanner() {
   }, [newCode, newTitle, newCredits, newPrereqs, commitCoursePlan]);
 
   const loadPreset = useCallback(
-    (index: number) => {
-      const preset = PRESETS[index];
+    (name: string) => {
+      const preset = PRESETS.find((p) => p.name === name);
       if (!preset) return;
       setCourses(preset.courses.map((c) => ({ ...c, completed: false })));
     },
@@ -305,8 +325,8 @@ export function CoursePlanner() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            {PRESETS.map((p, i) => (
-              <DropdownMenuItem key={i} onClick={() => loadPreset(i)}>
+            {PRESETS.map((p) => (
+              <DropdownMenuItem key={p.name} onClick={() => loadPreset(p.name)}>
                 {p.name}
               </DropdownMenuItem>
             ))}
@@ -359,16 +379,31 @@ export function CoursePlanner() {
           <CardContent className="pt-4">
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               <Input
+                aria-label="Course code"
                 placeholder="Course code (e.g. CSE 211)"
                 value={newCode}
                 onChange={(e) => setNewCode(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addCourse();
+                  }
+                }}
               />
               <Input
+                aria-label="Course title"
                 placeholder="Title"
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addCourse();
+                  }
+                }}
               />
               <Input
+                aria-label="Credits"
                 type="number"
                 placeholder="Credits"
                 min="1"
@@ -377,9 +412,16 @@ export function CoursePlanner() {
                 onChange={(e) => setNewCredits(e.target.value)}
               />
               <Input
+                aria-label="Prerequisites (comma-separated codes)"
                 placeholder="Prerequisites (codes, comma-sep)"
                 value={newPrereqs}
                 onChange={(e) => setNewPrereqs(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addCourse();
+                  }
+                }}
               />
               <Button onClick={addCourse}>Add</Button>
             </div>
@@ -413,7 +455,8 @@ export function CoursePlanner() {
                   return (
                     <Card
                       key={course.id}
-                      className={`transition-all ${
+                      aria-disabled={isLocked || undefined}
+                      className={`transition-all motion-reduce:transition-none ${
                         isCompleted
                           ? 'border-emerald-500/40 bg-emerald-500/5'
                           : isUnlocked
@@ -441,13 +484,10 @@ export function CoursePlanner() {
                       </CardHeader>
                       <CardContent className="px-4 pb-3 pt-0">
                         {course.prerequisites.length > 0 && (
-                          <p className="text-[10px] text-muted-foreground mb-2">
+                          <p className="text-xs text-muted-foreground mb-2">
                             Requires:{' '}
                             {course.prerequisites
-                              .map(
-                                (pid) =>
-                                  courses.find((c) => c.id === pid)?.code ?? pid
-                              )
+                              .map((pid) => codeById.get(pid) ?? pid)
                               .join(', ')}
                           </p>
                         )}
@@ -455,7 +495,7 @@ export function CoursePlanner() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-7 px-2 text-xs"
+                            className="h-9 px-2 text-xs"
                             disabled={isLocked}
                             onClick={() => toggleComplete(course.id)}
                           >
@@ -479,7 +519,7 @@ export function CoursePlanner() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-7 w-7 ml-auto text-muted-foreground hover:text-destructive"
+                            className="h-9 w-9 ml-auto text-muted-foreground hover:text-destructive"
                             onClick={() => removeCourse(course.id)}
                             aria-label={`Remove ${course.code}`}
                           >

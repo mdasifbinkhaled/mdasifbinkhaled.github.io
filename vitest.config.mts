@@ -49,10 +49,10 @@ export default defineConfig({
         'next-env.d.ts',
       ],
       thresholds: {
-        lines: 64,
-        functions: 54,
+        lines: 70,
+        functions: 60,
         branches: 81,
-        statements: 64,
+        statements: 70,
       },
       all: true,
       clean: true,
