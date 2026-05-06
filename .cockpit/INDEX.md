@@ -1,6 +1,6 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-05-09 (Audit remediation: course-planner cascade + a11y wins + coverage ratchet 70/81/60/70)
+> **Last Updated**: 2026-05-06 (Audit remediation, Course Planner preset modularization, and security truth-sync)
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
 > **Version**: 1.5.0 | **Stack**: Next.js 16.2.3 · React 19 · TypeScript 5.9 · Tailwind 4.1.18
 
@@ -25,9 +25,9 @@
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
     Unit:       481/481 PASS (58 files)
-    Coverage:   73.76% lines · 81.79% branches · 62.87% funcs · 73.76% stmts (thresholds 70/81/60/70)
+    Coverage:   73.81% lines · 81.78% branches · 62.66% funcs · 73.81% stmts (thresholds 70/81/60/70)
     E2E:        Chromium is the fast CI gate; Firefox + mobile-safari run in Cross-Browser E2E on main/manual
-    Build:      30 HTML pages generated + 118 files precached (Workbox, 7664.5 KB)
+    Build:      30 HTML pages generated + 118 files precached (Workbox, 7680.9 KB)
     Format:     All files formatted
     Phase:      Roadmap Phases 7-12 — complete (all tracked items done)
 
@@ -60,7 +60,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 
 ## Deferred Triggers Watchlist
 
-All previously deferred roadmap items (`7.6`, `10.2`, `10.5`, `11.3`) shipped on 2026-04-21. Quarterly review remains relevant for the two open findings only: F-260 (`/cv` accessibility stability) and F-264 (dependency advisory cadence). Next review: **2026-07-17**.
+All previously deferred roadmap items (`7.6`, `10.2`, `10.5`, `11.3`) shipped on 2026-04-21. Quarterly review remains relevant for the two open findings only: F-260 (`/cv` accessibility stability) and F-264 (dependency advisory cadence). Next reviews: **F-260 2026-07-17**, **F-264 2026-08-06**.
 
 ## Project Vitals
 

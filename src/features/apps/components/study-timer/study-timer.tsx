@@ -46,6 +46,8 @@ const DEFAULT_SETTINGS: TimerSettings = {
 
 const STUDY_TOOL_SLUG = 'study-timer';
 
+const SESSION_TYPES = ['focus', 'short-break', 'long-break'] as const;
+
 function getSessionLabel(type: SessionType): string {
   switch (type) {
     case 'focus':
@@ -328,6 +330,79 @@ export function StudyTimer() {
       ? ((totalDuration - secondsLeft) / totalDuration) * 100
       : 0;
 
+  const renderSessionButton = (type: SessionType) => {
+    const isSelected = sessionType === type;
+    const className = `flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+      isSelected
+        ? type === 'focus'
+          ? 'bg-primary text-primary-foreground'
+          : 'bg-emerald-500 text-white'
+        : 'bg-muted text-muted-foreground hover:bg-muted/80'
+    }`;
+    const icon =
+      type === 'focus' ? (
+        <BookOpen className="h-4 w-4" />
+      ) : (
+        <Coffee className="h-4 w-4" />
+      );
+
+    if (isSelected) {
+      return (
+        <button
+          key={type}
+          type="button"
+          onClick={() => switchSession(type)}
+          aria-pressed="true"
+          className={className}
+        >
+          {icon}
+          {getSessionLabel(type)}
+        </button>
+      );
+    }
+
+    return (
+      <button
+        key={type}
+        type="button"
+        onClick={() => switchSession(type)}
+        aria-pressed="false"
+        className={className}
+      >
+        {icon}
+        {getSessionLabel(type)}
+      </button>
+    );
+  };
+
+  const settingsToggle = showSettings ? (
+    <button
+      type="button"
+      onClick={() => setShowSettings(false)}
+      aria-expanded="true"
+      className="flex items-center justify-between w-full"
+    >
+      <CardTitle className="text-lg flex items-center gap-2">
+        <Settings2 className="h-5 w-5 text-muted-foreground" />
+        Settings
+      </CardTitle>
+      <span className="text-xs text-muted-foreground">Hide</span>
+    </button>
+  ) : (
+    <button
+      type="button"
+      onClick={() => setShowSettings(true)}
+      aria-expanded="false"
+      className="flex items-center justify-between w-full"
+    >
+      <CardTitle className="text-lg flex items-center gap-2">
+        <Settings2 className="h-5 w-5 text-muted-foreground" />
+        Settings
+      </CardTitle>
+      <span className="text-xs text-muted-foreground">Show</span>
+    </button>
+  );
+
   if (!mounted) return null;
 
   return (
@@ -350,28 +425,7 @@ export function StudyTimer() {
         <div className="space-y-6">
           {/* Session Type Tabs */}
           <div className="flex gap-2">
-            {(['focus', 'short-break', 'long-break'] as const).map((type) => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => switchSession(type)}
-                aria-pressed={sessionType === type}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  sessionType === type
-                    ? type === 'focus'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-emerald-500 text-white'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                }`}
-              >
-                {type === 'focus' ? (
-                  <BookOpen className="h-4 w-4" />
-                ) : (
-                  <Coffee className="h-4 w-4" />
-                )}
-                {getSessionLabel(type)}
-              </button>
-            ))}
+            {SESSION_TYPES.map((type) => renderSessionButton(type))}
           </div>
 
           {/* Timer Display */}
@@ -570,22 +624,7 @@ export function StudyTimer() {
 
           {/* Settings */}
           <Card>
-            <CardHeader className="pb-2">
-              <button
-                type="button"
-                onClick={() => setShowSettings(!showSettings)}
-                aria-expanded={showSettings}
-                className="flex items-center justify-between w-full"
-              >
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Settings2 className="h-5 w-5 text-muted-foreground" />
-                  Settings
-                </CardTitle>
-                <span className="text-xs text-muted-foreground">
-                  {showSettings ? 'Hide' : 'Show'}
-                </span>
-              </button>
-            </CardHeader>
+            <CardHeader className="pb-2">{settingsToggle}</CardHeader>
             {showSettings && (
               <CardContent className="space-y-3 pt-2">
                 <div className="space-y-1.5">

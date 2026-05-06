@@ -1,6 +1,6 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-05-02 | **Status**: Post-Tanvir-merge sync pass (HEAD `f1c7dd9`)
+> **Last Audit**: 2026-05-06 | **Status**: Round-2 audit remediation sync (HEAD `9413908`)
 > **Total Findings**: 275 | **Resolved**: 265 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
 
 ## Dashboard
@@ -21,9 +21,9 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:   ✅ 0 errors  (strict mode — root + tests projects, see ADR-006)
 ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
-Unit tests:   ✅ 473/473 pass  (57 files, coverage 73.74% lines / 81.65% branches / 63.07% funcs / 73.74% stmts; floor 64/81/54/64 in vitest.config.mts)
+Unit tests:   ✅ 481/481 pass  (58 files, coverage 73.81% lines / 81.78% branches / 62.66% funcs / 73.81% stmts; floor 70/81/60/70 in vitest.config.mts)
 E2E:          ✅ Chromium gate in CI; Firefox + mobile-safari run in Cross-Browser E2E on main/manual
-Build:        ✅ 30 HTML pages exported  (static export, Workbox precaches 118 files ≈ 7664.5 KB)
+Build:        ✅ 30 HTML pages exported  (static export, Workbox precaches 118 files ≈ 7680.9 KB)
 Dependencies: ⚠️ 3 production advisories (`next`, `postcss`, `@next/third-parties`) — all moderate, no upstream fix; quarterly re-review (see F-264)
 ```
 
@@ -38,7 +38,7 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
 
 - **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
   `npm audit --omit=dev` reports 3 **moderate** advisories: `next@16.x` (patch train), `postcss<8.5.10` (GHSA-qx2v-qp2m-jg93, CWE-79 line-return parsing), and `@next/third-parties` (carries the postcss chain). All transitive through next 16's bundled toolchain; `npm audit fix` reports `fixAvailable: false`. Static export + Workbox precache + strict CSP reduce the exploitable surface to near-zero (no postcss runtime in the static bundle; XSS vector requires server-side untrusted CSS input the static export does not have).
-  **Disposition (2026-04-22)**: **quarterly review cadence** tied to the `security.yml` exception block (F-244 policy). **Next review: 2026-07-22.** Re-check by running `npm audit --omit=dev --json` and inspecting upstream GHSA entries for:
+  **Disposition (2026-05-06)**: **quarterly review cadence** tied to the `security.yml` exception block (F-244 policy). **Next review: 2026-08-06.** Re-check by running `npm audit --omit=dev --json` and inspecting upstream GHSA entries for:
   - `next` — 16.x patch train; upgrade within the minor when a security patch lands.
   - `postcss` — wait for next.js 16.x to bump bundled postcss ≥ 8.5.10.
   - `@next/third-parties` — transitive only via next; resolves automatically once next ships fixed postcss.

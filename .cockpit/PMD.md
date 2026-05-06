@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
-> **Last Updated**: 2026-04-25
-> **Commit**: HEAD (ground-up audit remediation)
+> **Last Updated**: 2026-05-06
+> **Commit**: HEAD (round-2 audit remediation and truth-sync)
 
 ## Mission
 
@@ -24,8 +24,8 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | UI Primitives | Radix UI (9 packages)                 | various |
 | PDF Export    | jsPDF + jspdf-autotable + html2canvas | various |
 | Blog          | next-mdx-remote + gray-matter         | various |
-| Analytics     | @next/third-parties (Google GA4)      | latest  |
-| Error Track   | @sentry/browser (client-side)         | latest  |
+| Analytics     | @next/third-parties (Google GA4)      | 16.2.3  |
+| Error Track   | @sentry/browser (client-side)         | 10.48.0 |
 | Testing       | Vitest + Testing Library + jsdom      | 3.2.4   |
 | E2E Testing   | Playwright + axe-core                 | 1.58.0  |
 | Linting       | ESLint 9 (flat config)                | 9.39.2  |
@@ -40,15 +40,15 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ```text
 +---------------------------------------------+
-|  App Layer (2,283 LOC / 9%)                 |  Page routes, layouts, error boundaries
+|  App Layer (2,283 LOC / 8%)                 |  Page routes, layouts, error boundaries
 
 |  src/app/                                    |  22 routes, 27 pages
 +---------------------------------------------+
-|  Features Layer (13,150 LOC / 50%)          |  Domain modules
+|  Features Layer (14,329 LOC / 52%)          |  Domain modules
 |  src/features/{about,apps,home,              |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
-|  Shared Layer (10,732 LOC / 41%)            |  Cross-cutting infrastructure
+|  Shared Layer (10,732 LOC / 39%)            |  Cross-cutting infrastructure
 |  src/shared/{components,config,hooks,        |  UI primitives, config, data,
 |              lib,providers,types}            |  analytics, types
 +---------------------------------------------+
@@ -71,51 +71,52 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Metric            | Value                    |
 | ----------------- | ------------------------ |
 | Source files      | 272                      |
-| Lines of code     | 26,397                   |
+| Lines of code     | 27,618                   |
 | Components (.tsx) | 170                      |
 | Custom hooks      | 4                        |
 | Data files        | 32                       |
 | Config files      | 6                        |
 | Barrel exports    | 19                       |
 | Test files        | 61                       |
-| Test count        | 473 (unit) + 4 E2E specs |
+| Test count        | 481 (unit) + 4 E2E specs |
 | Pages generated   | 30 HTML / 30 routes      |
 | Themes            | 6                        |
 | Git commits       | 460+                     |
 
 ### Largest Files
 
-| File                                      | LOC | Purpose                   |
-| ----------------------------------------- | --- | ------------------------- |
-| `apps/seat-planner/seat-plan-results.tsx` | 439 | Seat plan results display |
-| `features/apps/grade-calculator.tsx`      | 365 | Weighted grade calculator |
-| `ui/theme-selector.tsx`                   | 321 | Theme picker (6 themes)   |
-| `shared/lib/data/about.ts`                | 297 | About page data           |
-| `teaching/course-card.tsx`                | 280 | Course card component     |
-| `apps/seat-planner/use-seat-planner.ts`   | 266 | Seat planner state hook   |
-| `ui/command-menu.tsx`                     | 259 | Command palette (⌘K)      |
-| `teaching/schedule-table.tsx`             | 256 | Course schedule table     |
-| `shared/types/index.ts`                   | 255 | Domain type definitions   |
+| File                                         | LOC  | Purpose                            |
+| -------------------------------------------- | ---- | ---------------------------------- |
+| `apps/course-planner/presets/iub-cse.ts`     | 1208 | IUB CSE course catalog payload     |
+| `shared/components/common/data-importer.tsx` | 1197 | Shared CSV/XLSX/paste import UI    |
+| `apps/seat-planner/seat-plan-results.tsx`    | 949  | Seat plan results display          |
+| `apps/study-timer/study-timer.tsx`           | 705  | Study timer state and UI           |
+| `apps/seat-planner/use-seat-planner.ts`      | 553  | Seat planner state hook            |
+| `apps/course-planner/course-planner.tsx`     | 540  | Course planner state and UI        |
+| `apps/seat-planner/seat-planner.tsx`         | 532  | Seat planner orchestration         |
+| `apps/grade-calculator.tsx`                  | 495  | Weighted grade calculator          |
+| `apps/gpa-calculator/gpa-calculator.tsx`     | 459  | GPA calculator state and UI        |
+| `apps/seat-planner/room-configuration.tsx`   | 445  | Seat planner room configuration UI |
 
 ### LOC Distribution
 
 ```text
-shared/   10,732 (41%)  █████████████████████████
+shared/   10,724 (39%)  ████████████████████
 
-features/ 13,150 (50%)  █████████████████████████████
-app/       2,283  (9%)  █████
-styles/      247  (1%)  █
+features/ 14,387 (52%)  ██████████████████████████
+app/       2,275  (8%)  ████
+styles/      232  (1%)  █
 ```
 
 ## Feature Modules
 
-| Module      | Files | Purpose                                          |
-| ----------- | ----- | ------------------------------------------------ |
-| `teaching/` | 20    | Course cards, detail pages, schedules, syllabi   |
-| `apps/`     | 19    | Student tools (grade calculator, seat planner)   |
-| `about/`    | 11    | Hero, awards, certifications, skills, philosophy |
-| `research/` | 9     | Research areas, projects, open source, vision    |
-| `home/`     | 7     | Hero, news, research highlights, connect         |
+| Module      | Files | Purpose                                             |
+| ----------- | ----- | --------------------------------------------------- |
+| `apps/`     | 34    | Student tools, shared app primitives, import/export |
+| `teaching/` | 22    | Course cards, detail pages, schedules, syllabi      |
+| `about/`    | 12    | Hero, awards, certifications, skills, philosophy    |
+| `research/` | 11    | Research areas, projects, open source, vision       |
+| `home/`     | 9     | Hero, news, research highlights, connect            |
 
 ## Pages & Routes
 
@@ -149,14 +150,14 @@ styles/      247  (1%)  █
 
 ## Quality Status
 
-| Check      | Status | Details                                                                                                                              |
-| ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| TypeScript | PASS   | 0 errors (strict mode)                                                                                                               |
-| ESLint     | PASS   | 0 errors, 0 warnings                                                                                                                 |
-| Prettier   | PASS   | All formatted                                                                                                                        |
-| Tests      | PASS   | 473/473 unit (57 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow                           |
-| Build      | PASS   | 30 HTML pages generated + 118 Workbox precache entries                                                                               |
-| Audit      | NOTE   | 3 production advisories (jspdf critical, next high, dompurify moderate) — all at latest, no fix available; 5 dev-only (rollup, vite) |
+| Check      | Status | Details                                                                                                       |
+| ---------- | ------ | ------------------------------------------------------------------------------------------------------------- |
+| TypeScript | PASS   | 0 errors (strict mode)                                                                                        |
+| ESLint     | PASS   | 0 errors, 0 warnings                                                                                          |
+| Prettier   | PASS   | All formatted                                                                                                 |
+| Tests      | PASS   | 481/481 unit (58 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow    |
+| Build      | PASS   | 30 HTML pages generated + 118 Workbox precache entries                                                        |
+| Audit      | NOTE   | 3 moderate advisories (`next`, `postcss`, `@next/third-parties`); no high/critical; no fix available upstream |
 
 ## Architecture Observations
 
@@ -165,7 +166,7 @@ styles/      247  (1%)  █
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (473 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
+- Strong test foundation (481 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
 - Professional CI/CD with conventional commits
 - CSP headers with no `unsafe-eval`
 - Service worker registered via `sw-register.tsx` (Workbox-generated `out/sw.js`)
@@ -187,9 +188,12 @@ See [ROADMAP.md](ROADMAP.md) for the improvement plan (Phases 7-11).
 
 ## ADRs (Architecture Decision Records)
 
-| ADR     | Title                | Status   |
-| ------- | -------------------- | -------- |
-| ADR-005 | Student Apps Feature | Accepted |
+| ADR     | Title                           | Status   |
+| ------- | ------------------------------- | -------- |
+| ADR-005 | Student Apps Feature            | Accepted |
+| ADR-006 | Tests tsconfig strictness       | Accepted |
+| ADR-007 | Apps I/O redesign               | Accepted |
+| SPIKE   | jsPDF to pdf-lib migration path | Deferred |
 
 See [adr/](adr/) for the full record and template.
 

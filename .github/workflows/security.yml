@@ -33,14 +33,14 @@ jobs:
         run: |
           echo "## 🔒 Dependency Audit Results" >> $GITHUB_STEP_SUMMARY
 
-          # Static-export project: server-side & build-only vulns do not apply.
-          # Excepted packages (reviewed 2026-04-11, re-check by 2026-07-11):
-          #   next      — server-side vulns irrelevant for output:'export'
-          #   rollup    — build-time only, not in production bundle
-          #   vite      — build-time only, not in production bundle
-          #   jspdf     — v4.2.0 is latest; vuln is unpatched upstream (client-only use)
-          #   dompurify — transitive dep of jspdf; same situation
-          EXCEPTED="^next$|^rollup$|^vite$|^jspdf$|^dompurify$"
+          # Static-export project: server-side & build-only criticals do not apply.
+          # Critical exceptions (reviewed 2026-05-06, re-check by 2026-08-06):
+          #   next   — server-only criticals may be irrelevant for output:'export'
+          #   rollup — build-time only, not in production bundle
+          #   vite   — build-time only, not in production bundle
+          # Current F-264 moderate watchlist is not critical-excepted:
+          #   next / postcss / @next/third-parties via GHSA-qx2v-qp2m-jg93.
+          EXCEPTED="^next$|^rollup$|^vite$"
 
           AUDIT_OUTPUT=$(npm audit --json 2>/dev/null || true)
           CRITICAL_COUNT=$(echo "$AUDIT_OUTPUT" | jq -r '.metadata.vulnerabilities.critical // 0')

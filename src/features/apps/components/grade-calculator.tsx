@@ -23,9 +23,24 @@ import type { GradeComponent } from '@/shared/types/tools';
 import { STANDARD_GRADING_SCALE } from '@/shared/lib/data/grading';
 import { useToolStorage } from '@/shared/lib/storage';
 import { ToolSettings } from '@/shared/components/common/tool-settings';
+import { cn } from '@/shared/lib/utils';
 import { toast } from 'sonner';
 
 const GRADE_TOOL_SLUG = 'grade-calculator';
+
+const GRADE_SCALE_SEGMENT_WIDTH_CLASS: Record<string, string> = {
+  A: 'basis-[10%]',
+  'A-': 'basis-[5%]',
+  'B+': 'basis-[5%]',
+  B: 'basis-[5%]',
+  'B-': 'basis-[5%]',
+  'C+': 'basis-[5%]',
+  C: 'basis-[5%]',
+  'C-': 'basis-[5%]',
+  'D+': 'basis-[5%]',
+  D: 'basis-[5%]',
+  F: 'basis-[45%]',
+};
 
 const DEFAULT_COMPONENTS: GradeComponent[] = [
   { id: '1', name: 'Midterm', weight: 30, score: 0, maxScore: 100 },
@@ -144,6 +159,12 @@ export function GradeCalculator() {
         ?.label || 'F'
     );
   }, [currentPercentage]);
+
+  const gradeMarkerX = Math.min(100, Math.max(0, currentPercentage));
+  const gradeMarkerPoints = `${gradeMarkerX},0 ${Math.max(
+    0,
+    gradeMarkerX - 1.5
+  )},8 ${Math.min(100, gradeMarkerX + 1.5)},8`;
 
   const handleCopyResult = () => {
     const lines = components.map(
@@ -352,39 +373,32 @@ export function GradeCalculator() {
                     .map((scale, i, arr) => {
                       const nextMin = arr[i + 1]?.minPercentage ?? 100;
                       const width = nextMin - scale.minPercentage;
+                      const isCurrentGrade = scale.label === currentGradeMatch;
+
                       return (
                         <div
                           key={scale.label}
-                          className="h-full flex items-center justify-center text-[9px] font-bold border-r border-background/40 last:border-0"
-                          style={{
-                            width: `${width}%`,
-                            backgroundColor:
-                              scale.label === currentGradeMatch
-                                ? 'var(--color-primary)'
-                                : undefined,
-                            color:
-                              scale.label === currentGradeMatch
-                                ? 'var(--color-primary-foreground)'
-                                : undefined,
-                            opacity:
-                              scale.label === currentGradeMatch ? 1 : 0.5,
-                          }}
+                          className={cn(
+                            'h-full grow-0 shrink-0 flex items-center justify-center text-[9px] font-bold border-r border-background/40 last:border-0',
+                            GRADE_SCALE_SEGMENT_WIDTH_CLASS[scale.label],
+                            isCurrentGrade
+                              ? 'bg-primary text-primary-foreground opacity-100'
+                              : 'opacity-50'
+                          )}
                         >
                           {width >= 6 ? scale.label : ''}
                         </div>
                       );
                     })}
                 </div>
-                <div className="relative h-0" style={{ marginTop: '-2px' }}>
-                  <div
-                    className="absolute -translate-x-1/2 text-primary"
-                    style={{
-                      left: `${Math.min(100, Math.max(0, currentPercentage))}%`,
-                    }}
-                  >
-                    ▲
-                  </div>
-                </div>
+                <svg
+                  className="-mt-0.5 block h-2 w-full text-primary"
+                  viewBox="0 0 100 8"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <polygon points={gradeMarkerPoints} fill="currentColor" />
+                </svg>
               </div>
 
               <Button

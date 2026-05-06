@@ -14,12 +14,16 @@
 | `class-variance-authority` | 0.7.1   | Component variant API                           |
 | `cmdk`                     | 1.1.1   | Command palette                                 |
 | `html2canvas`              | 1.4.1   | HTML-to-canvas rendering (seat planner export)  |
-| `jspdf`                    | 4.2.0   | PDF document generation (seat planner export)   |
+| `jspdf`                    | 4.2.1   | PDF document generation (seat planner export)   |
 | `jspdf-autotable`          | 5.0.7   | PDF table generation (seat planner export)      |
-| `@next/third-parties`      | latest  | Google Analytics GA4 integration                |
-| `@sentry/browser`          | latest  | Client-side error tracking                      |
-| `gray-matter`              | latest  | Frontmatter parsing for MDX blog posts          |
-| `next-mdx-remote`          | ^6.0.0  | Remote MDX rendering (RSC-compatible, archived) |
+| `pdfjs-dist`               | 5.6.205 | Browser-local PDF text extraction               |
+| `papaparse`                | 5.5.3   | CSV import parsing                              |
+| `read-excel-file`          | 9.0.6   | XLSX import parsing                             |
+| `sonner`                   | 2.0.7   | Toast notifications                             |
+| `@next/third-parties`      | 16.2.3  | Google Analytics GA4 integration                |
+| `@sentry/browser`          | 10.48.0 | Client-side error tracking                      |
+| `gray-matter`              | 4.0.3   | Frontmatter parsing for MDX blog posts          |
+| `next-mdx-remote`          | 6.0.0   | Remote MDX rendering (RSC-compatible, archived) |
 | `@radix-ui/*`              | various | Headless UI primitives (9 packages)             |
 
 ### Radix UI Packages
@@ -36,29 +40,29 @@
 
 ## Dev Dependencies
 
-| Package                           | Version  | Purpose                     |
-| --------------------------------- | -------- | --------------------------- |
-| `typescript`                      | ^5.9.x   | Type checking               |
-| `eslint`                          | ^9.39.2  | Linting                     |
-| `eslint-config-next`              | ^16.1.4  | Next.js ESLint rules        |
-| `prettier`                        | ^3.8.2   | Code formatting             |
-| `vitest`                          | ^3.2.4   | Test runner                 |
-| `@vitest/coverage-v8`             | ^3.2.4   | Coverage reporting          |
-| `@testing-library/react`          | ^16.x    | React testing utilities     |
-| `@testing-library/jest-dom`       | ^6.x     | DOM matchers                |
-| `@testing-library/user-event`     | ^14.6.1  | User interaction simulation |
-| `jsdom`                           | ^25.x    | DOM environment for tests   |
-| `@vitejs/plugin-react`            | ^4.7.0   | Vite React plugin           |
-| `tailwindcss`                     | ^4.1.18  | CSS framework               |
-| `tailwindcss-animate`             | ^1.0.7   | Animation utilities         |
-| `autoprefixer`                    | ^10.4.20 | CSS vendor prefixing        |
-| `postcss`                         | ^8.4.41  | CSS processing              |
-| `husky`                           | ^9.1.7   | Git hooks                   |
-| `lint-staged`                     | ^15.5.2  | Pre-commit linting          |
-| `commitlint`                      | ^20.1.0  | Commit message enforcement  |
-| `@commitlint/config-conventional` | ^20.0.0  | Conventional commit rules   |
-| `cross-env`                       | ^7.0.3   | Cross-platform env vars     |
-| `@playwright/test`                | ^1.58.0  | E2E testing + accessibility |
+| Package                           | Version | Purpose                     |
+| --------------------------------- | ------- | --------------------------- |
+| `typescript`                      | ^5.9.x  | Type checking               |
+| `eslint`                          | ^9.39.2 | Linting                     |
+| `eslint-config-next`              | ^16.1.4 | Next.js ESLint rules        |
+| `prettier`                        | ^3.8.2  | Code formatting             |
+| `vitest`                          | ^3.2.4  | Test runner                 |
+| `@vitest/coverage-v8`             | ^3.2.4  | Coverage reporting          |
+| `@testing-library/react`          | ^16.x   | React testing utilities     |
+| `@testing-library/jest-dom`       | ^6.x    | DOM matchers                |
+| `@testing-library/user-event`     | ^14.6.1 | User interaction simulation |
+| `jsdom`                           | ^25.x   | DOM environment for tests   |
+| `@vitejs/plugin-react`            | ^4.7.0  | Vite React plugin           |
+| `tailwindcss`                     | ^4.1.18 | CSS framework               |
+| `@tailwindcss/postcss`            | ^4.1.18 | Tailwind CSS PostCSS plugin |
+| `tw-animate-css`                  | ^1.4.0  | Animation CSS utilities     |
+| `postcss`                         | ^8.4.41 | CSS processing              |
+| `husky`                           | ^9.1.7  | Git hooks                   |
+| `lint-staged`                     | ^15.5.2 | Pre-commit linting          |
+| `commitlint`                      | ^20.1.0 | Commit message enforcement  |
+| `@commitlint/config-conventional` | ^20.0.0 | Conventional commit rules   |
+| `cross-env`                       | ^7.0.3  | Cross-platform env vars     |
+| `@playwright/test`                | ^1.58.0 | E2E testing + accessibility |
 
 ## Overrides
 
@@ -82,7 +86,7 @@ npm run build
   │   ├── Static page generation (30 HTML pages / 30 routes)
   │   ├── SSG for dynamic routes (generateStaticParams)
   │   └── Output to out/ directory
-  └── postbuild: creates out/.nojekyll for GitHub Pages
+  └── postbuild: creates out/.nojekyll and generates Workbox SW/precache
 ```
 
 ### Build Output
@@ -113,15 +117,13 @@ npm run build
 
 ## Known Vulnerabilities
 
-| Package             | Severity | Impact                                      | Mitigation                                        |
-| ------------------- | -------- | ------------------------------------------- | ------------------------------------------------- |
-| `dompurify` <=3.3.1 | Moderate | mutation-XSS via Re-Contextualization       | No third-party inputs passed; static context      |
-| `jspdf` <=4.2.0     | Critical | PDF Object Injection via FreeText color     | Low risk; parameters controlled purely locally    |
-| `next` 16.2.3       | High     | Server-side DoS (Image Optimizer, RSC, PPR) | **Fully mitigated** — static export has no server |
-| `rollup` 4.x        | High     | Arbitrary file write via path traversal     | **Dev-only** (build tooling), no runtime impact   |
-| `vite` 6.x          | High     | Path traversal via URL encoding             | **Dev-only** (test tooling), no runtime impact    |
+| Package               | Severity | Impact                                               | Mitigation                                                       |
+| --------------------- | -------- | ---------------------------------------------------- | ---------------------------------------------------------------- |
+| `next` 16.2.3         | Moderate | Carries bundled PostCSS advisory chain               | Static export; no server runtime; wait for Next patch train      |
+| `postcss` <8.5.10     | Moderate | XSS via unescaped `</style>` in CSS stringify output | Build/toolchain path only; no untrusted CSS input in static site |
+| `@next/third-parties` | Moderate | Transitive advisory via `next`                       | Resolves when Next ships fixed bundled PostCSS                   |
 
-**Summary**: 8 total advisories (3 production: 1 moderate, 1 high, 1 critical — all at latest versions with no fix available; 5 dev-only). Production vulns are fully mitigated by static export (no server runtime) and controlled-input usage. Reviewed 2026-04-12; re-check by 2026-07-12.
+**Summary**: 3 total advisories, all moderate, no high/critical, no fix available (`npm audit` and `npm audit --omit=dev` both verified on 2026-05-06). Reviewed 2026-05-06; re-check by 2026-08-06 under F-264.
 
 ## Deployment
 

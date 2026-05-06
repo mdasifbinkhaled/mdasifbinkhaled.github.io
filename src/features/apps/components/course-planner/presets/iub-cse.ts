@@ -1,4 +1,4 @@
-import type { CoursePlannerPreset } from './types';
+import type { CoursePlannerPreset } from '../types';
 
 const G = {
   comm: 'Foundation — Communication Skills',
@@ -1206,7 +1206,3 @@ export const IUB_CSE_PRESET: CoursePlannerPreset = {
     },
   ],
 };
-
-export const PRESETS = [
-  IUB_CSE_PRESET,
-] as const satisfies readonly CoursePlannerPreset[];

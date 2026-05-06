@@ -142,6 +142,10 @@
   @apply bg-clip-text text-transparent bg-linear-to-r from-primary to-accent;
 }
 
+@utility h-navbar-spacer {
+  height: 73px;
+}
+
 /* Base styles */
 body {
   background: hsl(var(--background));

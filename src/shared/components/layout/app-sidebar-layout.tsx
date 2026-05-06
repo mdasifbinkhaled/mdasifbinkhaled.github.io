@@ -28,8 +28,6 @@ import { siteConfig } from '@/shared/config/site';
 
 import { allNavItems } from '@/shared/config/navigation';
 
-import { LAYOUT } from '@/shared/config/constants';
-
 export default function AppSidebarLayout({
   children,
 }: {
@@ -138,13 +136,7 @@ export default function AppSidebarLayout({
           </header>
 
           {/* Spacer to account for fixed navbar height */}
-
-          {/* Spacer to account for fixed navbar height */}
-          <div
-            className="shrink-0"
-            style={{ height: LAYOUT.NAVBAR_HEIGHT }}
-            aria-hidden="true"
-          />
+          <div className="h-navbar-spacer shrink-0" aria-hidden="true" />
 
           <main
             id="main-content"

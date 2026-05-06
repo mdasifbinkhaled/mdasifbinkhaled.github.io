@@ -1,7 +1,7 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-05-02
-> **Current Version**: 1.5.0 | **Quality**: All gates green (473/473 unit, coverage 73.74/81.65/63.07/73.74, static build 30/30, Chromium gate in CI, cross-browser matrix automated post-CI, 0 TS/ESLint errors)
+> **Created**: 2026-02-19 | **Updated**: 2026-05-06
+> **Current Version**: 1.5.0 | **Quality**: All gates green (481/481 unit, coverage 73.81/81.78/62.66/73.81 with floor 70/81/60/70, static build 30/30, Chromium gate in CI, cross-browser matrix automated post-CI, 0 TS/ESLint errors)
 > **Open Findings**: 2 — F-260 `/cv` a11y hardened (watched), F-264 supply-chain advisories (quarterly review)
 
 ## Phase 6: Code Quality & Cleanup
@@ -28,10 +28,10 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 | 7.5 | **Exam Countdown** — per-course countdown timers                                               | EASY       | LOW      | Done   |
 | 7.6 | **PDF Study Aid** — upload PDF, generate browser-local notes, glossary, and practice questions | HARD       | LOW      | Done   |
 | 7.7 | **Study Timer** — Pomodoro-style focus sessions with persistent tool storage                   | EASY       | MEDIUM   | Done   |
-| 7.8 | **Course Planner** — degree planner with topo-sort prerequisites and IUB/BRACU presets         | MODERATE   | MEDIUM   | Done   |
+| 7.8 | **Course Planner** — degree planner with topo-sort prerequisites and IUB preset                | MODERATE   | MEDIUM   | Done   |
 
 > **7.6 Shipped**: Implemented as a deterministic browser-local workflow using `pdfjs-dist` text extraction plus heuristic summary, glossary, and question generation. No WebLLM, WebGPU, or external API key is required.
-> **7.8 Shipped**: Topological-level layout with cascading uncomplete, CSV/XLSX/paste import via `<DataImporter>`, JSON export, and curated IUB BSc CSE + BRACU presets (IUB preset expanded in `f1c7dd9`, May 2026).
+> **7.8 Shipped**: Topological-level layout with cascading uncomplete, CSV/XLSX/paste import via `<DataImporter>`, JSON export, and a curated IUB BSc CSE preset (expanded in `f1c7dd9`, then modularized under `course-planner/presets/` in May 2026).
 
 ## Phase 8: Modern Web & Performance
 

@@ -20,12 +20,16 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               :root { color-scheme: light dark; }
               body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
               .ge-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; background: #fff; color: #111; }
+              .ge-panel { text-align: center; max-width: 28rem; display: flex; flex-direction: column; gap: 1.5rem; }
               .ge-icon-ring { width: 4rem; height: 4rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin: 0 auto; background: #fef2f2; }
+              .ge-icon { width: 2rem; height: 2rem; color: #dc2626; }
+              .ge-stack { display: flex; flex-direction: column; gap: 0.5rem; }
               .ge-title { font-size: 1.5rem; font-weight: 700; margin: 0; }
               .ge-body { color: #555; margin: 0; }
               .ge-debug { padding: 1rem; border-radius: 0.5rem; text-align: left; font-family: monospace; font-size: 0.875rem; background: #f3f4f6; color: #374151; }
               .ge-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #2563eb; color: #fff; border: none; border-radius: 0.5rem; font-weight: 500; font-size: 1rem; cursor: pointer; transition: background 0.15s; }
               .ge-btn:hover { background: #1d4ed8; }
+              .ge-refresh-icon { width: 1rem; height: 1rem; }
               @media (prefers-color-scheme: dark) {
                 .ge-wrap { background: #111; color: #f3f4f6; }
                 .ge-icon-ring { background: rgba(127,29,29,0.2); }
@@ -38,27 +42,11 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
       </head>
       <body>
         <div className="ge-wrap">
-          <div
-            style={{
-              textAlign: 'center',
-              maxWidth: '28rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1.5rem',
-            }}
-          >
+          <div className="ge-panel">
             <div className="ge-icon-ring">
-              <AlertTriangle
-                style={{ width: '2rem', height: '2rem', color: '#dc2626' }}
-              />
+              <AlertTriangle className="ge-icon" />
             </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.5rem',
-              }}
-            >
+            <div className="ge-stack">
               <h1 className="ge-title">Critical Error</h1>
               <p className="ge-body">
                 A critical error occurred. Please refresh the page to continue.
@@ -69,7 +57,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             )}
             <div>
               <button onClick={reset} className="ge-btn">
-                <RefreshCw style={{ width: '1rem', height: '1rem' }} />
+                <RefreshCw className="ge-refresh-icon" />
                 Try again
               </button>
             </div>
