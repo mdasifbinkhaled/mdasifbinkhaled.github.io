@@ -1,14 +1,14 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-04-17 | **Status**: Post-AUD-016 cockpit hygiene pass
-> **Total Findings**: 275 | **Resolved**: 266 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 1
+> **Last Audit**: 2026-05-02 | **Status**: Post-Tanvir-merge sync pass (HEAD `f1c7dd9`)
+> **Total Findings**: 275 | **Resolved**: 265 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
 
 ## Dashboard
 
 ```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
-HIGH:      32 (1 open)  — Functional bugs, SEO/a11y violations, dead code
-MEDIUM:    85 (0 open)  — Performance, DRY, architecture, testing gaps
+HIGH:      32 (1 open)  — F-264 supply-chain advisories (quarterly review)
+MEDIUM:    85 (1 open)  — F-260 /cv a11y flaky locally (hardened, watched)
 LOW:      104 (0 open)  — Polish, minor config, cosmetic
 INFO:      32 (0 open)  — Informational, acceptable trade-offs
 REASSESSED: 5           — F-195, F-196 (no action needed)
@@ -21,9 +21,9 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:   ✅ 0 errors  (strict mode — root + tests projects, see ADR-006)
 ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
-Unit tests:   ✅ 368/368 pass  (41 files, coverage 65.52% lines / 82.40% branches, floor 64/81/54/64 in vitest.config.mts)
-E2E:          ✅ 49/49 pass  (4 spec files — a11y-audit, all-pages-smoke, keyboard-nav, theme-contrast)
-Build:        ✅ 25 HTML pages / 27 routes exported  (static export, Workbox precaches 109 files ≈ 5.3 MB)
+Unit tests:   ✅ 473/473 pass  (57 files, coverage 73.74% lines / 81.65% branches / 63.07% funcs / 73.74% stmts; floor 64/81/54/64 in vitest.config.mts)
+E2E:          ✅ Chromium gate in CI; Firefox + mobile-safari run in Cross-Browser E2E on main/manual
+Build:        ✅ 30 HTML pages exported  (static export, Workbox precaches 118 files ≈ 7664.5 KB)
 Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `dompurify`) — all at latest, no upstream fix; quarterly re-review (see F-264)
 ```
 
@@ -32,6 +32,9 @@ Dependencies: ⚠️ 3 production advisories  (`next`, `jspdf`, transitive `domp
 ## Open Findings
 
 Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 2026-04-12 ground-up audit.
+
+- **F-260 | Testing | MEDIUM** — `/cv` accessibility audit is nondeterministic locally (hardened, watched).
+  Hardened by `test.describe.configure({ mode: 'serial' })` in `tests/e2e/a11y-audit.spec.ts`. Stable in CI; kept open as a watchlist entry to catch regressions if the parallel `/cv` route ever flakes again.
 
 - **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
   `npm audit --omit=dev` reports open advisories for `jspdf@4.2.0`, `next@16.1.4`, and transitive `dompurify@3.3.1`. All at latest upstream versions — no fix currently published. Static export + Workbox precache reduce the exploitable surface.

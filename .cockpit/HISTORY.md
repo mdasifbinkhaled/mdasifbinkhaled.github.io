@@ -377,6 +377,24 @@
   - The full Playwright matrix also passed at 161 passed / 4 skipped across chromium, firefox, and mobile-safari.
   - Remote GitHub Actions cleared end to end on `main`: `CI`, `Security Scanning`, `Deploy Next.js site to Pages`, and `Lighthouse CI` all succeeded for `bae5ecb`.
 
+### Phase — Course Planner IUB Preset Expansion + CSP Prop Fix (2026-05-02)
+
+- **Commit**: `f1c7dd9` `feat: added all the courses` (Tanvir branch merged into `main`; remote `Tanvir` and `main` are now identical refs).
+- **Course Planner data**:
+  - `src/features/apps/components/course-planner/presets.ts` grew by ~1,193 lines, expanding the IUB BSc CSE preset to the full Curriculum 01 (Spring 2024) catalog: Foundation tracks (Communication, Computer Skills, Numeracy, Natural & Social Sciences, Humanities, LFE), Core, Major Projects, and Areas 01–10 plus Special Topics.
+  - `course-planner.tsx` now renders by `course.group` label when any course defines a group (e.g. "Foundation — Communication Skills", "Area 05 — Intelligent Systems"), and falls back to topological levels otherwise. Existing apps stay on the topo-level layout.
+  - `topo-sort.ts` cycle guard refactored from a leaky `Set` mutation to a per-call cloned `nextVisited`, eliminating cross-DFS state bleed.
+  - Minor `course-plan-utils.ts` and `types.ts` tweaks to support the optional `group` discriminator.
+- **Hidden CSP/JSX fix in `src/app/layout.tsx`** (not advertised in the commit message):
+  - Replaced `<meta http-equiv="…">` with the React-correct `httpEquiv` prop. The kebab-case form was invalid as a JSX attribute and silently dropped by React 19 in dev runs.
+  - CSP `script-src` now adds `'unsafe-eval'` only when `process.env.NODE_ENV === 'development'` (needed by Next 16 dev tooling). Production CSP is unchanged.
+- **Validation reverified at `f1c7dd9`**: 0 lint, 0 typecheck errors, 473/473 unit tests across 57 files, coverage 73.74% lines / 81.65% branches / 63.07% funcs / 73.74% stmts (floor 64/81/54/64). Coverage of `course-planner` block: 92.99% lines / 82.55% branches / 70.37% funcs.
+- **Cockpit truth-sync**: ISSUES.md was 3 months stale (still showed 368/368 unit, 25 pages, 1 open finding); refreshed header + dashboard + quality gates and re-listed F-260 alongside F-264 as the two open watchlist entries. ROADMAP Phase 7 expanded from 6 rows to 8 rows (added 7.7 Study Timer + 7.8 Course Planner). INDEX last-updated bumped.
+- **Remaining advisory items** (deferred to next round):
+  - 11 open Dependabot PRs (#41, #48–#56) untriaged; merge plan to be drafted before any merges.
+  - 22 stale `dependabot/*` remote branches awaiting cleanup confirmation.
+  - F-264 quarterly review still due 2026-07-17.
+
 ## Tags
 
 | Tag                   | Description                            |

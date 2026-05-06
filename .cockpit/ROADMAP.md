@@ -1,7 +1,7 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-04-25
-> **Current Version**: 1.5.0 | **Quality**: All gates green (473/473 unit, static build 30/30, Chromium gate in CI, cross-browser matrix automated post-CI, 0 TS/ESLint errors)
+> **Created**: 2026-02-19 | **Updated**: 2026-05-02
+> **Current Version**: 1.5.0 | **Quality**: All gates green (473/473 unit, coverage 73.74/81.65/63.07/73.74, static build 30/30, Chromium gate in CI, cross-browser matrix automated post-CI, 0 TS/ESLint errors)
 > **Open Findings**: 2 — F-260 `/cv` a11y hardened (watched), F-264 supply-chain advisories (quarterly review)
 
 ## Phase 6: Code Quality & Cleanup
@@ -27,8 +27,11 @@ See [ADR-005](adr/ADR-005-student-tools.md) for architecture decisions.
 | 7.4 | **Office Hours** — structured schedule with booking CTA                                        | EASY       | MEDIUM   | Done   |
 | 7.5 | **Exam Countdown** — per-course countdown timers                                               | EASY       | LOW      | Done   |
 | 7.6 | **PDF Study Aid** — upload PDF, generate browser-local notes, glossary, and practice questions | HARD       | LOW      | Done   |
+| 7.7 | **Study Timer** — Pomodoro-style focus sessions with persistent tool storage                   | EASY       | MEDIUM   | Done   |
+| 7.8 | **Course Planner** — degree planner with topo-sort prerequisites and IUB/BRACU presets         | MODERATE   | MEDIUM   | Done   |
 
 > **7.6 Shipped**: Implemented as a deterministic browser-local workflow using `pdfjs-dist` text extraction plus heuristic summary, glossary, and question generation. No WebLLM, WebGPU, or external API key is required.
+> **7.8 Shipped**: Topological-level layout with cascading uncomplete, CSV/XLSX/paste import via `<DataImporter>`, JSON export, and curated IUB BSc CSE + BRACU presets (IUB preset expanded in `f1c7dd9`, May 2026).
 
 ## Phase 8: Modern Web & Performance
 
@@ -98,10 +101,10 @@ Unify data ingress, storage, stats, exports, and settings across every tool unde
 | Phase 4A/B/C (CRITICAL/DRY) | 18     | EASY-MODERATE | Completed     |
 | Phase 5 (Modernization)     | 10     | MODERATE      | Completed     |
 | Phase 6 (Code Quality)      | 4      | MODERATE-HARD | Completed     |
-| Phase 7 (Student Apps)      | 6      | MODERATE      | 6/6 done      |
+| Phase 7 (Student Apps)      | 8      | MODERATE      | 8/8 done      |
 | Phase 8 (Modern Web)        | 6      | MODERATE      | 6/6 done      |
 | Phase 9 (Testing)           | 6      | MODERATE      | 6/6 done      |
 | Phase 10 (Content)          | 5      | MIXED         | 5/5 done      |
 | Phase 11 (Monitoring)       | 4      | EASY-MODERATE | 4/4 done      |
 | Phase 12 (Apps Hub I/O)     | 4      | MODERATE-HARD | 4/4 done      |
-| **Total**                   | **63** |               | **12-20**     |
+| **Total**                   | **65** |               | **12-20**     |
