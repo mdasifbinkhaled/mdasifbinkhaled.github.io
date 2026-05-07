@@ -199,4 +199,5 @@ npm run build
 - Groups: linting, testing, UI, react
 - Queue cleaned on 2026-05-06: stale PRs #29, #30, #41, #48–#56 closed after triage.
 - Accepted locally: `@vitejs/plugin-react` 4.7.0 -> 5.2.0, validated with the full gate.
+- Accepted locally: `github/codeql-action` v3 -> v4 in `security.yml`.
 - Rejected/deferred: Vitest 4.x. Unit tests can pass with a threads pool, but V8 branch coverage drops below the 81% ratchet under Vitest 4 coverage semantics; keep Vitest 3.2.4 until a dedicated coverage migration raises or rebaselines tests without weakening quality.
