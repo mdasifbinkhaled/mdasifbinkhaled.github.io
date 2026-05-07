@@ -52,7 +52,7 @@
 | `@testing-library/jest-dom`       | ^6.x    | DOM matchers                |
 | `@testing-library/user-event`     | ^14.6.1 | User interaction simulation |
 | `jsdom`                           | ^25.x   | DOM environment for tests   |
-| `@vitejs/plugin-react`            | ^4.7.0  | Vite React plugin           |
+| `@vitejs/plugin-react`            | ^5.2.0  | Vite React plugin           |
 | `tailwindcss`                     | ^4.1.18 | CSS framework               |
 | `@tailwindcss/postcss`            | ^4.1.18 | Tailwind CSS PostCSS plugin |
 | `tw-animate-css`                  | ^1.4.0  | Animation CSS utilities     |
@@ -197,3 +197,6 @@ npm run build
 
 - Active for GitHub Actions versions and npm packages
 - Groups: linting, testing, UI, react
+- Queue cleaned on 2026-05-06: stale PRs #29, #30, #41, #48–#56 closed after triage.
+- Accepted locally: `@vitejs/plugin-react` 4.7.0 -> 5.2.0, validated with the full gate.
+- Rejected/deferred: Vitest 4.x. Unit tests can pass with a threads pool, but V8 branch coverage drops below the 81% ratchet under Vitest 4 coverage semantics; keep Vitest 3.2.4 until a dedicated coverage migration raises or rebaselines tests without weakening quality.

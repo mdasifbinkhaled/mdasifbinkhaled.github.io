@@ -1,6 +1,6 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-05-06 (Audit remediation, Course Planner preset modularization, and security truth-sync)
+> **Last Updated**: 2026-05-06 (Audit remediation, dependency queue cleanup, and security truth-sync)
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
 > **Version**: 1.5.0 | **Stack**: Next.js 16.2.3 · React 19 · TypeScript 5.9 · Tailwind 4.1.18
 
@@ -66,17 +66,17 @@ All previously deferred roadmap items (`7.6`, `10.2`, `10.5`, `11.3`) shipped on
 
 | Metric              | Value                         |
 | ------------------- | ----------------------------- |
-| Source files        | 272                           |
-| Lines of code       | 26,397                        |
+| Source files        | 273                           |
+| Lines of code       | 27,618                        |
 | Source `.tsx` files | 170                           |
-| Test files          | 61 (57 unit + 4 E2E)          |
+| Test files          | 62 (58 unit + 4 E2E)          |
 | Runtime deps        | 29                            |
 | Dev deps            | 28                            |
 | ADRs                | 3 (ADR-005, ADR-006, ADR-007) |
 
 ## Architecture Layers (LOC Distribution)
 
-    shared/   10,732 LOC (41%) — Infrastructure, data, UI primitives
-    features/ 13,150 LOC (50%) — Feature modules (teaching, about, research, home, apps)
-    app/       2,283 LOC  (9%) — Page routes and layouts
+    shared/   10,724 LOC (39%) — Infrastructure, data, UI primitives
+    features/ 14,387 LOC (52%) — Feature modules (teaching, about, research, home, apps)
+    app/       2,275 LOC  (8%) — Page routes and layouts
     styles/      232 LOC  (1%) — Design tokens + globals

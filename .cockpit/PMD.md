@@ -70,14 +70,14 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value                    |
 | ----------------- | ------------------------ |
-| Source files      | 272                      |
+| Source files      | 273                      |
 | Lines of code     | 27,618                   |
 | Components (.tsx) | 170                      |
 | Custom hooks      | 4                        |
 | Data files        | 32                       |
 | Config files      | 6                        |
 | Barrel exports    | 19                       |
-| Test files        | 61                       |
+| Test files        | 62                       |
 | Test count        | 481 (unit) + 4 E2E specs |
 | Pages generated   | 30 HTML / 30 routes      |
 | Themes            | 6                        |
