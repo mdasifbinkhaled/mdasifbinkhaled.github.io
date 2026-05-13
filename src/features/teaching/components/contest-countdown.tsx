@@ -31,20 +31,9 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
     return () => clearInterval(timer);
   }, [contest.endDate]);
 
-  if (!isClient || !contest.endDate) return null;
+  if (!isClient) return null;
 
-  const difference = +new Date(contest.endDate) - +new Date();
-  const timeLeft =
-    difference > 0
-      ? {
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        }
-      : null;
-
-  if (!timeLeft) return null;
-
-  return (
+  const contestCard = (countdown: { days: number; hours: number } | null) => (
     <Card className="border-border/60 bg-muted/10 relative overflow-hidden">
       <div className="absolute top-0 right-0 p-4 opacity-10">
         <Trophy className="w-24 h-24 rotate-12" />
@@ -68,27 +57,29 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
         </div>
 
         <div className="flex items-center gap-6">
-          <div className="flex gap-4 text-center">
-            <div>
-              <div className="text-3xl font-bold font-mono text-foreground">
-                {String(timeLeft.days).padStart(2, '0')}
+          {countdown && (
+            <div className="flex gap-4 text-center">
+              <div>
+                <div className="text-3xl font-bold font-mono text-foreground">
+                  {String(countdown.days).padStart(2, '0')}
+                </div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                  Days
+                </div>
               </div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">
-                Days
+              <div className="text-3xl font-bold font-mono text-muted-foreground/30">
+                :
+              </div>
+              <div>
+                <div className="text-3xl font-bold font-mono text-foreground">
+                  {String(countdown.hours).padStart(2, '0')}
+                </div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                  Hours
+                </div>
               </div>
             </div>
-            <div className="text-3xl font-bold font-mono text-muted-foreground/30">
-              :
-            </div>
-            <div>
-              <div className="text-3xl font-bold font-mono text-foreground">
-                {String(timeLeft.hours).padStart(2, '0')}
-              </div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">
-                Hours
-              </div>
-            </div>
-          </div>
+          )}
 
           <Button asChild size="lg" className="shadow-lg">
             <a href={contest.url} target="_blank" rel="noopener noreferrer">
@@ -99,4 +90,19 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
       </CardContent>
     </Card>
   );
+
+  if (!contest.endDate) return contestCard(null);
+
+  const difference = +new Date(contest.endDate) - +new Date();
+  const timeLeft =
+    difference > 0
+      ? {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        }
+      : null;
+
+  if (!timeLeft) return null;
+
+  return contestCard(timeLeft);
 }
