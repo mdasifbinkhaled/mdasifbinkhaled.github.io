@@ -27,7 +27,7 @@ export const links: CourseLink[] = [
     type: 'site',
   },
   {
-    title: 'Discord Community',
+    title: 'Discord (CSE 211)',
     url: 'https://discord.gg/ynwm3GDW',
     type: 'discord',
   },
