@@ -9,8 +9,11 @@ describe('course data freshness', () => {
     expect(iubCse211.year).toBe(2026);
   });
 
-  it('does not expose stale Spring 2026 live logistics as current CSE 211 data', () => {
-    expect(iubCse211.activeContest).toBeUndefined();
+  it('exposes Summer 2026 live logistics and no stale data', () => {
+    expect(iubCse211.activeContest?.url).toBe(
+      'https://vjudge.net/contest/815686'
+    );
+    expect(iubCse211.activeContest?.platform).toBe('VJudge');
     expect(iubCse211.classSchedule).toEqual([]);
     expect(iubCse211.assignments?.[0]?.status).toBe('upcoming');
   });

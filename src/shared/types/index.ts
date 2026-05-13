@@ -121,7 +121,7 @@ export interface CourseContest {
   title: string;
   url: string;
   startDate?: string;
-  endDate: string;
+  endDate?: string;
   platform?: string;
 }
 

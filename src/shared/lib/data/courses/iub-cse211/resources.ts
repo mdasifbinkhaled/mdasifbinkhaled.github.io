@@ -1,5 +1,4 @@
 import type { CourseLink, CourseResourceSection } from '@/shared/types';
-import { cse211Term } from './term';
 
 export const links: CourseLink[] = [
   {
@@ -26,6 +25,11 @@ export const links: CourseLink[] = [
     title: 'Anonymous Feedback',
     url: 'https://forms.gle/zpz4ZFWBgMyZB9h27',
     type: 'site',
+  },
+  {
+    title: 'Discord Community',
+    url: 'https://discord.gg/ynwm3GDW',
+    type: 'discord',
   },
 ];
 
@@ -71,9 +75,9 @@ export const resourceSections: CourseResourceSection[] = [
     title: 'Practice Arena (Build It)',
     items: [
       {
-        label: 'VJudge',
-        url: 'https://vjudge.net/',
-        description: `${cse211Term.label} class contest link will be added after lab sections are finalized.`,
+        label: 'VJudge Contest',
+        url: 'https://vjudge.net/contest/815686',
+        description: 'The official Summer 2026 class programming contest.',
       },
       {
         label: 'CSES Problem Set',

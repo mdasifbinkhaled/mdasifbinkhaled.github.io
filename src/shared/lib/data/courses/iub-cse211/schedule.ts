@@ -14,14 +14,19 @@ export const notices = [
   {
     id: 'n-routine-pending',
     title:
-      'Class routine, lab sections, contest link, and exam dates will be updated after official publication',
+      'Class routine, lab sections, and exam dates will be updated after official publication',
     date: cse211Term.publishedOn,
     type: 'warning' as const,
     importance: 'medium' as const,
   },
 ];
 
-export const activeContest: CourseData['activeContest'] = undefined;
+export const activeContest: CourseData['activeContest'] = {
+  title: 'Algorithms Lab Programming Contest — Summer 2026',
+  url: 'https://vjudge.net/contest/815686',
+  startDate: cse211Term.publishedOn,
+  platform: 'VJudge',
+};
 
 export const exams = {
   midterm: {

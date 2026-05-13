@@ -11,7 +11,7 @@ interface ContestCountdownProps {
   contest: {
     title: string;
     url: string;
-    endDate: string;
+    endDate?: string;
     platform?: string;
   };
 }
@@ -31,7 +31,7 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
     return () => clearInterval(timer);
   }, [contest.endDate]);
 
-  if (!isClient) return null;
+  if (!isClient || !contest.endDate) return null;
 
   const difference = +new Date(contest.endDate) - +new Date();
   const timeLeft =
