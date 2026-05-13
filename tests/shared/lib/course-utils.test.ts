@@ -24,6 +24,7 @@ describe('formatBreadcrumbTitle', () => {
   });
 
   it('formats complex course codes with semester info', () => {
+    expect(formatBreadcrumbTitle('cse211sum26')).toBe('CSE 211 Summer 2026');
     expect(formatBreadcrumbTitle('cse211spr26')).toBe('CSE 211 Spring 2026');
     expect(formatBreadcrumbTitle('cse420sum25')).toBe('CSE 420 Summer 2025');
     expect(formatBreadcrumbTitle('mat101aut24')).toBe('MAT 101 Autumn 2024');

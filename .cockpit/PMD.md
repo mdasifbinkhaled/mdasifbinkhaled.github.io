@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
-> **Last Updated**: 2026-05-06
-> **Commit**: HEAD (round-2 audit remediation and truth-sync)
+> **Last Updated**: 2026-05-13
+> **Commit**: HEAD (CSE211 Summer 2026 rollover and cockpit truth-sync)
 
 ## Mission
 
@@ -14,10 +14,10 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Layer         | Technology                            | Version |
 | ------------- | ------------------------------------- | ------- |
-| Framework     | Next.js (App Router)                  | 16.2.3  |
+| Framework     | Next.js (App Router)                  | 16.2.4  |
 | UI Library    | React                                 | 19.2.5  |
 | Language      | TypeScript (strict)                   | 5.9     |
-| Styling       | Tailwind CSS + CSS custom properties  | 4.1.18  |
+| Styling       | Tailwind CSS + CSS custom properties  | 4.2.4   |
 | Animation     | Vanilla JS (no library)               | ---     |
 | Icons         | Lucide React                          | 0.563.0 |
 | Themes        | next-themes + 6 color themes          | 0.4.6   |
@@ -27,10 +27,10 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Analytics     | @next/third-parties (Google GA4)      | 16.2.3  |
 | Error Track   | @sentry/browser (client-side)         | 10.48.0 |
 | Testing       | Vitest + Testing Library + jsdom      | 3.2.4   |
-| E2E Testing   | Playwright + axe-core                 | 1.58.0  |
-| Linting       | ESLint 9 (flat config)                | 9.39.2  |
-| Formatting    | Prettier                              | 3.8.2   |
-| Git Hooks     | Husky + lint-staged + commitlint      | 9.1.7   |
+| E2E Testing   | Playwright + axe-core                 | 1.59.1  |
+| Linting       | ESLint 9 (flat config)                | 9.39.4  |
+| Formatting    | Prettier                              | 3.8.3   |
+| Git Hooks     | Husky + lint-staged + local validator | 9.1.7   |
 | Deployment    | GitHub Pages (static export)          | ---     |
 | CI/CD         | GitHub Actions (5 workflows)          | ---     |
 
@@ -40,19 +40,19 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ```text
 +---------------------------------------------+
-|  App Layer (2,283 LOC / 8%)                 |  Page routes, layouts, error boundaries
+|  App Layer (2,275 LOC / 8%)                 |  Page routes, layouts, error boundaries
 
 |  src/app/                                    |  22 routes, 27 pages
 +---------------------------------------------+
-|  Features Layer (14,329 LOC / 52%)          |  Domain modules
+|  Features Layer (14,393 LOC / 52%)          |  Domain modules
 |  src/features/{about,apps,home,              |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
-|  Shared Layer (10,732 LOC / 39%)            |  Cross-cutting infrastructure
+|  Shared Layer (10,624 LOC / 39%)            |  Cross-cutting infrastructure
 |  src/shared/{components,config,hooks,        |  UI primitives, config, data,
 |              lib,providers,types}            |  analytics, types
 +---------------------------------------------+
-|  Data Layer (bottom of shared/)             |  32 data files (TypeScript objects)
+|  Data Layer (bottom of shared/)             |  33 data files (TypeScript objects)
 |  src/shared/lib/data/                        |  Type-checked via satisfies assertions
 +---------------------------------------------+
 ```
@@ -70,15 +70,15 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value                    |
 | ----------------- | ------------------------ |
-| Source files      | 273                      |
-| Lines of code     | 27,618                   |
+| Source files      | 274                      |
+| Lines of code     | 27,524                   |
 | Components (.tsx) | 170                      |
 | Custom hooks      | 4                        |
-| Data files        | 32                       |
+| Data files        | 33                       |
 | Config files      | 6                        |
 | Barrel exports    | 19                       |
-| Test files        | 62                       |
-| Test count        | 481 (unit) + 4 E2E specs |
+| Test files        | 63                       |
+| Test count        | 485 (unit) + 4 E2E specs |
 | Pages generated   | 30 HTML / 30 routes      |
 | Themes            | 6                        |
 | Git commits       | 460+                     |
@@ -101,9 +101,9 @@ An academic portfolio showcasing research, publications, teaching activities, an
 ### LOC Distribution
 
 ```text
-shared/   10,724 (39%)  ████████████████████
+shared/   10,624 (39%)  ████████████████████
 
-features/ 14,387 (52%)  ██████████████████████████
+features/ 14,393 (52%)  ██████████████████████████
 app/       2,275  (8%)  ████
 styles/      232  (1%)  █
 ```
@@ -112,7 +112,7 @@ styles/      232  (1%)  █
 
 | Module      | Files | Purpose                                             |
 | ----------- | ----- | --------------------------------------------------- |
-| `apps/`     | 34    | Student tools, shared app primitives, import/export |
+| `apps/`     | 35    | Student tools, shared app primitives, import/export |
 | `teaching/` | 22    | Course cards, detail pages, schedules, syllabi      |
 | `about/`    | 12    | Hero, awards, certifications, skills, philosophy    |
 | `research/` | 11    | Research areas, projects, open source, vision       |
@@ -150,14 +150,14 @@ styles/      232  (1%)  █
 
 ## Quality Status
 
-| Check      | Status | Details                                                                                                       |
-| ---------- | ------ | ------------------------------------------------------------------------------------------------------------- |
-| TypeScript | PASS   | 0 errors (strict mode)                                                                                        |
-| ESLint     | PASS   | 0 errors, 0 warnings                                                                                          |
-| Prettier   | PASS   | All formatted                                                                                                 |
-| Tests      | PASS   | 481/481 unit (58 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow    |
-| Build      | PASS   | 30 HTML pages generated + 118 Workbox precache entries                                                        |
-| Audit      | NOTE   | 3 moderate advisories (`next`, `postcss`, `@next/third-parties`); no high/critical; no fix available upstream |
+| Check      | Status | Details                                                                                                    |
+| ---------- | ------ | ---------------------------------------------------------------------------------------------------------- |
+| TypeScript | PASS   | 0 errors (strict mode)                                                                                     |
+| ESLint     | PASS   | 0 errors, 0 warnings                                                                                       |
+| Prettier   | PASS   | All formatted                                                                                              |
+| Tests      | PASS   | 485/485 unit (59 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow |
+| Build      | PASS   | 30 HTML pages generated + 118 custom service-worker precache entries                                       |
+| Audit      | NOTE   | 2 upstream advisories (`next` HIGH, bundled `postcss` MODERATE); no safe non-force Next 16 fix published   |
 
 ## Architecture Observations
 
@@ -166,10 +166,10 @@ styles/      232  (1%)  █
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (481 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
-- Professional CI/CD with conventional commits
+- Strong test foundation (485 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
+- Professional CI/CD with local Conventional Commit validation
 - CSP headers with no `unsafe-eval`
-- Service worker registered via `sw-register.tsx` (Workbox-generated `out/sw.js`)
+- Service worker registered via `sw-register.tsx` (generated `out/sw.js`)
 - Playwright E2E + axe-core accessibility testing (18-route a11y suite)
 - Route announcer for screen reader navigation
 - Well-decomposed Seat Planner (13 files, clean separation of concerns)

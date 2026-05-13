@@ -1,8 +1,8 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-05-06 (Audit remediation, dependency queue cleanup, and security truth-sync)
+> **Last Updated**: 2026-05-13 (CSE211 Summer 2026 rollover, dependency-audit cleanup, and cockpit truth-sync)
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.5.0 | **Stack**: Next.js 16.2.3 · React 19 · TypeScript 5.9 · Tailwind 4.1.18
+> **Version**: 1.5.0 | **Stack**: Next.js 16.2.4 · React 19 · TypeScript 5.9 · Tailwind 4.2.4
 
 ## Quick Navigation
 
@@ -24,19 +24,19 @@
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Unit:       481/481 PASS (58 files)
-    Coverage:   73.81% lines · 81.78% branches · 62.66% funcs · 73.81% stmts (thresholds 70/81/60/70)
-    E2E:        Chromium is the fast CI gate; Firefox + mobile-safari run in Cross-Browser E2E on main/manual
-    Build:      30 HTML pages generated + 118 files precached (Workbox, 7680.9 KB)
+    Unit:       485/485 PASS (59 files)
+    Coverage:   74.12% lines · 81.42% branches · 62.89% funcs · 74.12% stmts (thresholds 70/81/60/70)
+    E2E:        55/55 Chromium PASS; 106 PASS / 4 skipped across Firefox + mobile-safari
+    Build:      30 HTML pages generated + 118 files precached (custom SW, 7548.1 KB)
     Format:     All files formatted
     Phase:      Roadmap Phases 7-12 — complete (all tracked items done)
 
 ## Findings Summary
 
-    Total:    275 findings (265 resolved, 2 open, 3 false positives, 5 reassessed)
+    Total:    276 findings (266 resolved, 2 open, 3 false positives, 5 reassessed)
     CRITICAL:   4 (0 open)
-    HIGH:      32 (1 open)   — F-264 supply-chain watch (quarterly review)
-    MEDIUM:    85 (1 open)   — F-260 /cv a11y flaky under local parallel (hardened)
+    HIGH:      32 (1 open)   — F-264 Next.js supply-chain watch (weekly until fixed Next 16 patch)
+    MEDIUM:    86 (1 open)   — F-260 /cv a11y flaky under local parallel (hardened)
     LOW:      104 (0 open)
     INFO:      32 (0 open)
 
@@ -52,7 +52,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 11 (Monitoring): COMPLETED** — Sentry error tracking, Google Analytics page views, publications filter telemetry, command-palette telemetry, and UptimeRobot monitoring are all live.
 **Phase 12 (Apps Hub I/O): COMPLETED** — shared import, storage, export, stats, and settings primitives rolled out; Seat Planner now ships the redesigned workflow shell, resilient reallocation, flexible room ingest, bulk faculty tools, and PDF/PNG/print exports; GPA transcript, Course CSV/XLSX, and Exam CSV/XLSX imports live.
 
-- 481/481 unit tests passing (58 files), with Chromium gated in CI and Firefox/WebKit automated separately.
+- 485/485 unit tests passing (59 files), with Chromium gated in CI and Firefox/WebKit automated separately.
 - 30 HTML pages generated and precached for static deployment.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).
@@ -60,23 +60,23 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 
 ## Deferred Triggers Watchlist
 
-All previously deferred roadmap items (`7.6`, `10.2`, `10.5`, `11.3`) shipped on 2026-04-21. Quarterly review remains relevant for the two open findings only: F-260 (`/cv` accessibility stability) and F-264 (dependency advisory cadence). Next reviews: **F-260 2026-07-17**, **F-264 2026-08-06**.
+All previously deferred roadmap items (`7.6`, `10.2`, `10.5`, `11.3`) shipped on 2026-04-21. Watchlist remains relevant for the two open findings only: F-260 (`/cv` accessibility stability) and F-264 (upstream Next.js advisory cadence). Next reviews: **F-260 2026-07-17**, **F-264 weekly until a fixed Next 16 patch is published**.
 
 ## Project Vitals
 
 | Metric              | Value                         |
 | ------------------- | ----------------------------- |
-| Source files        | 273                           |
-| Lines of code       | 27,618                        |
+| Source files        | 274                           |
+| Lines of code       | 27,524                        |
 | Source `.tsx` files | 170                           |
-| Test files          | 62 (58 unit + 4 E2E)          |
+| Test files          | 63 (59 unit + 4 E2E)          |
 | Runtime deps        | 29                            |
-| Dev deps            | 28                            |
+| Dev deps            | 24                            |
 | ADRs                | 3 (ADR-005, ADR-006, ADR-007) |
 
 ## Architecture Layers (LOC Distribution)
 
-    shared/   10,724 LOC (39%) — Infrastructure, data, UI primitives
-    features/ 14,387 LOC (52%) — Feature modules (teaching, about, research, home, apps)
+    shared/   10,624 LOC (39%) — Infrastructure, data, UI primitives
+    features/ 14,393 LOC (52%) — Feature modules (teaching, about, research, home, apps)
     app/       2,275 LOC  (8%) — Page routes and layouts
     styles/      232 LOC  (1%) — Design tokens + globals

@@ -75,22 +75,15 @@ If the site moves to a host that supports custom headers (Cloudflare Pages,
 Netlify, a reverse proxy, etc.), the CSP should be lifted out of the `<meta>`
 tag and served via HTTP response header to close these gaps.
 
-## Known Development Dependency Vulnerabilities
+## Known Dependency Advisory Watch
 
-The following vulnerability exists in a development dependency and is **NOT exploitable** in production:
+`npm audit` and `npm audit --omit=dev` currently report only the upstream Next.js advisory chain (`next` plus its bundled `postcss`). Fixing it with `npm audit fix --force` would install `next@15.5.15`, a framework downgrade that is not a safe update path for this Next 16 static-export app.
 
-### js-yaml (MODERATE severity) - GHSA-mh29-5h37-fv8m
+Development-only vulnerable chains previously pulled in by `serve`, `workbox-build`, and `commitlint` were removed on 2026-05-13 by replacing them with local Node scripts for static E2E serving, service-worker generation, and commit-message validation.
 
-- **Affected Versions**: ALL versions (3.x, 4.x) - No version is safe
-- **Status**: No patch available across any version
-- **Location**: Used by eslint, commitlint for config parsing
-- **Vulnerability**: Prototype pollution in merge operator (`<<`)
-- **Risk Assessment**: LOW - Only parses trusted config files, merge operator not used
-- **Action**: Monitoring for upstream fixes from js-yaml maintainers
+**Action**: stay on the latest available Next 16 patch (`16.2.4` as of 2026-05-13) and upgrade immediately when a non-force fixed Next 16 release is published.
 
-**Note**: This vulnerability is in development tooling only and does not affect the production build or runtime security of the deployed website. The production bundle is completely static HTML/CSS/JS with no vulnerable code. The glob vulnerability has been mitigated by downgrading to stable version 10.1.0.
-
-**Last Updated**: 2026-02-05
+**Last Updated**: 2026-05-13
 
 ## Responsible Disclosure
 

@@ -1,6 +1,7 @@
 import type { CourseData } from '@/shared/types';
 import { weeklyModules } from './modules';
 import { links, resourceSections } from './resources';
+import { cse211Term } from './term';
 import {
   classSchedule,
   semesterEndDate,
@@ -10,16 +11,16 @@ import {
 } from './schedule';
 
 export const iubCse211: CourseData = {
-  id: 'iub-cse211-spring26',
+  id: cse211Term.id,
   code: 'CSE 211',
-  slug: 'cse211spr26',
+  slug: cse211Term.slug,
 
   title: 'Algorithms',
   institution: 'IUB',
   level: 'undergraduate',
   credits: 3,
-  semester: 'Spring',
-  year: 2026,
+  semester: cse211Term.semester,
+  year: cse211Term.year,
   description:
     'Comprehensive study of algorithm analysis and design. Topics include sorting, searching, graph algorithms, dynamic programming, and complexity analysis (Big O). Emphasis on solving complex computational problems efficiently.',
   outcomes: [
@@ -32,11 +33,10 @@ export const iubCse211: CourseData = {
   technologies: ['Python', 'C++', 'Jupyter Notebook'],
   assignments: [
     {
-      title: 'Assignment 1 Specification',
-      link: 'https://docs.google.com/document/d/1zpuJU5Us3u_ZXNavkciqvSvQeB2ZmoFqvhbLo-6sIEk/edit?usp=sharing',
-      status: 'active',
+      title: `${cse211Term.label} Assignment 1`,
+      status: 'upcoming',
       description:
-        'Review the detailed requirement specification for Assignment 1.',
+        'Specification will be published after the Summer 2026 class routine and lab sections are finalized.',
     },
   ],
   enrollmentCount: 0,
@@ -46,12 +46,18 @@ export const iubCse211: CourseData = {
   tier: 'detailed',
 
   // Hub Features (Imported from Sub-modules)
-  semesterEndDate,
+  ...(semesterEndDate ? { semesterEndDate } : {}),
   notices,
-  activeContest,
+  ...(activeContest ? { activeContest } : {}),
   exams,
   weeklyModules,
   links,
   resourceSections,
   classSchedule,
+  consultation: {
+    office: 'BC5010-D',
+    hours:
+      'By appointment during Summer 2026 until the class routine is finalized.',
+    note: 'Please make an appointment before visiting.',
+  },
 };

@@ -4,7 +4,7 @@
 
 | Package                    | Version | Purpose                                         |
 | -------------------------- | ------- | ----------------------------------------------- |
-| `next`                     | 16.2.3  | Framework (App Router, static export)           |
+| `next`                     | 16.2.4  | Framework (App Router, static export)           |
 | `react`                    | 19.2.5  | UI library                                      |
 | `react-dom`                | 19.2.5  | React DOM bindings                              |
 | `lucide-react`             | 0.563.0 | Icons                                           |
@@ -40,29 +40,27 @@
 
 ## Dev Dependencies
 
-| Package                           | Version | Purpose                     |
-| --------------------------------- | ------- | --------------------------- |
-| `typescript`                      | ^5.9.x  | Type checking               |
-| `eslint`                          | ^9.39.2 | Linting                     |
-| `eslint-config-next`              | ^16.1.4 | Next.js ESLint rules        |
-| `prettier`                        | ^3.8.2  | Code formatting             |
-| `vitest`                          | ^3.2.4  | Test runner                 |
-| `@vitest/coverage-v8`             | ^3.2.4  | Coverage reporting          |
-| `@testing-library/react`          | ^16.x   | React testing utilities     |
-| `@testing-library/jest-dom`       | ^6.x    | DOM matchers                |
-| `@testing-library/user-event`     | ^14.6.1 | User interaction simulation |
-| `jsdom`                           | ^25.x   | DOM environment for tests   |
-| `@vitejs/plugin-react`            | ^5.2.0  | Vite React plugin           |
-| `tailwindcss`                     | ^4.1.18 | CSS framework               |
-| `@tailwindcss/postcss`            | ^4.1.18 | Tailwind CSS PostCSS plugin |
-| `tw-animate-css`                  | ^1.4.0  | Animation CSS utilities     |
-| `postcss`                         | ^8.4.41 | CSS processing              |
-| `husky`                           | ^9.1.7  | Git hooks                   |
-| `lint-staged`                     | ^15.5.2 | Pre-commit linting          |
-| `commitlint`                      | ^20.1.0 | Commit message enforcement  |
-| `@commitlint/config-conventional` | ^20.0.0 | Conventional commit rules   |
-| `cross-env`                       | ^7.0.3  | Cross-platform env vars     |
-| `@playwright/test`                | ^1.58.0 | E2E testing + accessibility |
+| Package                       | Version | Purpose                     |
+| ----------------------------- | ------- | --------------------------- |
+| `typescript`                  | 5.9.3   | Type checking               |
+| `eslint`                      | 9.39.4  | Linting                     |
+| `eslint-config-next`          | 16.2.4  | Next.js ESLint rules        |
+| `prettier`                    | 3.8.3   | Code formatting             |
+| `vitest`                      | 3.2.4   | Test runner                 |
+| `@vitest/coverage-v8`         | 3.2.4   | Coverage reporting          |
+| `@testing-library/react`      | 16.3.2  | React testing utilities     |
+| `@testing-library/jest-dom`   | 6.9.1   | DOM matchers                |
+| `@testing-library/user-event` | 14.6.1  | User interaction simulation |
+| `jsdom`                       | 25.0.1  | DOM environment for tests   |
+| `@vitejs/plugin-react`        | 5.2.0   | Vite React plugin           |
+| `tailwindcss`                 | 4.2.4   | CSS framework               |
+| `@tailwindcss/postcss`        | 4.2.4   | Tailwind CSS PostCSS plugin |
+| `tw-animate-css`              | 1.4.0   | Animation CSS utilities     |
+| `postcss`                     | 8.5.14  | CSS processing              |
+| `husky`                       | 9.1.7   | Git hooks                   |
+| `lint-staged`                 | 15.5.2  | Pre-commit linting          |
+| `cross-env`                   | 7.0.3   | Cross-platform env vars     |
+| `@playwright/test`            | 1.59.1  | E2E testing + accessibility |
 
 ## Overrides
 
@@ -86,7 +84,7 @@ npm run build
   │   ├── Static page generation (30 HTML pages / 30 routes)
   │   ├── SSG for dynamic routes (generateStaticParams)
   │   └── Output to out/ directory
-  └── postbuild: creates out/.nojekyll and generates Workbox SW/precache
+  └── postbuild: creates out/.nojekyll and generates service worker/precache
 ```
 
 ### Build Output
@@ -115,15 +113,22 @@ npm run build
 | `validate:full`    | validate + build + Chromium Playwright                | Full validation + fast E2E gate |
 | `prepare`          | `husky`                                               | Setup git hooks                 |
 
+## Local Tooling Scripts
+
+| Script path                           | Purpose                                                |
+| ------------------------------------- | ------------------------------------------------------ |
+| `scripts/generate-service-worker.mjs` | Generates `out/sw.js` and the static precache manifest |
+| `scripts/serve-static.mjs`            | Serves `out/` for Playwright without `serve`           |
+| `scripts/validate-commit-message.mjs` | Enforces Conventional Commit headers in Husky          |
+
 ## Known Vulnerabilities
 
-| Package               | Severity | Impact                                               | Mitigation                                                       |
-| --------------------- | -------- | ---------------------------------------------------- | ---------------------------------------------------------------- |
-| `next` 16.2.3         | Moderate | Carries bundled PostCSS advisory chain               | Static export; no server runtime; wait for Next patch train      |
-| `postcss` <8.5.10     | Moderate | XSS via unescaped `</style>` in CSS stringify output | Build/toolchain path only; no untrusted CSS input in static site |
-| `@next/third-parties` | Moderate | Transitive advisory via `next`                       | Resolves when Next ships fixed bundled PostCSS                   |
+| Package                  | Severity | Impact                                                              | Mitigation                                                                      |
+| ------------------------ | -------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `next` 16.2.4            | High     | Multiple upstream Next.js advisories across server/runtime surfaces | Static export; latest Next 16 patch installed; upgrade when fixed release ships |
+| `next` bundled `postcss` | Moderate | XSS via unescaped `</style>` in CSS stringify output                | Bundled dependency; no untrusted CSS input in static site                       |
 
-**Summary**: 3 total advisories, all moderate, no high/critical, no fix available (`npm audit` and `npm audit --omit=dev` both verified on 2026-05-06). Reviewed 2026-05-06; re-check by 2026-08-06 under F-264.
+**Summary**: 2 total advisories (1 high, 1 moderate), both from the upstream Next.js chain. `npm audit fix --force` proposes `next@15.5.15`, a framework downgrade, so it is intentionally not applied. Reviewed 2026-05-13; re-check weekly under F-264 until a fixed Next 16 patch is published.
 
 ## Deployment
 
@@ -179,12 +184,12 @@ npm run build
 
 ## PWA
 
-| Asset                        | Status                                                             |
-| ---------------------------- | ------------------------------------------------------------------ |
-| `site.webmanifest`           | ✅ Present                                                         |
-| App icons (192x192, 512x512) | ✅ Present                                                         |
-| Service Worker               | ✅ Workbox-generated `out/sw.js`, registered via `sw-register.tsx` |
-| Offline support              | ✅ Cache-first for static pages (118 files precached)              |
+| Asset                        | Status                                                     |
+| ---------------------------- | ---------------------------------------------------------- |
+| `site.webmanifest`           | ✅ Present                                                 |
+| App icons (192x192, 512x512) | ✅ Present                                                 |
+| Service Worker               | ✅ Generated `out/sw.js`, registered via `sw-register.tsx` |
+| Offline support              | ✅ Cache-first for static pages (118 files precached)      |
 
 ## Analytics
 

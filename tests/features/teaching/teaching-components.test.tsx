@@ -5,6 +5,7 @@ import { TeachingCTA } from '@/features/teaching/components/teaching-cta';
 import { MentorshipSection } from '@/features/teaching/components/mentorship-section';
 import { CourseCardCompact } from '@/features/teaching/components/course-card-compact';
 import { CourseCard } from '@/features/teaching/components/course-card';
+import { CourseHero } from '@/features/teaching/components/course-hero';
 import type { CourseData } from '@/shared/types';
 
 vi.mock('next/link', () => ({
@@ -57,6 +58,21 @@ const basicCourse: CourseData = {
   outcomes: ['Master linear and non-linear data structures'],
 };
 
+const ongoingCourse: CourseData = {
+  ...detailedCourse,
+  id: 'test-cse211-summer26',
+  title: 'Algorithms',
+  code: 'CSE 211',
+  semester: 'Summer',
+  year: 2026,
+  status: 'ongoing',
+  consultation: {
+    office: 'Room 101',
+    hours: 'By appointment after lab section assignment.',
+    note: 'Confirm before visiting.',
+  },
+};
+
 // ─── TeachingHeroStats ───────────────────────────────────────────────────────
 describe('TeachingHeroStats', () => {
   const defaultProps = {
@@ -78,6 +94,28 @@ describe('TeachingHeroStats', () => {
     const { container } = render(<TeachingHeroStats {...defaultProps} />);
     const grid = container.firstElementChild;
     expect(grid?.classList.contains('grid')).toBe(true);
+  });
+});
+
+// ─── CourseHero ─────────────────────────────────────────────────────────────
+describe('CourseHero', () => {
+  it('renders consultation details from course data', () => {
+    render(<CourseHero course={ongoingCourse} />);
+
+    expect(screen.getByText('Consultation Hours')).toBeInTheDocument();
+    expect(screen.getByText('Room 101')).toBeInTheDocument();
+    expect(
+      screen.getByText('By appointment after lab section assignment.')
+    ).toBeInTheDocument();
+    expect(screen.getByText('Confirm before visiting.')).toBeInTheDocument();
+  });
+
+  it('does not render consultation details without course data', () => {
+    render(
+      <CourseHero course={{ ...ongoingCourse, consultation: undefined }} />
+    );
+
+    expect(screen.queryByText('Consultation Hours')).not.toBeInTheDocument();
   });
 });
 

@@ -417,6 +417,16 @@
 - **Rejected/deferred dependency cleanup**: Vitest 4.1.5 + `@vitest/coverage-v8` 4.1.5 was tested. With default forks it timed out worker startup after 52/58 files; with `pool: 'threads'`, 481/481 unit tests passed but branch coverage dropped to 56.34%, below the 81% ratchet. Rolled back to Vitest 3.2.4; future Vitest 4 migration needs a dedicated coverage rebaseline without weakening the quality floor.
 - **Deferred** (out of scope this round): discriminated-union course state (audit #11) and tokens.css contrast bump (visual regression risk requiring screenshot review).
 
+### Phase — CSE211 Summer 2026 Rollover & Data Freshness (2026-05-13)
+
+- **CSE211 term rollover**: detailed IUB `CSE 211 — Algorithms` course metadata moved from Spring 2026 to Summer 2026 (`iub-cse211-summer26`, `cse211sum26`) using a shared `cse211Term` source of truth.
+- **Stale logistics removed**: Spring 2026 VJudge contest, Discord invite notice, assignment link, and section/lab room table were removed from the active course surface until official Summer 2026 logistics are published.
+- **Consultation root fix**: `CourseHero` no longer hardcodes one office-hours block for every ongoing course; consultation now lives in `CourseData` and renders only when current course data provides it.
+- **Regression coverage**: added CSE211 data freshness tests plus CourseHero consultation rendering/omission tests; `formatBreadcrumbTitle` now explicitly covers `cse211sum26` while preserving historical Spring slug parsing.
+- **Dependency-audit cleanup**: `npm audit fix` advanced the safe patch surface (`next@16.2.4`, `@next/third-parties@16.2.3`, `eslint-config-next@16.2.4`, root `postcss@8.5.14`, Tailwind 4.2.4, Playwright 1.59.1). Replaced `serve`, `workbox-build`, and `commitlint` with local Node scripts for static E2E serving, service-worker generation, and commit-message validation, eliminating their vulnerable dev-only chains.
+- **F-264 status**: audit is narrowed to the upstream Next.js chain only (`next` HIGH + bundled `postcss` MODERATE). `npm audit fix --force` would install `next@15.5.15`, a framework downgrade, so the safe path is weekly Next 16 patch watch rather than a force fix.
+- **Measured quality snapshot**: full gates passed after clean reinstall and dependency refresh — lint, format, typecheck, 485/485 unit tests across 59 files, coverage 74.12 lines / 81.42 branches / 62.89 funcs / 74.12 stmts, build 30/30 pages with 118 generated SW precache entries (7548.1 KB), Chromium 55/55, Firefox/mobile-safari 106 pass + 4 skipped.
+
 ## Tags
 
 | Tag                   | Description                            |

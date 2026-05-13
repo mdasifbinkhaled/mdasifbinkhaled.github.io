@@ -1,8 +1,8 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-05-06
-> **Current Version**: 1.5.0 | **Quality**: All gates green (481/481 unit, coverage 73.81/81.78/62.66/73.81 with floor 70/81/60/70, static build 30/30, Chromium gate in CI, cross-browser matrix automated post-CI, 0 TS/ESLint errors)
-> **Open Findings**: 2 — F-260 `/cv` a11y hardened (watched), F-264 supply-chain advisories (quarterly review)
+> **Created**: 2026-02-19 | **Updated**: 2026-05-13
+> **Current Version**: 1.5.0 | **Quality**: Functional gates green (485/485 unit, coverage 74.12/81.42/62.89/74.12 with floor 70/81/60/70, static build 30/30, Chromium 55/55, Firefox/mobile-safari 106 pass + 4 skipped, 0 TS/ESLint errors); audit warning remains under F-264
+> **Open Findings**: 2 — F-260 `/cv` a11y hardened (watched), F-264 upstream Next.js advisories (weekly until fixed Next 16 patch)
 
 ## Phase 6: Code Quality & Cleanup
 

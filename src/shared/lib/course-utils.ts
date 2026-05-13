@@ -13,7 +13,7 @@ import type { LucideIcon } from 'lucide-react';
 
 /**
  * Formats a URL segment into a human-readable title.
- * Handles institution codes (IUB) and course slugs (cse211spr26 -> CSE 211 Spring 2026).
+ * Handles institution codes (IUB) and course slugs (cse211sum26 -> CSE 211 Summer 2026).
  */
 export function formatBreadcrumbTitle(segment: string): string {
   const institutionCodes = ['iub', 'bracu', 'nsu', 'aiub'];
@@ -32,7 +32,7 @@ export function formatBreadcrumbTitle(segment: string): string {
     return segment.toUpperCase();
   }
 
-  // Complex course codes: "cse211spr26" -> "CSE 211 Spring 2026"
+  // Complex course codes: "cse211sum26" -> "CSE 211 Summer 2026"
   const complexMatch = segment.match(
     /^([a-z]+)(\d+)(spr|sum|aut|win|fal)(\d{2})$/i
   );

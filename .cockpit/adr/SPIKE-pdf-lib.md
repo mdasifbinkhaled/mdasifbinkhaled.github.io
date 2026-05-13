@@ -4,7 +4,7 @@
 > **Context**: Resolving security finding F-264 (transitive `dompurify` vulnerability via `jspdf`).
 > **Status**: **Spike Complete — Original Advisory Resolved, Migration Deferred**
 
-**2026-05-06 advisory note**: the original `jspdf` / `dompurify` chain no longer appears in `npm audit`. F-264 now tracks the current moderate `next` / `postcss` / `@next/third-parties` chain (GHSA-qx2v-qp2m-jg93), which is unrelated to PDF generation. This spike is retained as an implementation blueprint only if the PDF stack regains a high/critical advisory or a product need justifies the migration.
+**2026-05-13 advisory note**: the original `jspdf` / `dompurify` chain no longer appears in `npm audit`. F-264 now tracks only the upstream Next.js advisory chain: `next@16.2.4` (HIGH) and its bundled `postcss<8.5.10` (MODERATE, GHSA-qx2v-qp2m-jg93). `npm audit fix --force` would downgrade the app to `next@15.5.15`, so this spike is retained as an implementation blueprint only if the PDF stack regains a high/critical advisory or a product need justifies the migration.
 
 ## Executive Summary
 
@@ -84,6 +84,6 @@ export async function generateMasterListPDF(
 
 **Next Steps**:
 
-1. Maintain the quarterly review of F-264 against the current Next/PostCSS advisory chain.
+1. Maintain the weekly F-264 review against the current Next/PostCSS advisory chain until a fixed Next 16 patch is published.
 2. Keep `jspdf` / `jspdf-autotable` unless a new high/critical PDF-stack advisory appears or the product needs capabilities that `pdf-lib` handles better.
 3. Keep this SPIKE document as a blueprint in case an immediate migration becomes mandatory.

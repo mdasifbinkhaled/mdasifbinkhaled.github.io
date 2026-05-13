@@ -74,7 +74,7 @@ test(utils): add unit tests for date formatting
 
 **Valid types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
-Commit messages are validated automatically with `commitlint`.
+Commit messages are validated automatically by the local Husky commit-message hook.
 
 ## 🔀 Pull Request Process
 

@@ -15,7 +15,6 @@ const config = [
       '.turbo/**',
       '.eslintcache',
       'public/**',
-      'workbox-config.cjs',
     ],
   },
   ...nextCoreWebVitals,

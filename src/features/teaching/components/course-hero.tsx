@@ -132,32 +132,38 @@ export function CourseHero({ course }: { course: CourseData }) {
         )}
 
         {/* Consultation Hours - Only for ongoing courses */}
-        {course.status === 'ongoing' && (
+        {course.status === 'ongoing' && course.consultation && (
           <div className="mt-6 rounded-xl border border-border/60 bg-muted/10 p-6 shadow-xs relative z-20">
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
               <GraduationCap className="w-4 h-4" />
               Consultation Hours
             </h3>
             <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
-              <div className="flex items-center gap-2">
-                <span className="text-muted-foreground">Office:</span>
-                <span className="font-medium">BC5010 - D</span>
-              </div>
-              <div className="hidden sm:block w-px h-4 bg-border/50" />
+              {course.consultation.office && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="text-muted-foreground">Office:</span>
+                    <span className="font-medium">
+                      {course.consultation.office}
+                    </span>
+                  </div>
+                  <div className="hidden sm:block w-px h-4 bg-border/50" />
+                </>
+              )}
               <div className="flex items-center gap-2">
                 <span className="text-muted-foreground">Hours:</span>
-                <span className="font-medium">
-                  Mon & Wed, 2:40 PM - 4:10 PM
-                </span>
+                <span className="font-medium">{course.consultation.hours}</span>
               </div>
               <div className="hidden sm:block w-px h-4 bg-border/50" />
               <div className="flex items-center gap-2">
                 <span className="text-muted-foreground">Contact:</span>
                 <span className="font-medium">{siteConfig.phone}</span>
               </div>
-              <span className="text-xs text-muted-foreground italic ml-auto">
-                Please make an appointment before visiting.
-              </span>
+              {course.consultation.note && (
+                <span className="text-xs text-muted-foreground italic ml-auto">
+                  {course.consultation.note}
+                </span>
+              )}
             </div>
           </div>
         )}

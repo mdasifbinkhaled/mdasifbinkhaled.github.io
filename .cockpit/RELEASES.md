@@ -43,7 +43,7 @@ Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry l
 
 ### Ground-Up Audit & A11y Remediation (2026-04-12)
 
-- **Service worker registration**: Created `sw-register.tsx` component, imported in root layout — Workbox-generated `out/sw.js` now actually registered
+- **Service worker registration**: Created `sw-register.tsx` component, imported in root layout — generated `out/sw.js` now actually registered
 - **A11y audit expansion**: Playwright axe-core suite expanded from 10 to 18 routes, uncovering 7 new violations:
   - `/apps/exam-countdown`: Added aria-labels to 3 inputs and delete button
   - `/apps/gpa-calculator`: Added aria-labels to course name and credits inputs

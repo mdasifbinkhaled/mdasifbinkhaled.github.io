@@ -1,14 +1,14 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-05-06 | **Status**: Round-2 audit remediation sync (HEAD `9413908`)
-> **Total Findings**: 275 | **Resolved**: 265 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
+> **Last Audit**: 2026-05-13 | **Status**: CSE211 Summer 2026 rollover sync
+> **Total Findings**: 276 | **Resolved**: 266 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
 
 ## Dashboard
 
 ```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
-HIGH:      32 (1 open)  — F-264 supply-chain advisories (quarterly review)
-MEDIUM:    85 (1 open)  — F-260 /cv a11y flaky locally (hardened, watched)
+HIGH:      32 (1 open)  — F-264 upstream Next.js advisories (weekly watch)
+MEDIUM:    86 (1 open)  — F-260 /cv a11y flaky locally (hardened, watched)
 LOW:      104 (0 open)  — Polish, minor config, cosmetic
 INFO:      32 (0 open)  — Informational, acceptable trade-offs
 REASSESSED: 5           — F-195, F-196 (no action needed)
@@ -21,10 +21,10 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:   ✅ 0 errors  (strict mode — root + tests projects, see ADR-006)
 ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
-Unit tests:   ✅ 481/481 pass  (58 files, coverage 73.81% lines / 81.78% branches / 62.66% funcs / 73.81% stmts; floor 70/81/60/70 in vitest.config.mts)
-E2E:          ✅ Chromium gate in CI; Firefox + mobile-safari run in Cross-Browser E2E on main/manual
-Build:        ✅ 30 HTML pages exported  (static export, Workbox precaches 118 files ≈ 7680.9 KB)
-Dependencies: ⚠️ 3 production advisories (`next`, `postcss`, `@next/third-parties`) — all moderate, no upstream fix; quarterly re-review (see F-264)
+Unit tests:   ✅ 485/485 pass  (59 files, coverage 74.12% lines / 81.42% branches / 62.89% funcs / 74.12% stmts; floor 70/81/60/70 in vitest.config.mts)
+E2E:          ✅ Chromium 55/55; Firefox + mobile-safari 106 pass / 4 skipped
+Build:        ✅ 30 HTML pages exported  (static export, custom SW precaches 118 files ≈ 7548.1 KB)
+Dependencies: ⚠️ 2 upstream advisories (`next` HIGH, bundled `postcss` MODERATE) — no safe non-force Next 16 fix yet; weekly re-check (see F-264)
 ```
 
 ---
@@ -37,14 +37,19 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
   Hardened by `test.describe.configure({ mode: 'serial' })` in `tests/e2e/a11y-audit.spec.ts`. Stable in CI; kept open as a watchlist entry to catch regressions if the parallel `/cv` route ever flakes again.
 
 - **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
-  `npm audit --omit=dev` reports 3 **moderate** advisories: `next@16.x` (patch train), `postcss<8.5.10` (GHSA-qx2v-qp2m-jg93, CWE-79 line-return parsing), and `@next/third-parties` (carries the postcss chain). All transitive through next 16's bundled toolchain; `npm audit fix` reports `fixAvailable: false`. Static export + Workbox precache + strict CSP reduce the exploitable surface to near-zero (no postcss runtime in the static bundle; XSS vector requires server-side untrusted CSS input the static export does not have).
-  **Disposition (2026-05-06)**: **quarterly review cadence** tied to the `security.yml` exception block (F-244 policy). **Next review: 2026-08-06.** Re-check by running `npm audit --omit=dev --json` and inspecting upstream GHSA entries for:
-  - `next` — 16.x patch train; upgrade within the minor when a security patch lands.
-  - `postcss` — wait for next.js 16.x to bump bundled postcss ≥ 8.5.10.
-  - `@next/third-parties` — transitive only via next; resolves automatically once next ships fixed postcss.
-    **Escalation**: if any advisory reaches HIGH/CRITICAL severity or a public PoC targeting static-export sites is published, bump to IMMEDIATE and evaluate a `pdf-lib` migration spike (the previous jspdf/dompurify advisory chain has now resolved upstream and dropped off the audit list).
+  `npm audit --omit=dev` reports 2 upstream advisories: `next@16.2.4` (HIGH; advisory range currently includes `9.3.4-canary.0 - 16.3.0-canary.5`) and its bundled `postcss<8.5.10` (MODERATE; GHSA-qx2v-qp2m-jg93). `npm audit fix --force` proposes `next@15.5.15`, a breaking framework downgrade, so it is not a safe remediation for this Next 16 static-export app. Static export + generated precache + strict CSP reduce the exploitable surface: there is no Next server runtime, no image optimizer runtime, no middleware/proxy runtime, and no untrusted CSS stringify input in production.
+  **Disposition (2026-05-13)**: **weekly upstream watch until fixed Next 16 patch**. Safe fixes already applied locally: `npm audit fix` advanced the lockfile to `next@16.2.4`, root `postcss@8.5.14`, Tailwind 4.2.4, Playwright 1.59.1, and removed vulnerable dev-only chains by replacing `serve`, `workbox-build`, and `commitlint` with local Node scripts. Re-check by running `npm audit --omit=dev --json` and inspecting upstream GHSA entries for:
+  - `next` — upgrade within Next 16 immediately when a fixed patch lands.
+  - bundled `postcss` — resolves when Next ships a bundled PostCSS ≥ 8.5.10.
+    **Escalation**: if a public PoC targets static-export sites or a non-force fixed Next 16 release appears, bump to IMMEDIATE and patch in the same maintenance window.
 
 ## Resolved Findings
+
+### Resolved in CSE211 Summer 2026 Rollover (2026-05-13)
+
+| ID    | Category     | Severity | Title                                          | Resolution                                                                                                                                                               |
+| ----- | ------------ | -------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| F-276 | Content/Data | MEDIUM   | CSE211 live page still showed Spring 2026 data | Rolled the detailed CSE211 course to Summer 2026, moved consultation into CourseData, removed stale Spring contest/Discord/section logistics, and added regression tests |
 
 ### Resolved in Ground-Up Audit & A11y Remediation (2026-04-12 to 2026-04-17)
 
@@ -371,7 +376,7 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
 | ID    | Category      | Severity | Title                                                                      | Resolution                                                                                                              |
 | ----- | ------------- | -------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | F-053 | Security      | HIGH     | cv/error.tsx leaks `error.message` to production                           | Replaced hand-rolled Card UI with standard `ErrorFallback` component                                                    |
-| F-054 | Quality       | HIGH     | eslint-config-next@15 mismatched with Next.js 16                           | Updated to `^16.1.4`, rewrote eslint.config.mjs to native flat config, removed `@eslint/eslintrc` and `@eslint/js` deps |
+| F-054 | Quality       | HIGH     | eslint-config-next@15 mismatched with Next.js 16                           | Updated to `^16.2.4`, rewrote eslint.config.mjs to native flat config, removed `@eslint/eslintrc` and `@eslint/js` deps |
 | F-055 | Architecture  | HIGH     | Legacy `.husky/_/` directory (17 scripts from Husky v4/v8)                 | Deleted entire directory — modern Husky 9+ does not use it                                                              |
 | F-056 | Architecture  | MEDIUM   | analytics.ts: ~200 LOC dead code (performanceTracker, userBehaviorTracker) | Deleted trackers, 5 helper functions, 2 interfaces. 346 to 138 LOC                                                      |
 | F-057 | Architecture  | MEDIUM   | courses.ts: 7 unused utility functions never imported                      | Deleted 7 unused exports. 114 to 48 LOC                                                                                 |
@@ -388,7 +393,7 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
 | F-069 | Quality       | MEDIUM   | 3 files use useState+useEffect for mounted detection (anti-pattern)        | Created `useIsClient` hook via `useSyncExternalStore`. Refactored cv-content, time-display, back-to-top                 |
 | F-070 | Quality       | LOW      | eslint.config.mjs FlatCompat bridge legacy (unneeded with next@16)         | Rewrote to native flat config imports from `eslint-config-next/*`                                                       |
 | F-013 | Performance   | MEDIUM   | Analytics module size (345 LOC)                                            | Resolved by F-056 — pruned to 138 LOC                                                                                   |
-| F-027 | Quality       | INFO     | eslint-config-next version mismatch (15 vs 16)                             | Resolved by F-054 — upgraded to ^16.1.4 with native flat config                                                         |
+| F-027 | Quality       | INFO     | eslint-config-next version mismatch (15 vs 16)                             | Resolved by F-054 — upgraded to ^16.2.4 with native flat config                                                         |
 
 ### Resolved in Phase 3 Hardening (2026-02-18)
 

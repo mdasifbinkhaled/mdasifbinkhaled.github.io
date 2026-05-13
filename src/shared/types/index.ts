@@ -153,6 +153,12 @@ export interface CourseExams {
   };
 }
 
+export interface CourseConsultation {
+  office?: string;
+  hours: string;
+  note?: string;
+}
+
 export interface CourseData {
   id: string;
   code: string;
@@ -191,6 +197,7 @@ export interface CourseData {
   activeContest?: CourseContest;
   weeklyModules?: CourseModule[];
   exams?: CourseExams;
+  consultation?: CourseConsultation;
 }
 
 // Navigation types

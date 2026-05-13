@@ -34,12 +34,12 @@ jobs:
           echo "## 🔒 Dependency Audit Results" >> $GITHUB_STEP_SUMMARY
 
           # Static-export project: server-side & build-only criticals do not apply.
-          # Critical exceptions (reviewed 2026-05-06, re-check by 2026-08-06):
+          # Critical exceptions (reviewed 2026-05-13; F-264 is on weekly watch while Next 16 remains advisory-flagged):
           #   next   — server-only criticals may be irrelevant for output:'export'
           #   rollup — build-time only, not in production bundle
           #   vite   — build-time only, not in production bundle
-          # Current F-264 moderate watchlist is not critical-excepted:
-          #   next / postcss / @next/third-parties via GHSA-qx2v-qp2m-jg93.
+          # Current F-264 watchlist is not critical-excepted:
+          #   next HIGH + bundled postcss MODERATE. Force-fixing would downgrade to next@15.x.
           EXCEPTED="^next$|^rollup$|^vite$"
 
           AUDIT_OUTPUT=$(npm audit --json 2>/dev/null || true)

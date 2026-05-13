@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 /**
- * Registers the Workbox-generated service worker for offline caching.
+ * Registers the generated service worker for offline caching.
  * The SW file is generated during postbuild into out/sw.js.
  * Registration is deferred until after page load to avoid blocking.
  */

@@ -1,4 +1,5 @@
 import type { CourseLink, CourseResourceSection } from '@/shared/types';
+import { cse211Term } from './term';
 
 export const links: CourseLink[] = [
   {
@@ -20,11 +21,6 @@ export const links: CourseLink[] = [
     title: 'Python Cheat Sheet',
     url: 'https://github.com/ehmatthes/pcc_3e/blob/main/cheat_sheets/color_sheets/beginners_python_cheat_sheet_pcc_all.pdf',
     type: 'note',
-  },
-  {
-    title: 'Discord Community',
-    url: 'https://discord.gg/N5PSCt5q',
-    type: 'discord',
   },
   {
     title: 'Anonymous Feedback',
@@ -75,9 +71,9 @@ export const resourceSections: CourseResourceSection[] = [
     title: 'Practice Arena (Build It)',
     items: [
       {
-        label: 'VJudge Contest',
-        url: 'https://vjudge.net/contest/782172',
-        description: '🏆 The official class programming contest.',
+        label: 'VJudge',
+        url: 'https://vjudge.net/',
+        description: `${cse211Term.label} class contest link will be added after lab sections are finalized.`,
       },
       {
         label: 'CSES Problem Set',

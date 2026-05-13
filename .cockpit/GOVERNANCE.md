@@ -46,9 +46,9 @@
 
 ## Commit Convention
 
-Conventional Commits enforced by `commitlint`:
+Conventional Commits are enforced by the local Husky commit-message validator:
 
-```
+```text
 type(scope): description
 
 feat:     New feature
@@ -65,7 +65,7 @@ chore:    Maintenance tasks
 
 ### Module Structure
 
-```
+```text
 feature/
 ├── components/       — UI components
 │   └── index.ts      — Barrel export
