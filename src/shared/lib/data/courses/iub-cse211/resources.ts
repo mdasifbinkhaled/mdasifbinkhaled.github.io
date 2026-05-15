@@ -3,12 +3,12 @@ import type { CourseLink, CourseResourceSection } from '@/shared/types';
 export const links: CourseLink[] = [
   {
     title: 'Course Outline (Theory)',
-    url: 'https://docs.google.com/document/d/10nD1Ao4XhV4BlDBgUX18qyV_9dUlwvzb/edit?usp=sharing&ouid=103481537481896376273&rtpof=true&sd=true',
+    url: 'https://docs.google.com/document/d/1d6AwhklgOhBYonl4V16j_eE4QTxjKgvH/edit?usp=sharing&ouid=103481537481896376273&rtpof=true&sd=true',
     type: 'outline',
   },
   {
     title: 'Course Outline (Lab)',
-    url: 'https://docs.google.com/document/d/1lLKafW3GkDltO92__eqn0_Iwyk2rCmPZ/edit?usp=sharing&ouid=103481537481896376273&rtpof=true&sd=true',
+    url: 'https://docs.google.com/document/d/13zrMkWs4c81qzJFjCvlxlJgwyVnqnnJ1/edit?usp=sharing&ouid=103481537481896376273&rtpof=true&sd=true',
     type: 'outline',
   },
   {
@@ -147,7 +147,7 @@ export const resourceSections: CourseResourceSection[] = [
     items: [
       {
         label: 'Course Outline (Theory)',
-        url: 'https://docs.google.com/document/d/10nD1Ao4XhV4BlDBgUX18qyV_9dUlwvzb/edit?usp=sharing&ouid=103481537481896376273&rtpof=true&sd=true',
+        url: 'https://docs.google.com/document/d/1d6AwhklgOhBYonl4V16j_eE4QTxjKgvH/edit?usp=sharing&ouid=103481537481896376273&rtpof=true&sd=true',
         description: 'Official syllabus and policy document.',
       },
       {
