@@ -10,9 +10,12 @@ export function SentryInit() {
     import('@sentry/browser').then((Sentry) => {
       Sentry.init({
         dsn,
-        tracesSampleRate: 1.0,
+        // Conservative defaults to limit Sentry billable events on a static
+        // personal-portfolio site. Tune via NEXT_PUBLIC_SENTRY_DSN-bound env
+        // overrides if real traffic exceeds the free tier budget.
+        tracesSampleRate: 0.1,
         replaysSessionSampleRate: 0.1,
-        replaysOnErrorSampleRate: 1.0,
+        replaysOnErrorSampleRate: 0.5,
       });
     });
   }, []);

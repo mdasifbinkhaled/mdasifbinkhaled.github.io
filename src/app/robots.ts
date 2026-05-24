@@ -8,7 +8,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/private/', '/admin/'],
+      // No phantom paths: this site has no /private or /admin routes.
+      // Disallow is intentionally empty; the full static export is public.
+      disallow: [],
     },
     sitemap: `${siteConfig.url}/sitemap.xml`,
     host: siteConfig.url,

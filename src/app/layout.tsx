@@ -69,11 +69,18 @@ export default function RootLayout({
           - 'unsafe-inline' styles: required by next/font inline injection + Tailwind runtime
           - img-src whitelist: self, data: (SVG inlining), blob: (canvas export), and
             specific CDNs used for profile/OG images
+          - frame-ancestors: cannot be enforced via <meta http-equiv> on a
+            static export; relies on the GitHub Pages X-Frame-Options default
+            (and any Cloudflare-level header). Sites embedding this domain in
+            an iframe will not be blocked by this CSP.
+          - manifest-src / media-src: explicitly self to deny third-party
+            origins fetching the PWA manifest or HTML5 media on this site's
+            behalf.
           These are acceptable trade-offs for a static portfolio site.
         */}
         <meta
           httpEquiv="Content-Security-Policy"
-          content={`default-src 'self'; script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://scholar.googleusercontent.com https://avatars.githubusercontent.com; font-src 'self'; worker-src 'self'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://*.ingest.sentry.io; frame-src 'self' https://www.youtube.com; object-src 'none'; base-uri 'self'; form-action 'self';`}
+          content={`default-src 'self'; script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://scholar.googleusercontent.com https://avatars.githubusercontent.com; font-src 'self'; worker-src 'self'; manifest-src 'self'; media-src 'self'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://*.ingest.sentry.io; object-src 'none'; base-uri 'self'; form-action 'self';`}
         />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
       </head>
