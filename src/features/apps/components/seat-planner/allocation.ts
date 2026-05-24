@@ -84,7 +84,11 @@ function allocateCohort(
         break;
       }
 
-      const alloc = allocations[roomIdx]!;
+      const alloc = allocations[roomIdx];
+      if (!alloc) {
+        roomIdx++;
+        continue;
+      }
       const space = alloc.room.capacity - alloc.students.length;
 
       if (space <= 0) {

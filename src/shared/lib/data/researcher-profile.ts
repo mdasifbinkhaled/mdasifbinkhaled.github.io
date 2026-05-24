@@ -7,6 +7,7 @@ import {
   researchData,
   academicProfiles as profiles,
 } from '@/shared/lib/data/research';
+import { siteConfig } from '@/shared/config/site';
 
 // Research identity
 export const researchIdentity = {
@@ -27,7 +28,7 @@ export const academicProfiles = {
     citations: METRICS.CITATION_COUNT,
     hIndex: METRICS.H_INDEX,
     i10Index: METRICS.I10_INDEX,
-    lastUpdated: '2026-04-15',
+    lastUpdated: siteConfig.lastUpdated,
   },
 } as const;
 
