@@ -31,7 +31,7 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 | ------------- | ------------------------------------------------------------- |
 | **Framework** | Next.js 16 (App Router, Static Export)                        |
 | **Language**  | TypeScript 5.9 (Strict Mode)                                  |
-| **Styling**   | Tailwind CSS 4.1 (CSS-first config)                           |
+| **Styling**   | Tailwind CSS 4.2 (CSS-first config)                           |
 | **Testing**   | Vitest + Playwright (Chromium CI gate + cross-browser matrix) |
 | **Linting**   | ESLint 9 + Prettier                                           |
 | **CI/CD**     | GitHub Actions (5 workflows)                                  |

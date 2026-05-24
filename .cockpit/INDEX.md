@@ -1,8 +1,8 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-05-13 (CSE211 Summer 2026 rollover, dependency-audit cleanup, and cockpit truth-sync)
+> **Last Updated**: 2026-05-25 (AUD-2026-05 forensic audit: docs truth-sync, code-correctness fixes, security hardening, dep-patch sweep)
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.5.0 | **Stack**: Next.js 16.2.4 · React 19 · TypeScript 5.9 · Tailwind 4.2.4
+> **Version**: 1.5.1 | **Stack**: Next.js 16.2.4 · React 19 · TypeScript 5.9 · Tailwind 4.2.4
 
 ## Quick Navigation
 

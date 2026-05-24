@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
-> **Last Updated**: 2026-05-13
-> **Commit**: HEAD (CSE211 Summer 2026 rollover and cockpit truth-sync)
+> **Last Updated**: 2026-05-25
+> **Commit**: HEAD (AUD-2026-05 forensic audit: docs truth-sync, code-correctness fixes, security hardening, dep-patch sweep)
 
 ## Mission
 

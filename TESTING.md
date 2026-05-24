@@ -54,10 +54,10 @@ Enforced in `vitest.config.mts`:
 
 | Metric     | Threshold |
 | ---------- | --------- |
-| Lines      | 64%       |
-| Functions  | 54%       |
+| Lines      | 70%       |
+| Functions  | 60%       |
 | Branches   | 81%       |
-| Statements | 64%       |
+| Statements | 70%       |
 
 ### Writing Tests
 
