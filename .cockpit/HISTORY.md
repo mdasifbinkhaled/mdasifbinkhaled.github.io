@@ -427,6 +427,17 @@
 - **F-264 status**: audit is narrowed to the upstream Next.js chain only (`next` HIGH + bundled `postcss` MODERATE). `npm audit fix --force` would install `next@15.5.15`, a framework downgrade, so the safe path is weekly Next 16 patch watch rather than a force fix.
 - **Measured quality snapshot**: full gates passed after clean reinstall and dependency refresh — lint, format, typecheck, 485/485 unit tests across 59 files, coverage 74.12 lines / 81.42 branches / 62.89 funcs / 74.12 stmts, build 30/30 pages with 118 generated SW precache entries (7548.1 KB), Chromium 55/55, Firefox/mobile-safari 106 pass + 4 skipped.
 
+### Phase — AUD-2026-05 Forensic Audit & v1.5.1 Release (2026-05-25)
+
+- **Scope**: Five-wave grouped-commit forensic audit landing on top of v1.5.0 (`d321a60`). Plan locked as "C (Continue original full overhaul) + B (Logical grouped commits)" with risky majors deferred to Phase 13.
+- **Wave 1 — docs truth-sync (`b7abd76`)**: TESTING.md, README.md (Tailwind 4.2 callout), `public/humans.txt` (2026/05/25), `.cockpit/INDEX.md`, `.cockpit/PMD.md`. All counts/versions reconciled to measured reality.
+- **Wave 2 — code correctness (`b773628`)**: seat-planner `allocation.ts` defensive fixes; `researcher-profile.ts` `siteConfig.lastUpdated`.
+- **Wave 3 — security hardening (`89b041a` `fix(security):`)**: Sentry sampling tightened (`tracesSampleRate 0.1`, `replaysSessionSampleRate 0.1`, `replaysOnErrorSampleRate 0.5`); CSP refined in `layout.tsx` (added `manifest-src 'self'; media-src 'self';`, dropped unused YouTube `frame-src`, documented `frame-ancestors` static-export limitation); `robots.ts` `disallow: []` removes phantom path entries.
+- **Wave 4 — safe dep sweep (`273b238`)**: `react`/`react-dom` 19.2.5 → 19.2.6, `@types/react` 19.2.14 → 19.2.15, lockfile refresh inside existing carets (`@types/node` 22.19.17 → 22.19.19 + ~28 transitive). Pinned `eslint-plugin-react-hooks` to 7.0.1 via npm override (7.1.x adds `preserve-manual-memoization` + `set-state-in-effect` rules that would flag 5 pre-existing call sites; re-enable tracked under Phase 13). Verified `npm outdated` phantom versions for `@next/*`, `@sentry/browser`, `pdfjs-dist`, `read-excel-file` against `npm view` — registry cache staleness, not actual upstream releases.
+- **Wave 5 — release (this commit)**: `package.json` 1.5.0 → 1.5.1; cockpit RELEASES/HISTORY/ISSUES/ROADMAP updated; tag `v1.5.1` pushed.
+- **Quality gates between waves and at tag**: lint clean, format clean, typecheck 0 errors, 488/488 unit (60 files), coverage 74.12/81.42/62.89/74.12 vs floor 70/81/60/70, build 30/30 HTML + 118 SW precache files (7548.1 KB), Playwright Chromium 55/55.
+- **Open findings unchanged**: F-260 (`/cv` a11y local flake, hardened), F-264 (Next.js upstream advisory weekly watch with public-PoC / fixed-patch escalation rule).
+
 ## Tags
 
 | Tag                   | Description                            |
@@ -435,6 +446,7 @@
 | `v1.1.0-stable`       | First stable release with modern stack |
 | `v1.1.1-stable`       | Patch release                          |
 | `v1.3.0-stable`       | Final cleanup, dead code removal       |
+| `v1.5.1`              | AUD-2026-05 forensic audit closeout    |
 
 ## Branch Strategy
 

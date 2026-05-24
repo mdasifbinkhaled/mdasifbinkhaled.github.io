@@ -155,7 +155,7 @@ styles/      232  (1%)  █
 | TypeScript | PASS   | 0 errors (strict mode)                                                                                     |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                                                       |
 | Prettier   | PASS   | All formatted                                                                                              |
-| Tests      | PASS   | 485/485 unit (59 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow |
+| Tests      | PASS   | 488/488 unit (60 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow |
 | Build      | PASS   | 30 HTML pages generated + 118 custom service-worker precache entries                                       |
 | Audit      | NOTE   | 2 upstream advisories (`next` HIGH, bundled `postcss` MODERATE); no safe non-force Next 16 fix published   |
 

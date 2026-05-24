@@ -24,7 +24,7 @@
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Unit:       485/485 PASS (59 files)
+    Unit:       488/488 PASS (60 files)
     Coverage:   74.12% lines · 81.42% branches · 62.89% funcs · 74.12% stmts (thresholds 70/81/60/70)
     E2E:        55/55 Chromium PASS; 106 PASS / 4 skipped across Firefox + mobile-safari
     Build:      30 HTML pages generated + 118 files precached (custom SW, 7548.1 KB)
@@ -52,7 +52,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 11 (Monitoring): COMPLETED** — Sentry error tracking, Google Analytics page views, publications filter telemetry, command-palette telemetry, and UptimeRobot monitoring are all live.
 **Phase 12 (Apps Hub I/O): COMPLETED** — shared import, storage, export, stats, and settings primitives rolled out; Seat Planner now ships the redesigned workflow shell, resilient reallocation, flexible room ingest, bulk faculty tools, and PDF/PNG/print exports; GPA transcript, Course CSV/XLSX, and Exam CSV/XLSX imports live.
 
-- 485/485 unit tests passing (59 files), with Chromium gated in CI and Firefox/WebKit automated separately.
+- 488/488 unit tests passing (60 files), with Chromium gated in CI and Firefox/WebKit automated separately.
 - 30 HTML pages generated and precached for static deployment.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).

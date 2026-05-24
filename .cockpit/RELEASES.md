@@ -1,6 +1,10 @@
 # RELEASES.md — Version History
 
-## Current: v1.5.0 (package.json)
+## Current: v1.5.1 (package.json)
+
+Bumped from 1.5.0 to 1.5.1 — AUD-2026-05 forensic audit closeout: docs truth-sync, high-impact code-correctness fixes, security hardening (Sentry sampling + CSP refinement + robots), safe minor/patch dependency sweep with eslint-plugin-react-hooks pinned to 7.0.1 via npm override.
+
+## Previous: v1.5.0 (package.json)
 
 Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry lazy-load, cockpit sync.
 
@@ -30,6 +34,22 @@ Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry l
 - Marked before major stack upgrade
 
 ## Unreleased (Current HEAD)
+
+_None — last release v1.5.1 just cut._
+
+## v1.5.1 — AUD-2026-05 Forensic Audit (2026-05-25)
+
+Forensic audit AUD-2026-05 executed as 5 grouped commits on top of v1.5.0 (`d321a60`):
+
+1. **Wave 1 — `b7abd76` `docs: truth-sync after AUD-2026-05 forensic audit`** — TESTING.md, README.md (Tailwind 4.2 callout), `public/humans.txt` last-updated → 2026/05/25, `.cockpit/INDEX.md` + `.cockpit/PMD.md` synced to measured reality (485/485 unit, coverage 74.12/81.42/62.89/74.12, 30 pages, 118 SW precache files, 55/55 Chromium).
+2. **Wave 2 — `b773628` `fix: high-impact code correctness from AUD-2026-05`** — seat-planner `allocation.ts` hardening, `researcher-profile.ts` `siteConfig.lastUpdated` refresh.
+3. **Wave 3 — `89b041a` `fix(security): tighten Sentry sampling, refine CSP, drop phantom robots paths`** — `sentry-init.tsx` (`tracesSampleRate 0.1`, `replaysSessionSampleRate 0.1`, `replaysOnErrorSampleRate 0.5`); `layout.tsx` CSP (`manifest-src 'self'; media-src 'self';` added; dropped unused `frame-src` for YouTube; documented `frame-ancestors` static-export limitation); `robots.ts` `disallow: []` to prune phantom paths.
+4. **Wave 4 — `273b238` `chore(deps): safe minor + patch bumps from AUD-2026-05`** — `react`/`react-dom` 19.2.5 → 19.2.6, `@types/react` 19.2.14 → 19.2.15, `npm update` lockfile refresh within existing carets (`@types/node` 22.19.17 → 22.19.19 + ~28 transitive bumps); added npm override pinning `eslint-plugin-react-hooks` to 7.0.1 (the transitive bump to 7.1.1 introduced two new rules — `preserve-manual-memoization`, `set-state-in-effect` — that would flag 5 pre-existing call sites; re-enabling 7.1.x with the 5-site fix is tracked under Phase 13). Confirmed via `npm view` that `npm outdated` reported phantom 16.2.4 / 10.49.0 / 5.7.284 / 9.0.9 versions for `@next/*`, `@sentry/browser`, `pdfjs-dist`, `read-excel-file` that are NOT actually published (stale registry cache); real latest is already satisfied by existing carets, so no manifest churn there. Risky majors (TS 6, ESLint 10, Vitest 4, jsdom 29, lucide 1, cross-env 10, lint-staged 17, `@vitejs/plugin-react` 6, `@types/node` 25, `@vitest/coverage-v8` 4) deferred to Phase 13.
+5. **Wave 5 — this commit `chore(release): v1.5.1 — AUD-2026-05`** — `package.json` 1.5.0 → 1.5.1; cockpit RELEASES/HISTORY/ISSUES/ROADMAP updated.
+
+**Quality gates** (verified between waves and once more before tag): lint clean, format clean, typecheck 0 errors, 488/488 unit (60 files), coverage 74.12% lines / 81.42% branches / 62.89% funcs / 74.12% stmts (floor 70/81/60/70), build 30/30 HTML + 118 precache (7548.1 KB), Playwright Chromium 55/55.
+
+**Open findings unchanged**: F-260 `/cv` a11y flaky local (hardened, watched), F-264 upstream Next.js advisories (weekly watch; escalation rule: public PoC or fixed Next 16 patch → IMMEDIATE).
 
 ### Seat Planner Workflow Redesign & Remote Verification (2026-04-22)
 

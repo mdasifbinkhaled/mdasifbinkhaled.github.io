@@ -1,7 +1,7 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-05-13
-> **Current Version**: 1.5.0 | **Quality**: Functional gates green (485/485 unit, coverage 74.12/81.42/62.89/74.12 with floor 70/81/60/70, static build 30/30, Chromium 55/55, Firefox/mobile-safari 106 pass + 4 skipped, 0 TS/ESLint errors); audit warning remains under F-264
+> **Created**: 2026-02-19 | **Updated**: 2026-05-25
+> **Current Version**: 1.5.1 | **Quality**: Functional gates green (488/488 unit, coverage 74.12/81.42/62.89/74.12 with floor 70/81/60/70, static build 30/30, Chromium 55/55, Firefox/mobile-safari 106 pass + 4 skipped, 0 TS/ESLint errors); audit warning remains under F-264
 > **Open Findings**: 2 — F-260 `/cv` a11y hardened (watched), F-264 upstream Next.js advisories (weekly until fixed Next 16 patch)
 
 ## Phase 6: Code Quality & Cleanup
@@ -94,17 +94,42 @@ Unify data ingress, storage, stats, exports, and settings across every tool unde
 
 ---
 
+## Phase 13: Deferred from AUD-2026-05 Forensic Audit
+
+Items intentionally deferred from the v1.5.1 forensic audit (2026-05-25) to keep the release surface bounded. None blocks the v1.5.1 cut; each is a follow-up improvement.
+
+| #     | Item                                                                                                                                                                                                             | Category      | Complexity | Impact | Status      |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------- | ------ | ----------- |
+| 13.1  | Re-enable `eslint-plugin-react-hooks@^7.1` and fix the 5 sites flagged by new `preserve-manual-memoization` + `set-state-in-effect` rules                                                                        | Lint          | MODERATE   | MEDIUM | Not started |
+| 13.2  | Study Timer effect refactor (`completeSession` as `useCallback`, `secondsLeftRef` to drop interval re-bind)                                                                                                      | Refactor      | EASY       | LOW    | Not started |
+| 13.3  | `use-seat-planner.ts` (553 LOC) split into focused hooks / reducers                                                                                                                                              | Refactor      | MODERATE   | MEDIUM | Not started |
+| 13.4  | `seat-plan-results.tsx` (951 LOC) extraction into smaller view components                                                                                                                                        | Refactor      | MODERATE   | MEDIUM | Not started |
+| 13.5  | Grade-calculator folder convention alignment with the rest of `/apps`                                                                                                                                            | Refactor      | EASY       | LOW    | Not started |
+| 13.6  | Shared clipboard helper consolidating per-tool copy implementations                                                                                                                                              | DRY           | EASY       | LOW    | Not started |
+| 13.7  | Shared constants file for repeated app/tool literals                                                                                                                                                             | DRY           | EASY       | LOW    | Not started |
+| 13.8  | `xlsx-adapter` zod-validated parse output                                                                                                                                                                        | Hardening     | EASY       | MEDIUM | Not started |
+| 13.9  | Remove unneeded `'use client'` from analytics shim                                                                                                                                                               | Cleanup       | EASY       | LOW    | Not started |
+| 13.10 | Tailwind z-index scale token alignment                                                                                                                                                                           | Design system | EASY       | LOW    | Not started |
+| 13.11 | ESLint `no-restricted-imports` to enforce module boundaries                                                                                                                                                      | Lint          | EASY       | MEDIUM | Not started |
+| 13.12 | Brand types for IDs (student/room/section) to harden seat-planner contracts                                                                                                                                      | Typing        | MODERATE   | MEDIUM | Not started |
+| 13.13 | Risky major dep bumps in 3 batches — Batch A: TS 6, ESLint 10, `@vitest/coverage-v8` 4, Vitest 4, jsdom 29; Batch B: lucide 1, cross-env 10, lint-staged 17, `@vitejs/plugin-react` 6; Batch C: `@types/node` 25 | Dependencies  | HARD       | HIGH   | Not started |
+
+> **Phase 13 escalation rule**: F-264 (Next.js upstream advisory) stays on weekly watch; a public PoC or fixed Next 16 patch triggers an IMMEDIATE security release ahead of Phase 13 work.
+
+---
+
 ## Summary
 
-| Phase                       | Items  | Complexity    | Est. Sessions |
-| --------------------------- | ------ | ------------- | ------------- |
-| Phase 4A/B/C (CRITICAL/DRY) | 18     | EASY-MODERATE | Completed     |
-| Phase 5 (Modernization)     | 10     | MODERATE      | Completed     |
-| Phase 6 (Code Quality)      | 4      | MODERATE-HARD | Completed     |
-| Phase 7 (Student Apps)      | 8      | MODERATE      | 8/8 done      |
-| Phase 8 (Modern Web)        | 6      | MODERATE      | 6/6 done      |
-| Phase 9 (Testing)           | 6      | MODERATE      | 6/6 done      |
-| Phase 10 (Content)          | 5      | MIXED         | 5/5 done      |
-| Phase 11 (Monitoring)       | 4      | EASY-MODERATE | 4/4 done      |
-| Phase 12 (Apps Hub I/O)     | 4      | MODERATE-HARD | 4/4 done      |
-| **Total**                   | **65** |               | **12-20**     |
+| Phase                        | Items  | Complexity    | Est. Sessions |
+| ---------------------------- | ------ | ------------- | ------------- |
+| Phase 4A/B/C (CRITICAL/DRY)  | 18     | EASY-MODERATE | Completed     |
+| Phase 5 (Modernization)      | 10     | MODERATE      | Completed     |
+| Phase 6 (Code Quality)       | 4      | MODERATE-HARD | Completed     |
+| Phase 7 (Student Apps)       | 8      | MODERATE      | 8/8 done      |
+| Phase 8 (Modern Web)         | 6      | MODERATE      | 6/6 done      |
+| Phase 9 (Testing)            | 6      | MODERATE      | 6/6 done      |
+| Phase 10 (Content)           | 5      | MIXED         | 5/5 done      |
+| Phase 11 (Monitoring)        | 4      | EASY-MODERATE | 4/4 done      |
+| Phase 12 (Apps Hub I/O)      | 4      | MODERATE-HARD | 4/4 done      |
+| Phase 13 (AUD-2026-05 defer) | 13     | MIXED         | Not started   |
+| **Total**                    | **78** |               | **12-20**     |

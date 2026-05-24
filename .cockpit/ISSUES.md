@@ -1,7 +1,7 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-05-13 | **Status**: CSE211 Summer 2026 rollover sync
-> **Total Findings**: 276 | **Resolved**: 266 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
+> **Last Audit**: 2026-05-25 | **Status**: AUD-2026-05 forensic audit closeout (v1.5.1)
+> **Total Findings**: 281 | **Resolved**: 271 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
 
 ## Dashboard
 
@@ -21,7 +21,7 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:   ✅ 0 errors  (strict mode — root + tests projects, see ADR-006)
 ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
-Unit tests:   ✅ 485/485 pass  (59 files, coverage 74.12% lines / 81.42% branches / 62.89% funcs / 74.12% stmts; floor 70/81/60/70 in vitest.config.mts)
+Unit tests:   ✅ 488/488 pass  (60 files, coverage 74.12% lines / 81.42% branches / 62.89% funcs / 74.12% stmts; floor 70/81/60/70 in vitest.config.mts)
 E2E:          ✅ Chromium 55/55; Firefox + mobile-safari 106 pass / 4 skipped
 Build:        ✅ 30 HTML pages exported  (static export, custom SW precaches 118 files ≈ 7548.1 KB)
 Dependencies: ⚠️ 2 upstream advisories (`next` HIGH, bundled `postcss` MODERATE) — no safe non-force Next 16 fix yet; weekly re-check (see F-264)
@@ -44,6 +44,16 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
     **Escalation**: if a public PoC targets static-export sites or a non-force fixed Next 16 release appears, bump to IMMEDIATE and patch in the same maintenance window.
 
 ## Resolved Findings
+
+### Resolved in AUD-2026-05 Forensic Audit (2026-05-25 — v1.5.1)
+
+| ID    | Category      | Severity | Title                                                                                | Resolution                                                                                                                                                                                                                                                                                                                                                                                         |
+| ----- | ------------- | -------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| F-277 | Documentation | LOW      | Cockpit + root docs drifted from measured reality after CSE211 rollover              | TESTING.md, README.md (Tailwind 4.2 callout), `public/humans.txt` (2026/05/25), `.cockpit/INDEX.md`, `.cockpit/PMD.md` synced in `b7abd76` to 488/488 unit, 30 pages, 118 SW precache, 55/55 Chromium                                                                                                                                                                                              |
+| F-278 | Correctness   | MEDIUM   | Seat-planner allocation + researcher-profile lastUpdated drift                       | `b773628`: seat-planner `allocation.ts` hardened against edge cases; `researcher-profile.ts` `siteConfig.lastUpdated` refreshed                                                                                                                                                                                                                                                                    |
+| F-279 | Security      | MEDIUM   | Sentry default sampling too loud + CSP carried unused YouTube `frame-src`            | `89b041a`: `sentry-init.tsx` tightened (`tracesSampleRate 0.1`, `replaysSessionSampleRate 0.1`, `replaysOnErrorSampleRate 0.5`); `layout.tsx` CSP dropped unused `frame-src`, added `manifest-src 'self'; media-src 'self';` before `object-src 'none';`, documented `frame-ancestors` static-export limitation                                                                                    |
+| F-280 | Security      | LOW      | `robots.ts` disallow list referenced phantom paths                                   | `89b041a`: `disallow: []` — no real paths require blocking on the static export                                                                                                                                                                                                                                                                                                                    |
+| F-281 | Dependencies  | LOW      | Safe patch surface drift + `eslint-plugin-react-hooks` transitive bump breaking gate | `273b238`: `react`/`react-dom` 19.2.5→19.2.6, `@types/react` 19.2.14→19.2.15, lockfile refresh (`@types/node` 22.19.17→22.19.19 + ~28 transitive). Pinned `eslint-plugin-react-hooks` to 7.0.1 via npm override; 7.1.x re-enable deferred to Phase 13. Verified `npm outdated` phantoms (16.2.4 / 10.49.0 / 5.7.284 / 9.0.9) against `npm view` — stale registry cache, not real upstream releases |
 
 ### Resolved in CSE211 Summer 2026 Rollover (2026-05-13)
 
