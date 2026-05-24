@@ -195,6 +195,28 @@ describe('parseText (PapaParse adapter)', () => {
       'Skipped "group-b.csv": headers do not match the first file.'
     );
   });
+
+  it('skips later files with mismatched column counts to prevent header-alignment corruption', async () => {
+    const fileA = new File(['id,name\n1,Alice'], 'group-a.csv', {
+      type: 'text/csv',
+    });
+    const fileB = new File(['id,name,section\n2,Bob,A'], 'group-b.csv', {
+      type: 'text/csv',
+    });
+    Object.defineProperty(fileA, 'text', {
+      value: async () => 'id,name\n1,Alice',
+    });
+    Object.defineProperty(fileB, 'text', {
+      value: async () => 'id,name,section\n2,Bob,A',
+    });
+
+    const out = await parseFiles([fileA, fileB]);
+
+    expect(out.rows).toEqual([['1', 'Alice']]);
+    expect(out.warnings).toContain(
+      'Skipped "group-b.csv": 3 columns vs first file\'s 2.'
+    );
+  });
 });
 
 describe('inferMapping', () => {

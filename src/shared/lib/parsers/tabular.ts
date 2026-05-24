@@ -35,8 +35,11 @@ function createAlignedRows(
   const normalizedBase = baseHeaders.map(normalizeHeader);
   const normalizedIncoming = incoming.headers.map(normalizeHeader);
 
+  if (normalizedIncoming.length !== normalizedBase.length) {
+    return null;
+  }
+
   if (
-    normalizedIncoming.length !== normalizedBase.length ||
     normalizedIncoming.every(
       (header, index) => header === normalizedBase[index]
     )

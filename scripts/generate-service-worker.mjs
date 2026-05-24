@@ -128,8 +128,11 @@ async function cacheFirst(request, cacheName) {
 
 async function networkFirst(request) {
   const cache = await caches.open(PAGE_CACHE);
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Network timeout')), 3000)
+  );
   try {
-    const response = await fetch(request);
+    const response = await Promise.race([fetch(request), timeoutPromise]);
     if (response.ok) await cache.put(request, response.clone());
     return response;
   } catch (error) {

@@ -110,7 +110,8 @@
   "overrides": {
     "glob": "10.1.0",
     "serialize-javascript": "7.0.5",
-    "typescript-eslint": "8.53.1"
+    "typescript-eslint": "8.53.1",
+    "postcss": "$postcss"
   },
   "prettier": {
     "semi": true,
