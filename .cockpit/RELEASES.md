@@ -35,7 +35,7 @@ Bumped from 1.5.0 to 1.5.1 — AUD-2026-05 forensic audit closeout: docs truth-s
 
 ## Unreleased (Current HEAD)
 
-_None — preparing v1.5.2 release._
+_None — last release v1.5.2 just cut._
 
 ## v1.5.2 — Maintenance Modernization (2026-05-25)
 
