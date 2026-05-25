@@ -1,6 +1,6 @@
 import {
-  Github,
-  Linkedin,
+  Code2,
+  BriefcaseBusiness,
   BookUser,
   Globe,
   Award,
@@ -53,7 +53,7 @@ export function SocialsSection({
             aria-label="GitHub Profile"
             onClick={onLinkClick}
           >
-            <Github className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
+            <Code2 className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
           </a>
         </Button>
         <Button
@@ -70,7 +70,7 @@ export function SocialsSection({
             aria-label="LinkedIn Profile"
             onClick={onLinkClick}
           >
-            <Linkedin className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
+            <BriefcaseBusiness className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
           </a>
         </Button>
         <Button

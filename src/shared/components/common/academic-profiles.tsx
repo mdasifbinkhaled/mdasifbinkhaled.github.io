@@ -13,7 +13,7 @@ import {
   BookOpen,
   Database,
   Globe,
-  Github,
+  Code2,
 } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { academicProfiles } from '@/shared/lib/data/researcher-profile';
@@ -25,7 +25,7 @@ const iconMap = {
   BookOpen,
   Database,
   Globe,
-  Github,
+  GitHub: Code2,
 };
 
 interface AcademicProfilesProps {

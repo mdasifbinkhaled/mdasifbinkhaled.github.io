@@ -19,7 +19,7 @@
 // stateless w.r.t. the tool's own data — it only returns the parsed rows.
 // ─────────────────────────────────────────────────────────────────────
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
   AlertTriangle,
   CheckCircle2,
@@ -199,19 +199,21 @@ export function DataImporter<TKey extends string>({
   const [extraColumns, setExtraColumns] = useState<ExtraColumnDraft[]>([]);
   const [mergeStrategy, setMergeStrategy] = useState<MergeStrategy>('merge');
 
-  // reset state whenever the dialog closes
-  useEffect(() => {
-    if (!open) {
-      setTab(defaultTab);
-      setPasted('');
-      setTabular(null);
-      setMapping({} as ColumnMapping<TKey>);
-      setFileDefaults({});
-      setAdditionalFileDefaults({});
-      setExtraColumns([]);
-      setMergeStrategy('merge');
-    }
-  }, [defaultTab, open]);
+  const resetDraft = () => {
+    setTab(defaultTab);
+    setPasted('');
+    setTabular(null);
+    setMapping({} as ColumnMapping<TKey>);
+    setFileDefaults({});
+    setAdditionalFileDefaults({});
+    setExtraColumns([]);
+    setMergeStrategy('merge');
+  };
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) resetDraft();
+    onOpenChange(nextOpen);
+  };
 
   // ── actions ───────────────────────────────────────────────────────
   const handlePasteParse = () => {
@@ -393,7 +395,7 @@ export function DataImporter<TKey extends string>({
       extraColumns: extraColumnState.valid.map((column) => column.key),
       perFileValues: commitPerFileValues,
     });
-    onOpenChange(false);
+    handleOpenChange(false);
   };
 
   // ── render helpers ────────────────────────────────────────────────
@@ -438,7 +440,7 @@ export function DataImporter<TKey extends string>({
   ];
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-h-[92vh] w-[min(98vw,76rem)] max-w-6xl overflow-hidden p-0 sm:rounded-2xl">
         <div className="flex max-h-[92vh] min-h-0 flex-col">
           <DialogHeader className="border-b px-6 py-5">

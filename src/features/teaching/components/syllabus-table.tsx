@@ -8,7 +8,7 @@ import {
 } from '@/shared/components/ui/table';
 import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
-import { Video, FileText, MonitorPlay, Github } from 'lucide-react';
+import { Video, FileText, MonitorPlay, Code2 } from 'lucide-react';
 
 // cn unused
 
@@ -184,7 +184,7 @@ export function SyllabusTable({ modules }: SyllabusTableProps) {
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              <Github className="w-3 h-3 mr-1.5 text-foreground/70" />
+                              <Code2 className="w-3 h-3 mr-1.5 text-foreground/70" />
                               Code
                             </a>
                           </Button>

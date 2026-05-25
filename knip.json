@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "include": ["files", "dependencies", "binaries", "duplicates"],
+  "entry": [
+    ".github/lighthouserc.js",
+    "scripts/*.mjs",
+    "tests/vitest.d.ts",
+    "src/app/**/{page,layout,error,global-error,not-found,robots,sitemap}.{ts,tsx}",
+    "tests/**/*.{test,spec}.{ts,tsx}"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx}",
+    "tests/**/*.{ts,tsx}",
+    "*.config.{ts,mjs}",
+    "scripts/*.mjs"
+  ],
+  "ignoreDependencies": ["tailwindcss", "tw-animate-css"],
+  "ignoreBinaries": ["lhci"]
+}

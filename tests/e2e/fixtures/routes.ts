@@ -29,7 +29,7 @@ export const CONTENT_ROUTES = [
 ] as const;
 
 /** All routes that should pass WCAG 2.x AA accessibility audit. */
-export const A11Y_ROUTES = CONTENT_ROUTES;
+export const A11Y_ROUTES = [...CONTENT_ROUTES] as const;
 
 /** Redirect-only pages that should forward to another route. */
 export const REDIRECT_ROUTES = [

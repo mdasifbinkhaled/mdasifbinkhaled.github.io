@@ -4,8 +4,8 @@ import { siteConfig } from '@/shared/config';
 import Link from 'next/link';
 import {
   ArrowRight,
-  Github,
-  Linkedin,
+  Code2,
+  BriefcaseBusiness,
   Mail,
   BookUser,
   Globe,
@@ -87,7 +87,7 @@ const socialLinks: SocialLink[] = [
     id: 'github',
     name: 'GitHub',
     href: siteConfig.links.github,
-    icon: Github,
+    icon: Code2,
     colorVariant: 'primary',
     isExternal: true,
   },
@@ -95,7 +95,7 @@ const socialLinks: SocialLink[] = [
     id: 'linkedin',
     name: 'LinkedIn',
     href: siteConfig.links.linkedin,
-    icon: Linkedin,
+    icon: BriefcaseBusiness,
     colorVariant: 'secondary',
     isExternal: true,
   },

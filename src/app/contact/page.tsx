@@ -7,7 +7,14 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
-import { Mail, Github, Linkedin, BookUser, MapPin, Phone } from 'lucide-react';
+import {
+  Mail,
+  Code2,
+  BriefcaseBusiness,
+  BookUser,
+  MapPin,
+  Phone,
+} from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 
@@ -88,7 +95,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Github className="mr-2 h-5 w-5" /> GitHub
+                    <Code2 className="mr-2 h-5 w-5" /> GitHub
                   </a>
                 </Button>
                 <Button variant="outline" asChild className="py-6 text-base">
@@ -97,7 +104,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Linkedin className="mr-2 h-5 w-5" /> LinkedIn
+                    <BriefcaseBusiness className="mr-2 h-5 w-5" /> LinkedIn
                   </a>
                 </Button>
                 <Button variant="outline" asChild className="py-6 text-base">

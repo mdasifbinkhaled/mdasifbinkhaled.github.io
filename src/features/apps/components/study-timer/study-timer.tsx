@@ -108,6 +108,7 @@ export function StudyTimer() {
   );
   const mounted = settingsReady && logReady;
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const secondsLeftRef = useRef(DEFAULT_SETTINGS.focusMinutes * 60);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
   /** Play a short beep using the Web Audio API */
@@ -143,76 +144,82 @@ export function StudyTimer() {
     }
   }, []);
 
+  const switchSession = useCallback(
+    (type: SessionType) => {
+      const nextDuration = getSessionDuration(type, settings);
+      secondsLeftRef.current = nextDuration;
+      setSessionType(type);
+      setSecondsLeft(nextDuration);
+      setIsRunning(false);
+    },
+    [settings]
+  );
+
+  const completeSession = useCallback(() => {
+    setIsRunning(false);
+    playAlarm();
+
+    const duration = getSessionDuration(sessionType, settings);
+    const log: SessionLog = {
+      type: sessionType,
+      duration,
+      completedAt: new Date().toISOString(),
+    };
+    setAllLog((prev) => [...prev, log]);
+
+    if (sessionType === 'focus') {
+      const newCount = focusCount + 1;
+      setFocusCount(newCount);
+      switchSession(
+        newCount % settings.sessionsBeforeLongBreak === 0
+          ? 'long-break'
+          : 'short-break'
+      );
+      return;
+    }
+
+    switchSession('focus');
+  }, [focusCount, playAlarm, sessionType, settings, setAllLog, switchSession]);
+
   // When settings hydrate from storage, sync the displayed countdown for the
   // current session type (unless the timer is already running).
   useEffect(() => {
     if (!settingsReady) return;
-    setSecondsLeft((prev) =>
-      isRunning ? prev : getSessionDuration(sessionType, settings)
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settingsReady]);
+    if (isRunning) return;
+    const nextDuration = getSessionDuration(sessionType, settings);
+    secondsLeftRef.current = nextDuration;
+    // Hydration from persisted settings is an external-storage sync.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSecondsLeft(nextDuration);
+  }, [isRunning, sessionType, settings, settingsReady]);
 
   // Timer tick
   useEffect(() => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
+        if (secondsLeftRef.current <= 1) {
+          if (intervalRef.current) clearInterval(intervalRef.current);
+          completeSession();
+          return;
+        }
+
         setSecondsLeft((prev) => {
-          if (prev <= 1) {
-            clearInterval(intervalRef.current!);
-            return 0;
-          }
-          return prev - 1;
+          const nextValue = Math.max(prev - 1, 0);
+          secondsLeftRef.current = nextValue;
+          return nextValue;
         });
       }, 1000);
     }
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isRunning]);
-
-  // Session complete
-  useEffect(() => {
-    if (secondsLeft === 0 && mounted) {
-      setIsRunning(false);
-      playAlarm();
-
-      const duration = getSessionDuration(sessionType, settings);
-      const log: SessionLog = {
-        type: sessionType,
-        duration,
-        completedAt: new Date().toISOString(),
-      };
-      setAllLog((prev) => [...prev, log]);
-
-      // Auto-advance
-      if (sessionType === 'focus') {
-        const newCount = focusCount + 1;
-        setFocusCount(newCount);
-        if (newCount % settings.sessionsBeforeLongBreak === 0) {
-          switchSession('long-break');
-        } else {
-          switchSession('short-break');
-        }
-      } else {
-        switchSession('focus');
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [secondsLeft]);
-
-  const switchSession = useCallback(
-    (type: SessionType) => {
-      setSessionType(type);
-      setSecondsLeft(getSessionDuration(type, settings));
-      setIsRunning(false);
-    },
-    [settings]
-  );
+  }, [completeSession, isRunning]);
 
   const handleReset = useCallback(() => {
     setIsRunning(false);
-    setSecondsLeft(getSessionDuration(sessionType, settings));
+    const nextDuration = getSessionDuration(sessionType, settings);
+    secondsLeftRef.current = nextDuration;
+    setSecondsLeft(nextDuration);
   }, [sessionType, settings]);
 
   const handleSkip = useCallback(() => {
@@ -242,7 +249,9 @@ export function StudyTimer() {
           (field === 'shortBreakMinutes' && sessionType === 'short-break') ||
           (field === 'longBreakMinutes' && sessionType === 'long-break')
         ) {
-          setSecondsLeft(num * 60);
+          const nextDuration = num * 60;
+          secondsLeftRef.current = nextDuration;
+          setSecondsLeft(nextDuration);
           setIsRunning(false);
         }
         return updated;
@@ -417,6 +426,8 @@ export function StudyTimer() {
             setFocusCount(0);
             setSessionType('focus');
             setIsRunning(false);
+            secondsLeftRef.current = DEFAULT_SETTINGS.focusMinutes * 60;
+            setSecondsLeft(DEFAULT_SETTINGS.focusMinutes * 60);
           }}
         />
       </div>
