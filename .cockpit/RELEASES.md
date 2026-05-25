@@ -1,12 +1,12 @@
 # RELEASES.md — Version History
 
-## Current: v1.5.1 (package.json)
+## Current: v1.5.2 (package.json)
+
+Bumped from 1.5.1 to 1.5.2 — maintenance modernization: safe dependency upgrades, React Hooks 7.1 cleanup, focused dead-code guardrail, and documentation/security truth-sync.
+
+## Previous: v1.5.1 (package.json)
 
 Bumped from 1.5.0 to 1.5.1 — AUD-2026-05 forensic audit closeout: docs truth-sync, high-impact code-correctness fixes, security hardening (Sentry sampling + CSP refinement + robots), safe minor/patch dependency sweep with eslint-plugin-react-hooks pinned to 7.0.1 via npm override.
-
-## Previous: v1.5.0 (package.json)
-
-Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry lazy-load, cockpit sync.
 
 ## Git Tags
 
@@ -35,7 +35,19 @@ Bumped from 1.4.0 to 1.5.0 — Stabilization push, WCAG contrast fixes, Sentry l
 
 ## Unreleased (Current HEAD)
 
-_None — last release v1.5.1 just cut._
+_None — preparing v1.5.2 release._
+
+## v1.5.2 — Maintenance Modernization (2026-05-25)
+
+Patch release on top of `v1.5.1` focused on dependency freshness, lint compatibility, and repository hygiene.
+
+- **Accepted dependency upgrades**: TypeScript 6.0.3, @types/node 25.8.0, jsdom 28.1.0, lucide-react 1.8.0, cross-env 10.1.0, lint-staged 16.4.0, postcss 8.5.15, tailwind-merge 3.5.0, knip 6.6.1, `typescript-eslint` 8.59.0, `eslint-plugin-react-hooks` 7.1.1, and `test-exclude` 8.0.0.
+- **Code migrations**: replaced removed lucide brand icon exports with available generic icons; refactored `DataImporter` dialog close/reset state and `StudyTimer` session completion to satisfy React Hooks 7.1 rules without suppressing the new checks.
+- **Dead-code guardrail**: added `npm run deadcode` with `knip.json`; removed the unused parser barrel and stale shared teaching types; kept workflow/test fixtures explicitly represented so knip remains actionable.
+- **Deferred with evidence**: ESLint 10 and jsdom 29 blocked by unpublished registry dependencies; Vitest 4 / coverage-v8 4 passed unit tests but failed the branch coverage ratchet; plugin-react 6 remains deferred while the test runner stays on Vitest 3.
+- **Docs/security sync**: cockpit, testing, contributing, packaging, and security docs now reflect 273 source files, 27,547 LOC, 488/488 unit tests, 74.16/81.53/63.20/74.16 coverage, and one current upstream Next.js advisory entry.
+
+**Quality gates**: lint clean, format clean, typecheck 0 errors, 488/488 unit (60 files), coverage 74.16% lines / 81.53% branches / 63.20% funcs / 74.16% stmts (floor 70/81/60/70), focused knip clean, build 30/30 HTML + 118 precache (7461.5 KB), Playwright Chromium 55/55, full Playwright matrix 161 passed / 4 skipped.
 
 ## v1.5.1 — AUD-2026-05 Forensic Audit (2026-05-25)
 

@@ -1,8 +1,8 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-05-25 (AUD-2026-05 forensic audit: docs truth-sync, code-correctness fixes, security hardening, dep-patch sweep)
+> **Last Updated**: 2026-05-25 (v1.5.2 maintenance: dependency modernization, React Hooks 7.1 cleanup, dead-code guardrail)
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.5.1 | **Stack**: Next.js 16.2.4 · React 19 · TypeScript 5.9 · Tailwind 4.2.4
+> **Version**: 1.5.2 | **Stack**: Next.js 16.2.4 · React 19.2.6 · TypeScript 6.0.3 · Tailwind 4.2.4
 
 ## Quick Navigation
 
@@ -25,19 +25,19 @@
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
     Unit:       488/488 PASS (60 files)
-    Coverage:   74.12% lines · 81.42% branches · 62.89% funcs · 74.12% stmts (thresholds 70/81/60/70)
+    Coverage:   74.16% lines · 81.53% branches · 63.20% funcs · 74.16% stmts (thresholds 70/81/60/70)
     E2E:        55/55 Chromium PASS; 106 PASS / 4 skipped across Firefox + mobile-safari
-    Build:      30 HTML pages generated + 118 files precached (custom SW, 7548.1 KB)
+    Build:      30 HTML pages generated + 118 files precached (custom SW, 7461.5 KB)
     Format:     All files formatted
-    Phase:      Roadmap Phases 7-12 — complete (all tracked items done)
+    Phase:      Roadmap Phases 7-12 complete; Phase 13 partially complete
 
 ## Findings Summary
 
-    Total:    276 findings (266 resolved, 2 open, 3 false positives, 5 reassessed)
+    Total:    285 findings (275 resolved, 2 open, 3 false positives, 5 reassessed)
     CRITICAL:   4 (0 open)
     HIGH:      32 (1 open)   — F-264 Next.js supply-chain watch (weekly until fixed Next 16 patch)
-    MEDIUM:    86 (1 open)   — F-260 /cv a11y flaky under local parallel (hardened)
-    LOW:      104 (0 open)
+    MEDIUM:    87 (1 open)   — F-260 /cv a11y flaky under local parallel (hardened)
+    LOW:      107 (0 open)
     INFO:      32 (0 open)
 
 ## Phase Status
@@ -47,7 +47,7 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 6 (Code Quality): COMPLETED**
 **Phase 7 (Student Apps): COMPLETED** — 8 tools live (Grade Calculator, GPA Calculator, Seat Planner, Office Hours, Exam Countdown, Study Timer, Course Planner, PDF Study Aid). The study aid ships as a deterministic browser-local PDF workflow; no WebLLM, WebGPU, or API key required.
 **Phase 8 (Modern Web): COMPLETED** — View transitions, container queries, content-visibility, SEO enhancements.
-**Phase 9 (Testing): COMPLETED** — Playwright E2E + axe-core + smoke render tests + 64% coverage floor wired in CI.
+**Phase 9 (Testing): COMPLETED** — Playwright E2E + axe-core + smoke render tests + 70/81/60/70 coverage floor wired in CI.
 **Phase 10 (Content): COMPLETED** — Blog (MDX), Talks, mentorship, research timeline, and the bilingual About introduction are live.
 **Phase 11 (Monitoring): COMPLETED** — Sentry error tracking, Google Analytics page views, publications filter telemetry, command-palette telemetry, and UptimeRobot monitoring are all live.
 **Phase 12 (Apps Hub I/O): COMPLETED** — shared import, storage, export, stats, and settings primitives rolled out; Seat Planner now ships the redesigned workflow shell, resilient reallocation, flexible room ingest, bulk faculty tools, and PDF/PNG/print exports; GPA transcript, Course CSV/XLSX, and Exam CSV/XLSX imports live.
@@ -64,19 +64,19 @@ All previously deferred roadmap items (`7.6`, `10.2`, `10.5`, `11.3`) shipped on
 
 ## Project Vitals
 
-| Metric              | Value                         |
-| ------------------- | ----------------------------- |
-| Source files        | 274                           |
-| Lines of code       | 27,524                        |
-| Source `.tsx` files | 170                           |
-| Test files          | 63 (59 unit + 4 E2E)          |
-| Runtime deps        | 29                            |
-| Dev deps            | 24                            |
-| ADRs                | 3 (ADR-005, ADR-006, ADR-007) |
+| Metric              | Value                           |
+| ------------------- | ------------------------------- |
+| Source files        | 273                             |
+| Lines of code       | 27,547                          |
+| Source `.tsx` files | 170                             |
+| Test files          | 64 executable (60 unit + 4 E2E) |
+| Runtime deps        | 29                              |
+| Dev deps            | 25                              |
+| ADRs                | 3 (ADR-005, ADR-006, ADR-007)   |
 
 ## Architecture Layers (LOC Distribution)
 
-    shared/   10,624 LOC (39%) — Infrastructure, data, UI primitives
-    features/ 14,393 LOC (52%) — Feature modules (teaching, about, research, home, apps)
-    app/       2,275 LOC  (8%) — Page routes and layouts
+    shared/   10,610 LOC (39%) — Infrastructure, data, UI primitives
+    features/ 14,414 LOC (52%) — Feature modules (teaching, about, research, home, apps)
+    app/       2,291 LOC  (8%) — Page routes and layouts
     styles/      232 LOC  (1%) — Design tokens + globals

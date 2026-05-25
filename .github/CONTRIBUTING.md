@@ -38,6 +38,7 @@ npm run validate
 npm run lint:check   # ESLint without auto-fixing
 npm run test:run     # Tests
 npm run typecheck    # TypeScript type checking
+npm run deadcode     # Focused unused-file/dependency check
 ```
 
 ### Testing
@@ -164,7 +165,7 @@ Feature requests are welcome! Please open an issue describing:
 ## 🧪 Testing Guidelines
 
 - Write tests for new features and bug fixes
-- Maintain coverage above enforced thresholds (lines: 60%, branches: 70%)
+- Maintain coverage above enforced thresholds (lines: 70%, functions: 60%, branches: 81%, statements: 70%)
 - Test accessibility features
 - Test responsive behavior
 - Use descriptive test names

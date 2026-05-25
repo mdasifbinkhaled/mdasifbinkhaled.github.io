@@ -4,13 +4,13 @@
 > **Context**: Resolving security finding F-264 (transitive `dompurify` vulnerability via `jspdf`).
 > **Status**: **Spike Complete — Original Advisory Resolved, Migration Deferred**
 
-**2026-05-13 advisory note**: the original `jspdf` / `dompurify` chain no longer appears in `npm audit`. F-264 now tracks only the upstream Next.js advisory chain: `next@16.2.4` (HIGH) and its bundled `postcss<8.5.10` (MODERATE, GHSA-qx2v-qp2m-jg93). `npm audit fix --force` would downgrade the app to `next@15.5.15`, so this spike is retained as an implementation blueprint only if the PDF stack regains a high/critical advisory or a product need justifies the migration.
+**2026-05-25 advisory note**: the original `jspdf` / `dompurify` chain no longer appears in `npm audit`. F-264 now tracks one high-severity upstream Next.js advisory entry for `next@16.2.4`. `npm audit fix --force` would downgrade the app, so this spike is retained as an implementation blueprint only if the PDF stack regains a high/critical advisory or a product need justifies the migration.
 
 ## Executive Summary
 
 The project currently uses `jspdf` and `jspdf-autotable` to generate the Seat Planner PDF and CV export. `jspdf` carries a known transitive vulnerability (`dompurify@3.3.1`) that lacks an upstream fix. This spike evaluates migrating to `pdf-lib`, a modern, secure alternative that does not rely on DOM parsing or canvas elements, thereby eliminating the `dompurify` dependency.
 
-**Conclusion**: Migrating to `pdf-lib` is feasible but requires **significant engineering effort**. `pdf-lib` is a low-level library with no native table generation equivalent to `jspdf-autotable`. We must build a custom table layout engine from scratch. Since the original PDF-related advisory has resolved upstream and the current F-264 advisory chain is in Next/PostCSS, the migration remains **deferred**.
+**Conclusion**: Migrating to `pdf-lib` is feasible but requires **significant engineering effort**. `pdf-lib` is a low-level library with no native table generation equivalent to `jspdf-autotable`. We must build a custom table layout engine from scratch. Since the original PDF-related advisory has resolved upstream and the current F-264 advisory is in Next.js, the migration remains **deferred**.
 
 ## Vulnerability Context (F-264)
 
@@ -75,7 +75,7 @@ export async function generateMasterListPDF(
 
 - **Engineering Cost**: ~15–20 hours to rebuild and test the Seat Planner PDF generation with a custom table layout engine.
 - **Bundle Size**: `pdf-lib` is slightly larger than `jspdf` but tree-shakes well.
-- **Security**: Completely neutralized the original PDF-stack `dompurify` advisory; F-264 now tracks a separate Next/PostCSS advisory chain.
+- **Security**: Completely neutralized the original PDF-stack `dompurify` advisory; F-264 now tracks a separate Next.js advisory entry.
 - **Maintenance**: High. Maintaining a custom table engine is brittle compared to relying on `jspdf-autotable`.
 
 ## Final Recommendation
@@ -84,6 +84,6 @@ export async function generateMasterListPDF(
 
 **Next Steps**:
 
-1. Maintain the weekly F-264 review against the current Next/PostCSS advisory chain until a fixed Next 16 patch is published.
+1. Maintain the weekly F-264 review against the current Next.js advisory entry until a fixed Next 16 patch is published.
 2. Keep `jspdf` / `jspdf-autotable` unless a new high/critical PDF-stack advisory appears or the product needs capabilities that `pdf-lib` handles better.
 3. Keep this SPIKE document as a blueprint in case an immediate migration becomes mandatory.

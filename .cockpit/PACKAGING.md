@@ -5,11 +5,11 @@
 | Package                    | Version | Purpose                                         |
 | -------------------------- | ------- | ----------------------------------------------- |
 | `next`                     | 16.2.4  | Framework (App Router, static export)           |
-| `react`                    | 19.2.5  | UI library                                      |
-| `react-dom`                | 19.2.5  | React DOM bindings                              |
-| `lucide-react`             | 0.563.0 | Icons                                           |
+| `react`                    | 19.2.6  | UI library                                      |
+| `react-dom`                | 19.2.6  | React DOM bindings                              |
+| `lucide-react`             | 1.8.0   | Icons                                           |
 | `next-themes`              | 0.4.6   | Theme management (dark/light/system + 6 themes) |
-| `tailwind-merge`           | 3.3.1   | Tailwind class conflict resolution              |
+| `tailwind-merge`           | 3.5.0   | Tailwind class conflict resolution              |
 | `clsx`                     | 2.1.1   | Conditional class joining                       |
 | `class-variance-authority` | 0.7.1   | Component variant API                           |
 | `cmdk`                     | 1.1.1   | Command palette                                 |
@@ -42,7 +42,7 @@
 
 | Package                       | Version | Purpose                     |
 | ----------------------------- | ------- | --------------------------- |
-| `typescript`                  | 5.9.3   | Type checking               |
+| `typescript`                  | 6.0.3   | Type checking               |
 | `eslint`                      | 9.39.4  | Linting                     |
 | `eslint-config-next`          | 16.2.4  | Next.js ESLint rules        |
 | `prettier`                    | 3.8.3   | Code formatting             |
@@ -51,28 +51,35 @@
 | `@testing-library/react`      | 16.3.2  | React testing utilities     |
 | `@testing-library/jest-dom`   | 6.9.1   | DOM matchers                |
 | `@testing-library/user-event` | 14.6.1  | User interaction simulation |
-| `jsdom`                       | 25.0.1  | DOM environment for tests   |
+| `jsdom`                       | 28.1.0  | DOM environment for tests   |
 | `@vitejs/plugin-react`        | 5.2.0   | Vite React plugin           |
 | `tailwindcss`                 | 4.2.4   | CSS framework               |
 | `@tailwindcss/postcss`        | 4.2.4   | Tailwind CSS PostCSS plugin |
 | `tw-animate-css`              | 1.4.0   | Animation CSS utilities     |
-| `postcss`                     | 8.5.14  | CSS processing              |
+| `postcss`                     | 8.5.15  | CSS processing              |
 | `husky`                       | 9.1.7   | Git hooks                   |
-| `lint-staged`                 | 15.5.2  | Pre-commit linting          |
-| `cross-env`                   | 7.0.3   | Cross-platform env vars     |
+| `lint-staged`                 | 16.4.0  | Pre-commit linting          |
+| `cross-env`                   | 10.1.0  | Cross-platform env vars     |
+| `knip`                        | 6.6.1   | Focused dead-code checks    |
+| `@types/node`                 | 25.8.0  | Node.js type declarations   |
 | `@playwright/test`            | 1.59.1  | E2E testing + accessibility |
 
 ## Overrides
 
 ```json
 {
-  "glob": "10.1.0",
-  "typescript-eslint": "8.53.1"
+  "test-exclude": "8.0.0",
+  "serialize-javascript": "7.0.5",
+  "typescript-eslint": "8.59.0",
+  "postcss": "$postcss",
+  "eslint-plugin-react-hooks": "7.1.1"
 }
 ```
 
-- `glob` pinned to avoid breaking changes in transitive deps.
-- `typescript-eslint` pinned for ESLint flat config compatibility.
+- `test-exclude` is advanced to 8.0.0 so Vitest 3 coverage uses the maintained glob 13 chain.
+- `serialize-javascript` remains pinned to the patched 7.x line.
+- `typescript-eslint` and `eslint-plugin-react-hooks` are advanced through npm overrides while Next's ESLint preset catches up.
+- `postcss` is forced to the root patched version used by the CSS toolchain.
 
 ## Build Pipeline
 
@@ -96,22 +103,23 @@ npm run build
 
 ## Scripts Reference
 
-| Script             | Command                                               | Purpose                         |
-| ------------------ | ----------------------------------------------------- | ------------------------------- |
-| `dev`              | `next dev`                                            | Development server              |
-| `build`            | `cross-env next build`                                | Production build                |
-| `build:production` | `NODE_ENV=production build`                           | Explicit production build       |
-| `test`             | `vitest`                                              | Test watch mode                 |
-| `test:run`         | `vitest run`                                          | Single test run                 |
-| `test:coverage`    | `vitest run --coverage`                               | Coverage report                 |
-| `lint`             | `eslint src --fix`                                    | Lint + auto-fix                 |
-| `lint:check`       | `eslint src`                                          | Lint check only                 |
-| `format`           | `prettier --write`                                    | Format all files                |
-| `format:check`     | `prettier --check`                                    | Format check                    |
-| `typecheck`        | `tsc --noEmit && tsc --noEmit -p tests/tsconfig.json` | Type checking                   |
-| `validate`         | lint + format + test + typecheck                      | Full validation                 |
-| `validate:full`    | validate + build + Chromium Playwright                | Full validation + fast E2E gate |
-| `prepare`          | `husky`                                               | Setup git hooks                 |
+| Script             | Command                                               | Purpose                              |
+| ------------------ | ----------------------------------------------------- | ------------------------------------ |
+| `dev`              | `next dev`                                            | Development server                   |
+| `build`            | `cross-env next build`                                | Production build                     |
+| `build:production` | `NODE_ENV=production build`                           | Explicit production build            |
+| `test`             | `vitest`                                              | Test watch mode                      |
+| `test:run`         | `vitest run`                                          | Single test run                      |
+| `test:coverage`    | `vitest run --coverage`                               | Coverage report                      |
+| `lint`             | `eslint src --fix`                                    | Lint + auto-fix                      |
+| `lint:check`       | `eslint src`                                          | Lint check only                      |
+| `format`           | `prettier --write`                                    | Format all files                     |
+| `format:check`     | `prettier --check`                                    | Format check                         |
+| `typecheck`        | `tsc --noEmit && tsc --noEmit -p tests/tsconfig.json` | Type checking                        |
+| `deadcode`         | `knip --no-progress`                                  | Focused unused-file/dependency check |
+| `validate`         | lint + format + test + typecheck                      | Full validation                      |
+| `validate:full`    | validate + build + Chromium Playwright                | Full validation + fast E2E gate      |
+| `prepare`          | `husky`                                               | Setup git hooks                      |
 
 ## Local Tooling Scripts
 
@@ -123,12 +131,11 @@ npm run build
 
 ## Known Vulnerabilities
 
-| Package                  | Severity | Impact                                                              | Mitigation                                                                      |
-| ------------------------ | -------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `next` 16.2.4            | High     | Multiple upstream Next.js advisories across server/runtime surfaces | Static export; latest Next 16 patch installed; upgrade when fixed release ships |
-| `next` bundled `postcss` | Moderate | XSS via unescaped `</style>` in CSS stringify output                | Bundled dependency; no untrusted CSS input in static site                       |
+| Package       | Severity | Impact                                                              | Mitigation                                                                      |
+| ------------- | -------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `next` 16.2.4 | High     | Multiple upstream Next.js advisories across server/runtime surfaces | Static export; latest Next 16 patch installed; upgrade when fixed release ships |
 
-**Summary**: 2 total advisories (1 high, 1 moderate), both from the upstream Next.js chain. `npm audit fix --force` proposes `next@15.5.15`, a framework downgrade, so it is intentionally not applied. Reviewed 2026-05-13; re-check weekly under F-264 until a fixed Next 16 patch is published.
+**Summary**: 1 high advisory entry from the upstream Next.js chain. `npm audit fix --force` proposes a framework downgrade, so it is intentionally not applied. Reviewed 2026-05-25; re-check weekly under F-264 until a fixed Next 16 patch is published.
 
 ## Deployment
 
@@ -162,7 +169,7 @@ npm run build
 
 ### `lhci.yml` — Lighthouse CI
 
-- Triggers: Pull requests to `main`
+- Triggers: successful `CI` workflow on `main` + manual dispatch
 - Runs: Lighthouse audits against static build
 - Enforces performance and accessibility budgets
 
@@ -203,6 +210,7 @@ npm run build
 - Active for GitHub Actions versions and npm packages
 - Groups: linting, testing, UI, react
 - Queue cleaned on 2026-05-06: stale PRs #29, #30, #41, #48–#56 closed after triage.
+- Accepted locally: TypeScript 6.0.3, @types/node 25.8.0, jsdom 28.1.0, lucide-react 1.8.0, cross-env 10.1.0, lint-staged 16.4.0, postcss 8.5.15, tailwind-merge 3.5.0, knip 6.6.1.
 - Accepted locally: `@vitejs/plugin-react` 4.7.0 -> 5.2.0, validated with the full gate.
 - Accepted locally: `github/codeql-action` v3 -> v4 in `security.yml`.
-- Rejected/deferred: Vitest 4.x. Unit tests can pass with a threads pool, but V8 branch coverage drops below the 81% ratchet under Vitest 4 coverage semantics; keep Vitest 3.2.4 until a dedicated coverage migration raises or rebaselines tests without weakening quality.
+- Rejected/deferred: ESLint 10 (`@eslint/config-helpers@^0.6.0` unavailable in the registry), jsdom 29 (`@asamuzakjp/css-color@^5.1.11` unavailable), Vitest 4 / `@vitest/coverage-v8` 4 (unit tests pass but V8 branch coverage drops below the 81% ratchet), and `@vitejs/plugin-react` 6 while Vitest remains on the 3.x toolchain.

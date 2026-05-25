@@ -4,7 +4,7 @@
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
 > **Last Updated**: 2026-05-25
-> **Commit**: HEAD (AUD-2026-05 forensic audit: docs truth-sync, code-correctness fixes, security hardening, dep-patch sweep)
+> **Commit**: HEAD (v1.5.2 maintenance: dependency modernization, hooks cleanup, dead-code guardrail)
 
 ## Mission
 
@@ -12,27 +12,27 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ## Tech Stack
 
-| Layer         | Technology                            | Version |
-| ------------- | ------------------------------------- | ------- |
-| Framework     | Next.js (App Router)                  | 16.2.4  |
-| UI Library    | React                                 | 19.2.5  |
-| Language      | TypeScript (strict)                   | 5.9     |
-| Styling       | Tailwind CSS + CSS custom properties  | 4.2.4   |
-| Animation     | Vanilla JS (no library)               | ---     |
-| Icons         | Lucide React                          | 0.563.0 |
-| Themes        | next-themes + 6 color themes          | 0.4.6   |
-| UI Primitives | Radix UI (9 packages)                 | various |
-| PDF Export    | jsPDF + jspdf-autotable + html2canvas | various |
-| Blog          | next-mdx-remote + gray-matter         | various |
-| Analytics     | @next/third-parties (Google GA4)      | 16.2.3  |
-| Error Track   | @sentry/browser (client-side)         | 10.48.0 |
-| Testing       | Vitest + Testing Library + jsdom      | 3.2.4   |
-| E2E Testing   | Playwright + axe-core                 | 1.59.1  |
-| Linting       | ESLint 9 (flat config)                | 9.39.4  |
-| Formatting    | Prettier                              | 3.8.3   |
-| Git Hooks     | Husky + lint-staged + local validator | 9.1.7   |
-| Deployment    | GitHub Pages (static export)          | ---     |
-| CI/CD         | GitHub Actions (5 workflows)          | ---     |
+| Layer         | Technology                            | Version        |
+| ------------- | ------------------------------------- | -------------- |
+| Framework     | Next.js (App Router)                  | 16.2.4         |
+| UI Library    | React                                 | 19.2.6         |
+| Language      | TypeScript (strict)                   | 6.0.3          |
+| Styling       | Tailwind CSS + CSS custom properties  | 4.2.4          |
+| Animation     | Vanilla JS (no library)               | ---            |
+| Icons         | Lucide React                          | 1.8.0          |
+| Themes        | next-themes + 6 color themes          | 0.4.6          |
+| UI Primitives | Radix UI (9 packages)                 | various        |
+| PDF Export    | jsPDF + jspdf-autotable + html2canvas | various        |
+| Blog          | next-mdx-remote + gray-matter         | various        |
+| Analytics     | @next/third-parties (Google GA4)      | 16.2.3         |
+| Error Track   | @sentry/browser (client-side)         | 10.48.0        |
+| Testing       | Vitest + Testing Library + jsdom      | 3.2.4 / 28.1.0 |
+| E2E Testing   | Playwright + axe-core                 | 1.59.1         |
+| Linting       | ESLint 9 (flat config)                | 9.39.4         |
+| Formatting    | Prettier                              | 3.8.3          |
+| Git Hooks     | Husky + lint-staged + local validator | 9.1.7          |
+| Deployment    | GitHub Pages (static export)          | ---            |
+| CI/CD         | GitHub Actions (5 workflows)          | ---            |
 
 ## Architecture
 
@@ -40,15 +40,15 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 ```text
 +---------------------------------------------+
-|  App Layer (2,275 LOC / 8%)                 |  Page routes, layouts, error boundaries
+|  App Layer (2,291 LOC / 8%)                 |  Page routes, layouts, error boundaries
 
 |  src/app/                                    |  22 routes, 27 pages
 +---------------------------------------------+
-|  Features Layer (14,393 LOC / 52%)          |  Domain modules
+|  Features Layer (14,414 LOC / 52%)          |  Domain modules
 |  src/features/{about,apps,home,              |  Self-contained feature code
 |                 research,teaching}            |
 +---------------------------------------------+
-|  Shared Layer (10,624 LOC / 39%)            |  Cross-cutting infrastructure
+|  Shared Layer (10,610 LOC / 39%)            |  Cross-cutting infrastructure
 |  src/shared/{components,config,hooks,        |  UI primitives, config, data,
 |              lib,providers,types}            |  analytics, types
 +---------------------------------------------+
@@ -70,27 +70,27 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Metric            | Value                    |
 | ----------------- | ------------------------ |
-| Source files      | 274                      |
-| Lines of code     | 27,524                   |
+| Source files      | 273                      |
+| Lines of code     | 27,547                   |
 | Components (.tsx) | 170                      |
 | Custom hooks      | 4                        |
 | Data files        | 33                       |
-| Config files      | 6                        |
-| Barrel exports    | 19                       |
-| Test files        | 63                       |
-| Test count        | 485 (unit) + 4 E2E specs |
+| Config files      | 8                        |
+| Barrel exports    | 23                       |
+| Test files        | 64 executable            |
+| Test count        | 488 (unit) + 4 E2E specs |
 | Pages generated   | 30 HTML / 30 routes      |
 | Themes            | 6                        |
-| Git commits       | 460+                     |
+| Git commits       | 512+                     |
 
 ### Largest Files
 
 | File                                         | LOC  | Purpose                            |
 | -------------------------------------------- | ---- | ---------------------------------- |
 | `apps/course-planner/presets/iub-cse.ts`     | 1208 | IUB CSE course catalog payload     |
-| `shared/components/common/data-importer.tsx` | 1197 | Shared CSV/XLSX/paste import UI    |
+| `shared/components/common/data-importer.tsx` | 1199 | Shared CSV/XLSX/paste import UI    |
 | `apps/seat-planner/seat-plan-results.tsx`    | 949  | Seat plan results display          |
-| `apps/study-timer/study-timer.tsx`           | 705  | Study timer state and UI           |
+| `apps/study-timer/study-timer.tsx`           | 716  | Study timer state and UI           |
 | `apps/seat-planner/use-seat-planner.ts`      | 553  | Seat planner state hook            |
 | `apps/course-planner/course-planner.tsx`     | 540  | Course planner state and UI        |
 | `apps/seat-planner/seat-planner.tsx`         | 532  | Seat planner orchestration         |
@@ -101,10 +101,10 @@ An academic portfolio showcasing research, publications, teaching activities, an
 ### LOC Distribution
 
 ```text
-shared/   10,624 (39%)  ████████████████████
+shared/   10,610 (39%)  ████████████████████
 
-features/ 14,393 (52%)  ██████████████████████████
-app/       2,275  (8%)  ████
+features/ 14,414 (52%)  ██████████████████████████
+app/       2,291  (8%)  ████
 styles/      232  (1%)  █
 ```
 
@@ -157,7 +157,7 @@ styles/      232  (1%)  █
 | Prettier   | PASS   | All formatted                                                                                              |
 | Tests      | PASS   | 488/488 unit (60 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow |
 | Build      | PASS   | 30 HTML pages generated + 118 custom service-worker precache entries                                       |
-| Audit      | NOTE   | 2 upstream advisories (`next` HIGH, bundled `postcss` MODERATE); no safe non-force Next 16 fix published   |
+| Audit      | NOTE   | 1 upstream advisory entry (`next` HIGH); no safe non-force Next 16 fix published                           |
 
 ## Architecture Observations
 
@@ -166,7 +166,7 @@ styles/      232  (1%)  █
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (485 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
+- Strong test foundation (488 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
 - Professional CI/CD with local Conventional Commit validation
 - CSP headers with no `unsafe-eval`
 - Service worker registered via `sw-register.tsx` (generated `out/sw.js`)
@@ -199,12 +199,12 @@ See [adr/](adr/) for the full record and template.
 
 ### Notes
 
-- **shared/ layer is 47% of codebase** --- acceptable for an infrastructure-heavy portfolio site
+- **shared/ layer is 39% of codebase** --- acceptable for an infrastructure-heavy portfolio site
 - **62 client components (.tsx)** --- justified (error boundaries, interactive UI, seat planner, blog); plus client-side analytics and hooks
-- **3 shared hooks** (`useDebounce`, `useIsClient`, `useHoverDelay`) + 1 feature-specific (`useSeatPlanner`)
-- **8 barrel files** --- all actively imported; organized per feature module and shared layers
+- **4 shared hooks** (`useDebounce`, `useHoverDelay`, `useIsClient`, `usePersistedState`) + 1 feature-specific (`useSeatPlanner`)
+- **23 `index.ts` files** --- feature and data entry points are intentional; `knip` now guards unused barrels/files
 - **6 themes** --- light, dark, ocean, forest, lavender, slate
-- **54 LOC analytics** --- lean, only 4 wired events (viewCV, downloadCV, viewPublication, downloadPublication)
+- **Lean analytics shim** --- academic events plus portfolio search/filter command-palette events
 - **Zero animation libraries** --- framer-motion removed; spotlight effect now vanilla JS (15 LOC)
 - **All hardcoded colors migrated** --- only documented exceptions remain (global-error.tsx, brand colors)
 - **5 GitHub workflows**: ci.yml (fast PR gate), cross-browser-e2e.yml (Firefox/WebKit), lhci.yml (Lighthouse CI), nextjs.yml (deploy), security.yml (audit)

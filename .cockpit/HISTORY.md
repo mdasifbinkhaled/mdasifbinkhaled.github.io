@@ -1,6 +1,6 @@
 # HISTORY.md — Development Timeline
 
-> 490 commits | 4 tags | Single branch (main) | Deployed to GitHub Pages
+> 510+ commits | 6 tags | Single branch (main) | Deployed to GitHub Pages
 
 ## Timeline
 
@@ -438,6 +438,16 @@
 - **Quality gates between waves and at tag**: lint clean, format clean, typecheck 0 errors, 488/488 unit (60 files), coverage 74.12/81.42/62.89/74.12 vs floor 70/81/60/70, build 30/30 HTML + 118 SW precache files (7548.1 KB), Playwright Chromium 55/55.
 - **Open findings unchanged**: F-260 (`/cv` a11y local flake, hardened), F-264 (Next.js upstream advisory weekly watch with public-PoC / fixed-patch escalation rule).
 
+### Phase — v1.5.2 Maintenance Modernization (2026-05-25)
+
+- **Dependency modernization**: accepted the verified safe subset from Phase 13 — TypeScript 6.0.3, @types/node 25.8.0, jsdom 28.1.0, lucide-react 1.8.0, cross-env 10.1.0, lint-staged 16.4.0, postcss 8.5.15, tailwind-merge 3.5.0, knip 6.6.1, `typescript-eslint` 8.59.0, `eslint-plugin-react-hooks` 7.1.1, and `test-exclude` 8.0.0.
+- **Blocked with evidence**: ESLint 10 is blocked by unpublished `@eslint/config-helpers@^0.6.0`; jsdom 29 is blocked by unpublished `@asamuzakjp/css-color@^5.1.11`; Vitest 4 / `@vitest/coverage-v8` 4 passes unit tests but drops branch coverage below the 81% ratchet; `@vitejs/plugin-react` 6 stays deferred while Vitest remains on 3.x.
+- **Hooks cleanup**: `DataImporter` reset-on-close moved into the dialog open-change path; `StudyTimer` now completes sessions through a stable callback and `secondsLeftRef`, satisfying React Hooks 7.1 without weakening lint.
+- **Icon migration**: lucide brand exports removed upstream (`Github`, `Linkedin`), so social/profile links now use available generic icons (`Code2`, `BriefcaseBusiness`) while preserving link behavior and labels.
+- **Dead-code guardrail**: added focused `knip.json` + `npm run deadcode`; removed an unused parser barrel and stale shared teaching types; documented workflow/test fixture entries and CSS-imported Tailwind dependency exceptions.
+- **Docs/security sync**: current docs record 273 source files, 27,547 LOC, 488/488 unit tests, 74.16/81.53/63.20/74.16 coverage, and one high upstream Next.js advisory entry under F-264.
+- **Release gates reverified**: lint clean, format clean, typecheck 0 errors, 488/488 unit, coverage gate pass, focused knip clean, build 30/30 HTML + 118 SW precache entries (7461.5 KB), Playwright Chromium 55/55, full Playwright matrix 161 passed / 4 skipped.
+
 ## Tags
 
 | Tag                   | Description                            |
@@ -447,6 +457,7 @@
 | `v1.1.1-stable`       | Patch release                          |
 | `v1.3.0-stable`       | Final cleanup, dead code removal       |
 | `v1.5.1`              | AUD-2026-05 forensic audit closeout    |
+| `v1.5.2`              | Maintenance modernization              |
 
 ## Branch Strategy
 

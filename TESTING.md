@@ -15,8 +15,11 @@
 # Unit tests (watch mode)
 npm run test
 
-# Unit tests (single run with coverage)
+# Unit tests (single run)
 npm run test:run
+
+# Unit tests with coverage threshold gate
+npm run test:coverage
 
 # E2E tests (requires build first)
 npm run build
@@ -58,6 +61,8 @@ Enforced in `vitest.config.mts`:
 | Functions  | 60%       |
 | Branches   | 81%       |
 | Statements | 70%       |
+
+Latest measured v1.5.2 coverage: 74.16% lines, 63.20% functions, 81.53% branches, 74.16% statements.
 
 ### Writing Tests
 

@@ -68,8 +68,8 @@ reviewers:
   without a reporter.
 - **Headers that protect the HTML shell itself** (e.g. `X-Content-Type-Options`,
   `Referrer-Policy`) are applied by GitHub Pages and cannot be further tightened
-  from the repo. The `public/_headers` file is kept for migration readiness but
-  is not read by GitHub Pages.
+  from the repo. GitHub Pages does not read Netlify/Cloudflare-style `_headers`
+  files, so no such file is tracked here.
 
 If the site moves to a host that supports custom headers (Cloudflare Pages,
 Netlify, a reverse proxy, etc.), the CSP should be lifted out of the `<meta>`
@@ -77,13 +77,13 @@ tag and served via HTTP response header to close these gaps.
 
 ## Known Dependency Advisory Watch
 
-`npm audit` and `npm audit --omit=dev` currently report only the upstream Next.js advisory chain (`next` plus its bundled `postcss`). Fixing it with `npm audit fix --force` would install `next@15.5.15`, a framework downgrade that is not a safe update path for this Next 16 static-export app.
+`npm audit` and `npm audit --omit=dev` currently report one high-severity upstream Next.js advisory entry for `next@16.2.4`. Fixing it with `npm audit fix --force` would install a framework downgrade, which is not a safe update path for this Next 16 static-export app.
 
 Development-only vulnerable chains previously pulled in by `serve`, `workbox-build`, and `commitlint` were removed on 2026-05-13 by replacing them with local Node scripts for static E2E serving, service-worker generation, and commit-message validation.
 
-**Action**: stay on the latest available Next 16 patch (`16.2.4` as of 2026-05-13) and upgrade immediately when a non-force fixed Next 16 release is published.
+**Action**: stay on the latest available Next 16 patch (`16.2.4` as of 2026-05-25) and upgrade immediately when a non-force fixed Next 16 release is published.
 
-**Last Updated**: 2026-05-13
+**Last Updated**: 2026-05-25
 
 ## Responsible Disclosure
 

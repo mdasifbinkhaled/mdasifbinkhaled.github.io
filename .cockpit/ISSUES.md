@@ -1,15 +1,15 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-05-25 | **Status**: AUD-2026-05 forensic audit closeout (v1.5.1)
-> **Total Findings**: 281 | **Resolved**: 271 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
+> **Last Audit**: 2026-05-25 | **Status**: v1.5.2 maintenance closeout
+> **Total Findings**: 285 | **Resolved**: 275 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
 
 ## Dashboard
 
 ```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
 HIGH:      32 (1 open)  — F-264 upstream Next.js advisories (weekly watch)
-MEDIUM:    86 (1 open)  — F-260 /cv a11y flaky locally (hardened, watched)
-LOW:      104 (0 open)  — Polish, minor config, cosmetic
+MEDIUM:    87 (1 open)  — F-260 /cv a11y flaky locally (hardened, watched)
+LOW:      107 (0 open)  — Polish, minor config, cosmetic
 INFO:      32 (0 open)  — Informational, acceptable trade-offs
 REASSESSED: 5           — F-195, F-196 (no action needed)
 FALSE POS:  3           — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
@@ -21,10 +21,11 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:   ✅ 0 errors  (strict mode — root + tests projects, see ADR-006)
 ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
-Unit tests:   ✅ 488/488 pass  (60 files, coverage 74.12% lines / 81.42% branches / 62.89% funcs / 74.12% stmts; floor 70/81/60/70 in vitest.config.mts)
+Unit tests:   ✅ 488/488 pass  (60 files, coverage 74.16% lines / 81.53% branches / 63.20% funcs / 74.16% stmts; floor 70/81/60/70 in vitest.config.mts)
 E2E:          ✅ Chromium 55/55; Firefox + mobile-safari 106 pass / 4 skipped
-Build:        ✅ 30 HTML pages exported  (static export, custom SW precaches 118 files ≈ 7548.1 KB)
-Dependencies: ⚠️ 2 upstream advisories (`next` HIGH, bundled `postcss` MODERATE) — no safe non-force Next 16 fix yet; weekly re-check (see F-264)
+Build:        ✅ 30 HTML pages exported  (static export, custom SW precaches 118 files ≈ 7461.5 KB)
+Dead code:    ✅ `npm run deadcode` clean  (focused knip files/dependencies/binaries/duplicates pass)
+Dependencies: ⚠️ 1 upstream advisory entry (`next` HIGH) — no safe non-force Next 16 fix yet; weekly re-check (see F-264)
 ```
 
 ---
@@ -37,13 +38,20 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
   Hardened by `test.describe.configure({ mode: 'serial' })` in `tests/e2e/a11y-audit.spec.ts`. Stable in CI; kept open as a watchlist entry to catch regressions if the parallel `/cv` route ever flakes again.
 
 - **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
-  `npm audit --omit=dev` reports 2 upstream advisories: `next@16.2.4` (HIGH; advisory range currently includes `9.3.4-canary.0 - 16.3.0-canary.5`) and its bundled `postcss<8.5.10` (MODERATE; GHSA-qx2v-qp2m-jg93). `npm audit fix --force` proposes `next@15.5.15`, a breaking framework downgrade, so it is not a safe remediation for this Next 16 static-export app. Static export + generated precache + strict CSP reduce the exploitable surface: there is no Next server runtime, no image optimizer runtime, no middleware/proxy runtime, and no untrusted CSS stringify input in production.
-  **Disposition (2026-05-13)**: **weekly upstream watch until fixed Next 16 patch**. Safe fixes already applied locally: `npm audit fix` advanced the lockfile to `next@16.2.4`, root `postcss@8.5.14`, Tailwind 4.2.4, Playwright 1.59.1, and removed vulnerable dev-only chains by replacing `serve`, `workbox-build`, and `commitlint` with local Node scripts. Re-check by running `npm audit --omit=dev --json` and inspecting upstream GHSA entries for:
-  - `next` — upgrade within Next 16 immediately when a fixed patch lands.
-  - bundled `postcss` — resolves when Next ships a bundled PostCSS ≥ 8.5.10.
-    **Escalation**: if a public PoC targets static-export sites or a non-force fixed Next 16 release appears, bump to IMMEDIATE and patch in the same maintenance window.
+  `npm audit --omit=dev` reports one high-severity upstream advisory entry for `next@16.2.4` (range `16.0.0 - 16.2.4`). `npm audit fix --force` proposes a breaking framework downgrade, so it is not a safe remediation for this Next 16 static-export app. Static export + generated precache + strict CSP reduce the exploitable surface: there is no Next server runtime, no image optimizer runtime, no middleware/proxy runtime, and no untrusted CSS stringify input in production.
+  **Disposition (2026-05-25)**: **weekly upstream watch until fixed Next 16 patch**. Safe fixes already applied locally: root `postcss@8.5.15`, Tailwind 4.2.4, Playwright 1.59.1, and vulnerable dev-only chains replaced by local Node scripts. Re-check by running `npm audit --omit=dev --json` and upgrading within Next 16 immediately when a fixed patch lands.
+  **Escalation**: if a public PoC targets static-export sites or a non-force fixed Next 16 release appears, bump to IMMEDIATE and patch in the same maintenance window.
 
 ## Resolved Findings
+
+### Resolved in v1.5.2 Maintenance (2026-05-25)
+
+| ID    | Category      | Severity | Title                                                       | Resolution                                                                                                                                                                                                                                  |
+| ----- | ------------- | -------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| F-282 | Dependencies  | LOW      | Phase 13 dependency queue carried safe upgrades             | Upgraded TypeScript 6.0.3, @types/node 25.8.0, jsdom 28.1.0, lucide-react 1.8.0, cross-env 10.1.0, lint-staged 16.4.0, postcss 8.5.15, tailwind-merge 3.5.0, knip 6.6.1, `typescript-eslint` 8.59.0, and `eslint-plugin-react-hooks` 7.1.1. |
+| F-283 | Lint          | MEDIUM   | React Hooks 7.1 rules exposed pre-existing effect patterns  | Refactored `DataImporter` close/reset flow and `StudyTimer` session-completion flow so lint, typecheck, unit, and coverage gates pass under `eslint-plugin-react-hooks` 7.1.1.                                                              |
+| F-284 | Cleanup       | LOW      | Dead-code checks had no maintained local guardrail          | Added focused `knip` config/script, removed the unused parsers barrel and stale shared teaching types, kept verified workflow/test fixtures as entries, and documented CSS-imported Tailwind exceptions.                                    |
+| F-285 | Documentation | LOW      | Release docs drifted after dependency modernization attempt | Synced cockpit, testing, contributing, and security docs to the measured v1.5.2 state: 273 source files, 27,547 LOC, 488/488 unit tests, 74.16/81.53/63.20/74.16 coverage, and one current upstream Next.js advisory entry.                 |
 
 ### Resolved in AUD-2026-05 Forensic Audit (2026-05-25 — v1.5.1)
 

@@ -1,6 +1,6 @@
 # STRUCTURE.md — Annotated Project Tree
 
-> Last Updated: 2026-05-13 | 274 source files | 27,524 LOC
+> Last Updated: 2026-05-25 | 273 source files | 27,547 LOC
 
 ## Root Configuration
 
@@ -12,6 +12,7 @@
 ├── eslint.config.mjs       — ESLint flat config
 ├── vitest.config.mts       — Vitest + jsdom + v8 coverage
 ├── playwright.config.ts    — Playwright E2E config (static export)
+├── knip.json               — Focused dead-code/dependency guardrail
 ├── components.json         — shadcn/ui configuration
 └── next-env.d.ts           — Next.js type declarations
 ```
@@ -37,9 +38,9 @@ public/
 
 > **Note:** `sw.js` is generated during postbuild into `out/` by `scripts/generate-service-worker.mjs`. The static `public/sw.js` and `public/_headers` were removed. Service worker is registered via `src/shared/components/infra/sw-register.tsx`.
 
-## Source Tree — `src/` (27,524 LOC)
+## Source Tree — `src/` (27,547 LOC)
 
-### App Layer — `src/app/` (2,275 LOC)
+### App Layer — `src/app/` (2,291 LOC)
 
 Page routes using Next.js App Router. Each route has its own error boundary.
 
@@ -131,7 +132,7 @@ src/app/
             └── error.tsx
 ```
 
-### Features Layer — `src/features/` (14,393 LOC)
+### Features Layer — `src/features/` (14,414 LOC)
 
 Domain-specific feature modules. Each is self-contained.
 
@@ -228,7 +229,7 @@ src/features/
 │       ├── publication-list.tsx
 │       └── index.ts
 │
-└── teaching/               — Teaching feature (20 files, largest module by count)
+└── teaching/               — Teaching feature (22 files, largest module by count)
     ├── index.ts
     ├── course-card.tsx
     ├── course-card-compact.tsx
@@ -252,22 +253,27 @@ src/features/
         └── teaching-tabs.client.tsx
 ```
 
-### Shared Layer — `src/shared/` (10,624 LOC, 39% of codebase)
+### Shared Layer — `src/shared/` (10,610 LOC, 39% of codebase)
 
 Cross-cutting infrastructure: components, config, data, hooks, lib, types.
 
 ```text
 src/shared/
 ├── components/
-│   ├── common/             — Domain-aware shared components (7 files)
+│   ├── common/             — Domain-aware shared components (12 files)
 │   │   ├── academic-profiles.tsx
 │   │   ├── back-to-top.tsx
+│   │   ├── data-importer.tsx
+│   │   ├── export-bar.tsx
 │   │   ├── icons.tsx
 │   │   ├── pdf-viewer.tsx
 │   │   ├── pdf-viewer-wrapper.tsx
 │   │   ├── stat-card.tsx
-│   │   └── time-display.tsx
-│   ├── infra/              — Infrastructure/cross-cutting components (9 files)
+│   │   ├── stats-panel.tsx
+│   │   ├── tool-settings.tsx
+│   │   ├── time-display.tsx
+│   │   └── trailing-slash-redirect.tsx
+│   ├── infra/              — Infrastructure/cross-cutting components (10 files)
 │   │   ├── error-boundary.tsx
 │   │   ├── error-card.tsx
 │   │   ├── error-fallback.tsx
@@ -289,7 +295,7 @@ src/shared/
 │   ├── navigation/         — Nav components (2 files)
 │   │   ├── breadcrumbs.tsx
 │   │   └── navbar.tsx
-│   └── ui/                 — Primitive UI (shadcn/ui based, 19 files)
+│   └── ui/                 — Primitive UI (shadcn/ui based, 20 files)
 │       ├── accordion.tsx, alert.tsx, badge.tsx, button.tsx
 │       ├── card.tsx, collapsible-section.tsx, command-menu.tsx
 │       ├── dialog.tsx, dropdown-menu.tsx
@@ -305,13 +311,13 @@ src/shared/
 │   ├── themes.ts
 │   └── index.ts
 │
-├── hooks/                  — Custom React hooks (3 files + barrel)
+├── hooks/                  — Custom React hooks (4 files + barrel)
 │   ├── use-debounce.ts
 │   ├── use-hover-delay.ts  — Hover-triggered menu open/close with configurable delay
 │   ├── use-is-client.ts    — SSR hydration detection via useSyncExternalStore
 │   └── index.ts
 │
-├── lib/                    — Core utilities (54 files)
+├── lib/                    — Core utilities (53 files)
 │   ├── analytics.ts        — Google Analytics helpers
 │   ├── course-utils.ts     — Course data helpers
 │   ├── nav-icon-map.ts     — Shared navigation icon mapping
