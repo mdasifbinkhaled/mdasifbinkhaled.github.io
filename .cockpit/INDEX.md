@@ -1,8 +1,8 @@
 # .cockpit — Project Central Intelligence
 
-> **Last Updated**: 2026-05-25 (v1.5.2 maintenance: dependency modernization, React Hooks 7.1 cleanup, dead-code guardrail)
+> **Last Updated**: 2026-05-26 (v1.5.3 final forensic closeout: next@16.2.6 security upgrade, detailed-course WCAG AA contrast fix, Study Timer pause regression fix, CI/CD hardening, docs truth-sync)
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio
-> **Version**: 1.5.2 | **Stack**: Next.js 16.2.4 · React 19.2.6 · TypeScript 6.0.3 · Tailwind 4.2.4
+> **Version**: 1.5.3 | **Stack**: Next.js 16.2.6 · React 19.2.6 · TypeScript 6.0.3 · Tailwind 4.2.4
 
 ## Quick Navigation
 
@@ -24,20 +24,20 @@
 
     Typecheck:  PASS (0 errors, strict, zero `any`)
     Lint:       PASS (0 errors, 0 warnings)
-    Unit:       488/488 PASS (60 files)
-    Coverage:   74.16% lines · 81.53% branches · 63.20% funcs · 74.16% stmts (thresholds 70/81/60/70)
-    E2E:        55/55 Chromium PASS; 106 PASS / 4 skipped across Firefox + mobile-safari
-    Build:      30 HTML pages generated + 118 files precached (custom SW, 7461.5 KB)
+    Unit:       491/491 PASS (60 files)
+    Coverage:   74.56% lines · 81.91% branches · 63.65% funcs · 74.56% stmts (thresholds 70/81/60/70)
+    E2E:        59/59 Chromium PASS; Firefox + mobile-safari pass / skips per fixtures
+    Build:      28 HTML pages exported (30 prerendered routes) + 118 files precached (custom SW, 7463.2 KB)
     Format:     All files formatted
     Phase:      Roadmap Phases 7-12 complete; Phase 13 partially complete
 
 ## Findings Summary
 
-    Total:    285 findings (275 resolved, 2 open, 3 false positives, 5 reassessed)
+    Total:    289 findings (280 resolved, 1 open, 3 false positives, 5 reassessed)
     CRITICAL:   4 (0 open)
-    HIGH:      32 (1 open)   — F-264 Next.js supply-chain watch (weekly until fixed Next 16 patch)
-    MEDIUM:    87 (1 open)   — F-260 /cv a11y flaky under local parallel (hardened)
-    LOW:      107 (0 open)
+    HIGH:      33 (0 open)   — F-264 Next.js advisory CLOSED by next@16.2.6 (0 vulnerabilities)
+    MEDIUM:    89 (1 open)   — F-260 /cv a11y flaky under local parallel (hardened, watched)
+    LOW:      108 (0 open)
     INFO:      32 (0 open)
 
 ## Phase Status
@@ -52,8 +52,8 @@ See [ROADMAP.md](ROADMAP.md) for the full improvement plan.
 **Phase 11 (Monitoring): COMPLETED** — Sentry error tracking, Google Analytics page views, publications filter telemetry, command-palette telemetry, and UptimeRobot monitoring are all live.
 **Phase 12 (Apps Hub I/O): COMPLETED** — shared import, storage, export, stats, and settings primitives rolled out; Seat Planner now ships the redesigned workflow shell, resilient reallocation, flexible room ingest, bulk faculty tools, and PDF/PNG/print exports; GPA transcript, Course CSV/XLSX, and Exam CSV/XLSX imports live.
 
-- 488/488 unit tests passing (60 files), with Chromium gated in CI and Firefox/WebKit automated separately.
-- 30 HTML pages generated and precached for static deployment.
+- 491/491 unit tests passing (60 files), with Chromium gated in CI and Firefox/WebKit automated separately.
+- 28 HTML pages exported (30 prerendered routes) and precached for static deployment.
 - Blog system with MDX and frontmatter.
 - Sentry client-side error tracking (lazy-loaded client component).
 - Google Analytics via `@next/third-parties`.

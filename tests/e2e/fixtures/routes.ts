@@ -26,6 +26,9 @@ export const CONTENT_ROUTES = [
   '/teaching',
   '/teaching/bracu',
   '/teaching/iub',
+  // Dynamic detailed-tier course pages (generateStaticParams)
+  '/teaching/bracu/cse420',
+  '/teaching/iub/cse211sum26',
 ] as const;
 
 /** All routes that should pass WCAG 2.x AA accessibility audit. */

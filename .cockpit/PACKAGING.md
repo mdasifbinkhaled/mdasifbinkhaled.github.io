@@ -4,7 +4,7 @@
 
 | Package                    | Version | Purpose                                         |
 | -------------------------- | ------- | ----------------------------------------------- |
-| `next`                     | 16.2.4  | Framework (App Router, static export)           |
+| `next`                     | 16.2.6  | Framework (App Router, static export)           |
 | `react`                    | 19.2.6  | UI library                                      |
 | `react-dom`                | 19.2.6  | React DOM bindings                              |
 | `lucide-react`             | 1.8.0   | Icons                                           |
@@ -88,7 +88,7 @@ npm run build
   ├── cross-env NEXT_TELEMETRY_DISABLED=1 next build
   │   ├── TypeScript compilation
   │   ├── ESLint checking
-  │   ├── Static page generation (30 HTML pages / 30 routes)
+  │   ├── Static page generation (28 HTML pages / 30 prerendered routes)
   │   ├── SSG for dynamic routes (generateStaticParams)
   │   └── Output to out/ directory
   └── postbuild: creates out/.nojekyll and generates service worker/precache
@@ -97,7 +97,7 @@ npm run build
 ### Build Output
 
 - **Format**: Static HTML export (`output: 'export'`)
-- **Pages**: 30 HTML pages / routes in the exported app tree
+- **Pages**: 28 HTML pages exported / 30 prerendered routes in the exported app tree
 - **Directory**: `out/`
 - `.nojekyll` file prevents GitHub Pages Jekyll processing
 
@@ -131,11 +131,11 @@ npm run build
 
 ## Known Vulnerabilities
 
-| Package       | Severity | Impact                                                              | Mitigation                                                                      |
-| ------------- | -------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `next` 16.2.4 | High     | Multiple upstream Next.js advisories across server/runtime surfaces | Static export; latest Next 16 patch installed; upgrade when fixed release ships |
+| Package | Severity | Impact                                                                      | Mitigation |
+| ------- | -------- | --------------------------------------------------------------------------- | ---------- |
+| _None_  | —        | `npm audit` reports 0 vulnerabilities on prod (`--omit=dev`) and full trees | —          |
 
-**Summary**: 1 high advisory entry from the upstream Next.js chain. `npm audit fix --force` proposes a framework downgrade, so it is intentionally not applied. Reviewed 2026-05-25; re-check weekly under F-264 until a fixed Next 16 patch is published.
+**Summary**: 0 vulnerabilities. F-264 (the prior upstream Next.js advisory chain) was closed by upgrading to `next@16.2.6`; `npm audit` is clean on both prod and full dependency trees. Reviewed 2026-05-26.
 
 ## Deployment
 

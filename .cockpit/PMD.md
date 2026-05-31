@@ -3,8 +3,8 @@
 > **Project**: mdasifbinkhaled.github.io — Academic Portfolio Website
 > **Owner**: Md Asif Bin Khaled (Senior Lecturer, IUB, Bangladesh)
 > **URL**: <https://mdasifbinkhaled.github.io>
-> **Last Updated**: 2026-05-25
-> **Commit**: HEAD (v1.5.2 maintenance: dependency modernization, hooks cleanup, dead-code guardrail)
+> **Last Updated**: 2026-05-26
+> **Commit**: HEAD (v1.5.3 final forensic closeout: next@16.2.6 security upgrade, WCAG AA contrast fix, Study Timer pause fix, CI/CD hardening, docs truth-sync)
 
 ## Mission
 
@@ -14,7 +14,7 @@ An academic portfolio showcasing research, publications, teaching activities, an
 
 | Layer         | Technology                            | Version        |
 | ------------- | ------------------------------------- | -------------- |
-| Framework     | Next.js (App Router)                  | 16.2.4         |
+| Framework     | Next.js (App Router)                  | 16.2.6         |
 | UI Library    | React                                 | 19.2.6         |
 | Language      | TypeScript (strict)                   | 6.0.3          |
 | Styling       | Tailwind CSS + CSS custom properties  | 4.2.4          |
@@ -78,8 +78,8 @@ An academic portfolio showcasing research, publications, teaching activities, an
 | Config files      | 8                        |
 | Barrel exports    | 23                       |
 | Test files        | 64 executable            |
-| Test count        | 488 (unit) + 4 E2E specs |
-| Pages generated   | 30 HTML / 30 routes      |
+| Test count        | 491 (unit) + 4 E2E specs |
+| Pages generated   | 28 HTML / 30 routes      |
 | Themes            | 6                        |
 | Git commits       | 512+                     |
 
@@ -155,9 +155,9 @@ styles/      232  (1%)  █
 | TypeScript | PASS   | 0 errors (strict mode)                                                                                     |
 | ESLint     | PASS   | 0 errors, 0 warnings                                                                                       |
 | Prettier   | PASS   | All formatted                                                                                              |
-| Tests      | PASS   | 488/488 unit (60 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow |
-| Build      | PASS   | 30 HTML pages generated + 118 custom service-worker precache entries                                       |
-| Audit      | NOTE   | 1 upstream advisory entry (`next` HIGH); no safe non-force Next 16 fix published                           |
+| Tests      | PASS   | 491/491 unit (60 files); Chromium is the fast CI gate and Firefox/WebKit run in the cross-browser workflow |
+| Build      | PASS   | 28 HTML pages exported (30 prerendered routes) + 118 custom service-worker precache entries                |
+| Audit      | PASS   | 0 vulnerabilities (`npm audit` prod + full tree clean after next@16.2.6)                                   |
 
 ## Architecture Observations
 
@@ -166,7 +166,7 @@ styles/      232  (1%)  █
 - Clean 4-layer separation with clear dependency direction
 - Type safety via strict TypeScript (`noUncheckedIndexedAccess`, `noImplicitOverride`)
 - Full error boundary coverage (factory pattern)
-- Strong test foundation (488 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
+- Strong test foundation (491 unit tests, Chromium CI gating, and automated Firefox/WebKit follow-up coverage)
 - Professional CI/CD with local Conventional Commit validation
 - CSP headers with no `unsafe-eval`
 - Service worker registered via `sw-register.tsx` (generated `out/sw.js`)
@@ -181,7 +181,7 @@ See [ISSUES.md](ISSUES.md) for the live tracker and [INDEX.md](INDEX.md) for the
 Current posture:
 
 - No open CRITICAL findings remain.
-- Two watch items remain open: F-260 (`/cv` accessibility stability) and F-264 (dependency advisory cadence).
+- One watch item remains open: F-260 (`/cv` accessibility stability). F-264 (Next.js advisory) is CLOSED by next@16.2.6 with `npm audit` reporting 0 vulnerabilities on prod and full trees.
 - Historical audit work outside those watch items is resolved, reclassified, or documented as a false positive in the tracker.
 
 See [ROADMAP.md](ROADMAP.md) for the improvement plan (Phases 7-11).

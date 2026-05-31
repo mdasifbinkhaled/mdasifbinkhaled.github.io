@@ -109,7 +109,15 @@ export function StudyTimer() {
   const mounted = settingsReady && logReady;
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const secondsLeftRef = useRef(DEFAULT_SETTINGS.focusMinutes * 60);
+  const isRunningRef = useRef(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
+
+  // Keep a ref of the running state so the duration-sync effect can read it
+  // without listing `isRunning` as a dependency (which would otherwise reset
+  // the remaining time whenever the user pauses).
+  useEffect(() => {
+    isRunningRef.current = isRunning;
+  }, [isRunning]);
 
   /** Play a short beep using the Web Audio API */
   const playAlarm = useCallback(() => {
@@ -181,17 +189,17 @@ export function StudyTimer() {
     switchSession('focus');
   }, [focusCount, playAlarm, sessionType, settings, setAllLog, switchSession]);
 
-  // When settings hydrate from storage, sync the displayed countdown for the
-  // current session type (unless the timer is already running).
+  // When settings or the session type change, sync the displayed countdown to
+  // the new duration — but never while the timer is running, and never merely
+  // because the user paused. `isRunning` is intentionally read from a ref and
+  // kept out of the dependency array so pausing preserves the remaining time.
   useEffect(() => {
     if (!settingsReady) return;
-    if (isRunning) return;
+    if (isRunningRef.current) return;
     const nextDuration = getSessionDuration(sessionType, settings);
     secondsLeftRef.current = nextDuration;
-    // Hydration from persisted settings is an external-storage sync.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSecondsLeft(nextDuration);
-  }, [isRunning, sessionType, settings, settingsReady]);
+  }, [sessionType, settings, settingsReady]);
 
   // Timer tick
   useEffect(() => {

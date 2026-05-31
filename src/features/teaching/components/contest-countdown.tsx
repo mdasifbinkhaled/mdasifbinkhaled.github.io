@@ -42,7 +42,7 @@ export function ContestCountdown({ contest }: ContestCountdownProps) {
         <div className="space-y-2 text-center sm:text-left">
           <Badge
             variant="secondary"
-            className="bg-primary/10 text-primary border border-primary/20"
+            className="bg-primary/5 text-primary border border-primary/20"
           >
             <Timer className="w-3 h-3 mr-1" />
             Active Contest

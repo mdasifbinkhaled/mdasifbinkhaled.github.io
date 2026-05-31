@@ -1,15 +1,15 @@
 # ISSUES.md — Finding Tracker
 
-> **Last Audit**: 2026-05-25 | **Status**: v1.5.2 maintenance closeout
-> **Total Findings**: 285 | **Resolved**: 275 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 2
+> **Last Audit**: 2026-05-26 | **Status**: v1.5.3 final forensic closeout
+> **Total Findings**: 289 | **Resolved**: 280 | **False Positives**: 3 | **Reassessed**: 5 | **Open**: 1
 
 ## Dashboard
 
 ```text
 CRITICAL:  4 (0 open)   — Build breaks, data loss, security holes
-HIGH:      32 (1 open)  — F-264 upstream Next.js advisories (weekly watch)
-MEDIUM:    87 (1 open)  — F-260 /cv a11y flaky locally (hardened, watched)
-LOW:      107 (0 open)  — Polish, minor config, cosmetic
+HIGH:      33 (0 open)  — F-264 Next.js advisory CLOSED by next@16.2.6
+MEDIUM:    89 (1 open)  — F-260 /cv a11y flaky locally (hardened, watched)
+LOW:      108 (0 open)  — Polish, minor config, cosmetic
 INFO:      32 (0 open)  — Informational, acceptable trade-offs
 REASSESSED: 5           — F-195, F-196 (no action needed)
 FALSE POS:  3           — F-212 (CSS dedup), F-214 (config barrel), F-215 (typos)
@@ -21,11 +21,11 @@ NOTE: 10 findings span LOW+INFO; totals include reclassified items.
 ```text
 TypeScript:   ✅ 0 errors  (strict mode — root + tests projects, see ADR-006)
 ESLint:       ✅ 0 errors, 0 warnings  (native flat config)
-Unit tests:   ✅ 488/488 pass  (60 files, coverage 74.16% lines / 81.53% branches / 63.20% funcs / 74.16% stmts; floor 70/81/60/70 in vitest.config.mts)
-E2E:          ✅ Chromium 55/55; Firefox + mobile-safari 106 pass / 4 skipped
-Build:        ✅ 30 HTML pages exported  (static export, custom SW precaches 118 files ≈ 7461.5 KB)
+Unit tests:   ✅ 491/491 pass  (60 files, coverage 74.56% lines / 81.91% branches / 63.65% funcs / 74.56% stmts; floor 70/81/60/70 in vitest.config.mts)
+E2E:          ✅ Chromium 59/59; Firefox + mobile-safari pass / skips per fixtures
+Build:        ✅ 28 HTML pages exported (30 prerendered routes)  (static export, custom SW precaches 118 files ≈ 7463.2 KB)
 Dead code:    ✅ `npm run deadcode` clean  (focused knip files/dependencies/binaries/duplicates pass)
-Dependencies: ⚠️ 1 upstream advisory entry (`next` HIGH) — no safe non-force Next 16 fix yet; weekly re-check (see F-264)
+Dependencies: ✅ 0 vulnerabilities  (`npm audit` prod + full tree clean after next@16.2.6)
 ```
 
 ---
@@ -37,12 +37,17 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
 - **F-260 | Testing | MEDIUM** — `/cv` accessibility audit is nondeterministic locally (hardened, watched).
   Hardened by `test.describe.configure({ mode: 'serial' })` in `tests/e2e/a11y-audit.spec.ts`. Stable in CI; kept open as a watchlist entry to catch regressions if the parallel `/cv` route ever flakes again.
 
-- **F-264 | Security | HIGH** — Runtime dependencies lag current security patches.
-  `npm audit --omit=dev` reports one high-severity upstream advisory entry for `next@16.2.4` (range `16.0.0 - 16.2.4`). `npm audit fix --force` proposes a breaking framework downgrade, so it is not a safe remediation for this Next 16 static-export app. Static export + generated precache + strict CSP reduce the exploitable surface: there is no Next server runtime, no image optimizer runtime, no middleware/proxy runtime, and no untrusted CSS stringify input in production.
-  **Disposition (2026-05-25)**: **weekly upstream watch until fixed Next 16 patch**. Safe fixes already applied locally: root `postcss@8.5.15`, Tailwind 4.2.4, Playwright 1.59.1, and vulnerable dev-only chains replaced by local Node scripts. Re-check by running `npm audit --omit=dev --json` and upgrading within Next 16 immediately when a fixed patch lands.
-  **Escalation**: if a public PoC targets static-export sites or a non-force fixed Next 16 release appears, bump to IMMEDIATE and patch in the same maintenance window.
-
 ## Resolved Findings
+
+### Resolved in v1.5.3 Final Forensic Closeout (2026-05-26)
+
+| ID    | Category      | Severity | Title                                                             | Resolution                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ----- | ------------- | -------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| F-264 | Security      | HIGH     | Runtime dependency `next` carried an upstream advisory entry      | **CLOSED**: upgraded `next`/`@next/third-parties`/`@next/bundle-analyzer` to `^16.2.6` (eslint-config-next dev-only stays `^16.2.4`). `npm audit` now reports **0 vulnerabilities** on both the prod (`--omit=dev`) and full dependency trees. The deferred pdf-lib migration remains tracked separately under SPIKE-pdf-lib (unaffected by this advisory).                                                                                                                 |
+| F-290 | A11y          | MEDIUM   | Detailed course page failed WCAG AA contrast (4 nodes)            | Adding `/teaching/iub/cse211sum26` to the a11y route set surfaced 4 color-contrast failures. `notice-board.tsx`: dropped low-contrast `text-info`/`text-success` body tint (kept border + `/10` background, moved colour to the icon via `[&>svg]:text-info`); "New" badge `bg-destructive`/white (3.6:1) → `bg-red-700 text-white dark:bg-red-600`. `contest-countdown.tsx`: Active Contest badge `bg-primary/10` (4.45:1) → `bg-primary/5` (≈4.83:1). Chromium E2E 59/59. |
+| F-291 | Correctness   | MEDIUM   | Study Timer lost elapsed time when paused                         | Added `isRunningRef` + sync effect; hydration effect now reads `isRunningRef.current` and depends on `[sessionType, settings, settingsReady]`. Pause preserves remaining time. Added 3 regression tests (7 study-timer tests pass).                                                                                                                                                                                                                                         |
+| F-292 | CI/CD         | LOW      | `workflow_run` workflows checked out the default branch, not head | Pinned `nextjs.yml`, `cross-browser-e2e.yml`, `lhci.yml` checkout to `ref: ${{ github.event.workflow_run.head_sha }}`; pinned third-party actions to commit SHAs.                                                                                                                                                                                                                                                                                                           |
+| F-293 | Documentation | LOW      | `SECURITY.md` claimed 16.2.4 was the latest with no fix available | Rewrote the dependency-advisory section to reflect `next@16.2.6` + 0 vulnerabilities; removed the stale `// cn unused` comment from `syllabus-table.tsx`.                                                                                                                                                                                                                                                                                                                   |
 
 ### Resolved in v1.5.2 Maintenance (2026-05-25)
 
@@ -459,10 +464,10 @@ Reopened by the 2026-04-12 verification pass. F-261, F-262, F-263 resolved in 20
 
 | ID    | Category    | Severity | Title                                                       | Resolution                                                                   |
 | ----- | ----------- | -------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| F-225 | Navigation  | LOW      | 4 raw `<a>` tags for internal routes bypass Next.js routing | Converted to `<Link>` in cv-content (3) and search-result-card (1)           |
-| F-226 | Type Safety | LOW      | 4 non-null assertions (`!`) in course-utils.ts              | Replaced with nullish coalescing (`?? ''`) for safe regex group access       |
-| F-227 | Type Safety | LOW      | Type assertion cast in skills-section.tsx                   | Added `iconName` to Skill interface + `satisfies Skill[]` to data            |
-| F-228 | Testing     | LOW      | 4 feature modules (About, Home, Research, Pubs) untested    | Added 12 smoke render tests covering key components from each feature module |
+| F-286 | Navigation  | LOW      | 4 raw `<a>` tags for internal routes bypass Next.js routing | Converted to `<Link>` in cv-content (3) and search-result-card (1)           |
+| F-287 | Type Safety | LOW      | 4 non-null assertions (`!`) in course-utils.ts              | Replaced with nullish coalescing (`?? ''`) for safe regex group access       |
+| F-288 | Type Safety | LOW      | Type assertion cast in skills-section.tsx                   | Added `iconName` to Skill interface + `satisfies Skill[]` to data            |
+| F-289 | Testing     | LOW      | 4 feature modules (About, Home, Research, Pubs) untested    | Added 12 smoke render tests covering key components from each feature module |
 
 ### Previously Acceptable (No Action Needed)
 

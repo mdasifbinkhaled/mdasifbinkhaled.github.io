@@ -77,13 +77,17 @@ tag and served via HTTP response header to close these gaps.
 
 ## Known Dependency Advisory Watch
 
-`npm audit` and `npm audit --omit=dev` currently report one high-severity upstream Next.js advisory entry for `next@16.2.4`. Fixing it with `npm audit fix --force` would install a framework downgrade, which is not a safe update path for this Next 16 static-export app.
+As of 2026-05-26 the dependency tree is clean: `npm audit` and
+`npm audit --omit=dev` report **0 vulnerabilities**. The previously tracked
+high-severity Next.js advisory was resolved by upgrading to `next@16.2.6`, a
+non-force in-place patch within the Next 16 line (no framework downgrade
+required).
 
 Development-only vulnerable chains previously pulled in by `serve`, `workbox-build`, and `commitlint` were removed on 2026-05-13 by replacing them with local Node scripts for static E2E serving, service-worker generation, and commit-message validation.
 
-**Action**: stay on the latest available Next 16 patch (`16.2.4` as of 2026-05-25) and upgrade immediately when a non-force fixed Next 16 release is published.
+**Action**: stay on the latest available Next 16 patch (`16.2.6` as of 2026-05-26) and upgrade promptly when new Next 16 patches are published. CI enforces this via `npm audit --audit-level=high` and a security workflow that fails on any non-build-time critical advisory.
 
-**Last Updated**: 2026-05-25
+**Last Updated**: 2026-05-26
 
 ## Responsible Disclosure
 

@@ -33,14 +33,14 @@ jobs:
         run: |
           echo "## 🔒 Dependency Audit Results" >> $GITHUB_STEP_SUMMARY
 
-          # Static-export project: server-side & build-only criticals do not apply.
-          # Critical exceptions (reviewed 2026-05-13; F-264 is on weekly watch while Next 16 remains advisory-flagged):
-          #   next   — server-only criticals may be irrelevant for output:'export'
+          # Static-export project: build-only criticals in the toolchain do not ship.
+          # Exceptions (reviewed 2026-05-13): build-time-only packages absent from the
+          # production bundle. Next.js is intentionally NOT excepted — as of 16.2.6 the
+          # dependency tree is clean (0 vulnerabilities), so any future critical in `next`
+          # must fail CI rather than be silently waived.
           #   rollup — build-time only, not in production bundle
           #   vite   — build-time only, not in production bundle
-          # Current F-264 watchlist is not critical-excepted:
-          #   next HIGH + bundled postcss MODERATE. Force-fixing would downgrade to next@15.x.
-          EXCEPTED="^next$|^rollup$|^vite$"
+          EXCEPTED="^rollup$|^vite$"
 
           AUDIT_OUTPUT=$(npm audit --json 2>/dev/null || true)
           CRITICAL_COUNT=$(echo "$AUDIT_OUTPUT" | jq -r '.metadata.vulnerabilities.critical // 0')

@@ -1,8 +1,8 @@
 # ROADMAP.md — Improvement Roadmap
 
-> **Created**: 2026-02-19 | **Updated**: 2026-05-25
-> **Current Version**: 1.5.2 | **Quality**: Release gates green (488/488 unit, coverage 74.16/81.53/63.20/74.16 with floor 70/81/60/70, 0 TS/ESLint errors, focused knip clean, build 30/30, Chromium 55/55, full Playwright 161 passed / 4 skipped); audit warning remains under F-264
-> **Open Findings**: 2 — F-260 `/cv` a11y hardened (watched), F-264 upstream Next.js advisories (weekly until fixed Next 16 patch)
+> **Created**: 2026-02-19 | **Updated**: 2026-05-26
+> **Current Version**: 1.5.3 | **Quality**: Release gates green (491/491 unit, coverage 74.56/81.91/63.65/74.56 with floor 70/81/60/70, 0 TS/ESLint errors, focused knip clean, build 28 HTML pages exported / 30 prerendered routes, Chromium 59/59, 0 npm-audit vulnerabilities after next@16.2.6)
+> **Open Findings**: 1 — F-260 `/cv` a11y hardened (watched). F-264 upstream Next.js advisory CLOSED by next@16.2.6.
 
 ## Phase 6: Code Quality & Cleanup
 

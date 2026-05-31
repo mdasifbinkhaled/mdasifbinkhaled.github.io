@@ -448,7 +448,15 @@
 - **Docs/security sync**: current docs record 273 source files, 27,547 LOC, 488/488 unit tests, 74.16/81.53/63.20/74.16 coverage, and one high upstream Next.js advisory entry under F-264.
 - **Release gates reverified**: lint clean, format clean, typecheck 0 errors, 488/488 unit, coverage gate pass, focused knip clean, build 30/30 HTML + 118 SW precache entries (7461.5 KB), Playwright Chromium 55/55, full Playwright matrix 161 passed / 4 skipped.
 
-## Tags
+### Phase — v1.5.3 Final Forensic Closeout (2026-05-26)
+
+- **Security upgrade**: `next` 16.2.4 → 16.2.6 (plus `@next/third-parties` and `@next/bundle-analyzer` → 16.2.6), closing the upstream advisory chain tracked under F-264. `npm audit` now reports 0 vulnerabilities on both prod (`--omit=dev`) and full dependency trees. `eslint-config-next` intentionally remains at 16.2.4 (dev-only lint config).
+- **Accessibility (WCAG AA contrast)**: `notice-board.tsx` alert icon/badge colors moved to `[&>svg]:text-info` / `[&>svg]:text-success` and the "New" badge to `bg-red-700 text-white dark:bg-red-600`; `contest-countdown.tsx` badge background softened to `bg-primary/5`. Verified by the Playwright theme-contrast suite.
+- **Bug fix**: corrected a Study Timer pause regression.
+- **CI/CD hardening**: SHA-pinned all GitHub Actions across the five workflows (ci, nextjs, cross-browser-e2e, lhci, security); rewrote `SECURITY.md`.
+- **Docs truth-sync**: reconciled cockpit (INDEX, PMD, ROADMAP, PACKAGING, RELEASES, HISTORY, ISSUES) and root docs to measured reality — 491/491 unit (60 files), coverage 74.56/81.91/63.65/74.56, 28 HTML pages exported / 30 prerendered routes, SW 118 files (7463.2 KB), 0 npm-audit vulnerabilities.
+- **Release gates at tag**: lint clean, format clean, typecheck 0 errors, 491/491 unit, coverage gate pass (floor 70/81/60/70), focused knip clean, build 28 HTML pages exported (30 prerendered routes) + 118 SW precache entries (7463.2 KB), Playwright Chromium 59/59, 0 npm-audit vulnerabilities.
+- **Open findings**: F-260 (`/cv` a11y local flake, hardened, watched) remains the sole open item. F-264 is CLOSED.
 
 | Tag                   | Description                            |
 | --------------------- | -------------------------------------- |
@@ -458,6 +466,7 @@
 | `v1.3.0-stable`       | Final cleanup, dead code removal       |
 | `v1.5.1`              | AUD-2026-05 forensic audit closeout    |
 | `v1.5.2`              | Maintenance modernization              |
+| `v1.5.3`              | Final forensic closeout (next@16.2.6)  |
 
 ## Branch Strategy
 

@@ -10,8 +10,6 @@ import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
 import { Video, FileText, MonitorPlay, Code2 } from 'lucide-react';
 
-// cn unused
-
 interface WeeklyModule {
   week: number;
   title: string;

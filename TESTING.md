@@ -62,7 +62,7 @@ Enforced in `vitest.config.mts`:
 | Branches   | 81%       |
 | Statements | 70%       |
 
-Latest measured v1.5.2 coverage: 74.16% lines, 63.20% functions, 81.53% branches, 74.16% statements.
+Latest measured v1.5.3 coverage: 74.56% lines, 63.65% functions, 81.91% branches, 74.56% statements.
 
 ### Writing Tests
 

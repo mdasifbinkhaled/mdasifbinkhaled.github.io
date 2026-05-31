@@ -1,6 +1,10 @@
 # RELEASES.md — Version History
 
-## Current: v1.5.2 (package.json)
+## Current: v1.5.3 (package.json)
+
+Bumped from 1.5.2 to 1.5.3 — final forensic closeout: `next@16.2.6` security upgrade (closes F-264, 0 npm-audit vulnerabilities), detailed-course WCAG AA contrast fix, Study Timer pause-regression fix, CI/CD workflow SHA-pinning, and full cockpit/docs truth-sync.
+
+## Previous: v1.5.2 (package.json)
 
 Bumped from 1.5.1 to 1.5.2 — maintenance modernization: safe dependency upgrades, React Hooks 7.1 cleanup, focused dead-code guardrail, and documentation/security truth-sync.
 
@@ -35,7 +39,19 @@ Bumped from 1.5.0 to 1.5.1 — AUD-2026-05 forensic audit closeout: docs truth-s
 
 ## Unreleased (Current HEAD)
 
-_None — last release v1.5.2 just cut._
+_None — last release v1.5.3 just cut._
+
+## v1.5.3 — Final Forensic Closeout (2026-05-26)
+
+Patch release on top of `v1.5.2` focused on security, accessibility, a UI regression fix, CI/CD hardening, and documentation truth-sync.
+
+- **Security**: upgraded `next` 16.2.4 → 16.2.6 (plus `@next/third-parties` and `@next/bundle-analyzer` to 16.2.6), closing the upstream advisory chain tracked under F-264. `npm audit` now reports 0 vulnerabilities on both prod (`--omit=dev`) and full dependency trees. `eslint-config-next` intentionally stays at 16.2.4 (dev-only lint config).
+- **Accessibility**: fixed WCAG AA contrast on detailed-course teaching components — `notice-board.tsx` alert icon/badge colors and `contest-countdown.tsx` badge background — verified via the Playwright theme-contrast suite.
+- **Bug fix**: corrected a Study Timer pause regression.
+- **CI/CD hardening**: SHA-pinned all GitHub Actions across the five workflows; rewrote `SECURITY.md`.
+- **Docs truth-sync**: cockpit (INDEX, PMD, ROADMAP, PACKAGING, RELEASES, HISTORY, ISSUES) and root docs synced to measured reality.
+
+**Quality gates**: lint clean, format clean, typecheck 0 errors, 491/491 unit (60 files), coverage 74.56% lines / 81.91% branches / 63.65% funcs / 74.56% stmts (floor 70/81/60/70), focused knip clean, build 28 HTML pages exported (30 prerendered routes) + 118 precache (7463.2 KB), Playwright Chromium 59/59, 0 npm-audit vulnerabilities.
 
 ## v1.5.2 — Maintenance Modernization (2026-05-25)
 
