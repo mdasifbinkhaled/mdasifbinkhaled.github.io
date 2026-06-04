@@ -1,345 +1,51 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
-  Timer,
   Play,
   Pause,
   RotateCcw,
-  Settings2,
-  Coffee,
   BookOpen,
+  Coffee,
   SkipForward,
 } from 'lucide-react';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from '@/shared/components/ui/card';
+import { Card, CardContent } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
-import { Input } from '@/shared/components/ui/input';
-import { useToolStorage } from '@/shared/lib/storage';
 import { ToolSettings } from '@/shared/components/common/tool-settings';
-
-type SessionType = 'focus' | 'short-break' | 'long-break';
-
-interface TimerSettings {
-  focusMinutes: number;
-  shortBreakMinutes: number;
-  longBreakMinutes: number;
-  sessionsBeforeLongBreak: number;
-}
-
-interface SessionLog {
-  type: SessionType;
-  duration: number; // seconds actually spent
-  completedAt: string; // ISO string
-}
-
-const DEFAULT_SETTINGS: TimerSettings = {
-  focusMinutes: 25,
-  shortBreakMinutes: 5,
-  longBreakMinutes: 15,
-  sessionsBeforeLongBreak: 4,
-};
-
-const STUDY_TOOL_SLUG = 'study-timer';
-
-const SESSION_TYPES = ['focus', 'short-break', 'long-break'] as const;
-
-function getSessionLabel(type: SessionType): string {
-  switch (type) {
-    case 'focus':
-      return 'Focus';
-    case 'short-break':
-      return 'Short Break';
-    case 'long-break':
-      return 'Long Break';
-  }
-}
-
-function getSessionDuration(
-  type: SessionType,
-  settings: TimerSettings
-): number {
-  switch (type) {
-    case 'focus':
-      return settings.focusMinutes * 60;
-    case 'short-break':
-      return settings.shortBreakMinutes * 60;
-    case 'long-break':
-      return settings.longBreakMinutes * 60;
-  }
-}
-
-function formatTime(totalSeconds: number): string {
-  const m = Math.floor(totalSeconds / 60);
-  const s = totalSeconds % 60;
-  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-}
-
-function getHeatmapToneClass(intensity: number): string {
-  if (intensity <= 0) return 'bg-muted';
-  if (intensity < 0.25) return 'bg-primary/20';
-  if (intensity < 0.5) return 'bg-primary/35';
-  if (intensity < 0.75) return 'bg-primary/55';
-  return 'bg-primary/75';
-}
+import { useStudyTimer } from './use-study-timer';
+import { TimerSettingsPanel } from './timer-settings-panel';
+import { ActivityHeatmap } from './activity-heatmap';
+import { TodayProgress } from './today-progress';
+import {
+  STUDY_TOOL_SLUG,
+  SESSION_TYPES,
+  getSessionLabel,
+  getSessionDuration,
+  formatTime,
+  type SessionType,
+} from './study-timer.utils';
 
 export function StudyTimer() {
-  const [settings, setSettings, { ready: settingsReady }] =
-    useToolStorage<TimerSettings>(
-      STUDY_TOOL_SLUG,
-      'settings',
-      DEFAULT_SETTINGS
-    );
-  const [showSettings, setShowSettings] = useState(false);
-  const [sessionType, setSessionType] = useState<SessionType>('focus');
-  const [secondsLeft, setSecondsLeft] = useState(
-    DEFAULT_SETTINGS.focusMinutes * 60
-  );
-  const [isRunning, setIsRunning] = useState(false);
-  const [focusCount, setFocusCount] = useState(0);
-  const [allLog, setAllLog, { ready: logReady }] = useToolStorage<SessionLog[]>(
-    STUDY_TOOL_SLUG,
-    'log',
-    []
-  );
-  const mounted = settingsReady && logReady;
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const secondsLeftRef = useRef(DEFAULT_SETTINGS.focusMinutes * 60);
-  const isRunningRef = useRef(false);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-
-  // Keep a ref of the running state so the duration-sync effect can read it
-  // without listing `isRunning` as a dependency (which would otherwise reset
-  // the remaining time whenever the user pauses).
-  useEffect(() => {
-    isRunningRef.current = isRunning;
-  }, [isRunning]);
-
-  /** Play a short beep using the Web Audio API */
-  const playAlarm = useCallback(() => {
-    try {
-      if (!audioCtxRef.current) {
-        audioCtxRef.current = new AudioContext();
-      }
-      const ctx = audioCtxRef.current;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.type = 'sine';
-      osc.frequency.value = 880;
-      gain.gain.setValueAtTime(0.5, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.8);
-      // Second beep after a short gap
-      const osc2 = ctx.createOscillator();
-      const gain2 = ctx.createGain();
-      osc2.connect(gain2);
-      gain2.connect(ctx.destination);
-      osc2.type = 'sine';
-      osc2.frequency.value = 880;
-      gain2.gain.setValueAtTime(0.5, ctx.currentTime + 1);
-      gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.8);
-      osc2.start(ctx.currentTime + 1);
-      osc2.stop(ctx.currentTime + 1.8);
-    } catch {
-      // Web Audio not available
-    }
-  }, []);
-
-  const switchSession = useCallback(
-    (type: SessionType) => {
-      const nextDuration = getSessionDuration(type, settings);
-      secondsLeftRef.current = nextDuration;
-      setSessionType(type);
-      setSecondsLeft(nextDuration);
-      setIsRunning(false);
-    },
-    [settings]
-  );
-
-  const completeSession = useCallback(() => {
-    setIsRunning(false);
-    playAlarm();
-
-    const duration = getSessionDuration(sessionType, settings);
-    const log: SessionLog = {
-      type: sessionType,
-      duration,
-      completedAt: new Date().toISOString(),
-    };
-    setAllLog((prev) => [...prev, log]);
-
-    if (sessionType === 'focus') {
-      const newCount = focusCount + 1;
-      setFocusCount(newCount);
-      switchSession(
-        newCount % settings.sessionsBeforeLongBreak === 0
-          ? 'long-break'
-          : 'short-break'
-      );
-      return;
-    }
-
-    switchSession('focus');
-  }, [focusCount, playAlarm, sessionType, settings, setAllLog, switchSession]);
-
-  // When settings or the session type change, sync the displayed countdown to
-  // the new duration — but never while the timer is running, and never merely
-  // because the user paused. `isRunning` is intentionally read from a ref and
-  // kept out of the dependency array so pausing preserves the remaining time.
-  useEffect(() => {
-    if (!settingsReady) return;
-    if (isRunningRef.current) return;
-    const nextDuration = getSessionDuration(sessionType, settings);
-    secondsLeftRef.current = nextDuration;
-    setSecondsLeft(nextDuration);
-  }, [sessionType, settings, settingsReady]);
-
-  // Timer tick
-  useEffect(() => {
-    if (isRunning) {
-      intervalRef.current = setInterval(() => {
-        if (secondsLeftRef.current <= 1) {
-          if (intervalRef.current) clearInterval(intervalRef.current);
-          completeSession();
-          return;
-        }
-
-        setSecondsLeft((prev) => {
-          const nextValue = Math.max(prev - 1, 0);
-          secondsLeftRef.current = nextValue;
-          return nextValue;
-        });
-      }, 1000);
-    }
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [completeSession, isRunning]);
-
-  const handleReset = useCallback(() => {
-    setIsRunning(false);
-    const nextDuration = getSessionDuration(sessionType, settings);
-    secondsLeftRef.current = nextDuration;
-    setSecondsLeft(nextDuration);
-  }, [sessionType, settings]);
-
-  const handleSkip = useCallback(() => {
-    setIsRunning(false);
-    if (sessionType === 'focus') {
-      const newCount = focusCount + 1;
-      setFocusCount(newCount);
-      if (newCount % settings.sessionsBeforeLongBreak === 0) {
-        switchSession('long-break');
-      } else {
-        switchSession('short-break');
-      }
-    } else {
-      switchSession('focus');
-    }
-  }, [sessionType, focusCount, settings, switchSession]);
-
-  const handleSettingsChange = useCallback(
-    (field: keyof TimerSettings, value: string) => {
-      const num = parseInt(value, 10);
-      if (isNaN(num) || num < 1) return;
-      setSettings((prev) => {
-        const updated = { ...prev, [field]: num };
-        // Reset timer if changing the current session's duration
-        if (
-          (field === 'focusMinutes' && sessionType === 'focus') ||
-          (field === 'shortBreakMinutes' && sessionType === 'short-break') ||
-          (field === 'longBreakMinutes' && sessionType === 'long-break')
-        ) {
-          const nextDuration = num * 60;
-          secondsLeftRef.current = nextDuration;
-          setSecondsLeft(nextDuration);
-          setIsRunning(false);
-        }
-        return updated;
-      });
-    },
-    [sessionType, setSettings]
-  );
-
-  // Today's sessions derived from full log
-  const todayStr = new Date().toDateString();
-  const todayLog = useMemo(
-    () =>
-      allLog.filter((l) => new Date(l.completedAt).toDateString() === todayStr),
-    [allLog, todayStr]
-  );
-
-  // Today's stats
-  const todayFocusSessions = todayLog.filter((l) => l.type === 'focus').length;
-  const todayFocusMinutes = Math.round(
-    todayLog
-      .filter((l) => l.type === 'focus')
-      .reduce((sum, l) => sum + l.duration, 0) / 60
-  );
-
-  // Weekly heatmap: last 7 weeks (49 days)
-  const heatmapData = useMemo(() => {
-    const DAYS = 49;
-    const DAY_MS = 86_400_000;
-    const now = new Date();
-    const todayStart = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate()
-    ).getTime();
-    // Build a map: dateString → focus seconds
-    const dayMap = new Map<string, number>();
-    for (const entry of allLog) {
-      if (entry.type !== 'focus') continue;
-      const d = new Date(entry.completedAt);
-      const key = new Date(
-        d.getFullYear(),
-        d.getMonth(),
-        d.getDate()
-      ).toDateString();
-      dayMap.set(key, (dayMap.get(key) ?? 0) + entry.duration);
-    }
-    // Generate array of DAYS cells ending today (immutable Date arithmetic)
-    const cells: { date: Date; minutes: number }[] = [];
-    for (let i = DAYS - 1; i >= 0; i--) {
-      const d = new Date(todayStart - i * DAY_MS);
-      const mins = Math.round((dayMap.get(d.toDateString()) ?? 0) / 60);
-      cells.push({ date: d, minutes: mins });
-    }
-    const maxMinutes = Math.max(...cells.map((c) => c.minutes), 1);
-    // Weekday labels aligned to grid columns: each column's weekday equals
-    // (firstCell.getDay() + colIndex) % 7. Grid rows fill left→right.
-    const weekdayShort = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-    const firstDay = cells[0]?.date.getDay() ?? 0;
-    const columnLabels = Array.from(
-      { length: 7 },
-      (_, col) => weekdayShort[(firstDay + col) % 7] ?? ''
-    );
-    return { cells, maxMinutes, columnLabels };
-  }, [allLog]);
-
-  const heatmapSummary = useMemo(() => {
-    const totalMinutes = heatmapData.cells.reduce(
-      (sum, cell) => sum + cell.minutes,
-      0
-    );
-    const activeDays = heatmapData.cells.filter(
-      (cell) => cell.minutes > 0
-    ).length;
-
-    if (totalMinutes === 0) {
-      return 'No focus sessions recorded in the last 7 weeks.';
-    }
-
-    return `${totalMinutes} focus minutes recorded across ${activeDays} active days in the last 7 weeks.`;
-  }, [heatmapData]);
+  const {
+    settings,
+    showSettings,
+    sessionType,
+    secondsLeft,
+    isRunning,
+    focusCount,
+    mounted,
+    todayLog,
+    todayFocusSessions,
+    todayFocusMinutes,
+    heatmapData,
+    heatmapSummary,
+    setIsRunning,
+    setShowSettings,
+    switchSession,
+    handleReset,
+    handleSkip,
+    handleSettingsChange,
+    handleResetAll,
+  } = useStudyTimer();
 
   const totalDuration = getSessionDuration(sessionType, settings);
   const progress =
@@ -392,34 +98,6 @@ export function StudyTimer() {
     );
   };
 
-  const settingsToggle = showSettings ? (
-    <button
-      type="button"
-      onClick={() => setShowSettings(false)}
-      aria-expanded="true"
-      className="flex items-center justify-between w-full"
-    >
-      <CardTitle className="text-lg flex items-center gap-2">
-        <Settings2 className="h-5 w-5 text-muted-foreground" />
-        Settings
-      </CardTitle>
-      <span className="text-xs text-muted-foreground">Hide</span>
-    </button>
-  ) : (
-    <button
-      type="button"
-      onClick={() => setShowSettings(true)}
-      aria-expanded="false"
-      className="flex items-center justify-between w-full"
-    >
-      <CardTitle className="text-lg flex items-center gap-2">
-        <Settings2 className="h-5 w-5 text-muted-foreground" />
-        Settings
-      </CardTitle>
-      <span className="text-xs text-muted-foreground">Show</span>
-    </button>
-  );
-
   if (!mounted) return null;
 
   return (
@@ -428,15 +106,7 @@ export function StudyTimer() {
         <ToolSettings
           toolName="Study Timer"
           toolSlug={STUDY_TOOL_SLUG}
-          onReset={() => {
-            setSettings(DEFAULT_SETTINGS);
-            setAllLog([]);
-            setFocusCount(0);
-            setSessionType('focus');
-            setIsRunning(false);
-            secondsLeftRef.current = DEFAULT_SETTINGS.focusMinutes * 60;
-            setSecondsLeft(DEFAULT_SETTINGS.focusMinutes * 60);
-          }}
+          onReset={handleResetAll}
         />
       </div>
       <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
@@ -551,172 +221,21 @@ export function StudyTimer() {
 
         {/* Sidebar */}
         <div className="space-y-6">
-          {/* Today's Stats */}
-          <Card className="bg-primary/5 border-primary/20">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Timer className="h-5 w-5 text-primary" />
-                Today&apos;s Progress
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 pt-2">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-background rounded-lg border p-3 text-center">
-                  <span className="block text-2xl font-bold tabular-nums">
-                    {todayFocusSessions}
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    Sessions
-                  </span>
-                </div>
-                <div className="bg-background rounded-lg border p-3 text-center">
-                  <span className="block text-2xl font-bold tabular-nums">
-                    {todayFocusMinutes}
-                  </span>
-                  <span className="text-xs text-muted-foreground">Minutes</span>
-                </div>
-              </div>
-              {todayLog.length > 0 && (
-                <div className="space-y-1 max-h-40 overflow-y-auto">
-                  {todayLog
-                    .filter((l) => l.type === 'focus')
-                    .map((log, i) => (
-                      <div
-                        key={i}
-                        className="flex justify-between text-xs text-muted-foreground py-1 border-b border-border/50 last:border-0"
-                      >
-                        <span>Session {i + 1}</span>
-                        <span>
-                          {Math.round(log.duration / 60)}min &middot;{' '}
-                          {new Date(log.completedAt).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </span>
-                      </div>
-                    ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Weekly Activity Heatmap */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg">Weekly Activity</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-7 gap-1 text-[10px] text-muted-foreground mb-1">
-                {heatmapData.columnLabels.map((d, i) => (
-                  <span key={i} className="text-center">
-                    {d}
-                  </span>
-                ))}
-              </div>
-              <div
-                role="img"
-                aria-label={`Weekly activity heatmap. ${heatmapSummary}`}
-                className="grid grid-cols-7 gap-1"
-              >
-                {heatmapData.cells.map((cell, i) => {
-                  const intensity =
-                    cell.minutes > 0
-                      ? Math.max(0.15, cell.minutes / heatmapData.maxMinutes)
-                      : 0;
-                  return (
-                    <div
-                      key={i}
-                      title={`${cell.date.toLocaleDateString()}: ${cell.minutes}min`}
-                      aria-hidden="true"
-                      className={`aspect-square rounded-sm ${getHeatmapToneClass(
-                        intensity
-                      )}`}
-                    />
-                  );
-                })}
-              </div>
-              <p className="text-[10px] text-muted-foreground mt-2 text-right">
-                Last 7 weeks
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Settings */}
-          <Card>
-            <CardHeader className="pb-2">{settingsToggle}</CardHeader>
-            {showSettings && (
-              <CardContent className="space-y-3 pt-2">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground">
-                    <span className="block mb-1.5">Focus Duration (min)</span>
-                    <Input
-                      type="number"
-                      min="1"
-                      max="120"
-                      value={settings.focusMinutes}
-                      onChange={(e) =>
-                        handleSettingsChange('focusMinutes', e.target.value)
-                      }
-                      className="h-9"
-                    />
-                  </label>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground">
-                    <span className="block mb-1.5">Short Break (min)</span>
-                    <Input
-                      type="number"
-                      min="1"
-                      max="30"
-                      value={settings.shortBreakMinutes}
-                      onChange={(e) =>
-                        handleSettingsChange(
-                          'shortBreakMinutes',
-                          e.target.value
-                        )
-                      }
-                      className="h-9"
-                    />
-                  </label>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground">
-                    <span className="block mb-1.5">Long Break (min)</span>
-                    <Input
-                      type="number"
-                      min="1"
-                      max="60"
-                      value={settings.longBreakMinutes}
-                      onChange={(e) =>
-                        handleSettingsChange('longBreakMinutes', e.target.value)
-                      }
-                      className="h-9"
-                    />
-                  </label>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground">
-                    <span className="block mb-1.5">
-                      Sessions Before Long Break
-                    </span>
-                    <Input
-                      type="number"
-                      min="1"
-                      max="10"
-                      value={settings.sessionsBeforeLongBreak}
-                      onChange={(e) =>
-                        handleSettingsChange(
-                          'sessionsBeforeLongBreak',
-                          e.target.value
-                        )
-                      }
-                      className="h-9"
-                    />
-                  </label>
-                </div>
-              </CardContent>
-            )}
-          </Card>
+          <TodayProgress
+            todayLog={todayLog}
+            todayFocusSessions={todayFocusSessions}
+            todayFocusMinutes={todayFocusMinutes}
+          />
+          <ActivityHeatmap
+            heatmapData={heatmapData}
+            heatmapSummary={heatmapSummary}
+          />
+          <TimerSettingsPanel
+            settings={settings}
+            showSettings={showSettings}
+            setShowSettings={setShowSettings}
+            handleSettingsChange={handleSettingsChange}
+          />
         </div>
       </div>
     </div>
