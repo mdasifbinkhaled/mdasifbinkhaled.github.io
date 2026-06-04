@@ -1,0 +1,20 @@
+# Md Asif Bin Khaled — Academic Portfolio
+
+> Senior Lecturer & Researcher (CS). Research in Explainable AI (XAI) and Multimodal AI for healthcare and environment.
+
+## Pages
+
+- /: Home (bio, news, research interests, recent publications, experience)
+- /about: About / bio
+- /research: Research areas, projects, grants
+- /publications: Full publication list
+- /teaching: Courses taught (IUB, BRACU)
+- /experience: Professional experience timeline
+- /cv: CV (PDF)
+- /blog: Articles (MDX)
+- /talks: Talks & presentations
+- /apps: Browser-local academic utilities (grade/GPA calculators, seat & course planners, timers)
+
+## Notes
+
+- Static site (Next.js export). Content data lives in src/shared/lib/data/.

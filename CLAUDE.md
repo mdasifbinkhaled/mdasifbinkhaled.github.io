@@ -1,0 +1,41 @@
+# CLAUDE.md
+
+Academic portfolio for Md Asif Bin Khaled. Next.js 16 (App Router, **static export** — `output: 'export'`, no server runtime), React 19, TypeScript 6 (strict), Tailwind 4.
+
+## Commands
+
+- `npm run dev` — local dev server
+- `npm run validate` — lint + format:check + test:run + typecheck (run before committing)
+- `npm run validate:full` — validate + build + Chromium E2E (run before pushing)
+- `npm run build` — static export to `out/`
+- `npm run test:run` — unit tests once · `npm run test:e2e` — Playwright (needs build)
+- `npm run typecheck` · `npm run lint` (autofix) · `npm run deadcode` (knip)
+
+## Architecture
+
+- `src/app/**` — routes/layouts/metadata only (thin). Every route has `error.tsx`.
+- `src/features/<name>/**` — feature modules (`about`, `apps`, `home`, `publications`, `research`, `teaching`); each has `components/`, optional `hooks/`/`utils/`, and an `index.ts` barrel.
+- `src/shared/**` — `components/` (ui, layout, navigation, common), `config/` (SSoT), `hooks/`, `lib/` (incl. `data/`), `providers/`, `types/`.
+- Content data lives in `src/shared/lib/data/` as typed TS objects (`satisfies`). Blog posts are MDX in `content/`.
+- Courses use a tiered system in `lib/data/courses/`: summary (inline) → standard (file) → detailed (directory). Only `tier: 'detailed'` courses generate `/teaching/[institution]/[courseCode]` pages.
+
+## Conventions (only what differs from defaults)
+
+- **Named exports only** (except Next.js `page`/`layout`/etc.).
+- **Server Components by default**; add `'use client'` ONLY for hooks/events/browser APIs.
+- **Theme tokens only** — use `bg-background`, `text-foreground`, etc. NEVER hardcoded colors (`bg-gray-50`). Merge classes with `cn()` (`@/shared/lib/utils`).
+- Files `kebab-case`; components `PascalCase`; hooks `useX`; constants `SCREAMING_SNAKE_CASE`.
+- No `any` (ESLint-enforced); `noUncheckedIndexedAccess` is on.
+- Conventional Commits enforced by the `commit-msg` hook.
+- `target="_blank"` links must include `rel="noopener noreferrer"`.
+
+## App modules (`src/features/apps/`)
+
+Eight browser-local student tools. **Follow the `seat-planner/` structure** when editing apps: state in a `use-<name>.ts` hook, pure logic in `<name>.utils.ts`, and focused sub-components in their own files. Keep components under ~300 LOC.
+
+## Out of scope / do NOT over-engineer
+
+- This is a **solo** site. Do not add OSS-collaboration ceremony, governance docs, findings trackers, or scheduled audits.
+- Do not add dependencies, abstraction layers, or runtime schema validation without asking.
+- Prefer **small, behavior-preserving diffs**. Reuse existing patterns; don't invent new ones.
+- When asked to "fix" something, first verify it's actually broken (check `out/` build output), then fix the minimum.
