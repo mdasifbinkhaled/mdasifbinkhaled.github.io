@@ -155,7 +155,7 @@ Available environment variables:
 ├── content/              # MDX blog posts
 ├── tests/                # Vitest + Playwright test suites
 ├── public/               # Static assets (images, CV, favicon)
-├── .cockpit/             # Project Master Document (PMD)
+├── docs/                 # ADRs and project notes
 └── .github/workflows/    # CI/CD pipelines (ci, cross-browser, deploy, security, lhci)
 ```
 
@@ -212,13 +212,7 @@ The `out/` folder can be deployed to any static hosting service.
 
 ## 🤝 Contributing
 
-1. Review `.cockpit/PMD.md` for project conventions
-2. Create a feature branch from `main`
-3. Follow [Conventional Commits](https://www.conventionalcommits.org/)
-4. Ensure `npm run validate` passes
-5. Submit a pull request
-
-See [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) for detailed guidelines.
+This is a personal portfolio. Conventions live in [`CLAUDE.md`](CLAUDE.md). Create a feature branch from `main`, follow [Conventional Commits](https://www.conventionalcommits.org/), and ensure `npm run validate` passes before opening a PR.
 
 ---
 
@@ -231,4 +225,4 @@ This project is licensed under the [MIT License](LICENSE).
 ## 📞 Support
 
 - **Issues**: [GitHub Issues](https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/issues)
-- **Documentation**: [`.cockpit/PMD.md`](.cockpit/PMD.md)
+- **Conventions**: [`CLAUDE.md`](CLAUDE.md)
