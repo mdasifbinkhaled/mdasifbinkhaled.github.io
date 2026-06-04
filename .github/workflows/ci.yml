@@ -70,7 +70,7 @@ jobs:
             echo "❌ Static export failed — out/index.html missing" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
-          PAGE_COUNT=$(find out -name 'index.html' | wc -l)
+          PAGE_COUNT=$(find out -name '*.html' | wc -l)
           MIN_PAGES=20
           if [ "$PAGE_COUNT" -lt "$MIN_PAGES" ]; then
             echo "❌ Static export regressed — $PAGE_COUNT pages (< $MIN_PAGES expected)" >> $GITHUB_STEP_SUMMARY
