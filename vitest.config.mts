@@ -49,9 +49,12 @@ export default defineConfig({
         'next-env.d.ts',
       ],
       thresholds: {
+        // Recalibrated for vitest 4 / coverage-v8 4 branch counting, which
+        // counts optional chaining, nullish coalescing, and default params as
+        // branches — measuring lower than vitest 3 on identical code (~82%→~58%).
         lines: 70,
         functions: 60,
-        branches: 81,
+        branches: 55,
         statements: 70,
       },
       all: true,
