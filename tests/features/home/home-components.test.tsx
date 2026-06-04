@@ -10,6 +10,8 @@ import {
 } from '@/features/home/components/content-previews';
 import { ExperienceCompact } from '@/features/home/components/experience-compact';
 import type { ExperienceItem } from '@/shared/types';
+import { samplePublications } from '@/shared/lib/data/publications';
+import { DISPLAY_LIMITS } from '@/shared/config';
 
 vi.mock('next/link', () => ({
   default: ({
@@ -228,6 +230,19 @@ describe('PublicationsPreview', () => {
     expect(
       screen.getByRole('link', { name: /View All Publications/i })
     ).toHaveAttribute('href', '/publications');
+  });
+
+  it('renders at least one publication card (guards against an empty homepage)', () => {
+    const shown = samplePublications
+      .filter((p) => p.type !== 'In Progress' && p.type !== 'Thesis')
+      .slice(0, DISPLAY_LIMITS.HOMEPAGE_RECENT);
+    expect(shown.length).toBeGreaterThan(0);
+
+    render(<PublicationsPreview />);
+    expect(screen.getByText(shown[0].title)).toBeInTheDocument();
+    expect(
+      screen.queryByText('No publications to display.')
+    ).not.toBeInTheDocument();
   });
 });
 
