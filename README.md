@@ -106,11 +106,12 @@ cp .env.example .env.local
 
 Available environment variables:
 
-| Variable                        | Description                     | Required |
-| ------------------------------- | ------------------------------- | -------- |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 ID           | No       |
-| `NEXT_PUBLIC_ENABLE_ANALYTICS`  | Enable analytics (`true/false`) | No       |
-| `NEXT_PUBLIC_SENTRY_DSN`        | Sentry DSN for error tracking   | No       |
+| Variable                        | Description                         | Required |
+| ------------------------------- | ----------------------------------- | -------- |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 ID               | No       |
+| `NEXT_PUBLIC_ENABLE_ANALYTICS`  | Enable analytics (`true/false`)     | No       |
+| `NEXT_PUBLIC_SENTRY_DSN`        | Sentry DSN for error tracking       | No       |
+| `NEXT_PUBLIC_SITE_URL`          | Canonical site URL for SEO/metadata | No       |
 
 ---
 
@@ -122,11 +123,13 @@ Available environment variables:
 | `npm run build`         | Create optimized static export                     |
 | `npm run test`          | Run tests in watch mode                            |
 | `npm run test:run`      | Run tests once (for CI)                            |
+| `npm run test:coverage` | Run tests with the coverage threshold gate         |
 | `npm run test:e2e`      | Run Playwright E2E tests (requires build first)    |
 | `npm run lint`          | Lint and auto-fix code                             |
 | `npm run lint:check`    | Lint without fixing (for CI)                       |
 | `npm run format`        | Format code with Prettier                          |
 | `npm run typecheck`     | Type-check without emitting files                  |
+| `npm run deadcode`      | Find unused files/exports/deps (knip)              |
 | `npm run validate`      | Full validation (lint + format + test + typecheck) |
 | `npm run validate:full` | `validate` + build + Chromium Playwright gate      |
 
@@ -142,6 +145,7 @@ Available environment variables:
 │   │   ├── about/        # About page components
 │   │   ├── apps/         # Student tools (grade calc, seat planner, etc.)
 │   │   ├── home/         # Homepage components
+│   │   ├── publications/ # Publications list & filtering
 │   │   ├── research/     # Research page components
 │   │   └── teaching/     # Teaching portfolio & course pages
 │   ├── shared/           # Shared infrastructure

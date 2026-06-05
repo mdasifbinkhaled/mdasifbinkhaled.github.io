@@ -59,10 +59,12 @@ Enforced in `vitest.config.mts`:
 | ---------- | --------- |
 | Lines      | 70%       |
 | Functions  | 60%       |
-| Branches   | 81%       |
+| Branches   | 55%       |
 | Statements | 70%       |
 
-Latest measured v1.5.3 coverage: 74.56% lines, 63.65% functions, 81.91% branches, 74.56% statements.
+> Branch threshold is 55% because vitest 4 / coverage-v8 4 count more branch
+> points (optional chaining, nullish coalescing, default params) than vitest 3.
+> Exact per-run figures are published by the CI `coverage-report` artifact.
 
 ### Writing Tests
 

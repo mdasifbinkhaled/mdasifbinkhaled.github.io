@@ -14,6 +14,7 @@
 - /blog: Articles (MDX)
 - /talks: Talks & presentations
 - /apps: Browser-local academic utilities (grade/GPA calculators, seat & course planners, timers)
+- /contact: Contact and social links
 
 ## Notes
 
