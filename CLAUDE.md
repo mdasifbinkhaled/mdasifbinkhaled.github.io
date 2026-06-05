@@ -24,6 +24,7 @@ Academic portfolio for Md Asif Bin Khaled. Next.js 16 (App Router, **static expo
 - **Named exports only** (except Next.js `page`/`layout`/etc.).
 - **Server Components by default**; add `'use client'` ONLY for hooks/events/browser APIs.
 - **Theme tokens only** — use `bg-background`, `text-foreground`, etc. NEVER hardcoded colors (`bg-gray-50`). Merge classes with `cn()` (`@/shared/lib/utils`).
+- **Visual design contract** — follow `DESIGN.md` for all UI (tokens, typography, components, anti-generic-AI do/don'ts). Re-anchor on UI tasks: "Follow DESIGN.md."
 - Files `kebab-case`; components `PascalCase`; hooks `useX`; constants `SCREAMING_SNAKE_CASE`.
 - No `any` (ESLint-enforced); `noUncheckedIndexedAccess` is on.
 - Conventional Commits enforced by the `commit-msg` hook.
