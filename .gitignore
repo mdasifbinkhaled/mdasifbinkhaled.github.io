@@ -59,3 +59,7 @@ Thumbs.db
 .eslintcache
 .mypy_cache
 .lighthouseci/
+
+# Local working scratch (mockups, QA screenshots) — never commit
+/tmp/
+.husky/_/

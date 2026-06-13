@@ -1,5 +1,7 @@
 # Portfolio De-bloat + Agentic Environment — Implementation Plan
 
+> **Status: ✅ Implemented & shipped to `main` (2026-06-05).** All tasks complete (see git history); checkboxes left unticked but retained as a historical record.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace 3,000 lines of solo-project process ceremony with a lean, best-practice agentic environment, then refactor the four oversized "app" god-files into focused modules — without changing any runtime behavior.

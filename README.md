@@ -36,7 +36,7 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 | **Linting**   | ESLint 9 + Prettier                                           |
 | **CI/CD**     | GitHub Actions (5 workflows)                                  |
 | **Security**  | CodeQL, npm audit, CSP hardened                               |
-| **A11y**      | WCAG 2.1 AA targeted (axe-core enforced per page in CI)       |
+| **A11y**      | WCAG 2.x AA targeted (axe-core enforced per page in CI)       |
 | **Themes**    | 6 color themes with WCAG AA contrast compliance               |
 
 ---

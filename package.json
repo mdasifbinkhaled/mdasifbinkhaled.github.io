@@ -44,7 +44,7 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p tests/tsconfig.json",
     "deadcode": "knip --no-progress",
     "analyze": "cross-env ANALYZE=true next build",
-    "audit:ci": "npm audit --audit-level=high",
+    "audit:ci": "npm audit --omit=dev --audit-level=high",
     "pre-commit": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next out coverage playwright-report test-results tsconfig*.tsbuildinfo .lighthouseci",
@@ -110,8 +110,6 @@
     "vitest": "^4.1.8"
   },
   "overrides": {
-    "test-exclude": "8.0.0",
-    "serialize-javascript": "7.0.5",
     "typescript-eslint": "8.59.0",
     "postcss": "$postcss",
     "eslint-plugin-react-hooks": "7.1.1"

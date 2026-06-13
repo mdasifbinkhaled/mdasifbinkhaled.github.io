@@ -3,7 +3,7 @@
 > **Date**: 2026-06-04
 > **Author**: Md Asif Bin Khaled (with Claude)
 > **Repo**: `mdasifbinkhaled.github.io` — academic portfolio (Next.js 16 / React 19 / TS 6 / Tailwind 4)
-> **Status**: Draft — awaiting user review before implementation plan
+> **Status**: ✅ Implemented & shipped to `main` (2026-06-05). Retained as historical record.
 
 ---
 
