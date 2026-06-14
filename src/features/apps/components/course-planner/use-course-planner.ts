@@ -257,5 +257,3 @@ export function useCoursePlanner() {
     removeCourse,
   };
 }
-
-export type CoursePlannerState = ReturnType<typeof useCoursePlanner>;

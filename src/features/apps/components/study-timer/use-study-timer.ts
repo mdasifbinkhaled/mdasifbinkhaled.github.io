@@ -306,5 +306,3 @@ export function useStudyTimer() {
     handleResetAll,
   };
 }
-
-export type StudyTimerState = ReturnType<typeof useStudyTimer>;

@@ -32,18 +32,7 @@ export const academicProfiles = {
   },
 } as const;
 
-// Teaching philosophy
-export const teachingPhilosophy = personalIdentity.teachingPhilosophy;
-
-// Key learnings & insights (Preserved here or move to personal?)
-// Removed unused metrics and unused domains
-
 // Research projects
 export const researchProjects = {
   featured: researchData.projects,
 } as const;
-
-// Type exports
-export type ResearchArea = (typeof researchIdentity.primaryAreas)[number];
-export type AcademicProfile = (typeof academicProfiles.profiles)[number];
-export type ResearchProject = (typeof researchProjects.featured)[number];

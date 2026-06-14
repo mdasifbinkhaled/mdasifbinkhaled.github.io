@@ -152,5 +152,3 @@ export function useGpaCalculator() {
     handleCopyResult,
   };
 }
-
-export type GpaCalculatorState = ReturnType<typeof useGpaCalculator>;

@@ -1,17 +1,12 @@
 # Security Policy
 
-## Supported Versions
-
-The following versions of this project are currently being supported with security updates:
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.x     | :white_check_mark: |
-| < 1.0   | :x:                |
+This is the security policy for a single-maintainer academic portfolio site
+(static export, no server runtime). The site tracks the latest commit on `main`;
+there are no versioned releases, so fixes ship by updating `main`.
 
 ## Reporting a Vulnerability
 
-We take the security of this portfolio website seriously. If you discover a security vulnerability, please follow these steps:
+If you discover a security vulnerability, please follow these steps:
 
 ### How to Report
 
@@ -27,10 +22,8 @@ We take the security of this portfolio website seriously. If you discover a secu
 
 ### What to Expect
 
-- **Response Time**: You will receive an acknowledgment within 48 hours
-- **Investigation**: We will investigate the issue and provide an estimated timeline for a fix
-- **Updates**: You will receive regular updates on the progress
-- **Disclosure**: Once the vulnerability is fixed, we will coordinate with you on the disclosure timeline
+You will receive an acknowledgment, and once the issue is confirmed and fixed
+we'll coordinate on a disclosure timeline.
 
 ### Security Best Practices
 
@@ -38,9 +31,8 @@ This project follows these security practices:
 
 - **Dependency Scanning**: Automated npm audit in CI/CD pipeline
 - **Static Analysis**: CodeQL scanning enabled
-- **Secure Defaults**: All security headers configured
-- **Regular Updates**: Dependencies are regularly updated
-- **Code Review**: All changes require review before merging
+- **Secure Defaults**: Security headers configured (see CSP note below)
+- **Regular Updates**: Dependencies kept current via Dependabot
 
 ## Security Features
 
@@ -85,24 +77,18 @@ required).
 
 Development-only vulnerable chains previously pulled in by `serve`, `workbox-build`, and `commitlint` were removed on 2026-05-13 by replacing them with local Node scripts for static E2E serving, service-worker generation, and commit-message validation.
 
-**Action**: stay on the latest available Next 16 patch (`16.2.6` as of 2026-05-26) and upgrade promptly when new Next 16 patches are published. CI enforces this via `npm audit --audit-level=high` and a security workflow that fails on any non-build-time critical advisory.
+**Action**: stay on the latest available Next 16 patch and upgrade promptly when
+new Next 16 patches are published. The CI `audit:ci` gate runs
+`npm audit --omit=dev --audit-level=high` against production dependencies
+(dev-only build-tool advisories don't ship in a static export), and the weekly
+security workflow audits the full tree, failing on any non-build-time critical
+advisory.
 
 **Last Updated**: 2026-05-26
 
 ## Responsible Disclosure
 
-We kindly ask that you:
-
-- Allow us reasonable time to address the vulnerability before public disclosure
-- Make a good faith effort to avoid privacy violations and data destruction
-- Do not exploit the vulnerability beyond what is necessary to demonstrate the issue
-
-## Recognition
-
-We appreciate security researchers who help keep our project secure. Contributors who responsibly disclose vulnerabilities will be acknowledged (with their permission) in:
-
-- This SECURITY.md file
-- Project release notes
-- Special recognition in the repository
-
-Thank you for helping keep this project and its users safe! 🛡️
+Please allow reasonable time to address an issue before public disclosure, make a
+good-faith effort to avoid privacy violations and data destruction, and don't
+exploit a vulnerability beyond what's needed to demonstrate it. Genuine reports
+are credited here with your permission.

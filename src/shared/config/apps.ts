@@ -97,22 +97,6 @@ export const appCategories: Record<AppCategory, string> = {
   productivity: 'Productivity',
 };
 
-/** Return apps grouped by their category, preserving declaration order. */
-export function getAppsByCategory(): {
-  category: AppCategory;
-  label: string;
-  items: AppDefinition[];
-}[] {
-  const order: AppCategory[] = ['grades', 'planning', 'productivity'];
-  return order
-    .map((cat) => ({
-      category: cat,
-      label: appCategories[cat],
-      items: apps.filter((a) => a.category === cat),
-    }))
-    .filter((g) => g.items.length > 0);
-}
-
 /** Look up an app definition by slug. Throws if the slug is unknown. */
 export function getAppBySlug(slug: string): AppDefinition {
   const app = apps.find((a) => a.slug === slug);

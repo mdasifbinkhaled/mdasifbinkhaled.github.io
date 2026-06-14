@@ -94,23 +94,6 @@ export const getThemeConfig = (themeName: ThemeName): ThemeConfig =>
   themeConfigs[themeName];
 
 /**
- * Theme category type for filtering
- */
-export type ThemeCategory = ThemeConfig['category'];
-
-/**
- * Get themes by category
- */
-export const getThemesByCategory = (category: ThemeCategory): ThemeConfig[] =>
-  Object.values(themeConfigs).filter((theme) => theme.category === category);
-
-/**
- * Check if a theme name is valid
- */
-export const isValidTheme = (theme: string): theme is ThemeName =>
-  theme in themeConfigs;
-
-/**
  * Default theme for the application
  */
 export const DEFAULT_THEME: ThemeName = 'light';

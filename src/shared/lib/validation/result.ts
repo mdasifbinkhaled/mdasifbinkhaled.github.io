@@ -63,10 +63,3 @@ export const errMsg = (
   message: string,
   row?: number
 ): ErrResult => err([{ code, message, row }]);
-
-/** Convenience helper for a single warning. */
-export const warn = (
-  code: string,
-  message: string,
-  row?: number
-): ResultMessage => ({ code, message, row });

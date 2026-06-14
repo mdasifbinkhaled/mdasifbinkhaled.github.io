@@ -549,5 +549,3 @@ export function useSeatPlanner() {
     setResult,
   };
 }
-
-export type SeatPlannerState = ReturnType<typeof useSeatPlanner>;

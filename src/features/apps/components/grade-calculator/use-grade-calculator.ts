@@ -132,5 +132,3 @@ export function useGradeCalculator() {
     handleCopyResult,
   };
 }
-
-export type GradeCalculatorState = ReturnType<typeof useGradeCalculator>;

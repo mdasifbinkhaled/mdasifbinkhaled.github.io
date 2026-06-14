@@ -1,6 +1,16 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "include": ["files", "dependencies", "binaries", "duplicates"],
+  "include": [
+    "files",
+    "dependencies",
+    "binaries",
+    "duplicates",
+    "exports",
+    "types",
+    "nsExports",
+    "nsTypes"
+  ],
+  "ignoreExportsUsedInFile": true,
   "entry": [
     ".github/lighthouserc.js",
     "scripts/*.mjs",
@@ -15,5 +25,6 @@
     "scripts/*.mjs"
   ],
   "ignoreDependencies": ["tailwindcss", "tw-animate-css"],
-  "ignoreBinaries": ["lhci"]
+  "ignoreBinaries": ["lhci"],
+  "ignore": ["src/shared/components/ui/**"]
 }

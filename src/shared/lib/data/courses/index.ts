@@ -4,7 +4,7 @@
  * All course data, institution groupings, tier-based filtering,
  * and derived calculations live here. No wrapper layers.
  */
-import type { CourseData, CourseInstitution, CourseTier } from '@/shared/types';
+import type { CourseData, CourseInstitution } from '@/shared/types';
 
 import { iubCse101 } from './iub-cse101';
 import { iubCse201 } from './iub-cse201';
@@ -64,10 +64,6 @@ export const allCourses: CourseData[] = [
   ...coursesTaughtIUB,
   ...coursesTaughtBRACU,
 ];
-
-/** Get courses by tier */
-export const getCoursesByTier = (tier: CourseTier): CourseData[] =>
-  allCourses.filter((c) => c.tier === tier);
 
 /** Get detailed courses (for generating static pages) */
 export const getDetailedCourses = (): CourseData[] =>

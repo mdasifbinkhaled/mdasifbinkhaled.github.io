@@ -10,8 +10,6 @@
  * normalized to string cells, with header detection already resolved.
  */
 
-import type { Result } from '@/shared/lib/validation';
-
 export interface ParsedTabularFile {
   source: string;
   rowCount: number;
@@ -106,12 +104,6 @@ export interface ApplySchemaOptions<TKey extends string = string> {
   extraColumns?: ExtraColumnSelection[];
 }
 
-export interface ImportOptions<TKey extends string = string> {
-  fields: readonly SchemaField<TKey>[];
-  /** Called when user hits "Commit". */
-  onCommit: (rows: ImportedRow<TKey>[], meta: ImportCommitMeta) => void;
-}
-
 export type MergeStrategy = 'replace' | 'merge' | 'append';
 
 export interface ImportCommitMeta {
@@ -123,8 +115,3 @@ export interface ImportCommitMeta {
   extraColumns?: string[];
   perFileValues?: Record<string, Record<string, string>>;
 }
-
-/** The signature tools receive from their importer invocation. */
-export type ImportResult<TKey extends string = string> = Result<
-  ImportedRow<TKey>[]
->;

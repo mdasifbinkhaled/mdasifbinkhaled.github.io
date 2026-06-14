@@ -38,11 +38,3 @@ export const newsItems: NewsItem[] = [
 export function getNewsItems(): NewsItem[] {
   return newsItems;
 }
-
-/**
- * Get recent news items (limited count)
- * @param limit Maximum number of items to return
- */
-export function getRecentNews(limit: number = 3): NewsItem[] {
-  return newsItems.slice(0, limit);
-}

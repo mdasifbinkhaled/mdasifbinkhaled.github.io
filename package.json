@@ -1,6 +1,6 @@
 {
   "name": "mdasifbinkhaled.github.io",
-  "version": "1.5.3",
+  "version": "0.0.0",
   "description": "Academic portfolio showcasing research, publications, teaching activities, and professional experience",
   "author": {
     "name": "Md Asif Bin Khaled",
@@ -24,7 +24,7 @@
   ],
   "private": true,
   "engines": {
-    "node": ">=22",
+    "node": "^22 || ^24",
     "npm": ">=10.0.0 <12"
   },
   "packageManager": "npm@11.4.2",

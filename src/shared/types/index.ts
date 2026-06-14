@@ -218,16 +218,6 @@ export interface Skill {
   items: string[];
 }
 
-// Academic types
-export interface ResearchArea {
-  id: string;
-  name: string;
-  description: string;
-  keywords: string[];
-  publicationCount?: number;
-  icon?: IconName;
-}
-
 // Theme types
 export type ThemeName =
   | 'light'
