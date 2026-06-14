@@ -4,9 +4,15 @@ import { cn } from '@/shared/lib/utils';
 
 const Table = React.forwardRef<
   HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
+  React.HTMLAttributes<HTMLTableElement> & {
+    /** Forwarded to the scrollable wrapper — e.g. tabIndex/role for a11y. */
+    containerProps?: React.HTMLAttributes<HTMLDivElement>;
+  }
+>(({ className, containerProps, ...props }, ref) => (
+  <div
+    {...containerProps}
+    className={cn('relative w-full overflow-auto', containerProps?.className)}
+  >
     <table
       ref={ref}
       className={cn('w-full caption-bottom text-sm', className)}

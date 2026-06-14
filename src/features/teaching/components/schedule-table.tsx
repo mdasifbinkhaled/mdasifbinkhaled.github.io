@@ -83,87 +83,92 @@ function DesktopView({
 }) {
   return (
     <div className="hidden lg:block rounded-lg border border-border shadow-xs overflow-hidden bg-background">
-      <div className="w-full overflow-x-auto">
-        <Table className="w-full border-collapse">
-          <caption className="sr-only">
-            Course schedule{semesterLabel ? ` for ${semesterLabel}` : ''}
-          </caption>
-          <TableHeader className="bg-muted/40 sticky top-0 z-10">
-            <TableRow className="border-b border-border hover:bg-muted/40">
-              <TableHead className="w-14 text-center border-r border-border/50 h-10 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                Sec
-              </TableHead>
-              <TableHead className="min-w-44 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
-                Theory Faculty
-              </TableHead>
-              <TableHead className="w-28 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
-                Time
-              </TableHead>
-              <TableHead className="w-20 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
-                Room
-              </TableHead>
-              <TableHead className="min-w-44 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
-                Lab Faculty
-              </TableHead>
-              <TableHead className="w-28 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
-                Time
-              </TableHead>
-              <TableHead className="w-20 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
-                Room
-              </TableHead>
+      <Table
+        className="w-full border-collapse"
+        containerProps={{
+          tabIndex: 0,
+          role: 'group',
+          'aria-label': `Course schedule${semesterLabel ? ` for ${semesterLabel}` : ''}`,
+        }}
+      >
+        <caption className="sr-only">
+          Course schedule{semesterLabel ? ` for ${semesterLabel}` : ''}
+        </caption>
+        <TableHeader className="bg-muted/40 sticky top-0 z-10">
+          <TableRow className="border-b border-border hover:bg-muted/40">
+            <TableHead className="w-14 text-center border-r border-border/50 h-10 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Sec
+            </TableHead>
+            <TableHead className="min-w-44 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
+              Theory Faculty
+            </TableHead>
+            <TableHead className="w-28 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
+              Time
+            </TableHead>
+            <TableHead className="w-20 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-primary/80 bg-primary/5">
+              Room
+            </TableHead>
+            <TableHead className="min-w-44 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
+              Lab Faculty
+            </TableHead>
+            <TableHead className="w-28 border-r border-border/50 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
+              Time
+            </TableHead>
+            <TableHead className="w-20 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/20">
+              Room
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {schedule.map((item) => (
+            <TableRow
+              key={item.section}
+              className={cn(
+                'group border-b border-border/50 last:border-0 transition-colors',
+                'hover:bg-muted/5'
+              )}
+            >
+              <TableCell className="text-center font-bold text-sm text-foreground/70 bg-muted/5 border-r border-border/50 py-3">
+                {String(item.section).padStart(2, '0')}
+              </TableCell>
+              <TableCell className="border-r border-border/50 py-3">
+                <div className="flex flex-col gap-1">
+                  <CellContent text={item.theory.faculty} icon={BookOpen} />
+                  <EmailLink email={item.theory.email} />
+                </div>
+              </TableCell>
+              <TableCell className="border-r border-border/50 py-3">
+                <div className="flex flex-col gap-1.5 items-start">
+                  <BadgeCell text={item.theory.days} variant="secondary" />
+                  <span className="text-xs font-mono text-muted-foreground">
+                    {item.theory.time}
+                  </span>
+                </div>
+              </TableCell>
+              <TableCell className="border-r border-border/50 py-3">
+                <BadgeCell text={item.theory.room} variant="outline" />
+              </TableCell>
+              <TableCell className="border-r border-border/50 py-3 bg-muted/5">
+                <div className="flex flex-col gap-1">
+                  <CellContent text={item.lab.faculty} icon={Monitor} />
+                  <EmailLink email={item.lab.email} />
+                </div>
+              </TableCell>
+              <TableCell className="border-r border-border/50 py-3 bg-muted/5">
+                <div className="flex flex-col gap-1.5 items-start">
+                  <BadgeCell text={item.lab.days} variant="secondary" />
+                  <span className="text-xs font-mono text-muted-foreground">
+                    {item.lab.time}
+                  </span>
+                </div>
+              </TableCell>
+              <TableCell className="py-3 bg-muted/5">
+                <BadgeCell text={item.lab.room} variant="outline" />
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {schedule.map((item) => (
-              <TableRow
-                key={item.section}
-                className={cn(
-                  'group border-b border-border/50 last:border-0 transition-colors',
-                  'hover:bg-muted/5'
-                )}
-              >
-                <TableCell className="text-center font-bold text-sm text-foreground/70 bg-muted/5 border-r border-border/50 py-3">
-                  {String(item.section).padStart(2, '0')}
-                </TableCell>
-                <TableCell className="border-r border-border/50 py-3">
-                  <div className="flex flex-col gap-1">
-                    <CellContent text={item.theory.faculty} icon={BookOpen} />
-                    <EmailLink email={item.theory.email} />
-                  </div>
-                </TableCell>
-                <TableCell className="border-r border-border/50 py-3">
-                  <div className="flex flex-col gap-1.5 items-start">
-                    <BadgeCell text={item.theory.days} variant="secondary" />
-                    <span className="text-xs font-mono text-muted-foreground">
-                      {item.theory.time}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="border-r border-border/50 py-3">
-                  <BadgeCell text={item.theory.room} variant="outline" />
-                </TableCell>
-                <TableCell className="border-r border-border/50 py-3 bg-muted/5">
-                  <div className="flex flex-col gap-1">
-                    <CellContent text={item.lab.faculty} icon={Monitor} />
-                    <EmailLink email={item.lab.email} />
-                  </div>
-                </TableCell>
-                <TableCell className="border-r border-border/50 py-3 bg-muted/5">
-                  <div className="flex flex-col gap-1.5 items-start">
-                    <BadgeCell text={item.lab.days} variant="secondary" />
-                    <span className="text-xs font-mono text-muted-foreground">
-                      {item.lab.time}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="py-3 bg-muted/5">
-                  <BadgeCell text={item.lab.room} variant="outline" />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }

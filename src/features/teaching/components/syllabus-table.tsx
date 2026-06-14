@@ -35,7 +35,13 @@ export function SyllabusTable({ modules }: SyllabusTableProps) {
 
   return (
     <div className="rounded-md border border-border/40 overflow-hidden">
-      <Table>
+      <Table
+        containerProps={{
+          tabIndex: 0,
+          role: 'group',
+          'aria-label': 'Course syllabus by week',
+        }}
+      >
         <TableHeader className="bg-muted/40">
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-24">Week</TableHead>
