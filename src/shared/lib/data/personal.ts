@@ -40,14 +40,4 @@ export const personalIdentity = {
     commitment:
       'Creating an environment where students develop both technical skills and ethical responsibility',
   },
-  phdInterests: {
-    timeline: {
-      targetStart: 'Fall 2026',
-      applicationPeriod: '2025-2026',
-    },
-    targetLocations: ['Europe', 'Australia', 'Saudi Arabia'],
-    researchFocus: ['Healthcare AI', 'AI/ML', 'Explainable AI'],
-    supervisorPreferences: {},
-    isPrivate: true,
-  },
 } as const;
