@@ -77,6 +77,7 @@ export const iubCse211: CourseData = {
 
   // Course-page "Command Center" template fields
   template: 'command-center',
+  role: 'Course Coordinator',
   totalWeeks: 12,
   currentWeek: 3,
   termStartDate: '2026-06-01',
