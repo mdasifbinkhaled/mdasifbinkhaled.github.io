@@ -32,16 +32,16 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 ## 3. Typography
 
-- **Sans (current):** Inter, via `--font-sans` (`font-sans`). Used for everything today.
-- **Serif (planned):** a serif display font is planned for the teaching/course redesign (academic gravitas). **Not yet configured** — do not use `font-serif` until a `--font-serif` token is added to `globals.css`.
-- **Scale:** lean on Tailwind's scale; section titles `text-2xl`/`text-3xl` `font-semibold`, body `text-base` (line-height ~1.6), meta/caption `text-sm`/`text-xs` `text-muted-foreground`. Prefer `clamp()` for large display headings.
+- **Sans:** Inter, via `--font-sans` (`font-sans`). The default for everything.
+- **Mono:** IBM Plex Mono, via `--font-mono` (`font-mono`). For tracked numeric/technical labels only — course codes, week/section numbers, times, percentages, dates, badges (introduced with the course-page redesign). Not for prose. _(This supersedes the earlier "serif planned" note — the course redesign uses Inter + IBM Plex Mono, no serif.)_
+- **Scale:** lean on Tailwind's scale; section titles `text-2xl`/`text-3xl` `font-semibold`, body `text-base` (line-height ~1.6), meta/caption `text-sm`/`text-xs` `text-muted-foreground`. Prefer `clamp()` for large display headings. (Course pages run a bolder display scale — see §11.)
 - **Prose width:** constrain long-form text (publications, about, blog) to ~`max-w-prose` (~65–72ch). Never full-width prose on wide screens.
 - **Prohibited:** gradient text; all-caps body; font-size below 14px for body; letter-spacing on body (caps labels only).
 
 ## 4. Spacing & layout
 
 - **8px base grid** (Tailwind default units; use even multiples). Generous vertical rhythm: large gaps between sections, comfortable padding inside cards.
-- **Shell:** fixed left **profile sidebar** + top nav + content column (see `app-sidebar-layout`). Content max-width is constrained and centered; don't let content run full-bleed on large screens.
+- **Shell:** fixed left **profile sidebar** + top nav + content column (see `app-sidebar-layout`). Content max-width is constrained and centered; don't let content run full-bleed on large screens. **Exception:** course detail pages hide the profile sidebar and run the full-width "Command Center" layout (top nav retained) — see §11.
 - **Patterns in use:** single-column prose; bordered card grids; (planned) scrollspy sub-nav on course pages. **Avoid** a 3-column symmetric icon-card grid as a hero/feature block (the #1 generic-AI tell).
 
 ## 5. Components
@@ -69,7 +69,7 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 **Do:** semantic tokens only · `cn()` for class merging · constrain prose width · `focus-visible` rings · `rel="noopener noreferrer"` on `_blank` · keep components <300 LOC · verify in light **and** dark before claiming done.
 
-**Don't:** `bg-indigo-*`/`bg-purple-*`/raw `bg-gray-*` · gradient text · heavy/stacked shadows · 3-column icon-card hero · `rounded-2xl` on cards · `font-serif` until the token exists · new deps/animation libs without asking · hardcoded hex/HSL in components.
+**Don't:** `bg-indigo-*`/`bg-purple-*`/raw `bg-gray-*` · gradient text · heavy/stacked shadows · 3-column icon-card hero · `rounded-2xl` on cards · new deps/animation libs without asking · hardcoded hex/HSL in components. _(Course pages carry a few scoped exceptions — see §11.)_
 
 ## 9. Content voice
 
@@ -81,6 +81,20 @@ First-person, precise, unembellished. Specific over vague ("Principal Investigat
 - **Drift check (periodic):** `grep -rnE "bg-(gray|zinc|slate|indigo|purple)-[0-9]|text-(gray|zinc|slate)-[0-9]|#[0-9a-fA-F]{3,6}" src` should return ~nothing in components.
 - **Keep in sync:** when `tokens.css`, the font setup, or a recurring component pattern changes, update this file in the same commit. A stale DESIGN.md is worse than none.
 
+## 11. Course pages ("Command Center")
+
+Course **detail** pages are a deliberately distinct, full-width "publication" surface (see `src/features/teaching/components/course-page/`). They follow §1–§9 (semantic tokens only, the 6-theme + a11y gates, content voice) **with these scoped exceptions** — intentional, confined to `.cp` in `course-page.css`, and **not** propagated to the rest of the site unless explicitly decided:
+
+- **Layout:** full-width (max ~1180px, centered), profile sidebar hidden, top nav retained (`app-sidebar-layout` switches on the route).
+- **Cards:** `--radius-xl` (12px) rather than the default 8px.
+- **Display headings:** bolder — hero ~800, section titles 700 (vs the site default `font-semibold`/600).
+- **Mono:** IBM Plex Mono for tracked numerals/labels (codes, weeks, times, %, dates, badges).
+- **Caps labels:** two 10px uppercase families — structural (600/0.07em, muted) and status badges (700/0.06em, colored).
+- **The "This Week" band:** the one element allowed a deeper soft shadow and a brand-tinted gradient surface (a `color-mix` of the active theme's `--primary`); its on-dark foregrounds are intentional `hsl(210 40% 96% / a)` literals (the band is always dark in every theme).
+- **Scale tokens** (`--radius-xl/full`, shadow/duration/ease) are defined locally on `.cp`, not globally.
+
+Everything else — the teaching index, institution pages, and all non-course pages — stays on the §1–§9 defaults.
+
 ---
 
-_Last synced: 2026-06-05 (tokens: 6 themes in `src/styles/tokens.css`; fonts: Inter sans; serif planned for course redesign)._
+_Last synced: 2026-06-16 (tokens: 6 themes in `src/styles/tokens.css`; fonts: Inter sans + IBM Plex Mono; course pages: full-width "Command Center", see §11)._

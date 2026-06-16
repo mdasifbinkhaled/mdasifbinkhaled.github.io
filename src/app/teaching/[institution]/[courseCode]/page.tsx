@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { allCourses, institutionNames } from '@/shared/lib/data/courses';
 import { CoursePageLayout } from '@/features/teaching';
+import { CoursePage as CommandCenterCoursePage } from '@/features/teaching/components/course-page';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { CourseStructuredDataScript } from '@/shared/components/infra/structured-data';
 
@@ -86,6 +87,17 @@ export default async function CoursePage({ params }: CoursePageProps) {
 
   if (!course) {
     notFound();
+  }
+
+  // Courses opted into the "Command Center" template render the full-width
+  // redesigned page; all others stay on the legacy layout inside the shell.
+  if (course.template === 'command-center') {
+    return (
+      <>
+        <CourseStructuredDataScript course={course} />
+        <CommandCenterCoursePage course={course} />
+      </>
+    );
   }
 
   return (

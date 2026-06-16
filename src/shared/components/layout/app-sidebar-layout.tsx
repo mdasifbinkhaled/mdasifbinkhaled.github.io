@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import { cn } from '@/shared/lib/utils';
 
@@ -37,6 +38,13 @@ export default function AppSidebarLayout({
 
   const [collapsed, setCollapsed] = useState(false);
 
+  // Pages on the redesigned full-width "Command Center" course layout: the
+  // global top nav stays, but the left profile sidebar is hidden so the page
+  // has room to breathe. Scoped to the courses that actually use the new
+  // template (add more paths here as other courses migrate to it).
+  const pathname = usePathname();
+  const isFullWidthCourse = pathname === '/teaching/iub/cse211sum26';
+
   const lastUpdatedLabel = new Intl.DateTimeFormat('en', {
     month: 'long',
     year: 'numeric',
@@ -67,44 +75,47 @@ export default function AppSidebarLayout({
       {/* Two-column layout on desktop */}
 
       <div className="lg:flex">
-        {/* Desktop sidebar - natural height, no inner scrollbars */}
+        {/* Desktop sidebar + toggle — hidden on full-width course pages */}
+        {!isFullWidthCourse && (
+          <>
+            <aside
+              id="desktop-sidebar"
+              className={cn(
+                'hidden lg:flex flex-col shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-sidebar shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
 
-        <aside
-          id="desktop-sidebar"
-          className={cn(
-            'hidden lg:flex flex-col shrink-0 transition-all duration-300 border-r border-sidebar-border bg-sidebar text-sidebar-foreground fixed top-0 left-0 h-screen z-sidebar shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]',
+                collapsed ? 'w-[60px]' : 'w-80'
+              )}
+            >
+              <ProfileSidebar isCollapsed={collapsed} hideNav={true} />
+            </aside>
 
-            collapsed ? 'w-[60px]' : 'w-80'
-          )}
-        >
-          <ProfileSidebar isCollapsed={collapsed} hideNav={true} />
-        </aside>
+            {/* Desktop sidebar toggle button - overlays navbar and content */}
 
-        {/* Desktop sidebar toggle button - overlays navbar and content */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                'hidden lg:inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all duration-200',
 
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn(
-            'hidden lg:inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all duration-200',
+                'fixed top-[3.75rem] z-sidebar-toggle h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent',
 
-            'fixed top-[3.75rem] z-sidebar-toggle h-6 w-6 rounded-full bg-background shadow-md border border-border hover:bg-accent',
-
-            collapsed
-              ? 'left-[60px] -translate-x-1/2'
-              : 'left-80 -translate-x-1/2'
-          )}
-          onClick={() => setCollapsed(!collapsed)}
-          aria-controls="desktop-sidebar"
-          aria-expanded={!collapsed}
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          {collapsed ? (
-            <ChevronRight className="h-3 w-3" />
-          ) : (
-            <ChevronLeft className="h-3 w-3" />
-          )}
-        </Button>
+                collapsed
+                  ? 'left-[60px] -translate-x-1/2'
+                  : 'left-80 -translate-x-1/2'
+              )}
+              onClick={() => setCollapsed(!collapsed)}
+              aria-controls="desktop-sidebar"
+              aria-expanded={!collapsed}
+              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              {collapsed ? (
+                <ChevronRight className="h-3 w-3" />
+              ) : (
+                <ChevronLeft className="h-3 w-3" />
+              )}
+            </Button>
+          </>
+        )}
 
         {/* Right column: navbar, content, footer. No inner scrollbars. */}
 
@@ -112,7 +123,7 @@ export default function AppSidebarLayout({
           className={cn(
             'flex-1 min-w-0 flex flex-col transition-all duration-300',
 
-            collapsed ? 'lg:ml-[60px]' : 'lg:ml-80'
+            !isFullWidthCourse && (collapsed ? 'lg:ml-[60px]' : 'lg:ml-80')
           )}
         >
           <header
@@ -122,9 +133,10 @@ export default function AppSidebarLayout({
 
               'left-0 w-full',
 
-              collapsed
-                ? 'lg:left-[60px] lg:w-[calc(100%-60px)]'
-                : 'lg:left-80 lg:w-[calc(100%-20rem)]'
+              !isFullWidthCourse &&
+                (collapsed
+                  ? 'lg:left-[60px] lg:w-[calc(100%-60px)]'
+                  : 'lg:left-80 lg:w-[calc(100%-20rem)]')
             )}
           >
             <div className="container mx-auto px-6 py-4">
@@ -140,9 +152,16 @@ export default function AppSidebarLayout({
 
           <main
             id="main-content"
-            className="flex-1 min-w-0 px-4 lg:px-6 scroll-mt-20"
+            className={cn(
+              'flex-1 min-w-0 scroll-mt-20',
+              !isFullWidthCourse && 'px-4 lg:px-6'
+            )}
           >
-            <div className="container mx-auto py-6">{children}</div>
+            {isFullWidthCourse ? (
+              children
+            ) : (
+              <div className="container mx-auto py-6">{children}</div>
+            )}
           </main>
 
           <footer className="shrink-0 py-8 px-6 border-t bg-background/50 backdrop-blur-sm">

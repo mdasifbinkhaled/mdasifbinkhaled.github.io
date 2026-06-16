@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google';
+import { Inter, IBM_Plex_Mono } from 'next/font/google';
 import type { Metadata } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { AppProviders } from '@/shared/providers/app-providers';
@@ -21,6 +21,15 @@ import '@/styles/tokens.css';
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+});
+
+// Monospace for tracked numeric/technical labels (course codes, week numbers,
+// times, percentages, badges) — used by the course-page "command center" design.
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-ibm-plex-mono',
   display: 'swap',
 });
 
@@ -85,7 +94,7 @@ export default function RootLayout({
         <meta name="referrer" content="strict-origin-when-cross-origin" />
       </head>
       <body
-        className={`${inter.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${inter.variable} ${ibmPlexMono.variable} font-sans antialiased bg-background text-foreground`}
       >
         {/* JSON-LD Structured Data — sanitized to prevent XSS */}
         <script

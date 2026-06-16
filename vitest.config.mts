@@ -45,6 +45,12 @@ export default defineConfig({
         'src/shared/components/common/pdf-viewer.tsx',
         'src/shared/components/infra/sw-register.tsx',
         'src/shared/lib/mdx.ts',
+        // Course-page "Command Center" template: presentational React + DOM
+        // hooks (IntersectionObserver, clipboard) are covered via the E2E a11y
+        // + smoke suite; the pure logic in `course-page.utils.ts` is unit-tested.
+        'src/features/teaching/components/course-page/*.tsx',
+        'src/features/teaching/components/course-page/copy-link.ts',
+        'src/shared/hooks/use-scrollspy.ts',
         'vitest.d.ts',
         'next-env.d.ts',
       ],

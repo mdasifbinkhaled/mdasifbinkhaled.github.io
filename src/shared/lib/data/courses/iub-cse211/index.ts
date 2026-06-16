@@ -9,6 +9,16 @@ import {
   activeContest,
   exams,
 } from './schedule';
+import {
+  announcements,
+  assessmentSchemes,
+  nextMilestone,
+  pastOfferings,
+  quickLinks,
+  sectionsRoster,
+  staff,
+  units,
+} from './command-center';
 
 export const iubCse211: CourseData = {
   id: cse211Term.id,
@@ -17,10 +27,13 @@ export const iubCse211: CourseData = {
 
   title: 'Algorithms',
   institution: 'IUB',
+  institutionShort: 'IUB',
   level: 'undergraduate',
   credits: 3,
   semester: cse211Term.semester,
   year: cse211Term.year,
+  tagline:
+    'Designing and analyzing efficient algorithms — from asymptotic complexity to the paradigms behind scalable computation.',
   description:
     'Comprehensive study of algorithm analysis and design. Topics include sorting, searching, graph algorithms, dynamic programming, and complexity analysis (Big O). Emphasis on solving complex computational problems efficiently.',
   outcomes: [
@@ -58,6 +71,21 @@ export const iubCse211: CourseData = {
     office: 'BC5010-D',
     hours:
       'By appointment during Summer 2026 until the class routine is finalized.',
+    phone: '(+88) 01676076329',
     note: 'Please make an appointment before visiting.',
   },
+
+  // Course-page "Command Center" template fields
+  template: 'command-center',
+  totalWeeks: 12,
+  currentWeek: 3,
+  termStartDate: '2026-06-01',
+  staff,
+  nextMilestone,
+  units,
+  quickLinks,
+  assessmentSchemes,
+  sectionsRoster,
+  announcements,
+  pastOfferings,
 };

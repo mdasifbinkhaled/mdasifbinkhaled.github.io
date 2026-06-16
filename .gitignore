@@ -60,6 +60,7 @@ Thumbs.db
 .mypy_cache
 .lighthouseci/
 
-# Local working scratch (mockups, QA screenshots) — never commit
+# Local working scratch (mockups, QA screenshots, design handoffs) — never commit
 /tmp/
+.dump/
 .husky/_/

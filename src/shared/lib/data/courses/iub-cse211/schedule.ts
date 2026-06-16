@@ -26,6 +26,7 @@ export const activeContest: CourseData['activeContest'] = {
   url: 'https://vjudge.net/contest/815686',
   startDate: cse211Term.publishedOn,
   platform: 'VJudge',
+  sub: 'Live now · open to all enrolled students',
 };
 
 export const exams = {

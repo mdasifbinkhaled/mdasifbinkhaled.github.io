@@ -123,6 +123,8 @@ export interface CourseContest {
   startDate?: string;
   endDate?: string;
   platform?: string;
+  /** Short subtitle shown on the course-page contest CTA. */
+  sub?: string;
 }
 
 export interface CourseModule {
@@ -156,7 +158,143 @@ export interface CourseExams {
 export interface CourseConsultation {
   office?: string;
   hours: string;
+  phone?: string;
   note?: string;
+}
+
+/* ---------------------------------------------------------------------------
+ * Course-page "Command Center" template types.
+ * One data-driven CoursePage renders active + completed courses defensively.
+ * All fields below are additive/optional on CourseData so existing tiered
+ * courses (summary/standard, and detailed courses still on the legacy layout)
+ * are unaffected.
+ * ------------------------------------------------------------------------- */
+
+/** Icon names the course-page template understands (mapped to lucide-react). */
+export type CourseIconName =
+  | 'file-text'
+  | 'flask-conical'
+  | 'presentation'
+  | 'code-2'
+  | 'message-square'
+  | 'message-circle'
+  | 'book-open'
+  | 'list-checks'
+  | 'eye'
+  | 'trophy'
+  | 'folder'
+  | 'link'
+  | 'graduation-cap'
+  | 'video';
+
+export interface CourseStaff {
+  name: string;
+  role: string;
+  initials: string;
+  email?: string;
+}
+
+export interface CourseNextMilestone {
+  label: string;
+  detail: string;
+}
+
+export interface CourseGradeItem {
+  label: string;
+  pct: number;
+}
+
+export interface CourseExamEntry {
+  name: string;
+  date: string;
+  seatPlan?: string;
+  syllabus?: string;
+}
+
+export interface CourseSchemeExams {
+  midterm?: CourseExamEntry;
+  final?: CourseExamEntry;
+}
+
+/** One assessment scheme (e.g. Theory or Lab) with its grade breakdown. */
+export interface CourseScheme {
+  label: string;
+  credits?: number;
+  /** Marks the scheme as a provisional DRAFT in the UI. */
+  placeholder?: boolean;
+  grading: CourseGradeItem[];
+  exams?: CourseSchemeExams;
+}
+
+export interface CourseAssessmentSchemes {
+  theory?: CourseScheme;
+  lab?: CourseScheme;
+}
+
+export interface CourseRosterRow {
+  sec: string;
+  type: 'Theory' | 'Lab';
+  instructor: string;
+  /** Highlights rows taught by the page owner (enables the All/Mine toggle). */
+  mine?: boolean;
+  days: string;
+  time: string;
+  room: string;
+}
+
+export interface CourseSectionRoster {
+  coordinator?: boolean;
+  note?: string;
+  rows: CourseRosterRow[];
+}
+
+export interface CourseQuickLink {
+  label: string;
+  url?: string;
+  icon: CourseIconName;
+  primary?: boolean;
+}
+
+export type CourseAnnouncementTag = 'new' | 'update' | 'exam' | 'soon' | 'info';
+
+export interface CourseAnnouncement {
+  tag: CourseAnnouncementTag;
+  title: string;
+  date?: string;
+  /** Section id to deep-link to when the notice is clicked. */
+  target?: string;
+}
+
+export interface CourseMaterial {
+  label: string;
+  icon: CourseIconName;
+  url?: string;
+}
+
+/** A syllabus week (string `week` supports ranges like "8–9"). */
+export interface CourseSyllabusWeek {
+  week: number | string;
+  title: string;
+  theory?: string;
+  lab?: string;
+  materials?: CourseMaterial[];
+}
+
+export interface CourseUnit {
+  label: string;
+  weeks: CourseSyllabusWeek[];
+}
+
+export interface CourseSummaryStat {
+  k: string;
+  v: string;
+}
+
+/** Retrospective band content for completed courses. */
+export interface CourseSummary {
+  headline: string;
+  detail: string;
+  stats: CourseSummaryStat[];
 }
 
 export interface CourseData {
@@ -198,6 +336,30 @@ export interface CourseData {
   weeklyModules?: CourseModule[];
   exams?: CourseExams;
   consultation?: CourseConsultation;
+
+  /* ---- Course-page "Command Center" template fields (all optional) ---- */
+  /** Short institution label for the hero meta line (e.g. "IUB"). */
+  institutionShort?: string;
+  tagline?: string;
+  /** Live week number; if omitted the page computes it from the term start. */
+  currentWeek?: number;
+  totalWeeks?: number;
+  staff?: CourseStaff;
+  nextMilestone?: CourseNextMilestone;
+  /** Unit-grouped syllabus weeks (drives the syllabus + "this week" band). */
+  units?: CourseUnit[];
+  sectionsRoster?: CourseSectionRoster;
+  quickLinks?: CourseQuickLink[];
+  /** Dual theory/lab grade schemes (takes precedence over `assessment`). */
+  assessmentSchemes?: CourseAssessmentSchemes;
+  announcements?: CourseAnnouncement[];
+  /** Retrospective band content (completed courses). */
+  summary?: CourseSummary;
+  pastOfferings?: string[];
+  /** ISO date the term began — used to compute the live current week. */
+  termStartDate?: string;
+  /** Opt a detailed course into the full-width "Command Center" course page. */
+  template?: 'command-center';
 }
 
 // Navigation types

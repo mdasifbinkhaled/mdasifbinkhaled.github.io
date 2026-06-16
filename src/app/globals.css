@@ -6,6 +6,9 @@
 
 @theme {
   --font-sans: var(--font-inter), sans-serif;
+  --font-mono:
+    var(--font-ibm-plex-mono), ui-monospace, Menlo, Consolas, 'Liberation Mono',
+    monospace;
 
   --breakpoint-3xl: 1920px;
 
