@@ -18,7 +18,7 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 ### Core Capabilities
 
 - **📚 Publications** — Display research papers with abstracts, keywords, and citation links
-- **🎓 Teaching Portfolio** — Course pages with schedules, resources, and announcements
+- **🎓 Teaching Portfolio** — Full-width, data-driven "Command Center" course pages (syllabus, schedule, assessment, resources, live current-week) across 6 themes
 - **💼 Experience Timeline** — Academic and professional experience showcase
 - **🔬 Research Areas** — Highlight research interests and ongoing projects
 - **📄 CV Download** — Integrated PDF viewer and download
@@ -182,9 +182,11 @@ All content is configured in `src/shared/config/` and `src/shared/lib/data/`:
 
 ### Adding a New Course
 
-1. Create a new file in `src/shared/lib/data/courses/`
-2. Export course data following the `CourseData` schema
-3. Import and add to the courses index
+Courses are tiered (summary inline · standard one file · detailed directory) and
+only `tier: 'detailed'` courses generate a `/teaching/[institution]/[courseCode]`
+page. A detailed course can set `template: 'command-center'` to use the
+full-width course page. See the **`add-course`** skill (`.claude/skills/add-course/`)
+and the content-data rule for the exact steps and data fields.
 
 ### Changing Themes
 

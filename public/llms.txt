@@ -8,7 +8,7 @@
 - /about: About / bio
 - /research: Research areas, projects, grants
 - /publications: Full publication list
-- /teaching: Courses taught (IUB, BRACU)
+- /teaching: Courses taught (IUB, BRACU); detailed courses generate /teaching/<institution>/<slug> pages (e.g. /teaching/iub/cse211sum26)
 - /experience: Professional experience timeline
 - /cv: CV (PDF)
 - /blog: Articles (MDX)

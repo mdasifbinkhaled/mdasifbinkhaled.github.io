@@ -31,19 +31,21 @@ import { allNavItems } from '@/shared/config/navigation';
 
 export default function AppSidebarLayout({
   children,
+  commandCenterPaths = [],
 }: {
   children: React.ReactNode;
+  /** Course paths that use the full-width "Command Center" layout (derived
+   *  from `course.template` in the root layout — single source of truth). */
+  commandCenterPaths?: string[];
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const [collapsed, setCollapsed] = useState(false);
 
-  // Pages on the redesigned full-width "Command Center" course layout: the
-  // global top nav stays, but the left profile sidebar is hidden so the page
-  // has room to breathe. Scoped to the courses that actually use the new
-  // template (add more paths here as other courses migrate to it).
+  // On a full-width course page the global top nav stays but the left profile
+  // sidebar is hidden so the page has room to breathe.
   const pathname = usePathname();
-  const isFullWidthCourse = pathname === '/teaching/iub/cse211sum26';
+  const isFullWidthCourse = commandCenterPaths.includes(pathname);
 
   const lastUpdatedLabel = new Intl.DateTimeFormat('en', {
     month: 'long',

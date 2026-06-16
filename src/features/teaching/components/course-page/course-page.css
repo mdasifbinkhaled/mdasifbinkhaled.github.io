@@ -67,7 +67,6 @@
     ),
     hsl(var(--background));
 }
-.dark .cp,
 [data-theme='dark'] .cp {
   --cp-band-from: color-mix(
     in oklab,
@@ -408,6 +407,20 @@
   font-size: var(--text-xs);
   color: var(--cp-band-dim);
   margin-top: 2px;
+}
+/* Completed-course summary band stat rows */
+.cp .now__ratingsub {
+  margin-top: 4px;
+}
+.cp .now__stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+}
+.cp .now__stat .now__md,
+.cp .now__stat .now__mv {
+  margin-top: 0;
 }
 .cp .btn-contest {
   display: inline-flex;

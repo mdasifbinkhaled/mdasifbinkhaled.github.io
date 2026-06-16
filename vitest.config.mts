@@ -51,8 +51,6 @@ export default defineConfig({
         'src/features/teaching/components/course-page/*.tsx',
         'src/features/teaching/components/course-page/copy-link.ts',
         'src/shared/hooks/use-scrollspy.ts',
-        'vitest.d.ts',
-        'next-env.d.ts',
       ],
       thresholds: {
         // Recalibrated for vitest 4 / coverage-v8 4 branch counting, which

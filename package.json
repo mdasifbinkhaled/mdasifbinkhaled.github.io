@@ -90,14 +90,14 @@
     "@testing-library/jest-dom": "^6.x",
     "@testing-library/react": "^16.x",
     "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^25.8.0",
+    "@types/node": "^24.0.0",
     "@types/papaparse": "^5.5.2",
     "@types/react": "^19.2.15",
     "@vitejs/plugin-react": "^5.2.0",
     "@vitest/coverage-v8": "^4.1.8",
     "cross-env": "^10.1.0",
     "eslint": "^9.39.4",
-    "eslint-config-next": "^16.2.4",
+    "eslint-config-next": "^16.2.6",
     "husky": "^9.1.7",
     "jsdom": "^28.1.0",
     "knip": "^6.6.1",
@@ -110,7 +110,7 @@
     "vitest": "^4.1.8"
   },
   "overrides": {
-    "typescript-eslint": "8.59.0",
+    "typescript-eslint": "8.60.1",
     "postcss": "$postcss",
     "eslint-plugin-react-hooks": "7.1.1"
   },

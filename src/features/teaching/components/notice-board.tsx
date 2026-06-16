@@ -60,7 +60,7 @@ export function NoticeBoard({ notices }: NoticeBoardProps) {
                 <AlertTitle className="mb-1 flex items-center gap-2">
                   {notice.title}
                   {notice.importance === 'high' && (
-                    <span className="text-[10px] uppercase bg-red-700 text-white dark:bg-red-600 px-1.5 py-0.5 rounded-full font-bold">
+                    <span className="text-[10px] uppercase bg-success/15 text-success px-1.5 py-0.5 rounded-full font-bold">
                       New
                     </span>
                   )}

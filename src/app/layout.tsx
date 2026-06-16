@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { AppProviders } from '@/shared/providers/app-providers';
 import AppSidebarLayout from '@/shared/components/layout/app-sidebar-layout';
+import { allCourses } from '@/shared/lib/data/courses';
+import { getCoursePath } from '@/shared/lib/course-utils';
 import { SkipLink } from '@/shared/components/infra/skip-link';
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
@@ -35,6 +37,13 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const ANALYTICS_ENABLED = process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true';
+
+// Course pages that use the full-width "Command Center" template, derived from
+// the data (single source of truth) so the shell never drifts from the route.
+// Computed server-side; only the small path list is passed to the client shell.
+const commandCenterPaths = allCourses
+  .filter((course) => course.template === 'command-center')
+  .map(getCoursePath);
 
 export const metadata: Metadata = {
   title: siteConfig.author,
@@ -113,7 +122,9 @@ export default function RootLayout({
         <SkipLink />
         <RouteAnnouncer />
         <AppProviders>
-          <AppSidebarLayout>{children}</AppSidebarLayout>
+          <AppSidebarLayout commandCenterPaths={commandCenterPaths}>
+            {children}
+          </AppSidebarLayout>
         </AppProviders>
       </body>
     </html>

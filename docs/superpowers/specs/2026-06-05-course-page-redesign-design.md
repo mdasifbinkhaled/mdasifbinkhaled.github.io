@@ -1,5 +1,12 @@
 # Design Spec — Course Page Redesign (v7)
 
+> **⚠️ SUPERSEDED (2026-06-16).** Historical record only. The shipped CSE 211
+> redesign uses the separate `src/features/teaching/components/course-page/`
+> "Command Center" module (Inter + IBM Plex Mono, **no serif**; full-width) —
+> see DESIGN.md §11. The serif/`--font-serif` and `course-subnav`/`course-week`
+> proposals below were **not** built. CSE 420 was **not** migrated (still legacy
+> `CoursePageLayout`). Future teaching IA: `docs/.../2026-06-16-teaching-page-restructure.md`.
+
 > **Date**: 2026-06-05
 > **Scope**: the detailed-course page (`/teaching/[institution]/[courseCode]`) shared layout — applies to **CSE 211** and **BRACU CSE 420**
 > **Status**: Draft — awaiting review before implementation plan

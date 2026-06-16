@@ -17,9 +17,7 @@ export function SummaryBand({ course }: { course: CourseData }) {
             {course.rating ? course.rating.toFixed(1) : '✓'}
           </div>
           {course.rating ? (
-            <div className="now__weeklbl" style={{ marginTop: 4 }}>
-              / 5 rating
-            </div>
+            <div className="now__weeklbl now__ratingsub">/ 5 rating</div>
           ) : null}
         </div>
         <div>
@@ -47,21 +45,9 @@ export function SummaryBand({ course }: { course: CourseData }) {
               <Ic name="archive" /> Archive
             </div>
             {s.stats.map((x) => (
-              <div
-                key={x.k}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  gap: 12,
-                  marginTop: 6,
-                }}
-              >
-                <span className="now__md" style={{ marginTop: 0 }}>
-                  {x.k}
-                </span>
-                <span className="now__mv" style={{ marginTop: 0 }}>
-                  {x.v}
-                </span>
+              <div key={x.k} className="now__stat">
+                <span className="now__md">{x.k}</span>
+                <span className="now__mv">{x.v}</span>
               </div>
             ))}
           </div>
