@@ -6,6 +6,7 @@ const TARGET = '/about#honors-awards';
 export const metadata: Metadata = {
   title: 'Service — Redirecting',
   alternates: { canonical: '/about' },
+  robots: { index: false, follow: true },
 };
 
 /**

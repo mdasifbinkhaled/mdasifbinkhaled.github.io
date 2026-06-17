@@ -2,6 +2,7 @@ export const dynamic = 'force-static';
 
 import type { MetadataRoute } from 'next';
 import { siteConfig } from '@/shared/config/site';
+import { apps } from '@/shared/config/apps';
 import { getDetailedCourses } from '@/shared/lib/data/courses';
 import { getAllPosts } from '@/shared/lib/mdx';
 
@@ -88,37 +89,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/apps/exam-countdown`,
-      lastModified: siteLastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/apps/gpa-calculator`,
-      lastModified: siteLastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/apps/grade-calculator`,
-      lastModified: siteLastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/apps/office-hours`,
-      lastModified: siteLastModified,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/apps/seat-planner`,
-      lastModified: siteLastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
   ];
+
+  // App tool pages — derived from the apps config (single source of truth)
+  const appRoutes: MetadataRoute.Sitemap = apps.map((app) => ({
+    url: `${baseUrl}/apps/${app.slug}`,
+    lastModified: siteLastModified,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
 
   // Dynamic course detail pages
   const detailedCourses = getDetailedCourses();
@@ -136,5 +115,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...courseRoutes, ...blogRoutes];
+  return [...staticRoutes, ...appRoutes, ...courseRoutes, ...blogRoutes];
 }

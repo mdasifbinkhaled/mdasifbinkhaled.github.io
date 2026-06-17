@@ -5,7 +5,7 @@
 
 /**
  * Course level badge styles
- * Used by CourseCard and CourseCardCompact
+ * Used by CourseCard
  */
 export const LEVEL_STYLES = {
   undergraduate: 'bg-primary/5 text-primary',

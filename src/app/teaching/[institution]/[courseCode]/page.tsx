@@ -59,9 +59,15 @@ export async function generateMetadata({
 
   const institutionName = institutionNames[course.institution];
 
+  const slug =
+    course.slug?.toLowerCase() ?? course.code.toLowerCase().replace(/\s+/g, '');
+
   return {
     title: `${course.code}: ${course.title} | Teaching Portfolio`,
     description: `Course details for ${course.code}: ${course.title} at ${institutionName}. ${course.description}`,
+    alternates: {
+      canonical: `/teaching/${course.institution.toLowerCase()}/${slug}`,
+    },
     keywords: [
       course.code,
       course.title,

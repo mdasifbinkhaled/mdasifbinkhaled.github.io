@@ -2,13 +2,11 @@
  * Teaching components — sub-barrel
  *
  * Re-exports the public components used by teaching pages.
- * Internal sub-components (schedule-table, syllabus-table, etc.)
- * stay private to the feature.
+ * The full-width course page lives in ./course-page.
  */
 
 // Shared teaching components
 export { CourseCard } from './course-card';
-export { CourseCardCompact } from './course-card-compact';
 export { TeachingHeroStats } from './teaching-hero-stats';
 export { TeachingCTA } from './teaching-cta';
 export { TeachingRecordTable } from './teaching-record-table';

@@ -22,9 +22,9 @@ export function MentorshipSection() {
         <div className="space-y-3">
           <h2
             id="mentorship-heading"
-            className="text-3xl font-bold tracking-tight inline-flex items-center gap-3 text-primary"
+            className="text-2xl font-semibold tracking-tight inline-flex items-center gap-3 text-foreground"
           >
-            <Users className="h-8 w-8" />
+            <Users className="h-6 w-6 text-primary" />
             Mentorship & Supervision
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl">

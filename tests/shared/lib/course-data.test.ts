@@ -14,7 +14,6 @@ describe('course data freshness', () => {
       'https://vjudge.net/contest/815686'
     );
     expect(iubCse211.activeContest?.platform).toBe('VJudge');
-    expect(iubCse211.classSchedule).toEqual([]);
     expect(iubCse211.assignments?.[0]?.status).toBe('upcoming');
   });
 });

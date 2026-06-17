@@ -2,12 +2,11 @@
  * Teaching feature — public API
  *
  * Re-exports the components, styles, and helpers used by
- * pages under /teaching. Internal sub-components (schedule-table,
- * syllabus-table, etc.) stay private to the feature.
+ * pages under /teaching. The full-width course page lives in
+ * ./components/course-page and is exported from there.
  */
 export {
   CourseCard,
-  CourseCardCompact,
   TeachingHeroStats,
   TeachingCTA,
   TeachingRecordTable,

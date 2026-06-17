@@ -6,6 +6,7 @@ const TARGET = '/about#experience';
 export const metadata: Metadata = {
   title: 'Experience — Redirecting',
   alternates: { canonical: '/about' },
+  robots: { index: false, follow: true },
 };
 
 /**

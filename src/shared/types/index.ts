@@ -99,33 +99,6 @@ export interface CourseResourceSection {
   items: CourseResourceSectionItem[];
 }
 
-export interface ClassScheduleItem {
-  section: number;
-  theory: {
-    faculty: string;
-    email?: string;
-    days: string;
-    time: string;
-    room: string;
-  };
-  lab: {
-    faculty: string;
-    email?: string;
-    days: string;
-    time: string;
-    room: string;
-  };
-}
-
-export interface CourseNotice {
-  id: string;
-  title: string;
-  date: string;
-  type: 'alert' | 'info' | 'success' | 'warning';
-  link?: string;
-  importance?: 'high' | 'medium' | 'low';
-}
-
 export interface CourseContest {
   title: string;
   url: string;
@@ -134,22 +107,6 @@ export interface CourseContest {
   platform?: string;
   /** Short subtitle shown on the course-page contest CTA. */
   sub?: string;
-}
-
-export interface CourseModule {
-  week: number;
-  title: string;
-  description?: string;
-  theory?: {
-    topic: string;
-    slides?: string;
-    recording?: string;
-  };
-  lab?: {
-    topic: string;
-    task?: string;
-    repo?: string;
-  };
 }
 
 export interface CourseExams {
@@ -319,7 +276,6 @@ export interface CourseData {
   description: string;
   outcomes: string[];
   objectives?: string[];
-  topics?: string[];
   technologies?: string[];
   assignments?: {
     title: string;
@@ -328,7 +284,6 @@ export interface CourseData {
     status?: 'active' | 'closed' | 'upcoming';
     description?: string;
   }[];
-  projects?: string[];
   assessment?: CourseAssessmentBreakdown;
   enrollmentCount?: number;
   rating?: number;
@@ -336,13 +291,8 @@ export interface CourseData {
   iconName?: IconName;
   status?: CourseStatus;
   tier?: CourseTier;
-  links?: CourseLink[];
   resourceSections?: CourseResourceSection[];
-  classSchedule?: ClassScheduleItem[];
-  semesterEndDate?: string;
-  notices?: CourseNotice[];
   activeContest?: CourseContest;
-  weeklyModules?: CourseModule[];
   exams?: CourseExams;
   consultation?: CourseConsultation;
 

@@ -117,6 +117,7 @@ export function generatePersonStructuredData(): AcademicPersonStructuredData {
 export function generateCourseStructuredData(course: {
   title: string;
   code: string;
+  slug?: string;
   description: string;
   institution: string;
   level: string;
@@ -126,6 +127,9 @@ export function generateCourseStructuredData(course: {
   const providerName =
     institutionNames[course.institution as CourseInstitution] ??
     course.institution;
+
+  const slug =
+    course.slug?.toLowerCase() ?? course.code.toLowerCase().replace(/\s+/g, '');
 
   return {
     '@context': 'https://schema.org',
@@ -144,7 +148,7 @@ export function generateCourseStructuredData(course: {
     educationalLevel: course.level,
     timeRequired: 'P16W', // One semester (~16 weeks)
     teaches: course.outcomes,
-    url: `${siteConfig.url}/teaching#${course.code.toLowerCase().replace(/\s+/g, '-')}`,
+    url: `${siteConfig.url}/teaching/${course.institution.toLowerCase()}/${slug}`,
   };
 }
 

@@ -173,6 +173,11 @@ export function CommandMenu() {
                 {renderNavItems(navItems.main)}
               </Command.Group>
 
+              {/* Secondary pages (Blog, Talks, Contact) */}
+              <Command.Group heading="More">
+                {renderNavItems(navItems.secondary)}
+              </Command.Group>
+
               {/* Teaching — courses with their own page */}
               {courseNavItems.length > 0 && (
                 <Command.Group heading="Courses">

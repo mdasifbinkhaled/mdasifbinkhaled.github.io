@@ -1,14 +1,7 @@
 import type { CourseData } from '@/shared/types';
-import { weeklyModules } from './modules';
-import { links, resourceSections } from './resources';
+import { resourceSections } from './resources';
 import { cse211Term } from './term';
-import {
-  classSchedule,
-  semesterEndDate,
-  notices,
-  activeContest,
-  exams,
-} from './schedule';
+import { activeContest, exams } from './schedule';
 import {
   announcements,
   assessmentSchemes,
@@ -59,14 +52,9 @@ export const iubCse211: CourseData = {
   tier: 'detailed',
 
   // Hub Features (Imported from Sub-modules)
-  ...(semesterEndDate ? { semesterEndDate } : {}),
-  notices,
   ...(activeContest ? { activeContest } : {}),
   exams,
-  weeklyModules,
-  links,
   resourceSections,
-  classSchedule,
   consultation: {
     office: 'BC5010-D',
     hours:

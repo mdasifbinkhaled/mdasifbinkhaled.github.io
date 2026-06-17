@@ -13,6 +13,7 @@ module.exports = {
         'http://localhost/research/',
         'http://localhost/talks/',
         'http://localhost/teaching/',
+        'http://localhost/teaching/iub/cse211sum26/',
         // Excluded: /experience/, /service/, /service-awards/ are redirect stubs
       ],
       numberOfRuns: 3,

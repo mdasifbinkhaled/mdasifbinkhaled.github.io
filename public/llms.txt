@@ -4,12 +4,11 @@
 
 ## Pages
 
-- /: Home (bio, news, research interests, recent publications, experience)
-- /about: About / bio
+- /: Home (bio, news, research interests, recent publications)
+- /about: About / bio, including experience, service & awards
 - /research: Research areas, projects, grants
 - /publications: Full publication list
 - /teaching: Courses taught (IUB, BRACU); detailed courses generate /teaching/<institution>/<slug> pages (e.g. /teaching/iub/cse211sum26)
-- /experience: Professional experience timeline
 - /cv: CV (PDF)
 - /blog: Articles (MDX)
 - /talks: Talks & presentations

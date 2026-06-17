@@ -3,8 +3,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { TeachingHeroStats } from '@/features/teaching/components/teaching-hero-stats';
 import { TeachingCTA } from '@/features/teaching/components/teaching-cta';
 import { MentorshipSection } from '@/features/teaching/components/mentorship-section';
-import { CourseCardCompact } from '@/features/teaching/components/course-card-compact';
 import { CourseCard } from '@/features/teaching/components/course-card';
+import { TeachingRecordTable } from '@/features/teaching/components/teaching-record-table';
 import type { CourseData } from '@/shared/types';
 
 vi.mock('next/link', () => ({
@@ -165,40 +165,6 @@ describe('MentorshipSection', () => {
   });
 });
 
-// ─── CourseCardCompact ───────────────────────────────────────────────────────
-describe('CourseCardCompact', () => {
-  it('renders course code and title', () => {
-    render(<CourseCardCompact course={detailedCourse} />);
-    expect(screen.getByText('CSE 101')).toBeInTheDocument();
-    expect(
-      screen.getByText('Introduction to Computer Science')
-    ).toBeInTheDocument();
-  });
-
-  it('renders semester and year', () => {
-    render(<CourseCardCompact course={detailedCourse} />);
-    expect(screen.getByText(/Fall 2024/)).toBeInTheDocument();
-  });
-
-  it('wraps detailed-tier courses in a link', () => {
-    const { container } = render(<CourseCardCompact course={detailedCourse} />);
-    const link = container.querySelector('a');
-    expect(link).toBeInTheDocument();
-    expect(link?.getAttribute('href')).toContain('cse');
-  });
-
-  it('does NOT wrap basic-tier courses in a link', () => {
-    const { container } = render(<CourseCardCompact course={basicCourse} />);
-    const link = container.querySelector('a');
-    expect(link).toBeNull();
-  });
-
-  it('renders level badge', () => {
-    render(<CourseCardCompact course={detailedCourse} />);
-    expect(screen.getByText('UNDERGRADUATE')).toBeInTheDocument();
-  });
-});
-
 // ─── CourseCard ──────────────────────────────────────────────────────────────
 describe('CourseCard', () => {
   it('renders course title and code', () => {
@@ -258,5 +224,53 @@ describe('CourseCard', () => {
     expect(
       screen.getByRole('button', { name: /Hide Details/i })
     ).toBeInTheDocument();
+  });
+});
+
+// ─── TeachingRecordTable ─────────────────────────────────────────────────────
+describe('TeachingRecordTable', () => {
+  const iubNewer: CourseData = {
+    ...detailedCourse,
+    id: 'iub-new',
+    code: 'CSE 211',
+    title: 'Algorithms',
+    year: 2026,
+    role: 'Course Coordinator',
+  };
+  const iubOlder: CourseData = {
+    ...basicCourse,
+    id: 'iub-old',
+    code: 'CSE 201',
+    title: 'Data Structures',
+    year: 2023,
+  };
+  const bracu: CourseData = {
+    ...basicCourse,
+    id: 'bracu-1',
+    code: 'CSE 420',
+    title: 'Compilers',
+    institution: 'BRACU',
+    year: 2022,
+  };
+
+  it('groups courses by institution with a table per institution', () => {
+    render(<TeachingRecordTable courses={[iubNewer, iubOlder, bracu]} />);
+    // one focusable scroll region (role=group) per institution
+    const regions = screen.getAllByRole('group');
+    expect(regions).toHaveLength(2);
+    regions.forEach((r) => expect(r).toHaveAttribute('tabindex', '0'));
+  });
+
+  it('renders the role when present and an em dash when absent', () => {
+    render(<TeachingRecordTable courses={[iubNewer, iubOlder]} />);
+    expect(screen.getByText('Course Coordinator')).toBeInTheDocument();
+    // iubOlder has no role → dash placeholder
+    expect(screen.getAllByText('—').length).toBeGreaterThan(0);
+  });
+
+  it('orders rows newest-first within an institution', () => {
+    render(<TeachingRecordTable courses={[iubOlder, iubNewer]} />);
+    const codes = screen.getAllByText(/CSE \d+/).map((el) => el.textContent);
+    expect(codes.indexOf('CSE 211')).toBeLessThan(codes.indexOf('CSE 201'));
   });
 });
