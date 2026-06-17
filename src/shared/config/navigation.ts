@@ -1,12 +1,11 @@
 import type { NavItem } from '@/shared/types';
-import {
-  coursesTaughtIUB,
-  coursesTaughtBRACU,
-} from '@/shared/lib/data/courses';
+import { allCourses } from '@/shared/lib/data/courses';
 import type { CourseData } from '@/shared/types';
 
 // ---------------------------------------------------------------------------
-// Helper: derive a NavItem from the single source of truth (CourseData)
+// Helper: derive a NavItem for a course that has its own page.
+// Only 'detailed' tier courses are routable (via generateStaticParams); the
+// rest live in the /teaching record table and are not individually linkable.
 // ---------------------------------------------------------------------------
 function courseToNavItem(course: CourseData): NavItem {
   const institutionSlug = course.institution.toLowerCase(); // 'iub' | 'bracu'
@@ -14,14 +13,8 @@ function courseToNavItem(course: CourseData): NavItem {
     ? course.slug.toLowerCase()
     : course.code.toLowerCase().replace(/\s+/g, '');
 
-  // Only 'detailed' tier courses get their own page (via generateStaticParams)
-  const href =
-    course.tier === 'detailed'
-      ? `/teaching/${institutionSlug}/${courseSlug}`
-      : `/teaching/${institutionSlug}`;
-
   return {
-    href,
+    href: `/teaching/${institutionSlug}/${courseSlug}`,
     label: `${course.code} - ${course.title}`,
     icon: course.iconName ?? 'BookOpen',
     sectionId: course.code.toLowerCase().replace(/\s+/g, ''),
@@ -78,42 +71,13 @@ export const secondaryNavItems: NavItem[] = [
 export const allNavItems: NavItem[] = [...mainNavItems, ...secondaryNavItems];
 
 // ---------------------------------------------------------------------------
-// Teaching sub-navigation
+// Course navigation — derived from the course data (single source of truth).
+// Only courses with their own page (detailed tier) appear; today that's CSE 211.
+// Drives the navbar Teaching dropdown + command-palette "Courses" group.
 // ---------------------------------------------------------------------------
-export const teachingNavItems: NavItem[] = [
-  {
-    href: '/teaching',
-    label: 'Overview',
-    icon: 'LayoutDashboard',
-    sectionId: 'overview',
-  },
-  {
-    href: '/teaching/iub',
-    label: 'IUB Courses',
-    icon: 'Building2',
-    sectionId: 'iub',
-  },
-  {
-    href: '/teaching/bracu',
-    label: 'BRACU Courses',
-    icon: 'Building2',
-    sectionId: 'bracu',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Course navigation — derived from the course data (single source of truth)
-// Detailed-tier courses appear first (they have their own page).
-// ---------------------------------------------------------------------------
-export const iubCourseNavItems: NavItem[] = [
-  ...coursesTaughtIUB.filter((c) => c.tier === 'detailed'),
-  ...coursesTaughtIUB.filter((c) => c.tier !== 'detailed'),
-].map(courseToNavItem);
-
-export const bracuCourseNavItems: NavItem[] = [
-  ...coursesTaughtBRACU.filter((c) => c.tier === 'detailed'),
-  ...coursesTaughtBRACU.filter((c) => c.tier !== 'detailed'),
-].map(courseToNavItem);
+export const courseNavItems: NavItem[] = allCourses
+  .filter((c) => c.tier === 'detailed')
+  .map(courseToNavItem);
 
 // ---------------------------------------------------------------------------
 // Aggregated export
@@ -122,7 +86,5 @@ export const navItems = {
   main: mainNavItems,
   secondary: secondaryNavItems,
   all: allNavItems,
-  teaching: teachingNavItems,
-  iub: iubCourseNavItems,
-  bracu: bracuCourseNavItems,
+  courses: courseNavItems,
 };

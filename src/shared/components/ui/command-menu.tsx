@@ -27,11 +27,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/shared/components/ui/dialog';
-import {
-  navItems,
-  iubCourseNavItems,
-  bracuCourseNavItems,
-} from '@/shared/config/navigation';
+import { navItems, courseNavItems } from '@/shared/config/navigation';
 import { navIconMap } from '@/shared/lib/nav-icon-map';
 import { cn } from '@/shared/lib/utils';
 import { portfolioEvents } from '@/shared/lib/analytics';
@@ -177,15 +173,12 @@ export function CommandMenu() {
                 {renderNavItems(navItems.main)}
               </Command.Group>
 
-              {/* Teaching — IUB */}
-              <Command.Group heading="IUB Courses">
-                {renderNavItems(iubCourseNavItems)}
-              </Command.Group>
-
-              {/* Teaching — BRACU */}
-              <Command.Group heading="BRACU Courses">
-                {renderNavItems(bracuCourseNavItems)}
-              </Command.Group>
+              {/* Teaching — courses with their own page */}
+              {courseNavItems.length > 0 && (
+                <Command.Group heading="Courses">
+                  {renderNavItems(courseNavItems)}
+                </Command.Group>
+              )}
 
               {/* Quick actions */}
               <Command.Group heading="Quick Actions">

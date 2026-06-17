@@ -6,12 +6,7 @@ import { cn } from '@/shared/lib/utils';
 import { GraduationCap, Menu } from 'lucide-react';
 import { ThemeSelector } from '@/shared/components/ui/theme-selector';
 import { CommandMenu } from '@/shared/components/ui/command-menu';
-import {
-  mainNavItems,
-  iubCourseNavItems,
-  bracuCourseNavItems,
-} from '@/shared/config/navigation';
-import type { NavItem } from '@/shared/types';
+import { mainNavItems, courseNavItems } from '@/shared/config/navigation';
 import { useHoverDelay } from '@/shared/hooks';
 
 interface NavbarProps {
@@ -145,97 +140,35 @@ function TeachingDropdown({
         {label}
       </Link>
 
-      {/* Dropdown Panel: simple vertical with flyouts */}
+      {/* Dropdown Panel: active courses (those with pages) + All teaching */}
       <div
         id={panelId}
         aria-label={`${label} navigation links`}
         className={cn(
-          'absolute left-1/2 -translate-x-1/2 mt-2 z-40 w-56 bg-background border rounded-lg shadow-lg py-2 transition-all duration-200',
+          'absolute left-1/2 -translate-x-1/2 mt-2 z-40 w-72 bg-background border rounded-lg shadow-lg py-2 transition-all duration-200',
           isOpen
             ? 'visible opacity-100 pointer-events-auto'
             : 'invisible opacity-0 pointer-events-none'
         )}
       >
-        <div className="relative">
-          <InstitutionFlyout
-            label="IUB"
-            href="/teaching?tab=iub#courses-taught"
-            navItems={iubCourseNavItems}
-            parentOpen={isOpen}
-          />
-          <InstitutionFlyout
-            label="BRACU"
-            href="/teaching?tab=bracu#courses-taught"
-            navItems={bracuCourseNavItems}
-            parentOpen={isOpen}
-          />
-          <Link
-            className="block px-3 py-2 hover:bg-accent/50"
-            href="/teaching?tab=support#courses-taught"
-            tabIndex={isOpen ? 0 : -1}
-          >
-            TA/ST/SoD
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Institution Flyout Component with delay on unhover
-function InstitutionFlyout({
-  label,
-  href,
-  navItems,
-  parentOpen,
-}: {
-  label: string;
-  href: string;
-  navItems: NavItem[];
-  parentOpen: boolean;
-}) {
-  const panelId = useId();
-  const { isOpen, handleMouseEnter, handleMouseLeave, openNow, closeNow } =
-    useHoverDelay();
-
-  return (
-    <div
-      className="relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onFocusCapture={openNow}
-      onBlurCapture={(event) => handleBlurOutside(event, closeNow)}
-    >
-      <Link
-        className="block px-3 py-2 hover:bg-accent/50"
-        href={href}
-        aria-expanded={isOpen}
-        aria-controls={panelId}
-        tabIndex={parentOpen ? 0 : -1}
-      >
-        {label}
-      </Link>
-      {/* Flyout */}
-      <div
-        id={panelId}
-        aria-label={`${label} course links`}
-        className={cn(
-          'absolute top-0 left-full ml-2 w-72 max-h-80 overflow-auto bg-background border rounded-lg shadow-lg py-2 transition-all duration-200 z-50',
-          isOpen
-            ? 'visible opacity-100 pointer-events-auto'
-            : 'invisible opacity-0 pointer-events-none'
-        )}
-      >
-        {navItems.map((item) => (
+        {courseNavItems.map((item) => (
           <Link
             key={`${item.href}-${item.sectionId}`}
             className="block px-3 py-2 hover:bg-accent/50 text-sm"
             href={item.href}
-            tabIndex={parentOpen && isOpen ? 0 : -1}
+            tabIndex={isOpen ? 0 : -1}
           >
             {item.label}
           </Link>
         ))}
+        {courseNavItems.length > 0 && <div className="my-1 border-t" />}
+        <Link
+          className="block px-3 py-2 hover:bg-accent/50 text-sm font-medium"
+          href="/teaching"
+          tabIndex={isOpen ? 0 : -1}
+        >
+          All teaching →
+        </Link>
       </div>
     </div>
   );

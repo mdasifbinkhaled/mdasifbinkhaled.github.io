@@ -148,8 +148,15 @@ describe('Navbar', () => {
     fireEvent.focus(teachingLink);
 
     expect(teachingLink).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.getByRole('link', { name: /^iub$/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /^bracu$/i })).toBeInTheDocument();
+    // The dropdown lists courses that have their own page plus an "All teaching" link.
+    expect(
+      screen.getByRole('link', { name: /all teaching/i })
+    ).toBeInTheDocument();
+    expect(
+      screen
+        .getAllByRole('link')
+        .some((a) => a.getAttribute('href')?.startsWith('/teaching/iub/'))
+    ).toBe(true);
   });
 
   it('has proper semantic structure', () => {
