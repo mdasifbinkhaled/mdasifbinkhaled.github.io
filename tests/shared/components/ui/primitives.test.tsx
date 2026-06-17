@@ -15,7 +15,6 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@/shared/components/ui/alert';
-import { CollapsibleSection } from '@/shared/components/ui/collapsible-section';
 import { SpotlightCard } from '@/shared/components/ui/spotlight-card';
 import React from 'react';
 
@@ -188,62 +187,6 @@ describe('Alert', () => {
       </Alert>
     );
     expect(screen.getByTestId('alert').className).toContain('destructive');
-  });
-});
-
-// ─── CollapsibleSection ──────────────────────────────────────────────────────
-describe('CollapsibleSection', () => {
-  it('renders title and children', () => {
-    render(
-      <CollapsibleSection
-        title="Section Title"
-        icon={<span data-testid="icon">📚</span>}
-      >
-        <p>Section content</p>
-      </CollapsibleSection>
-    );
-    expect(screen.getByText('Section Title')).toBeInTheDocument();
-    expect(screen.getByTestId('icon')).toBeInTheDocument();
-  });
-
-  it('defaults to open state', () => {
-    render(
-      <CollapsibleSection title="Open" icon={<span>📚</span>}>
-        <p>Visible</p>
-      </CollapsibleSection>
-    );
-    const button = screen.getByRole('button');
-    expect(button).toHaveAttribute('aria-expanded', 'true');
-  });
-
-  it('can start collapsed', () => {
-    render(
-      <CollapsibleSection
-        title="Closed"
-        icon={<span>📚</span>}
-        defaultOpen={false}
-      >
-        <p>Hidden</p>
-      </CollapsibleSection>
-    );
-    const button = screen.getByRole('button');
-    expect(button).toHaveAttribute('aria-expanded', 'false');
-  });
-
-  it('toggles on click', () => {
-    render(
-      <CollapsibleSection title="Toggle" icon={<span>📚</span>}>
-        <p>Content</p>
-      </CollapsibleSection>
-    );
-    const button = screen.getByRole('button');
-    expect(button).toHaveAttribute('aria-expanded', 'true');
-
-    fireEvent.click(button);
-    expect(button).toHaveAttribute('aria-expanded', 'false');
-
-    fireEvent.click(button);
-    expect(button).toHaveAttribute('aria-expanded', 'true');
   });
 });
 

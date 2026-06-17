@@ -6,16 +6,12 @@
  * stay private to the feature.
  */
 
-// Page-level components
-export { default as TeachingTabsClient } from './teaching-tabs.client';
-export { InstitutionCoursesPage } from './institution-courses-page';
-export { CoursePageLayout } from './course-page-layout';
-
 // Shared teaching components
 export { CourseCard } from './course-card';
 export { CourseCardCompact } from './course-card-compact';
 export { TeachingHeroStats } from './teaching-hero-stats';
 export { TeachingCTA } from './teaching-cta';
+export { TeachingRecordTable } from './teaching-record-table';
 
 // Styles
 export { getLevelStyle, LEVEL_STYLES } from './styles';

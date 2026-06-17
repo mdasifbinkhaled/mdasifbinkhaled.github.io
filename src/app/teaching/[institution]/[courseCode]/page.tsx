@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { allCourses, institutionNames } from '@/shared/lib/data/courses';
-import { CoursePageLayout } from '@/features/teaching';
 import { CoursePage as CommandCenterCoursePage } from '@/features/teaching/components/course-page';
-import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { CourseStructuredDataScript } from '@/shared/components/infra/structured-data';
 
 interface CoursePageProps {
@@ -85,30 +83,16 @@ export default async function CoursePage({ params }: CoursePageProps) {
   const { institution, courseCode } = await params;
   const course = getCourseByParams(institution, courseCode);
 
-  if (!course) {
+  // Only detailed courses generate a page, and every detailed course uses the
+  // full-width "Command Center" template.
+  if (!course || course.template !== 'command-center') {
     notFound();
   }
 
-  // Courses opted into the "Command Center" template render the full-width
-  // redesigned page; all others stay on the legacy layout inside the shell.
-  if (course.template === 'command-center') {
-    return (
-      <>
-        <CourseStructuredDataScript course={course} />
-        <CommandCenterCoursePage course={course} />
-      </>
-    );
-  }
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Structured Data for rich results */}
+    <>
       <CourseStructuredDataScript course={course} />
-
-      <Breadcrumbs />
-      <div className="mt-6">
-        <CoursePageLayout course={course} />
-      </div>
-    </div>
+      <CommandCenterCoursePage course={course} />
+    </>
   );
 }

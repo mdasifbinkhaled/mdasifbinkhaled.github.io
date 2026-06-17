@@ -24,10 +24,7 @@ export const CONTENT_ROUTES = [
   '/research',
   '/talks',
   '/teaching',
-  '/teaching/bracu',
-  '/teaching/iub',
   // Dynamic detailed-tier course pages (generateStaticParams)
-  '/teaching/bracu/cse420',
   '/teaching/iub/cse211sum26',
 ] as const;
 
@@ -39,6 +36,9 @@ export const REDIRECT_ROUTES = [
   { from: '/experience', to: '/about' },
   { from: '/service', to: '/about' },
   { from: '/service-awards', to: '/about' },
+  { from: '/teaching/iub', to: '/teaching' },
+  { from: '/teaching/bracu', to: '/teaching' },
+  { from: '/teaching/bracu/cse420', to: '/teaching' },
 ] as const;
 
 /** All available themes for contrast testing. */

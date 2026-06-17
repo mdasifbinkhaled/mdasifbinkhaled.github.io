@@ -1,6 +1,6 @@
 # Spec: Teaching page restructure — "Courses" + "Teaching record"
 
-**Status:** Approved direction · **build deferred** until after the CSE 211 real-data polish.
+**Status:** ✅ Implemented 2026-06-17 (go-live: featured = CSE 211 only, roles left blank pending data).
 **Decided:** 2026-06-16 (discussion).
 
 ## Context / problem

@@ -4,25 +4,25 @@ import Link from 'next/link';
 const TARGET = '/teaching';
 
 export const metadata: Metadata = {
-  title: 'Teaching — Redirecting',
+  title: 'CSE 420 — Redirecting',
   alternates: { canonical: '/teaching' },
   robots: { index: false, follow: true },
 };
 
 /**
- * Static-export-safe redirect. The per-institution listing was folded into the
- * single /teaching page (Courses + Teaching record). React 19 hoists the
- * <meta httpEquiv="refresh"> into <head>, so it redirects without JavaScript.
+ * Static-export-safe redirect. CSE 420 (completed) is now a row in the Teaching
+ * record rather than a standalone page. React 19 hoists the <meta refresh> into
+ * <head>, so it redirects without JavaScript.
  */
-export default function BracuTeachingRedirect() {
+export default function Cse420Redirect() {
   return (
     <>
       <meta httpEquiv="refresh" content={`0;url=${TARGET}`} />
       <div className="flex min-h-[50vh] items-center justify-center text-center">
         <p className="text-muted-foreground">
-          This page has moved to{' '}
+          This course moved to the{' '}
           <Link href={TARGET} className="text-primary underline">
-            Teaching
+            Teaching record
           </Link>
           .
         </p>

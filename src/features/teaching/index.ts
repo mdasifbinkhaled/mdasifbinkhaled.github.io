@@ -6,13 +6,11 @@
  * syllabus-table, etc.) stay private to the feature.
  */
 export {
-  TeachingTabsClient,
-  InstitutionCoursesPage,
-  CoursePageLayout,
   CourseCard,
   CourseCardCompact,
   TeachingHeroStats,
   TeachingCTA,
+  TeachingRecordTable,
   getLevelStyle,
   LEVEL_STYLES,
   MentorshipSection,

@@ -1,5 +1,4 @@
 import type { CourseData } from '@/shared/types';
-import { weeklyModules } from './modules';
 
 export const bracuCse420: CourseData = {
   id: 'bracu-cd-lab',
@@ -23,7 +22,5 @@ export const bracuCse420: CourseData = {
   rating: 4.5,
   iconName: 'Code2',
   status: 'completed',
-  tier: 'detailed',
-
-  weeklyModules,
+  tier: 'standard',
 };
