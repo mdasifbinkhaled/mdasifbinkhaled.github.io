@@ -130,7 +130,13 @@ describe('StudyTimer countdown', () => {
       });
     }
 
-    // Focus completes and rolls into the short break.
+    // The clock visibly reaches 00:00 before the session rolls over.
+    expect(screen.getByText('00:00')).toBeInTheDocument();
+
+    // One more tick: completes and rolls into the short break.
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
     expect(screen.getByText('05:00')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Short Break' })).toHaveAttribute(
       'aria-pressed',

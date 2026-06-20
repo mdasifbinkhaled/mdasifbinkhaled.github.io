@@ -65,7 +65,7 @@ export function useGradeCalculator() {
             field === 'weight'
               ? Math.min(100, Math.max(0, num))
               : field === 'maxScore'
-                ? Math.max(0, num)
+                ? Math.max(1, num) // a component must have a positive max
                 : Math.max(0, num); // score
           return { ...c, [field]: clamped };
         })

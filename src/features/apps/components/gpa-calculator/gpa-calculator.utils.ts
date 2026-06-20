@@ -62,6 +62,8 @@ export interface GpaResult {
   termCredits: number;
   cgpa: number;
   totalCredits: number;
+  /** Courses excluded from the GPA because their grade is blank/unrecognized. */
+  ignoredCount: number;
 }
 
 export function computeGpa(
@@ -71,6 +73,7 @@ export function computeGpa(
 ): GpaResult {
   let currentGradePoints = 0;
   let currentCredits = 0;
+  let ignoredCount = 0;
 
   courses.forEach((course) => {
     const scaleMatch = STANDARD_GRADING_SCALE.find(
@@ -79,6 +82,11 @@ export function computeGpa(
     if (scaleMatch && course.credits > 0) {
       currentGradePoints += scaleMatch.gpa * course.credits;
       currentCredits += course.credits;
+    } else if (course.grade.trim() !== '' || course.credits > 0) {
+      // A populated row that didn't count (unknown grade or non-positive
+      // credits) — surface it instead of dropping it silently. A wholly-empty
+      // row (blank grade AND no credits) is an untouched placeholder, not a drop.
+      ignoredCount += 1;
     }
   });
 
@@ -103,5 +111,6 @@ export function computeGpa(
     termCredits: currentCredits,
     cgpa: finalCgpa,
     totalCredits: finalTotalCredits,
+    ignoredCount,
   };
 }

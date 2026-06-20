@@ -133,7 +133,9 @@ export function useStudyTimer() {
   useEffect(() => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
-        if (secondsLeftRef.current <= 1) {
+        // Complete only once the clock has visibly reached 00:00 (ref hits 0 on
+        // the prior tick), so the final 00:00 second is actually rendered.
+        if (secondsLeftRef.current <= 0) {
           if (intervalRef.current) clearInterval(intervalRef.current);
           completeSession();
           return;

@@ -21,6 +21,7 @@ export function GpaCalculator() {
     termCredits,
     cgpa,
     totalCredits,
+    ignoredCount,
     setPrevCredits,
     setPrevCgpa,
     setImportOpen,
@@ -86,6 +87,13 @@ export function GpaCalculator() {
             prevCgpa={prevCgpa}
             onCopyResult={handleCopyResult}
           />
+          {ignoredCount > 0 && (
+            <p className="text-xs text-muted-foreground" role="status">
+              {ignoredCount} course{ignoredCount === 1 ? '' : 's'} excluded from
+              the GPA — add a valid grade and positive credits to include{' '}
+              {ignoredCount === 1 ? 'it' : 'them'}.
+            </p>
+          )}
         </div>
       </div>
     </div>

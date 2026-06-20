@@ -42,7 +42,9 @@ export function useGpaCalculator() {
         id: crypto.randomUUID(),
         name: String(r.name ?? ''),
         credits: Number(r.credits) || 0,
-        grade: String(r.grade ?? 'A'),
+        // Don't invent a grade — a missing grade is left blank and excluded from
+        // the GPA (surfaced via ignoredCount) rather than silently scored as 'A'.
+        grade: String(r.grade ?? ''),
       }));
       setCourses((prev) => {
         if (meta.mergeStrategy === 'replace') return incoming;
@@ -92,7 +94,7 @@ export function useGpaCalculator() {
     [setCourses]
   );
 
-  const { termGpa, termCredits, cgpa, totalCredits } = useMemo(
+  const { termGpa, termCredits, cgpa, totalCredits, ignoredCount } = useMemo(
     () => computeGpa(courses, prevCredits, prevCgpa),
     [courses, prevCredits, prevCgpa]
   );
@@ -139,6 +141,7 @@ export function useGpaCalculator() {
     termCredits,
     cgpa,
     totalCredits,
+    ignoredCount,
     // setters
     setPrevCredits,
     setPrevCgpa,

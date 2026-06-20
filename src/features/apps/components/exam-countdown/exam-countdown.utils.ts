@@ -9,29 +9,47 @@ export interface ExamEvent {
   id: string;
   course: string;
   title: string;
-  date: string; // ISO string format
+  /**
+   * Naive local wall-clock, `YYYY-MM-DDThh:mm` — the exact format a
+   * `<input type="datetime-local">` produces and consumes. Parsed as LOCAL by
+   * `new Date(...)`. Every producer (defaults, add, import) must use this format
+   * so the countdown isn't skewed by the user's timezone offset.
+   */
+  date: string;
 }
 
 export type ExamKey = 'course' | 'title' | 'date';
 
 export const EXAM_TOOL_SLUG = 'exam-countdown';
 
+/**
+ * Format a Date as a naive local `YYYY-MM-DDThh:mm` string (the canonical
+ * `ExamEvent.date` shape). Uses local getters so the value round-trips through
+ * `new Date(...)` with no timezone shift — unlike `toISOString()`, which emits
+ * UTC and desyncs the countdown for any non-UTC user.
+ */
+export function toLocalInputValue(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return (
+    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
+    `T${pad(date.getHours())}:${pad(date.getMinutes())}`
+  );
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
 export const DEFAULT_EXAMS: ExamEvent[] = [
   {
     id: '1',
     course: 'CSE 420',
     title: 'Midterm Examination',
-    date: new Date(
-      new Date().getTime() + 14 * 24 * 60 * 60 * 1000
-    ).toISOString(),
+    date: toLocalInputValue(new Date(Date.now() + 14 * DAY_MS)),
   }, // +14 days
   {
     id: '2',
     course: 'CSE 211',
     title: 'Final Examination',
-    date: new Date(
-      new Date().getTime() + 45 * 24 * 60 * 60 * 1000
-    ).toISOString(),
+    date: toLocalInputValue(new Date(Date.now() + 45 * DAY_MS)),
   }, // +45 days
 ];
 
@@ -58,7 +76,8 @@ export const EXAM_FIELDS: readonly SchemaField<ExamKey>[] = [
       if (Number.isNaN(d.getTime())) {
         throw new Error(`invalid date "${raw}"`);
       }
-      return d.toISOString();
+      // Normalize to the canonical naive-local format (see ExamEvent.date).
+      return toLocalInputValue(d);
     },
   },
 ];

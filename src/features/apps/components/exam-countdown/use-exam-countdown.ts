@@ -13,6 +13,7 @@ import type { ImportCommitMeta } from '@/shared/lib/parsers/types';
 import {
   DEFAULT_EXAMS,
   EXAM_TOOL_SLUG,
+  toLocalInputValue,
   type ExamEvent,
   type ExamKey,
 } from './exam-countdown.utils';
@@ -40,7 +41,7 @@ export function useExamCountdown() {
         id: crypto.randomUUID(),
         course: '',
         title: 'New Exam',
-        date: new Date().toISOString().slice(0, 16),
+        date: toLocalInputValue(new Date()),
       },
     ]);
   }, [setExams]);
