@@ -1,5 +1,6 @@
 import type { NavItem } from '@/shared/types';
 import { allCourses } from '@/shared/lib/data/courses';
+import { getCoursePath, getCourseSlug } from '@/shared/lib/course-utils';
 import type { CourseData } from '@/shared/types';
 
 // ---------------------------------------------------------------------------
@@ -8,16 +9,11 @@ import type { CourseData } from '@/shared/types';
 // rest live in the /teaching record table and are not individually linkable.
 // ---------------------------------------------------------------------------
 function courseToNavItem(course: CourseData): NavItem {
-  const institutionSlug = course.institution.toLowerCase(); // 'iub' | 'bracu'
-  const courseSlug = course.slug
-    ? course.slug.toLowerCase()
-    : course.code.toLowerCase().replace(/\s+/g, '');
-
   return {
-    href: `/teaching/${institutionSlug}/${courseSlug}`,
+    href: getCoursePath(course),
     label: `${course.code} - ${course.title}`,
     icon: course.iconName ?? 'BookOpen',
-    sectionId: course.code.toLowerCase().replace(/\s+/g, ''),
+    sectionId: getCourseSlug(course),
   };
 }
 

@@ -2,6 +2,7 @@
 import { siteConfig } from '@/shared/config/site';
 import { assetPaths } from '@/shared/config/assets';
 import { institutionNames } from '@/shared/lib/data/courses';
+import { getCoursePath } from '@/shared/lib/course-utils';
 import type { CourseInstitution } from '@/shared/types';
 
 /**
@@ -128,9 +129,6 @@ export function generateCourseStructuredData(course: {
     institutionNames[course.institution as CourseInstitution] ??
     course.institution;
 
-  const slug =
-    course.slug?.toLowerCase() ?? course.code.toLowerCase().replace(/\s+/g, '');
-
   return {
     '@context': 'https://schema.org',
     '@type': 'Course',
@@ -148,7 +146,7 @@ export function generateCourseStructuredData(course: {
     educationalLevel: course.level,
     timeRequired: 'P16W', // One semester (~16 weeks)
     teaches: course.outcomes,
-    url: `${siteConfig.url}/teaching/${course.institution.toLowerCase()}/${slug}`,
+    url: `${siteConfig.url}${getCoursePath(course)}`,
   };
 }
 

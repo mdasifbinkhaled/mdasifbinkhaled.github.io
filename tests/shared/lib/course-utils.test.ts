@@ -2,7 +2,39 @@ import { describe, it, expect } from 'vitest';
 import {
   formatBreadcrumbTitle,
   getCourseLinkIcon,
+  getCourseSlug,
+  getCoursePath,
 } from '@/shared/lib/course-utils';
+
+describe('getCourseSlug / getCoursePath (single source of truth)', () => {
+  it('prefers the slug, lowercased and space-stripped', () => {
+    expect(getCourseSlug({ slug: 'CSE211Sum26', code: 'CSE 211' })).toBe(
+      'cse211sum26'
+    );
+  });
+
+  it('falls back to the normalized code when slug is absent or blank', () => {
+    expect(getCourseSlug({ code: 'CSE 211' })).toBe('cse211');
+    expect(getCourseSlug({ slug: '   ', code: 'MAT 120' })).toBe('mat120');
+  });
+
+  it('builds a fully lowercased, space-free course path', () => {
+    expect(
+      getCoursePath({
+        slug: 'cse211sum26',
+        code: 'CSE 211',
+        institution: 'IUB',
+      })
+    ).toBe('/teaching/iub/cse211sum26');
+  });
+
+  it('path slug matches the standalone slug helper (no route desync)', () => {
+    const course = { code: 'CSE 420', institution: 'BRACU' };
+    expect(getCoursePath(course)).toBe(
+      `/teaching/bracu/${getCourseSlug(course)}`
+    );
+  });
+});
 
 describe('formatBreadcrumbTitle', () => {
   it('converts institution codes to uppercase', () => {

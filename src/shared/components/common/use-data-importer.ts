@@ -9,6 +9,7 @@
 // ─────────────────────────────────────────────────────────────────────
 
 import { useMemo, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import { parseFiles, parseText } from '@/shared/lib/parsers/tabular';
 import { applySchema, inferMapping } from '@/shared/lib/parsers/schema';
 import type {
@@ -27,6 +28,10 @@ import {
   getParsedFiles,
 } from '@/shared/components/common/data-importer.utils';
 import type { ExtraColumnDraft } from '@/shared/components/common/data-importer.utils';
+
+/** Upper bound for a single imported file — these are browser-local tools. */
+const MAX_IMPORT_FILE_MB = 10;
+const MAX_IMPORT_FILE_BYTES = MAX_IMPORT_FILE_MB * 1024 * 1024;
 
 interface UseDataImporterArgs<TKey extends string> {
   defaultTab: 'paste' | 'upload';
@@ -153,6 +158,17 @@ export function useDataImporter<TKey extends string>({
     const files = Array.from(e.target.files ?? []);
     if (files.length === 0) return;
 
+    // Guard against accidentally importing a huge file (these are browser-local
+    // tools — a multi-hundred-MB sheet would freeze the tab / exhaust memory).
+    const tooBig = files.find((f) => f.size > MAX_IMPORT_FILE_BYTES);
+    if (tooBig) {
+      toast.error(
+        `"${tooBig.name}" is too large (max ${MAX_IMPORT_FILE_MB} MB).`
+      );
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
+    }
+
     setLoading(true);
     try {
       const data = await parseFiles(files);
@@ -163,6 +179,10 @@ export function useDataImporter<TKey extends string>({
         buildInitialAdditionalFileDefaults(data, extraPerFileFields)
       );
       setExtraColumns([]);
+    } catch (err) {
+      toast.error(
+        err instanceof Error ? err.message : 'Could not read that file.'
+      );
     } finally {
       setLoading(false);
       // Allow re-selecting the same file name.

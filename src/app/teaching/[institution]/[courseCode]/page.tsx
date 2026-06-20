@@ -3,6 +3,11 @@ import { notFound } from 'next/navigation';
 import { allCourses, institutionNames } from '@/shared/lib/data/courses';
 import { CoursePage as CommandCenterCoursePage } from '@/features/teaching/components/course-page';
 import { CourseStructuredDataScript } from '@/shared/components/infra/structured-data';
+import {
+  getCoursePath,
+  getCourseSlug,
+  getCourseInstitutionSlug,
+} from '@/shared/lib/course-utils';
 
 interface CoursePageProps {
   params: Promise<{
@@ -15,15 +20,11 @@ interface CoursePageProps {
  * Helper to fetch a course from route params
  */
 function getCourseByParams(institution: string, courseCode: string) {
-  return allCourses.find((c) => {
-    const slug = c.slug
-      ? c.slug.toLowerCase()
-      : c.code.toLowerCase().replace(/\s+/g, '');
-    return (
-      c.institution.toLowerCase() === institution.toLowerCase() &&
-      slug === courseCode.toLowerCase()
-    );
-  });
+  return allCourses.find(
+    (c) =>
+      getCourseInstitutionSlug(c.institution) === institution.toLowerCase() &&
+      getCourseSlug(c) === courseCode.toLowerCase()
+  );
 }
 
 /**
@@ -35,10 +36,8 @@ export async function generateStaticParams() {
   return allCourses
     .filter((course) => course.tier === 'detailed')
     .map((course) => ({
-      institution: course.institution.toLowerCase(),
-      courseCode: course.slug
-        ? course.slug.toLowerCase()
-        : course.code.toLowerCase().replace(/\s+/g, ''),
+      institution: getCourseInstitutionSlug(course.institution),
+      courseCode: getCourseSlug(course),
     }));
 }
 
@@ -59,14 +58,11 @@ export async function generateMetadata({
 
   const institutionName = institutionNames[course.institution];
 
-  const slug =
-    course.slug?.toLowerCase() ?? course.code.toLowerCase().replace(/\s+/g, '');
-
   return {
     title: `${course.code}: ${course.title} | Teaching Portfolio`,
     description: `Course details for ${course.code}: ${course.title} at ${institutionName}. ${course.description}`,
     alternates: {
-      canonical: `/teaching/${course.institution.toLowerCase()}/${slug}`,
+      canonical: getCoursePath(course),
     },
     keywords: [
       course.code,

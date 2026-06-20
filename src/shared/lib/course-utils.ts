@@ -83,6 +83,23 @@ export function getCourseLinkIcon(type: CourseLink['type']): LucideIcon {
 }
 
 /**
+ * Canonical course URL slug — the single source of truth used by the dynamic
+ * route's `generateStaticParams`, the link path, the sitemap, and the JSON-LD.
+ * A blank/whitespace slug falls back to the normalized code; the result is
+ * always lowercased and space-stripped so every producer emits byte-identical
+ * paths (a divergence here is a static-export 404).
+ */
+export function getCourseSlug(course: { slug?: string; code: string }): string {
+  const raw = course.slug?.trim() ? course.slug : course.code;
+  return raw.toLowerCase().replace(/\s+/g, '');
+}
+
+/** Canonical institution URL segment (lowercased, space-stripped). */
+export function getCourseInstitutionSlug(institution: string): string {
+  return institution.toLowerCase().replace(/\s+/g, '');
+}
+
+/**
  * Generates the canonical local URL path for a course detail page.
  */
 export function getCoursePath(course: {
@@ -90,7 +107,5 @@ export function getCoursePath(course: {
   code: string;
   institution: string;
 }): string {
-  const courseSlug =
-    course.slug || course.code.toLowerCase().replace(/\s+/g, '');
-  return `/teaching/${course.institution.toLowerCase().replace(/\s+/g, '')}/${courseSlug}`;
+  return `/teaching/${getCourseInstitutionSlug(course.institution)}/${getCourseSlug(course)}`;
 }

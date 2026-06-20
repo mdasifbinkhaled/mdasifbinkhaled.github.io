@@ -219,6 +219,124 @@ describe('parseText (PapaParse adapter)', () => {
   });
 });
 
+// ── AUD-013: multi-file merge / alignment ───────────────────────────────
+//
+// `parseFiles` takes headers from the FIRST file, then for each later file:
+//   • skips on column-count mismatch (covered above),
+//   • skips on header-set mismatch (covered above),
+//   • reorders columns when headers match but are out of order (covered),
+//   • otherwise concatenates rows, preserving per-row + per-file provenance.
+// These tests cover the merge bookkeeping and header-detection edges that
+// lacked direct coverage.
+
+const csvFile = (name: string, body: string): File => {
+  const file = new File([body], name, { type: 'text/csv' });
+  Object.defineProperty(file, 'text', { value: async () => body });
+  return file;
+};
+
+describe('parseFiles — merge provenance & alignment (AUD-013)', () => {
+  it('merges 3 same-header files into one dataset with per-file source preserved', async () => {
+    const a = csvFile('a.csv', 'id,name\n1,Alice');
+    const b = csvFile('b.csv', 'id,name\n2,Bob\n3,Cara');
+    const c = csvFile('c.csv', 'id,name\n4,Dan');
+
+    const out = await parseFiles([a, b, c]);
+
+    expect(out.headers).toEqual(['id', 'name']);
+    expect(out.rows).toEqual([
+      ['1', 'Alice'],
+      ['2', 'Bob'],
+      ['3', 'Cara'],
+      ['4', 'Dan'],
+    ]);
+    // per-row provenance follows the contributing file
+    expect(out.rowSources).toEqual(['a.csv', 'b.csv', 'b.csv', 'c.csv']);
+    // per-file row counts preserved in order
+    expect(out.files).toEqual([
+      { source: 'a.csv', rowCount: 1 },
+      { source: 'b.csv', rowCount: 2 },
+      { source: 'c.csv', rowCount: 1 },
+    ]);
+    // combined source label lists every input filename
+    expect(out.source).toBe('a.csv, b.csv, c.csv');
+    // merge banner warning is emitted
+    expect(out.warnings).toContain('Merging 3 files (a.csv, b.csv, c.csv).');
+  });
+
+  it('skipped files contribute neither rows nor file/source provenance', async () => {
+    const a = csvFile('a.csv', 'id,name\n1,Alice');
+    const bad = csvFile('bad.csv', 'id,program\n2,CSE');
+    const c = csvFile('c.csv', 'id,name\n3,Cara');
+
+    const out = await parseFiles([a, bad, c]);
+
+    expect(out.rows).toEqual([
+      ['1', 'Alice'],
+      ['3', 'Cara'],
+    ]);
+    expect(out.rowSources).toEqual(['a.csv', 'c.csv']);
+    expect(out.files).toEqual([
+      { source: 'a.csv', rowCount: 1 },
+      { source: 'c.csv', rowCount: 1 },
+    ]);
+    expect(out.warnings).toContain(
+      'Skipped "bad.csv": headers do not match the first file.'
+    );
+  });
+
+  it('refuses to align when the base file has duplicate headers', async () => {
+    // createAlignedRows returns null when reordering is needed but either
+    // header set has duplicates — the later file is skipped, not corrupted.
+    const a = csvFile('a.csv', 'qty,qty\n1,2');
+    const b = csvFile('b.csv', 'qty,total\n3,4');
+
+    const out = await parseFiles([a, b]);
+
+    // base headers come from file A (all-numeric first body row 1,2 is data)
+    expect(out.headers).toEqual(['qty', 'qty']);
+    // B is skipped: its header set differs from base's
+    expect(out.rows).toEqual([['1', '2']]);
+    expect(out.warnings).toContain(
+      'Skipped "b.csv": headers do not match the first file.'
+    );
+  });
+
+  it('skips a reorder when the incoming file has duplicate headers', async () => {
+    // Base has unique headers but incoming repeats one — createAlignedRows
+    // bails (returns null) rather than guess the mapping.
+    const a = csvFile('a.csv', 'id,name\n1,Alice');
+    const b = csvFile('b.csv', 'name,name\nBob,Bobby');
+
+    const out = await parseFiles([a, b]);
+
+    expect(out.rows).toEqual([['1', 'Alice']]);
+    expect(out.warnings).toContain(
+      'Skipped "b.csv": headers do not match the first file.'
+    );
+  });
+
+  it('an all-numeric first row is treated as DATA, not headers (synthesizes headers)', async () => {
+    // looksLikeHeader: numericCells(2) >= alphaCells(0) → not a header.
+    const a = csvFile('a.csv', '10,20\n30,40');
+    const b = csvFile('b.csv', '50,60');
+
+    const out = await parseFiles([a, b]);
+
+    // synthesized header names; first row stays as data
+    expect(out.headers).toEqual(['Column 1', 'Column 2']);
+    expect(out.rows).toEqual([
+      ['10', '20'],
+      ['30', '40'],
+      ['50', '60'],
+    ]);
+    // synthesized headers match across both files → rows merge cleanly
+    expect(out.warnings).not.toContain(
+      'Skipped "b.csv": headers do not match the first file.'
+    );
+  });
+});
+
 describe('inferMapping', () => {
   it('maps exact header matches', () => {
     const m = inferMapping(['id', 'name', 'section'], STUDENT_FIELDS);

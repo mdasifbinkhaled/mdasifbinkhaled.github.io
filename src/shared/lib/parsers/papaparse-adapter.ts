@@ -89,7 +89,8 @@ export function parseText(text: string, source: string): TabularData {
   }
 
   // Normalize row length to the widest row so every row has the same arity.
-  const maxCols = Math.max(...allRows.map((r) => r.length));
+  // reduce (not Math.max(...spread)) avoids a RangeError on very wide sheets.
+  const maxCols = allRows.reduce((m, r) => Math.max(m, r.length), 0);
   const normalized = allRows.map((r) =>
     r.length < maxCols ? [...r, ...Array(maxCols - r.length).fill('')] : r
   );

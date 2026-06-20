@@ -44,7 +44,8 @@ export async function parseSpreadsheet(file: File): Promise<TabularData> {
   };
 
   const stringRows = raw.map((r) => r.map(stringify));
-  const maxCols = Math.max(...stringRows.map((r) => r.length));
+  // reduce (not Math.max(...spread)) avoids a RangeError on very wide sheets.
+  const maxCols = stringRows.reduce((m, r) => Math.max(m, r.length), 0);
   const normalized = stringRows.map((r) =>
     r.length < maxCols ? [...r, ...Array(maxCols - r.length).fill('')] : r
   );

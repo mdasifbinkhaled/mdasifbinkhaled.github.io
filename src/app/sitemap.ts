@@ -4,6 +4,7 @@ import type { MetadataRoute } from 'next';
 import { siteConfig } from '@/shared/config/site';
 import { apps } from '@/shared/config/apps';
 import { getDetailedCourses } from '@/shared/lib/data/courses';
+import { getCoursePath } from '@/shared/lib/course-utils';
 import { getAllPosts } from '@/shared/lib/mdx';
 
 const fallbackLastModified = '2026-01-01T00:00:00.000Z';
@@ -102,7 +103,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic course detail pages
   const detailedCourses = getDetailedCourses();
   const courseRoutes: MetadataRoute.Sitemap = detailedCourses.map((course) => ({
-    url: `${baseUrl}/teaching/${course.institution.toLowerCase()}/${course.slug || course.code.toLowerCase().replace(/\s+/g, '')}`,
+    url: `${baseUrl}${getCoursePath(course)}`,
     lastModified: siteLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.5,
