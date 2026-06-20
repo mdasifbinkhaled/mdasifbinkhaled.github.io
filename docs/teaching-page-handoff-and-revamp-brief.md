@@ -1,5 +1,8 @@
 # Teaching Page — Handoff & Revamp Brief
 
+> **⚠️ SUPERSEDED / DONE (2026-06-20). Historical record only — do NOT treat as current.**
+> This brief described the teaching page **before** the revamp it requested, which has since shipped (`feb94e7` "swap the revamped index live; remove the superseded components"). The components it documents as "what exists today" were **deleted or renamed**: `CourseCard`/`course-card.tsx`, `TeachingRecordTable`/`teaching-record-table.tsx`, `TeachingHeroStats`, `MentorshipSection`, `TeachingCTA`, `getTeachingStats` (→ `getTeachingFigures`), `mentorship.ts` (removed; `METRICS.AVERAGE_RATING` removed). **Current code:** `src/features/teaching/components/teaching-index/` (index) + `course-page/` (the command-center detail template). Kept only as the record of the revamp's motivation.
+
 _Last updated: 2026-06-17. Audience: (a) another LLM picking this up cold, and
 (b) Claude Design, to revamp + simplify the teaching surface. Self-contained —
 you should not need to read the whole repo to use it._

@@ -47,7 +47,7 @@ A modern, accessible academic portfolio built with **Next.js 16**, **TypeScript*
 
 Ensure you have the following installed:
 
-- **Node.js** v22.0.0 or higher ([Download](https://nodejs.org/)) — matches `engines.node` in `package.json` and the CI runner
+- **Node.js** 22 or 24 ([Download](https://nodejs.org/)) — matches `engines.node` (`^22 || ^24`) in `package.json` and the CI runner
 - **npm** v10.0.0 or higher (comes with Node.js)
 - **Git** ([Download](https://git-scm.com/))
 
@@ -160,7 +160,7 @@ Available environment variables:
 ├── tests/                # Vitest + Playwright test suites
 ├── public/               # Static assets (images, CV, favicon)
 ├── docs/                 # ADRs and project notes
-└── .github/workflows/    # CI/CD pipelines (ci, cross-browser, deploy, security, lhci)
+└── .github/workflows/    # CI/CD pipelines (ci, cross-browser-e2e, nextjs[deploy], security, lhci)
 ```
 
 ---

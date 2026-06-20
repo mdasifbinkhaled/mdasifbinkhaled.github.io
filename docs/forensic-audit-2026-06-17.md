@@ -1,5 +1,8 @@
 # Forensic Code Audit — Portfolio
 
+> **✅ HISTORICAL — point-in-time audit, baseline `fad0bd2` (2026-06-17). NOT a live findings tracker.**
+> Every actionable finding below has since been remediated (see `git log`): AUD-005 status colors → `bbc5793`; AUD-016/017/019/025 hygiene → `23c35d7`; AUD-007/015/021 DESIGN.md gradient/shadow/radius reconciliation → `3835d0f`/`a1b93d6`/`c9c9573`; M1/M2 correctness + slug SSoT → `e693df5`/`5461810`. Files referenced below that were removed in the teaching revamp (`feb94e7`) — `course-card.tsx`, `teaching-record-table.tsx`, `mentorship-section.tsx`, `getTeachingStats` — no longer exist. Retained as a record of the audit campaign only.
+
 _Baseline commit: `fad0bd2`. Mode: Deep. Method: 6 parallel forensic tracks (architecture/SOLID, security, correctness, testing+ecosystem, JS-TS/vibe, design-centralization) + synthesis. Generated 2026-06-17._
 
 ## 1 — Executive summary
