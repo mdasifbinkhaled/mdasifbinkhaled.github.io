@@ -54,7 +54,7 @@ export default function PublicationsPage() {
         {/* Academic Profiles */}
         <section className="mx-auto max-w-5xl">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-primary mb-4">
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-4">
               Academic Profiles
             </h2>
             <p className="text-muted-foreground">

@@ -10,7 +10,7 @@ import { honorsAndAwards } from '@/shared/lib/data/about';
 export function AwardsSection() {
   return (
     <section id="honors-awards">
-      <h2 className="text-3xl font-bold text-center mb-10 text-primary">
+      <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-10">
         Honors & Awards
       </h2>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

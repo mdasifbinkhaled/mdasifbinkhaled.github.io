@@ -106,7 +106,7 @@ export function AppsHub() {
         <div className="space-y-12">
           {groups.map((group) => (
             <section key={group.category} className="space-y-6">
-              <h2 className="text-2xl font-bold tracking-tight flex items-center gap-3">
+              <h2 className="text-2xl font-semibold tracking-tight text-foreground flex items-center gap-3">
                 {group.label}
                 <span className="text-sm font-semibold text-muted-foreground bg-muted px-3 py-0.5 rounded-full">
                   {group.items.length}

@@ -37,7 +37,7 @@ export function ExamCountdownToolbar({
   return (
     <>
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold flex items-center gap-2">
+        <h2 className="text-xl font-semibold tracking-tight text-foreground flex items-center gap-2">
           <Timer className="h-5 w-5 text-primary" />
           Active Timers
         </h2>

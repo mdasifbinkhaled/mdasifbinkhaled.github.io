@@ -21,7 +21,7 @@ export function ResearchHighlights() {
 
       <div className="container-responsive relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4 bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-4">
             Research Interests
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">

@@ -22,7 +22,7 @@ export function PrimaryAreas() {
   return (
     <section id="research-areas">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-primary mb-4">
+        <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-4">
           Primary Research Areas
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">

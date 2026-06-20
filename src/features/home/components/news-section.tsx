@@ -12,7 +12,7 @@ export function NewsSection() {
     <article className="w-full py-8 md:py-10 bg-linear-to-br from-secondary/30 via-secondary/20 to-transparent">
       <div className="container-responsive">
         <section className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 text-primary flex items-center gap-2">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-6 flex items-center gap-2">
             <span className="w-1 h-6 bg-primary rounded-full"></span>
             News
           </h2>

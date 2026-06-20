@@ -6,7 +6,9 @@ import { academicProfiles } from '@/shared/lib/data/researcher-profile';
 export function ResearchCTA() {
   return (
     <section className="text-center space-y-6 py-12">
-      <h2 className="text-2xl font-bold">Explore My Research Further</h2>
+      <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+        Explore My Research Further
+      </h2>
       <div className="flex flex-wrap justify-center gap-4">
         <Button asChild size="lg" className="group">
           <Link href="/publications">

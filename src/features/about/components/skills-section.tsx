@@ -11,7 +11,7 @@ import { technicalSkills } from '@/shared/lib/data/experience';
 export function SkillsSection() {
   return (
     <section id="skills">
-      <h2 className="text-3xl font-bold text-center mb-10 bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+      <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-10">
         Technical Skills
       </h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

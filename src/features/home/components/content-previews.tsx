@@ -28,7 +28,7 @@ export function PublicationsPreview() {
     <section className="w-full py-8 md:py-10 bg-secondary/10">
       <div className="container-responsive">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 text-primary">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-6">
             Recent Publications
           </h2>
           <PublicationList
@@ -64,7 +64,7 @@ export function ExperiencePreview() {
     <section className="w-full py-8 md:py-10">
       <div className="container-responsive">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 text-primary">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-6">
             Work Experience
           </h2>
           <ExperienceCompact experiences={recentExperiences} />
@@ -94,7 +94,7 @@ export function FeaturedGrant() {
   return (
     <section className="w-full py-12 md:py-16 bg-linear-to-br from-primary/5 to-accent/5">
       <div className="container-responsive">
-        <h2 className="text-3xl font-bold text-center mb-12 text-primary">
+        <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-12">
           Featured Research Grant
         </h2>
         <Card className="shadow-xl hover:shadow-2xl transition-all duration-300 max-w-3xl mx-auto border-primary/20">

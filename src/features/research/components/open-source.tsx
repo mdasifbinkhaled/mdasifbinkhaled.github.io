@@ -15,7 +15,7 @@ export function OpenSource() {
   return (
     <section>
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-primary mb-3">
+        <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-3">
           Open Source Contributions
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">

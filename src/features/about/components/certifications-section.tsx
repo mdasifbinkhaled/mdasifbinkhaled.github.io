@@ -11,7 +11,7 @@ import { certifications } from '@/shared/lib/data/about';
 export function CertificationsSection() {
   return (
     <section id="certifications">
-      <h2 className="text-3xl font-bold text-center mb-10 text-primary">
+      <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-10">
         Certifications & Training
       </h2>
       <div className="grid gap-6 md:grid-cols-2">
