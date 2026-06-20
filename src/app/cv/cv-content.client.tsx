@@ -95,8 +95,11 @@ export default function CVContent() {
                       Thesis: {edu.thesis.title}
                     </p>
                   )}
-                  {edu.achievements?.map((achievement, idx) => (
-                    <p key={idx} className="text-sm text-muted-foreground">
+                  {edu.achievements?.map((achievement) => (
+                    <p
+                      key={achievement}
+                      className="text-sm text-muted-foreground"
+                    >
                       {achievement}
                     </p>
                   ))}

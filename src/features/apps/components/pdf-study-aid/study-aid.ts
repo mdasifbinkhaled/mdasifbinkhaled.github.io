@@ -232,21 +232,34 @@ export function buildStudyAidFromText(
   });
 }
 
+/** Minimal structural view of the pdf.js document we consume (the module is untyped). */
+interface PdfTextItem {
+  str?: string;
+  hasEOL?: boolean;
+}
+interface PdfPage {
+  getTextContent: () => Promise<{ items: PdfTextItem[] }>;
+  cleanup: () => void;
+}
+interface PdfDocument {
+  numPages: number;
+  getPage: (pageNumber: number) => Promise<PdfPage>;
+  destroy: () => Promise<void>;
+}
+
 export async function extractTextFromPdf(
   file: File
 ): Promise<Result<{ text: string; pageCount: number }>> {
+  let pdf: PdfDocument | undefined;
   try {
     const pdfjs = await import('pdfjs-dist/webpack.mjs');
     const data = new Uint8Array(await file.arrayBuffer());
-    const loadingTask = pdfjs.getDocument({ data });
-    const pdf = await loadingTask.promise;
+    pdf = (await pdfjs.getDocument({ data }).promise) as PdfDocument;
     const pages: string[] = [];
 
     for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
       const page = await pdf.getPage(pageNumber);
-      const content = (await page.getTextContent()) as {
-        items: Array<{ str?: string; hasEOL?: boolean }>;
-      };
+      const content = await page.getTextContent();
       const pageText = content.items
         .map((item) => {
           if (typeof item.str === 'string') {
@@ -273,6 +286,9 @@ export async function extractTextFromPdf(
       'pdf-read-failed',
       'Unable to read this PDF in the browser. Try a text-based PDF instead of a scanned image.'
     );
+  } finally {
+    // Release the worker-held document + transferred buffer even if a page throws.
+    await pdf?.destroy();
   }
 }
 

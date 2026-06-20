@@ -7,7 +7,8 @@ import { getTotalStudentsFromCourses } from '@/shared/lib/data/courses';
 
 export const METRICS = {
   // Teaching
-  AVERAGE_RATING: 4.32, // Source: CV, verified 2026
+  // Note: average teaching rating is derived from course data via
+  // getTeachingFigures() — don't reintroduce a hardcoded rating here.
   TOTAL_STUDENTS: getTotalStudentsFromCourses(),
   YEARS_TEACHING: new Date().getFullYear() - 2015,
 

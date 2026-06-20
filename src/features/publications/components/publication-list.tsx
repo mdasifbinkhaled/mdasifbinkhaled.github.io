@@ -1,7 +1,7 @@
 'use client';
 
 import type { PublicationItem, PublicationType } from '@/shared/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Card } from '@/shared/components/ui/card';
 import {
   Select,
@@ -38,13 +38,13 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
   const debouncedSearchTerm = useDebounce(searchTerm, TIMING.SEARCH_DEBOUNCE);
   const hasTrackedFilters = useRef(false);
 
-  const uniqueYears = (() => {
+  const uniqueYears = useMemo(() => {
     const years = new Set(initialPublications.map((p) => p.year.toString()));
     return [
       'all',
       ...Array.from(years).sort((a, b) => parseInt(b) - parseInt(a)),
     ];
-  })();
+  }, [initialPublications]);
 
   const handleYearChange = (value: string) => {
     setYearFilter(value);
@@ -58,7 +58,7 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
     setSearchTerm(e.target.value);
   };
 
-  const filteredPublications = (() => {
+  const filteredPublications = useMemo(() => {
     return initialPublications.filter((pub) => {
       const yearMatch =
         yearFilter === 'all' || pub.year.toString() === yearFilter;
@@ -77,7 +77,7 @@ export function PublicationList({ initialPublications }: PublicationListProps) {
             .includes(debouncedSearchTerm.toLowerCase()));
       return yearMatch && typeMatch && searchMatch;
     });
-  })();
+  }, [initialPublications, yearFilter, typeFilter, debouncedSearchTerm]);
 
   useEffect(() => {
     if (!hasTrackedFilters.current) {
