@@ -64,7 +64,7 @@ export function OfficeHoursBooker() {
               className="relative overflow-hidden hover:shadow-md transition-shadow"
             >
               <div
-                className={`absolute top-0 right-0 w-2 h-full ${slot.type === 'In-Person' ? 'bg-primary' : 'bg-emerald-500'}`}
+                className={`absolute top-0 right-0 w-2 h-full ${slot.type === 'In-Person' ? 'bg-primary' : 'bg-success'}`}
               />
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
@@ -73,7 +73,7 @@ export function OfficeHoursBooker() {
                     {slot.day}
                   </CardTitle>
                   <span
-                    className={`text-xs font-semibold px-2 py-1 rounded-full ${slot.type === 'In-Person' ? 'bg-primary/5 text-primary font-bold' : 'bg-emerald-500/5 text-emerald-700 dark:text-emerald-400 font-bold'}`}
+                    className={`text-xs font-semibold px-2 py-1 rounded-full ${slot.type === 'In-Person' ? 'bg-primary/5 text-primary font-bold' : 'bg-success/5 text-success-emphasis font-bold'}`}
                   >
                     {slot.type}
                   </span>

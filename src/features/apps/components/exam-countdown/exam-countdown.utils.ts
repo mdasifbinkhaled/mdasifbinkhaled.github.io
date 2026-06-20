@@ -121,29 +121,29 @@ export function getUrgencyClasses(
   const urgencyClass = isPassed
     ? 'opacity-60 border-muted'
     : days <= 1
-      ? 'border-red-500/50 shadow-red-500/10 shadow-md'
+      ? 'border-destructive/50 shadow-destructive/10 shadow-md'
       : days <= 3
-        ? 'border-orange-500/40 shadow-orange-500/10 shadow-sm'
+        ? 'border-warning/40 shadow-warning/10 shadow-sm'
         : days <= 7
-          ? 'border-amber-500/30 shadow-xs'
+          ? 'border-warning/30 shadow-xs'
           : 'border-primary/20 shadow-xs';
 
   const accentColor = isPassed
     ? 'bg-muted'
     : days <= 1
-      ? 'bg-red-500'
+      ? 'bg-destructive'
       : days <= 3
-        ? 'bg-orange-500'
+        ? 'bg-warning'
         : days <= 7
-          ? 'bg-amber-500'
+          ? 'bg-warning/70'
           : 'bg-primary';
 
   const countdownColor = isPassed
     ? 'text-muted-foreground'
     : days <= 1
-      ? 'text-red-600 dark:text-red-400'
+      ? 'text-destructive'
       : days <= 3
-        ? 'text-orange-600 dark:text-orange-400'
+        ? 'text-warning-emphasis'
         : 'text-foreground';
 
   return { urgencyClass, accentColor, countdownColor };

@@ -42,7 +42,7 @@ export function ExamTimerCard({
   const secsColor = isPassed
     ? 'text-muted-foreground'
     : days <= 1
-      ? 'text-red-500'
+      ? 'text-destructive'
       : 'text-primary';
 
   return (

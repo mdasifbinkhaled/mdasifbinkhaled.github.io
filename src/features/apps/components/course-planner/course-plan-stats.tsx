@@ -25,7 +25,7 @@ export function CoursePlanStats({
       </Badge>
       <Badge
         variant="outline"
-        className="text-sm px-3 py-1 border-emerald-500/50 text-emerald-700 font-bold dark:text-emerald-400"
+        className="text-sm px-3 py-1 border-success/50 text-success-emphasis font-bold"
       >
         {unlockedCount} available now
       </Badge>

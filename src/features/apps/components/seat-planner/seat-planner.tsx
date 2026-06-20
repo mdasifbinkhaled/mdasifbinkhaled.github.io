@@ -58,9 +58,9 @@ import { cn } from '@/shared/lib/utils';
 
 const STAT_TONE_CLASS: Record<NonNullable<StatItem['tone']>, string> = {
   default: 'text-foreground',
-  success: 'text-emerald-600 dark:text-emerald-400',
-  warning: 'text-amber-600 dark:text-amber-400',
-  danger: 'text-red-600 dark:text-red-400',
+  success: 'text-success-emphasis',
+  warning: 'text-warning-emphasis',
+  danger: 'text-destructive',
 };
 
 export function SeatPlanner() {
@@ -310,7 +310,6 @@ export function SeatPlanner() {
               Cancel
             </Button>
             <Button
-              className="bg-red-700 text-white hover:bg-red-800"
               variant="destructive"
               onClick={() => {
                 sp.handleResetAll();
@@ -401,8 +400,8 @@ function SeatPlannerWorkspaceCard({
               className={cn(
                 'rounded-full px-2.5 py-1 text-xs font-medium',
                 totalSections > 0 && namedFacultySections === totalSections
-                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300'
-                  : 'bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300'
+                  ? 'bg-success/10 text-success-emphasis'
+                  : 'bg-warning/10 text-warning-emphasis'
               )}
             >
               {totalSections > 0 && namedFacultySections === totalSections
@@ -452,7 +451,7 @@ function SeatPlannerActionCard({
           </a>
         </Button>
         <Button
-          className="justify-start bg-red-700 text-white hover:bg-red-800"
+          className="justify-start"
           variant="destructive"
           onClick={onReset}
         >
@@ -501,7 +500,7 @@ function SeatPlannerWorkflowCard({
                 className={cn(
                   'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
                   step.complete
-                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300'
+                    ? 'bg-success/10 text-success-emphasis'
                     : 'bg-muted text-muted-foreground'
                 )}
               >

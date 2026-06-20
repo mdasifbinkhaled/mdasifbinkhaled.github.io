@@ -22,9 +22,9 @@ describe('<StatsPanel>', () => {
     expect(screen.getByText('120 seats')).toBeInTheDocument();
   });
 
-  it('applies success tone class', () => {
+  it('applies the success tone token', () => {
     const { container } = render(<StatsPanel items={items} title="X" />);
-    expect(container.querySelector('.text-emerald-600')).not.toBeNull();
+    expect(container.querySelector('.text-success-emphasis')).not.toBeNull();
   });
 
   it('renders horizontally without a heading text node', () => {

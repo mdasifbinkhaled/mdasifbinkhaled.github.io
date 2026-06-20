@@ -60,7 +60,7 @@ export function CoursePlanGrid({
                   aria-disabled={isLocked || undefined}
                   className={`transition-all motion-reduce:transition-none ${
                     isCompleted
-                      ? 'border-emerald-500/40 bg-emerald-500/5'
+                      ? 'border-success/40 bg-success/5'
                       : isUnlocked
                         ? 'border-primary/30 bg-primary/5'
                         : 'opacity-60'
@@ -103,7 +103,7 @@ export function CoursePlanGrid({
                       >
                         {isCompleted ? (
                           <>
-                            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400 mr-1" />
+                            <CheckCircle2 className="h-3.5 w-3.5 text-success-emphasis mr-1" />
                             Done
                           </>
                         ) : isUnlocked ? (

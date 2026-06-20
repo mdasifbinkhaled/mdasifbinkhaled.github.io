@@ -102,7 +102,7 @@ export function PreviewTable<TKey extends string>({
                     key={idx}
                     className={cn(
                       'border-t border-border/70',
-                      rowError && 'bg-red-50/60 dark:bg-red-950/30'
+                      rowError && 'bg-destructive/10'
                     )}
                   >
                     <td className="px-2 py-1.5 text-muted-foreground">
@@ -137,7 +137,7 @@ export function PreviewTable<TKey extends string>({
                           key={column.key}
                           className={cn(
                             'px-2 py-1.5 align-top',
-                            missing && 'text-red-600 dark:text-red-400'
+                            missing && 'text-destructive'
                           )}
                         >
                           {val || (missing ? '— missing —' : '')}
@@ -171,7 +171,7 @@ export function PreviewTable<TKey extends string>({
             {parseWarnings.map((warning, index) => (
               <div
                 key={`${warning}-${index}`}
-                className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50/70 px-3 py-2 text-amber-900 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-200"
+                className="flex items-start gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning-emphasis"
               >
                 <AlertTriangle
                   className="mt-0.5 h-3.5 w-3.5 shrink-0"
@@ -183,7 +183,7 @@ export function PreviewTable<TKey extends string>({
             {validation?.warnings.map((warning, index) => (
               <div
                 key={`${warning.message}-${index}`}
-                className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50/70 px-3 py-2 text-amber-900 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-200"
+                className="flex items-start gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning-emphasis"
               >
                 <AlertTriangle
                   className="mt-0.5 h-3.5 w-3.5 shrink-0"
@@ -195,7 +195,7 @@ export function PreviewTable<TKey extends string>({
             {extraColumnState.issues.map((issue, index) => (
               <div
                 key={`${issue}-${index}`}
-                className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50/70 px-3 py-2 text-red-800 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200"
+                className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-destructive"
               >
                 <AlertTriangle
                   className="mt-0.5 h-3.5 w-3.5 shrink-0"
@@ -207,7 +207,7 @@ export function PreviewTable<TKey extends string>({
             {validation?.errors.slice(0, 5).map((error, index) => (
               <div
                 key={`${error.row}-${index}`}
-                className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50/70 px-3 py-2 text-red-800 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200"
+                className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-destructive"
               >
                 <AlertTriangle
                   className="mt-0.5 h-3.5 w-3.5 shrink-0"

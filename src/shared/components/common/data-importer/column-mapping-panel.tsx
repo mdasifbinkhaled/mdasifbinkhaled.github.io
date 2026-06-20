@@ -97,19 +97,19 @@ export function ColumnMappingPanel<TKey extends string>({
                 className={cn(
                   'rounded-lg border bg-background/80 p-3',
                   isUnmappedRequired &&
-                    'border-red-300 bg-red-50/40 dark:border-red-900 dark:bg-red-950/20'
+                    'border-destructive/40 bg-destructive/10'
                 )}
               >
                 <div className="mb-2 min-w-0">
                   <p
                     className={cn(
                       'truncate text-xs font-semibold',
-                      isUnmappedRequired && 'text-red-600 dark:text-red-400'
+                      isUnmappedRequired && 'text-destructive'
                     )}
                   >
                     {field.label}
                     {field.required ? (
-                      <span className="ml-0.5 text-red-500">*</span>
+                      <span className="ml-0.5 text-destructive">*</span>
                     ) : null}
                   </p>
                   <p className="text-[11px] text-muted-foreground">
@@ -206,7 +206,7 @@ export function ColumnMappingPanel<TKey extends string>({
                         <span className="flex flex-wrap items-center gap-2 text-xs font-semibold">
                           <span>{field.label}</span>
                           {isAutofill ? (
-                            <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">
+                            <span className="rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-medium text-success-emphasis">
                               Auto-detected
                             </span>
                           ) : null}
@@ -368,7 +368,7 @@ export function ColumnMappingPanel<TKey extends string>({
             ))}
 
             {extraColumnState.issues.length > 0 ? (
-              <div className="space-y-1 rounded-lg border border-red-200 bg-red-50/70 px-3 py-2 text-[11px] text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+              <div className="space-y-1 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-[11px] text-destructive">
                 {extraColumnState.issues.map((issue) => (
                   <p key={issue}>{issue}</p>
                 ))}

@@ -25,9 +25,9 @@ export interface StatsPanelProps {
 
 const TONE_CLASS: Record<NonNullable<StatItem['tone']>, string> = {
   default: 'text-foreground',
-  success: 'text-emerald-600 dark:text-emerald-400',
-  warning: 'text-amber-600 dark:text-amber-400',
-  danger: 'text-red-600 dark:text-red-400',
+  success: 'text-success-emphasis',
+  warning: 'text-warning-emphasis',
+  danger: 'text-destructive',
 };
 
 /**

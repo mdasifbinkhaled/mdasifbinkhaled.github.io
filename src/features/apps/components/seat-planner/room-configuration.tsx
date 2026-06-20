@@ -215,7 +215,7 @@ export function RoomConfiguration({
           <p
             className={cn(
               'text-muted-foreground',
-              roomDraftError && 'text-red-600 dark:text-red-400'
+              roomDraftError && 'text-destructive'
             )}
           >
             {roomDraftError ??
@@ -329,7 +329,7 @@ export function RoomConfiguration({
               <p
                 className={cn(
                   'mt-1 text-lg font-semibold tabular-nums',
-                  seatDelta < 0 && 'text-amber-600 dark:text-amber-400'
+                  seatDelta < 0 && 'text-warning-emphasis'
                 )}
               >
                 {studentCount > 0
@@ -416,7 +416,7 @@ export function RoomConfiguration({
           totalCapacity > 0 &&
           studentCount > totalCapacity && (
             <div
-              className="flex items-center gap-2 text-sm text-amber-600 bg-amber-50 dark:bg-amber-950/20 rounded-md px-3 py-2"
+              className="flex items-center gap-2 text-sm text-warning-emphasis bg-warning/10 rounded-md px-3 py-2"
               role="alert"
             >
               <AlertCircle className="h-4 w-4 shrink-0" />

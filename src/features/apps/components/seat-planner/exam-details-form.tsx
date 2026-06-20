@@ -135,8 +135,8 @@ export function ExamDetailsForm({
                 className={cn(
                   'rounded-full px-2.5 py-1',
                   sections.length > 0 && namedSectionsCount === sections.length
-                    ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/50 dark:bg-emerald-950/40 dark:text-emerald-300'
-                    : 'border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-300'
+                    ? 'border-success/30 bg-success/10 text-success-emphasis'
+                    : 'border-warning/30 bg-warning/10 text-warning-emphasis'
                 )}
               >
                 {sections.length > 0
@@ -166,7 +166,7 @@ export function ExamDetailsForm({
                         className={cn(
                           'rounded-full px-2 py-0.5 text-[10px] font-medium',
                           sectionFaculty[section]?.trim()
-                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300'
+                            ? 'bg-success/10 text-success-emphasis'
                             : 'bg-muted text-muted-foreground'
                         )}
                       >

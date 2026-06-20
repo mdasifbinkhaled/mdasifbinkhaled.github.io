@@ -113,7 +113,7 @@ export function StudentDataPanel({
           {students.length > 0 && (
             <span className="ml-auto flex items-center gap-2 text-sm font-normal text-muted-foreground">
               <CheckCircle2
-                className="h-4 w-4 text-green-600 dark:text-green-400"
+                className="h-4 w-4 text-success-emphasis"
                 aria-hidden
               />
               {students.length} student{students.length === 1 ? '' : 's'}

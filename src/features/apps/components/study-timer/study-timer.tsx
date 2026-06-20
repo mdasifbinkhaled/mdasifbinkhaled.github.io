@@ -59,7 +59,7 @@ export function StudyTimer() {
       isSelected
         ? type === 'focus'
           ? 'bg-primary text-primary-foreground'
-          : 'bg-emerald-500 text-white'
+          : 'bg-success text-success-foreground'
         : 'bg-muted text-muted-foreground hover:bg-muted/80'
     }`;
     const icon =
@@ -119,7 +119,7 @@ export function StudyTimer() {
 
           {/* Timer Display */}
           <Card
-            className={`overflow-hidden ${sessionType === 'focus' ? 'border-primary/20' : 'border-emerald-500/20'}`}
+            className={`overflow-hidden ${sessionType === 'focus' ? 'border-primary/20' : 'border-success/20'}`}
           >
             <CardContent className="py-12">
               <div className="flex flex-col items-center gap-8">
@@ -148,7 +148,7 @@ export function StudyTimer() {
                       strokeLinecap="round"
                       strokeDasharray={`${2 * Math.PI * 45}`}
                       strokeDashoffset={`${2 * Math.PI * 45 * (1 - progress / 100)}`}
-                      className={`transition-all duration-1000 ${sessionType === 'focus' ? 'text-primary' : 'text-emerald-500'}`}
+                      className={`transition-all duration-1000 ${sessionType === 'focus' ? 'text-primary' : 'text-success'}`}
                     />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -178,7 +178,7 @@ export function StudyTimer() {
                     aria-label={isRunning ? 'Pause timer' : 'Start timer'}
                     className={`h-14 w-14 rounded-full ${
                       sessionType !== 'focus'
-                        ? 'bg-emerald-500 hover:bg-emerald-600'
+                        ? 'bg-success text-success-foreground hover:bg-success/90'
                         : ''
                     }`}
                   >

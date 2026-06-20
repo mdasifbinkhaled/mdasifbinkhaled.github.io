@@ -12,19 +12,19 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 **All color is HSL CSS custom properties in `src/styles/tokens.css`, exposed as Tailwind utilities via `@theme` in `src/app/globals.css`. Use the utilities. NEVER hardcode hex/rgb or raw Tailwind palette colors (`bg-gray-50`, `text-zinc-700`, `bg-indigo-500`).** Merge classes with `cn()` (`@/shared/lib/utils`).
 
-| Utility                                  | Role                                                                                                      |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `bg-background` / `text-foreground`      | Page canvas + primary text                                                                                |
-| `bg-card` / `text-card-foreground`       | Elevated surfaces (cards, panels)                                                                         |
-| `bg-popover` / `text-popover-foreground` | Overlays (dropdowns, command palette, tooltips)                                                           |
-| `bg-muted` / `text-muted-foreground`     | Subdued surfaces + secondary text (dates, captions, meta)                                                 |
-| `bg-primary` / `text-primary-foreground` | The one brand/interactive accent: links, primary buttons, active nav, focus ring, "now/active" highlights |
-| `bg-secondary`, `bg-accent`              | Subtle fills / hover surfaces (not decorative color)                                                      |
-| `border-border`, `bg-input`, `ring-ring` | Borders/dividers, inputs, focus rings                                                                     |
-| `text-success` / `bg-success`            | Positive/active state (e.g. "Active Course" dot)                                                          |
-| `text-warning` / `bg-warning`            | Attention / time-sensitive (e.g. "TBA", upcoming) — amber, the complement of the blue primary             |
-| `text-destructive`                       | Errors only                                                                                               |
-| `hsl(var(--academic-highlight))`         | Subtle primary-tinted highlight (e.g. current-week row). CSS var, used via arbitrary value.               |
+| Utility                                  | Role                                                                                                                                                                                                |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bg-background` / `text-foreground`      | Page canvas + primary text                                                                                                                                                                          |
+| `bg-card` / `text-card-foreground`       | Elevated surfaces (cards, panels)                                                                                                                                                                   |
+| `bg-popover` / `text-popover-foreground` | Overlays (dropdowns, command palette, tooltips)                                                                                                                                                     |
+| `bg-muted` / `text-muted-foreground`     | Subdued surfaces + secondary text (dates, captions, meta)                                                                                                                                           |
+| `bg-primary` / `text-primary-foreground` | The one brand/interactive accent: links, primary buttons, active nav, focus ring, "now/active" highlights                                                                                           |
+| `bg-secondary`, `bg-accent`              | Subtle fills / hover surfaces (not decorative color)                                                                                                                                                |
+| `border-border`, `bg-input`, `ring-ring` | Borders/dividers, inputs, focus rings                                                                                                                                                               |
+| `bg-success` + `text-success-emphasis`   | Positive / active / live. **Fill** = `bg-success` (with `text-success-foreground`); **small status text/icons on a tint** = `text-success-emphasis` (the mid-tone `text-success` fails AA as text). |
+| `bg-warning` + `text-warning-emphasis`   | Attention / time-sensitive (amber). Same rule: `bg-warning` fills, `text-warning-emphasis` for text.                                                                                                |
+| `text-destructive` / `bg-destructive`    | Errors only. `--destructive` is tuned AA both as text and as a fill (white foreground), so no separate emphasis token is needed.                                                                    |
+| `hsl(var(--academic-highlight))`         | Subtle primary-tinted highlight (e.g. current-week row). CSS var, used via arbitrary value.                                                                                                         |
 
 **Themes:** 6 runtime themes — `light` (default), `dark`, `ocean`, `forest`, `lavender`, `slate` — set via `data-theme` on `<html>` (`dark` also via the `@custom-variant dark`). Each theme only redefines token _values_; component structure never changes between themes. **Every color decision must hold in all 6 themes + dark** — which is why you use tokens, never literals. Semantic tokens (`success`/`warning`/`info`/`destructive`) stay constant across themes by design.
 

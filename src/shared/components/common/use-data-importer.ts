@@ -303,19 +303,19 @@ export function useDataImporter<TKey extends string>({
   const statusItems = [
     validation?.ok && validation.data.length > 0
       ? {
-          tone: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300',
+          tone: 'bg-success/10 text-success-emphasis',
           label: `${validation.data.length} row${validation.data.length === 1 ? '' : 's'} ready`,
         }
       : null,
     validation && validation.errors.length > 0
       ? {
-          tone: 'bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-300',
+          tone: 'bg-destructive/10 text-destructive',
           label: `${validation.errors.length} row${validation.errors.length === 1 ? '' : 's'} skipped`,
         }
       : null,
     parseWarnings.length > 0
       ? {
-          tone: 'bg-amber-50 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300',
+          tone: 'bg-warning/10 text-warning-emphasis',
           label: `${parseWarnings.length} import note${parseWarnings.length === 1 ? '' : 's'}`,
         }
       : null,

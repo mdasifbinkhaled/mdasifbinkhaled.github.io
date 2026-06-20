@@ -185,7 +185,8 @@ export const PublicationCard = memo(function PublicationCard({
           >
             {isCopied ? (
               <>
-                <Check className="mr-2 h-4 w-4 text-green-500" /> Copied BibTeX
+                <Check className="mr-2 h-4 w-4 text-success-emphasis" /> Copied
+                BibTeX
               </>
             ) : (
               <>

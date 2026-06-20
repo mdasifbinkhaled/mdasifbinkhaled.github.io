@@ -34,7 +34,7 @@ export function ToolCard({ app }: ToolCardProps) {
             <span
               className={`px-2.5 py-1 text-xs font-semibold tracking-wide rounded-full uppercase ${
                 status === 'beta'
-                  ? 'bg-amber-100/80 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                  ? 'bg-warning/10 text-warning-emphasis'
                   : 'bg-secondary text-secondary-foreground'
               }`}
             >

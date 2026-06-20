@@ -73,7 +73,7 @@ export function TargetProjectionCard({
             </div>
           ) : targetRequirement.requiredAverage !== null &&
             targetRequirement.requiredAverage <= 0 ? (
-            <div className="bg-green-100 text-green-700 dark:bg-green-900/30 p-4 rounded-lg text-sm font-medium">
+            <div className="bg-success/10 text-success-emphasis p-4 rounded-lg text-sm font-medium">
               Status: Secured! You have already acquired enough points for this
               target.
             </div>

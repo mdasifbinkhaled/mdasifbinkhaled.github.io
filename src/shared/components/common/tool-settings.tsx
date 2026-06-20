@@ -137,7 +137,7 @@ export function ToolSettings({
               e.preventDefault();
               setConfirmOpen(true);
             }}
-            className="text-red-600 focus:text-red-700 dark:text-red-400 dark:focus:text-red-300"
+            className="text-destructive focus:text-destructive"
           >
             <RotateCcw className="mr-2 h-4 w-4" aria-hidden />
             Reset to defaults
