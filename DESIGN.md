@@ -6,7 +6,7 @@ The visual source of truth for this academic portfolio. **Any agent or person ge
 
 ## 1. Voice & atmosphere
 
-Academic editorial: calm, credible, precise — closer to a well-set university-press page than a SaaS landing page. Generous whitespace, restrained color, typography that earns trust. Impressions to aim for: **legible, considered, unhurried.** Not: flashy, gradient-heavy, "startup."
+Academic editorial: calm, credible, precise — closer to a well-set university-press page than a SaaS landing page. Generous whitespace, restrained color, typography that earns trust. Impressions to aim for: **legible, considered, unhurried.** Not flashy or busy. A restrained `primary→primary/70` gradient on a page's **hero `h1`** is the one sanctioned flourish (used sparingly — never on section headings or body); everything below the hero stays calm.
 
 ## 2. Color — tokens & roles
 
@@ -28,15 +28,15 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 **Themes:** 6 runtime themes — `light` (default), `dark`, `ocean`, `forest`, `lavender`, `slate` — set via `data-theme` on `<html>` (`dark` also via the `@custom-variant dark`). Each theme only redefines token _values_; component structure never changes between themes. **Every color decision must hold in all 6 themes + dark** — which is why you use tokens, never literals. Semantic tokens (`success`/`warning`/`info`/`destructive`) stay constant across themes by design.
 
-**Prohibited:** indigo/purple/blue-`500` literals; gradient text (`bg-clip-text`); pure `#000`/`#fff`; any raw palette color in components.
+**Prohibited:** indigo/purple/blue-`500` literals; pure `#000`/`#fff`; any raw palette color in components. _(Gradient text (`bg-clip-text` from `primary`) is permitted on page hero `h1`s only — see §3 — never on section headings or body.)_
 
 ## 3. Typography
 
 - **Sans:** Inter, via `--font-sans` (`font-sans`). The default for everything.
 - **Mono:** IBM Plex Mono, via `--font-mono` (`font-mono`). For tracked numeric/technical labels only — course codes, week/section numbers, times, percentages, dates, badges (introduced with the course-page redesign). Not for prose. _(This supersedes the earlier "serif planned" note — the course redesign uses Inter + IBM Plex Mono, no serif.)_
-- **Scale:** lean on Tailwind's scale; section titles `text-2xl`/`text-3xl` `font-semibold`, body `text-base` (line-height ~1.6), meta/caption `text-sm`/`text-xs` `text-muted-foreground`. Prefer `clamp()` for large display headings. (Course pages run a bolder display scale — see §11.)
+- **Scale:** lean on Tailwind's scale. **Section titles are one canonical style — `text-2xl font-semibold tracking-tight text-foreground`** (not `font-bold`, not tinted `text-primary`, no gradient). Body `text-base` (line-height ~1.6); meta/caption `text-sm`/`text-xs` `text-muted-foreground`. Page **hero `h1`**s run larger (`text-3xl`–`text-fluid-heading`, `font-bold`) and may use the sanctioned `primary→primary/70` gradient. (Course pages run a bolder display scale — see §11.)
 - **Prose width:** constrain long-form text (publications, about, blog) to ~`max-w-prose` (~65–72ch). Never full-width prose on wide screens.
-- **Prohibited:** gradient text; all-caps body; font-size below 14px for body; letter-spacing on body (caps labels only).
+- **Prohibited:** gradient text on **section headings or body** (hero `h1`s only); all-caps body; font-size below 14px for body; letter-spacing on body (caps labels only).
 
 ## 4. Spacing & layout
 
@@ -55,7 +55,7 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 ## 6. Depth & motion
 
-- **Elevation:** border + subtle background/shadow. No `shadow-xl`/`shadow-2xl` on static content; no stacked shadows; no `text-shadow`.
+- **Elevation:** border + subtle background/shadow at rest. `shadow-lg`/`shadow-xl` (and a small `hover:scale`/`-translate-y`) are allowed as a **hover/interactive** affordance on cards and on hero/feature surfaces; static resting content stays subtle. No stacked shadows; no `text-shadow`.
 - **Motion:** subtle, purposeful (`transition-colors`, small opacity/translate). All animation must respect `prefers-reduced-motion` (already globally handled in `tokens.css`). No parallax, autoplay loops, or load-time hero animations.
 
 ## 7. Accessibility (enforced)
@@ -69,7 +69,7 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 **Do:** semantic tokens only · `cn()` for class merging · constrain prose width · `focus-visible` rings · `rel="noopener noreferrer"` on `_blank` · keep components <300 LOC · verify in light **and** dark before claiming done.
 
-**Don't:** `bg-indigo-*`/`bg-purple-*`/raw `bg-gray-*` · gradient text · heavy/stacked shadows · 3-column icon-card hero · `rounded-2xl` on cards · new deps/animation libs without asking · hardcoded hex/HSL in components. _(Course pages carry a few scoped exceptions — see §11.)_
+**Don't:** `bg-indigo-*`/`bg-purple-*`/raw `bg-gray-*` · gradient text on section headings or body (hero `h1`s only) · `font-bold`/`text-primary` on section headings (use the canonical §3 style) · stacked shadows · 3-column icon-card hero · `rounded-2xl` on cards · new deps/animation libs without asking · hardcoded hex/HSL in components. _(Course pages carry a few scoped exceptions — see §11.)_
 
 ## 9. Content voice
 
@@ -93,8 +93,8 @@ Course **detail** pages are a deliberately distinct, full-width "publication" su
 - **The "This Week" band:** the one element allowed a deeper soft shadow and a brand-tinted gradient surface (a `color-mix` of the active theme's `--primary`); its on-dark foregrounds are intentional `hsl(210 40% 96% / a)` literals (the band is always dark in every theme).
 - **Scale tokens** (`--radius-xl/full`, shadow/duration/ease) are defined locally on `.cp`, not globally.
 
-Everything else — the teaching index, institution pages, and all non-course pages — stays on the §1–§9 defaults.
+Everything else — the teaching index and all non-course pages — stays on the §1–§9 defaults.
 
 ---
 
-_Last synced: 2026-06-16 (tokens: 6 themes in `src/styles/tokens.css`; fonts: Inter sans + IBM Plex Mono; course pages: full-width "Command Center", see §11)._
+_Last synced: 2026-06-17 (section headings converged to one canonical style §3; gradient text + hover shadows reconciled to shipped reality — permitted on hero `h1`s / interactive surfaces, §1–§2 / §6 / §8; tokens: 6 themes in `src/styles/tokens.css`; fonts: Inter sans + IBM Plex Mono; course pages: full-width "Command Center", see §11)._

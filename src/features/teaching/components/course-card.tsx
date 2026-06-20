@@ -143,8 +143,11 @@ export const CourseCard = memo(function CourseCard({
   // Use tier field (detailed = has separate page)
   const hasDetailPage = course.tier === 'detailed';
   const coursePath = getCoursePath(course);
+  // In static mode a detailed course has no inner controls, so the whole card
+  // is the link to its page (the collapsible variant keeps its footer button).
+  const cardIsLink = !isCollapsible && hasDetailPage;
 
-  return (
+  const card = (
     <Card
       className={cn(
         '@container transition-all duration-200 flex flex-col group h-full',
@@ -277,4 +280,18 @@ export const CourseCard = memo(function CourseCard({
       )}
     </Card>
   );
+
+  if (cardIsLink) {
+    return (
+      <Link
+        href={coursePath}
+        aria-label={`View ${course.code}: ${course.title}`}
+        className="block h-full rounded-xl focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      >
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 });
