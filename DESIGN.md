@@ -65,7 +65,7 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 ## 6. Depth & motion
 
-- **Elevation:** border + subtle background/shadow at rest. `shadow-lg`/`shadow-xl` (and a small `hover:scale`/`-translate-y`) are allowed as a **hover/interactive** affordance on cards and on hero/feature surfaces; static resting content stays subtle. No stacked shadows; no `text-shadow`.
+- **Elevation:** border + subtle background/shadow at rest. `shadow-lg`/`shadow-xl` (with a small `hover:scale`/`-translate-y`) are the **hover/interactive** affordance on cards and hero/feature surfaces; static resting _content_ stays subtle (a rare prominent feature card — e.g. the contact form, the research-philosophy highlight — may carry a resting `shadow-lg`, but don't make it the default). **Overlays and floating elements legitimately sit elevated at rest:** modals (`Dialog`), `DropdownMenu`, `Sheet`, the command palette, and the floating theme button use `shadow-lg`–`shadow-2xl` to separate from the page (shadcn defaults — not a violation). No stacked shadows; no `text-shadow`; no non-existent shadow utilities (Tailwind tops out at `shadow-2xl`).
 - **Motion:** subtle, purposeful (`transition-colors`, small opacity/translate). All animation must respect `prefers-reduced-motion` (already globally handled in `tokens.css`). No parallax, autoplay loops, or load-time hero animations.
 
 ## 7. Accessibility (enforced)
@@ -107,4 +107,4 @@ Everything else — the teaching index and all non-course pages — stays on the
 
 ---
 
-_Last synced: 2026-06-20 (radius scale reconciled to shipped reality — `rounded-xl`/12px is the canonical card radius, `rounded-2xl`/16px for app surfaces, all derived from one `--radius` base in `globals.css` `@theme`; `.cp` de-islanded onto the global `--radius-xl`, §5 / §8 / §11; `Segmented` vs colored-toggle boundary noted §5; sanctioned raw-color exceptions listed §2. Prior: section headings §3; gradient text + hover shadows §1–§2 / §6; 6 themes in `src/styles/tokens.css`; Inter + IBM Plex Mono; course pages "Command Center" §11)._
+_Last synced: 2026-06-20 (radius scale reconciled to shipped reality — `rounded-xl`/12px is the canonical card radius, `rounded-2xl`/16px for app surfaces, all derived from one `--radius` base in `globals.css` `@theme`; `.cp` de-islanded onto the global `--radius-xl`, §5 / §8 / §11; `Segmented` vs colored-toggle boundary noted §5; sanctioned raw-color exceptions listed §2; elevation §6 reconciled — overlays/floating elements legitimately elevated at rest, dead `shadow-3xl` removed. Prior: section headings §3; gradient text + hover shadows §1–§2 / §6; 6 themes in `src/styles/tokens.css`; Inter + IBM Plex Mono; course pages "Command Center" §11)._
