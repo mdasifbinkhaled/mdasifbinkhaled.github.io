@@ -5,6 +5,9 @@ import { PublicationList } from '@/features/publications';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { ErrorBoundary } from '@/shared/components/infra/error-boundary';
 import { AcademicProfiles } from '@/shared/components/common/academic-profiles';
+import { ContentColumn } from '@/shared/components/layout/content-column';
+import { PageHeader } from '@/shared/components/layout/page-header';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 
 export const metadata: Metadata = {
   title: 'Publications & Research',
@@ -37,48 +40,40 @@ export const metadata: Metadata = {
 
 export default function PublicationsPage() {
   return (
-    <div className="container-responsive space-y-12">
-      <div className="max-w-7xl mx-auto space-y-12">
-        <Breadcrumbs />
+    <ContentColumn width="wide">
+      <Breadcrumbs />
 
-        <header className="text-center">
-          <h1 className="text-fluid-heading font-bold tracking-tight text-primary pb-1">
-            Publications & Research
-          </h1>
-          <p className="mt-4 text-fluid-lg leading-8 text-muted-foreground">
-            A comprehensive archive of my scholarly articles, conference papers,
-            and contributions to the scientific community.
-          </p>
-        </header>
+      <PageHeader
+        align="center"
+        title="Publications & Research"
+        lead="A comprehensive archive of my scholarly articles, conference papers, and contributions to the scientific community."
+      />
 
-        {/* Academic Profiles */}
-        <section className="mx-auto max-w-5xl">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-4">
-              Academic Profiles
-            </h2>
-            <p className="text-muted-foreground">
-              Find my complete publication record on these platforms
-            </p>
-          </div>
-          <AcademicProfiles variant="grid" />
-        </section>
+      {/* Academic Profiles */}
+      <section className="mx-auto max-w-5xl">
+        <SectionHeading
+          wrapperClassName="text-center mb-8"
+          description="Find my complete publication record on these platforms"
+        >
+          Academic Profiles
+        </SectionHeading>
+        <AcademicProfiles variant="grid" />
+      </section>
 
-        <section id="publication-listing">
-          <ErrorBoundary
-            fallback={
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">
-                  Unable to load publications at this time. Please try again
-                  later.
-                </p>
-              </div>
-            }
-          >
-            <PublicationList initialPublications={samplePublications} />
-          </ErrorBoundary>
-        </section>
-      </div>
-    </div>
+      <section id="publication-listing">
+        <ErrorBoundary
+          fallback={
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">
+                Unable to load publications at this time. Please try again
+                later.
+              </p>
+            </div>
+          }
+        >
+          <PublicationList initialPublications={samplePublications} />
+        </ErrorBoundary>
+      </section>
+    </ContentColumn>
   );
 }
