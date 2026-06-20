@@ -30,6 +30,15 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 **Prohibited:** indigo/purple/blue-`500` literals; pure `#000`/`#fff`; any raw palette color in components. _(Gradient text (`bg-clip-text` from `primary`) is permitted on page hero `h1`s only — see §3 — never on section headings or body.)_
 
+**Sanctioned raw-color exceptions (the only ones — anything else is drift):** four surfaces legitimately bypass the token system because they render _outside_ the themed React tree or encode non-UI data. Don't "fix" them, and don't add new ones without recording them here:
+
+| Surface                                                                | Why raw color is required                                                                                                                |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `app/global-error.tsx`                                                 | Last-resort error boundary with an inline `<style>` — renders before/outside the theme provider, so CSS-var tokens aren't available.     |
+| `blog/[slug]/page.tsx` (code blocks)                                   | Syntax-highlight surfaces are intentionally dark in every theme (`bg-zinc-950`/`text-zinc-50`), matching standard code-block convention. |
+| `seat-planner/types.ts` (room swatches)                                | `bg-{purple,indigo,…}-500` are **categorical data colors** distinguishing rooms, not chrome.                                             |
+| `seat-planner/seat-plan-png-document.tsx` (+ the `#ffffff` capture bg) | An off-screen document rasterized to a downloadable PNG — a fixed print artifact, not a themed surface.                                  |
+
 ## 3. Typography
 
 - **Sans:** Inter, via `--font-sans` (`font-sans`). The default for everything.
@@ -78,7 +87,7 @@ First-person, precise, unembellished. Specific over vague ("Principal Investigat
 ## 10. Using this file with an agent
 
 - It's referenced from `CLAUDE.md`, so Claude Code loads it at session start. For a UI task, re-anchor: _"Follow DESIGN.md — tokens only, no prohibited patterns."_
-- **Drift check (periodic):** `grep -rnE "bg-(gray|zinc|slate|indigo|purple)-[0-9]|text-(gray|zinc|slate)-[0-9]|#[0-9a-fA-F]{3,6}" src` should return ~nothing in components.
+- **Drift check (periodic):** `grep -rnE "bg-(gray|zinc|slate|indigo|purple)-[0-9]|text-(gray|zinc|slate)-[0-9]|#[0-9a-fA-F]{3,6}" src` should return **only the four sanctioned exceptions listed in §2** (global-error, blog code blocks, seat-planner room swatches + PNG export doc). Anything else is real drift — fix it.
 - **Keep in sync:** when `tokens.css`, the font setup, or a recurring component pattern changes, update this file in the same commit. A stale DESIGN.md is worse than none.
 
 ## 11. Course pages ("Command Center")
