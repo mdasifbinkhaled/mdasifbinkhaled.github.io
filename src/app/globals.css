@@ -66,6 +66,11 @@
   --color-academic-card: hsl(var(--academic-card));
   --color-academic-highlight: hsl(var(--academic-highlight));
 
+  /* Radius scale — all derived from the single --radius base (8px).
+     --radius-xl (12px) is the canonical card radius; --radius-2xl (16px)
+     is the larger app-surface radius. See DESIGN.md §5. */
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-xl: calc(var(--radius) + 4px);
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);

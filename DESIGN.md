@@ -56,8 +56,9 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 ## 5. Components
 
 - **Buttons:** shadcn/`cva` variants. Primary = `bg-primary text-primary-foreground`; ghost/outline use `border-border`/`bg-accent` on hover. Keep radius modest (the project's `--radius`); no `rounded-full` except avatars/tag pills.
-- **Cards:** `bg-card border border-border rounded-[--radius]` with a _subtle_ shadow at most. Prefer border + slight surface contrast for elevation over heavy shadows.
+- **Cards:** `bg-card border border-border rounded-xl` — `rounded-xl` (12px, the `--radius-xl` token) is the **canonical card radius** site-wide; app tool surfaces may go one step larger to `rounded-2xl` (16px, `--radius-2xl`). Both derive from the single `--radius` base in `globals.css` `@theme`. Keep a _subtle_ shadow at most; prefer border + slight surface contrast for elevation over heavy shadows. _(Buttons/inputs stay on the smaller `--radius`/`rounded-lg`.)_
 - **Links:** `text-primary`, hover underline (`underline-offset`). External links **must** include `target="_blank" rel="noopener noreferrer"`.
+- **Toggle groups:** neutral single-select filters use the `Segmented` primitive (`ui/segmented` — `aria-pressed` pills, tokens only). Semantically _colored_ mode switches (e.g. the study-timer focus/break toggle, `bg-primary`/`bg-success`) and multi-panel switches (`Tabs`) are legitimately distinct — don't force them into `Segmented`.
 - **Badges/tags:** neutral (`bg-muted text-muted-foreground`) unless conveying state (then `success`/`warning`).
 - **Navigation:** top nav active item uses `text-primary`; the left sidebar shows identity/contact/social. (Both exist — don't remove them.)
 - Keep any component file **under ~300 LOC**; extract a `use-*` hook + `*.utils.ts` + sub-components (see `seat-planner/`, `study-timer/`).
@@ -78,7 +79,7 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 
 **Do:** semantic tokens only · `cn()` for class merging · constrain prose width · `focus-visible` rings · `rel="noopener noreferrer"` on `_blank` · keep components <300 LOC · verify in light **and** dark before claiming done.
 
-**Don't:** `bg-indigo-*`/`bg-purple-*`/raw `bg-gray-*` · gradient text on section headings or body (hero `h1`s only) · `font-bold`/`text-primary` on section headings (use the canonical §3 style) · stacked shadows · 3-column icon-card hero · `rounded-2xl` on cards · new deps/animation libs without asking · hardcoded hex/HSL in components. _(Course pages carry a few scoped exceptions — see §11.)_
+**Don't:** `bg-indigo-*`/`bg-purple-*`/raw `bg-gray-*` · gradient text on section headings or body (hero `h1`s only) · `font-bold`/`text-primary` on section headings (use the canonical §3 style) · stacked shadows · 3-column icon-card hero · ad-hoc radii (use the `--radius` scale: `rounded-xl` cards, `rounded-2xl` app surfaces, `rounded-lg` controls) · new deps/animation libs without asking · hardcoded hex/HSL in components. _(Course pages carry a few scoped exceptions — see §11.)_
 
 ## 9. Content voice
 
@@ -95,15 +96,15 @@ First-person, precise, unembellished. Specific over vague ("Principal Investigat
 Course **detail** pages are a deliberately distinct, full-width "publication" surface (see `src/features/teaching/components/course-page/`). They follow §1–§9 (semantic tokens only, the 6-theme + a11y gates, content voice) **with these scoped exceptions** — intentional, confined to `.cp` in `course-page.css`, and **not** propagated to the rest of the site unless explicitly decided:
 
 - **Layout:** full-width (max ~1180px, centered), profile sidebar hidden, top nav retained (`app-sidebar-layout` switches on the route).
-- **Cards:** `--radius-xl` (12px) rather than the default 8px.
+- **Cards:** `--radius-xl` (12px) — this is now the **shared** site-wide card radius (globals.css `@theme`), no longer a course-page-only value; `.cp` just consumes the global token.
 - **Display headings:** bolder — hero ~800, section titles 700 (vs the site default `font-semibold`/600).
 - **Mono:** IBM Plex Mono for tracked numerals/labels (codes, weeks, times, %, dates, badges).
 - **Caps labels:** two 10px uppercase families — structural (600/0.07em, muted) and status badges (700/0.06em, colored).
 - **The "This Week" band:** the one element allowed a deeper soft shadow and a brand-tinted gradient surface (a `color-mix` of the active theme's `--primary`); its on-dark foregrounds are intentional `hsl(210 40% 96% / a)` literals (the band is always dark in every theme).
-- **Scale tokens** (`--radius-xl/full`, shadow/duration/ease) are defined locally on `.cp`, not globally.
+- **Scale tokens:** `--radius-xl` is now a **global** token (globals.css `@theme`); only `--radius-full` and the `.cp` shadow/duration/ease tokens remain defined locally on `.cp`.
 
 Everything else — the teaching index and all non-course pages — stays on the §1–§9 defaults.
 
 ---
 
-_Last synced: 2026-06-17 (section headings converged to one canonical style §3; gradient text + hover shadows reconciled to shipped reality — permitted on hero `h1`s / interactive surfaces, §1–§2 / §6 / §8; tokens: 6 themes in `src/styles/tokens.css`; fonts: Inter sans + IBM Plex Mono; course pages: full-width "Command Center", see §11)._
+_Last synced: 2026-06-20 (radius scale reconciled to shipped reality — `rounded-xl`/12px is the canonical card radius, `rounded-2xl`/16px for app surfaces, all derived from one `--radius` base in `globals.css` `@theme`; `.cp` de-islanded onto the global `--radius-xl`, §5 / §8 / §11; `Segmented` vs colored-toggle boundary noted §5; sanctioned raw-color exceptions listed §2. Prior: section headings §3; gradient text + hover shadows §1–§2 / §6; 6 themes in `src/styles/tokens.css`; Inter + IBM Plex Mono; course pages "Command Center" §11)._
