@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
+import { ContentColumn } from '@/shared/components/layout/content-column';
 import { siteConfig } from '@/shared/config/site';
 import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 import { assetPaths } from '@/shared/config/assets';
@@ -31,21 +32,19 @@ export const metadata: Metadata = {
 
 export default function ResearchPage() {
   return (
-    <div className="container-responsive space-y-20">
-      <div className="max-w-7xl mx-auto space-y-20">
-        <Breadcrumbs />
-        <ResearchHero />
+    <ContentColumn width="wide" gap="space-y-20">
+      <Breadcrumbs />
+      <ResearchHero />
 
-        <h2 className="sr-only">Vision & Direction</h2>
-        <ResearchVision />
-        <PrimaryAreas />
-        <CurrentFocus />
-        <ResearchTimeline />
-        <FeaturedProjects />
-        <OpenSource />
-        <LookingAhead />
-        <ResearchCTA />
-      </div>
-    </div>
+      <h2 className="sr-only">Vision & Direction</h2>
+      <ResearchVision />
+      <PrimaryAreas />
+      <CurrentFocus />
+      <ResearchTimeline />
+      <FeaturedProjects />
+      <OpenSource />
+      <LookingAhead />
+      <ResearchCTA />
+    </ContentColumn>
   );
 }

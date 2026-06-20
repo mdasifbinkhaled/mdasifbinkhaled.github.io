@@ -12,6 +12,8 @@ import {
   CardFooter,
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
+import { ContentColumn } from '@/shared/components/layout/content-column';
+import { PageHeader } from '@/shared/components/layout/page-header';
 
 export const metadata: Metadata = {
   title: `Blog | ${siteConfig.author}`,
@@ -25,14 +27,11 @@ export default async function BlogPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className="container-responsive py-8 space-y-12">
-      <div className="space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">Writing & Notes</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl text-balance">
-          Thoughts on human-computer interaction, academic research, and
-          software engineering.
-        </p>
-      </div>
+    <ContentColumn width="wide" className="py-8">
+      <PageHeader
+        title="Writing & Notes"
+        lead="Thoughts on human-computer interaction, academic research, and software engineering."
+      />
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
@@ -89,6 +88,6 @@ export default async function BlogPage() {
           </div>
         )}
       </div>
-    </div>
+    </ContentColumn>
   );
 }

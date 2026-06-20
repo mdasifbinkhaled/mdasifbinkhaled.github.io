@@ -12,6 +12,8 @@ import {
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
+import { ContentColumn } from '@/shared/components/layout/content-column';
+import { PageHeader } from '@/shared/components/layout/page-header';
 
 export const metadata: Metadata = {
   title: `Talks & Presentations | ${siteConfig.author}`,
@@ -23,17 +25,16 @@ export const metadata: Metadata = {
 
 export default function TalksPage() {
   return (
-    <div className="container-responsive py-8 space-y-12 max-w-4xl">
-      <div className="space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight inline-flex items-center gap-3">
-          <Presentation className="h-10 w-10 text-primary" />
-          Talks
-        </h1>
-        <p className="text-xl text-muted-foreground">
-          Public speaking engagements, conference presentations, and guest
-          lectures.
-        </p>
-      </div>
+    <ContentColumn width="standard" className="py-8">
+      <PageHeader
+        title={
+          <span className="inline-flex items-center gap-3">
+            <Presentation className="h-10 w-10 text-primary" />
+            Talks
+          </span>
+        }
+        lead="Public speaking engagements, conference presentations, and guest lectures."
+      />
 
       <div className="space-y-6 relative border-l border-primary/20 ml-4 md:ml-6 py-4">
         {talksData.map((talk) => (
@@ -123,6 +124,6 @@ export default function TalksPage() {
           </div>
         )}
       </div>
-    </div>
+    </ContentColumn>
   );
 }
