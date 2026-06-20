@@ -24,7 +24,6 @@ export const CONTENT_ROUTES = [
   '/research',
   '/talks',
   '/teaching',
-  '/teaching/preview', // TEMP: revamp verification (remove at swap)
   // Dynamic detailed-tier course pages (generateStaticParams)
   '/teaching/iub/cse211sum26',
 ] as const;

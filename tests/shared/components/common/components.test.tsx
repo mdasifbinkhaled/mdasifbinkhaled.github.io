@@ -4,12 +4,7 @@ import { ProfileSidebar } from '@/shared/components/layout/profile-sidebar';
 import { PublicationCard } from '@/features/publications';
 import { ExperienceCompact } from '@/features/home';
 import { HeroSection, NewsSection } from '@/features/home';
-import { CourseCard } from '@/features/teaching';
-import type {
-  PublicationItem,
-  ExperienceItem,
-  CourseData,
-} from '@/shared/types';
+import type { PublicationItem, ExperienceItem } from '@/shared/types';
 import { AppProviders } from '@/shared/providers/app-providers';
 
 // Type definitions for mocks
@@ -400,38 +395,5 @@ describe('Performance', () => {
     expect(end - start - baseline).toBeLessThan(150);
 
     nowSpy.mockRestore();
-  });
-});
-
-describe('CourseCard', () => {
-  const mockCourse: CourseData = {
-    id: 'test-cse-123',
-    code: 'CSE 123',
-    title: 'Test Course 101',
-    institution: 'IUB',
-    semester: 'Fall',
-    year: 2026,
-    credits: 3,
-    level: 'undergraduate',
-    tier: 'standard',
-    description: 'This is a test course description.',
-    outcomes: ['Learn the basics'],
-  };
-
-  it('renders essential course information', () => {
-    renderWithTheme(<CourseCard course={mockCourse} variant="static" />);
-
-    expect(screen.getByText('CSE 123')).toBeInTheDocument();
-    expect(screen.getByText('Test Course 101')).toBeInTheDocument();
-  });
-
-  it('renders detailed tier link state accurately', () => {
-    const detailedCourse = { ...mockCourse, tier: 'detailed' as const };
-    renderWithTheme(
-      <CourseCard course={detailedCourse} variant="collapsible" />
-    );
-
-    // Detailed courses render a "View Course" anchor/button
-    expect(screen.getByText(/View/)).toBeInTheDocument();
   });
 });

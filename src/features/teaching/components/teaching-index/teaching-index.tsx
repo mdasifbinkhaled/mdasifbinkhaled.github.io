@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
 import { ContentColumn } from '@/shared/components/layout/content-column';
 import { PageHeader } from '@/shared/components/layout/page-header';
+import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
 import { CollapsibleSection } from '@/shared/components/ui/collapsible-section';
 import { Badge } from '@/shared/components/ui/badge';
 import { TeachingFigures } from './teaching-figures';
@@ -59,6 +60,8 @@ export function TeachingIndex() {
 
   return (
     <ContentColumn width="wide" gap="space-y-9">
+      <Breadcrumbs />
+
       {/* §1 — header card with the institutions filter on the right */}
       <div className="grid grid-cols-1 items-start gap-10 rounded-xl border border-border bg-card p-8 shadow-xs lg:grid-cols-[minmax(0,1fr)_360px] lg:p-9">
         <PageHeader

@@ -6,7 +6,7 @@ import { newsItems } from '@/shared/lib/data/news';
 import { siteConfig } from '@/shared/config/site';
 // Note: about.ts, activities.ts have icon imports which require mocking
 // Testing them requires additional setup, skipping for now
-import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
+import { getTeachingFigures } from '@/shared/lib/data/teaching-stats';
 
 describe('Data Layer Integrity', () => {
   describe('Courses Data', () => {
@@ -94,13 +94,14 @@ describe('Data Layer Integrity', () => {
     });
   });
 
-  describe('Teaching Stats', () => {
-    it('should return valid teaching statistics', () => {
-      const stats = getTeachingStats();
-      expect(stats.totalStudents).toBeGreaterThan(0);
-      expect(stats.totalCourses).toBeGreaterThan(0);
-      expect(stats.averageRating).toBeGreaterThan(0);
-      expect(stats.yearsTeaching).toBeGreaterThan(0);
+  describe('Teaching Figures', () => {
+    it('should derive valid teaching figures from the course list', () => {
+      const figures = getTeachingFigures();
+      expect(figures.courses).toBeGreaterThan(0);
+      expect(figures.institutions).toBeGreaterThan(0);
+      expect(figures.creditHours).toBeGreaterThan(0);
+      expect(figures.avgRating).toBeGreaterThan(0);
+      expect(figures.years).toBeGreaterThan(0);
     });
   });
 });

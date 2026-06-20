@@ -18,16 +18,6 @@ export interface TeachingActivity {
 }
 
 /**
- * Teaching statistics
- */
-export interface TeachingStats {
-  totalStudents: number;
-  totalCourses: number;
-  averageRating: number;
-  yearsTeaching: number;
-}
-
-/**
  * Honest, single-sourced teaching figures derived from the course list
  * (drives the /teaching figure strip). No invented "students mentored".
  */

@@ -1,16 +1,7 @@
 /**
- * Teaching feature — public API
+ * Teaching feature — public API.
  *
- * Re-exports the components, styles, and helpers used by
- * pages under /teaching. The full-width course page lives in
+ * The `/teaching` index is `TeachingIndex`; the full-width course page lives in
  * ./components/course-page and is exported from there.
  */
-export {
-  CourseCard,
-  TeachingHeroStats,
-  TeachingCTA,
-  TeachingRecordTable,
-  getLevelStyle,
-  LEVEL_STYLES,
-  MentorshipSection,
-} from './components';
+export { TeachingIndex } from './components';

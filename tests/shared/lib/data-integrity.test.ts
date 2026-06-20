@@ -17,7 +17,7 @@ import {
   researchInterests,
   getResearchInterests,
 } from '@/shared/lib/data/research-interests';
-import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
+import { getTeachingFigures } from '@/shared/lib/data/teaching-stats';
 
 describe('Data Integrity Checks', () => {
   describe('About Data (about.ts)', () => {
@@ -124,14 +124,15 @@ describe('Data Integrity Checks', () => {
     });
   });
 
-  describe('Teaching Stats (teaching-stats.ts)', () => {
-    it('should return non-negative statistical values', () => {
-      const stats = getTeachingStats();
-      expect(stats.totalStudents).toBeGreaterThanOrEqual(0);
-      expect(stats.totalCourses).toBeGreaterThanOrEqual(0);
-      expect(stats.averageRating).toBeGreaterThan(0);
-      expect(stats.averageRating).toBeLessThanOrEqual(5);
-      expect(stats.yearsTeaching).toBeGreaterThan(0);
+  describe('Teaching Figures (teaching-stats.ts)', () => {
+    it('should derive non-negative, in-range figures', () => {
+      const figures = getTeachingFigures();
+      expect(figures.courses).toBeGreaterThanOrEqual(0);
+      expect(figures.creditHours).toBeGreaterThanOrEqual(0);
+      expect(figures.ratedCount).toBeLessThanOrEqual(figures.courses);
+      expect(figures.avgRating).toBeGreaterThan(0);
+      expect(figures.avgRating).toBeLessThanOrEqual(5);
+      expect(figures.years).toBeGreaterThan(0);
     });
   });
 });

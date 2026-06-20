@@ -14,11 +14,12 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { StatCard } from '@/shared/components/common/stat-card';
-import { getTeachingStats } from '@/shared/lib/data/teaching-stats';
+import { getTeachingFigures } from '@/shared/lib/data/teaching-stats';
 
 /** Main landing section with introduction, quick stats, and CTAs. */
 export function HeroSection() {
-  const { averageRating } = getTeachingStats();
+  // Single source of truth with /teaching — the mean over rated courses.
+  const { avgRating: averageRating } = getTeachingFigures();
 
   // Stats data with unique IDs for stable React keys
   const stats = [
