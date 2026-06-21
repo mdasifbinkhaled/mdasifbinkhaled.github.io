@@ -4,6 +4,8 @@
 import type { IconName } from '@/shared/components/common/icons';
 
 export type { AppStatus, AppCategory, AppDefinition } from './apps';
+export type * from './teaching';
+export type * from './tools';
 
 export type PublicationType =
   | 'Conference'
@@ -303,7 +305,7 @@ export interface NavItem {
 // Skill types
 export interface Skill {
   category: string;
-  iconName?: string;
+  iconName?: IconName;
   items: string[];
 }
 

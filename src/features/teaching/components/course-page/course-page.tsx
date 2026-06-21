@@ -3,8 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { CourseData } from '@/shared/types';
-import { useScrollspy } from '@/shared/hooks/use-scrollspy';
-import { useIsClient } from '@/shared/hooks/use-is-client';
+import { useIsClient, useScrollspy } from '@/shared/hooks';
 import { Ic } from './course-icons';
 import { Hero } from './hero';
 import { NowBand, SummaryBand } from './bands';

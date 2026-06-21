@@ -5,7 +5,7 @@ import {
   CardContent,
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
-import { Icon, type IconName } from '@/shared/components/common/icons';
+import { Icon } from '@/shared/components/common/icons';
 import { technicalSkills } from '@/shared/lib/data/experience';
 
 export function SkillsSection() {
@@ -25,7 +25,7 @@ export function SkillsSection() {
                 <CardTitle className="flex items-center gap-3 text-lg">
                   <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <Icon
-                      name={(skillGroup.iconName || 'Layers') as IconName}
+                      name={skillGroup.iconName || 'Layers'}
                       className="w-5 h-5 text-primary"
                     />
                   </div>
