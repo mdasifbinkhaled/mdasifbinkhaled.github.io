@@ -4,7 +4,7 @@ export function ToolsHero() {
   const activeCount = apps.filter((a) => a.status === 'active').length;
 
   return (
-    <div className="relative overflow-hidden bg-primary/5 py-16 sm:py-24 rounded-3xl border mb-12">
+    <div className="relative overflow-hidden bg-primary/5 py-16 sm:py-24 rounded-2xl border mb-12">
       <div
         className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
         aria-hidden

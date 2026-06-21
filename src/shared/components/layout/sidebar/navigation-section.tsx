@@ -6,7 +6,7 @@ import { Globe } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
 import { mainNavItems, secondaryNavItems } from '@/shared/config/navigation';
-import { navIconMap } from '@/shared/lib/nav-icon-map';
+import { iconComponents } from '@/shared/components/common/icons';
 import type { NavItem } from '@/shared/types';
 
 interface NavigationSectionProps {
@@ -26,7 +26,7 @@ export function NavigationSection({
   };
 
   const renderItem = (item: NavItem) => {
-    const IconComponent = (item.icon && navIconMap[item.icon]) || Globe;
+    const IconComponent = (item.icon && iconComponents[item.icon]) || Globe;
     const active = isActive(item.href);
 
     return (

@@ -99,4 +99,21 @@ describe('ExamCountdown', () => {
     fireEvent.change(courseInput, { target: { value: 'MAT 215' } });
     expect(screen.getByDisplayValue('MAT 215')).toBeInTheDocument();
   });
+
+  it('stores an edited date as naive-local, not UTC (regression: the onChange must not toISOString)', () => {
+    render(<ExamCountdown />);
+    const dateInputs = screen.getAllByLabelText(/Target date and time/i);
+    fireEvent.change(dateInputs[0]!, { target: { value: '2026-07-04T14:00' } });
+
+    // Display reflects the entered wall-clock with no timezone shift...
+    expect(screen.getByDisplayValue('2026-07-04T14:00')).toBeInTheDocument();
+    // ...and the persisted value stays in the canonical naive-local format —
+    // toISOString() would have emitted '2026-07-04T...:00.000Z' (the prior bug).
+    const saved = JSON.parse(
+      localStorage.getItem('abk:v1:exam-countdown:events')!
+    ) as Array<{ date: string }>;
+    const edited = saved.find((e) => e.date.startsWith('2026-07-04'));
+    expect(edited?.date).toBe('2026-07-04T14:00');
+    expect(edited?.date).not.toContain('Z');
+  });
 });

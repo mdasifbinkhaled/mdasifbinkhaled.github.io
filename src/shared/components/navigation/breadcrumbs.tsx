@@ -5,10 +5,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { formatBreadcrumbTitle } from '@/shared/lib/course-utils';
 import { allNavItems } from '@/shared/config/navigation';
-import { navIconMap } from '@/shared/lib/nav-icon-map';
+import {
+  iconComponents,
+  type IconName,
+} from '@/shared/components/common/icons';
 
 /** Build a lookup from URL segment → icon name using navigation config */
-const segmentIconMap: Record<string, string> = {};
+const segmentIconMap: Record<string, IconName> = {};
 for (const item of allNavItems) {
   const segment = item.href.replace(/^\//, '') || 'home';
   if (item.icon) segmentIconMap[segment] = item.icon;
@@ -31,7 +34,7 @@ export function Breadcrumbs() {
             className="flex items-center gap-1 hover:text-primary transition-colors"
           >
             {(() => {
-              const HomeIcon = navIconMap['Home'];
+              const HomeIcon = iconComponents['Home'];
               return HomeIcon ? (
                 <HomeIcon className="w-4 h-4" aria-hidden="true" />
               ) : null;
@@ -48,7 +51,7 @@ export function Breadcrumbs() {
           const title = formatBreadcrumbTitle(segment);
 
           const iconName = segmentIconMap[segment];
-          const Icon = iconName ? navIconMap[iconName] : undefined;
+          const Icon = iconName ? iconComponents[iconName] : undefined;
 
           return (
             <li key={href} className="flex items-center gap-2">

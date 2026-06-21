@@ -52,7 +52,7 @@ export function HeroSection() {
       </div>
 
       <p
-        className={`text-lg leading-8 text-muted-foreground max-w-3xl mx-auto transition-opacity duration-300 ${lang === 'BN' ? 'font-serif text-xl' : ''}`}
+        className={`text-lg leading-8 text-muted-foreground max-w-3xl mx-auto transition-opacity duration-300 ${lang === 'BN' ? 'text-xl' : ''}`}
       >
         {content[lang].bio}
       </p>

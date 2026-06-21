@@ -12,6 +12,7 @@ import { cn } from '@/shared/lib/utils';
 import {
   computeTimeRemaining,
   getUrgencyClasses,
+  toLocalInputValue,
   type ExamEvent,
 } from './exam-countdown.utils';
 
@@ -150,7 +151,11 @@ export function ExamTimerCard({
             aria-label={`Target date and time for ${exam.course || `exam ${index + 1}`}`}
             value={exam.date.slice(0, 16)} // format: YYYY-MM-DDThh:mm
             onChange={(e) =>
-              onChange(exam.id, 'date', new Date(e.target.value).toISOString())
+              onChange(
+                exam.id,
+                'date',
+                toLocalInputValue(new Date(e.target.value))
+              )
             }
             className="text-sm h-9"
           />

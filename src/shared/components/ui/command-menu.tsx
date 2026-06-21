@@ -28,7 +28,7 @@ import {
   DialogTitle,
 } from '@/shared/components/ui/dialog';
 import { navItems, courseNavItems } from '@/shared/config/navigation';
-import { navIconMap } from '@/shared/lib/nav-icon-map';
+import { iconComponents } from '@/shared/components/common/icons';
 import { cn } from '@/shared/lib/utils';
 import { portfolioEvents } from '@/shared/lib/analytics';
 import { TIMING } from '@/shared/config/constants';
@@ -91,7 +91,7 @@ export function CommandMenu() {
   // Render a group of NavItem entries
   const renderNavItems = (items: NavItem[]) =>
     items.map((navItem) => {
-      const Icon = navItem.icon ? navIconMap[navItem.icon] : null;
+      const Icon = navItem.icon ? iconComponents[navItem.icon] : null;
       return (
         <Command.Item
           key={`${navItem.href}-${navItem.sectionId}`}

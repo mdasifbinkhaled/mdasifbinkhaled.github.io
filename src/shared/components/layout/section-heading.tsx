@@ -18,11 +18,15 @@ interface SectionHeadingProps {
 }
 
 /**
- * The single canonical section title (DESIGN.md §3). Every `<section>` heading
- * across the site uses this so weight/size/color never drift again:
+ * The canonical section-title recipe (DESIGN.md §3):
  * `text-2xl font-semibold tracking-tight text-foreground` (h2), one step down
  * for h3. Never `font-bold`, never tinted `text-primary`, never gradient —
  * those are reserved for page hero `h1`s (see `PageHeader`).
+ *
+ * NOTE: adoption is currently opt-in / partial — several feature sections still
+ * hand-roll the same literal. Prefer this primitive for new section headings;
+ * migrating the remaining hand-rolled ones is a tracked consistency follow-up.
+ * Keep the recipe here as the single source of truth either way.
  */
 export function SectionHeading({
   as: Tag = 'h2',

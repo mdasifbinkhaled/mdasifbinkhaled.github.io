@@ -80,7 +80,7 @@ export function AppsHub() {
 
       {/* Tools Grid */}
       {groups.length === 0 ? (
-        <div className="text-center py-24 px-4 bg-primary/5 rounded-3xl border border-dashed">
+        <div className="text-center py-24 px-4 bg-primary/5 rounded-2xl border border-dashed">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-background mb-4 shadow-sm">
             <Search className="h-8 w-8 text-muted-foreground/50" />
           </div>
