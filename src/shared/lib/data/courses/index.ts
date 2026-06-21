@@ -37,7 +37,7 @@ export {
 
 /** Institution display names */
 export const institutionNames: Record<CourseInstitution, string> = {
-  IUB: 'Independent University, Bangladesh (IUB)',
+  IUB: 'Independent University, Bangladesh',
   BRACU: 'BRAC University',
 };
 

@@ -176,9 +176,7 @@ export function CoursePage({ course }: { course: CourseData }) {
                 </span>
               ))}
             </div>
-            <span className="foot__archnote">
-              Past exams &amp; problem sets archived per term.
-            </span>
+            <span className="foot__archnote">Offered in earlier terms.</span>
           </div>
         ) : null}
         <div className="foot__colophon">

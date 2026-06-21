@@ -93,14 +93,6 @@ describe('allExams', () => {
     const exams = allExams(base);
     expect(exams.map((e) => e.name)).toEqual(['Midterm', 'Final']);
   });
-  it('falls back to top-level exams', () => {
-    const course = {
-      ...base,
-      assessmentSchemes: undefined,
-      exams: { midterm: { date: '2026-07-01' }, final: { date: 'TBA' } },
-    } satisfies CourseData;
-    expect(allExams(course).map((e) => e.name)).toEqual(['Midterm', 'Final']);
-  });
   it('returns [] when there are no exams', () => {
     const course = {
       ...base,
@@ -120,8 +112,16 @@ describe('buildNotices', () => {
   it('lists exams individually when dates are known', () => {
     const course = {
       ...base,
-      assessmentSchemes: undefined,
-      exams: { midterm: { date: '2026-07-01' }, final: { date: 'TBA' } },
+      assessmentSchemes: {
+        theory: {
+          label: 'Theory',
+          grading: [{ label: 'Final', pct: 100 }],
+          exams: {
+            midterm: { name: 'Midterm', date: '2026-07-01' },
+            final: { name: 'Final', date: 'To be announced' },
+          },
+        },
+      },
     } satisfies CourseData;
     const titles = buildNotices(course).map((n) => n.title);
     expect(titles.some((t) => t.includes('2026-07-01'))).toBe(true);

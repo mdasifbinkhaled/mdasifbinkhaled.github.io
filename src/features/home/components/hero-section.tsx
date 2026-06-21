@@ -25,7 +25,7 @@ export function HeroSection() {
   const stats = [
     {
       id: 'stat-years',
-      number: `${METRICS.YEARS_TEACHING}+`,
+      number: `${METRICS.YEARS_IN_ACADEMIA}+`,
       label: 'Years Experience',
       icon: GraduationCap,
       description: 'Teaching & Research\nin Academia',

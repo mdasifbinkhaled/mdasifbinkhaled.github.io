@@ -10,7 +10,11 @@ export const METRICS = {
   // Note: average teaching rating is derived from course data via
   // getTeachingFigures() — don't reintroduce a hardcoded rating here.
   TOTAL_STUDENTS: getTotalStudentsFromCourses(),
-  YEARS_TEACHING: new Date().getFullYear() - 2015,
+  // Academia experience (TA since 2015 + research + teaching) — powers the home
+  // "Years Experience · Teaching & Research in Academia" stat. Deliberately
+  // DISTINCT from teaching years: /teaching shows "Years teaching" = 9, anchored
+  // to the first course (2017). Different claims, different labels — not a dupe.
+  YEARS_IN_ACADEMIA: new Date().getFullYear() - 2015,
 
   // Research
   CITATION_COUNT: 42, // Source: Google Scholar, updated 2026-04-15

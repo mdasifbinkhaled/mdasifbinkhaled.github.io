@@ -1,4 +1,5 @@
 import type { CourseLink, CourseResourceSection } from '@/shared/types';
+import { cse211Term } from './term';
 
 export const links: CourseLink[] = [
   {
@@ -77,7 +78,7 @@ export const resourceSections: CourseResourceSection[] = [
       {
         label: 'VJudge Contest',
         url: 'https://vjudge.net/contest/815686',
-        description: 'The official Summer 2026 class programming contest.',
+        description: `The official ${cse211Term.label} class programming contest.`,
       },
       {
         label: 'CSES Problem Set',

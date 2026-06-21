@@ -1,5 +1,5 @@
 import type { CourseData, CourseInstitution } from '@/shared/types';
-import { allCourses } from '@/shared/lib/data/courses';
+import { allCourses, institutionNames } from '@/shared/lib/data/courses';
 
 /** The active institution filter value: a real institution code or "all". */
 export type InstitutionFilter = CourseInstitution | 'all';
@@ -19,16 +19,12 @@ export interface InstitutionGroup {
   count: number;
 }
 
-const META: Record<
-  CourseInstitution,
-  { mark: string; name: string; current: boolean }
-> = {
-  IUB: {
-    mark: 'IUB',
-    name: 'Independent University, Bangladesh',
-    current: true,
-  },
-  BRACU: { mark: 'BU', name: 'BRAC University', current: false },
+// Name is single-sourced from `institutionNames` (shared data) so the filter
+// card and the record toolbar can never disagree. Only the teaching-local
+// presentation bits (crest mark, present-institution flag) live here.
+const META: Record<CourseInstitution, { mark: string; current: boolean }> = {
+  IUB: { mark: 'IUB', current: true },
+  BRACU: { mark: 'BU', current: false },
 };
 
 /** True when a course belongs to the present institution. */
@@ -61,7 +57,7 @@ export function getInstitutionGroups(): InstitutionGroup[] {
     return {
       short,
       mark: meta.mark,
-      name: meta.name,
+      name: institutionNames[short],
       current: meta.current,
       years: meta.current ? `${min} – present` : `${min} – ${max}`,
       count: courses.length,

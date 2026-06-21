@@ -54,24 +54,6 @@ export type CourseLevel = 'undergraduate' | 'graduate';
 export type CourseStatus = 'completed' | 'ongoing' | 'upcoming';
 export type CourseTier = 'summary' | 'standard' | 'detailed';
 
-/** Teaching role held for a course (shown in the Teaching record). */
-export type CourseRole =
-  | 'Course Coordinator'
-  | 'Instructor'
-  | 'Lab Instructor'
-  | 'Teaching Assistant'
-  | 'Contractual Lecturer'
-  | 'Adjunct Faculty';
-
-export interface CourseAssessmentBreakdown {
-  midterm?: number;
-  final?: number;
-  assignments?: number;
-  projects?: number;
-  quizzes?: number;
-  participation?: number;
-}
-
 export interface CourseLink {
   title: string;
   url: string;
@@ -107,18 +89,6 @@ export interface CourseContest {
   platform?: string;
   /** Short subtitle shown on the course-page contest CTA. */
   sub?: string;
-}
-
-export interface CourseExams {
-  midterm?: {
-    date?: string;
-    seatPlanUrl?: string;
-    syllabus?: string;
-  };
-  final?: {
-    date?: string;
-    seatPlanUrl?: string;
-  };
 }
 
 export interface CourseConsultation {
@@ -284,7 +254,6 @@ export interface CourseData {
     status?: 'active' | 'closed' | 'upcoming';
     description?: string;
   }[];
-  assessment?: CourseAssessmentBreakdown;
   enrollmentCount?: number;
   rating?: number;
   feedback?: string[];
@@ -293,7 +262,6 @@ export interface CourseData {
   tier?: CourseTier;
   resourceSections?: CourseResourceSection[];
   activeContest?: CourseContest;
-  exams?: CourseExams;
   consultation?: CourseConsultation;
 
   /* ---- Course-page "Command Center" template fields (all optional) ---- */
@@ -309,7 +277,7 @@ export interface CourseData {
   units?: CourseUnit[];
   sectionsRoster?: CourseSectionRoster;
   quickLinks?: CourseQuickLink[];
-  /** Dual theory/lab grade schemes (takes precedence over `assessment`). */
+  /** Dual theory/lab grade schemes — the single assessment model. */
   assessmentSchemes?: CourseAssessmentSchemes;
   announcements?: CourseAnnouncement[];
   /** Retrospective band content (completed courses). */
@@ -319,8 +287,6 @@ export interface CourseData {
   termStartDate?: string;
   /** Opt a detailed course into the full-width "Command Center" course page. */
   template?: 'command-center';
-  /** Teaching role for the Teaching record table. */
-  role?: CourseRole;
 }
 
 // Navigation types

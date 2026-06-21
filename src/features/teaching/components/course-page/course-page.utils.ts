@@ -95,14 +95,6 @@ export function allExams(course: CourseData): ExamLite[] {
     }
     return out;
   }
-  if (course.exams) {
-    const out: ExamLite[] = [];
-    if (course.exams.midterm)
-      out.push({ name: 'Midterm', date: course.exams.midterm.date ?? 'TBA' });
-    if (course.exams.final)
-      out.push({ name: 'Final', date: course.exams.final.date ?? 'TBA' });
-    return out;
-  }
   return [];
 }
 
@@ -167,9 +159,7 @@ export function deriveSections(course: CourseData): DerivedSections {
     sections: !!course.sectionsRoster?.rows?.length,
     syllabus: !!course.units?.length,
     assessment: !!(
-      course.assessmentSchemes?.theory ||
-      course.assessmentSchemes?.lab ||
-      course.assessment
+      course.assessmentSchemes?.theory || course.assessmentSchemes?.lab
     ),
     assignments: !!course.assignments?.length,
     resources: !!course.resourceSections?.length,

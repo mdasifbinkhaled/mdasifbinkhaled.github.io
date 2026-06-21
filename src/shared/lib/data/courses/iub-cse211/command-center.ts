@@ -8,6 +8,7 @@ import type {
   CourseUnit,
 } from '@/shared/types';
 import { links } from './resources';
+import { cse211Term } from './term';
 
 /** Resolve a quick-link URL from the canonical `links` list by title prefix. */
 const linkUrl = (titlePrefix: string): string | undefined =>
@@ -272,7 +273,7 @@ export const sectionsRoster = {
 export const announcements = [
   {
     tag: 'new',
-    title: 'Summer 2026 course page is now active.',
+    title: `${cse211Term.label} course page is now active.`,
     date: 'Posted 13 May 2026',
   },
   {

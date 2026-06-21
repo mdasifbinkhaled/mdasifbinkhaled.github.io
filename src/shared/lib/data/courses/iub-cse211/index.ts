@@ -1,7 +1,7 @@
 import type { CourseData } from '@/shared/types';
 import { resourceSections } from './resources';
 import { cse211Term } from './term';
-import { activeContest, exams } from './schedule';
+import { activeContest } from './schedule';
 import {
   announcements,
   assessmentSchemes,
@@ -41,8 +41,7 @@ export const iubCse211: CourseData = {
     {
       title: `${cse211Term.label} Assignment 1`,
       status: 'upcoming',
-      description:
-        'Specification will be published after the Summer 2026 class routine and lab sections are finalized.',
+      description: `Specification will be published after the ${cse211Term.label} class routine and lab sections are finalized.`,
     },
   ],
   enrollmentCount: 0,
@@ -53,21 +52,18 @@ export const iubCse211: CourseData = {
 
   // Hub Features (Imported from Sub-modules)
   ...(activeContest ? { activeContest } : {}),
-  exams,
   resourceSections,
   consultation: {
     office: 'BC5010-D',
-    hours:
-      'By appointment during Summer 2026 until the class routine is finalized.',
+    hours: `By appointment during ${cse211Term.label} until the class routine is finalized.`,
     phone: '(+88) 01676076329',
     note: 'Please make an appointment before visiting.',
   },
 
   // Course-page "Command Center" template fields
   template: 'command-center',
-  role: 'Course Coordinator',
   totalWeeks: 12,
-  currentWeek: 3,
+  // currentWeek is computed live from termStartDate (course-page.tsx); not stored.
   termStartDate: '2026-06-01',
   staff,
   nextMilestone,
