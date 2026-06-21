@@ -6,14 +6,15 @@ import {
   CardContent,
 } from '@/shared/components/ui/card';
 import { Award, CalendarCheck2 } from 'lucide-react';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 import { certifications } from '@/shared/lib/data/about';
 
 export function CertificationsSection() {
   return (
     <section id="certifications">
-      <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-10">
+      <SectionHeading className="text-center mb-10">
         Certifications & Training
-      </h2>
+      </SectionHeading>
       <div className="grid gap-6 md:grid-cols-2">
         {certifications.map((cert) => (
           <Card

@@ -6,14 +6,15 @@ import {
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { Icon } from '@/shared/components/common/icons';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 import { technicalSkills } from '@/shared/lib/data/experience';
 
 export function SkillsSection() {
   return (
     <section id="skills">
-      <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-10">
+      <SectionHeading className="text-center mb-10">
         Technical Skills
-      </h2>
+      </SectionHeading>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {technicalSkills.map((skillGroup) => {
           return (

@@ -1,15 +1,16 @@
 import { AlertCircle } from 'lucide-react';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 import { researchProjects } from '@/shared/lib/data/researcher-profile';
 
 export function FeaturedProjects() {
   return (
     <section id="research-projects">
       <div className="text-center mb-12">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-4">
+        <SectionHeading className="mb-4">
           Featured Research Projects
-        </h2>
+        </SectionHeading>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           In-depth explorations of AI applications in healthcare and beyond
         </p>

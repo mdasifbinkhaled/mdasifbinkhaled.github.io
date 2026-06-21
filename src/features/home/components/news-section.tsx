@@ -1,5 +1,6 @@
 import { NewsFeed } from './news-feed';
 import { getNewsItems } from '@/shared/lib/data/news';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 
 /**
  * News Section Component
@@ -12,10 +13,10 @@ export function NewsSection() {
     <article className="w-full py-8 md:py-10 bg-linear-to-br from-secondary/30 via-secondary/20 to-transparent">
       <div className="container-responsive">
         <section className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-6 flex items-center gap-2">
+          <SectionHeading className="mb-6 flex items-center gap-2">
             <span className="w-1 h-6 bg-primary rounded-full"></span>
             News
-          </h2>
+          </SectionHeading>
           <NewsFeed items={newsItems} />
         </section>
       </div>

@@ -9,15 +9,16 @@ import {
 } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Badge } from '@/shared/components/ui/badge';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 
 export function OpenSource() {
   return (
     <section>
       <div className="text-center mb-12">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-3">
+        <SectionHeading className="mb-3">
           Open Source Contributions
-        </h2>
+        </SectionHeading>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Building tools for the research community
         </p>

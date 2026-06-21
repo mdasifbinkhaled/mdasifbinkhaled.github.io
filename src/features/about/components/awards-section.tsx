@@ -5,14 +5,15 @@ import {
   CardDescription,
 } from '@/shared/components/ui/card';
 import { CalendarCheck2 } from 'lucide-react';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 import { honorsAndAwards } from '@/shared/lib/data/about';
 
 export function AwardsSection() {
   return (
     <section id="honors-awards">
-      <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-10">
+      <SectionHeading className="text-center mb-10">
         Honors & Awards
-      </h2>
+      </SectionHeading>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {honorsAndAwards.map((award) => (
           <Card

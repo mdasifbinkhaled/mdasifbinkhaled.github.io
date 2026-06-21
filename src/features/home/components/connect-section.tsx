@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 
 /**
  * Social link color variants
@@ -120,9 +121,9 @@ export function ConnectSection() {
 
       <div className="container-responsive relative z-10">
         <div className="text-center mb-10">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-4">
+          <SectionHeading className="mb-4">
             Connect & Collaborate
-          </h2>
+          </SectionHeading>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Interested in collaboration, discussing research opportunities, or
             learning more about my work? Let&apos;s connect!

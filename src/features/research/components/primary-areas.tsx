@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 import { researchIdentity } from '@/shared/lib/data/researcher-profile';
 
 const iconMap = {
@@ -22,9 +23,7 @@ export function PrimaryAreas() {
   return (
     <section id="research-areas">
       <div className="text-center mb-12">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-4">
-          Primary Research Areas
-        </h2>
+        <SectionHeading className="mb-4">Primary Research Areas</SectionHeading>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           My work spans three interconnected domains, all focused on making AI
           understandable and beneficial for humanity

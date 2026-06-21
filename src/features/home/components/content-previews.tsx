@@ -14,6 +14,7 @@ import { samplePublications } from '@/shared/lib/data/publications';
 import { professionalExperiences } from '@/shared/lib/data/experience';
 import { DISPLAY_LIMITS } from '@/shared/config';
 import { researchData } from '@/shared/lib/data/research';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 
 /**
  * Publications Preview Section
@@ -28,9 +29,7 @@ export function PublicationsPreview() {
     <section className="w-full py-8 md:py-10 bg-secondary/10">
       <div className="container-responsive">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-6">
-            Recent Publications
-          </h2>
+          <SectionHeading className="mb-6">Recent Publications</SectionHeading>
           <PublicationList
             initialPublications={filteredPublications.slice(
               0,
@@ -64,9 +63,7 @@ export function ExperiencePreview() {
     <section className="w-full py-8 md:py-10">
       <div className="container-responsive">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-6">
-            Work Experience
-          </h2>
+          <SectionHeading className="mb-6">Work Experience</SectionHeading>
           <ExperienceCompact experiences={recentExperiences} />
           <div className="text-center mt-6">
             <Button variant="outline" asChild>
@@ -94,9 +91,9 @@ export function FeaturedGrant() {
   return (
     <section className="w-full py-12 md:py-16 bg-linear-to-br from-primary/5 to-accent/5">
       <div className="container-responsive">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-12">
+        <SectionHeading className="text-center mb-12">
           Featured Research Grant
-        </h2>
+        </SectionHeading>
         <Card className="shadow-xl hover:shadow-2xl transition-all duration-300 max-w-3xl mx-auto border-primary/20">
           <CardHeader>
             <CardTitle className="text-2xl">{grant.title}</CardTitle>

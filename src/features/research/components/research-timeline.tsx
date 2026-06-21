@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { Icon } from '@/shared/components/common/icons';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 import { researchData } from '@/shared/lib/data/research';
 import { samplePublications } from '@/shared/lib/data/publications';
 
@@ -19,9 +20,7 @@ export function ResearchTimeline() {
   return (
     <section id="research-timeline" className="max-w-5xl mx-auto space-y-6">
       <div className="space-y-3 text-center">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-          Research Timeline
-        </h2>
+        <SectionHeading>Research Timeline</SectionHeading>
         <p className="mx-auto max-w-3xl text-muted-foreground leading-relaxed">
           A compact view of how the research agenda has evolved across grants,
           projects, and published outputs.

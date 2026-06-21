@@ -8,6 +8,7 @@ import { apps, appCategories } from '@/shared/config/apps';
 import type { AppCategory } from '@/shared/types';
 import { ToolCard } from './tool-card';
 import { ToolsHero } from './tools-hero';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 
 export function AppsHub() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -106,12 +107,12 @@ export function AppsHub() {
         <div className="space-y-12">
           {groups.map((group) => (
             <section key={group.category} className="space-y-6">
-              <h2 className="text-2xl font-semibold tracking-tight text-foreground flex items-center gap-3">
+              <SectionHeading className="flex items-center gap-3">
                 {group.label}
                 <span className="text-sm font-semibold text-muted-foreground bg-muted px-3 py-0.5 rounded-full">
                   {group.items.length}
                 </span>
-              </h2>
+              </SectionHeading>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.items.map((app) => (
                   <ToolCard key={app.slug} app={app} />

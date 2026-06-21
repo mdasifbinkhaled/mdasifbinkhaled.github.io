@@ -8,6 +8,7 @@ import { getResearchInterests } from '@/shared/lib/data/research-interests';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/shared/components/ui/button';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 
 /** Displays primary research areas and interests. */
 export function ResearchHighlights() {
@@ -21,9 +22,7 @@ export function ResearchHighlights() {
 
       <div className="container-responsive relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-4">
-            Research Interests
-          </h2>
+          <SectionHeading className="mb-4">Research Interests</SectionHeading>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Exploring the intersection of AI, healthcare, and human-centered
             computing

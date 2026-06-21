@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import { ArrowRight, Code } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
+import { SectionHeading } from '@/shared/components/layout/section-heading';
 import { academicProfiles } from '@/shared/lib/data/researcher-profile';
 
 export function ResearchCTA() {
   return (
     <section className="text-center space-y-6 py-12">
-      <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-        Explore My Research Further
-      </h2>
+      <SectionHeading>Explore My Research Further</SectionHeading>
       <div className="flex flex-wrap justify-center gap-4">
         <Button asChild size="lg" className="group">
           <Link href="/publications">
