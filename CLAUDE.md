@@ -14,7 +14,7 @@ Academic portfolio for Md Asif Bin Khaled. Next.js 16 (App Router, **static expo
 ## Architecture
 
 - `src/app/**` — routes/layouts/metadata only (thin). Every route has `error.tsx`.
-- `src/features/<name>/**` — feature modules (`about`, `apps`, `home`, `publications`, `research`, `teaching`); each has `components/`, optional `hooks/`/`utils/`, and an `index.ts` barrel.
+- `src/features/<name>/**` — feature modules (`about`, `apps`, `blog`, `contact`, `home`, `publications`, `research`, `talks`, `teaching`); each has `components/`, optional `hooks/`/`utils/`, and an `index.ts` barrel.
 - `src/shared/**` — `components/` (ui, layout, navigation, common), `config/` (SSoT), `hooks/`, `lib/` (incl. `data/`), `providers/`, `types/`.
 - Content data lives in `src/shared/lib/data/` as typed TS objects (`satisfies`). Blog posts are MDX in `content/`.
 - Courses use a tiered system in `lib/data/courses/`: summary (inline) → standard (file) → detailed (directory). Only `tier: 'detailed'` courses generate `/teaching/[institution]/[courseCode]` pages, and every detailed course MUST set `template: 'command-center'` — it's the only course-page template (the dynamic route `notFound()`s a detailed course without it). It renders the full-width, data-driven page in `src/features/teaching/components/course-page/` (see DESIGN.md §11). The shell hides the profile sidebar on command-center pages — those paths are derived from the flag in `app/layout.tsx` (don't hardcode them).

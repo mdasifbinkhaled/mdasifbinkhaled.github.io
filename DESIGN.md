@@ -35,7 +35,7 @@ Academic editorial: calm, credible, precise — closer to a well-set university-
 | Surface                                                                | Why raw color is required                                                                                                                |
 | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `app/global-error.tsx`                                                 | Last-resort error boundary with an inline `<style>` — renders before/outside the theme provider, so CSS-var tokens aren't available.     |
-| `blog/[slug]/page.tsx` (code blocks)                                   | Syntax-highlight surfaces are intentionally dark in every theme (`bg-zinc-950`/`text-zinc-50`), matching standard code-block convention. |
+| `features/blog/components/mdx-components.tsx` (code blocks)            | Syntax-highlight surfaces are intentionally dark in every theme (`bg-zinc-950`/`text-zinc-50`), matching standard code-block convention. |
 | `seat-planner/types.ts` (room swatches)                                | `bg-{purple,indigo,…}-500` are **categorical data colors** distinguishing rooms, not chrome.                                             |
 | `seat-planner/seat-plan-png-document.tsx` (+ the `#ffffff` capture bg) | An off-screen document rasterized to a downloadable PNG — a fixed print artifact, not a themed surface.                                  |
 

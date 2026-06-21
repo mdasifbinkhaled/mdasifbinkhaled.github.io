@@ -1,24 +1,6 @@
 import type { Metadata } from 'next';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/shared/components/ui/card';
-import { Button } from '@/shared/components/ui/button';
-import {
-  Mail,
-  Code2,
-  BriefcaseBusiness,
-  BookUser,
-  MapPin,
-  Phone,
-} from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
-import { Breadcrumbs } from '@/shared/components/navigation/breadcrumbs';
-import { ContentColumn } from '@/shared/components/layout/content-column';
-import { PageHeader } from '@/shared/components/layout/page-header';
+import { ContactSection } from '@/features/contact';
 
 export const metadata: Metadata = {
   title: 'Contact Me',
@@ -29,94 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  return (
-    <ContentColumn width="wide">
-      <Breadcrumbs />
-      <PageHeader
-        align="center"
-        title="Let's Connect"
-        lead="I'm open to research collaborations and interesting conversations."
-      />
-
-      <section id="contact-info">
-        <h2 className="sr-only">Contact Details</h2>
-        <Card className="max-w-2xl mx-auto shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-2xl text-center">
-              Contact Information
-            </CardTitle>
-            <CardDescription className="text-center mt-2">
-              Feel free to reach out for research collaborations or academic
-              inquiries.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-              <Mail className="h-7 w-7 text-primary" />
-              <div>
-                <p className="font-semibold text-foreground">Email</p>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="text-muted-foreground hover:text-primary underline"
-                >
-                  {siteConfig.email}
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-              <Phone className="h-7 w-7 text-primary" />
-              <div>
-                <p className="font-semibold text-foreground">Phone</p>
-                <a
-                  href={`tel:${siteConfig.phone.replace(/\s|\(|\)/g, '')}`}
-                  className="text-muted-foreground hover:text-primary underline"
-                >
-                  {siteConfig.phone}
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-              <MapPin className="h-7 w-7 text-primary" />
-              <div>
-                <p className="font-semibold text-foreground">Location</p>
-                <p className="text-muted-foreground">{siteConfig.address}</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-              <Button variant="outline" asChild className="py-6 text-base">
-                <a
-                  href={siteConfig.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Code2 className="mr-2 h-5 w-5" /> GitHub
-                </a>
-              </Button>
-              <Button variant="outline" asChild className="py-6 text-base">
-                <a
-                  href={siteConfig.links.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <BriefcaseBusiness className="mr-2 h-5 w-5" /> LinkedIn
-                </a>
-              </Button>
-              <Button variant="outline" asChild className="py-6 text-base">
-                <a
-                  href={siteConfig.links.googleScholar}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <BookUser className="mr-2 h-5 w-5" /> Google Scholar
-                </a>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-    </ContentColumn>
-  );
+  return <ContactSection />;
 }
