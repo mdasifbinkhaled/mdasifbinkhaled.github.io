@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 15
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           # Audit the exact commit CI validated, not the branch tip.
           ref: ${{ github.event.workflow_run.head_sha }}

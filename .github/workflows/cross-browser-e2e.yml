@@ -26,7 +26,7 @@ jobs:
         project: ['firefox', 'mobile-safari']
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           # Test the exact commit CI validated, not the branch tip.
           ref: ${{ github.event.workflow_run.head_sha }}
