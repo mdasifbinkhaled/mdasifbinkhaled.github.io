@@ -43,7 +43,6 @@ export function ProfileSidebar({
         <ActionsSection
           isCollapsed={isCollapsed}
           onLinkClick={handleLinkClick}
-          hideNav={hideNav}
         />
 
         {!isCollapsed && (

@@ -1,109 +1,141 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Clock, Globe } from 'lucide-react';
-import { useIsClient } from '@/shared/hooks';
+import type { ReactNode } from 'react';
+import { useDhakaTime } from '@/shared/hooks';
 import { siteConfig } from '@/shared/config';
 
 interface TimeDisplayProps {
-  userTimezone: string;
+  /** IANA time zone of the site owner's location (defaults to Dhaka). */
+  homeTimeZone?: string;
   isCollapsed?: boolean;
 }
 
+const pct = (n: number) => `${Math.max(0, Math.min(100, n * 100))}%`;
+
+/** A 24-hour sky: midnight → sunrise → noon → sunset → midnight. */
+const SKY_GRADIENT =
+  'linear-gradient(90deg,' +
+  '#334155 0%,#5b6b86 12%,#f0a868 24%,#bfe0f5 50%,#f0a868 76%,#5b6b86 88%,#334155 100%)';
+
 export function TimeDisplay({
-  userTimezone,
+  homeTimeZone = 'Asia/Dhaka',
   isCollapsed = false,
 }: TimeDisplayProps) {
-  const isClient = useIsClient();
-  const [now, setNow] = useState(() => new Date());
+  const t = useDhakaTime(homeTimeZone);
+  if (!t.ready) return null;
 
-  useEffect(() => {
-    // Only display hours & minutes — update once per minute, not every second
-    const timer = setInterval(() => {
-      setNow(new Date());
-    }, 60_000);
+  // "Dhaka, Bangladesh" → "Bangladesh"
+  const homeCountry = siteConfig.address.split(',').slice(1).join(',').trim();
+  const apart =
+    t.offsetLabel === 'same time'
+      ? 'Same time as you'
+      : `You're ${t.offsetLabel}`;
 
-    return () => clearInterval(timer);
-  }, []);
+  const detail =
+    `${siteConfig.address} · ${t.homeTime} · ${t.homeDate} · ${t.homeGmtLabel}\n` +
+    `You · ${t.viewerCity} · ${t.viewerTime} · ${t.viewerDate} · ${t.viewerGmtLabel}\n` +
+    `${t.apartLabel} · Sunrise ${t.sunrise} · Sunset ${t.sunset}`;
 
-  if (!isClient) return null;
-
-  // Format options for 12-hour time
-  const timeOptions: Intl.DateTimeFormatOptions = {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  };
-
-  // 1. My Time (Dhaka)
-  const myTime = new Intl.DateTimeFormat('en-US', {
-    ...timeOptions,
-    timeZone: userTimezone,
-  }).format(now);
-
-  const myDate = new Intl.DateTimeFormat('en-US', {
-    weekday: 'short',
-    day: 'numeric',
-    timeZone: userTimezone,
-  }).format(now);
-
-  // 2. Your Time (Local Viewer)
-  // We use the browser's default timezone
-  const yourTime = new Intl.DateTimeFormat('en-US', {
-    ...timeOptions,
-  }).format(now);
-
-  const yourDate = new Intl.DateTimeFormat('en-US', {
-    weekday: 'short',
-    day: 'numeric',
-  }).format(now);
-
-  // Render collapsed view (icon only or minimal)
   if (isCollapsed) {
     return (
       <div
-        className="flex justify-center w-full py-2 hover:bg-sidebar-accent/50 rounded-md transition-colors cursor-help"
-        title={`My Time (${siteConfig.locationLabel}): ${myTime}\nYour Time: ${yourTime}`}
+        className="flex w-full cursor-help justify-center rounded-md py-2 text-muted-foreground transition-colors hover:bg-sidebar-accent/50"
+        title={detail}
       >
-        <Clock className="w-4 h-4 text-muted-foreground" />
+        <span className="font-mono text-[11px] font-semibold tabular-nums">
+          {t.homeTime.replace(/\s?[AP]M$/i, '')}
+        </span>
       </div>
     );
   }
 
+  const personRow = (
+    dot: ReactNode,
+    name: string,
+    time: string,
+    place: string,
+    date: string,
+    gmt: string
+  ) => (
+    <div>
+      <div className="flex items-baseline gap-2 text-xs">
+        {dot}
+        <span className="font-medium text-sidebar-foreground">{name}</span>
+        <span className="ml-auto font-mono font-semibold tabular-nums text-sidebar-foreground">
+          {time}
+        </span>
+      </div>
+      <div className="pl-4 text-[10px] leading-tight text-muted-foreground">
+        {place} · {date} · {gmt}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="mt-4 px-3 py-3 rounded-lg bg-sidebar-accent/20 border border-sidebar-border/30 space-y-2">
-      <div className="flex items-center justify-between text-xs">
-        <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-[10px]">
-          My Time ({siteConfig.locationLabel})
+    <div
+      className="mt-4 rounded-lg border border-sidebar-border/60 px-3 py-3"
+      title={detail}
+    >
+      {/* Dhaka's label above the bar (colour-matched to its filled marker) */}
+      <div className="relative mb-1 h-3 text-[9px] font-medium text-primary">
+        <span
+          className="absolute -translate-x-1/2 whitespace-nowrap"
+          style={{ left: pct(t.dayProgress) }}
+        >
+          {siteConfig.locationLabel}
         </span>
-        <span className="text-warning/80">
-          <Globe className="w-3 h-3" />
-        </span>
-      </div>
-      <div className="flex items-baseline justify-between">
-        <span className="text-sm font-mono font-semibold text-sidebar-foreground">
-          {myTime}
-        </span>
-        <span className="text-[10px] text-sidebar-foreground/50">{myDate}</span>
       </div>
 
-      <div className="h-px w-full bg-sidebar-border/30 my-1" />
+      {/* Gradient day-strip with two identifiable markers */}
+      <div
+        className="relative h-2 rounded-full"
+        style={{ background: SKY_GRADIENT }}
+      >
+        <div
+          className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary ring-2 ring-sidebar"
+          style={{ left: pct(t.dayProgress) }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-sidebar-foreground bg-sidebar ring-2 ring-sidebar"
+          style={{ left: pct(t.viewerDayProgress) }}
+          aria-hidden="true"
+        />
+      </div>
 
-      <div className="flex items-center justify-between text-xs">
-        <span className="text-sidebar-foreground/50 font-medium uppercase tracking-wider text-[10px]">
-          Your Time
-        </span>
-        <span className="text-info/80">
-          <Clock className="w-3 h-3" />
+      {/* The viewer's label below the bar — never collides with Dhaka's */}
+      <div className="relative mb-3 mt-1 h-3 text-[9px] font-medium text-muted-foreground">
+        <span
+          className="absolute -translate-x-1/2 whitespace-nowrap"
+          style={{ left: pct(t.viewerDayProgress) }}
+        >
+          You
         </span>
       </div>
-      <div className="flex items-baseline justify-between">
-        <span className="text-sm font-mono font-semibold text-sidebar-foreground">
-          {yourTime}
-        </span>
-        <span className="text-[10px] text-sidebar-foreground/50">
-          {yourDate}
-        </span>
+
+      {/* Two rows */}
+      <div className="space-y-2">
+        {personRow(
+          <span className="size-2 shrink-0 translate-y-px rounded-full bg-primary" />,
+          siteConfig.locationLabel,
+          t.homeTime,
+          homeCountry,
+          t.homeDate,
+          t.homeGmtLabel
+        )}
+        {personRow(
+          <span className="size-2 shrink-0 translate-y-px rounded-full border-[1.5px] border-sidebar-foreground" />,
+          'You',
+          t.viewerTime,
+          t.viewerCity,
+          t.viewerDate,
+          t.viewerGmtLabel
+        )}
+      </div>
+
+      {/* Difference — one consistent place */}
+      <div className="mt-2.5 border-t border-sidebar-border/40 pt-2 text-center text-[10px] font-medium text-muted-foreground">
+        {apart}
       </div>
     </div>
   );

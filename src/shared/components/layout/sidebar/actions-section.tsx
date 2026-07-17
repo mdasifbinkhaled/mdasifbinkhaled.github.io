@@ -7,13 +7,11 @@ import { TimeDisplay } from '@/shared/components/common/time-display';
 interface ActionsSectionProps {
   isCollapsed: boolean;
   onLinkClick?: () => void;
-  hideNav?: boolean;
 }
 
 export function ActionsSection({
   isCollapsed,
   onLinkClick,
-  hideNav = false,
 }: ActionsSectionProps) {
   return (
     <div className={cn('grow', isCollapsed ? 'p-2' : 'px-6 py-4')}>
@@ -101,10 +99,8 @@ export function ActionsSection({
           </Button>
         </div>
 
-        {/* Dual Time Display */}
-        {!hideNav && (
-          <TimeDisplay userTimezone="Asia/Dhaka" isCollapsed={isCollapsed} />
-        )}
+        {/* Dual Time Display — shown in every sidebar (mobile + desktop) */}
+        <TimeDisplay isCollapsed={isCollapsed} />
       </div>
     </div>
   );
