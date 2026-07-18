@@ -14,6 +14,7 @@
     "url": "https://github.com/mdasifbinkhaled/mdasifbinkhaled.github.io/issues"
   },
   "homepage": "https://mdasifbinkhaled.github.io",
+  "license": "MIT",
   "keywords": [
     "portfolio",
     "academic",
@@ -86,10 +87,10 @@
     "@next/bundle-analyzer": "^16.2.6",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4.2.4",
-    "@testing-library/jest-dom": "^6.x",
-    "@testing-library/react": "^16.x",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^24.0.0",
+    "@types/node": "^22.19.19",
     "@types/papaparse": "^5.5.2",
     "@types/react": "^19.2.15",
     "@vitejs/plugin-react": "^5.2.0",
@@ -105,7 +106,7 @@
     "prettier": "^3.8.3",
     "tailwindcss": "^4.2.4",
     "tw-animate-css": "^1.4.0",
-    "typescript": "^6.0.3",
+    "typescript": "~6.0.3",
     "vitest": "^4.1.8"
   },
   "overrides": {

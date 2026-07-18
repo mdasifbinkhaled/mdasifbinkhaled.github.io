@@ -7,7 +7,7 @@
 | Unit & Integration | Vitest + React Testing Library | Component and utility tests              |
 | E2E Cross-Browser  | Playwright                     | Chromium CI gate + Firefox/WebKit matrix |
 | Accessibility      | axe-core + Playwright          | WCAG 2.x AA audit on all main pages      |
-| Performance        | Lighthouse CI                  | 10 pages, 3 runs each                    |
+| Performance        | Lighthouse CI                  | 11 pages, 3 runs each                    |
 
 ## Running Tests
 
@@ -102,7 +102,7 @@ Enforced in `vitest.config.mts`:
 
 Config: `.github/lighthouserc.js`
 
-Runs against 10 pages (3 runs each) with assertions:
+Runs against 11 pages (3 runs each) with assertions:
 
 - Performance ≥ 0.9
 - Accessibility ≥ 0.95
