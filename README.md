@@ -106,12 +106,11 @@ cp .env.example .env.local
 
 Available environment variables:
 
-| Variable                        | Description                         | Required |
-| ------------------------------- | ----------------------------------- | -------- |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 ID               | No       |
-| `NEXT_PUBLIC_ENABLE_ANALYTICS`  | Enable analytics (`true/false`)     | No       |
-| `NEXT_PUBLIC_SENTRY_DSN`        | Sentry DSN for error tracking       | No       |
-| `NEXT_PUBLIC_SITE_URL`          | Canonical site URL for SEO/metadata | No       |
+| Variable                        | Description                     | Required |
+| ------------------------------- | ------------------------------- | -------- |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 ID           | No       |
+| `NEXT_PUBLIC_ENABLE_ANALYTICS`  | Enable analytics (`true/false`) | No       |
+| `NEXT_PUBLIC_SENTRY_DSN`        | Sentry DSN for error tracking   | No       |
 
 ---
 
