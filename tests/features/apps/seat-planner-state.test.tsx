@@ -43,7 +43,7 @@ vi.mock('@/features/apps/components/seat-planner/pdf-export', () => ({
   generateCombinedPDF: generateCombinedPDFMock,
 }));
 
-vi.mock('html2canvas', () => ({
+vi.mock('html2canvas-pro', () => ({
   default: html2canvasMock,
 }));
 

@@ -399,7 +399,7 @@ export function useSeatPlanner() {
         2,
         Math.min(window.devicePixelRatio || 1, 3)
       );
-      const html2canvas = (await import('html2canvas')).default;
+      const html2canvas = (await import('html2canvas-pro')).default;
       const canvas = await html2canvas(snapshotTarget, {
         backgroundColor: '#ffffff',
         scale: exportScale,
